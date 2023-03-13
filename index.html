@@ -1,0 +1,53 @@
+<html>
+<head>
+
+    <title>PROTOCOL</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./client/css/base.css" />
+
+    <script type="module">
+        import * as THREE from '/client/libs/three/Three.js';
+console.log(THREE)
+        // Our Javascript will go here.
+    </script>
+
+    <script>
+
+        window.SYSTEM_SETUP = {
+            DEBUG:{
+                on:false
+            }
+        };
+
+        window.pollingOn = true;
+
+        var mapEnums = function() {
+            var map = {};
+
+            for (var key in ENUMS) {
+                map[key] = [];
+
+                for (var i in ENUMS[key]) {
+                    map[key][ENUMS[key][i]] = i;
+                }
+            }
+
+            ENUMS.Map = map;
+
+            ENUMS.getKey = function(category, index) {
+                return ENUMS.Map[category][index];
+            }
+        };
+
+    //    mapEnums();
+
+
+
+
+    </script>
+
+</head>
+
+<body id="canvas_window"></body>
+
+</html>
