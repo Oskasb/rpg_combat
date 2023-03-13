@@ -7,12 +7,16 @@
 
     <script type="module">
         import * as THREE from '/client/libs/three/Three.js';
-console.log(THREE)
+        console.log(THREE)
+        import * as APPLICATION from '/client/js/Application.js';
+        console.log(APPLICATION)
         // Our Javascript will go here.
-    </script>
 
-    <script>
+        var devMode = true;
+        var env = navigator;
+        var Client = new APPLICATION.Client(devMode, env);
 
+        console.log(Client)
         window.SYSTEM_SETUP = {
             DEBUG:{
                 on:false
