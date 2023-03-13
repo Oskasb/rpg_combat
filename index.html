@@ -1,13 +1,12 @@
 <html>
 <head>
 
-    <title>PROTOCOL</title>
+    <title>PROTOTYPE</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./client/css/base.css" />
 
     <script type="module">
-        import * as THREE from '/client/libs/three/Three.js';
-        console.log(THREE)
+
         import * as APPLICATION from '/client/js/Application.js';
         console.log(APPLICATION)
         // Our Javascript will go here.
@@ -16,7 +15,8 @@
         var env = navigator;
         var Client = new APPLICATION.Client(devMode, env);
 
-        console.log(Client)
+        console.log(Client);
+        Client.createScene();
         window.SYSTEM_SETUP = {
             DEBUG:{
                 on:false
