@@ -3,12 +3,22 @@ console.log(THREE)
 
 class Client {
 
-    constructor( devMode, env ) {
 
+
+    constructor( devMode, env, events ) {
+
+        var testEvent = function(res) {
+            console.log(res);
+        }
+
+
+        var evt = events;
         this.type = 'Client';
         this.devMode = devMode;
         this.env = env;
-
+        this.evt = evt;
+        evt.on(ENUMS.Event.TEST_EVENT, testEvent)
+        evt.fire(ENUMS.Event.TEST_EVENT, {msg:"hello"})
     }
 
     createScene() {
