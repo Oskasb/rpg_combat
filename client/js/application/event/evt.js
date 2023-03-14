@@ -5,23 +5,23 @@ import { EventParser } from './EventParser.js';
 class evt {
 
     constructor() {
+        this.eventProtocol = new EventProtocol();
 
+        this.eventList = {};
+        this.events = [];
+        this.listeners = [];
+
+        this.spliceListeners = [];
+
+        this.evtStatus = {
+            activeListeners:0,
+            firedCount:0,
+            onceListeners:0,
+            addedListeners:0
+        };
     }
 
-    eventProtocol = new EventProtocol();
 
-    eventList = {};
-    events = [];
-    listeners = [];
-
-    spliceListeners = [];
-
-    evtStatus = {
-        activeListeners:0,
-        firedCount:0,
-        onceListeners:0,
-        addedListeners:0
-    };
 
     list() {
         return this.eventList;
@@ -40,7 +40,7 @@ class evt {
     };
 
 
-    dispatchEvent(event, args) {
+    dispatch(event, args) {
 
         while (this.spliceListeners.length) {
             this.spliceListener(this.spliceListeners.shift(), this.spliceListeners.shift())
@@ -59,20 +59,21 @@ class evt {
         while (this.spliceListeners.length) {
             this.spliceListener(this.spliceListeners.shift(), this.spliceListeners.shift())
         }
-
+        this.evtStatus.firedCount++;
     };
 
-    dispatch(event, args) {
+    removeListener(event, callback, evt) {
 
-
-        if (typeof(this.listeners[event]) === 'undefined') {
-
+        if (!evt.listeners[event]) {
             return;
-            // listeners[event] = []
         }
 
-        dispatchEvent(event, args);
-        this.evtStatus.firedCount++;
+        if (evt.listeners[event].indexOf(callback) === -1) {
+            return;
+        }
+
+        //     spliceListener(listeners[event], callback);
+        evt.asynchifySplice(evt.listeners[event], callback);
     };
 
     on(event, callback) {
@@ -83,10 +84,16 @@ class evt {
     once(event, callback) {
         this.setupEvent(event);
 
+        var _this = this;
+
+        var removeListnrs = this.removeListener;
+        var listeners = this.listeners;
+        var evtStatus = this.evtStatus;
+
         var remove = function() {
-            this.removeListener(this.listeners[event], singleShot);
-            this.evtStatus.onceListeners--;
-            if (this.evtStatus.onceListeners < 0) {
+            removeListnrs(listeners[event], singleShot,_this);
+            evtStatus.onceListeners--;
+            if (evtStatus.onceListeners < 0) {
                 console.log("overdose singleshots", event);
             }
         };
@@ -104,7 +111,7 @@ class evt {
 
         this.evtStatus.onceListeners++;
 
-        this.registerListener(event, singleShot);
+        this.on(event, singleShot);
     };
 
     spliceListener(listeners, cb) {
@@ -130,19 +137,7 @@ class evt {
         this.spliceListeners.push(cb);
     };
 
-    removeListener(event, callback) {
 
-        if (!this.listeners[event]) {
-            return;
-        }
-
-        if (this.listeners[event].indexOf(callback) === -1) {
-            return;
-        }
-
-        //     spliceListener(listeners[event], callback);
-        this.asynchifySplice(this.listeners[event], callback);
-    };
 
     setEventBuffers(buffers, workerIndex) {
         EventProtocol.setEventBuffer(buffers, workerIndex, this.dispatch)
