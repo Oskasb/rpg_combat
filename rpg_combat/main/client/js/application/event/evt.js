@@ -1,5 +1,5 @@
-import { EventProtocol } from '/client/js/application/event/EventProtocol.js';
-import { EventParser } from '/client/js/application/event/EventParser.js';
+import { EventProtocol } from './EventProtocol.js';
+import { EventParser } from './EventParser.js';
 
 
 class evt {

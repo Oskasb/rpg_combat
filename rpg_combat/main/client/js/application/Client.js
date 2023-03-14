@@ -1,4 +1,4 @@
-import * as THREE from '/client/libs/three/Three.js';
+import * as THREE from '../../libs/three/Three.js';
 console.log(THREE)
 
 class Client {

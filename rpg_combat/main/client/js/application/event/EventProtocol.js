@@ -1,5 +1,5 @@
 "use strict";
-import { EventBufferProcessor } from '/client/js/application/event/EventBufferProcessor.js';
+import { EventBufferProcessor } from './EventBufferProcessor.js';
 
 
 class EventProtocol {
