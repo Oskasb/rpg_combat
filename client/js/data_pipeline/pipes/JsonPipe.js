@@ -22,32 +22,33 @@ class JsonPipe {
 		};
 
 		registerPollCallback = function(url, onUpdateCallback) {
-			pollCallbacks[url] = onUpdateCallback;
-			pollIndex.push(url);
+            this.pollCallbacks[url] = onUpdateCallback;
+            this.pollIndex.push(url);
 		};
 
         pollUrl = function(url) {
-            if (!pollCallbacks[url]) return;
-            if (pollIndex.indexOf(url) === -1) {
-            	pollIndex.push(url);
+            if (!this.pollCallbacks[url]) return;
+            if (this.pollIndex.indexOf(url) === -1) {
+                this.pollIndex.push(url);
             }
         };
 
         removeUrlPoll = function(url) {
-            if (pollIndex.indexOf(url) !== -1) {
-                pollIndex.splice(pollIndex.indexOf(url));
+            if (this.pollIndex.indexOf(url) !== -1) {
+                this.pollIndex.splice(pollIndex.indexOf(url));
             }
         };
 
 		storeConfig = function(url, config, success) {
-			loadedData[url] = config;
+			this.loadedData[url] = config;
 			success(url, config);
 		};
 
 		loadJsonFromUrl = function(url, dataUpdated, fail) {
+		    let _this = this;
 			var onLoaded = function(config, fileUrl) {
-				JsonPipe.storeConfig(fileUrl, config, dataUpdated);
-				JsonPipe.registerPollCallback(fileUrl, dataUpdated);
+                _this.storeConfig(fileUrl, config, dataUpdated);
+                _this.registerPollCallback(fileUrl, dataUpdated);
 			};
 
 			var onWorkerOk = function(resUrl, res) {
@@ -67,24 +68,24 @@ class JsonPipe {
 		
 		tickJsonPipe = function(tpf) {
 			if (!options.polling.enabled) return;
-			pollDelay = 1/options.polling.frequency;
-			pollCountdown -= pollIndex.length*tpf/(pollIndex.length+1);
-			if (pollCountdown < 0) {
-				lastPolledIndex += 1;
-				if (lastPolledIndex >= pollIndex.length) {
-					lastPolledIndex = 0;
+            this.pollDelay = 1/options.polling.frequency;
+            this.pollCountdown -= this.pollIndex.length*tpf/(this.pollIndex.length+1);
+			if (this.pollCountdown < 0) {
+                this.lastPolledIndex += 1;
+				if (this.lastPolledIndex >= this.pollIndex.length) {
+                    this.lastPolledIndex = 0;
 				}
 				var pollFail = function(err) {
-					errorCallback("Json: ", err);
+                    this.errorCallback("Json: ", err);
 				};
-				JsonPipe.loadJsonFromUrl(pollIndex[lastPolledIndex], pollCallbacks[pollIndex[lastPolledIndex]], pollFail, false);
-				pollCountdown = pollDelay;
+				this.loadJsonFromUrl(this.pollIndex[this.lastPolledIndex], this.pollCallbacks[this.pollIndex[this.lastPolledIndex]], pollFail, false);
+                this.pollCountdown = pollDelay;
 			}
 		};
 
 		setJsonPipeOpts = function(opts, pipelineErrorCb, ConfigCache) {
-			options = opts;
-			errorCallback = pipelineErrorCb;
+            this.options = opts;
+            this.errorCallback = pipelineErrorCb;
 			
 			var statusUpdate = function(key, value) {
 				if (value) {
@@ -93,7 +94,7 @@ class JsonPipe {
 
 				}
 
-				options.polling.enabled = value;
+                opts.polling.enabled = value;
 			};
 			ConfigCache.subscribeToCategoryKey('STATUS', "PIPELINE", statusUpdate)
 		};

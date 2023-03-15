@@ -7,7 +7,7 @@ define([
 
 		) {
 
-        var fileServerUrl = "http://localhost:5001";
+        var fileServerUrl = "http://localhost:3000";
 
         var paths = [];
         var fileSystem;
@@ -99,7 +99,7 @@ define([
 		XhrThing.prototype.sendXHR = function(packet, successCallback, failCallback) {
 
 			if (paths.indexOf(packet.url) !== -1) {
-			//	console.log("File Reader is present!", LocalFileSystem);
+				console.log("File Reader is present!", LocalFileSystem);
 
                     var pkt = packet;
                     var reader = new FileReaderSync();
@@ -129,9 +129,10 @@ define([
 			var asynch = true;
 			//    if (packet.contentType == 'application/x-www-form-urlencoded') asynch = false;
 
+            console.log("xhr packet:", packet);
 			request.open(packet.type, packet.url, asynch);
 
-			if (packet.responseType == 'application/json') {
+			if (packet.responseType === '') {
 				request.responseType = 'json';
 			} else if (packet.responseType) {
 				request.responseType = packet.responseType;
@@ -154,12 +155,14 @@ define([
 			if (packet.auth) request.setRequestHeader('Authorization', packet.auth.header);
 
 			request.onreadystatechange = function() {
-				if (request.readyState == 4) {
+				if (request.readyState === 4) {
+				    console.log('XHR Response: ', request);
 				    successCallback(request.response, request.packet);
 				}
 			};
 
 			request.onError = function() {
+                console.log('XHR Fail: ', request);
 				failCallback(packet.url, "XHR Fail!")
 			};
 

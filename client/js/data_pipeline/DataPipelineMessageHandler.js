@@ -38,25 +38,25 @@ class DataPipelineMessageHandler {
 
 		delayedSend = function(channel, msg, delay) {
 			setTimeout(function() {
-                console.log("Worker error: ", channel, msg)
+                console.log("Worker message: ", channel, msg)
 			}, delay)
 		};
 
 		handleDataUpdated = function(url) {
 			this.okCount += 1;
-			delayedSend('data_update_channel', url+' '+okCount, 500);
+            this.delayedSend('data_update_channel', url+' '+this.okCount, 50);
 		//	delayedSend('data_update_channel', url+' '+okCount, 500);
 		//	delayedSend('data_update_channel', url+' '+okCount, 2500);
 		};
 
 		handleValidationPass = function(list) {
-			delayedSend('data_validation_update_channel', list, 500);
+            this.delayedSend('data_validation_update_channel', list, 50);
 		//	delayedSend('data_validation_update_channel', list, 600);
 		//	delayedSend('data_validation_update_channel', list, 3500);
 		};
 
 		handleValidationError = function(msg) {
-			delayedSend('data_validation_error_channel', msg, 500);
+            this.delayedSend('data_validation_error_channel', msg, 50);
 		//	delayedSend('data_validation_error_channel', msg, 600);
 		//	delayedSend('data_validation_error_channel', msg, 3500);
 		};

@@ -27,7 +27,12 @@ class Client {
             console.log("Data Pipeline Error:", err);
         };
 
+        let onPipelineReadyCallback = function(msg) {
+            console.log("Data Pipeline Ready:", msg)
+        };
+
         const dataPipelineSetup = {
+            "jsonConfigUrl":"client/json",
             "jsonPipe":{
                 "polling":{
                     "enabled":pollJson/false,
@@ -48,9 +53,9 @@ class Client {
             }
         };
 
-        const jsonRegUrl = './client/json/config_urls.json';
+        const jsonRegUrl = 'client/json/config_urls.json';
 
-        this.pipelineAPI.dataPipelineSetup(jsonRegUrl, dataPipelineSetup, onErrorCallback);
+        this.pipelineAPI.dataPipelineSetup(jsonRegUrl, dataPipelineSetup, onPipelineReadyCallback, onErrorCallback);
     }
 
     createScene() {

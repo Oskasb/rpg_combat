@@ -5,6 +5,7 @@ class ConfigCache {
 
     constructor() {
         this.gameDataPipeline = new GameDataPipeline();
+        this.pipelineReadyFlag = false;
     }
 
 
@@ -12,7 +13,7 @@ class ConfigCache {
         urls:{}
     };
 
-    pipelineReady = false;
+
     readyCallbacks = [];
 
     categories = {};
@@ -32,38 +33,39 @@ class ConfigCache {
 
 
     pipelineReady = function(bool) {
-        pipelineReady = bool;
-        if (pipelineReady) {
-            for (var i = 0; i < readyCallbacks.length; i++) {
-                readyCallbacks[i]();
+        this.pipelineReadyFlag = bool;
+        if (this.pipelineReadyFlag) {
+            for (var i = 0; i < this.readyCallbacks.length; i++) {
+                this.readyCallbacks[i]();
             }
-            readyCallbacks.length = 0;
+            this.readyCallbacks.length = 0;
         }
     };
 
     getReady = function() {
-        return pipelineReady;
+        return this.pipelineReadyFlag;
     };
 
     getCacheReads = function() {
-        return cacheReads;
+        return this.cacheReads;
     };
 
     resetCacheReads = function() {
-        cacheReads = 0;
+        this.cacheReads = 0;
     };
 
     addReadyCallback = function(cb) {
-        readyCallbacks.push(cb);
+        this.readyCallbacks.push(cb);
     };
 
     storeJsonAtUrl = function(json, url) {
-        gameDataPipeline.storeJson(json, url)
+        this.gameDataPipeline.storeJson(json, url)
     };
 
 
-    applyDataPipelineOptions = function(jsonIndexUrl, opts, pipelineErrorCb) {
+    applyDataPipelineOptions = function(jsonIndexUrl, opts, pipelineReadyCb, pipelineErrorCb) {
 
+        let _this = this;
 
         var loadFail = function(url, error) {
             console.log("JSON Pipe Fail! ", url, error);
@@ -72,21 +74,22 @@ class ConfigCache {
         var indexLoaded = function(url, json) {
             //			console.log("JSON Pipe: ", url, json);
 
-            gameDataPipeline.applyPipelineOptions(opts, pipelineErrorCb, ConfigCache);
+            _this.gameDataPipeline.applyPipelineOptions(opts, pipelineErrorCb, _this);
 
             var indexFiledAdded = function(iurl, jsn) {
-                //			console.log("JSON File Indexed: ", iurl, jsn);
+                console.log("JSON File Indexed: ", iurl, jsn);
             };
 
 
-            for (var i = 0; i < json[0].config_url_index.files.length;i++) {
-                ConfigCache.cacheFromUrl(window.jsonConfigUrls+json[0].config_url_index.files[i], indexFiledAdded, loadFail);
+            for (let i = 0; i < json[0].config_url_index.files.length;i++) {
+                _this.cacheFromUrl(opts.jsonConfigUrl+json[0].config_url_index.files[i], indexFiledAdded, loadFail);
             }
+            pipelineReadyCb({msg:'indexLoaded', json:json});
 
         };
 
-
-        console.log("Request Load: ", jsonIndexUrl);
+        this.addReadyCallback(pipelineReadyCb);
+        console.log("Request Load: ", jsonIndexUrl, opts);
         this.cacheFromUrl(jsonIndexUrl, indexLoaded, loadFail);
 
     };
@@ -102,11 +105,11 @@ class ConfigCache {
     };
 
     setMasterResetFunction = function(callback) {
-        masterReset = callback;
+        this.masterReset = callback;
     };
 
     storeImageRef = function(id, image) {
-        ConfigCache.notifyUrlReadRequest(image.url);
+        this.notifyUrlReadRequest(image.url);
         images[id] = image;
     };
 
@@ -115,34 +118,35 @@ class ConfigCache {
     };
 
     addCategory = function(category) {
-        configs[category] = {};
-        categories[category] = {
+        this.configs[category] = {};
+        this.categories[category] = {
             callbacks:[],
             subscription:{}
         }
     };
 
     fireCategoryCallbacks = function(key) {
+        let _this = this;
 
-        var fireCallbacks = function(callbacks, id, data) {
-            for (var i = 0; i < callbacks.length; i++) {
-                cacheReads++;
+        let fireCallbacks = function(callbacks, id, data) {
+            for (let i = 0; i < callbacks.length; i++) {
+                _this.cacheReads++;
                 callbacks[i](id, data);
             }
         };
-        fireCallbacks(categories[key].callbacks, key, configs[key]);
+        fireCallbacks(this.categories[key].callbacks, key, this.configs[key]);
     };
 
     fireCategoryKeyCallbacks = function(category, key) {
         var fireCallbacks = function(callbacks, id, data) {
             for (var i = 0; i < callbacks.length; i++) {
-                cacheReads++;
+                this.cacheReads++;
                 callbacks[i](id, data);
             }
         };
 
-        if (categories[category].subscription[key]) {
-            fireCallbacks(categories[category].subscription[key], key, configs[category][key]);
+        if (this.categories[category].subscription[key]) {
+            fireCallbacks(this.categories[category].subscription[key], key, this.configs[category][key]);
         }
 
     };
@@ -195,30 +199,30 @@ class ConfigCache {
 
 
     dataCombineToKey = function(key, url, data) {
-        if (!configs[key]) {
-            ConfigCache.addCategory(key);
+        if (!this.configs[key]) {
+            this.addCategory(key);
         }
         for (var index in data[key]) {
 
-            if (!configs[key][index]) {
-                configs[key][index] = data[key][index];
+            if (!this.configs[key][index]) {
+                this.configs[key][index] = data[key][index];
             } else {
-                if (configs[key][index] && data[key][index]) {
-                    if (configs[key][index].length && typeof(configs[key][index]) !== 'string') {
-                        combineArray(data[key][index], configs[key][index], index)
+                if (this.configs[key][index] && data[key][index]) {
+                    if (this.configs[key][index].length && typeof(this.configs[key][index]) !== 'string') {
+                        this.combineArray(data[key][index], this.configs[key][index], index)
                     } else {
-                        configs[key][index] = data[key][index];
+                        this.configs[key][index] = data[key][index];
                     }
 
                 } else {
-                    configs[key][index] = data[key][index];
+                    this.configs[key][index] = data[key][index];
                 }
             }
 
-            ConfigCache.fireCategoryKeyCallbacks(key, index);
+            this.fireCategoryKeyCallbacks(key, index);
         }
 
-        ConfigCache.fireCategoryCallbacks(key);
+        this.fireCategoryCallbacks(key);
     };
 
     getBuiltCategoryKeyConfig = function(category, key) {
@@ -229,27 +233,27 @@ class ConfigCache {
     };
 
     getCategory = function(category) {
-        var data = configs[category];
+        var data = this.configs[category];
         if (!data) return "No data "+category;
         return data;
     };
 
     getConfigKey = function(category, key) {
-        var data = ConfigCache.getCategory(category)[key];
+        var data = this.getCategory(category)[key];
         if(typeof(data) === 'undefined') return key;
         return data;
     };
 
     registerCategoryKeySubscriber = function(category, key, callback) {
-        if (!categories[category]) {
-            ConfigCache.addCategory(category);
+        if (!this.categories[category]) {
+            this.addCategory(category);
         }
 
-        if (!categories[category].subscription[key]) {
-            categories[category].subscription[key] = [];
+        if (!this.categories[category].subscription[key]) {
+            this.categories[category].subscription[key] = [];
         }
 
-        categories[category].subscription[key].push(callback);
+        this.categories[category].subscription[key].push(callback);
 
     };
 
@@ -280,13 +284,13 @@ class ConfigCache {
     };
 
     subscribeToCategoryKey = function(category, key, callback) {
-        var data = ConfigCache.getConfigKey(category, key);
+        var data = this.getConfigKey(category, key);
         if (data != key) {
             //    console.log("reject string", data)
-            cacheReads++;
+            this.cacheReads++;
             callback(key, data);
         }
-        ConfigCache.registerCategoryKeySubscriber(category, key, callback);
+        this.registerCategoryKeySubscriber(category, key, callback);
     };
 
     registerImageSub = function(subscriberId, imageId, callback) {
@@ -332,12 +336,12 @@ class ConfigCache {
     };
 
     notifyUrlReceived = function(url) {
-        if (remainingUrls.indexOf(url) !== -1) {
-            remainingUrls.splice(remainingUrls.indexOf(url), 1);
+        if (this.remainingUrls.indexOf(url) !== -1) {
+            this.remainingUrls.splice(this.remainingUrls.indexOf(url), 1);
         }
 
-        if (loadedUrls.indexOf(url) === -1) {
-            loadedUrls.push(url);
+        if (this.loadedUrls.indexOf(url) === -1) {
+            this.loadedUrls.push(url);
 
         }
         this.notifyLoadStateChange();
@@ -346,12 +350,13 @@ class ConfigCache {
 
     cacheFromUrl = function(url, success, fail) {
         this.notifyUrlReadRequest(url);
+        let _this = this;
         var onLoaded = function(remoteUrl, data) {
-            ConfigCache.notifyUrlReceived(remoteUrl);
-            configs.urls[remoteUrl] = data;
+            _this.notifyUrlReceived(remoteUrl);
+            _this.configs.urls[remoteUrl] = data;
             for (var i = 0; i < data.length; i++) {
                 for (var key in data[i]) {
-                    ConfigCache.dataCombineToKey(key, url, data[i]);
+                    _this.dataCombineToKey(key, url, data[i]);
                 }
             }
             success(remoteUrl, data)
@@ -362,9 +367,10 @@ class ConfigCache {
 
 
     cacheSvgFromUrl = function(url, success, fail) {
-        ConfigCache.notifyUrlReadRequest(url);
+        let _this = this;
+        _this.notifyUrlReadRequest(url);
         var onLoaded = function(remoteUrl, svgData) {
-            ConfigCache.notifyUrlReceived(remoteUrl);
+            _this.notifyUrlReceived(remoteUrl);
             success(remoteUrl, svgData)
         };
 
@@ -372,13 +378,14 @@ class ConfigCache {
     };
 
     cacheImageFromUrl = function(url, success, fail) {
-        ConfigCache.notifyUrlReadRequest(url);
+        let _this = this;
+        _this.notifyUrlReadRequest(url);
         var onLoaded = function(remoteUrl, svgData) {
-            ConfigCache.notifyUrlReceived(remoteUrl);
+            _this.notifyUrlReceived(remoteUrl);
             success(remoteUrl, svgData)
         };
 
-        gameDataPipeline.loadImageFromUrl(url, onLoaded, fail);
+        this.gameDataPipeline.loadImageFromUrl(url, onLoaded, fail);
     };
 
 

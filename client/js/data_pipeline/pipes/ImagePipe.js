@@ -20,23 +20,23 @@ class ImagePipe {
 		};
 
 		registerPollCallback = function(url, onUpdateCallback) {
-			if (!pollCallbacks[url]) {
-				pollCallbacks[url] = [];
+			if (!this.pollCallbacks[url]) {
+                this.pollCallbacks[url] = [];
 			}
-			pollCallbacks[url].push(onUpdateCallback);
-			pollIndex.push(url);
+            this.pollCallbacks[url].push(onUpdateCallback);
+            this.pollIndex.push(url);
 		};
 
         pollUrl = function(url) {
-        	if (!pollCallbacks[url]) return;
-            if (pollIndex.indexOf(url) === -1) {
-                pollIndex.push(url);
+        	if (!this.pollCallbacks[url]) return;
+            if (this.pollIndex.indexOf(url) === -1) {
+                this.pollIndex.push(url);
             }
         };
 
         removeUrlPoll = function(url) {
-            if (pollIndex.indexOf(url) !== -1) {
-                pollIndex.splice(pollIndex.indexOf(url));
+            if (this.pollIndex.indexOf(url) !== -1) {
+                this.pollIndex.splice(pollIndex.indexOf(url));
             }
         };
 
@@ -45,22 +45,24 @@ class ImagePipe {
 
      //       console.log(url, pollCallbacks)
 
-            for (var i = 0; i < pollCallbacks[url].length; i++) {
-                pollCallbacks[url][i](url, img);
+            for (var i = 0; i < this.pollCallbacks[url].length; i++) {
+                this.pollCallbacks[url][i](url, img);
             }
 
-            loadedData[url] = img;
+            this.loadedData[url] = img;
         };
 
 		storeData = function(url, svg, success) {
-			loadedData[url] = svg;
+            this.loadedData[url] = svg;
 			success(url, svg);
 		};
 
 		loadImage = function(url, dataUpdated, fail) {
 
+			let _this = this;
+
 			var onLoaded = function(img, fileUrl) {
-				ImagePipe.callUrlCallbacks(fileUrl, img);
+                _this.callUrlCallbacks(fileUrl, img);
 
 			};
 
@@ -93,7 +95,7 @@ class ImagePipe {
 		};
 
 		setImagePipeOpts = function(opts) {
-			options = opts;
+			this.options = opts;
 		};
 
 

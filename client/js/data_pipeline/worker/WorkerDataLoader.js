@@ -19,16 +19,18 @@ define([
 		var errorUrls = {};
 
 
+		var jsonUrl = '/';
+
 		WorkerDataLoader.prototype.fetchJson = function(url, dc) {
 			var packet = {
-				responseType:'application/json',
+				responseType:'text',
 				type:"GET",
 				url:baseUrl+url
 			};
 
 			var responseFail = function(url, err) {
 				if (errorUrls[url]) {
-					if (errorUrls[url] == err) {
+					if (errorUrls[url] === err) {
 						postMessage(['error_unchanged', 'Unchanged Error:', err])
 					} else {
 						postMessage(['error_changed', 'Error Changed:', errorUrls[url]])
@@ -38,9 +40,11 @@ define([
 				postMessage(['fail', url, err])
 			};
 
+			console.log('Worker fetch json', url)
+
 			var _this = this;
 			var checkJson = function(str) {
-				dc.compareAndCacheJson(url, str, _this);
+				dc.compareAndCacheJson(url, [JSON.parse(str)], _this);
 			};
 
 			this.xhrThing.sendXHR(packet, checkJson, responseFail);
