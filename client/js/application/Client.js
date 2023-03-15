@@ -9,6 +9,7 @@ class Client {
         this.devMode = devMode;
         this.env = env;
         this.evt = new evt(ENUMS.Event);
+        this.pipelineAPI = new PipelineAPI();
     }
 
     setupWorkerDataPipeline(pipeWorkersReadyCB) {
@@ -30,7 +31,7 @@ class Client {
             console.log(src, channel, msg)
         };
 
-        this.pipelineAPI = new PipelineAPI(pipeReady, pipeMsgCB);
+        this.pipelineAPI.initConfigCache(pipeReady, pipeMsgCB);
     };
 
     initDataPipeline(dataPipelineSetup) {
