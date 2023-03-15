@@ -1,24 +1,24 @@
 import * as THREE from '../../libs/three/Three.js';
+import { evt } from './event/evt.js';
 console.log(THREE)
 
 class Client {
 
 
 
-    constructor( devMode, env, events ) {
+    constructor( devMode, env ) {
 
-        var testEvent = function(res) {
+        var testEventCB = function(res) {
             console.log(res);
         }
 
 
-        var evt = events;
         this.type = 'Client';
         this.devMode = devMode;
         this.env = env;
-        this.evt = evt;
-        evt.once(ENUMS.Event.TEST_EVENT, testEvent)
-        evt.dispatch(ENUMS.Event.TEST_EVENT, {msg: 'hello'})
+        this.evt = new evt();
+        this.evt.once(ENUMS.Event.TEST_EVENT, testEventCB)
+        this.evt.dispatch(ENUMS.Event.TEST_EVENT, {msg: 'hello'})
     }
 
     createScene() {

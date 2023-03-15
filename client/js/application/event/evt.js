@@ -23,10 +23,6 @@ class evt {
 
 
 
-    list() {
-        return this.eventList;
-    };
-
     setupEvent = function(event) {
 
         if (typeof (event) !== 'number') {
