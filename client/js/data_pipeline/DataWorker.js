@@ -4,13 +4,10 @@ import { DataPipelineMessageHandler } from './DataPipelineMessageHandler.js';
 
 class DataWorker {
 
-
-
-
     onUpdateCallbacks = {};
 
-    constructor() {
-        this.dataPipelineMessageHandler = new DataPipelineMessageHandler()
+    constructor(pipeName, workerReadyCB, pipelineMessageCB) {
+        this.dataPipelineMessageHandler = new DataPipelineMessageHandler(pipelineMessageCB)
         const messageHandler = this.dataPipelineMessageHandler;
 
         if (typeof(Worker) !== 'undefined') {
@@ -20,7 +17,7 @@ class DataWorker {
 
             this.worker.onmessage = function(msg) {
                 if (msg.data[0] === 'ready') {
-                    messageHandler.notifyWorkerReady();
+                    workerReadyCB(msg, ENUMS.getKey('Worker', pipeName));
                 }
                 if (msg.data[0] === 'ok') {
                     _this.onUpdateCallbacks[msg.data[1]][0](msg.data[1], msg.data[2]);

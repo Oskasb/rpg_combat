@@ -16,20 +16,43 @@
 
         window.pollingOn = true;
 
+        const dataPipelineOptions = {
+            "jsonConfigUrl":"client/json",
+            "jsonPipe":{
+                "polling":{
+                    "enabled":window.pollingOn,
+                    "frequency":45
+                }
+            },
+            "svgPipe":{
+                "polling":{
+                    "enabled":window.pollingOn,
+                    "frequency":2
+                }
+            },
+            "imagePipe":{
+                "polling":{
+                    "enabled":window.pollingOn,
+                    "frequency":1
+                }
+            }
+        };
+
         import * as APPLICATION from './client/js/Application.js';
 
-        console.log('APP:', APPLICATION);
+    //    console.log('APP:', APPLICATION);
         console.log('ENUMS:', ENUMS);
-        // Our Javascript will go here.
 
         const devMode = true;
         const env = navigator;
         window.client = new APPLICATION.Client(devMode, env);
 
-        console.log(client);
-        client.initDataPipeline(true, false, false);
-        client.createScene();
+        let pipeWorkersReadyCB = function() {
+            client.initDataPipeline(dataPipelineOptions);
+            client.createScene();
+        };
 
+        client.setupWorkerDataPipeline(pipeWorkersReadyCB);
 
     </script>
 </head>

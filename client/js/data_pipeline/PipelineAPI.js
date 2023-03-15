@@ -2,9 +2,9 @@
 import { ConfigCache } from './data/ConfigCache.js';
 
 class PipelineAPI {
-    constructor() {
-        this.configCache = new ConfigCache()
-    }
+    constructor(pipeReadyCB, pipeMsgCB) {
+        this.configCache = new ConfigCache(pipeReadyCB, pipeMsgCB)
+    };
 
     pipeOptions = {};
 

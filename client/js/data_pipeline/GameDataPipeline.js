@@ -5,9 +5,9 @@ import { ImagePipe } from './pipes/ImagePipe.js';
 
 class GameDataPipeline {
 
-		constructor() {
-			this.jsonPipe = new JsonPipe();
-            this.imagePipe = new ImagePipe();
+		constructor(pipeReady, pipeMsgCB) {
+			this.jsonPipe = new JsonPipe(pipeReady, pipeMsgCB);
+            this.imagePipe = new ImagePipe(pipeReady, pipeMsgCB);
 		}
 
 		loadConfigFromUrl = function(url, dataUpdated, fail) {

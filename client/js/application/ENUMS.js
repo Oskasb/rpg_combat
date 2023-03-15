@@ -45,7 +45,8 @@ if(typeof(ENUMS) === "undefined"){
         DEBUG_DRAW_CROSS:       20,
         DEBUG_DRAW_AABOX:       21,
         DYNAMIC_JOINT:          22,
-        TRACK_STAT:             23
+        TRACK_STAT:             23,
+        DATA_PIPELINE_READY:    24
     };
 
     ENUMS.Args = {
@@ -256,7 +257,9 @@ if(typeof(ENUMS) === "undefined"){
         MAIN_WORKER:        1,
         STATIC_WORLD:       2,
         PHYSICS_WORLD:      3,
-        DATA:               4
+        DATA:               4,
+        JSON_PIPE:          5,
+        IMAGE_PIPE:         6
     };
 
     ENUMS.PointerStates = {

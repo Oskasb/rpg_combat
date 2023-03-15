@@ -3,7 +3,10 @@ import { DataWorker } from '../DataWorker.js';
 
 class ImagePipe {
 
-    	dataWorker = new DataWorker();
+        constructor(pipeReadyCB, pipelineMessageCB) {
+            this.dataWorker = new DataWorker(ENUMS.Worker.IMAGE_PIPE, pipeReadyCB, pipelineMessageCB);
+        }
+
 
 		pollDelay = 1;
 		pollCountdown = this.pollDelay;

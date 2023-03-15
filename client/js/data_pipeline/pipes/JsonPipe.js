@@ -4,7 +4,9 @@ import { DataWorker } from '../DataWorker.js';
 
 class JsonPipe {
 
-		dataWorker = new DataWorker();
+    constructor(pipeReadyCB, pipelineMessageCB) {
+        this.dataWorker = new DataWorker(ENUMS.Worker.JSON_PIPE, pipeReadyCB, pipelineMessageCB);
+    }
 
 		pollDelay = 0.2;
 		pollCountdown = this.pollDelay;

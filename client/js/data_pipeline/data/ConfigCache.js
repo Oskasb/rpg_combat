@@ -3,8 +3,8 @@ import { GameDataPipeline } from '../GameDataPipeline.js';
 
 class ConfigCache {
 
-    constructor() {
-        this.gameDataPipeline = new GameDataPipeline();
+    constructor(pipeReadyCB, pipeMsgCB) {
+        this.gameDataPipeline = new GameDataPipeline(pipeReadyCB, pipeMsgCB);
         this.pipelineReadyFlag = false;
     }
 
@@ -77,19 +77,19 @@ class ConfigCache {
             _this.gameDataPipeline.applyPipelineOptions(opts, pipelineErrorCb, _this);
 
             var indexFiledAdded = function(iurl, jsn) {
-                console.log("JSON File Indexed: ", iurl, jsn);
+            //    console.log("JSON File Indexed: ", iurl, jsn);
             };
 
 
             for (let i = 0; i < json[0].config_url_index.files.length;i++) {
                 _this.cacheFromUrl(opts.jsonConfigUrl+json[0].config_url_index.files[i], indexFiledAdded, loadFail);
             }
-            pipelineReadyCb({msg:'indexLoaded', json:json});
+            pipelineReadyCb(_this);
 
         };
 
-        this.addReadyCallback(pipelineReadyCb);
-        console.log("Request Load: ", jsonIndexUrl, opts);
+    //    this.addReadyCallback(pipelineReadyCb);
+    //    console.log("Request Load: ", jsonIndexUrl, opts);
         this.cacheFromUrl(jsonIndexUrl, indexLoaded, loadFail);
 
     };

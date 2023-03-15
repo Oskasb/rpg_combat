@@ -1,56 +1,46 @@
 import { PipelineAPI } from '../data_pipeline/PipelineAPI.js';
 import { evt } from './event/evt.js';
-console.log("importing three...");
 import * as THREE from '../../libs/three/Three.js';
-console.log("THREE:", THREE);
 
 class Client {
 
     constructor( devMode, env ) {
-
-        const testEventCB = function(res) {
-            console.log("Res:", res);
-        };
-
         this.type = 'Client';
         this.devMode = devMode;
         this.env = env;
         this.evt = new evt(ENUMS.Event);
-        this.evt.once(ENUMS.Event.TEST_EVENT, testEventCB);
-        this.evt.dispatch(ENUMS.Event.TEST_EVENT, {env: env})
-        this.pipelineAPI = new PipelineAPI();
     }
 
-    initDataPipeline(pollJson, pollSvg, pollImage) {
+    setupWorkerDataPipeline(pipeWorkersReadyCB) {
+
+        let ready = {
+            JSON_PIPE:false,
+            IMAGE_PIPE:false
+        };
+
+        let pipeReady = function(msg, pipeName) {
+            //    console.log('pipeReady', msg, pipeName)
+            ready[pipeName] = true;
+            if (ready.JSON_PIPE && ready.IMAGE_PIPE) {
+                pipeWorkersReadyCB();
+            }
+        };
+
+        let pipeMsgCB = function(src, channel, msg) {
+            console.log(src, channel, msg)
+        };
+
+        this.pipelineAPI = new PipelineAPI(pipeReady, pipeMsgCB);
+    };
+
+    initDataPipeline(dataPipelineSetup) {
 
         let onErrorCallback = function(err) {
             console.log("Data Pipeline Error:", err);
         };
 
-        let onPipelineReadyCallback = function(msg) {
-            console.log("Data Pipeline Ready:", msg)
-        };
-
-        const dataPipelineSetup = {
-            "jsonConfigUrl":"client/json",
-            "jsonPipe":{
-                "polling":{
-                    "enabled":pollJson/false,
-                    "frequency":45
-                }
-            },
-            "svgPipe":{
-                "polling":{
-                    "enabled":pollSvg/false,
-                    "frequency":2
-                }
-            },
-            "imagePipe":{
-                "polling":{
-                    "enabled":pollImage/false,
-                    "frequency":1
-                }
-            }
+        let onPipelineReadyCallback = function(configCache) {
+            console.log("CONFIGS:", configCache.configs)
         };
 
         const jsonRegUrl = 'client/json/config_urls.json';
@@ -59,7 +49,8 @@ class Client {
     }
 
     createScene() {
-
+        console.log("THREE:", THREE);
+        const clock = new THREE.Clock();
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 

@@ -38,7 +38,7 @@ require(
 
 		MainWorker = new WorkerMain();
 		postMessage(['ready']);
-		console.log("Worker Require Loaded OK!")
+	//	console.log("Worker Require Loaded OK!")
 	}
 );
 

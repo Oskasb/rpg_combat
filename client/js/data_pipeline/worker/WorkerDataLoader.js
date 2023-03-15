@@ -40,11 +40,11 @@ define([
 				postMessage(['fail', url, err])
 			};
 
-			console.log('Worker fetch json', url)
+		//	console.log('Worker fetch json', url)
 
 			var _this = this;
 			var checkJson = function(str) {
-				dc.compareAndCacheJson(url, [JSON.parse(str)], _this);
+				dc.compareAndCacheJson(url, JSON.parse(str), _this);
 			};
 
 			this.xhrThing.sendXHR(packet, checkJson, responseFail);

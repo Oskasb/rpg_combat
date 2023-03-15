@@ -129,7 +129,7 @@ define([
 			var asynch = true;
 			//    if (packet.contentType == 'application/x-www-form-urlencoded') asynch = false;
 
-            console.log("xhr packet:", packet);
+         //   console.log("xhr packet:", packet);
 			request.open(packet.type, packet.url, asynch);
 
 			if (packet.responseType === '') {
@@ -156,7 +156,7 @@ define([
 
 			request.onreadystatechange = function() {
 				if (request.readyState === 4) {
-				    console.log('XHR Response: ', request);
+				//    console.log('XHR Response: ', request);
 				    successCallback(request.response, request.packet);
 				}
 			};
