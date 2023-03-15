@@ -1,3 +1,4 @@
+import { PipelineAPI } from '../data_pipeline/PipelineAPI.js';
 import { evt } from './event/evt.js';
 console.log("importing three...");
 import * as THREE from '../../libs/three/Three.js';
@@ -16,7 +17,40 @@ class Client {
         this.env = env;
         this.evt = new evt(ENUMS.Event);
         this.evt.once(ENUMS.Event.TEST_EVENT, testEventCB);
-        this.evt.dispatch(ENUMS.Event.TEST_EVENT, {msg: 'hello'})
+        this.evt.dispatch(ENUMS.Event.TEST_EVENT, {env: env})
+        this.pipelineAPI = new PipelineAPI();
+    }
+
+    initDataPipeline(pollJson, pollSvg, pollImage) {
+
+        let onErrorCallback = function(err) {
+            console.log("Data Pipeline Error:", err);
+        };
+
+        const dataPipelineSetup = {
+            "jsonPipe":{
+                "polling":{
+                    "enabled":pollJson/false,
+                    "frequency":45
+                }
+            },
+            "svgPipe":{
+                "polling":{
+                    "enabled":pollSvg/false,
+                    "frequency":2
+                }
+            },
+            "imagePipe":{
+                "polling":{
+                    "enabled":pollImage/false,
+                    "frequency":1
+                }
+            }
+        };
+
+        const jsonRegUrl = './client/json/config_urls.json';
+
+        this.pipelineAPI.dataPipelineSetup(jsonRegUrl, dataPipelineSetup, onErrorCallback);
     }
 
     createScene() {
@@ -44,15 +78,14 @@ class Client {
         //    console.log("onFrameReadyCallback:",response);
         };
 
-        this.evt.on(ENUMS.Event.FRAME_READY, onFrameReadyCallback);
+        client.evt.on(ENUMS.Event.FRAME_READY, onFrameReadyCallback);
 
-        const _this = this;
-        let spin = 0.0;
+        let spin = {z:0.0};
 
         function animate() {
             requestAnimationFrame( animate );
-            spin += 0.02;
-            _this.evt.dispatch(ENUMS.Event.FRAME_READY, {z:spin});
+            spin.z += 0.02;
+            client.evt.dispatch(ENUMS.Event.FRAME_READY, spin);
 
             renderer.render( scene, camera )
         }

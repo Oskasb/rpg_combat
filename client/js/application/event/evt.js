@@ -38,7 +38,7 @@ class evt {
             this.spliceListener(this.spliceListeners.shift(), this.spliceListeners.shift())
         }
 
-        for (var i = 0; i < this.listeners[event].length; i++) {
+        for (let i = 0; i < this.listeners[event].length; i++) {
 
             if (typeof (this.listeners[event][i]) !== 'function') {
                 console.log("Bad listener", event, this.listeners);

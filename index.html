@@ -24,9 +24,10 @@
 
         const devMode = true;
         const env = navigator;
-        const client = new APPLICATION.Client(devMode, env);
+        window.client = new APPLICATION.Client(devMode, env);
 
         console.log(client);
+        client.initDataPipeline(true, false, false);
         client.createScene();
 
 
