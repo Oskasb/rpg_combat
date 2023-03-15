@@ -402,15 +402,15 @@ class ConfigCache {
     };
 
     registerPollUrl = function(url) {
-        gameDataPipeline.registerUrlForPoll(url);
+        this.gameDataPipeline.registerUrlForPoll(url);
     };
 
     removePollUrl = function(url) {
-        gameDataPipeline.removeUrlFromPoll(url);
+        this.gameDataPipeline.removeUrlFromPoll(url);
     };
 
     tickConfigCache = function(tpf) {
-        gameDataPipeline.tickDataLoader(tpf);
+        this.gameDataPipeline.tickDataLoader(tpf);
     };
 
 

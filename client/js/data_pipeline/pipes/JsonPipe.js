@@ -69,8 +69,8 @@ class JsonPipe {
 		};
 		
 		tickJsonPipe = function(tpf) {
-			if (!options.polling.enabled) return;
-            this.pollDelay = 1/options.polling.frequency;
+			if (!this.options.polling.enabled) return;
+            this.pollDelay = 1/this.options.polling.frequency;
             this.pollCountdown -= this.pollIndex.length*tpf/(this.pollIndex.length+1);
 			if (this.pollCountdown < 0) {
                 this.lastPolledIndex += 1;
@@ -81,7 +81,7 @@ class JsonPipe {
                     this.errorCallback("Json: ", err);
 				};
 				this.loadJsonFromUrl(this.pollIndex[this.lastPolledIndex], this.pollCallbacks[this.pollIndex[this.lastPolledIndex]], pollFail, false);
-                this.pollCountdown = pollDelay;
+                this.pollCountdown = this.pollDelay;
 			}
 		};
 

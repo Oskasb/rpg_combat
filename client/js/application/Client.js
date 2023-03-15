@@ -50,7 +50,7 @@ class Client {
 
     createScene() {
         console.log("THREE:", THREE);
-        const clock = new THREE.Clock();
+        const clock = new THREE.Clock(true);
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -66,22 +66,28 @@ class Client {
         camera.position.z = 5;
 
 
-        const onFrameReadyCallback= function(response) {
+        const onFrameReadyCallback= function(frame) {
            cube.rotation.x += 0.01;
            cube.rotation.y += 0.01;
-           cube.rotation.z = Math.sin(response.z)*3.14;
+           cube.rotation.z = Math.sin(frame.z)*3.14;
+           client.pipelineAPI.tickPipelineAPI(frame.tpf)
             //     cube.rotation.z += response.z;
         //    console.log("onFrameReadyCallback:",response);
         };
 
         client.evt.on(ENUMS.Event.FRAME_READY, onFrameReadyCallback);
 
-        let spin = {z:0.0};
+        let frame = {
+            tpf:clock.getDelta(),
+            elapsedTime:clock.elapsedTime,
+            z:0.0
+        };
 
         function animate() {
             requestAnimationFrame( animate );
-            spin.z += 0.02;
-            client.evt.dispatch(ENUMS.Event.FRAME_READY, spin);
+            frame.z += 0.02;
+            frame.tpf = clock.getDelta();
+            client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
 
             renderer.render( scene, camera )
         }

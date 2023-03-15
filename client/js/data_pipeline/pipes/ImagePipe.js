@@ -80,20 +80,20 @@ class ImagePipe {
 		};
 
 		tickImagePipe = function(tpf) {
-			if (!options.polling.enabled) return;
-            this.pollDelay = 1/options.polling.frequency;
-            this.pollCountdown -= pollIndex.length*tpf/(pollIndex.length+1);
-			if (pollCountdown < 0) {
+			if (!this.options.polling.enabled) return;
+            this.pollDelay = 1/this.options.polling.frequency;
+            this.pollCountdown -= this.pollIndex.length*tpf/(this.pollIndex.length+1);
+			if (this.pollCountdown < 0) {
                 this.lastPolledIndex += 1;
-				if (lastPolledIndex >= pollIndex.length) {
+				if (this.lastPolledIndex >= this.pollIndex.length) {
                     this.lastPolledIndex = 0;
 				}
 				var pollFail = function(err) {
 					console.error("Image Polling failed", err);
 				};
 
-				ImagePipe.loadImage(pollIndex[lastPolledIndex], pollCallbacks[pollIndex[lastPolledIndex]], pollFail, false)
-                this.pollCountdown = pollDelay;
+                this.loadImage(this.pollIndex[this.lastPolledIndex], this.pollCallbacks[this.pollIndex[this.lastPolledIndex]], pollFail, false)
+                this.pollCountdown = this.pollDelay;
 			}
 		};
 
