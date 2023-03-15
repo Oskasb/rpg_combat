@@ -1,27 +1,26 @@
-import * as THREE from '../../libs/three/Three.js';
 import { evt } from './event/evt.js';
-console.log(THREE)
+console.log("importing three...");
+import * as THREE from '../../libs/three/Three.js';
+console.log("THREE:", THREE);
 
 class Client {
 
-
-
     constructor( devMode, env ) {
 
-        var testEventCB = function(res) {
-            console.log(res);
-        }
-
+        const testEventCB = function(res) {
+            console.log("Res:", res);
+        };
 
         this.type = 'Client';
         this.devMode = devMode;
         this.env = env;
-        this.evt = new evt();
-        this.evt.once(ENUMS.Event.TEST_EVENT, testEventCB)
+        this.evt = new evt(ENUMS.Event);
+        this.evt.once(ENUMS.Event.TEST_EVENT, testEventCB);
         this.evt.dispatch(ENUMS.Event.TEST_EVENT, {msg: 'hello'})
     }
 
     createScene() {
+
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -36,16 +35,30 @@ class Client {
 
         camera.position.z = 5;
 
+
+        const onFrameReadyCallback= function(response) {
+           cube.rotation.x += 0.01;
+           cube.rotation.y += 0.01;
+           cube.rotation.z = Math.sin(response.z)*3.14;
+            //     cube.rotation.z += response.z;
+        //    console.log("onFrameReadyCallback:",response);
+        };
+
+        this.evt.on(ENUMS.Event.FRAME_READY, onFrameReadyCallback);
+
+        const _this = this;
+        let spin = 0.0;
+
         function animate() {
             requestAnimationFrame( animate );
+            spin += 0.02;
+            _this.evt.dispatch(ENUMS.Event.FRAME_READY, {z:spin});
 
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-
-            renderer.render( scene, camera );
+            renderer.render( scene, camera )
         }
 
         animate();
+
     }
 
 }

@@ -1,5 +1,7 @@
 // node servez C:\projects\rpg_combat\src
 
+// Use "lite-server" from packages for hot reload on js changes
+
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');

@@ -8,6 +8,13 @@
     <script src="./client/js/application/MATH.js"></script>
     <script type="module">
 
+        window.SYSTEM_SETUP = {
+            DEBUG:{
+                on:false
+            }
+        };
+
+        window.pollingOn = true;
 
         import * as APPLICATION from './client/js/Application.js';
 
@@ -17,26 +24,13 @@
 
         const devMode = true;
         const env = navigator;
-        let Client = new APPLICATION.Client(devMode, env);
+        const client = new APPLICATION.Client(devMode, env);
 
-        console.log(Client);
-        Client.createScene();
-        window.SYSTEM_SETUP = {
-            DEBUG:{
-                on:false
-            }
-        };
-
-        window.pollingOn = true;
-
-
-
-
+        console.log(client);
+        client.createScene();
 
 
     </script>
-
-
 </head>
 
 <body id="canvas_window"></body>
