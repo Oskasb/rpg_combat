@@ -34,6 +34,11 @@ class ThreeEnvironment {
         this.transitionTime = 1;
         this.transitionProgress = 0;
         this.sky;
+
+        this.ctx;
+        this.ctxHeight = 64;
+        this.ctxWidth= 1;
+
         this.scene;
         this.camera;
         this.renderer;
@@ -73,16 +78,16 @@ class ThreeEnvironment {
 
 
     setCanvasColor = function(ctx, tx) {
+        let _this = this;
+        let config = this.currentEnvConfig;
 
-    //    var config = currentEnvConfig;
+        let fogColor = config.fog.color;
+        let ambColor = config.ambient.color;
+        let sunColor = config.sun.color;
 
-    //    var fogColor = config.fog.color;
-    //    var ambColor = config.ambient.color;
-   //     var sunColor = config.sun.color;
+        var evFact = 1;// Math.min(camera.position.y*0.00005, 0.099);
 
-        var evFact = Math.min(camera.position.y*0.00005, 0.099);
-
-        var grd = ctx.createLinearGradient(0,0,0, ctxHeight);
+        var grd = ctx.createLinearGradient(0,0,0, _this.ctxHeight);
 
         grd.addColorStop(1-1, ThreeAPI.toRgb(0.0, 0.0, fogColor.b));
         //	grd.addColorStop(0.8+evFact,toRgb([color[0]*(0.5)*(1-evFact)+fog[0]*(0.5)*evFact*evFact, color[1]*0.5*(1-evFact)+fog[1]*(0.5)*evFact*evFact, color[2]*0.5*(1-evFact)+fog[2]*0.5*evFact*evFact]));
@@ -92,7 +97,7 @@ class ThreeEnvironment {
 
         grd.addColorStop(0.5, ThreeAPI.toRgb(fogColor.r, fogColor.g, fogColor.b));
         ctx.fillStyle=grd;
-        ctx.fillRect(0, 0, ctxWidth, ctxHeight);
+        ctx.fillRect(0, 0, _this.ctxWidth, _this.ctxHeight);
         tx.needsUpdate = true;
     };
 
@@ -288,8 +293,8 @@ class ThreeEnvironment {
             grd.addColorStop(0.5, ThreeAPI.toRgb(0.01, 0.25, 0.5));
             grd.addColorStop(0.495, ThreeAPI.toRgb(0.1, 0.3, 0.7));
             grd.addColorStop(0.05, ThreeAPI.toRgb(0.5, 0.7, 1.0));
-            ctx.fillStyle=grd;
-            ctx.fillRect(0, 0, ctxWidth, ctxHeight);
+            sky.ctx.fillStyle=grd;
+            sky.ctx.fillRect(0, 0, _this.ctxWidth, _this.ctxHeight);
             sky.tx.needsUpdate = true;
         }
 
@@ -454,11 +459,10 @@ class ThreeEnvironment {
 
         var setupCanvas = function(canvas) {
             canvas.id = 'sky_canvas';
-            canvas.width  = ctxWidth;
-            canvas.height = ctxHeight;
+            canvas.width  = _this.ctxWidth;
+            canvas.height = _this.ctxHeight;
             canvas.dataReady = true;
-            ctx = canvas.getContext('2d');
-            return ctx;
+            return canvas.getContext('2d');
         };
 
         var tx = ThreeAPI.newCanvasTexture(canvas);
@@ -479,14 +483,17 @@ class ThreeEnvironment {
             sunPosition: { value: new THREE.Vector3() }
         };
 
-        sky = {
+        let sky = {
             mesh:skyMesh,
             ctx:setupCanvas(canvas),
             tx:tx,
             uniforms:uniforms
         }
 
-        this.setCanvasColor(sky.ctx, sky.tx)
+        _this.sky = sky;
+        _this.ctx = sky.ctx;
+
+        this.setCanvasColor(sky.ctx, sky.tx);
 
         this.sky.meshClone = this.sky.mesh.clone();
         // Add Sun Helper

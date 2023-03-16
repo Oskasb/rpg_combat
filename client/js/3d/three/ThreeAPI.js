@@ -15,7 +15,10 @@ class ThreeAPI {
 
         this.threeEnvironment = new ThreeEnvironment();
         this.threeSetup = new ThreeSetup();
-        this.shaderBuilder;
+        this.threeTextureMaker = new ThreeTextureMaker();
+        this.threeMaterialMaker = new ThreeMaterialMaker();
+        this.threeModelLoader = new ThreeModelLoader();
+        this.shaderBuilder = null;
         this.glContext;
         this.renderer;
         this.camera;
@@ -31,9 +34,10 @@ class ThreeAPI {
 
         this.dynamicGlobalUnifs = {};
     }
-    initThreeLoaders = function() {
+    initThreeLoaders = function(assetLoader) {
         this.shaderBuilder = new ThreeShaderBuilder();
         this.spatialFunctions = new ThreeSpatialFunctions();
+        this.assetLoader = assetLoader;
     //    this.renderFilter = new ThreeRenderFilter();
         //    this.threeEnvironment.loadEnvironmentData();
     };
@@ -65,7 +69,7 @@ class ThreeAPI {
         this.initEnvironment(store);
         this.glContext = store.renderer.context;
 
-        this.threeSetup.addPrerenderCallback(ThreeModelLoader.updateActiveMixers);
+        this.threeSetup.addPrerenderCallback(this.threeModelLoader.updateActiveMixers);
 
         this.threeSetup.addToScene(this.threeSetup.getCamera());
         this.assetLoader = new AssetLoader();
@@ -84,14 +88,14 @@ class ThreeAPI {
     };
 
     loadThreeModels = function(TAPI) {
-        ThreeModelLoader.loadData();
+        this.threeModelLoader.loadData();
     };
 
     loadThreeData = function(TAPI) {
-        ThreeModelLoader.loadData();
-        ThreeModelLoader.loadTerrainData(TAPI);
-        ThreeTextureMaker.loadTextures();
-        ThreeMaterialMaker.loadMaterialist();
+        this.threeModelLoader.loadData();
+        this.threeModelLoader.loadTerrainData(TAPI);
+        this.threeTextureMaker.loadTextures();
+        this.threeMaterialMaker.loadMaterialist();
     };
 
     loadShaders = function() {
@@ -139,15 +143,15 @@ class ThreeAPI {
     };
 
     getModelLoader = function() {
-        return ThreeModelLoader;
+        return this.threeModelLoader;
     };
 
     getCamera = function() {
-        return camera;
+        return this.camera;
     };
 
     getScene = function() {
-        return scene;
+        return this.scene;
     };
 
     getReflectionScene = function() {
@@ -155,15 +159,15 @@ class ThreeAPI {
     };
 
     getRenderer = function() {
-        return renderer;
+        return this.renderer;
     };
 
     plantVegetationAt = function(pos, normalStore) {
-        return ThreeModelLoader.terrainVegetationAt(pos, normalStore);
+        return this.threeModelLoader.terrainVegetationAt(pos, normalStore);
     };
 
     setYbyTerrainHeightAt = function(pos, normalStore) {
-        return ThreeModelLoader.getHeightFromTerrainAt(pos, normalStore);
+        return this.threeModelLoader.getHeightFromTerrainAt(pos, normalStore);
     };
 
     updateWindowParameters = function(width, height, aspect, pxRatio) {
@@ -207,21 +211,21 @@ class ThreeAPI {
     };
 
     newCanvasTexture = function(canvas) {
-        return ThreeTextureMaker.createCanvasTexture(canvas);
+        return this.threeTextureMaker.createCanvasTexture(canvas);
     };
 
     buildCanvasHudMaterial = function(canvasTexture) {
-        return ThreeMaterialMaker.createCanvasHudMaterial(canvasTexture);
+        return this.threeMaterialMaker.createCanvasHudMaterial(canvasTexture);
     };
 
     buildCanvasMaterial = function(canvasTexture) {
-        return ThreeMaterialMaker.createCanvasMaterial(canvasTexture);
+        return this.threeMaterialMaker.createCanvasMaterial(canvasTexture);
     };
 
     buildCanvasObject = function(model, canvas, store) {
         var tx = this.newCanvasTexture(canvas);
-        var mat = ThreeMaterialMaker.createCanvasHudMaterial(tx);
-        ThreeModelLoader.applyMaterialToMesh(mat, model);
+        var mat = this.threeMaterialMaker.createCanvasHudMaterial(tx);
+        this.threeModelLoader.applyMaterialToMesh(mat, model);
         store.texture = tx;
         store.materia = mat;
         return store;
@@ -248,7 +252,7 @@ class ThreeAPI {
     };
 
     createRootObject = function() {
-        return ThreeModelLoader.createObject3D();
+        return this.threeModelLoader.createObject3D();
     };
 
     removeChildrenFrom = function(object) {
@@ -258,29 +262,29 @@ class ThreeAPI {
     };
 
     loadMeshModel = function(modelId, rootObject, partsReady) {
-        return ThreeModelLoader.loadThreeMeshModel(modelId, rootObject, this.threeSetup, partsReady);
+        return this.threeModelLoader.loadThreeMeshModel(modelId, rootObject, this.threeSetup, partsReady);
     };
 
     attachInstancedModel = function(modelId, rootObject) {
-        return ThreeModelLoader.attachInstancedModelTo3DObject(modelId, rootObject, this.threeSetup);
+        return this.threeModelLoader.attachInstancedModelTo3DObject(modelId, rootObject, this.threeSetup);
     };
 
 
     loadModel = function(sx, sy, sz, partsReady) {
-        return ThreeModelLoader.loadThreeModel(sx, sy, sz, partsReady);
+        return this.threeModelLoader.loadThreeModel(sx, sy, sz, partsReady);
     };
 
     loadDebugBox = function(sx, sy, sz, colorName) {
-        return ThreeModelLoader.loadThreeDebugBox(sx, sy, sz, colorName);
+        return this.threeModelLoader.loadThreeDebugBox(sx, sy, sz, colorName);
     };
 
     loadQuad = function(sx, sy) {
-        var model = ThreeModelLoader.loadThreeQuad(sx, sy);
+        var model = this.threeModelLoader.loadThreeQuad(sx, sy);
         return this.threeSetup.addToScene(model);
     };
 
     loadGround = function(applies, array1d, rootObject, partsReady) {
-        return ThreeModelLoader.loadGroundMesh(applies, array1d, rootObject, this.threeSetup, partsReady);
+        return this.threeModelLoader.loadGroundMesh(applies, array1d, rootObject, this.threeSetup, partsReady);
     };
 
     buildTerrainFromBuffers = function(buffers, x, y, z) {
@@ -321,7 +325,7 @@ class ThreeAPI {
     };
 
     removeTerrainByPosition = function(pos) {
-        return ThreeModelLoader.removeGroundMesh(pos);
+        return this.threeModelLoader.removeGroundMesh(pos);
     };
 
 
@@ -355,13 +359,13 @@ class ThreeAPI {
     removeModel = function(model) {
 
 //            ThreeSetup.removeModelFromScene(model);
-        ThreeModelLoader.returnModelToPool(model);
+        this.threeModelLoader.returnModelToPool(model);
     };
 
     disposeModel = function(model) {
 
         this.threeSetup.removeModelFromScene(model);
-        ThreeModelLoader.disposeHierarchy(model);
+        this.threeModelLoader.disposeHierarchy(model);
     };
 
     countAddedSceneModels = function() {
@@ -373,7 +377,7 @@ class ThreeAPI {
     };
 
     countPooledModels = function() {
-        return ThreeModelLoader.getPooledModelCount();
+        return this.threeModelLoader.getPooledModelCount();
     };
 
     activateMixer = function(mixer) {
@@ -392,24 +396,24 @@ class ThreeAPI {
     };
 
     getGlobalUniforms = function() {
-        return globalUniforms;
+        return this.globalUniforms;
     };
 
     getGlobalUniform = function(key) {
-        if (!globalUniforms[key]) {
-            globalUniforms[key] = {value:{}}
+        if (!this.globalUniforms[key]) {
+            this.globalUniforms[key] = {value:{}}
         }
-        return globalUniforms[key];
+        return this.globalUniforms[key];
     };
 
 
     setGlobalUniform = function(uniformKey, values) {
 
         if (typeof (values) === 'number') {
-            globalUniforms[uniformKey].value = values;
+            this.globalUniforms[uniformKey].value = values;
         } else {
             for (let val in values) {
-                globalUniforms[uniformKey].value[val] = values[val];
+                this.globalUniforms[uniformKey].value[val] = values[val];
             }
         }
     };
@@ -436,7 +440,7 @@ class ThreeAPI {
 
     applyDynamicGlobalUniforms = function() {
 
-        for (let val in dynamicGlobalUnifs) {
+        for (let val in this.dynamicGlobalUnifs) {
             ThreeAPI.setGlobalUniform(val, this.dynamicGlobalUnifs[val].value)
         }
 

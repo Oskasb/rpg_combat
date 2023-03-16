@@ -41,6 +41,7 @@ class ThreeController {
         let landscape = false;
         let timeout;
         let _this = this;
+        let divId = this.divId;
 
         var handleResize = function() {
 
