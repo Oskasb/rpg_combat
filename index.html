@@ -8,6 +8,23 @@
     <script src="./client/js/application/MATH.js"></script>
     <script type="module">
 
+        let meta = document.createElement('meta');
+        meta.name = "viewport";
+        meta.content = "initial-scale=1, maximum-scale=1";
+        document.getElementsByTagName('head')[0].appendChild(meta);
+
+        Element.prototype.remove = function() {
+            this.parentElement.removeChild(this);
+        };
+
+        NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+            for(let i = this.length - 1; i >= 0; i--) {
+                if(this[i] && this[i].parentElement) {
+                    this[i].parentElement.removeChild(this[i]);
+                }
+            }
+        };
+
         window.SYSTEM_SETUP = {
             DEBUG:{
                 on:false
@@ -17,11 +34,12 @@
         window.pollingOn = true;
 
         const dataPipelineOptions = {
+            "jsonRegUrl":"client/json/config_urls.json",
             "jsonConfigUrl":"client/json",
             "jsonPipe":{
                 "polling":{
                     "enabled":window.pollingOn,
-                    "frequency":45
+                    "frequency":15
                 }
             },
             "svgPipe":{
@@ -46,15 +64,12 @@
         const devMode = true;
         const env = navigator;
         window.client = new APPLICATION.Client(devMode, env);
+        client.initClientSetup(dataPipelineOptions);
 
-        let pipeWorkersReadyCB = function() {
-            client.initDataPipeline(dataPipelineOptions);
-            client.createScene();
-        };
 
-        client.setupWorkerDataPipeline(pipeWorkersReadyCB);
 
     </script>
+
 </head>
 
 <body id="canvas_window"></body>

@@ -1,53 +1,40 @@
 import { PipelineAPI } from '../data_pipeline/PipelineAPI.js';
 import { evt } from './event/evt.js';
-import * as THREE from '../../libs/three/Three.js';
+import { GameScreen } from './ui/GameScreen.js';
+import { PointerCursor } from './ui/input/PointerCursor.js';
+import { Setup } from './setup/Setup.js';
+import * as THREE from '../../libs/three/three.module.js';
 
 class Client {
 
     constructor( devMode, env ) {
+        window.THREE = THREE;
         this.type = 'Client';
         this.devMode = devMode;
         this.env = env;
         this.evt = new evt(ENUMS.Event);
         this.pipelineAPI = new PipelineAPI();
+        this.gameScreen = new GameScreen();
+        this.setup = new Setup();
+        this.INPUT_STATE = null;
     }
 
-    setupWorkerDataPipeline(pipeWorkersReadyCB) {
+    initUiSystem() {
+        this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
+        this.INPUT_STATE =  this.pointerCursor.getInputState();
+        console.log(this.INPUT_STATE);
+            client.createScene();
+    }
 
-        let ready = {
-            JSON_PIPE:false,
-            IMAGE_PIPE:false
+    initClientSetup(dataPipelineOptions) {
+        this.gameScreen.registerAppContainer(document.body);
+        let pipeWorkersReadyCB = function() {
+            client.setup.initConfigCache(client.pipelineAPI, dataPipelineOptions);
+            client.initUiSystem();
         };
 
-        let pipeReady = function(msg, pipeName) {
-            //    console.log('pipeReady', msg, pipeName)
-            ready[pipeName] = true;
-            if (ready.JSON_PIPE && ready.IMAGE_PIPE) {
-                pipeWorkersReadyCB();
-            }
-        };
-
-        let pipeMsgCB = function(src, channel, msg) {
-            console.log(src, channel, msg)
-        };
-
-        this.pipelineAPI.initConfigCache(pipeReady, pipeMsgCB);
+        this.setup.initDataPipeline(this.pipelineAPI, pipeWorkersReadyCB)
     };
-
-    initDataPipeline(dataPipelineSetup) {
-
-        let onErrorCallback = function(err) {
-            console.log("Data Pipeline Error:", err);
-        };
-
-        let onPipelineReadyCallback = function(configCache) {
-            console.log("CONFIGS:", configCache.configs)
-        };
-
-        const jsonRegUrl = 'client/json/config_urls.json';
-
-        this.pipelineAPI.dataPipelineSetup(jsonRegUrl, dataPipelineSetup, onPipelineReadyCallback, onErrorCallback);
-    }
 
     createScene() {
         console.log("THREE:", THREE);

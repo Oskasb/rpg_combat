@@ -1,4 +1,3 @@
-"use strict";
 import { ConfigCache } from './data/ConfigCache.js';
 
 class PipelineAPI {
@@ -80,14 +79,14 @@ class PipelineAPI {
     };
 
     setCategoryData = function(category, data) {
-        var store = {};
+        let store = {};
 
         store[category] = data;
         return this.configCache.dataCombineToKey(category, 'local', store);
     };
 
     setCategoryKeyValue = function(category, key, value) {
-        var store = {};
+        let store = {};
 
         store[category] = {};
         store[category][key] = value;
@@ -95,7 +94,7 @@ class PipelineAPI {
     };
 
     dataPipelineSetup = function(jsonIndexUrl, options, pipelineReady, pipelineError) {
-        for (var key in options) {
+        for (let key in options) {
             this.pipeOptions[key] = options[key];
         }
         this.configCache.applyDataPipelineOptions(jsonIndexUrl, options, pipelineReady, pipelineError);
@@ -114,7 +113,7 @@ class PipelineAPI {
     };
 
     sampleCacheReadCount = function() {
-        var reads = this.configCache.getCacheReads();
+        let reads = this.configCache.getCacheReads();
         this.configCache.resetCacheReads();
         return reads;
     };
