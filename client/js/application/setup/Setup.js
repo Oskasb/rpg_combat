@@ -1,10 +1,13 @@
 import { ThreeAPI } from '../../3D/three/ThreeAPI.js';
 import { InstanceAPI } from '../../3D/three/instancer/InstanceAPI.js';
+import { DomUtils } from '../ui/dom/DomUtils.js';
+import { DataLoader } from '../load/DataLoader.js';
 
 class Setup {
 
     constructor() {
-        this.dataLoader = null;
+        window.DomUtils = new DomUtils();
+        this.dataLoader = new DataLoader();
     }
 
     initGlobalAPIs(pipelineAPI) {
@@ -37,15 +40,17 @@ class Setup {
     };
 
     initConfigCache(pipelineAPI, dataPipelineSetup) {
+        let dataLoader = this.dataLoader;
         let onErrorCallback = function(err) {
             console.log("Data Pipeline Error:", err);
         };
 
-        let onPipelineReadyCallback = function(configCache) {
-            console.log("CONFIGS:", configCache.configs)
+        let onPipelineReadyCallback = function(msg) {
+            console.log("Pipeline:", msg)
+            dataLoader.notifyCompleted();
         };
 
-        pipelineAPI.dataPipelineSetup(dataPipelineSetup.jsonRegUrl, dataPipelineSetup, onPipelineReadyCallback, onErrorCallback);
+        dataLoader.loadData(dataPipelineSetup, onPipelineReadyCallback, onErrorCallback);
     }
 
     initLoader(dataLoader) {

@@ -31,7 +31,7 @@ class ThreeAPI {
     initThreeLoaders = function() {
         this.shaderBuilder = new ThreeShaderBuilder();
         this.spatialFunctions = new ThreeSpatialFunctions();
-        this.renderFilter = new ThreeRenderFilter();
+    //    this.renderFilter = new ThreeRenderFilter();
         //    ThreeEnvironment.loadEnvironmentData();
     };
 
@@ -91,7 +91,7 @@ class ThreeAPI {
     };
 
     loadShaders = function() {
-        shaderBuilder.loadShaderData(glContext);
+        this.shaderBuilder.loadShaderData(this.glContext);
     };
 
     buildAsset = function(assetId, callback) {

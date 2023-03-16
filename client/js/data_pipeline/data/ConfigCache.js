@@ -6,30 +6,23 @@ class ConfigCache {
     constructor(pipeReadyCB, pipeMsgCB) {
         this.gameDataPipeline = new GameDataPipeline(pipeReadyCB, pipeMsgCB);
         this.pipelineReadyFlag = false;
+        this.configs = {
+            urls:{}
+        };
+
+        this.readyCallbacks = [];
+        this.categories = {};
+        this.dataConfigs = {};
+        this.images = {};
+        this.imageSubs = {};
+        this.masterReset = function() {};
+        this.progressCallbacks = [];
+        this.requestedUrls = [];
+        this.loadedUrls = [];
+        this.remainingUrls = [];
+        this.cacheReads = 0
+
     }
-
-
-    configs = {
-        urls:{}
-    };
-
-
-    readyCallbacks = [];
-
-    categories = {};
-
-    dataConfigs = {};
-
-    images = {};
-    imageSubs = {};
-    masterReset = function() {};
-    progressCallbacks = [];
-    requestedUrls = [];
-    loadedUrls = [];
-    remainingUrls = [];
-
-    cacheReads = 0;
-
 
 
     pipelineReady = function(bool) {
@@ -110,11 +103,11 @@ class ConfigCache {
 
     storeImageRef = function(id, image) {
         this.notifyUrlReadRequest(image.url);
-        images[id] = image;
+        this.images[id] = image;
     };
 
     getImageRef = function(id) {
-        return images[id];
+        return this.images[id];
     };
 
     addCategory = function(category) {
@@ -226,7 +219,7 @@ class ConfigCache {
     };
 
     getBuiltCategoryKeyConfig = function(category, key) {
-        var data = dataConfigs[category];
+        var data = this.dataConfigs[category];
         if (!data) return "No data "+category;
         if (!data[key]) return "No entry for key "+key+" in category "+category;
         return data[key];
@@ -259,16 +252,16 @@ class ConfigCache {
 
 
     unsubscribeCategoryKey = function(category, key, callback) {
-        if (!categories[category]) {
+        if (!this.categories[category]) {
             console.log("No Category to unsubscribe from", category)
         }
 
-        if (!categories[category].subscription[key]) {
-            categories[category].subscription[key] = [];
+        if (!this.categories[category].subscription[key]) {
+            this.categories[category].subscription[key] = [];
             console.log("Category nas no key to unsubscribe from", category, key)
         }
 
-        categories[category].subscription[key].splice(categories[category].subscription[key].indexOf(callback), 1);
+        this.categories[category].subscription[key].splice(this.categories[category].subscription[key].indexOf(callback), 1);
 
     };
 
@@ -276,11 +269,11 @@ class ConfigCache {
 
 
     registerCategoryUpdatedCallback = function(category, callback) {
-        if (!categories[category]) {
+        if (!this.categories[category]) {
             ConfigCache.addCategory(category);
         }
-        categories[category].callbacks.push(callback);
-        return configs[category];
+        this.categories[category].callbacks.push(callback);
+        return this.configs[category];
     };
 
     subscribeToCategoryKey = function(category, key, callback) {
@@ -294,8 +287,8 @@ class ConfigCache {
     };
 
     registerImageSub = function(subscriberId, imageId, callback) {
-        if (!imageSubs[imageId]) imageSubs[imageId] = {};
-        imageSubs[imageId][subscriberId] = callback
+        if (!this.imageSubs[imageId]) this.imageSubs[imageId] = {};
+        this.imageSubs[imageId][subscriberId] = callback
     };
 
     subscribeToImageId = function(subscriberId, imageId, callback) {
@@ -303,7 +296,7 @@ class ConfigCache {
 
         if (data) {
             if (data.loaded) {
-                cacheReads++;
+                this.cacheReads++;
                 callback(imageId, data);
             }
         }
@@ -313,15 +306,15 @@ class ConfigCache {
 
     imageDataLoaded = function(id) {
         ConfigCache.notifyUrlReceived(ConfigCache.getImageRef(id).url);
-        if (!imageSubs[id]) return;
-        for (var sub  in imageSubs[id]) {
-            imageSubs[id][sub](id, ConfigCache.getImageRef(id))
+        if (!this.imageSubs[id]) return;
+        for (var sub  in this.imageSubs[id]) {
+            this.imageSubs[id][sub](id, ConfigCache.getImageRef(id))
         }
     };
 
     notifyLoadStateChange = function() {
         for (var i = 0; i < this.progressCallbacks.length; i++) {
-            this.progressCallbacks[i](requestedUrls.length, remainingUrls.length, loadedUrls.length, remainingUrls)
+            this.progressCallbacks[i](this.requestedUrls.length, this.remainingUrls.length, this.loadedUrls.length, this.remainingUrls)
         }
         //	console.log("CacheState, Requested:", requestedUrls.length, "Remaining:",remainingUrls.length, "Loaded:",loadedUrls.length)
     };
@@ -398,7 +391,7 @@ class ConfigCache {
     };
 
     getCachedConfigs = function() {
-        return configs;
+        return this.configs;
     };
 
     registerPollUrl = function(url) {

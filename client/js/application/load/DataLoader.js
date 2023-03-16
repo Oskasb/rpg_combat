@@ -1,60 +1,9 @@
-"use strict";
+import { DomLoadScreen } from '../ui/dom/DomLoadScreen.js';
+import { AssetLoader } from './AssetLoader.js';
 
-
-define([
-        'ui/dom/DomLoadScreen',
-        'ui/GameScreen',
-        'PipelineAPI',
-        'application/load/AssetLoader'
-    ],
-    function(
-        DomLoadScreen,
-        GameScreen,
-        PipelineAPI,
-        AssetLoader
-    ) {
-
-        var loadProgress;
-        var assetLoader = new AssetLoader();
-
-        var pipelineOn = pollingOn;
-        window.jsonConfigUrls = 'client/json/';
-        if (window.location.href === 'http://127.0.0.1:5000/' || window.location.href ===  'http://localhost:5000/' || window.location.href ===  'http://192.168.0.100:5000/') {
-            //    pipelineOn = true;
-        }
-
-        var dataPipelineSetup = {
-            "jsonPipe":{
-                "polling":{
-                    "enabled":pipelineOn,
-                    "frequency":45
-                }
-            },
-            "svgPipe":{
-                "polling":{
-                    "enabled":false,
-                    "frequency":2
-                }
-            },
-            "imagePipe":{
-                "polling":{
-                    "enabled":false,
-                    "frequency":1
-                }
-            }
-        };
-
-        var jsonRegUrl = './client/json/config_urls.json';
-
-        var setDebug = function(key, data) {
-            SYSTEM_SETUP.DEBUG = data;
-        };
-
-        var DataLoader = function() {
-
-        };
-
-        var loadStates= {
+class DataLoader {
+    constructor() {
+        this.loadStates= {
             SHARED_FILES:'SHARED_FILES',
             CONFIGS:'CONFIGS',
             THREEDATA:'THREEDATA',
@@ -62,92 +11,95 @@ define([
             COMPLETED:'COMPLETED'
         };
 
-        var loadState = loadStates.SHARED_FILES;
+        this.loadState = this.loadStates.SHARED_FILES;
+        this.loadProgress = new DomLoadScreen();
+        this.assetLoader = new AssetLoader();
 
-        DataLoader.prototype.getStates = function() {
-            return loadStates;
+    }
+
+    getLoadScreen = function() {
+        return this.loadProgress
+    };
+
+        getStates = function() {
+            return this.loadStates;
         };
 
-        DataLoader.prototype.setupPipelineCallback = function(loadStateChange) {
+        setupPipelineCallback = function(loadStateChange) {
 
         };
 
-        DataLoader.prototype.loadData = function(onReady) {
+        loadData = function(dataPipelineSetup, onPipelineReadyCallback, onErrorCallback) {
 
-            loadProgress = new DomLoadScreen(GameScreen.getElement());
 
-            var _this = this;
-
-            var loadingCompleted = function() {
-                onReady();
+            let _this = this;
+            let loadScreen = _this.getLoadScreen();
+            let loadStates = _this.loadStates;
+            let loadingCompleted = function() {
+                onPipelineReadyCallback('Loading Completed');
             };
 
-            var loadStateChange = function(state) {
+            let loadStateChange = function(state) {
                 //    console.log('loadStateChange', state)
                 if (state === _this.getStates().IMAGES) {
 
                 }
 
                 if (state === _this.getStates().COMPLETED) {
-                    loadState = loadStates.THREEDATA;
+                    _this.loadState = _this.loadStates.THREEDATA;
                     loadingCompleted()
                 }
 
             };
 
-
             function pipelineCallback(started, remaining, loaded, files) {
-                //    console.log("SRL", loadState, started, remaining, loaded, [files]);
+                    console.log("SRL", _this.loadState, started, remaining, loaded, [files]);
 
                 PipelineAPI.setCategoryKeyValue("STATUS", "FILE_CACHE", loaded);
 
-                loadProgress.setProgress(loaded / started);
+                loadScreen.setProgress(loaded / started);
 
-
-                if (loadState === loadStates.THREEDATA) {
-                    //    console.log( "loadThreeData:", loadState, started, remaining, loaded, [files]);
+                if (_this.loadState === loadStates.THREEDATA) {
+                        console.log( "loadThreeData:", _this.loadState, started, remaining, loaded, [files]);
                     //   loadState = loadStates.COMPLETED;
                     //   loadStateChange(loadState);
                 }
 
-                if (loadState === loadStates.CONFIGS && remaining === 0) {
-                    //    console.log( "json cached:", PipelineAPI.getCachedConfigs());
-                    loadState = loadStates.COMPLETED;
+                if (_this.loadState === loadStates.CONFIGS && remaining === 0) {
+                    console.log( "json cached:", PipelineAPI.getCachedConfigs());
+                    _this.loadState = loadStates.COMPLETED;
                 //        ThreeAPI.loadThreeData();
-                    loadStateChange(loadState);
+
+                    loadStateChange(_this.loadState);
                 }
 
-                if (loadState === loadStates.SHARED_FILES && remaining === 0) {
-                    //    console.log( "shared loaded....");
-                    loadState = loadStates.CONFIGS;
-                    assetLoader.initAssetConfigs();
+                if (_this.loadState === loadStates.SHARED_FILES && remaining === 0) {
+                    console.log( "shared loaded....");
+                    _this.loadState = loadStates.CONFIGS;
+                    _this.assetLoader.initAssetConfigs();
                     ThreeAPI.initThreeLoaders();
                     ThreeAPI.loadShaders();
-                    loadStateChange(loadState);
+                    loadStateChange(_this.loadState);
                 }
             }
 
             PipelineAPI.addProgressCallback(pipelineCallback);
 
-            var loadJsonData = function() {
-
-                function pipelineError(src, e) {
-                    console.log("Pipeline error Ready", src, e);
-                }
-                PipelineAPI.dataPipelineSetup(jsonRegUrl, dataPipelineSetup, pipelineError);
-
+            let onPipelineInitCallback = function(configCache) {
+                console.log("CONFIGS:", configCache.configs)
             };
 
+            PipelineAPI.dataPipelineSetup(dataPipelineSetup.jsonRegUrl, dataPipelineSetup, onPipelineInitCallback, onErrorCallback);
+
             _this.setupPipelineCallback(loadStateChange);
-            loadJsonData();
 
         };
 
 
-        DataLoader.prototype.notifyCompleted = function() {
-            loadProgress.removeProgress();
+        notifyCompleted = function() {
+            this.loadProgress.removeProgress();
         };
 
-        return DataLoader;
+    }
 
-    });
+export { DataLoader }

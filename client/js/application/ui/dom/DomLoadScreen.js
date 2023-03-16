@@ -1,16 +1,7 @@
-"use strict";
+class DomLoadScreen {
+    constructor() {
 
-
-define([
-		'ui/dom/DomUtils'
-	],
-	function(
-		DomUtils
-	) {
-
-        var bailTimeout;
-
-		var DomLoadScreen = function() {
+            this.bailTimeout;
 			this.root = DomUtils.createDivElement(document.body, 'load_screen', '', 'point');
             this.buildElements();
 
@@ -38,7 +29,7 @@ define([
 
 		};
 
-        DomLoadScreen.prototype.buildElements = function() {
+        buildElements = function() {
 
             var rootStyle = {
                 width: '100%',
@@ -143,15 +134,15 @@ define([
 
             var _this = this;
 
-            bailTimeout = setTimeout(function() {
+            this.bailTimeout = setTimeout(function() {
                 _this.progCounter.innerHTML = "Loading fishy... reload to retry";
             }, 2000);
 
         };
 
 
-		DomLoadScreen.prototype.setProgress = function(fraction) {
-            clearTimeout(bailTimeout);
+		setProgress = function(fraction) {
+            clearTimeout(this.bailTimeout);
             this.progCounter.innerHTML = Math.round(fraction*100)+'%';
 			// this.progress.element.style.width = 100 * fraction + '%';
             var style = {
@@ -162,7 +153,7 @@ define([
 		};
 
 
-        DomLoadScreen.prototype.renderTexts = function() {
+        renderTexts = function() {
 
             var text = '';
             for (var i = 0; i < this.texts.length; i++) {
@@ -174,7 +165,7 @@ define([
             }
         };
 
-        DomLoadScreen.prototype.renderPipeLog = function() {
+        renderPipeLog = function() {
 
             var text = '';
             for (var i = 0; i < this.pipeTexts.length; i++) {
@@ -186,7 +177,7 @@ define([
             }
         };
 
-        DomLoadScreen.prototype.logMessage = function(msg, color, channel) {
+        logMessage = function(msg, color, channel) {
             if (!color) color = '#f04';
 
             if (channel == 'pipeline_message') {
@@ -199,15 +190,15 @@ define([
 
         };
 
-		DomLoadScreen.prototype.addMessageToScreen = function(args) {
+		addMessageToScreen = function(args) {
             this.logMessage(args.message, this.logChannels[args.channel], args.channel);
 		};
 
-		DomLoadScreen.prototype.setHighlight = function() {
+		setHighlight = function() {
 			this.progress.flashElement();
 		};
 
-		DomLoadScreen.prototype.removeProgress = function() {
+		removeProgress = function() {
 
             var style = {
                 transform: 'translate3d(0px, 40px, 0px)'
@@ -242,6 +233,6 @@ define([
 
 		};
 
-		return DomLoadScreen;
+	}
 
-	});
+export { DomLoadScreen };
