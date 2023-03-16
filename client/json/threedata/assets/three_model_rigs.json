@@ -1,0 +1,97 @@
+
+[
+  {
+    "ASSETS": {
+      "RIGS": [
+        {
+          "id": "rig_fighter",
+          "config":{
+            "joints": [
+              {"key": "SKIN"          , "bone_name": "root_node"         },
+              {"key": "GRIP_R"        , "bone_name": "grip_r"            },
+              {"key": "GRIP_L"        , "bone_name": "grip_l"            },
+              {"key": "PROP_1"        , "bone_name": "Bip001_Prop1"      },
+              {"key": "PROP_2"        , "bone_name": "Bip001_Prop2"      },
+              {"key": "PROP_3"        , "bone_name": "Bip001_Prop3"      },
+              {"key": "HEAD"          , "bone_name": "Bip001_Head"       },
+              {"key": "PELVIS"        , "bone_name": "Bip001_Pelvis"     },
+              {"key": "HAND_L"        , "bone_name": "Bip001_L_Hand"     },
+              {"key": "HAND_R"        , "bone_name": "Bip001_R_Hand"     },
+              {"key": "FOOT_L"        , "bone_name": "Bip001_L_Foot"     },
+              {"key": "FOOT_R"        , "bone_name": "Bip001_R_Foot"     }
+            ],
+            "animations":[
+
+              {"key":"IDLE"           , "id":"file_idle_legs"            },
+              {"key":"WALK"           , "id":"file_walk_legs"            },
+              {"key":"WALK_COMBAT"    , "id":"file_walk_legs_combat"     },
+              {"key":"WALK_BODY"      , "id":"file_walk_body"            },
+
+              {"key":"GD_LFT_FF"      , "id":"file_gd_left_ff"           },
+              {"key":"SET_LFT_FF"     , "id":"file_set_left_ff"          },
+              {"key":"GD_RT_FF"       , "id":"file_gd_right_ff"          },
+              {"key":"SET_RT_FF"      , "id":"file_set_right_ff"         },
+
+              {"key":"GD_MID_R"       , "id":"file_guard_mid_rff"        },
+              {"key":"GD_LOW_R"       , "id":"file_guard_low_rff"        },
+              {"key":"GD_LNG_R"       , "id":"file_guard_long_rff"       },
+              {"key":"GD_SHT_R"       , "id":"file_guard_short_rff"      },
+
+              {"key":"GD_HNG_R"       , "id":"file_guard_hanging_rff"    },
+              
+              {"key":"GD_INS_R"       , "id":"file_guard_inside_rff"     },
+
+              {"key":"SW_BCK_R"       , "id":"file_swing_back_rff"       },
+
+              {"key":"GD_HI_R"        , "id":"file_guard_high_rff"       },
+
+              {"key":"CT_TC_R"       , "id":"file_cut_topcenter_rff"     },
+              {"key":"CT_TR_R"       , "id":"file_cut_topright_rff"      },
+
+              {"key":"GD_SID_R"       , "id":"file_guard_side_rff"       },
+
+              {"key":"CT_MR_R"       , "id":"file_cut_midright_rff"      },
+
+              {"key":"GD_BCK_R"       , "id":"file_guard_back_rff"       },
+
+              {"key":"CT_ML_R"       , "id":"file_cut_midleft_rff"       },
+
+              {"key":"SW_SID_R"       , "id":"file_swing_side_rff"       }
+            ]
+          }
+        },
+        {
+          "id": "rig_pilot",
+          "config":{
+            "model": "file_pilot_bind",
+            "joints": [            ],
+            "animations":[
+              {"key":"IDLE"  , "id":"file_pilot_idle"   } ,
+              {"key":"RUN"   , "id":"file_pilot_run"    }
+            ]
+          }
+        },
+        {
+          "id": "rig_barbarian",
+          "config":{
+            "joints": [            ],
+            "animations":[
+              {"key":"DEAD"           , "id":"file_barb_dead"           } ,
+              {"key":"IDLE"           , "id":"file_barb_idle"           } ,
+
+              {"key":"IDL_LO_CB"      , "id":"barb_legs_idle_cbt"       } ,
+              {"key":"IDL_HI_CB"      , "id":"barb_body_idle_cbt"       } ,
+
+              {"key":"ATTACK_1"       , "id":"file_barb_attack_1"       } ,
+              {"key":"ATTACK_2"       , "id":"file_barb_attack_2"       } ,
+
+              {"key":"FALL"           , "id":"file_barb_fall"           } ,
+
+              {"key":"RUN"            , "id":"file_barb_run"            }
+            ]
+          }
+        }
+       ]
+    }
+  }
+]

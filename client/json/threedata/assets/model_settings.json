@@ -1,0 +1,88 @@
+[
+  {
+    "ASSETS": {
+      "MODEL_SETTINGS":[
+
+        {"id": "default_model_settings" ,
+          "config": {
+            "transform": {
+              "pos":   [0, 0, 0],
+              "rot":   [0, 0, 0],
+              "scale": [1, 1, 1]
+            }
+          }
+        },
+        {"id": "instancing_vegetation_settings" ,
+          "config": {
+            "instancing": {
+              "instances": 1,
+              "attributes": ["offset", "vertexColor", "scale3d", "orientation", "sprite", "texelRowSelect", "lifecycle"],
+              "cameraspace": false
+            },
+            "transform": {
+              "pos":   [0, 0, 0],
+              "rot":   [0, 0, 0],
+              "scale": [1, 1, 1]
+            }
+          }
+        },
+        {"id": "particle_instancing_settings" ,
+          "config": {
+            "instancing": {
+              "instances": 1,
+              "attributes": ["offset", "vertexColor", "scale3d", "orientation", "sprite", "texelRowSelect", "lifecycle"],
+              "cameraspace": false
+            },
+            "transform": {
+              "pos":   [0, 0, 0],
+              "rot":   [0, 0, 0],
+              "scale": [1, 1, 1]
+            }
+          }
+        },
+        {"id": "ui_instancing_settings" ,
+          "config": {
+            "instancing": {
+              "instances": 1,
+              "attributes": ["offset", "vertexColor", "scale3d", "orientation", "sprite", "texelRowSelect", "lifecycle"],
+              "cameraspace": true
+            },
+            "transform": {
+              "pos":   [0, 0, 0],
+              "rot":   [0, 0, 0],
+              "scale": [1, 1, 1]
+            }
+          }
+        },
+        {"id": "instancing_items_settings" ,
+          "config": {
+            "instancing": {
+              "instances": 50,
+              "attributes": ["offset", "vertexColor", "scale3d", "orientation"],
+              "cameraspace": false
+            },
+            "transform": {
+              "pos":   [0, 0, 0],
+              "rot":   [0, 0, 0],
+              "scale": [1, 1, 1]
+            }
+          }
+        },
+        {"id": "instancing_settings" ,
+          "config": {
+            "instancing": {
+              "instances": 1500,
+              "attributes": ["offset", "vertexColor", "scale3d", "orientation"],
+              "cameraspace": false
+            },
+            "transform": {
+              "pos":   [0, 0, 0],
+              "rot":   [0, 0, 0],
+              "scale": [1, 1, 1]
+            }
+          }
+        }
+      ]
+    }
+  }
+]

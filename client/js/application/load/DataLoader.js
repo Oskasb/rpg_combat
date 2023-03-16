@@ -53,20 +53,20 @@ class DataLoader {
             };
 
             function pipelineCallback(started, remaining, loaded, files) {
-                    console.log("SRL", _this.loadState, started, remaining, loaded, [files]);
+                //    console.log("SRL", _this.loadState, started, remaining, loaded, [files]);
 
                 PipelineAPI.setCategoryKeyValue("STATUS", "FILE_CACHE", loaded);
 
                 loadScreen.setProgress(loaded / started);
 
                 if (_this.loadState === loadStates.THREEDATA) {
-                        console.log( "loadThreeData:", _this.loadState, started, remaining, loaded, [files]);
+                    //    console.log( "loadThreeData:", _this.loadState, started, remaining, loaded, [files]);
                     //   loadState = loadStates.COMPLETED;
                     //   loadStateChange(loadState);
                 }
 
                 if (_this.loadState === loadStates.CONFIGS && remaining === 0) {
-                    console.log( "json cached:", PipelineAPI.getCachedConfigs());
+                 //   console.log( "json cached:", PipelineAPI.getCachedConfigs());
                     _this.loadState = loadStates.COMPLETED;
                 //        ThreeAPI.loadThreeData();
 
@@ -74,7 +74,7 @@ class DataLoader {
                 }
 
                 if (_this.loadState === loadStates.SHARED_FILES && remaining === 0) {
-                    console.log( "shared loaded....");
+                //    console.log( "shared loaded....");
                     _this.loadState = loadStates.CONFIGS;
                     _this.assetLoader.initAssetConfigs();
                     ThreeAPI.initThreeLoaders();
@@ -95,11 +95,9 @@ class DataLoader {
 
         };
 
-
         notifyCompleted = function() {
             this.loadProgress.removeProgress();
         };
-
     }
 
 export { DataLoader }

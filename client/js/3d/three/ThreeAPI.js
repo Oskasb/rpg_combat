@@ -1,6 +1,7 @@
 import {AssetLoader} from '../../application/load/AssetLoader.js';
 import {ThreeAsset} from './assets/ThreeAsset.js';
 import {ThreeSetup} from './ThreeSetup.js';
+import {ThreeEnvironment} from './ThreeEnvironment.js';
 import {ThreeShaderBuilder} from './ThreeShaderBuilder.js';
 import {ThreeModelLoader} from './ThreeModelLoader.js';
 import {ThreeTextureMaker} from './ThreeTextureMaker.js';
@@ -12,6 +13,7 @@ class ThreeAPI {
 
     constructor() {
 
+        this.threeEnvironment = new ThreeEnvironment();
         this.shaderBuilder;
         this.glContext;
         this.renderer;
@@ -32,20 +34,21 @@ class ThreeAPI {
         this.shaderBuilder = new ThreeShaderBuilder();
         this.spatialFunctions = new ThreeSpatialFunctions();
     //    this.renderFilter = new ThreeRenderFilter();
-        //    ThreeEnvironment.loadEnvironmentData();
+        //    this.threeEnvironment.loadEnvironmentData();
     };
 
     initEnvironment = function(store) {
 
+        let _this = this;
         var envReady = function() {
-            ThreeEnvironment.enableEnvironment();
+            _this.threeEnvironment.enableEnvironment();
         };
 
         var onLoaded = function() {
-            ThreeEnvironment.initEnvironment(store, envReady);
+            _this.threeEnvironment.initEnvironment(store, envReady);
         };
 
-        ThreeEnvironment.loadEnvironmentData(onLoaded);
+        this.threeEnvironment.loadEnvironmentData(onLoaded);
 
     };
 
@@ -127,11 +130,11 @@ class ThreeAPI {
     };
 
     readEnvironmentUniform = function(worldProperty, key) {
-        return ThreeEnvironment.readDynamicValue(worldProperty, key);
+        return this.threeEnvironment.readDynamicValue(worldProperty, key);
     };
 
     getEnvironment = function() {
-        return ThreeEnvironment;
+        return this.threeEnvironment;
     };
 
     getModelLoader = function() {

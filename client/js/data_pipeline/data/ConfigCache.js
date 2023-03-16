@@ -131,9 +131,10 @@ class ConfigCache {
     };
 
     fireCategoryKeyCallbacks = function(category, key) {
+        let _this = this;
         var fireCallbacks = function(callbacks, id, data) {
             for (var i = 0; i < callbacks.length; i++) {
-                this.cacheReads++;
+                _this.cacheReads++;
                 callbacks[i](id, data);
             }
         };

@@ -1,0 +1,83 @@
+[{
+  "GAME":{
+    "SKELETON_RIGS":[
+      {
+        "id":"FIGHTER_RIG",
+        "data":{
+          "joints": {
+            "SKIN":     { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
+            "PROP_1":   { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
+            "PROP_2":   { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
+            "PROP_3":   { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
+            "HEAD":     { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
+            "PELVIS":   { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
+            "HAND_L":   { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
+            "HAND_R":   { "offset": [0, 0, 0], "rot": [0, 0, 1.57], "scale": [1, 1, 1]},
+            "GRIP_R":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "GRIP_L":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "FOOT_R":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "FOOT_L":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]}
+          },
+          "animations": {
+            "IDLE":           {"time_scale": 0.4,  "weight": 1, "fade": 0.25, "duration": 0   , "channel": 0, "loop": 1 ,"clamp": 1, "sync": 0},
+            "SET_LFT_FF":     {"time_scale": 1.0 , "weight": 1, "fade": 0.25, "duration": 0   , "channel": 0, "loop": 1 ,"clamp": 1, "sync": 0},
+            "GD_LFT_FF":      {"time_scale": 0.05, "weight": 1, "fade": 0.25, "duration": 0   , "channel": 0, "loop": 0 ,"clamp": 1, "sync": 0},
+            "SET_RT_FF":      {"time_scale": 1.0 , "weight": 1, "fade": 0.25, "duration": 0   , "channel": 0, "loop": 0 ,"clamp": 1, "sync": 0},
+            "GD_RT_FF":       {"time_scale": 0.4,  "weight": 1, "fade": 0.25, "duration": 0   , "channel": 0, "loop": 1 ,"clamp": 1, "sync": 0},
+            "GD_HI_R":        {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_MID_R":       {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_LOW_R":       {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_LNG_R":       {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_SHT_R":       {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_BCK_R":       {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_HNG_R":       {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_INS_R":       {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_SID_R":       {"time_scale": 0.03, "weight": 1, "fade": 0.95, "duration": 3   , "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "SW_BCK_R":       {"time_scale": 0.14, "weight": 1, "fade": 0.35, "duration": 2   , "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "SW_SID_R":       {"time_scale": 0.14, "weight": 1, "fade": 0.20, "duration": 2   , "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "CT_TR_R":        {"time_scale": 0.14, "weight": 1, "fade": 0.25, "duration": 5   , "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "CT_MR_R":        {"time_scale": 0.14, "weight": 1, "fade": 0.25, "duration": 5   , "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "CT_TC_R":        {"time_scale": 0.14, "weight": 1, "fade": 0.25, "duration": 5   , "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "CT_ML_R":        {"time_scale": 0.14, "weight": 1, "fade": 0.25, "duration": 5   , "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "WALK":           {"time_scale": 1,   "weight": 1, "fade": 0.25,  "duration": 2,    "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "WALK_BODY":      {"time_scale": 1,   "weight": 1, "fade": 0.25,  "duration": 2,    "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "WALK_COMBAT":    {"time_scale": 1,   "weight": 1, "fade": 0.25,  "duration": 2,    "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "RUN":            {"time_scale": 1,   "weight": 1, "fade": 0.25, "duration": 0,    "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "IDL_LO_CB":      {"time_scale": 1,   "weight": 1, "fade": 0.25, "duration": 4.6,  "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "IDL_HI_CB":      {"time_scale": 1,   "weight": 1, "fade": 0.25, "duration": 4.6,  "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "ATTACK_1":       {"time_scale": 1,   "weight": 1, "fade": 0.35, "duration": 0.8,  "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "ATTACK_2":       {"time_scale": 1,   "weight": 1, "fade": 0.45, "duration": 1.4,  "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "DEAD":           {"time_scale": 0.1, "weight": 1, "fade": 0.25, "duration": 1.6,  "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "FALL":           {"time_scale": 1,   "weight": 1, "fade": 0.45, "duration": 1.6,  "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 0}
+
+          },
+          "action_maps": {
+            "ATTACK_GREATSWORD_CHOP":   {"prep": ["GD_HI_R"],  "exec": ["CT_TC_R"], "end": ["GD_BCK_R"]},
+            "ATTACK_GREATSWORD_SLASH":  {"prep": ["GD_HI_R", "GD_SID_R"], "exec": ["SW_SID_R"], "end": ["GD_BCK_R", "GD_INS_R", "GD_SHT_R"]},
+            "ATTACK_GREATSWORD_SWIPE":  {"prep": ["GD_BCK_R"], "exec": ["SW_BCK_R", "CT_ML_R"], "end": ["GD_SID_R"]},
+            "ATTACK_GREATSWORD_SWING":  {"prep": ["GD_SHT_R"], "exec": ["CT_ML_R"], "end" : ["GD_SHT_R"]},
+            "ATTACK_GREATSWORD_CUT":    {"prep": ["GD_INS_R"], "exec": ["CT_MR_R", "CT_TR_R"],  "end": ["GD_BCK_R"]}
+          }
+        }
+      },
+      {
+        "id":"BARBARIAN_RIG",
+        "data":{
+          "joints": {
+          },
+          "animations": {
+            "IDLE":           {"time_scale": 1,   "weight": 1, "fade": 0.25, "duration": 2  , "channel": 0 },
+            "WALK":           {"time_scale": 1,   "weight": 1, "fade": 0.25, "duration": 2  , "channel": 0 },
+            "RUN":            {"time_scale": 1,   "weight": 1, "fade": 0.75, "duration": 6.6, "channel": 0 },
+            "IDL_LO_CB":      {"time_scale": 1,   "weight": 1, "fade": 0.25, "duration": 4.6, "channel": 0 },
+            "IDL_HI_CB":      {"time_scale": 1,   "weight": 1, "fade": 0.25, "duration": 4.6, "channel": 1 },
+            "ATTACK_1":       {"time_scale": 1,   "weight": 1, "fade": 0.35, "duration": 0.8, "channel": 1 },
+            "ATTACK_2":       {"time_scale": 1,   "weight": 1, "fade": 0.45, "duration": 1.4, "channel": 1 },
+            "DEAD":           {"time_scale": 0.1, "weight": 1, "fade": 0.25, "duration": 1.6, "channel": 0 },
+            "FALL":           {"time_scale": 1,   "weight": 1, "fade": 0.45, "duration": 1.6, "channel": 0 }
+          }
+        }
+      }
+    ]
+  }
+}]

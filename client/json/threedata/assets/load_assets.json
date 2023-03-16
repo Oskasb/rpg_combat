@@ -1,0 +1,15 @@
+[{
+  "ASSETS": {
+    "LOAD":[
+      "MATERIALS",
+      "MATERIAL_SETTINGS",
+      "MODELS",
+      "RIGS",
+      "MODEL_SETTINGS",
+      "TEXTURE_SETTINGS",
+      "FILES_GLB",
+      "FILES_IMAGES",
+      "TEXTURES"
+    ]
+  }
+}]

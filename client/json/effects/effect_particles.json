@@ -1,0 +1,44 @@
+[
+    {
+        "EFFECT": {
+            "PARTICLES":[
+                {
+                    "id":"particle_default",
+                    "data": [
+                        {
+                            "particle_id": "stamp_footprint",
+                            "spawner_id": "normal_stamps_6x6",
+                            "size_min": 45,
+                            "size_max": 47,
+                            "attack_time": 0.3,
+                            "release_time": 1.5,
+                            "color_min": [0.25, 0.15, 0.05, 0.4],
+                            "color_max": [0.51, 0.25, 0.10,   1],
+                            "sprite": [0, 3, 1, 0]
+                        },
+                        {
+                            "particle_id": "normal",
+                            "spawner_id": "normal_particles_6x6",
+                            "size_min": 14,
+                            "size_max": 18,
+                            "color_min": [0.95, 0.95, 0.95, 0.8],
+                            "color_max": [1, 1, 1, 1],
+                            "sprite": [1, 1, 1, 0]
+                        },
+                        {
+                            "particle_id": "particle_wisp_additive",
+                            "spawner_id": "additive_particles_6x6",
+                            "size_min": 65,
+                            "size_max": 92,
+                            "attack_time": 0.45,
+                            "release_time": 1.5,
+                            "color_min": [0.25, 0.45, 0.45, 0.95],
+                            "color_max": [0.4, 0.9, 1, 1],
+                            "sprite": [3, 3, 1, 0]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]

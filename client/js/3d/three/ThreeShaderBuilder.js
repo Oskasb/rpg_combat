@@ -13,6 +13,7 @@ class ThreeShaderBuilder {
            let shaderChunks = this.shaderChunks;
            let shaderDataIndex = this.shaderDataIndex;
            let buildTimeout = this.buildTimeout;
+           this.gl = glContext;
            let gl = this.gl;
            let okCount = this.okCount;
 

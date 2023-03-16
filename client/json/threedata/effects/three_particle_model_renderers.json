@@ -1,0 +1,54 @@
+[
+  {
+    "PARTICLE_MODEL_SYSTEMS": {
+      "RENDERERS":[
+
+        {
+          "id":"gpu_additive_atlas_trail_renderer",
+          "material_id":"gpu_sprite_atlas_trail_material",
+          "particle_pool":100,
+          "particle_geometry":{
+            "model_id":"model_bullet"
+          },
+          "material_options":{
+            "blending":"AdditiveBlending",
+            "transparent":true,
+            "alphaTest":0.0001,
+            "depthWrite":false,
+            "depthTest":true
+          }
+        },
+        {
+          "id":"gpu_spatial_tree_2_trunk_renderer",
+          "material_id":"gpu_main_atlas_spatial_material",
+          "particle_pool":400,
+          "particle_geometry":{
+            "model_id":"model_tree_1"
+          },
+          "material_options":{
+            "blending":"NoBlending",
+            "transparent":false,
+            "alphaTest":0.95,
+            "depthWrite":true,
+            "depthTest":true
+          }
+        },
+        {
+          "id":"gpu_spatial_tree_3_combined_renderer",
+          "material_id":"gpu_main_atlas_spatial_material",
+          "particle_pool":200,
+          "particle_geometry":{
+            "model_id":"model_tree_1"
+          },
+          "material_options":{
+            "blending":"NoBlending",
+            "transparent":false,
+            "alphaTest":0.95,
+            "depthWrite":true,
+            "depthTest":true
+          }
+        }
+      ]
+    }
+  }
+]

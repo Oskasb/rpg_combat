@@ -1,0 +1,30 @@
+[
+    {
+        "EFFECT": {
+            "BUFFERS":[
+                {
+                    "id":"spawners_default",
+                    "data": [
+                        {
+                            "spawner": "normal_stamps_6x6",
+                            "asset_id":  "asset_normalStamp",
+                            "pool_size": 2000,
+                            "render_order": 5
+                        },
+                        {
+                            "spawner": "normal_particles_6x6",
+                            "asset_id":  "asset_normalQuad",
+                            "pool_size": 2000,
+                            "render_order": 5
+                        },
+                        {
+                            "spawner": "additive_particles_6x6",
+                            "asset_id":  "asset_additiveQuad",
+                            "pool_size": 2000,
+                            "render_order": 4
+                        }]
+                }
+            ]
+        }
+    }
+]

@@ -17,7 +17,7 @@ class Setup {
     }
 
     initDataPipeline(pipelineAPI, pipelineReadyCB) {
-
+        let dataLoader = this.dataLoader;
         let ready = {
             JSON_PIPE:false,
             IMAGE_PIPE:false
@@ -32,7 +32,8 @@ class Setup {
         };
 
         let pipeMsgCB = function(src, channel, msg) {
-            console.log(src, channel, msg)
+        //    console.log(src, channel, msg)
+            dataLoader.getLoadScreen().logMessage(msg, '#af8', channel);
         };
 
         pipelineAPI.initConfigCache(pipeReady, pipeMsgCB);

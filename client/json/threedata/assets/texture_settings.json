@@ -1,0 +1,123 @@
+[
+  {
+    "ASSETS": {
+      "TEXTURE_SETTINGS":[
+        {
+          "id": "model_settings" ,
+          "config":{
+            "settings" : {
+              "wrapS": "RepeatWrapping",
+              "wrapT": "RepeatWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "tiles_x":1,
+              "tiles_y":1,
+              "flipY": false
+            }
+          }
+        } ,
+        {
+          "id": "data_settings"  ,
+          "config":{
+            "settings" : {
+              "wrapS": "ClampToEdgeWrapping",
+              "wrapT": "ClampToEdgeWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "flipY": false,
+              "data_rows":128
+            }
+          }
+        } ,
+        {
+          "id": "particle_settings"  ,
+          "config":{
+            "settings" : {
+              "wrapS": "RepeatWrapping",
+              "wrapT": "RepeatWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "flipY": false
+            }
+          }
+        } ,
+        {
+          "id": "ui_tx_tiles_6x6"  ,
+          "config":{
+            "settings" : {
+              "wrapS": "RepeatWrapping",
+              "wrapT": "RepeatWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "tiles_x":6,
+              "tiles_y":6,
+              "flipY": false
+            }
+          }
+        },
+        {
+          "id": "ui_tx_tiles_8x8"  ,
+          "config":{
+            "settings" : {
+              "wrapS": "RepeatWrapping",
+              "wrapT": "RepeatWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "tiles_x":8,
+              "tiles_y":8,
+              "flipY": false
+            }
+          }
+        },
+        {
+          "id": "ui_tx_tiles_16x16"  ,
+          "config":{
+            "settings" : {
+              "wrapS": "RepeatWrapping",
+              "wrapT": "RepeatWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "tiles_x":16,
+              "tiles_y":16,
+              "flipY": false
+            }
+          }
+        },
+        {
+          "id": "env_settings"   ,
+          "config":{
+            "settings" : {
+              "combine": "AddOperation",
+              "mapping": "SphericalReflectionMapping",
+              "wrapS": "RepeatWrapping",
+              "wrapT": "RepeatWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "flipY": false
+            }
+          }
+        },
+        {
+          "id": "terrain_settings" ,
+          "config":{
+            "settings" : {
+              "wrapS": "RepeatWrapping",
+              "wrapT": "RepeatWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "flipY": false
+            }
+          }
+        }
+      ]
+    }
+  }
+]

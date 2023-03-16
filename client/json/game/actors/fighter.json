@@ -1,0 +1,16 @@
+[{
+  "GAME":{
+    "CHARACTERS":[
+      {
+        "id":"CHARACTER_FIGHTER",
+        "data":{
+          "game_piece": "PIECE_FIGHTER",
+          "action_points": "ACTION_POINTS_FIGHTER",
+          "action_slots": "ACTION_SLOTS_FIGHTER",
+          "equip_slots": "SLOTS_FIGHTER",
+          "control_movement": "MOVEMENT_FIGHTER"
+        }
+      }
+    ]
+  }
+}]
