@@ -74,6 +74,9 @@ class InputState {
 
         if (inputState.action[0] + inputState.action[1]) {
             this.processDragState(inputState);
+        } else {
+            inputState.dragDistance[0] = 0;
+            inputState.dragDistance[1] = 0;
         }
     };
 

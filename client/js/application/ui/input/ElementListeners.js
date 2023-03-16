@@ -54,7 +54,7 @@ class ElementListeners {
             }, 100);
             zoomTimeout = true;
             _this.POINTER_STATE.mouse.wheelDelta = _this.wheelDelta;
-            callInputUpdate(POINTER_STATE.mouse);
+            callInputUpdate(_this.POINTER_STATE.mouse);
         });
 
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {

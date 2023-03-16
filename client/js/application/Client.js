@@ -53,8 +53,30 @@ class Client {
 
         camera.position.z = 5;
 
+        let touchCubes = [];
+
+        for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
+            touchCubes[i] = new THREE.Mesh( geometry, material );
+            scene.add(touchCubes[i])
+        }
 
         const onFrameReadyCallback= function(frame) {
+            if (client.INPUT_STATE.mouse.action[0]) {
+                cube.position.x = client.INPUT_STATE.mouse.dx*3
+                cube.position.y = -client.INPUT_STATE.mouse.dy*3
+            //    console.log(client.INPUT_STATE.mouse.dx)
+            }
+            for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
+
+                if (client.INPUT_STATE.touches[i].action[0]) {
+                    touchCubes[i].position.x = client.INPUT_STATE.touches[i].dx*3
+                    touchCubes[i].position.y = -client.INPUT_STATE.touches[i].dy*3
+                    //   console.log(client.INPUT_STATE.touches[0].dx)
+                }
+
+            }
+
+
            cube.rotation.x += 0.01;
            cube.rotation.y += 0.01;
            cube.rotation.z = Math.sin(frame.z)*3.14;
