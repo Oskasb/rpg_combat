@@ -449,8 +449,45 @@ class ThreeEnvironment {
         this.renderer = store.renderer;
         this.camera = store.camera;
 
-        this.sky = new THREE.Sky();
-        //    scene.add( sky.mesh );
+
+        var canvas = document.createElement("canvas");
+
+        var setupCanvas = function(canvas) {
+            canvas.id = 'sky_canvas';
+            canvas.width  = ctxWidth;
+            canvas.height = ctxHeight;
+            canvas.dataReady = true;
+            ctx = canvas.getContext('2d');
+            return ctx;
+        };
+
+        var tx = ThreeAPI.newCanvasTexture(canvas);
+        var mat = ThreeAPI.buildCanvasMaterial(tx);
+        mat.side = THREE.BackSide;
+
+        //    mat.depthWrite = false;
+
+        var skyGeo = new THREE.SphereBufferGeometry(15000, 36, 6 );
+        var skyMesh = new THREE.Mesh( skyGeo, mat);
+
+        var uniforms = {
+            luminance: { value: 1 },
+            turbidity: { value: 2 },
+            rayleigh: { value: 1 },
+            mieCoefficient: { value: 0.005 },
+            mieDirectionalG: { value: 0.8 },
+            sunPosition: { value: new THREE.Vector3() }
+        };
+
+        sky = {
+            mesh:skyMesh,
+            ctx:setupCanvas(canvas),
+            tx:tx,
+            uniforms:uniforms
+        }
+
+        this.setCanvasColor(sky.ctx, sky.tx)
+
         this.sky.meshClone = this.sky.mesh.clone();
         // Add Sun Helper
 

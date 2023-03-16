@@ -33,8 +33,8 @@ class ThreeSetup {
     callPrerender = function(time) {
         //    requestAnimationFrame( ThreeSetup.callPrerender );
 
-        time = performance.now()  - initTime;
-        this.tpf = (time - lastTime)*0.001;
+        time = performance.now()  - this.initTime;
+        this.tpf = (time - this.lastTime)*0.001;
 
         //    if (tpf < 0.03) return;
 
@@ -44,13 +44,16 @@ class ThreeSetup {
 
         this.lastTime = time;
 
-        this.avgTfp = tpf*0.3 + avgTfp*0.7;
+        this.avgTfp = this.tpf*0.3 + this.avgTfp*0.7;
 
-        for (var i = 0; i < prerenderCallbacks.length; i++) {
-            prerenderCallbacks[i](avgTfp);
+        for (let i = 0; i < this.prerenderCallbacks.length; i++) {
+            this.prerenderCallbacks[i](avgTfp);
         }
 
-        this.callRender(this.scene, this.camera);
+        if (this.camera) {
+            this.callRender(this.scene, this.camera);
+        }
+
 
     };
 
@@ -63,9 +66,9 @@ class ThreeSetup {
 
     callPostrender = function() {
 
-        PipelineAPI.setCategoryKeyValue('STATUS', 'TIME_ANIM_RENDER', renderEnd - renderStart);
-        for (var i = 0; i < postrenderCallbacks.length; i++) {
-            postrenderCallbacks[i](avgTfp);
+        PipelineAPI.setCategoryKeyValue('STATUS', 'TIME_ANIM_RENDER', this.renderEnd - this.renderStart);
+        for (let i = 0; i < this.postrenderCallbacks.length; i++) {
+            this.postrenderCallbacks[i](this.avgTfp);
         }
 
     };
@@ -78,33 +81,35 @@ class ThreeSetup {
     initThreeRenderer = function(pxRatio, antialias, containerElement, store) {
         this.initTime = performance.now();
 
-        function init() {
 
-            scene = new THREE.Scene();
-            reflectionScene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera( 45, containerElement.innerWidth / containerElement.innerHeight, 0.35, 35000 );
+            let scene = new THREE.Scene();
+            let reflectionScene = new THREE.Scene();
+            let camera = new THREE.PerspectiveCamera( 45, containerElement.innerWidth / containerElement.innerHeight, 0.35, 35000 );
             camera.position.z = 20;
             camera.position.y = 5;
             camera.position.x = 10;
             //     console.log("Three Camera:", camera);
 
-            renderer = new THREE.WebGLRenderer( { antialias:antialias, devicePixelRatio: pxRatio, logarithmicDepthBuffer: false, sortObjects: false });
+            let renderer = new THREE.WebGLRenderer( { antialias:antialias, devicePixelRatio: pxRatio, logarithmicDepthBuffer: false, sortObjects: false });
             renderer.setPixelRatio( pxRatio );
 
             renderer.toneMapping = THREE.LinearToneMapping;
+            store.scene = scene;
+            store.reflectionScene = reflectionScene;
+            store.camera = camera;
+            store.renderer = renderer;
+
+            this.scene = scene;
+            this.camera = camera;
+            this.renderer = renderer;
 
             containerElement.appendChild(renderer.domElement);
-        }
 
         this.lastTime = 0;
-        init();
+
         this.callPrerender(0.016);
 
 
-        store.scene = scene;
-        store.reflectionScene = reflectionScene;
-        store.camera = camera;
-        store.renderer = renderer;
 
         //    console.log("initThreeRenderer",pxRatio, antialias, containerElement, store);
 

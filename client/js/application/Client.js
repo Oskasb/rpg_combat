@@ -4,6 +4,7 @@ import { GameScreen } from './ui/GameScreen.js';
 import { PointerCursor } from './ui/input/PointerCursor.js';
 import { Setup } from './setup/Setup.js';
 import * as THREE from '../../libs/three/three.module.js';
+import { ThreeController } from '../3D/ThreeController.js';
 
 class Client {
 
@@ -13,13 +14,16 @@ class Client {
         this.devMode = devMode;
         this.env = env;
         this.evt = new evt(ENUMS.Event);
+        this.threeController = new ThreeController();
         this.pipelineAPI = new PipelineAPI();
         this.gameScreen = new GameScreen();
+        window.GameScreen = this.gameScreen;
         this.setup = new Setup();
         this.INPUT_STATE = null;
     }
 
     initUiSystem() {
+        this.threeController.setupThreeRenderer();
         this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
         this.INPUT_STATE =  this.pointerCursor.getInputState();
         console.log(this.INPUT_STATE);
@@ -32,8 +36,6 @@ class Client {
             client.setup.initConfigCache(client.pipelineAPI, dataPipelineOptions);
             client.initUiSystem();
         };
-
-
 
         this.setup.initDataPipeline(this.pipelineAPI, pipeWorkersReadyCB)
         this.setup.initGlobalAPIs(this.pipelineAPI);

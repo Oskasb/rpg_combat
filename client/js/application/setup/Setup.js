@@ -1,4 +1,5 @@
 import { ThreeAPI } from '../../3D/three/ThreeAPI.js';
+
 import { InstanceAPI } from '../../3D/three/instancer/InstanceAPI.js';
 import { DomUtils } from '../ui/dom/DomUtils.js';
 import { DataLoader } from '../load/DataLoader.js';
@@ -8,6 +9,7 @@ class Setup {
     constructor() {
         window.DomUtils = new DomUtils();
         this.dataLoader = new DataLoader();
+
     }
 
     initGlobalAPIs(pipelineAPI) {
