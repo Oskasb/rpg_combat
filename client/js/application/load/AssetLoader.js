@@ -1,31 +1,17 @@
-"use strict";
+import {ThreeModel} from '../../3d/three/assets/ThreeModel.js';
+import {ThreeRig} from '../../3d/three/assets/ThreeRig.js';
+import {ThreeMaterial} from '../../3d/three/assets/ThreeMaterial.js';
+import {ThreeTexture} from '../../3d/three/assets/ThreeTexture.js';
+import {ThreeModelSettings} from '../../3d/three/assets/ThreeModelSettings.js';
+import {ThreeModelFile} from '../../3d/three/assets/ThreeModelFile.js';
+import {ThreeMaterialSettings} from '../../3d/three/assets/ThreeMaterialSettings.js';
+import {ThreeTextureSettings} from '../../3d/three/assets/ThreeTextureSettings.js';
+import {ThreeImage} from '../../3d/three/assets/ThreeImage.js';
 
-define([
-        'PipelineAPI',
-        '3d/three/assets/ThreeModel',
-        '3d/three/assets/ThreeRig',
-        '3d/three/assets/ThreeMaterial',
-        '3d/three/assets/ThreeTexture',
-        '3d/three/assets/ThreeModelSettings',
-        '3d/three/assets/ThreeModelFile',
-        '3d/three/assets/ThreeMaterialSettings',
-        '3d/three/assets/ThreeTextureSettings',
-        '3d/three/assets/ThreeImage'
-    ],
-    function(
-        PipelineAPI,
-        ThreeModel,
-        ThreeRig,
-        ThreeMaterial,
-        ThreeTexture,
-        ThreeModelSettings,
-        ThreeModelFile,
-        ThreeMaterialSettings,
-        ThreeTextureSettings,
-        ThreeImage
-    ) {
+class AssetLoader {
+    constructor() {
 
-        var assetMap = {
+        this.assetMap = {
             MODELS_:            ThreeModel,
             RIGS_:              ThreeRig,
             MATERIALS_:         ThreeMaterial,
@@ -37,91 +23,94 @@ define([
             FILES_IMAGES_:      ThreeImage
         };
 
-        var assets = {};
-
-        var AssetLoader = function() {
+        this.assets = {};
 
         };
 
-        AssetLoader.prototype.initAssetConfigs = function() {
+        initAssetConfigs = function() {
 
-            var loadList = function(src, data) {
+            let loadList = function(src, data) {
                 this.loadAssetConfigs(data);
             }.bind(this);
 
             PipelineAPI.subscribeToCategoryKey('ASSETS', 'LOAD', loadList);
         };
 
-        AssetLoader.prototype.loadAssetConfigs = function(assets) {
+        loadAssetConfigs = function(assets) {
 
-            var assetData = function(src, data) {
+            let assetData = function(src, data) {
 
-                for (var i = 0; i < data.length; i++) {
+                for (let i = 0; i < data.length; i++) {
                     this.setAssetConfig(src, data[i].id, data[i]);
                 }
 
             }.bind(this);
 
-            for (var i = 0; i < assets.length; i++) {
+            for (let i = 0; i < assets.length; i++) {
                 PipelineAPI.subscribeToCategoryKey('ASSETS', assets[i], assetData);
             }
 
         };
 
-        AssetLoader.prototype.setAssetConfig = function(assetType, assetId, data) {
+        setAssetConfig = function(assetType, assetId, data) {
             PipelineAPI.setCategoryKeyValue('CONFIGS', assetType+'_'+assetId, data);
         };
 
 
-        var setupAsset = function(assetType, assetId) {
 
-            var assetKey = assetType+assetId;
+        loadAsset = function(assetType, assetId, callback) {
 
-            if (assets[assetKey]) {
-                return;
-            }
+            let assetMap = this.assetMap;
+            let assets = this.assets;
 
-            var configLoaded = function(src, data) {
+            let setupAsset = function(assetType, assetId) {
 
-                var callback = function(asset) {
-                    PipelineAPI.setCategoryKeyValue('ASSET', assetKey, asset);
-                //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, callback)
-                };
+                let assetKey = assetType+assetId;
 
                 if (assets[assetKey]) {
+                    return;
+                }
 
+                let configLoaded = function(src, data) {
+
+                    let callback = function(asset) {
+                        PipelineAPI.setCategoryKeyValue('ASSET', assetKey, asset);
+                        //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, callback)
+                    };
+
+                    if (assets[assetKey]) {
+
+                    } else {
+                        assets[assetKey] = new assetMap[assetType](assetId, data.config, callback);
+                    }
+
+                };
+
+                let cachedConfig = PipelineAPI.readCachedConfigKey('CONFIGS', assetKey);
+                if (cachedConfig === assetKey) {
+                    PipelineAPI.subscribeToCategoryKey('CONFIGS', assetKey, configLoaded);
                 } else {
-                    assets[assetKey] = new assetMap[assetType](assetId, data.config, callback);
+                    configLoaded(assetKey, cachedConfig);
                 }
 
             };
 
-            var cachedConfig = PipelineAPI.readCachedConfigKey('CONFIGS', assetKey);
-            if (cachedConfig === assetKey) {
-                PipelineAPI.subscribeToCategoryKey('CONFIGS', assetKey, configLoaded);
-            } else {
-                configLoaded(assetKey, cachedConfig);
-            }
 
+            let initLoadAsset = function(assetType, assetId, callback) {
+                let assetKey = assetType+assetId;
+                let cachedAsset = PipelineAPI.readCachedConfigKey('ASSET', assetKey);
+                if (cachedAsset === assetKey) {
+                    PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, callback);
+                    setupAsset(assetType, assetId);
+                } else {
+                    //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, callback)
+                    callback(assetKey, cachedAsset);
+                }
+            };
+
+
+            initLoadAsset(assetType, assetId, callback)
         };
+    }
 
-
-        var loadAsset = function(assetType, assetId, callback) {
-            var assetKey = assetType+assetId;
-            var cachedAsset = PipelineAPI.readCachedConfigKey('ASSET', assetKey);
-            if (cachedAsset === assetKey) {
-                PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, callback);
-                setupAsset(assetType, assetId);
-            } else {
-            //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, callback)
-                callback(assetKey, cachedAsset);
-            }
-        };
-
-        AssetLoader.prototype.loadAsset = function(assetType, assetId, callback) {
-            loadAsset(assetType, assetId, callback)
-        };
-
-        return AssetLoader;
-
-    });
+export { AssetLoader };

@@ -1,27 +1,17 @@
-"use strict";
+class ThreeRig {
+    constructor(id, config, callback) {
 
-define([
-        'PipelineAPI'
-    ],
-    function(
-        PipelineAPI
-    ) {
+        let _this = this;
 
-        var ThreeRig = function(id, config, callback) {
-
-            var _this = this;
-
-            var assetLoaded = function(src, asset) {
-        //        console.log(src, asset);
-                _this.joints = asset.config.joints;
-                _this.animations = asset.config.animations;
-                callback(asset.config);
-            };
-
-            PipelineAPI.subscribeToCategoryKey('CONFIGS', 'RIGS_'+id, assetLoaded);
-
+        let assetLoaded = function(src, asset) {
+            //        console.log(src, asset);
+            _this.joints = asset.config.joints;
+            _this.animations = asset.config.animations;
+            callback(asset.config);
         };
 
-        return ThreeRig;
+        PipelineAPI.subscribeToCategoryKey('CONFIGS', 'RIGS_'+id, assetLoaded);
+    };
+}
 
-    });
+export { ThreeRig };

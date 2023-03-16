@@ -33,7 +33,10 @@ class Client {
             client.initUiSystem();
         };
 
+
+
         this.setup.initDataPipeline(this.pipelineAPI, pipeWorkersReadyCB)
+        this.setup.initGlobalAPIs(this.pipelineAPI);
     };
 
     createScene() {

@@ -1,29 +1,20 @@
-"use strict";
-
-define([
-
-    ],
-    function(
-
-    ) {
-
-
-        var ThreeInstanceBufferModel = function(txSettings, verts, uvs, indices) {
-            var uvBuffer = new Float32Array( uvs );
-            var vertexBuffer = new Float32Array( verts );
-            var indexBuffer = new Uint16Array( indices );
+class ThreeInstanceBufferModel {
+    constructor(txSettings, verts, uvs, indices) {
+            let uvBuffer = new Float32Array( uvs );
+        let vertexBuffer = new Float32Array( verts );
+        let indexBuffer = new Uint16Array( indices );
             this.buildGeometry(vertexBuffer, uvBuffer, indexBuffer);
         };
 
-        ThreeInstanceBufferModel.prototype.buildGeometry = function(vertexBuffer, uvBuffer, indexBuffer) {
+        buildGeometry = function(vertexBuffer, uvBuffer, indexBuffer) {
 
-            var geometry = new THREE.InstancedBufferGeometry();
+            let geometry = new THREE.InstancedBufferGeometry();
 
             // per mesh data
-            var vertices = new THREE.BufferAttribute(vertexBuffer, 3 );
+            let vertices = new THREE.BufferAttribute(vertexBuffer, 3 );
             geometry.addAttribute( 'vertexPosition', vertices );
 
-            var uvs = new THREE.BufferAttribute(  uvScaled, 2 );
+            let uvs = new THREE.BufferAttribute(  uvScaled, 2 );
 
             geometry.addAttribute( 'uv', uvs );
 
@@ -31,25 +22,24 @@ define([
 
             this.geometry = geometry;
 
-            var mesh = new THREE.Mesh(geometry);
+            let mesh = new THREE.Mesh(geometry);
             mesh.frustumCulled = false;
             //    mesh.scale.set(1, 1, 1);
-            this.applyMesh(mesh);
+            this.mesh = mesh;
 
         };
 
-        ThreeInstanceBufferModel.prototype.applyMesh = function(mesh) {
+        applyMesh = function(mesh) {
             this.mesh = mesh;
         };
 
-        ThreeInstanceBufferModel.prototype.dispose = function() {
+        dispose = function() {
             ThreeAPI.disposeModel(this.mesh);
         };
 
-        ThreeInstanceBufferModel.prototype.addToScene = function() {
+        addToScene = function() {
             ThreeAPI.addToScene(this.mesh);
         };
 
-        return ThreeInstanceBufferModel;
-
-    });
+    })
+export { ThreeInstanceBufferModel };

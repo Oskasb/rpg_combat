@@ -1,51 +1,38 @@
-"use strict";
+class ThreeSpatialFunctions {
+    constructor() {
 
+        this.calcVec = new THREE.Vector3();
+        this.calcVec2 = new THREE.Vector3();
+        this.pointerFrustumPos = new THREE.Vector3();
+        this.frustumCoordinates = new THREE.Vector3(0, 0, 0);
+        this.hoverCoords = new THREE.Vector3(0, 0, 0);
+        this.distsq;
+        this.sizeFactor = 0.51;
 
-define([
-    'ui/GameScreen'
-], function(
-    GameScreen
-) {
+    }
 
-    var calcVec = new THREE.Vector3();
-    var calcVec2 = new THREE.Vector3();
-    var pointerFrustumPos = new THREE.Vector3();
-    var frustumCoordinates = new THREE.Vector3(0, 0, 0);
-    var hoverCoords = new THREE.Vector3(0, 0, 0);
-    var distsq;
+    getHoverDistanceToPos = function(pos, mouseState) {
 
-    var sizeFactor = 0.51;
-
-    var matchView = function(vec3) {
-        vec3.x *= sizeFactor * GameScreen.getAspect();
-        vec3.v *= sizeFactor;
-        vec3.z = 0;
-    };
-
-    var ThreeSpatialFunctions = function() {
-
-    };
-
-
-    ThreeSpatialFunctions.prototype.getHoverDistanceToPos = function(pos, mouseState) {
+        let matchView = function(vec3) {
+            vec3.x *= sizeFactor * client.gameScreen.getAspect();
+            vec3.v *= sizeFactor;
+            vec3.z = 0;
+        };
 
         pointerFrustumPos.set(
-            ((mouseState.x-GameScreen.getLeft()) / GameScreen.getWidth() - 0.5) ,
-            -((mouseState.y-GameScreen.getTop()) / GameScreen.getHeight()- 0.5) ,
+            ((mouseState.x-client.gameScreen.getLeft()) / client.gameScreen.getWidth() - 0.5) ,
+            -((mouseState.y-client.gameScreen.getTop()) / client.gameScreen.getHeight()- 0.5) ,
             0
         );
 
         matchView(pos);
 
+        this.distsq = pos.distanceToSquared(pointerFrustumPos);
 
-        distsq = pos.distanceToSquared(pointerFrustumPos);
-
-        return distsq;
+        return this.distsq;
 
     };
 
+}
 
-
-    return ThreeSpatialFunctions;
-
-});
+export { ThreeSpatialFunctions }

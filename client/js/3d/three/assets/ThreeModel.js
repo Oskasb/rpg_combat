@@ -1,22 +1,10 @@
-"use strict";
+import {ExpandingPool} from '../../../application/utils/ExpandingPool.js';
+import {InstanceSpatial} from './InstanceSpatial.js';
 
-define([
-        'application/ExpandingPool',
-        '3d/three/instancer/InstanceAPI',
-        '3d/three/assets/InstanceSpatial'
-    ],
-    function(
-        ExpandingPool,
-        InstanceAPI,
-        InstanceSpatial
-    ) {
-
-    var models = 0;
-
-        var ThreeModel = function(id, config, callback) {
-
-            models++;
-            this.modelNr = models;
+class ThreeModel {
+    constructor(id, config, callback) {
+            InstanceAPI.addToModelCount();
+            this.modelNr = InstanceAPI.getModelCount();
 
             this.config = config;
 
@@ -32,7 +20,7 @@ define([
 
             this.hasAnimations = false;
 
-            var materialLoaded = function(src, asset) {
+            let materialLoaded = function(src, asset) {
             //    console.log(src, asset);
                 this.material = asset;
 
@@ -43,13 +31,13 @@ define([
                 callback(this);
             }.bind(this);
 
-            var modelSettingsLoaded = function(src, asset) {
+        let modelSettingsLoaded = function(src, asset) {
              //   console.log(src, asset);
                 this.settings = asset.settings;
                 ThreeAPI.loadThreeAsset('MATERIALS_', config.material, materialLoaded);
             }.bind(this);
 
-            var modelFilesLoaded = function(src, asset) {
+        let modelFilesLoaded = function(src, asset) {
                  ThreeAPI.loadThreeAsset('MODEL_SETTINGS_', config.settings, modelSettingsLoaded);
             }.bind(this);
 
@@ -57,12 +45,12 @@ define([
 
         };
 
-        ThreeModel.prototype.geometryInstancingSettings = function() {
+        geometryInstancingSettings = function() {
         //    console.log(this.settings.instancing)
             return this.settings.instancing;
         };
 
-        ThreeModel.prototype.setupGeometryInstancing = function() {
+        setupGeometryInstancing = function() {
 
             var instancingSettings = this.geometryInstancingSettings();
             this.instanceBuffers = InstanceAPI.registerGeometry(this.id, this.model, instancingSettings, this.material.getAssetMaterial());
@@ -81,12 +69,12 @@ define([
             this.expandingPool = new ExpandingPool(this.id, instantiateAsset);
         };
 
-        ThreeModel.prototype.getAnimationClip = function(animationClipKey) {
+        getAnimationClip = function(animationClipKey) {
             var animScene = this.animations[animationClipKey].scene;
             return animScene.animations[0]
         };
 
-        ThreeModel.prototype.loadModelFiles = function(config, callback) {
+        loadModelFiles = function(config, callback) {
 
             var rqs = 0;
             var rds = 0;
@@ -153,7 +141,7 @@ define([
 
         };
 
-        ThreeModel.prototype.recoverModelClone = function(spatial) {
+        recoverModelClone = function(spatial) {
 
             if (this.geometryInstancingSettings()) {
                 spatial.setPosXYZ(20+this.modelNr*5, 5+this.expandingPool.poolEntryCount()*0.3, 30);
@@ -172,20 +160,19 @@ define([
 
         };
 
-        ThreeModel.prototype.getModelMaterial = function() {
+        getModelMaterial = function() {
             return this.material.getAssetMaterial();
         };
 
-        ThreeModel.prototype.getModelClone = function(callback) {
+        getModelClone = function(callback) {
 
             if (this.geometryInstancingSettings()) {
                 this.expandingPool.getFromExpandingPool(callback);
             } else {
                 this.model.getCloneFromPool(callback);
             }
-
         };
 
-        return ThreeModel;
+    }
 
-    });
+export { ThreeModel }

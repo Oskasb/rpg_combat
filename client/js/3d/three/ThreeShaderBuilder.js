@@ -1,25 +1,22 @@
-"use strict";
+import {PipelineObject} from '../../application/load/PipelineObject.js';
 
-define([
-    'application/PipelineObject',
-    'PipelineAPI',
-    'evt'
-    ],
-    function(
-        PipelineObject,
-        PipelineAPI,
-        evt
-    ) {
+class ThreeShaderBuilder {
+    constructor() {
+        this.shaderChunks = {};
+        this.shaderDataIndex = {};
+        this.buildTimeout;
+        this.gl;
+        this.okCount = 0;
+    }
+        loadShaderData = function(glContext) {
 
-        var shaderDataIndex = {};
-        var buildTimeout;
+           let shaderChunks = this.shaderChunks;
+           let shaderDataIndex = this.shaderDataIndex;
+           let buildTimeout = this.buildTimeout;
+           let gl = this.gl;
+           let okCount = this.okCount;
 
-        var gl;
-
-        var okCount = 0;
-
-
-        function testShader( src, type ) {
+        let testShader = function( src, type ) {
 
             var types = {
                 fragment:gl.FRAGMENT_SHADER,
@@ -56,36 +53,30 @@ define([
             }
 
             okCount++;
-        //    console.log("Shader OK:", okCount);
+            //    console.log("Shader OK:", okCount);
             return shader;
         }
 
-
-        var ShaderBuilder = function() {
-            this.shaderChunks = {};
-        };
-
-
-        var buildStringChunks = function(src, data) {
+        let buildStringChunks = function(src, data) {
             var chunks = {}
             for (var key in data) {
                 chunks[key] = data[key].join( "\n" );
                 PipelineAPI.setCategoryKeyValue(src, key, chunks[key]+"\n");
             }
             notifyShaderDataUpdate();
-        //    console.log("CACHE STRING CHUNKS:", src, chunks);
+            //    console.log("CACHE STRING CHUNKS:", src, chunks);
         };
 
-        var mapThreeShaderChunks = function() {
+            let mapThreeShaderChunks = function() {
             var chunks = {}
             for (var key in THREE.ShaderChunk) {
                 chunks[key] = THREE.ShaderChunk[key];
                 PipelineAPI.setCategoryKeyValue("THREE_CHUNKS", key, "\n" + chunks[key] + "\n");
             }
-        //    console.log("CACHE THREE CHUNKS:", chunks);
+            //    console.log("CACHE THREE CHUNKS:", chunks);
         };
 
-        var combineProgramFromSources = function(sources) {
+            let combineProgramFromSources = function(sources) {
             var programString = '';
             for (var i = 0; i < sources.length; i++) {
                 programString += PipelineAPI.readCachedConfigKey(sources[i].source, sources[i].chunk) + "\n";
@@ -93,8 +84,7 @@ define([
             return programString;
         };
 
-
-        var buildShaderPrograms = function(src, data) {
+            let buildShaderPrograms = function(src, data) {
 
             var program = {};
             var cached = PipelineAPI.readCachedConfigKey("SHADERS", src);
@@ -119,7 +109,7 @@ define([
 
                     return;
                 } else {
-    //                console.log("Shader Test success: ", src, key)
+                    //                console.log("Shader Test success: ", src, key)
                 }
 
                 if (cached) {
@@ -131,50 +121,50 @@ define([
             }
 
             PipelineAPI.setCategoryKeyValue("SHADERS", src, program);
-    //        console.log("CACHED SHADER PROGRAMS:", src, PipelineAPI.getCachedConfigs());
+            //        console.log("CACHED SHADER PROGRAMS:", src, PipelineAPI.getCachedConfigs());
         };
 
-        var buildShadersFromIndex = function() {
+            let buildShadersFromIndex = function() {
             for (var key in shaderDataIndex) {
                 buildShaderPrograms(key, shaderDataIndex[key]);
             }
         };
 
-        var registerShaderProgram = function(src, data) {
+            let registerShaderProgram = function(src, data) {
             shaderDataIndex[src] = {};
             for (var key in data) {
                 shaderDataIndex[src][key] = data[key];
             }
-        //    console.log("SHADER DATA INDEX:", shaderDataIndex);
+            //    console.log("SHADER DATA INDEX:", shaderDataIndex);
             notifyShaderDataUpdate();
         };
 
-        var notifyShaderDataUpdate = function() {
+            let notifyShaderDataUpdate = function() {
             clearTimeout(buildTimeout, 1);
             buildTimeout = setTimeout(function() {
                 buildShadersFromIndex();
             }, 10);
         };
 
-        var loadChunkIndex = function(src, data) {
+            let loadChunkIndex = function(src, data) {
             for (var i = 0; i < data.length; i++) {
                 new PipelineObject("SHADER_CHUNKS",   data[i], buildStringChunks)
             }
         };
 
-        var loadProgramIndex = function(src, data) {
+            let loadProgramIndex = function(src, data) {
             for (var i = 0; i < data.length; i++) {
                 new PipelineObject("SHADER_PROGRAMS",   data[i], buildStringChunks)
             }
         };
 
-        var loadShaderIndex = function(src, data) {
+            let loadShaderIndex = function(src, data) {
             for (var i = 0; i < data.length; i++) {
                 new PipelineObject("SHADERS_THREE",   data[i], registerShaderProgram)
             }
         };
 
-        var monkeyPatchStandardShaderForInstancing = function() {
+            let monkeyPatchStandardShaderForInstancing = function() {
 
 
             THREE.ShaderLib.lambert = { // this is a cut-and-paste of the lambert shader -- modified to accommodate instancing for this app
@@ -247,7 +237,7 @@ define([
 
             };
 
-        //    var attributes = ["offset", "vertexColor", "scale3d", "orientation"],
+            //    var attributes = ["offset", "vertexColor", "scale3d", "orientation"],
 
             THREE.ShaderLib.physical = { // this is a cut-and-paste of the physical shader -- modified to accommodate instancing for this app
 
@@ -346,18 +336,6 @@ define([
 
         };
 
-        /*
-
-                    transformed = transformed.xzy;
-                    vec3 vcV = cross(orientation.xyz, transformed);
-                    transformed = vcV * (2.0 * orientation.w) + (cross(orientation.xyz, vcV) * 2.0 + transformed);
-
-					transformed *= scale3d;
-					transformed = transformed + offset;
-
-         */
-
-        ShaderBuilder.prototype.loadShaderData = function(glContext) {
 
             gl = glContext;
 
@@ -372,7 +350,6 @@ define([
 
         };
 
-        
-        return ShaderBuilder;
+    }
 
-    });
+export { ThreeShaderBuilder }

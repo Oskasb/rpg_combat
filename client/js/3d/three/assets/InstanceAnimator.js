@@ -1,14 +1,10 @@
-"use strict";
+class InstanceAnimator {
+    constructor(instancedModel) {
 
-define([
-
-    ],
-    function() {
-
-        var action;
-        var animKey;
-
-        var InstanceAnimator = function(instancedModel) {
+        this.action = null;
+        this.animKey = null;
+        this.loopModes = [THREE.LoopOnce, THREE.LoopRepeat, THREE.LoopPingPong];
+        this.clampModes = [false, true];
             this.animationActions = {};
             this.instancedModel = instancedModel;
 
@@ -18,11 +14,11 @@ define([
             this.setupAnimations(this.instancedModel.getAnimationMap())
         };
 
-        InstanceAnimator.prototype.addMixer = function(clone) {
+        addMixer = function(clone) {
             this.mixer = new THREE.AnimationMixer( clone );
         };
 
-        InstanceAnimator.prototype.setupAnimations = function(animMap) {
+        setupAnimations = function(animMap) {
 
             this.actionKeys = [];
 
@@ -37,7 +33,7 @@ define([
             }
         };
 
-        InstanceAnimator.prototype.initAnimatior = function() {
+        initAnimatior = function() {
 
             for (var key in this.animationActions) {
                 var action = this.animationActions[key];
@@ -49,7 +45,7 @@ define([
         };
 
 
-        InstanceAnimator.prototype.addAnimationAction = function(actionClip) {
+        addAnimationAction = function(actionClip) {
             if (!actionClip) {
                 console.log("No Anim Clip", this)
                 return;
@@ -59,22 +55,18 @@ define([
         };
 
 
-        var loopModes = [THREE.LoopOnce, THREE.LoopRepeat, THREE.LoopPingPong];
-        var clampModes = [false, true];
 
+        getSyncSource = function(sync) {
 
-
-        var src;
-        InstanceAnimator.prototype.getSyncSource = function(sync) {
             for (var i = 0; i < this.channels.length; i++ ) {
-                src = MATH.getFromArrayByKeyValue(this.channels[i], 'sync', sync);
+                let src = MATH.getFromArrayByKeyValue(this.channels[i], 'sync', sync);
                 if (src) {
                     return src;
                 }
             }
         };
 
-        InstanceAnimator.prototype.syncAction = function(action) {
+        syncAction = function(action) {
 
             let syncSrc = this.getSyncSource(action.sync);
             if (syncSrc) {
@@ -97,7 +89,7 @@ define([
 
         };
 
-        InstanceAnimator.prototype.startChannelAction = function(channel, action, weight, fade, loop, clamp, timeScale, sync) {
+        startChannelAction = function(channel, action, weight, fade, loop, clamp, timeScale, sync) {
     //        console.log("start chan action", action);
 
                 action.reset();
@@ -122,7 +114,7 @@ define([
 
         };
 
-        InstanceAnimator.prototype.fadeinChannelAction = function(channel, toAction, weight, fade, loop, clamp, timeScale, sync) {
+        fadeinChannelAction = function(channel, toAction, weight, fade, loop, clamp, timeScale, sync) {
 
             if (channel.indexOf(toAction) === -1) {
 
@@ -148,16 +140,16 @@ define([
         };
 
 
-        InstanceAnimator.prototype.stopChannelAction = function(channel, action) {
+        stopChannelAction = function(channel, action) {
 
             MATH.quickSplice(channel, action);
             action.stop();
         };
 
 
-        InstanceAnimator.prototype.updateAnimationAction = function(animationKey, weight, timeScale, fade, chan, loop, clamp, sync) {
-            animKey = ENUMS.getKey('Animations', animationKey);
-            action = this.animationActions[animKey];
+        updateAnimationAction = function(animationKey, weight, timeScale, fade, chan, loop, clamp, sync) {
+            let animKey = ENUMS.getKey('Animations', animationKey);
+            let action = this.animationActions[animKey];
             action.channel = chan;
         //    console.log("anim event:", animationKey, weight, timeScale, fade, chan);
 
@@ -192,15 +184,17 @@ define([
 
         };
 
-        InstanceAnimator.prototype.activateAnimator = function() {
+        activateAnimator = function() {
         //    this.initAnimatior()
             ThreeAPI.activateMixer(this.mixer);
         };
 
-        InstanceAnimator.prototype.deActivateAnimator = function() {
+        deActivateAnimator = function() {
             ThreeAPI.deActivateMixer(this.mixer);
         };
 
-        return InstanceAnimator;
 
-    });
+
+    }
+
+export { InstanceAnimator }

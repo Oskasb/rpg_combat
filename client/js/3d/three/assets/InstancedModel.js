@@ -1,21 +1,12 @@
-"use strict";
+import {InstanceAnimator} from './InstanceAnimator.js';
+import {InstanceDynamicJoint} from './InstanceDynamicJoint.js';
 
-define([
-        '3d/three/assets/InstanceAnimator',
-        '3d/three/assets/InstanceDynamicJoint',
-        'evt'
-    ],
-    function(
-        InstanceAnimator,
-        InstanceDynamicJoint,
-        evt
-    ) {
-
-        var InstancedModel = function(originalAsset) {
+class InstancedModel {
+    constructor(originalAsset) {
             this.originalAsset = originalAsset;
             this.originalModel = originalAsset.model;
-
-            var onUpdateEvent = function(event) {
+            this.unifVec = {x:0, y:0, z:0};
+            let onUpdateEvent = function(event) {
                 this.handleUpdateEvent(event)
             }.bind(this);
 
@@ -29,52 +20,52 @@ define([
             this.attachments = [];
         };
 
-        InstancedModel.prototype.getAssetId = function() {
+        getAssetId = function() {
             return this.originalAsset.id;
         };
 
-        InstancedModel.prototype.setPointer = function(ptr) {
+        setPointer = function(ptr) {
             this.clearEventListener();
             this.ptr = ptr;
             this.setupEventListener();
         };
 
-        InstancedModel.prototype.getPointer = function() {
+        getPointer = function() {
             return this.ptr;
         };
 
-        InstancedModel.prototype.getSpatial = function() {
+        getSpatial = function() {
             return this.spatial;
         };
 
-        InstancedModel.prototype.handleUpdateEvent = function(event) {
-            evt.parser.parseEntityEvent(this, event);
+        handleUpdateEvent = function(event) {
+         //   evt.parser.parseEntityEvent(this, event);
         };
 
-        InstancedModel.prototype.requestAttachment = function(attachInstance) {
+        requestAttachment = function(attachInstance) {
             this.attachInstancedModel(attachInstance);
         };
 
-        InstancedModel.prototype.getDynamicJoint = function(jointEnum) {
+        getDynamicJoint = function(jointEnum) {
             var boneName = this.originalModel.jointMap[ENUMS.getKey('Joints', jointEnum)];
             this.boneMap[boneName].setJointEnum(jointEnum)
             return this.boneMap[boneName];
         };
 
-        InstancedModel.prototype.requestAttachToJoint = function(attachInstance, dynJoint) {
+        requestAttachToJoint = function(attachInstance, dynJoint) {
             attachInstance.getSpatial().attachToDynamicJoint(dynJoint);
         };
 
 
-        InstancedModel.prototype.setupEventListener = function() {
-            evt.on(this.ptr, this.callbacks.onUpdateEvent)
+        setupEventListener = function() {
+            client.evt.on(this.ptr, this.callbacks.onUpdateEvent)
         };
 
-        InstancedModel.prototype.clearEventListener = function() {
-            evt.removeListener(this.ptr, this.callbacks.onUpdateEvent)
+        clearEventListener = function() {
+            client.evt.removeListener(this.ptr, this.callbacks.onUpdateEvent)
         };
 
-        InstancedModel.prototype.initModelInstance = function(callback) {
+        initModelInstance = function(callback) {
 
             var cloned = function(spatial) {
                 this.spatial = spatial;
@@ -97,7 +88,7 @@ define([
             this.originalModel.getModelClone(cloned)
         };
 
-        InstancedModel.prototype.applyModelMaterial = function(clone, material) {
+        applyModelMaterial = function(clone, material) {
 
             var _this = this;
 
@@ -114,7 +105,7 @@ define([
             this.mapBones();
         };
 
-        InstancedModel.prototype.setActive = function(ENUM) {
+        setActive = function(ENUM) {
             this.active = ENUM;
             if (this.active !== ENUMS.InstanceState.DECOMISSION ) {
                 this.activateInstancedModel();
@@ -132,11 +123,11 @@ define([
         };
 
 
-        InstancedModel.prototype.getObj3d = function() {
+        getObj3d = function() {
             return this.obj3d;
         };
 
-        InstancedModel.prototype.mapBones = function() {
+        mapBones = function() {
 
             var mapSkinBones = function(parent) {
                 var parentSkel = parent.skeleton;
@@ -165,7 +156,7 @@ define([
         };
 
 
-        InstancedModel.prototype.attachInstancedModel = function(instancedModel) {
+        attachInstancedModel = function(instancedModel) {
 
             var getBoneByName = function(bones, name) {
                 for (var i = 0; i < bones.length; i++) {
@@ -208,24 +199,24 @@ define([
 
         };
 
-        InstancedModel.prototype.detatchInstancedModel = function(instancedModel) {
+        detatchInstancedModel = function(instancedModel) {
             this.obj3d.remove(instancedModel.obj3d);
         //    instancedModel.decommissionInstancedModel()
         };
 
-        InstancedModel.prototype.detatchAllAttachmnets = function() {
+        detatchAllAttachmnets = function() {
             while (this.attachments.length) {
                 this.detatchInstancedModel(this.attachments.pop())
             }
         };
 
-        InstancedModel.prototype.getAnimationMap = function() {
+        getAnimationMap = function() {
             return this.originalModel.animMap;
         };
 
-        var unifVec = {x:0, y:0, z:0}
 
-        InstancedModel.prototype.updateSpatialWorldMatrix = function() {
+
+        updateSpatialWorldMatrix = function() {
 
         //    this.getSpatial().updateSpatialMatrix();
 
@@ -258,10 +249,10 @@ define([
             let moveDist = this.getSpatial().getFrameMovement();
             if (moveDist.lengthSq()) {
                 let pos =  this.getSpatial().getSpatialPosition();
-                unifVec.x = pos.x;
-                unifVec.y = pos.y;
-                unifVec.z = pos.z;
-                ThreeAPI.registerDynamicGlobalUniform('character',unifVec)
+                this.unifVec.x = pos.x;
+                this.unifVec.y = pos.y;
+                this.unifVec.z = pos.z;
+                ThreeAPI.registerDynamicGlobalUniform('character',this.unifVec)
                 moveDist.set(0, 0, 0);
             }
 
@@ -269,11 +260,11 @@ define([
 
 
 
-        InstancedModel.prototype.updateAnimationState = function(animationKey, weight, timeScale, fade, channel, loop, clamp, sync) {
+        updateAnimationState = function(animationKey, weight, timeScale, fade, channel, loop, clamp, sync) {
             this.animator.updateAnimationAction(animationKey, weight, timeScale, fade, channel, loop, clamp, sync);
         };
 
-        InstancedModel.prototype.activateInstancedModel = function() {
+        activateInstancedModel = function() {
             this.isDecomiisisoned = false;
             ThreeAPI.addToScene(this.obj3d);
             if (this.animator) {
@@ -281,15 +272,14 @@ define([
             }
         };
 
-        InstancedModel.prototype.decommissionInstancedModel = function() {
+        decommissionInstancedModel = function() {
 
-            WorkerAPI.getDynamicMain().removeFromIsntanceIndex(this);
+            // WorkerAPI.getDynamicMain().removeFromIsntanceIndex(this);
 
             if (this.isDecomiisisoned) {
                 console.log("Already Decomissioned");
             }
             this.isDecomiisisoned = true;
-
 
             this.clearEventListener();
             if (this.animator) {
@@ -299,6 +289,6 @@ define([
             this.originalAsset.disableAssetInstance(this);
         };
 
-        return InstancedModel;
+    }
 
-    });
+export { InstancedModel };

@@ -1,25 +1,17 @@
-"use strict";
+import {InstanceBuffer} from './InstanceBuffer.js';
+import {GeometryInstance} from './GeometryInstance.js';
 
+class InstanceAPI {
+    constructor() {
+        this.modelCount = 0;
+        this.tempVec = new THREE.Vector3();
+        this.instanceBuffers = {};
 
-define([
-        '3d/three/instancer/InstanceBuffer',
-        '3d/three/instancer/GeometryInstance'
-    ],
-    function(
-        InstanceBuffer,
-        GeometryInstance
-    ) {
-
-        var instanceBuffers = {};
-
-        var instances = {};
-        var materials = [];
-
-        var uiSystems = {};
-
-        var systemTime = 0;
-
-        var attributes = {
+        this.instances = {};
+        this.materials = [];
+        this.uiSystems = {};
+        this.systemTime = 0;
+        this.attributes = {
             "startTime"      : { "dimensions":1, "dynamic":true },
             "duration"       : { "dimensions":1, "dynamic":false},
             "offset"         : { "dimensions":3, "dynamic":false},
@@ -32,22 +24,29 @@ define([
             "scale3d"        : { "dimensions":3, "dynamic":false},
             "orientation"    : { "dimensions":4, "dynamic":false}
         };
+    }
 
-        var InstanceAPI = function() {};
+    addToModelCount() {
+        this.modelCount++;
+    }
 
+    getModelCount() {
+        return this.modelCount;
+    }
 
-        InstanceAPI.registerGeometry = function(id, model, settings, material) {
+        registerGeometry = function(id, model, settings, material) {
 
-            if (materials.indexOf(material) === -1) {
-                materials.push(material);
+            if (this.materials.indexOf(material) === -1) {
+                this.materials.push(material);
             }
 
             var count = settings.instances;
             var attribs = settings.attributes;
 
             var buffers = {};
-            InstanceBuffer.extractFirstMeshGeometry(model.scene.children[0], buffers);
             var insBufs = new InstanceBuffer(buffers.verts, buffers.uvs, buffers.indices, buffers.normals);
+            insBufs.extractFirstMeshGeometry(model.scene.children[0], buffers);
+
 
             for (var i = 0; i < attribs.length; i++) {
                 var attrib = attributes[attribs[i]];
@@ -62,7 +61,7 @@ define([
             return insBufs;
         };
 
-        InstanceAPI.instantiateGeometry = function(id, callback) {
+        instantiateGeometry = function(id, callback) {
             if (!instances[id]) {
                 instances[id] = []
             }
@@ -73,67 +72,66 @@ define([
             callback(instance);
         };
 
-        InstanceAPI.setupInstancingBuffers = function(msg) {
+        setupInstancingBuffers = function(msg) {
 
-            var uiSysId     = msg[0];
-            var assetId     = msg[1];
-            var bufferNames = msg[2];
-            var buffers     = msg[3];
-            var order       = msg[4];
+            let _this = this;
+            let uiSysId     = msg[0];
+            let assetId     = msg[1];
+            let bufferNames = msg[2];
+            let buffers     = msg[3];
+            let order       = msg[4];
 
-            if (!uiSystems[uiSysId]) {
-                uiSystems[uiSysId] = [];
+            if (!this.uiSystems[uiSysId]) {
+                this.uiSystems[uiSysId] = [];
             }
 
-            var assetLoaded = function(src, asset) {
+            let assetLoaded = function(src, asset) {
 
-                var instanceBuffers = asset.instanceBuffers;
-                for (var i = 0; i < bufferNames.length; i++) {
-                    var attrib = attributes[bufferNames[i]];
+                let instanceBuffers = asset.instanceBuffers;
+                for (let i = 0; i < bufferNames.length; i++) {
+                    let attrib = attributes[bufferNames[i]];
                     instanceBuffers.attachAttribute(buffers[i], bufferNames[i], attrib.dimensions, attrib.dynamic)
                 }
 
                 instanceBuffers.setRenderOrder(order)
-                uiSystems[uiSysId].push(instanceBuffers);
+                _this.uiSystems[uiSysId].push(instanceBuffers);
             }
 
             ThreeAPI.loadThreeAsset('MODELS_', assetId, assetLoaded);
 
         };
 
-        var updateUiSystemBuffers = function(instanceBuffers) {
 
-            instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates(systemTime));
-        };
 
-        var quat;
-        var tempVec = new THREE.Vector3();
-        var i;
+        updateInstances = function(tpf) {
 
-        InstanceAPI.updateInstances = function(tpf) {
+            let updateUiSystemBuffers = function(instanceBuffers) {
 
-            systemTime += tpf;
+                instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates(systemTime));
+            };
 
-            for (var key in uiSystems) {
-                for (i = 0; i < uiSystems[key].length; i++) {
-                    updateUiSystemBuffers(uiSystems[key][i])
+
+
+            this.systemTime += tpf;
+
+            for (let key in this.uiSystems) {
+                for (let i = 0; i < this.uiSystems[key].length; i++) {
+                    updateUiSystemBuffers(this.uiSystems[key][i])
                 }
             }
-
-            var mat;
 
             ThreeAPI.setGlobalUniform('fogDensity', ThreeAPI.readEnvironmentUniform('fog', 'density'));
             ThreeAPI.setGlobalUniform( 'fogColor' ,ThreeAPI.readEnvironmentUniform('fog', 'color'));
             ThreeAPI.setGlobalUniform( 'sunLightColor' ,ThreeAPI.readEnvironmentUniform('sun', 'color'));
             ThreeAPI.setGlobalUniform( 'ambientLightColor' ,ThreeAPI.readEnvironmentUniform('ambient', 'color'));
 
-            quat = ThreeAPI.readEnvironmentUniform('sun', 'quaternion');
-            tempVec.set(0, 0, -1);
-            tempVec.applyQuaternion(quat);
-            ThreeAPI.setGlobalUniform( 'sunLightDirection' ,tempVec);
+            let quat = ThreeAPI.readEnvironmentUniform('sun', 'quaternion');
+            this.tempVec.set(0, 0, -1);
+            this.tempVec.applyQuaternion(quat);
+            ThreeAPI.setGlobalUniform( 'sunLightDirection' ,this.tempVec);
 
-            for (i = 0; i < materials.length; i++) {
-                mat = materials[i];
+            for (let i = 0; i < this.materials.length; i++) {
+                let mat = this.materials[i];
                 if (mat.uniforms) {
                     if (mat.uniforms.systemTime) {
                         mat.uniforms.systemTime.value = systemTime;
@@ -146,7 +144,6 @@ define([
 
         };
 
+    }
 
-        return InstanceAPI;
-    });
-
+export { InstanceAPI };

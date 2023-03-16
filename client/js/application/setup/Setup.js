@@ -1,8 +1,16 @@
+import { ThreeAPI } from '../../3D/three/ThreeAPI.js';
+import { InstanceAPI } from '../../3D/three/instancer/InstanceAPI.js';
 
 class Setup {
 
     constructor() {
         this.dataLoader = null;
+    }
+
+    initGlobalAPIs(pipelineAPI) {
+        window.PipelineAPI = pipelineAPI;
+        window.InstanceAPI = new InstanceAPI();
+        window.ThreeAPI = new ThreeAPI();
     }
 
     initDataPipeline(pipelineAPI, pipelineReadyCB) {

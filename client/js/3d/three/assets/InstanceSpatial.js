@@ -1,28 +1,19 @@
-"use strict";
+class InstanceSpatial{
 
-define([
-        'evt'
-    ],
-    function(
-        evt
-    ) {
-
-    var tempVec1 = new THREE.Vector3();
-
-        var InstanceSpatial = function(obj3d) {
+        constructor(obj3d) {
             this.obj3d = obj3d;
             this.frameMovement = new THREE.Vector3();
         };
 
-        InstanceSpatial.prototype.getFrameMovement = function() {
+        getFrameMovement = function() {
             return this.frameMovement;
         };
 
-        InstanceSpatial.prototype.getSpatialPosition = function() {
+        getSpatialPosition = function() {
             return this.obj3d.position;
         };
 
-        InstanceSpatial.prototype.setPosXYZ = function(x, y, z) {
+        setPosXYZ = function(x, y, z) {
             this.frameMovement.copy(this.obj3d.position);
             this.obj3d.position.x = x;
             this.obj3d.position.y = y;
@@ -33,7 +24,7 @@ define([
             }
         };
 
-        InstanceSpatial.prototype.setQuatXYZW = function(x, y, z, w) {
+        setQuatXYZW = function(x, y, z, w) {
             this.obj3d.quaternion.x = x;
             this.obj3d.quaternion.y = y;
             this.obj3d.quaternion.z = z;
@@ -43,7 +34,7 @@ define([
             }
         };
 
-        InstanceSpatial.prototype.setScaleXYZ = function(x, y, z) {
+        setScaleXYZ = function(x, y, z) {
             this.obj3d.scale.x = x;
             this.obj3d.scale.y = y;
             this.obj3d.scale.z = z;
@@ -53,12 +44,12 @@ define([
         };
 
 
-        InstanceSpatial.prototype.attachToDynamicJoint = function(dynamicJoint) {
+        attachToDynamicJoint = function(dynamicJoint) {
             this.dynamicJoint = dynamicJoint;
         };
 
 
-        InstanceSpatial.prototype.stickToDynamicJoint = function() {
+        stickToDynamicJoint = function() {
 
             let obj3d = this.dynamicJoint.obj3d;
 
@@ -75,7 +66,7 @@ define([
         };
 
 
-        InstanceSpatial.prototype.updateSpatialFrame = function() {
+        updateSpatialFrame = function() {
 
             if (this.dynamicJoint) {
             //    this.dynamicJoint.stickToBoneWorldMatrix();
@@ -84,7 +75,7 @@ define([
 
         };
 
-        InstanceSpatial.prototype.updateSpatialMatrix = function() {
+        updateSpatialMatrix = function() {
 
             if (!this.geometryInstance) {
                 this.obj3d.updateMatrixWorld();
@@ -93,12 +84,10 @@ define([
         };
 
 
-        InstanceSpatial.prototype.setGeometryInstance = function(geomIns) {
+        setGeometryInstance = function(geomIns) {
             this.geometryInstance = geomIns;
         };
 
-        return InstanceSpatial;
+    }
 
-    });
-
-
+export {InstanceSpatial}

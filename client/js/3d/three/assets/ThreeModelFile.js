@@ -1,37 +1,65 @@
-"use strict";
+import {ExpandingPool} from '../../../application/utils/ExpandingPool.js';
+import {InstanceSpatial} from './InstanceSpatial.js';
 
-define([
-        'application/ExpandingPool',
-        '3d/three/assets/InstanceSpatial'
-    ],
-    function(
-        ExpandingPool,
-        InstanceSpatial
-    ) {
-
-        var ThreeModelFile = function(id, config, callback) {
+        class ThreeModelFile {
+            constructor(id, config, callback) {
 
         //    console.log("ThreeModelFile", id, config);
 
             this.id = id;
 
 
-            var instantiateAsset = function(assetId, callback) {
+            let instantiateAsset = function(assetId, callback) {
                 this.cloneSkinnedModelOriginal(callback)
             }.bind(this);
 
             this.expandingPool = new ExpandingPool(this.id, instantiateAsset);
 
-            var modelLoaded = function(glb) {
+                let modelLoaded = function(glb) {
             //    console.log("glb loaded", glb);
                 this.scene = glb;
                 callback(this);
             }.bind(this);
 
+
+
+                let loader = new THREE.GLTFLoader();
+                let loadGLB = function(url, cacheMesh) {
+
+                    // Makes a Scene
+
+                    let obj;
+                    let animations = [];
+
+                    let err = function(e, x) {
+                        console.log("glb ERROR:", e, x);
+                    };
+
+                    let prog = function(p, x) {
+                        //    console.log("glb PROGRESS:", p, x);
+                    };
+
+                    let loaded = function ( model ) {
+
+                        obj = model.scene;
+                        obj.animations = model.animations;
+
+                        cacheMesh(obj);
+                    };
+
+                    let loadModel = function(src) {
+
+                        loader.load(src, loaded, prog, err);
+                    };
+
+                    loadModel(url+'.glb')
+
+                };
+
             loadGLB(config.url, modelLoaded)
         };
 
-        ThreeModelFile.prototype.returnCloneToPool = function(spatial) {
+        returnCloneToPool = function(spatial) {
             ThreeAPI.hideModel(spatial.obj3d);
 
             if (this.expandingPool.pool.indexOf(spatial) !== -1) {
@@ -42,57 +70,18 @@ define([
             this.expandingPool.returnToExpandingPool(spatial);
         };
 
-        ThreeModelFile.prototype.getCloneFromPool = function(callback) {
+        getCloneFromPool = function(callback) {
             this.expandingPool.getFromExpandingPool(callback)
         };
 
 
-        ThreeModelFile.prototype.cloneMeshModelOriginal = function() {
+        cloneMeshModelOriginal = function() {
             return this.scene.clone();
         };
 
-        ThreeModelFile.prototype.cloneSkinnedModelOriginal = function(callback) {
-            var clone = cloneGltf(this.scene, this.cloneMeshModelOriginal());
-            clone.frustumCulled = false;
-            var spatial = new InstanceSpatial(clone);
-            callback(spatial)
-        };
+        cloneSkinnedModelOriginal = function(callback) {
 
-        var loader = new THREE.GLTFLoader();
-
-        var loadGLB = function(url, cacheMesh) {
-
-            // Makes a Scene
-
-            var obj;
-            var animations = [];
-
-            var err = function(e, x) {
-                console.log("glb ERROR:", e, x);
-            };
-
-            var prog = function(p, x) {
-            //    console.log("glb PROGRESS:", p, x);
-            };
-
-            var loaded = function ( model ) {
-
-                obj = model.scene;
-                obj.animations = model.animations;
-
-                cacheMesh(obj);
-            };
-
-            var loadModel = function(src) {
-
-                loader.load(src, loaded, prog, err);
-            };
-
-            loadModel(url+'.glb')
-
-        };
-
-        var cloneGltf = function(mesh, clone) {
+            let cloneGltf = function(mesh, clone) {
 
                 var skinnedMeshes = {};
 
@@ -133,9 +122,16 @@ define([
                         cloneSkinnedMesh.matrixWorld);
                 }
 
-            return clone
+                return clone
+            };
+
+
+            var clone = cloneGltf(this.scene, this.cloneMeshModelOriginal());
+            clone.frustumCulled = false;
+            var spatial = new InstanceSpatial(clone);
+            callback(spatial)
         };
 
-        return ThreeModelFile;
+    }
 
-    });
+export { ThreeModelFile };

@@ -1,52 +1,46 @@
-"use strict";
+class ExpandingPool {
+    constructor(dataKey, createFunc) {
 
-define([],
-    function() {
-        
-        var ExpandingPool = function(key, createFunc) {
-
-            var dataKey = key;
-            this.pool = [];
-
-            this.generatePoolEntry = function(callback) {
-                createFunc(dataKey, callback)
-            };
-
+        this.pool = [];
+        this.generatePoolEntry = function(callback) {
+            createFunc(dataKey, callback)
         };
 
-        ExpandingPool.prototype.poolEntryCount = function() {
-            return this.pool.length
-        };
+    };
 
-        ExpandingPool.prototype.pushEP = function(entry) {
-            return this.pool.push(entry);
-        };
+    poolEntryCount = function() {
+        return this.pool.length
+    };
 
-        ExpandingPool.prototype.shiftEP = function() {
-            return this.pool.shift()
-        };
+    pushEP = function(entry) {
+        return this.pool.push(entry);
+    };
 
-        ExpandingPool.prototype.getFromExpandingPool = function(callback) {
+    shiftEP = function() {
+        return this.pool.shift()
+    };
 
-            if (this.poolEntryCount() > 1) {
-                callback(this.shiftEP());
-            } else {
-                this.generatePoolEntry(callback)
-            }
-        };
+    getFromExpandingPool = function(callback) {
 
-        ExpandingPool.prototype.returnToExpandingPool = function(entry) {
-            if (this.pool.indexOf(entry) === -1) {
-                this.pushEP(entry)
-            } else {
-                console.log("Entry already in pool, no good!", entry)
-            }
-        };
+        if (this.poolEntryCount() > 1) {
+            callback(this.shiftEP());
+        } else {
+            this.generatePoolEntry(callback)
+        }
+    };
 
-        ExpandingPool.prototype.wipeExpandingPool = function() {
-            this.pool = [];
-        };
+    returnToExpandingPool = function(entry) {
+        if (this.pool.indexOf(entry) === -1) {
+            this.pushEP(entry)
+        } else {
+            console.log("Entry already in pool, no good!", entry)
+        }
+    };
 
-        return ExpandingPool;
+    wipeExpandingPool = function() {
+        this.pool = [];
+    };
 
-    });
+}
+
+export { ExpandingPool }
