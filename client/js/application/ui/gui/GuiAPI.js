@@ -61,29 +61,28 @@ class GuiAPI {
         let loadCb = function() {
             loads++
             if (loads === reqs) {
-                onReadyCB();
+
             }
         };
 
         let loadUiConfig = function(key, dataId) {
             reqs++;
             this.guiSettings.loadUiConfig(key, dataId, loadCb);
-        };
+        }.bind(this);
 
         this.guiSettings.initGuiSprite("SPRITES", "FONT_16x16");
         this.guiSettings.initGuiSprite("SPRITES", "GUI_16x16");
 
         loadUiConfig("ICON_ELEMENTS", "GUI_16x16");
         loadUiConfig("SURFACE_LAYOUT", "SURFACES");
-
         loadUiConfig("WIDGET", "STANDARD_WIDGETS");
-
         loadUiConfig("FEEDBACK", "ICON");
         loadUiConfig("FEEDBACK", "SURFACE");
         loadUiConfig("FEEDBACK", "TEXT");
         loadUiConfig("SPRITE_FONT", "FONT_16x16");
         loadUiConfig("SURFACE_NINESLICE", "GUI_16x16");
 
+        onReadyCB('initGuiApi done loads: '+loads);
     };
 
     addUiSystem = function(sysKey, uiSysKey, assetId, poolSize, renderOrder) {

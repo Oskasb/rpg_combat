@@ -104,6 +104,24 @@ class PipelineAPI {
         this.configCache.registerPollUrl(url);
     };
 
+    fetchConfigData(configId, key, dataId, callback) {
+    //    console.log("Fetch data ", configId, key, dataId)
+        let configs = this.getCachedConfigs();
+
+        let data = configs[configId][key]
+
+        for (let i = 0; i < data.length; i ++) {
+            if (data[i].id === dataId) {
+                callback(dataId, data[i].data)
+                return;
+            }
+
+        }
+        console.log("No data for:", configId, key, dataId)
+
+
+    }
+
     cancelFileUrlPoll = function(url) {
         this.configCache.removePollUrl(url);
     };

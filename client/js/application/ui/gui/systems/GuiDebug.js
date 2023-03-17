@@ -240,6 +240,6 @@ class GuiDebug {
 
         };
 
-    });
+    }
 
 export { GuiDebug }

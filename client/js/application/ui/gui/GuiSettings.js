@@ -1,9 +1,11 @@
 class GuiSettings {
 
     constructor() {
+        this.sprites = {};
+        this.textLayouts = {};
         this.settings = {
-            sprites:sprites,
-            textLayouts:textLayouts
+            sprites:this.sprites,
+            textLayouts:this.textLayouts
         };
         console.log("GUI SETTINGS: ", this.settings)
 
@@ -18,16 +20,19 @@ class GuiSettings {
                 settings[key][dataId] = {};
             }
 
-            let settingUpdate = function(src, data) {
 
-                for (let i = 0; i < data.length; i ++) {
-                    settings[key][src][data[i].id] = data[i];
-                }
-                //        console.log("SETTING:", src, settings);
-                cb(src, settings[key][src]);
-            };
+                let settingUpdate = function(src, data) {
 
-            MainWorldAPI.fetchConfigData(conf, key, dataId, settingUpdate);
+                    for (let i = 0; i < data.length; i ++) {
+                        settings[key][src][data[i].id] = data[i];
+                    }
+                    //        console.log("SETTING:", src, settings);
+                    cb(src, settings[key][src]);
+                };
+
+                PipelineAPI.fetchConfigData(conf, key, dataId, settingUpdate);
+
+
         };
 
         this.calls = {
@@ -43,8 +48,9 @@ class GuiSettings {
 
 
     initGuiSprite = function(key, dataId) {
+        let sprites = this.settings.sprites;
 
-        let fontSprites = function(src, data) {
+        let dataSprites = function(src, data) {
 
             if (typeof (data) === 'undefined') {
                 console.log("Bad data fetch;", src);
@@ -55,10 +61,11 @@ class GuiSettings {
             for (let i = 0; i < data.length; i ++) {
                 sprites[src][data[i].id] = [data[i].tiles[0][0], data[i].tiles[0][1]]
             }
-            //    console.log("FONT SPRITES:", sprites[src]);
+                console.log("GUI SPRITES:", sprites[src]);
         };
 
-        MainWorldAPI.fetchConfigData("ASSETS", key, dataId, fontSprites);
+        PipelineAPI.fetchConfigData("ASSETS", key, dataId, dataSprites);
+
     };
 
 
@@ -84,7 +91,7 @@ class GuiSettings {
 
 
     getUiSprites = function(key) {
-        return sprites[key];
+        return this.sprites[key];
     };
 
     getSettingConfig = function(setting, configId) {

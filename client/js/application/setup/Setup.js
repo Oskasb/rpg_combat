@@ -1,5 +1,6 @@
 import { ThreeAPI } from '../../3D/three/ThreeAPI.js';
-
+import { GuiAPI} from "../ui/gui/GuiAPI.js";
+import { UiSetup } from "../ui/gui/UiSetup.js";
 import { InstanceAPI } from '../../3D/three/instancer/InstanceAPI.js';
 import { DomUtils } from '../ui/dom/DomUtils.js';
 import { DataLoader } from '../load/DataLoader.js';
@@ -9,13 +10,14 @@ class Setup {
     constructor() {
         window.DomUtils = new DomUtils();
         this.dataLoader = new DataLoader();
-
+        this.uiSetup = new UiSetup();
     }
 
     initGlobalAPIs(pipelineAPI) {
         window.PipelineAPI = pipelineAPI;
         window.InstanceAPI = new InstanceAPI();
         window.ThreeAPI = new ThreeAPI();
+        window.GuiAPI = new GuiAPI();
     }
 
     initDataPipeline(pipelineAPI, pipelineReadyCB) {
@@ -55,16 +57,6 @@ class Setup {
 
         dataLoader.loadData(dataPipelineSetup, onPipelineReadyCallback, onErrorCallback);
     }
-
-    initLoader(dataLoader) {
-        this.dataLoader = dataLoader;
-        this.dataLoader.loadData(onReady);
-        new PointerCursor();
-    };
-
-    completed() {
-        this.dataLoader.notifyCompleted();
-    };
 
 }
 

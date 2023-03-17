@@ -14,7 +14,7 @@ class UiSetup {
             GuiAPI.setTextSystem( new TextSystem());
 
             let textSysCb = function() {
-                callback();
+                callback('textSysCb loaded');
             };
             let inputReady = function() {
 

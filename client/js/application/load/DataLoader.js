@@ -62,20 +62,26 @@ class DataLoader {
                 if (_this.loadState === loadStates.THREEDATA) {
                     //    console.log( "loadThreeData:", _this.loadState, started, remaining, loaded, [files]);
                     //   loadState = loadStates.COMPLETED;
-                    //   loadStateChange(loadState);
+                       loadStateChange(loadStates.COMPLETED);
+                }
+
+                let guiAPIRdyCB = function(msg) {
+                    console.log(msg)
                 }
 
                 if (_this.loadState === loadStates.CONFIGS && remaining === 0) {
                  //   console.log( "json cached:", PipelineAPI.getCachedConfigs());
+
                     _this.loadState = loadStates.COMPLETED;
                 //        ThreeAPI.loadThreeData();
-
+                    GuiAPI.initGuiApi(guiAPIRdyCB)
                     loadStateChange(_this.loadState);
                 }
 
                 if (_this.loadState === loadStates.SHARED_FILES && remaining === 0) {
                 //    console.log( "shared loaded....");
                     _this.loadState = loadStates.CONFIGS;
+
                     _this.assetLoader.initAssetConfigs();
                     ThreeAPI.initThreeLoaders(_this.assetLoader);
 
