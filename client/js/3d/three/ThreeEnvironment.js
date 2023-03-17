@@ -14,13 +14,21 @@ class ThreeEnvironment {
             "night"
         ];
 
+        let _this = this;
+
+        let tickEnv = function(tpf) {
+            _this.tick(tpf)
+        };
+
+        this.tickEnvironment = tickEnv;
+
         this.currentEnvIndex = undefined;
-        this.enabled;
+        this.enabled = false;
         this.envList = {};
         this.skyList = {};
         this.worldSetup = {};
         this.world = {};
-        this.currentEnvId;
+        this.currentEnvId = null;
         this.maxElevation = 10000;
         this.currentElevation = 0;
         this.elevationFactor = 0;
@@ -33,9 +41,9 @@ class ThreeEnvironment {
         this.phi;
         this.transitionTime = 1;
         this.transitionProgress = 0;
-        this.sky;
+        this.sky = null;
 
-        this.ctx;
+        this.ctx = null;
         this.ctxHeight = 64;
         this.ctxWidth= 1;
 
@@ -304,7 +312,7 @@ class ThreeEnvironment {
         return MATH.calcFraction(0, this.transitionTime, this.transitionProgress);
     };
 
-    tickEnvironment = function(tpf) {
+    tick = function(tpf) {
 
 
         if (!this.sky) return;
@@ -321,8 +329,9 @@ class ThreeEnvironment {
         if (this.currentElevation > 0) {
             this.elevationFactor = MATH.curveCube( MATH.airDensityAtAlt(this.currentElevation) );
         } else {
-            this.updateUnderwater();
-            return;
+        //    this.updateUnderwater();
+        //    return;
+            this.elevationFactor = 0;
         }
 
         //      elevationFactor =  MATH.airDensityAtAlt(currentElevation) ;
@@ -407,12 +416,11 @@ class ThreeEnvironment {
         return this.world;
     };
 
-    enableEnvironment = function() {
-        if (this.enabled) return;
-        this.enabled = true;
-        this.scene.add( this.sky.mesh );
-    //    ThreeAPI.getReflectionScene().add(this.sky.meshClone);
-    //    ThreeAPI.getSetup().addPostrenderCallback(tickEnvironment);
+    enableEnvironment = function(threeEnv) {
+        if (threeEnv.enabled) return;
+        threeEnv.enabled = true;
+        threeEnv.scene.add( threeEnv.sky.mesh );
+        ThreeAPI.getReflectionScene().add(threeEnv.sky.meshClone);
     };
 
     getEnvConfigs = function() {
@@ -446,10 +454,11 @@ class ThreeEnvironment {
 
 //    evt.on(ENUMS.Event.ADVANCE_ENVIRONMENT, ThreeEnvironment.advanceEnv);
 
-    initEnvironment = function(store) {
+    initEnvironment = function(store, ready) {
 
         let _this = this;
         let scene = store.scene;
+        this.scene = scene;
         this.renderer = store.renderer;
         this.camera = store.camera;
 
@@ -491,7 +500,6 @@ class ThreeEnvironment {
 
         _this.sky = sky;
         _this.ctx = sky.ctx;
-
     //    this.setCanvasColor(sky.ctx, sky.tx);
 
         this.sky.meshClone = this.sky.mesh.clone();
@@ -529,7 +537,7 @@ class ThreeEnvironment {
                     //    ThreeAPI.getReflectionScene().add(world[key]);
                 }
             }
-
+            ready()
         };
 
 

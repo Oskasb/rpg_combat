@@ -58,15 +58,15 @@ class ThreeSetup {
     };
 
     callRender = function(scn, cam) {
-        this.renderStart = performance.now()/1000;
+    //    this.renderStart = performance.now()/1000;
         this.renderer.render(scn, cam);
-        this.renderEnd = performance.now()/1000;
+     //   this.renderEnd = performance.now()/1000;
         this.callPostrender();
     };
 
     callPostrender = function() {
 
-        PipelineAPI.setCategoryKeyValue('STATUS', 'TIME_ANIM_RENDER', this.renderEnd - this.renderStart);
+    //    PipelineAPI.setCategoryKeyValue('STATUS', 'TIME_ANIM_RENDER', this.renderEnd - this.renderStart);
         for (let i = 0; i < this.postrenderCallbacks.length; i++) {
             this.postrenderCallbacks[i](this.avgTfp);
         }
@@ -79,32 +79,31 @@ class ThreeSetup {
     };
 
     initThreeRenderer = function(pxRatio, antialias, containerElement, store) {
-        this.initTime = performance.now();
-
 
             let scene = new THREE.Scene();
             let reflectionScene = new THREE.Scene();
-            let camera = new THREE.PerspectiveCamera( 45, containerElement.innerWidth / containerElement.innerHeight, 0.35, 35000 );
-            camera.position.z = 20;
-            camera.position.y = 5;
-            camera.position.x = 10;
+        //    let camera = new THREE.PerspectiveCamera( 75, containerElement.innerWidth / containerElement.innerHeight, 0.1, 1000 );
+        //    camera.matrixWorldAutoUpdate = false;
+        //    scene.matrixWorldAutoUpdate = false;
             //     console.log("Three Camera:", camera);
-
-            let renderer = new THREE.WebGLRenderer( { antialias:antialias, devicePixelRatio: pxRatio, logarithmicDepthBuffer: false, sortObjects: false });
-            renderer.setPixelRatio( pxRatio );
-
-            renderer.toneMapping = THREE.LinearToneMapping;
+           let renderer = new THREE.WebGLRenderer( { antialias:antialias, devicePixelRatio: pxRatio, logarithmicDepthBuffer: false, sortObjects: false });
+        //    let renderer = new THREE.WebGLRenderer();
+        //    renderer.setPixelRatio( pxRatio );
+            renderer.setSize( window.innerWidth, window.innerHeight );
+        //    renderer.toneMapping = THREE.LinearToneMapping;
             store.scene = scene;
             store.reflectionScene = reflectionScene;
-            store.camera = camera;
+        //    store.camera = camera;
             store.renderer = renderer;
 
             this.scene = scene;
-            this.camera = camera;
+        //    this.camera = camera;
             this.renderer = renderer;
 
+        // document.body.appendChild( renderer.domElement );
+
             containerElement.appendChild(renderer.domElement);
-            //    console.log("initThreeRenderer",pxRatio, antialias, containerElement, store);
+                console.log("initThreeRenderer", store);
 
         return store;
     };
@@ -141,12 +140,12 @@ class ThreeSetup {
         }
 
         //    tempObj.updateMatrixWorld();
-        this.tempObj.getWorldPosition(vector)
-        this.vector.project(camera);
+        this.tempObj.getWorldPosition(this.vector)
+        this.vector.project(this.camera);
 
-        store.x = vector.x * 0.5;
-        store.y = vector.y * 0.5;
-        store.z = vector.z * -1;
+        store.x = this.vector.x * 0.5;
+        store.y = this.vector.y * 0.5;
+        store.z = this.vector.z * -1;
 
         return store;
     };
@@ -156,7 +155,7 @@ class ThreeSetup {
     cameraTestXYZRadius = function(vec3, radius) {
         this.sphere.center.copy(vec3);
         this.sphere.radius = radius;
-        return this.frustum.intersectsSphere(sphere);
+        return this.frustum.intersectsSphere(this.sphere);
     };
 
     calcDistanceToCamera = function(vec3) {
@@ -165,10 +164,12 @@ class ThreeSetup {
     };
 
 
-
-
     sampleCameraFrustum = function(store) {
 
+    };
+
+    setCamera = function(camera) {
+        this.camera = camera;
     };
 
     setCameraPosition = function(px, py, pz) {
@@ -188,11 +189,10 @@ class ThreeSetup {
         //    camera.updateProjectionMatrix();
 
         this.camera.updateMatrixWorld(true);
-
         this.frustum.setFromProjectionMatrix(this.frustumMatrix.multiplyMatrices(this.camera.projectionMatrix, this.camera.matrixWorldInverse));
         this.camera.needsUpdate = true;
 
-        for (var i = 0; i < this.camera.children.length; i++) {
+        for (let i = 0; i < this.camera.children.length; i++) {
             this.camera.children[i].updateMatrixWorld(true);
         }
 

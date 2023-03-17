@@ -1,4 +1,3 @@
-import {AssetLoader} from '../../application/load/AssetLoader.js';
 import {ThreeAsset} from './assets/ThreeAsset.js';
 import {ThreeSetup} from './ThreeSetup.js';
 import {ThreeEnvironment} from './ThreeEnvironment.js';
@@ -45,7 +44,8 @@ class ThreeAPI {
 
         let _this = this;
         var envReady = function() {
-            _this.threeEnvironment.enableEnvironment();
+            _this.threeEnvironment.enableEnvironment(_this.threeEnvironment);
+            _this.getSetup().addPostrenderCallback(_this.threeEnvironment.tickEnvironment);
         };
 
         var onLoaded = function() {
@@ -60,10 +60,13 @@ class ThreeAPI {
         let store = {};
         store = this.threeSetup.initThreeRenderer(pxRatio, antialias, containerElement, store);
         this.scene = store.scene;
-        this.scene.matrixWorldAutoUpdate = false;
-        this.camera = store.camera;
         this.renderer = store.renderer;
         this.reflectionScene = store.reflectionScene;
+
+        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.5, 31000 );
+        this.setCamera(camera);
+        store.camera = camera;
+        camera.matrixWorldAutoUpdate = false;
 
         this.initEnvironment(store);
         this.glContext = store.renderer.getContext();
@@ -71,7 +74,7 @@ class ThreeAPI {
         this.threeSetup.addPrerenderCallback(this.threeModelLoader.updateActiveMixers);
 
         this.threeSetup.addToScene(this.threeSetup.getCamera());
-        this.assetLoader = new AssetLoader();
+
         this.shaderBuilder.loadShaderData(this.glContext);
     };
 
@@ -152,7 +155,7 @@ class ThreeAPI {
     };
 
     getReflectionScene = function() {
-        return reflectionScene;
+        return this.reflectionScene;
     };
 
     getRenderer = function() {
@@ -181,6 +184,11 @@ class ThreeAPI {
 
     addAmbientLight = function() {
 
+    };
+
+    setCamera = function(camera) {
+        this.camera = camera;
+        this.threeSetup.setCamera(camera);
     };
 
     setCameraPos = function(x, y, z) {
@@ -238,7 +246,6 @@ class ThreeAPI {
         this.transformModel(model, spatial.posX(), spatial.posY(), spatial.posZ(), spatial.pitch(), spatial.yaw(), spatial.roll())
     };
 
-
     transformModel = function(model, px, py, pz, rx, ry, rz) {
         model.position.set(px, py, pz);
         model.rotation.set(rx, ry, rz, 'ZYX');
@@ -266,7 +273,6 @@ class ThreeAPI {
         return this.threeModelLoader.attachInstancedModelTo3DObject(modelId, rootObject, this.threeSetup);
     };
 
-
     loadModel = function(sx, sy, sz, partsReady) {
         return this.threeModelLoader.loadThreeModel(sx, sy, sz, partsReady);
     };
@@ -288,7 +294,6 @@ class ThreeAPI {
 
         var bufferGeo = new THREE.BufferGeometry();
         var train = new THREE.Object3D();
-
 
         var matReady=function(mat, value) {
             console.log("Mat Ready", mat, value)
@@ -313,7 +318,7 @@ class ThreeAPI {
             //    */
             train.rotateX(-Math.PI/2);
             this.threeSetup.addToScene(train);
-        }
+        };
 
         console.log("Load Terrain Mat");
         assetLoader.loadAsset('MATERIALS_', 'material_terrain', matReady);
@@ -324,7 +329,6 @@ class ThreeAPI {
     removeTerrainByPosition = function(pos) {
         return this.threeModelLoader.removeGroundMesh(pos);
     };
-
 
     addChildToObject3D = function(child, parent) {
         this.threeSetup.addChildToParent(child, parent);

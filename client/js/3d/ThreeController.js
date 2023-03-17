@@ -1,3 +1,4 @@
+
 class ThreeController {
     constructor() {
         this.pxRatio;
@@ -9,7 +10,7 @@ class ThreeController {
 
         this.pxRatio = window.devicePixelRatio;
 
-        var antialias = PipelineAPI.readCachedConfigKey('SETUP', 'ANTIALIAS');
+        let antialias = PipelineAPI.readCachedConfigKey('SETUP', 'ANTIALIAS');
     //    antialias = false;
         this.pxRatio =  PipelineAPI.readCachedConfigKey('SETUP', 'PX_SCALE');
 
@@ -19,7 +20,9 @@ class ThreeController {
 
         let notRez = this.notifyResize;
         window.addEventListener('resize', notRez);
-        this.monkeypatchCustomEngine();
+    //    this.monkeypatchCustomEngine();
+
+
     };
 
     notifyRezize = function() {

@@ -23,6 +23,9 @@ class Client {
     }
 
     initUiSystem() {
+
+
+
         this.threeController.setupThreeRenderer();
         this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
         this.INPUT_STATE =  this.pointerCursor.getInputState();
@@ -44,52 +47,57 @@ class Client {
     createScene() {
         console.log("THREE:", THREE);
         const clock = new THREE.Clock(true);
+
         const scene = ThreeAPI.getScene();
+
+        //    const camera = ThreeAPI.getCamera();
+       const renderer = ThreeAPI.getRenderer();
+
+    //    const scene = new THREE.Scene();
+
         const camera = ThreeAPI.getCamera();
-        const renderer = ThreeAPI.getRenderer();
-        /*
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        const renderer = new THREE.WebGLRenderer();
+        //    const renderer = new THREE.WebGLRenderer();
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
-        */
+
 
 
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
         const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
         const cube = new THREE.Mesh( geometry, material );
         scene.add( cube );
-
+/*
         ThreeAPI.setCameraPos(0, 2, 5)
 
         ThreeAPI.cameraLookAt(0, 0, 0)
-
+*/
         let touchCubes = [];
 
         for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
             touchCubes[i] = new THREE.Mesh( geometry, material );
+            touchCubes[i].position.x = (Math.random()-0.5)*20;
+            touchCubes[i].position.z = (Math.random()-0.5)*20;
             scene.add(touchCubes[i])
         }
 
         const onFrameReadyCallback= function(frame) {
-
+/*
             ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
 
             ThreeAPI.applyDynamicGlobalUniforms();
 
-            ThreeAPI.setCameraPos(0, 2, 5);
+            ThreeAPI.setCameraPos((Math.random()-0.5)*100, 3, (Math.random()-0.5)*100);
             ThreeAPI.cameraLookAt(0, 0, 0);
             ThreeAPI.updateCamera();
             ThreeAPI.updateAnimationMixers(frame.tpf);
             ThreeAPI.updateSceneMatrixWorld(frame.tpf);
-
+*/
 
 
             if (client.INPUT_STATE.mouse.action[0]) {
                 cube.position.x = client.INPUT_STATE.mouse.dx*3
                 cube.position.y = -client.INPUT_STATE.mouse.dy*3
-            //    console.log(client.INPUT_STATE.mouse.dx)
+                console.log(client.INPUT_STATE.mouse.dx)
             }
             for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
 
@@ -124,7 +132,8 @@ class Client {
             frame.tpf = clock.getDelta();
             frame.elapsedTime = clock.elapsedTime;
             client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
-            ThreeAPI.requestFrameRender(frame)
+            //     renderer.render(scene, camera)
+           ThreeAPI.requestFrameRender(frame)
         }
 
         triggerFrame();
