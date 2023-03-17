@@ -1,5 +1,5 @@
-import { ExpandingPool} from "../../../utils/ExpandingPool";
-import { GuiLetter} from "./GuiLetter";
+import { ExpandingPool} from "../../../utils/ExpandingPool.js";
+import { GuiLetter} from "./GuiLetter.js";
 
 class GuiString {
     constructor() {

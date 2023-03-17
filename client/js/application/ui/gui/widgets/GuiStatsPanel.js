@@ -1,16 +1,10 @@
-"use strict";
+import { GuiWidget} from "../elements/GuiWidget.js";
 
-define([
-        'client/js/workers/main/ui/elements/GuiWidget'
-    ],
-    function(
-        GuiWidget
-    ) {
-
-        var GuiStatsPanel = function(options) {
+class GuiStatsPanel {
+    constructor(options) {
 
             this.options = {};
-            for (var key in options) {
+            for (let key in options) {
                 this.options[key] = options[key];
             }
 
@@ -19,11 +13,11 @@ define([
 
             this.statWidgets = {};
 
-            var updateStat = function(key, value) {
+        let updateStat = function(key, value) {
                 this.updateStat(key, value);
             }.bind(this);
 
-            var updateSamplers = function(key, value) {
+        let updateSamplers = function(key, value) {
                 this.updateSamplers(key, value);
             }.bind(this);
 
@@ -35,42 +29,42 @@ define([
         };
 
 
-        GuiStatsPanel.prototype.initStatsPanel = function(widgetConfig, onReady, pos) {
+        initStatsPanel = function(widgetConfig, onReady, pos) {
             this.guiWidget = new GuiWidget(widgetConfig);
             this.guiWidget.initGuiWidget(pos, onReady);
             GuiAPI.addGuiUpdateCallback(this.callbacks.updateSamplers)
         };
 
-        GuiStatsPanel.prototype.setGuiWidget = function(guiWidget) {
+        setGuiWidget = function(guiWidget) {
             this.guiWidget = guiWidget;
             GuiAPI.addGuiUpdateCallback(this.callbacks.updateSamplers)
         };
 
-        GuiStatsPanel.prototype.removeGuiWidget = function() {
+        removeGuiWidget = function() {
             GuiAPI.removeGuiUpdateCallback(this.callbacks.updateSamplers);
             this.guiWidget.removeChildren();
             this.guiWidget.recoverGuiWidget();
         };
 
-        GuiStatsPanel.prototype.addChildWidgetToContainer = function(guiWidget) {
+        addChildWidgetToContainer = function(guiWidget) {
             this.guiWidget.disableWidgetInteraction();
             this.guiWidget.addChild(guiWidget);
             this.fitContainerChildren()
         };
 
-        GuiStatsPanel.prototype.addTrackStatFunction = function(statSampler) {
+        addTrackStatFunction = function(statSampler) {
 
             if (this.statWidgets[statSampler.key]) {
                 return
             }
 
             this.statWidgets[statSampler.key] = {key:null, value:null};
-            var sWids = this.statWidgets;
-            var samplers = this.samplers;
+            let sWids = this.statWidgets;
+            let samplers = this.samplers;
 
-            var contWid = this.guiWidget;
+            let contWid = this.guiWidget;
 
-            var valueReady = function(widget) {
+            let valueReady = function(widget) {
                 sWids[widget.statSampler.key].valueWidget = widget;
                 samplers.push(widget.statSampler);
                 contWid.addChild(sWids[widget.statSampler.key].keyWidget);
@@ -78,13 +72,13 @@ define([
                 contWid.applyWidgetPosition()
             };
 
-            var keyReady = function(widget) {
+            let keyReady = function(widget) {
                 sWids[widget.statSampler.key].keyWidget = widget;
                 valueWidget.initGuiWidget(null, valueReady);
             };
 
-            var valueWidget = new GuiWidget("widget_stats_value_box");
-            var keyWidget = new GuiWidget("widget_stats_key_box");
+            let valueWidget = new GuiWidget("widget_stats_value_box");
+            let keyWidget = new GuiWidget("widget_stats_key_box");
 
             keyWidget.statSampler = statSampler;
             valueWidget.statSampler = statSampler;
@@ -92,38 +86,38 @@ define([
 
         };
 
-        GuiStatsPanel.prototype.fitContainerChildren = function() {
+        fitContainerChildren = function() {
             this.guiWidget.applyWidgetPosition()
         };
 
-        GuiStatsPanel.prototype.setupValueString = function(value, unit, digits) {
+        setupValueString = function(value, unit, digits) {
 
-            var valueString = this.guiWidget.numberToDigits(value, digits, 0);
+            let valueString = this.guiWidget.numberToDigits(value, digits, 0);
 
             return valueString+unit;
         };
 
-        GuiStatsPanel.prototype.updateStat = function(key, value) {
+        updateStat = function(key, value) {
 
-            var sampler = this.statWidgets[key].keyWidget.statSampler;
+            let sampler = this.statWidgets[key].keyWidget.statSampler;
 
-            var valueString = this.setupValueString(value, sampler.unit || '', sampler.digits || 2);
+            let valueString = this.setupValueString(value, sampler.unit || '', sampler.digits || 2);
             this.statWidgets[key].keyWidget.setFirstSTringText(key);
             this.statWidgets[key].valueWidget.setFirstSTringText(valueString)
         };
 
-        GuiStatsPanel.prototype.updateStatSampler = function(statSampler) {
+        updateStatSampler = function(statSampler) {
             statSampler.callback(statSampler.key, this.callbacks.updateStat);
         };
 
-        GuiStatsPanel.prototype.updateSamplers = function() {
+        updateSamplers = function() {
 
-            for (var i = 0; i < this.samplers.length; i++) {
+            for (let i = 0; i < this.samplers.length; i++) {
                 this.updateStatSampler(this.samplers[i]);
             }
 
         };
 
-        return GuiStatsPanel;
+    }
 
-    });
+export { GuiStatsPanel }

@@ -1,307 +1,288 @@
-"use strict";
+import { WidgetBuilder } from "./widgets/WidgetBuilder.js";
+import { GuiSettings } from "./GuiSettings.js";
+import { Instantiator } from "./instancing/Instantiator.js";
+import { GuiDebug } from "./systems/GuiDebug.js";
 
-var GuiAPI;
+class GuiAPI {
+    constructor() {
+        this.aspect = 1;
+        this.elementPools = {};
+        this.inputSystem;
+        this.textSystem;
+        this.instantiator = new Instantiator();
+        this.worldSpacePointers = [];
+        this.guiSettings = new GuiSettings();
+        this.widgetBuilder = new WidgetBuilder();
+        this.basicText;
+        this.txtSysKey = 'UI_TEXT_MAIN';
+        this.guiUpdateCallbacks = [];
+        this.inputUpdateCallbacks = [];
+        this.aspectUpdateCallbacks = [];
+        this.guiBuffers = {};
+        this.anchorWidgets = {};
+        this.registeredTextElements = {};
 
-define([
-        'application/ExpandingPool',
-        'ui/widgets/WidgetBuilder',
-        'ui/GuiSettings',
-        'workers/main/instancing/Instantiator',
-        'ui/systems/GuiDebug',
-        'ui/ActorGui'
-    ],
-    function(
-        ExpandingPool,
-        WidgetBuilder,
-        GuiSettings,
-        Instantiator,
-        GuiDebug,
-        ActorGui
-    ) {
+        let _this = this;
 
-        var i;
-        var inputs;
-        var ib;
-        var guiSystems = [];
+        let callInputUpdateCallbacks = function(input, buffer) {
+            MATH.callAll(_this.inputUpdateCallbacks, input, buffer);
+        };
 
-        var aspect = 1;
-
-        var elementPools = {};
-
-        var inputSystem;
-        var textSystem;
-
-        var instantiator = new Instantiator();
-
-        var worldSpacePointers = [];
-
-        var guiSettings = new GuiSettings();
-        var widgetBuilder = new WidgetBuilder();
-
-        var basicText;
-
-        var txtSysKey = 'UI_TEXT_MAIN';
-
-        var guiUpdateCallbacks = [];
-        var inputUpdateCallbacks = [];
-        var aspectUpdateCallbacks = [];
-
-        var guiBuffers = {};
-
-
-        var anchorWidgets = {};
-
-        var GuiAPI = function() {
-
+        let callAspectUpdateCallbacks = function(aspect) {
+            //        console.log("Aspect:", aspect);
+            MATH.callAll(_this.aspectUpdateCallbacks, aspect);
         };
 
 
-        GuiAPI.initGuiApi = function(onReadyCB) {
-
-            var reqs = 0;
-            var loads = 0;
-
-            var loadCb = function() {
-                loads++
-                if (loads === reqs) {
-                    onReadyCB();
-                }
-            };
-
-            var loadUiConfig = function(key, dataId) {
-                reqs++;
-                guiSettings.loadUiConfig(key, dataId, loadCb);
-            };
-
-            guiSettings.initGuiSprite("SPRITES", "FONT_16x16");
-            guiSettings.initGuiSprite("SPRITES", "GUI_16x16");
-
-            loadUiConfig("ICON_ELEMENTS", "GUI_16x16");
-            loadUiConfig("SURFACE_LAYOUT", "SURFACES");
-
-            loadUiConfig("WIDGET", "STANDARD_WIDGETS");
-
-            loadUiConfig("FEEDBACK", "ICON");
-            loadUiConfig("FEEDBACK", "SURFACE");
-            loadUiConfig("FEEDBACK", "TEXT");
-            loadUiConfig("SPRITE_FONT", "FONT_16x16");
-            loadUiConfig("SURFACE_NINESLICE", "GUI_16x16");
-
-        };
-
-        GuiAPI.addUiSystem = function(sysKey, uiSysKey, assetId, poolSize, renderOrder) {
-            instantiator.addInstanceSystem(sysKey, uiSysKey, assetId, poolSize, renderOrder)
-        };
-
-        GuiAPI.buildBufferElement = function(uiSysKey, cb) {
-            instantiator.buildBufferElement(uiSysKey, cb)
-        };
-
-        var registeredTextElements = {};
-
-        GuiAPI.registerTextSurfaceElement = function(elemKey, txtElem) {
-            registeredTextElements[elemKey] = txtElem;
-            textSystem.addTextElement(txtElem);
-        };
-
-        GuiAPI.buildGuiWidget = function(widgetClassName, options, onReady) {
-            widgetBuilder.buildWidget(widgetClassName, options, onReady);
-        };
-
-        GuiAPI.buildWidgetOptions = function(configId, onActivate, testActive, interactive, text, offset_x, offset_y, anchor) {
-
-            var opts = {};
-
-            opts.configId = configId || 'button_big_blue';
-            opts.onActivate = onActivate || null;
-            opts.testActive = testActive || null;
-            opts.interactive = interactive || false;
-            opts.text = text || false;
-            opts.offset_x = offset_x || null;
-            opts.offset_y = offset_y || null;
-            opts.anchor = anchor || false;
-
-            return opts
-        };
-
-        GuiAPI.setInputSystem = function(inputSys) {
-            inputSystem = inputSys;
-        };
-
-        GuiAPI.getInputSystem = function() {
-            return inputSystem;
-        };
-
-        GuiAPI.setTextSystem = function(txtSys) {
-            textSystem = txtSys;
-        };
-
-        GuiAPI.getTextSystem = function() {
-            return textSystem;
-        };
-
-        GuiAPI.getGuiDebug = function() {
-            return GuiDebug;
-        };
-
-        GuiAPI.getUiSprites = function(spriteKey) {
-            return guiSettings.getUiSprites(spriteKey);
-        };
-
-        GuiAPI.getGuiSettings = function() {
-            return guiSettings;
-        };
-
-        GuiAPI.getGuiSettingConfig = function(uiKey, dataKey, dataId) {
-            return guiSettings.getSettingDataConfig(uiKey, dataKey, dataId);
-        };
-
-
-        GuiAPI.debugDrawGuiPosition = function(x, y) {
-            GuiDebug.debugDrawPoint(x, y)
-        };
-
-        GuiAPI.debugDrawRectExtents = function(minVec, maxVec) {
-            GuiDebug.drawRectExtents(minVec, maxVec)
-        };
-
-        GuiAPI.printDebugText = function(string) {
-            GuiDebug.addDebugTextString(string)
-        };
-
-        GuiAPI.attachGuiToActor = function(actor) {
-            actor.setActorGui(new ActorGui(actor))
-        };
-
-        GuiAPI.detachActorGui = function(actor) {
-            actor.getActorGui().removeAllGuiWidgets();
-        };
-
-        GuiAPI.registerInteractiveGuiElement = function(surfaceElement) {
-            inputSystem.registerInteractiveSurfaceElement(surfaceElement)
-        };
-
-        GuiAPI.unregisterInteractiveGuiElement = function(surfaceElement) {
-            inputSystem.unregisterInteractiveSurfaceElement(surfaceElement)
-        };
-
-
-        GuiAPI.setAnchorWidget = function(key, widget) {
-            anchorWidgets[key] = widget;
-        };
-
-        GuiAPI.getAnchorWidget = function(key) {
-            return anchorWidgets[key];
-        };
-
-        GuiAPI.addInputUpdateCallback = function(cb) {
-            inputUpdateCallbacks.push(cb);
-        };
-
-        GuiAPI.removeInputUpdateCallback = function(cb) {
-            MATH.quickSplice(inputUpdateCallbacks, cb);
-        };
-
-        GuiAPI.addGuiUpdateCallback = function(cb) {
-            guiUpdateCallbacks.push(cb);
-        };
-
-        GuiAPI.removeGuiUpdateCallback = function(cb) {
-            MATH.quickSplice(guiUpdateCallbacks, cb);
-        };
-
-        GuiAPI.addAspectUpdateCallback = function(cb) {
-            aspectUpdateCallbacks.push(cb);
-        };
-
-        GuiAPI.removeAspectUpdateCallback = function(cb) {
-            MATH.quickSplice(aspectUpdateCallbacks, cb);
-        };
-
-
-        GuiAPI.applyAspectToScreenPosition = function(sourcePos, store) {
-            store.copy(sourcePos);
-            store.x = sourcePos.x * aspect;
-        };
-
-        GuiAPI.setInputBufferValue = function(inputIndex, buffer, enumKey, value) {
-            let idx = inputIndex*ENUMS.InputState.BUFFER_SIZE + enumKey;
-            buffer[idx] = value;
-        };
-
-        GuiAPI.readInputBufferValue = function(inputIndex, buffer, enumKey) {
-            let idx = inputIndex*ENUMS.InputState.BUFFER_SIZE + enumKey;
-            return buffer[idx]
-        };
-
-        GuiAPI.setCameraAspect = function(camAspect) {
-            if (aspect !== camAspect) {
-                aspect = camAspect;
-                callAspectUpdateCallbacks(aspect);
-            }
-        };
-
-        GuiAPI.registerWorldSpacePointer = function(pointer) {
-            worldSpacePointers.push(pointer);
-        };
-
-        GuiAPI.unregisterWorldSpacePointer = function(pointer) {
-            MATH.quickSplice(worldSpacePointers, pointer)
-        };
-
-        GuiAPI.getWorldSpacePointers = function() {
-            return worldSpacePointers
-        };
-
-        var callInputUpdateCallbacks = function(input, buffer) {
-            MATH.callAll(inputUpdateCallbacks, input, buffer);
-        };
-
-        var callAspectUpdateCallbacks = function(aspect) {
-    //        console.log("Aspect:", aspect);
-            MATH.callAll(aspectUpdateCallbacks, aspect);
-        };
-
-
-        var updateInput = function(INPUT_BUFFER) {
-            inputs = ENUMS.Numbers.POINTER_TOUCH0 + ENUMS.Numbers.TOUCHES_COUNT;
-            for (ib = 0; ib < inputs; ib++) {
-                if (GuiAPI.readInputBufferValue(ib, INPUT_BUFFER, ENUMS.InputState.HAS_UPDATE )) {
+        let updateInput = function(INPUT_BUFFER) {
+            let inputs = ENUMS.Numbers.POINTER_TOUCH0 + ENUMS.Numbers.TOUCHES_COUNT;
+            for (let ib = 0; ib < inputs; ib++) {
+                if (_this.readInputBufferValue(ib, INPUT_BUFFER, ENUMS.InputState.HAS_UPDATE )) {
                     callInputUpdateCallbacks(ib, INPUT_BUFFER)
                 }
             }
         };
 
+        this.calls = {
+            callInputUpdateCallbacks:callInputUpdateCallbacks,
+            callAspectUpdateCallbacks:callAspectUpdateCallbacks,
+            updateInput:updateInput
+        }
 
-        var dymmy1 = function(textWidget) {
+
+    };
+
+
+    initGuiApi = function(onReadyCB) {
+
+        let reqs = 0;
+        let loads = 0;
+
+        let loadCb = function() {
+            loads++
+            if (loads === reqs) {
+                onReadyCB();
+            }
+        };
+
+        let loadUiConfig = function(key, dataId) {
+            reqs++;
+            this.guiSettings.loadUiConfig(key, dataId, loadCb);
+        };
+
+        this.guiSettings.initGuiSprite("SPRITES", "FONT_16x16");
+        this.guiSettings.initGuiSprite("SPRITES", "GUI_16x16");
+
+        loadUiConfig("ICON_ELEMENTS", "GUI_16x16");
+        loadUiConfig("SURFACE_LAYOUT", "SURFACES");
+
+        loadUiConfig("WIDGET", "STANDARD_WIDGETS");
+
+        loadUiConfig("FEEDBACK", "ICON");
+        loadUiConfig("FEEDBACK", "SURFACE");
+        loadUiConfig("FEEDBACK", "TEXT");
+        loadUiConfig("SPRITE_FONT", "FONT_16x16");
+        loadUiConfig("SURFACE_NINESLICE", "GUI_16x16");
+
+    };
+
+    addUiSystem = function(sysKey, uiSysKey, assetId, poolSize, renderOrder) {
+        this.instantiator.addInstanceSystem(sysKey, uiSysKey, assetId, poolSize, renderOrder)
+    };
+
+    buildBufferElement = function(uiSysKey, cb) {
+        this.instantiator.buildBufferElement(uiSysKey, cb)
+    };
+
+
+
+    registerTextSurfaceElement = function(elemKey, txtElem) {
+        this.registeredTextElements[elemKey] = txtElem;
+        this.textSystem.addTextElement(txtElem);
+    };
+
+    buildGuiWidget = function(widgetClassName, options, onReady) {
+        this.widgetBuilder.buildWidget(widgetClassName, options, onReady);
+    };
+
+    buildWidgetOptions = function(configId, onActivate, testActive, interactive, text, offset_x, offset_y, anchor) {
+
+        let opts = {};
+
+        opts.configId = configId || 'button_big_blue';
+        opts.onActivate = onActivate || null;
+        opts.testActive = testActive || null;
+        opts.interactive = interactive || false;
+        opts.text = text || false;
+        opts.offset_x = offset_x || null;
+        opts.offset_y = offset_y || null;
+        opts.anchor = anchor || false;
+
+        return opts
+    };
+
+    setInputSystem = function(inputSys) {
+        this.inputSystem = inputSys;
+    };
+
+    getInputSystem = function() {
+        return this.inputSystem;
+    };
+
+    setTextSystem = function(txtSys) {
+        this.textSystem = txtSys;
+    };
+
+    getTextSystem = function() {
+        return this.textSystem;
+    };
+
+    getGuiDebug = function() {
+        return GuiDebug;
+    };
+
+    getUiSprites = function(spriteKey) {
+        return this.guiSettings.getUiSprites(spriteKey);
+    };
+
+    getGuiSettings = function() {
+        return this.guiSettings;
+    };
+
+    getGuiSettingConfig = function(uiKey, dataKey, dataId) {
+        return this.guiSettings.getSettingDataConfig(uiKey, dataKey, dataId);
+    };
+
+
+    debugDrawGuiPosition = function(x, y) {
+        GuiDebug.debugDrawPoint(x, y)
+    };
+
+    debugDrawRectExtents = function(minVec, maxVec) {
+        GuiDebug.drawRectExtents(minVec, maxVec)
+    };
+
+    printDebugText = function(string) {
+        GuiDebug.addDebugTextString(string)
+    };
+
+    attachGuiToActor = function(actor) {
+        actor.setActorGui(new ActorGui(actor))
+    };
+
+    detachActorGui = function(actor) {
+        actor.getActorGui().removeAllGuiWidgets();
+    };
+
+    registerInteractiveGuiElement = function(surfaceElement) {
+        this.inputSystem.registerInteractiveSurfaceElement(surfaceElement)
+    };
+
+    unregisterInteractiveGuiElement = function(surfaceElement) {
+        this.inputSystem.unregisterInteractiveSurfaceElement(surfaceElement)
+    };
+
+
+    setAnchorWidget = function(key, widget) {
+        this.anchorWidgets[key] = widget;
+    };
+
+    getAnchorWidget = function(key) {
+        return this.anchorWidgets[key];
+    };
+
+    addInputUpdateCallback = function(cb) {
+        this.inputUpdateCallbacks.push(cb);
+    };
+
+    removeInputUpdateCallback = function(cb) {
+        MATH.quickSplice(this.inputUpdateCallbacks, cb);
+    };
+
+    addGuiUpdateCallback = function(cb) {
+        this.guiUpdateCallbacks.push(cb);
+    };
+
+    removeGuiUpdateCallback = function(cb) {
+        MATH.quickSplice(this.guiUpdateCallbacks, cb);
+    };
+
+    addAspectUpdateCallback = function(cb) {
+        this.aspectUpdateCallbacks.push(cb);
+    };
+
+    removeAspectUpdateCallback = function(cb) {
+        MATH.quickSplice(this.aspectUpdateCallbacks, cb);
+    };
+
+
+    applyAspectToScreenPosition = function(sourcePos, store) {
+        store.copy(sourcePos);
+        store.x = sourcePos.x * this.aspect;
+    };
+
+    setInputBufferValue = function(inputIndex, buffer, enumKey, value) {
+        let idx = inputIndex*ENUMS.InputState.BUFFER_SIZE + enumKey;
+        buffer[idx] = value;
+    };
+
+    readInputBufferValue = function(inputIndex, buffer, enumKey) {
+        let idx = inputIndex*ENUMS.InputState.BUFFER_SIZE + enumKey;
+        return buffer[idx]
+    };
+
+    setCameraAspect = function(camAspect) {
+        if (this.aspect !== camAspect) {
+            this.aspect = camAspect;
+            this.calls.callAspectUpdateCallbacks(this.aspect);
+        }
+    };
+
+    registerWorldSpacePointer = function(pointer) {
+        this.worldSpacePointers.push(pointer);
+    };
+
+    unregisterWorldSpacePointer = function(pointer) {
+        MATH.quickSplice(this.worldSpacePointers, pointer)
+    };
+
+    getWorldSpacePointers = function() {
+        return this.worldSpacePointers
+    };
+
+
+
+    getTextSysKey = function() {
+        return this.txtSysKey;
+    };
+
+    sampleInputState = function(INPUT_BUFFER) {
+
+
+
+        this.calls.updateInput(INPUT_BUFFER);
+        GuiDebug.updateDebugElements();
+    };
+
+
+    updateGui = function(tpf, time) {
+
+        let dymmy1 = function(textWidget) {
             textWidget.printWidgetText("MOO "+Math.random(), 7)
         };
 
+        GuiDebug.updateDebugElements();
+        this.instantiator.updateInstantiatorBuffers();
+        this.instantiator.monitorBufferStats();
 
-        GuiAPI.getTextSysKey = function() {
-            return txtSysKey;
-        };
+        if (this.registeredTextElements['main_text_box']) {
+            dymmy1(this.registeredTextElements['main_text_box']);
+        }
 
-        GuiAPI.sampleInputState = function(INPUT_BUFFER) {
-            updateInput(INPUT_BUFFER);
-            GuiDebug.updateDebugElements();
-        };
+        MATH.callAll(this.guiUpdateCallbacks, tpf, time);
+        DebugAPI.generateTrackEvent('GUI_DT', time, 'ms', 2)
+    };
 
-        var now;
-        GuiAPI.updateGui = function(tpf, time) {
-            now = MATH.getNowMS();
-            GuiDebug.updateDebugElements();
-            instantiator.updateInstantiatorBuffers();
-            instantiator.monitorBufferStats();
+}
 
-            if (registeredTextElements['main_text_box']) {
-                dymmy1(registeredTextElements['main_text_box']);
-            }
-
-            MATH.callAll(guiUpdateCallbacks, tpf, time);
-            DebugAPI.generateTrackEvent('GUI_DT', MATH.getNowMS() - now, 'ms', 2)
-        };
-
-        return GuiAPI;
-
-    });
+export { GuiAPI }

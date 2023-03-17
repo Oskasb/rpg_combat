@@ -1,173 +1,163 @@
-"use strict";
+import { GuiWidget} from "../elements/GuiWidget.js";
 
-define([
-        'client/js/workers/main/ui/elements/GuiWidget'
-    ],
-    function(
-        GuiWidget
-    ) {
+class GuiThumbstick {
+    constructor(options) {
 
+        this.options = {};
+        for (let key in options) {
+            this.options[key] = options[key];
+        }
 
-        var GuiThumbstick = function(options) {
+        this.pos = new THREE.Vector3();
+        this.origin = new THREE.Vector3();
+        this.offset = new THREE.Vector3();
 
-            this.options = {};
-            for (var key in options) {
-                this.options[key] = options[key];
-            }
+        this.releaseTime = 0;
+        this.releaseProgress = 0;
+        this.releaseDuration = 0.25;
 
-            this.pos = new THREE.Vector3();
-            this.origin = new THREE.Vector3();
-            this.offset = new THREE.Vector3();
+        this.maxRange = 0.08;
 
-            this.releaseTime = 0;
-            this.releaseProgress = 0;
-            this.releaseDuration = 0.25;
+        this.inputAngle = 0;
+        this.inputDistance = 0;
 
-            this.maxRange = 0.08;
+        this.activeInputIndex = null;
 
-            this.inputAngle = 0;
-            this.inputDistance = 0;
+        this.applyInputCallbacks = [];
 
-            this.activeInputIndex = null;
+        let onPressStart = function(index, widget) {
+            this.handleThumbstickPressStart(index, widget)
+        }.bind(this);
 
-            this.applyInputCallbacks = [];
+        let onStickInputUpdate = function(input, buffer) {
+            this.handleThumbstickInputUpdated(input, buffer)
+        }.bind(this);
 
-            var onPressStart = function(index, widget) {
-                this.handleThumbstickPressStart(index, widget)
-            }.bind(this);
-
-            var onStickInputUpdate = function(input, buffer) {
-                this.handleThumbstickInputUpdated(input, buffer)
-            }.bind(this);
-
-            var onStickReleasedUpdate = function(tpf, time) {
-                this.handleThumbstickReleasedUpdate(tpf, time)
-            }.bind(this);
+        let onStickReleasedUpdate = function(tpf, time) {
+            this.handleThumbstickReleasedUpdate(tpf, time)
+        }.bind(this);
 
 
-            var notifyInputUpdated = function() {
-                this.notifyInputUpdated(this.inputAngle, this.inputDistance)
-            }.bind(this);
+        let notifyInputUpdated = function() {
+            this.notifyInputUpdated(this.inputAngle, this.inputDistance)
+        }.bind(this);
 
-            this.callbacks = {
-                onPressStart:onPressStart,
-                onStickInputUpdate:onStickInputUpdate,
-                onStickReleasedUpdate:onStickReleasedUpdate,
-                notifyInputUpdated:notifyInputUpdated
-            }
+        this.callbacks = {
+            onPressStart:onPressStart,
+            onStickInputUpdate:onStickInputUpdate,
+            onStickReleasedUpdate:onStickReleasedUpdate,
+            notifyInputUpdated:notifyInputUpdated
+        }
 
-        };
+    };
 
 
-        GuiThumbstick.prototype.initThumbstick = function(widgetConfig, onReady) {
+    initThumbstick = function(widgetConfig, onReady) {
 
-            var widgetRdy = function(widget) {
-                widget.attachToAnchor('bottom_left');
-                widget.setWidgetIconKey('directional_arrows');
-                widget.addOnPressStartCallback(this.callbacks.onPressStart);
-                widget.enableWidgetInteraction();
-                onReady(this)
-            }.bind(this);
-
-            this.guiWidget = new GuiWidget(widgetConfig);
-            this.guiWidget.initGuiWidget(null, widgetRdy);
-
-        };
-
-        GuiThumbstick.prototype.setGuiWidget = function(widget) {
-            this.guiWidget = widget;
+        let widgetRdy = function(widget) {
+            widget.attachToAnchor('bottom_left');
+            widget.setWidgetIconKey('directional_arrows');
             widget.addOnPressStartCallback(this.callbacks.onPressStart);
             widget.enableWidgetInteraction();
-        };
+            onReady(this)
+        }.bind(this);
 
+        this.guiWidget = new GuiWidget(widgetConfig);
+        this.guiWidget.initGuiWidget(null, widgetRdy);
 
-        var camDir;
-        GuiThumbstick.prototype.applyPositionOffset = function() {
+    };
 
-            camDir = MainWorldAPI.getWorldSimulation().getWorldCameraDirection();
+    setGuiWidget = function(widget) {
+        this.guiWidget = widget;
+        widget.addOnPressStartCallback(this.callbacks.onPressStart);
+        widget.enableWidgetInteraction();
+    };
 
-            this.inputAngle = MATH.addAngles(MATH.vectorXYToAngleAxisZ(this.offset), camDir);
-            this.inputDistance = this.offset.length() / this.maxRange;
-            this.guiWidget.offsetWidgetPosition(this.offset);
+    applyPositionOffset = function() {
 
-        };
+        let camDir = MainWorldAPI.getWorldSimulation().getWorldCameraDirection();
 
-        GuiThumbstick.prototype.handleThumbstickPressStart = function(inputIndex, guiWidget) {
-            this.activeInputIndex = inputIndex;
-            console.log("Thumbstick press start", inputIndex);
-            GuiAPI.removeGuiUpdateCallback(this.callbacks.onStickReleasedUpdate);
-            GuiAPI.addInputUpdateCallback(this.callbacks.onStickInputUpdate);
-            GuiAPI.addGuiUpdateCallback(this.callbacks.notifyInputUpdated);
-        };
+        this.inputAngle = MATH.addAngles(MATH.vectorXYToAngleAxisZ(this.offset), camDir);
+        this.inputDistance = this.offset.length() / this.maxRange;
+        this.guiWidget.offsetWidgetPosition(this.offset);
 
-        var length;
+    };
 
-        GuiThumbstick.prototype.handleThumbstickInputUpdated = function(input, buffer) {
+    handleThumbstickPressStart = function(inputIndex, guiWidget) {
+        this.activeInputIndex = inputIndex;
+        console.log("Thumbstick press start", inputIndex);
+        GuiAPI.removeGuiUpdateCallback(this.callbacks.onStickReleasedUpdate);
+        GuiAPI.addInputUpdateCallback(this.callbacks.onStickInputUpdate);
+        GuiAPI.addGuiUpdateCallback(this.callbacks.notifyInputUpdated);
+    };
 
-            var pressActive = GuiAPI.readInputBufferValue(input, buffer, ENUMS.InputState.ACTION_0);
+    handleThumbstickInputUpdated = function(input, buffer) {
 
-            if (this.guiWidget.getWidgetSurface().getSurfaceInteractiveState() === ENUMS.ElementState.NONE) {
-        //        return;
+        let pressActive = GuiAPI.readInputBufferValue(input, buffer, ENUMS.InputState.ACTION_0);
+
+        if (this.guiWidget.getWidgetSurface().getSurfaceInteractiveState() === ENUMS.ElementState.NONE) {
+            //        return;
+        }
+
+        if (!pressActive) {
+
+            GuiAPI.removeInputUpdateCallback(this.callbacks.onStickInputUpdate);
+            GuiAPI.addGuiUpdateCallback(this.callbacks.onStickReleasedUpdate);
+            this.releaseTime = 0;
+
+        } else {
+            this.offset.x = GuiAPI.readInputBufferValue(input, buffer, ENUMS.InputState.DRAG_DISTANCE_X);
+            this.offset.y = GuiAPI.readInputBufferValue(input, buffer, ENUMS.InputState.DRAG_DISTANCE_Y);
+
+            let length = this.offset.length();
+            if (length > this.maxRange) {
+                this.offset.normalize();
+                this.offset.multiplyScalar(this.maxRange);
             }
 
-            if (!pressActive) {
+        }
 
-                    GuiAPI.removeInputUpdateCallback(this.callbacks.onStickInputUpdate);
-                    GuiAPI.addGuiUpdateCallback(this.callbacks.onStickReleasedUpdate);
-                    this.releaseTime = 0;
+        this.applyPositionOffset();
 
-            } else {
-                this.offset.x = GuiAPI.readInputBufferValue(input, buffer, ENUMS.InputState.DRAG_DISTANCE_X);
-                this.offset.y = GuiAPI.readInputBufferValue(input, buffer, ENUMS.InputState.DRAG_DISTANCE_Y);
+    };
 
-                length = this.offset.length();
-                if (length > this.maxRange) {
-                    this.offset.normalize();
-                    this.offset.multiplyScalar(this.maxRange);
-                }
+    handleThumbstickReleasedUpdate = function(tpf, time) {
+        this.releaseTime += tpf;
 
-            }
+        this.releaseProgress = MATH.curveSqrt(1 - MATH.calcFraction(-this.releaseDuration, this.releaseDuration, this.releaseTime-this.releaseDuration));
 
-            this.applyPositionOffset();
-
-        };
-
-        GuiThumbstick.prototype.handleThumbstickReleasedUpdate = function(tpf, time) {
-            this.releaseTime += tpf;
-
-            this.releaseProgress = MATH.curveSqrt(1 - MATH.calcFraction(-this.releaseDuration, this.releaseDuration, this.releaseTime-this.releaseDuration));
-
-            this.offset.multiplyScalar(this.releaseProgress);
+        this.offset.multiplyScalar(this.releaseProgress);
 
         //    this.offset.multiplyScalar(this.releaseProgress);
 
-            if (this.offset.lengthSq() < 0.0000001) {
-                this.offset.set(0, 0, 0);
-                GuiAPI.removeGuiUpdateCallback(this.callbacks.onStickReleasedUpdate);
-                GuiAPI.removeGuiUpdateCallback(this.callbacks.notifyInputUpdated);
-            }
+        if (this.offset.lengthSq() < 0.0000001) {
+            this.offset.set(0, 0, 0);
+            GuiAPI.removeGuiUpdateCallback(this.callbacks.onStickReleasedUpdate);
+            GuiAPI.removeGuiUpdateCallback(this.callbacks.notifyInputUpdated);
+        }
 
-            this.applyPositionOffset();
-        };
-
-
-        GuiThumbstick.prototype.addInputUpdateCallback = function(applyInputUpdate) {
-            this.applyInputCallbacks.push(applyInputUpdate)
-        };
-
-        GuiThumbstick.prototype.notifyInputUpdated = function(ang, dist) {
-
-            for (var i = 0; i < this.applyInputCallbacks.length; i++) {
-                this.applyInputCallbacks[i](ang, dist);
-            }
-        };
-
-        GuiThumbstick.prototype.removeGuiWidget = function() {
-            MATH.emptyArray(this.applyInputCallbacks);
-            this.guiWidget.recoverGuiWidget()
-        };
+        this.applyPositionOffset();
+    };
 
 
-        return GuiThumbstick;
+    addInputUpdateCallback = function(applyInputUpdate) {
+        this.applyInputCallbacks.push(applyInputUpdate)
+    };
 
-    });
+    notifyInputUpdated = function(ang, dist) {
+
+        for (let i = 0; i < this.applyInputCallbacks.length; i++) {
+            this.applyInputCallbacks[i](ang, dist);
+        }
+    };
+
+    removeGuiWidget = function() {
+        MATH.emptyArray(this.applyInputCallbacks);
+        this.guiWidget.recoverGuiWidget()
+    };
+
+
+
+
+}
+export { GuiThumbstick }

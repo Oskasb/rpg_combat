@@ -1,5 +1,5 @@
-import { GuiString } from "./GuiString";
-import { ExpandingPool } from "../../../utils/ExpandingPool";
+import { GuiString } from "./GuiString.js";
+import { ExpandingPool } from "../../../utils/ExpandingPool.js";
 
 class GuiTextElement {
     constructor() {

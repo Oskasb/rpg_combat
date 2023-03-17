@@ -1,4 +1,6 @@
-"use strict";
+import { GuiWidget} from "../elements/GuiWidget.js";
+import { GuiActionPoint} from "./GuiActionPoint.js";
+import { ActionP}
 
 define([
         'client/js/workers/main/ui/elements/GuiWidget',

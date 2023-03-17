@@ -1,5 +1,5 @@
-import { ExpandingPool } from "../../../utils/ExpandingPool";
-import { GuiTextElement } from "../elements/GuiTextElement";
+import { ExpandingPool } from "../../../utils/ExpandingPool.js";
+import { GuiTextElement } from "../elements/GuiTextElement.js";
 class TextSystem {
     constructor(spriteKey) {
 
@@ -14,7 +14,6 @@ class TextSystem {
             this.expandingPool = new ExpandingPool('text_elements', addElement);
         };
 
-
         initTextSystem = function(callback) {
 
             let textSystem = this;
@@ -25,25 +24,19 @@ class TextSystem {
                 GuiAPI.addUiSystem(src, data.config["sprite_atlas"],  data.config["mesh_asset"],   data.config["pool_size"], data.config["render_order"]);
                 callback();
 
-
             };
 
             GuiAPI.getGuiSettings().initGuiSettings(["UI_TEXT_MAIN"], onTextSetting)
 
         };
 
-
-
         getSpriteKey = function() {
             return this.spriteKey;
         };
 
-
-
         addTextElement = function(element) {
             this.elements.unshift(element);
         };
-
 
         removeTextElement = function(element) {
 
@@ -51,7 +44,6 @@ class TextSystem {
             this.expandingPool.returnToExpandingPool(element);
 
         };
-
 
         buildTextElement = function(cb, dataId) {
 
@@ -65,7 +57,6 @@ class TextSystem {
             this.expandingPool.getFromExpandingPool(getElement)
 
         };
-
 
     }
 

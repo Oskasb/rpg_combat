@@ -1,4 +1,4 @@
-import { GuiPointer } from "../elements/GuiPointer";
+import { GuiPointer } from "../elements/GuiPointer.js";
 
 class InputSystem {
     constructor() {

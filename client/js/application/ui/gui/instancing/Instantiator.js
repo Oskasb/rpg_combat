@@ -1,6 +1,6 @@
-import { ExpandingPool } from "../../../utils/ExpandingPool";
-import { InstancingBuffers} from "./InstancingBuffers";
-import { InstancingBufferElement } from "./InstancingBufferElement";
+import { ExpandingPool } from "../../../utils/ExpandingPool.js";
+import { InstancingBuffers} from "./InstancingBuffers.js";
+import { InstancingBufferElement } from "./InstancingBufferElement.js";
 
 class  Instantiator {
     constructor() {

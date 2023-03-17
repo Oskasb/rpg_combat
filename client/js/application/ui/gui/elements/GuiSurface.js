@@ -1,4 +1,4 @@
-import { InteractiveElement } from "../states/InteractiveElement";
+import { InteractiveElement } from "../states/InteractiveElement.js";
 
 class GuiSurface {
     constructor() {

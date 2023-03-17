@@ -1,6 +1,6 @@
-import { ElementStateProcessor } from "../states/ElementStateProcessor";
-import { GuiSurface } from "./GuiSurface";
-import { GuiIcon } from "./GuiIcon";
+import { ElementStateProcessor } from "../states/ElementStateProcessor.js";
+import { GuiSurface } from "./GuiSurface.js";
+import { GuiIcon } from "./GuiIcon.js";
 
 class GuiWidget {
     constructor(configId) {

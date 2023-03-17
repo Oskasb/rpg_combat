@@ -1,26 +1,16 @@
-"use strict";
 
-define([
-        'client/js/workers/main/ui/elements/GuiTextElement'
-    ],
-    function(
-        GuiTextElement
-    ) {
-
-
-        var GuiScreenSpaceText = function(options) {
+class GuiScreenSpaceText {
+    constructor(options) {
 
             this.options = {};
             for (var key in options) {
                 this.options[key] = options[key];
             }
 
-
             this.surface = {
                 minXY:{x:-0.5, y:-0.5, z:0},
                 maxXY:{x:0.5, y:0.5, z:0}
             };
-
 
             var stringReady = function(tpf, time) {
                 this.text.updateTextMinMaxPositions(this.surface);
@@ -53,7 +43,7 @@ define([
         };
 
 
-        GuiScreenSpaceText.prototype.initScreenSpaceText = function(onReady) {
+        initScreenSpaceText = function(onReady) {
 
 
             var conf = {
@@ -71,31 +61,31 @@ define([
 
         };
 
-        GuiScreenSpaceText.prototype.setTextDimensions = function(pos, size) {
+        setTextDimensions = function(pos, size) {
             this.pos.copy(pos);
             this.size.copy(size);
             this.text.updateTextMinMaxPositions(this.surface);
         };
 
 
-        GuiScreenSpaceText.prototype.updateTextContent = function(text) {
+        updateTextContent = function(text) {
             this.text.drawTextString(GuiAPI.getTextSysKey(), text, this.callbacks.stringReady)
         };
 
-        GuiScreenSpaceText.prototype.activateScreenSpaceText = function() {
+        activateScreenSpaceText = function() {
             this.time = 0;
             GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress);
         };
 
-        GuiScreenSpaceText.prototype.deactivateScreenSpaceText = function() {
+        deactivateScreenSpaceText = function() {
             GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);
         };
 
-        GuiScreenSpaceText.prototype.removeGuiWidget = function() {
+        removeGuiWidget = function() {
             this.deactivateScreenSpaceText();
             this.text.recoverTextElement();
         };
 
-        return GuiScreenSpaceText;
+    }
 
-    });
+    export { GuiScreenSpaceText }

@@ -1,57 +1,38 @@
-"use strict";
+import { GuiWidget} from "../elements/GuiWidget.js";
+import {GuiStatsPanel } from "./GuiStatsPanel.js";
+import { GuiActionButton } from "./GuiActionButton.js";
+import { GuiSimpleButton } from "./GuiSimpleButton.js";
+import { GuiExpandingContainer } from "./GuiExpandingContainer.js";
+import { GuiThumbstick } from "./GuiThumbstick.js";
+import { GuiTextBox } from "./GuiTextBox.js";
+import { GuiScreenSpaceText } from "./GuiScreenSpaceText.js";
+import { GuiProgressBar } from "./GuiProgressBar.js";
 
-define([
-        'client/js/workers/main/ui/elements/GuiWidget',
-        'ui/widgets/GuiStatsPanel',
-        'ui/widgets/GuiActionPointStatus',
-        'ui/widgets/GuiActionButton',
-        'ui/widgets/GuiSimpleButton',
-        'ui/widgets/GuiExpandingContainer',
-        'ui/widgets/GuiThumbstick',
-        'ui/widgets/GuiTextBox',
-        'ui/widgets/GuiScreenSpaceText',
-        'ui/widgets/GuiProgressBar'
-    ],
-    function(
-        GuiWidget,
-        GuiStatsPanel,
-        GuiActionPointStatus,
-        GuiActionButton,
-        GuiSimpleButton,
-        GuiExpandingContainer,
-        GuiThumbstick,
-        GuiTextBox,
-        GuiScreenSpaceText,
-        GuiProgressBar
-    ) {
-
-        var widgets = {
-            GuiStatsPanel           : GuiStatsPanel                      ,
-            GuiActionPointStatus    : GuiActionPointStatus               ,
-            GuiActionButton         : GuiActionButton                    ,
-            GuiSimpleButton         : GuiSimpleButton                    ,
-            GuiExpandingContainer   : GuiExpandingContainer              ,
-            GuiThumbstick           : GuiThumbstick                      ,
-            GuiTextBox              : GuiTextBox                         ,
-            GuiScreenSpaceText      : GuiScreenSpaceText                 ,
-            GuiProgressBar          : GuiProgressBar
+class WidgetBuilder {
+    constructor() {
+            this.widgets = {
+                GuiStatsPanel           : GuiStatsPanel                      ,
+                GuiActionButton         : GuiActionButton                    ,
+                GuiSimpleButton         : GuiSimpleButton                    ,
+                GuiExpandingContainer   : GuiExpandingContainer              ,
+                GuiThumbstick           : GuiThumbstick                      ,
+                GuiTextBox              : GuiTextBox                         ,
+                GuiScreenSpaceText      : GuiScreenSpaceText                 ,
+                GuiProgressBar          : GuiProgressBar
+            };
         };
 
-        var WidgetBuilder = function() {
-
-        };
-
-        WidgetBuilder.prototype.buildWidget = function(widgetClassName, options, onReady) {
-            var widgetOfClass = new widgets[widgetClassName](options);
+        buildWidget = function(widgetClassName, options, onReady) {
+            let widgetOfClass = new this.widgets[widgetClassName](options);
             this.setupWidgetFromOptions(widgetOfClass, onReady);
 
         };
 
-        WidgetBuilder.prototype.setupWidgetFromOptions = function(widgetOfClass, onReady) {
+        setupWidgetFromOptions = function(widgetOfClass, onReady) {
 
-            var guiWidget = new GuiWidget(widgetOfClass.options.configId);
+            let guiWidget = new GuiWidget(widgetOfClass.options.configId);
 
-            var wReady = function(widget) {
+            let wReady = function(widget) {
 
                 widget.applyWidgetOptions(widgetOfClass.options);
                 widgetOfClass.setGuiWidget(widget);
@@ -63,8 +44,6 @@ define([
 
         };
 
+    }
 
-
-        return WidgetBuilder;
-
-    });
+export { WidgetBuilder }

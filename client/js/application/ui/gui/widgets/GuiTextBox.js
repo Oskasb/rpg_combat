@@ -1,14 +1,7 @@
-"use strict";
+import { GuiWidget} from "../elements/GuiWidget.js";
 
-define([
-        'client/js/workers/main/ui/elements/GuiWidget'
-    ],
-    function(
-        GuiWidget
-    ) {
-
-
-        var GuiTextBox = function(options) {
+class GuiTextBox {
+    constructor(options) {
 
             this.options = {};
             for (var key in options) {
@@ -34,7 +27,7 @@ define([
         };
 
 
-        GuiTextBox.prototype.initTextBox = function(widgetConfig, onActivate, onReady, pos) {
+        initTextBox = function(widgetConfig, onActivate, onReady, pos) {
             this.guiWidget = new GuiWidget(widgetConfig);
 
             var widgetReady = function(widget) {
@@ -48,30 +41,30 @@ define([
 
         };
 
-        GuiTextBox.prototype.setGuiWidget = function(guiWidget) {
+        setGuiWidget = function(guiWidget) {
             this.guiWidget = guiWidget;
         };
 
-        GuiTextBox.prototype.updateTextContent = function(text) {
+        updateTextContent = function(text) {
             this.guiWidget.printWidgetText(text)
         };
 
-        GuiTextBox.prototype.activateTextBox = function() {
+        activateTextBox = function() {
             this.activated = true;
             this.time = 0;
             GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress);
         };
 
-        GuiTextBox.prototype.deactivateTextBox = function() {
+        deactivateTextBox = function() {
             this.activated = false;
             GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);
         };
 
-        GuiTextBox.prototype.removeGuiWidget = function() {
+        removeGuiWidget = function() {
             this.deactivateTextBox();
             this.guiWidget.recoverGuiWidget();
         };
 
-        return GuiTextBox;
+    }
 
-    });
+export { GuiTextBox }

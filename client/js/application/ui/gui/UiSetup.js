@@ -1,35 +1,22 @@
-"use strict";
+import { InputSystem } from "./systems/InputSystem.js";
+import { TextSystem } from "./systems/TextSystem.js";
+import { GuiAnchors } from "./widgets/GuiAnchors.js";
 
-define([
-
-        'client/js/workers/main/ui/systems/InputSystem',
-        'client/js/workers/main/ui/systems/TextSystem',
-        'client/js/workers/main/ui/widgets/GuiAnchors',
-        'client/js/workers/main/ui/UiTestSetup'
-    ],
-    function(
-
-        InputSystem,
-        TextSystem,
-        GuiAnchors,
-        UiTestSetup
-    ) {
-
-
-        var UiSetup = function() {
-            this.uiTestSetup = new UiTestSetup();
+class UiSetup {
+    constructor() {
+         //   this.uiTestSetup = new UiTestSetup();
             this.guiAnchors = new GuiAnchors();
         };
 
-        UiSetup.prototype.initUiSetup = function(callback) {
+        initUiSetup = function(callback) {
 
             GuiAPI.setInputSystem( new InputSystem());
             GuiAPI.setTextSystem( new TextSystem());
 
-            var textSysCb = function() {
+            let textSysCb = function() {
                 callback();
             };
-            var inputReady = function() {
+            let inputReady = function() {
 
                 GuiAPI.getTextSystem().initTextSystem(textSysCb);
             };
@@ -38,15 +25,13 @@ define([
 
         };
 
-
-        UiSetup.prototype.setupDefaultUi = function() {
+        setupDefaultUi = function() {
             this.guiAnchors.initGuiAnchors();
             GuiAPI.getGuiDebug().setupDebugControlContainer();
             GuiAPI.getGuiDebug().setupDebugControlContainer2();
-            this.uiTestSetup.initUiTestSetup();
+        //    this.uiTestSetup.initUiTestSetup();
         };
 
+    }
 
-        return UiSetup;
-
-    });
+    export { UiSetup }

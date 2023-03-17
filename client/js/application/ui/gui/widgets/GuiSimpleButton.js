@@ -1,13 +1,5 @@
-"use strict";
-
-define([
-
-    ],
-    function(
-
-    ) {
-
-        var GuiSimpleButton = function(options) {
+class GuiSimpleButton {
+    constructor(options) {
 
             this.options = {};
             for (var key in options) {
@@ -15,23 +7,23 @@ define([
             }
         };
 
-        GuiSimpleButton.prototype.setGuiWidget = function(guiWidget) {
+        setGuiWidget = function(guiWidget) {
             this.guiWidget = guiWidget;
         };
 
-        GuiSimpleButton.prototype.removeGuiWidget = function() {
+        removeGuiWidget = function() {
             this.guiWidget.recoverGuiWidget();
         };
 
-        GuiSimpleButton.prototype.pressButtonFromCode = function() {
+        pressButtonFromCode = function() {
             this.guiWidget.notifyElementActivate(0);
             this.guiWidget.getWidgetSurface().updateInterativeState();
         };
 
-        GuiSimpleButton.prototype.setTestActiveCallback = function(cb) {
+        setTestActiveCallback = function(cb) {
             this.guiWidget.addTestActiveCallback(cb);
         };
 
-        return GuiSimpleButton;
+    }
 
-    });
+    export { GuiSimpleButton }
