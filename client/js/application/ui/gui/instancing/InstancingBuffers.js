@@ -1,5 +1,5 @@
 class InstancingBuffers {
-    constructor() {
+    constructor(bufferSysKey, assetId, elementCount, renderOrder) {
         this.adds = 0;
         this.relCount = 0;
         this.actCount = 0;
@@ -52,15 +52,15 @@ class InstancingBuffers {
             let buffers = [];
 
             for (let i = 0; i < this.useBuffers.length; i++) {
-                let attrib = this.attributes[useBuffers[i]];
-                let sab = new SharedArrayBuffer(Float32Array.BYTES_PER_ELEMENT * elementCount * attrib.dimensions);
+                let attrib = this.attributes[this.useBuffers[i]];
+                let sab = new ArrayBuffer(Float32Array.BYTES_PER_ELEMENT * elementCount * attrib.dimensions);
                 let buffer = new Float32Array(sab);
                 buffers.push(buffer);
                 this.buffers[this.useBuffers[i]] = buffer;
             };
 
             let msg = [this.uiSysKey, this.assetId, this.useBuffers, buffers, this.renderOrder];
-            MainWorldAPI.postToRender([ENUMS.Message.REGISTER_INSTANCING_BUFFERS, msg])
+            InstanceAPI.setupInstancingBuffers(msg)
 
         };
 

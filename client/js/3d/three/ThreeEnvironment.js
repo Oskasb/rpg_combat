@@ -27,7 +27,7 @@ class ThreeEnvironment {
         this.envList = {};
         this.skyList = {};
         this.worldSetup = {};
-        this.world = {};
+        this.world = {fog:{density:0, near:1, far: 100000}};
         this.currentEnvId = null;
         this.maxElevation = 10000;
         this.currentElevation = 0;
@@ -479,7 +479,7 @@ class ThreeEnvironment {
 
         //    mat.depthWrite = false;
 
-        var skyGeo = new THREE.SphereGeometry(15000, 36, 6 );
+        var skyGeo = new THREE.SphereGeometry(1000, 36, 6 );
         var skyMesh = new THREE.Mesh( skyGeo, mat);
 
         var uniforms = {

@@ -63,7 +63,7 @@ class ThreeAPI {
         this.renderer = store.renderer;
         this.reflectionScene = store.reflectionScene;
 
-        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.5, 31000 );
+        const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.3, 11000 );
         this.setCamera(camera);
         store.camera = camera;
         camera.matrixWorldAutoUpdate = false;
@@ -107,7 +107,7 @@ class ThreeAPI {
     };
 
     loadThreeAsset = function(assetType, assetId, callback) {
-        assetLoader.loadAsset(assetType, assetId, callback);
+        this.assetLoader.loadAsset(assetType, assetId, callback);
     };
 
     getTimeElapsed = function() {
@@ -410,12 +410,18 @@ class ThreeAPI {
 
     setGlobalUniform = function(uniformKey, values) {
 
+        if (!this.globalUniforms[uniformKey]) {
+            this.globalUniforms[uniformKey] = {value:{}};
+        }
+
         if (typeof (values) === 'number') {
             this.globalUniforms[uniformKey].value = values;
         } else {
             for (let val in values) {
                 this.globalUniforms[uniformKey].value[val] = values[val];
             }
+
+
         }
     };
 

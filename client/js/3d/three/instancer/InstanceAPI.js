@@ -107,7 +107,7 @@ class InstanceAPI {
 
             let updateUiSystemBuffers = function(instanceBuffers) {
 
-                instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates(systemTime));
+                instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates( this.systemTime));
             };
 
 
@@ -120,7 +120,7 @@ class InstanceAPI {
                 }
             }
 
-            ThreeAPI.setGlobalUniform('fogDensity', ThreeAPI.readEnvironmentUniform('fog', 'density'));
+            ThreeAPI.setGlobalUniform( 'fogDensity', ThreeAPI.readEnvironmentUniform('fog', 'density'));
             ThreeAPI.setGlobalUniform( 'fogColor' ,ThreeAPI.readEnvironmentUniform('fog', 'color'));
             ThreeAPI.setGlobalUniform( 'sunLightColor' ,ThreeAPI.readEnvironmentUniform('sun', 'color'));
             ThreeAPI.setGlobalUniform( 'ambientLightColor' ,ThreeAPI.readEnvironmentUniform('ambient', 'color'));
@@ -134,7 +134,7 @@ class InstanceAPI {
                 let mat = this.materials[i];
                 if (mat.uniforms) {
                     if (mat.uniforms.systemTime) {
-                        mat.uniforms.systemTime.value = systemTime;
+                        mat.uniforms.systemTime.value = this.systemTime;
                     } else {
                         console.log("no uniform yet...")
                     }

@@ -13,11 +13,16 @@ class Setup {
         this.uiSetup = new UiSetup();
     }
 
+    initUiSetup(callback) {
+        this.uiSetup.initUiSetup(callback)
+    }
+
     initGlobalAPIs(pipelineAPI) {
         window.PipelineAPI = pipelineAPI;
         window.InstanceAPI = new InstanceAPI();
         window.ThreeAPI = new ThreeAPI();
         window.GuiAPI = new GuiAPI();
+        window.evt = client.evt;
     }
 
     initDataPipeline(pipelineAPI, pipelineReadyCB) {

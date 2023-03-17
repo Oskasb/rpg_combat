@@ -1,5 +1,6 @@
 import {ExpandingPool} from '../../../application/utils/ExpandingPool.js';
 import {InstanceSpatial} from './InstanceSpatial.js';
+import { GLTFLoader } from "../../../../libs/three/GLTFLoader.js";
 
         class ThreeModelFile {
             constructor(id, config, callback) {
@@ -23,7 +24,7 @@ import {InstanceSpatial} from './InstanceSpatial.js';
 
 
 
-                let loader = new THREE.GLTFLoader();
+                let loader = new GLTFLoader();
                 let loadGLB = function(url, cacheMesh) {
 
                     // Makes a Scene

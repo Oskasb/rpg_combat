@@ -1,52 +1,33 @@
-"use strict";
+class DynamicMain {
+    constructor() {
 
-define([
-    'evt',
-    'PipelineAPI',
-    '3d/three/instancer/InstanceAPI'
+    this.assets = [];
+    this.assetIndex = {};
+    this.instances = [];
 
-], function(
-    evt,
-    PipelineAPI,
-    InstanceAPI
-) {
-
-    var i;
-    var assets = [];
-    var assetIndex = {};
-    var instances = [];
-    var spatials = [];
-    var msg;
-
-    var pos;
-    var quat;
-    var obj3d;
-
-    var activeMixers = [];
-
-    var dynamicMain;
-
-
-    var DynamicMain = function() {
-        dynamicMain = this;
-
-
-        var requestInstance = function(event) {
+        let requestInstance = function(event) {
             this.requestAssetInstance(event)
         }.bind(this);
 
         evt.on(ENUMS.Event.REQUEST_ASSET_INSTANCE, requestInstance);
 
+        this.instanceEvt = [
+            ENUMS.Args.POINTER,             0,
+            ENUMS.Args.INSTANCE_POINTER,    0
+        ];
+
+        this.instancePointer = ENUMS.Numbers.INSTANCE_PTR_0;
+
     };
 
-    DynamicMain.prototype.requestAsset = function(msg) {
+    requestAsset = function(msg) {
 
         var onAssetReady = function(asset) {
         //    console.log("AssetReady:", asset);
-            assetIndex[asset.id] = assets.length;
+            this.assetIndex[asset.id] = assets.length;
             assets.push(asset);
 
-            var idx = assetIndex[asset.id];
+            var idx = this.assetIndex[asset.id];
             var anims = asset.model.animationKeys;
             var joints = asset.model.jointKeys;
             var message = {};
@@ -71,65 +52,64 @@ define([
     };
 
 
-    var instanceEvt = [
-        ENUMS.Args.POINTER,             0,
-        ENUMS.Args.INSTANCE_POINTER,    0
-    ];
 
-    var instancePointer = ENUMS.Numbers.INSTANCE_PTR_0;
 
-    var instanceReady = function(modelInstance) {
-        instancePointer++;
-        instances.push(modelInstance);
-        modelInstance.setPointer(instancePointer);
-        instanceEvt[1] = assetIndex[modelInstance.getAssetId()];
-        instanceEvt[3] = modelInstance.getPointer();
-        evt.fire(ENUMS.Event.REGISTER_INSTANCE, instanceEvt);
-    };
 
-    DynamicMain.prototype.getInstanceByPointer = function(ptr) {
-        for (var i = 0; i < instances.length; i++) {
-            if (instances[i].getPointer() === ptr) {
-                return instances[i];
+
+    getInstanceByPointer = function(ptr) {
+        for (var i = 0; i < this.instances.length; i++) {
+            if (this.instances[i].getPointer() === ptr) {
+                return this.instances[i];
             }
         }
     };
 
-    DynamicMain.prototype.removeFromIsntanceIndex = function(instancedModel) {
-        MATH.quickSplice(instances, instancedModel);
+    removeFromIsntanceIndex = function(instancedModel) {
+        MATH.quickSplice(this.instances, instancedModel);
     };
 
-    DynamicMain.prototype.requestAssetInstance = function(event) {
+
+    instanceReady = function(modelInstance) {
+        this.instancePointer++;
+        this.instances.push(modelInstance);
+        modelInstance.setPointer(this.instancePointer);
+        this.instanceEvt[1] = this.assetIndex[modelInstance.getAssetId()];
+        this.instanceEvt[3] = modelInstance.getPointer();
+        evt.dispatch(ENUMS.Event.REGISTER_INSTANCE, this.instanceEvt);
+    };
+
+    requestAssetInstance = function(event) {
+
+
+
         var asset = assets[event[1]];
         asset.instantiateAsset(instanceReady);
     };
 
-    DynamicMain.prototype.updateDynamicInstances = function() {
-        for (var i = 0; i < instances.length; i++) {
-            instances[i].getSpatial().updateSpatialFrame();
+    updateDynamicInstances = function() {
+        for (var i = 0; i < this.instances.length; i++) {
+            this.instances[i].getSpatial().updateSpatialFrame();
         }
     };
 
-    DynamicMain.prototype.updateDynamicMatrices = function() {
-        for (var i = 0; i < instances.length; i++) {
-            instances[i].updateSpatialWorldMatrix();
+    updateDynamicMatrices = function() {
+        for (var i = 0; i < this.instances.length; i++) {
+            this.instances[i].updateSpatialWorldMatrix();
         }
     };
 
 
-    DynamicMain.prototype.tickDynamicMain = function(tpf) {
+    tickDynamicMain = function(tpf) {
         this.updateDynamicMatrices();
         this.updateDynamicInstances();
         InstanceAPI.updateInstances(tpf);
 
     };
 
-
-    DynamicMain.prototype.initiateInstancesFromBufferMsg = function(bufferMsg) {
+    initiateInstancesFromBufferMsg = function(bufferMsg) {
         InstanceAPI.setupInstancingBuffers(bufferMsg);
     };
 
+};
 
-    return DynamicMain;
-
-});
+export { DynamicMain }

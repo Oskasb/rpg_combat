@@ -5,6 +5,7 @@ import { PointerCursor } from './ui/input/PointerCursor.js';
 import { Setup } from './setup/Setup.js';
 import * as THREE from '../../libs/three/three.module.js';
 import { ThreeController } from '../3D/ThreeController.js';
+import { DynamicMain } from '../3D/DynamicMain.js';
 
 class Client {
 
@@ -14,23 +15,32 @@ class Client {
         this.devMode = devMode;
         this.env = env;
         this.evt = new evt(ENUMS.Event);
+        window.evt = this.evt;
         this.threeController = new ThreeController();
         this.pipelineAPI = new PipelineAPI();
         this.gameScreen = new GameScreen();
+        this.dynamicMain = new DynamicMain();
         window.GameScreen = this.gameScreen;
         this.setup = new Setup();
         this.INPUT_STATE = null;
     }
 
+    activateGui() {
+        let uiSysReady = function(msg) {
+            console.log("Ui sys ready", msg)
+            client.createScene();
+        }
+        this.setup.initUiSetup(uiSysReady)
+    }
+
     initUiSystem() {
-
-
 
         this.threeController.setupThreeRenderer();
         this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
         this.INPUT_STATE =  this.pointerCursor.getInputState();
         console.log(this.INPUT_STATE);
-            client.createScene();
+
+
     }
 
     initClientSetup(dataPipelineOptions) {
@@ -81,7 +91,7 @@ class Client {
         }
 
         const onFrameReadyCallback= function(frame) {
-
+            InstanceAPI.updateInstances(frame.tpf)
             ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
 
             ThreeAPI.applyDynamicGlobalUniforms();
@@ -91,6 +101,7 @@ class Client {
             ThreeAPI.updateCamera();
             ThreeAPI.updateAnimationMixers(frame.tpf);
             ThreeAPI.updateSceneMatrixWorld(frame.tpf);
+            client.dynamicMain.tickDynamicMain(frame.tpf);
             /*
 */
 

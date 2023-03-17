@@ -1,4 +1,5 @@
 import {PipelineObject} from '../../application/load/PipelineObject.js';
+import { GLTFLoader } from "../../../libs/three/GLTFLoader.js";
 
 class ThreeModelLoader {
     constructor() {
@@ -300,7 +301,7 @@ class ThreeModelLoader {
 
             let loadModel = function (src) {
                 loadCalls++;
-                let loader = new THREE.GLTFLoader();
+                let loader = new GLTFLoader();
                 loader.load(src, loaded, prog, err);
             };
 

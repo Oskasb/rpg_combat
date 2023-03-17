@@ -102,6 +102,7 @@ class DataLoader {
         };
 
         notifyCompleted = function() {
+            client.activateGui();
             this.loadProgress.removeProgress();
         };
     }
