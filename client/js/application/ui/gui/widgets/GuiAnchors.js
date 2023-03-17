@@ -36,7 +36,7 @@ class GuiAnchors {
             widget.pos.copy(widget.originalPosition);
             widget.applyWidgetPosition();
             GuiAPI.setAnchorWidget(widget.anchor.key, widget)
-        };
+        }.bind(this);
         let anchor = new GuiWidget("widget_gui_anchor");
         anchor.anchor = this.anchors[key];
         anchor.anchor.key = key;

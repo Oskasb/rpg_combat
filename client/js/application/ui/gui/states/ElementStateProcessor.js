@@ -9,19 +9,19 @@ class ElementStateProcessor {
     };
 
     applyStateToTextElement = function(element, elementState) {
-        feedbackId = element.getFeedbackConfigId();
-        state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'TEXT', feedbackId);
+        let feedbackId = element.getFeedbackConfigId();
+        let state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'TEXT', feedbackId);
 
         if (state_feedback) {
 
-            stateKey = ENUMS.getKey('ElementState', elementState);
+            let stateKey = ENUMS.getKey('ElementState', elementState);
 
             if (state_feedback[stateKey]) {
 
-                color = state_feedback[stateKey]['color_rgba'];
+                let color = state_feedback[stateKey]['color_rgba'];
                 if (color) {
 
-                    for (var i = 0; i < element.guiStrings.length; i++) {
+                    for (let  i = 0; i < element.guiStrings.length; i++) {
                         element.guiStrings[i].setStringColorRGBA(color, state_feedback[stateKey]['lut_color']);
                     }
                 }
@@ -30,16 +30,16 @@ class ElementStateProcessor {
     };
 
     applyStateToIconElement = function(element, elementState) {
-        feedbackId = element.getFeedbackConfigId();
-        state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'ICON', feedbackId);
+        let feedbackId = element.getFeedbackConfigId();
+        let state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'ICON', feedbackId);
 
         if (state_feedback) {
 
-            stateKey = ENUMS.getKey('ElementState', elementState);
+            let stateKey = ENUMS.getKey('ElementState', elementState);
 
             if (state_feedback[stateKey]) {
 
-                color = state_feedback[stateKey]['color_rgba'];
+                let color = state_feedback[stateKey]['color_rgba'];
                 if (color) {
                     element.setGuiIconColorRGBA(color);
                 }
@@ -116,7 +116,7 @@ class ElementStateProcessor {
 
             let limit = layout.anchor['limitAspect'];
             if (limit) {
-                this.widgetOrigin.x = MATH.clamp(widgetOrigin.x, -limit/2, limit/2);
+                this.widgetOrigin.x = MATH.clamp(this.widgetOrigin.x, -limit/2, limit/2);
             }
         }
 
@@ -131,14 +131,14 @@ class ElementStateProcessor {
 
         } else {
 
-            this.widgetOrigin.add(offset);
-            this.widgetOrigin.add(anchor);
+            this.widgetOrigin.add(this.offset);
+            this.widgetOrigin.add(this.anchor);
             widget.pos.copy(this.widgetOrigin);
         }
 
         widget.pos.add(widget.offsetPosition);
 
-        layoutSize = function(widget, layout, offset, parentExtents) {
+        let layoutSize = function(widget, layout, offset, parentExtents) {
 
             let child;
             let children;
@@ -248,7 +248,7 @@ class ElementStateProcessor {
 
         };
 
-        layoutSize(widget, layout, anchor);
+        layoutSize(widget, layout, this.anchor);
 
         if (widget.text) {
             widget.text.setTextLayout(layout.text)

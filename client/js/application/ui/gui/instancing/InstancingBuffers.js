@@ -67,7 +67,7 @@ class InstancingBuffers {
         setAttribX = function(name, index, x) {
 
             let buffer = this.buffers[name];
-            let dims = attributes[name].dimensions;
+            let dims = this.attributes[name].dimensions;
             let idx = dims*index;
             buffer[idx] = x;
             this.setUpdated(buffer);
@@ -75,7 +75,7 @@ class InstancingBuffers {
 
         setAttribXY = function(name, index, x, y) {
             let buffer = this.buffers[name];
-            let dims = attributes[name].dimensions;
+            let dims = this.attributes[name].dimensions;
             let idx = dims*index;
             buffer[idx] = x;
             buffer[idx+1] = y;
@@ -85,7 +85,7 @@ class InstancingBuffers {
         setAttribXYZ = function(name, index, x, y, z) {
 
             let buffer = this.buffers[name];
-            let dims = attributes[name].dimensions;
+            let dims = this.attributes[name].dimensions;
             let idx = dims*index;
             buffer[idx] = x;
             buffer[idx+1] = y;
@@ -96,7 +96,7 @@ class InstancingBuffers {
         setAttribXYZW = function(name, index, x, y, z, w) {
 
             let buffer = this.buffers[name];
-            let dims = attributes[name].dimensions;
+            let dims = this.attributes[name].dimensions;
             let idx = dims*index;
             buffer[idx] = x;
             buffer[idx+1] = y;

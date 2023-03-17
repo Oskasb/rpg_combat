@@ -22,11 +22,27 @@ class UiSetup {
             };
 
             GuiAPI.getInputSystem().initInputSystem(inputReady);
+            this.guiAnchors.initGuiAnchors();
+
+
+            var onReady = function(textBox) {
+                textBox.updateTextContent("Text ready...")
+                //textBoxes.push(textBox);
+            };
+
+            var onActivate = function(inputIndex, widget) {
+                widget.printWidgetText('pressed')
+            };
+
+            var opts = GuiAPI.buildWidgetOptions('main_text_box', onActivate, false, true, "TRY ME", 0, 0, 'center');
+
+            GuiAPI.buildGuiWidget('GuiTextBox', opts, onReady);
+
 
         };
 
         setupDefaultUi = function() {
-            this.guiAnchors.initGuiAnchors();
+
             GuiAPI.getGuiDebug().setupDebugControlContainer();
             GuiAPI.getGuiDebug().setupDebugControlContainer2();
         //    this.uiTestSetup.initUiTestSetup();

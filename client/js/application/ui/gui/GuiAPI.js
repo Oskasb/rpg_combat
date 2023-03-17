@@ -257,10 +257,8 @@ class GuiAPI {
 
     sampleInputState = function(INPUT_BUFFER) {
 
-
-
         this.calls.updateInput(INPUT_BUFFER);
-        GuiDebug.updateDebugElements();
+    //    GuiDebug.updateDebugElements();
     };
 
 
@@ -270,16 +268,16 @@ class GuiAPI {
             textWidget.printWidgetText("MOO "+Math.random(), 7)
         };
 
-        GuiDebug.updateDebugElements();
+    //    GuiDebug.updateDebugElements();
         this.instantiator.updateInstantiatorBuffers();
-        this.instantiator.monitorBufferStats();
+    //    this.instantiator.monitorBufferStats();
 
         if (this.registeredTextElements['main_text_box']) {
             dymmy1(this.registeredTextElements['main_text_box']);
         }
 
         MATH.callAll(this.guiUpdateCallbacks, tpf, time);
-        DebugAPI.generateTrackEvent('GUI_DT', time, 'ms', 2)
+     //   DebugAPI.generateTrackEvent('GUI_DT', time, 'ms', 2)
     };
 
 }

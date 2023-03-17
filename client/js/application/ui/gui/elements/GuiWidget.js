@@ -7,7 +7,7 @@ class GuiWidget {
         this.progString = '';
             this.uiKey = 'WIDGET';
         this.settingKey = "STANDARD_WIDGETS";
-
+    this.elementStateProcessor = new ElementStateProcessor();
             this.configId = configId;
 
             this.pos  = new THREE.Vector3();
@@ -222,16 +222,16 @@ class GuiWidget {
         updateWidgetStateFeedback = function() {
 
             let state = this.guiSurface.getInteractiveState();
-            ElementStateProcessor.applyElementStateFeedback(this.guiSurface, state);
+            this.elementStateProcessor.applyElementStateFeedback(this.guiSurface, state);
 
             if (this.text) {
                 if (this.text.guiStrings.length) {
-                    ElementStateProcessor.applyStateToTextElement(this.text, state);
+                    this.elementStateProcessor.applyStateToTextElement(this.text, state);
                 }
             }
 
             if (this.icon) {
-                ElementStateProcessor.applyStateToIconElement(this.icon, state);
+                this.elementStateProcessor.applyStateToIconElement(this.icon, state);
             }
 
         };
@@ -366,7 +366,7 @@ class GuiWidget {
         //    GuiAPI.debugDrawGuiPosition(this.originalPosition.x, this.originalPosition.y);
 
 
-            ElementStateProcessor.applyElementLayout(this);
+            this.elementStateProcessor.applyElementLayout(this);
 
         //    GuiAPI.debugDrawGuiPosition(this.pos.x, this.pos.y);
 
@@ -458,12 +458,12 @@ class GuiWidget {
 
             if (this.text) {
                 if (this.text.guiStrings.length) {
-                    ElementStateProcessor.applyStateToTextElement(this.text, state);
+                    this.elementStateProcessor.applyStateToTextElement(this.text, state);
                 }
             }
 
             if (this.icon) {
-                ElementStateProcessor.applyStateToIconElement(this.icon, state);
+                this.elementStateProcessor.applyStateToIconElement(this.icon, state);
             }
 
         };

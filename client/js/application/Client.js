@@ -91,6 +91,7 @@ class Client {
         }
 
         const onFrameReadyCallback= function(frame) {
+            GuiAPI.updateGui(frame.tpf, frame.elapsedTime)
             InstanceAPI.updateInstances(frame.tpf)
             ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
 
