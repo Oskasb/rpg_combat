@@ -1,178 +1,236 @@
-"use strict";
+class ElementStateProcessor {
 
-define([
+    constructor() {
+        this.offset = new THREE.Vector3();
+        this.anchor = new THREE.Vector3();
+        this.widgetOrigin = new THREE.Vector3();
+        this.widgetExtents = new THREE.Vector3();
+        this.parentExtents = new THREE.Vector3();
+    };
 
-    ],
-    function(
+    applyStateToTextElement = function(element, elementState) {
+        feedbackId = element.getFeedbackConfigId();
+        state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'TEXT', feedbackId);
 
-    ) {
+        if (state_feedback) {
 
-        var imgConf;
-        var state_feedback;
-        var stateKey;
-        var color;
-        var sprites;
-        var sprite;
-        var spriteName;
+            stateKey = ENUMS.getKey('ElementState', elementState);
 
-        var lutColor;
-        var bufferElem;
-        var feedbackId;
+            if (state_feedback[stateKey]) {
 
-        var ElementStateProcessor = function() {
+                color = state_feedback[stateKey]['color_rgba'];
+                if (color) {
 
-        };
+                    for (var i = 0; i < element.guiStrings.length; i++) {
+                        element.guiStrings[i].setStringColorRGBA(color, state_feedback[stateKey]['lut_color']);
+                    }
+                }
+            }
+        }
+    };
 
-        ElementStateProcessor.applyStateToTextElement = function(element, elementState) {
-            feedbackId = element.getFeedbackConfigId();
-            state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'TEXT', feedbackId);
+    applyStateToIconElement = function(element, elementState) {
+        feedbackId = element.getFeedbackConfigId();
+        state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'ICON', feedbackId);
 
+        if (state_feedback) {
+
+            stateKey = ENUMS.getKey('ElementState', elementState);
+
+            if (state_feedback[stateKey]) {
+
+                color = state_feedback[stateKey]['color_rgba'];
+                if (color) {
+                    element.setGuiIconColorRGBA(color);
+                }
+            }
+        }
+    };
+
+    applyElementStateFeedback = function(element, elementState) {
+        let imgConf = element.config['image'];
+        let feedbackId = element.getFeedbackConfigId();
+        let state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'SURFACE', feedbackId);
+
+        if (imgConf) {
             if (state_feedback) {
 
-                stateKey = ENUMS.getKey('ElementState', elementState);
+                let stateKey = ENUMS.getKey('ElementState', elementState);
 
                 if (state_feedback[stateKey]) {
+                    let bufferElem = element.getBufferElement();
 
-                    color = state_feedback[stateKey]['color_rgba'];
+
+                    let color = state_feedback[stateKey]['color_rgba'];
                     if (color) {
+                        bufferElem.setColorRGBA(color);
+                    }
 
-                        for (var i = 0; i < element.guiStrings.length; i++) {
-                            element.guiStrings[i].setStringColorRGBA(color, state_feedback[stateKey]['lut_color']);
-                        }
+                    let lutColor = state_feedback[stateKey]['lut_color'];
+
+                    if (lutColor) {
+                        bufferElem.setLutColor(ENUMS.ColorCurve[lutColor]);
+                        bufferElem.applyDataTexture();
+                    }
+
+
+                    let spriteName = state_feedback[stateKey]['sprite'];
+
+                    if (spriteName) {
+
+                        let sprites = GuiAPI.getUiSprites(imgConf['atlas_key']);
+                        let sprite = sprites[spriteName];
+
+                        element.sprite.x = sprite[0];
+                        element.sprite.y = sprite[1];
+
+                        element.getBufferElement().setSprite(element.sprite);
+
                     }
                 }
             }
-        };
+        }
+    };
 
-        ElementStateProcessor.applyStateToIconElement = function(element, elementState) {
-            feedbackId = element.getFeedbackConfigId();
-            state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'ICON', feedbackId);
 
-            if (state_feedback) {
 
-                stateKey = ENUMS.getKey('ElementState', elementState);
+    applyElementLayout = function(widget) {
+        let layoutId = widget.getLayoutConfigId();
+        let layout =  GuiAPI.getGuiSettingConfig('SURFACE_LAYOUT', 'SURFACES', layoutId);
 
-                if (state_feedback[stateKey]) {
+        widget.getWidgetSurface().getSurfaceExtents(this.widgetExtents);
 
-                    color = state_feedback[stateKey]['color_rgba'];
-                    if (color) {
-                        element.setGuiIconColorRGBA(color);
-                    }
-                }
+        if (widget.parent) {
+            widget.parent.getWidgetSurface().getSurfaceExtents(this.parentExtents);
+            if (widget.parent.parent) {
+
+                this.widgetOrigin.copy(widget.parent.originalPosition);
+            } else {
+
+                this.widgetOrigin.copy(widget.parent.pos);
             }
-        };
 
-        ElementStateProcessor.applyElementStateFeedback = function(element, elementState) {
-            imgConf = element.config['image'];
-            feedbackId = element.getFeedbackConfigId();
-            state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'SURFACE', feedbackId);
+        } else {
+            this.parentExtents.set(1, 1, 1);
+            GuiAPI.applyAspectToScreenPosition(widget.originalPosition, this.widgetOrigin);
 
-            if (imgConf) {
-                if (state_feedback) {
-
-                    stateKey = ENUMS.getKey('ElementState', elementState);
-
-                    if (state_feedback[stateKey]) {
-                        bufferElem = element.getBufferElement();
-
-
-                        color = state_feedback[stateKey]['color_rgba'];
-                        if (color) {
-                            bufferElem.setColorRGBA(color);
-                        }
-
-                        lutColor = state_feedback[stateKey]['lut_color'];
-
-                        if (lutColor) {
-                            bufferElem.setLutColor(ENUMS.ColorCurve[lutColor]);
-                            bufferElem.applyDataTexture();
-                        }
-
-
-                        spriteName = state_feedback[stateKey]['sprite'];
-
-                        if (spriteName) {
-
-                            sprites = GuiAPI.getUiSprites(imgConf['atlas_key']);
-                            sprite = sprites[spriteName];
-
-                            element.sprite.x = sprite[0];
-                            element.sprite.y = sprite[1];
-
-                            element.getBufferElement().setSprite(element.sprite);
-
-                        }
-                    }
-                }
+            let limit = layout.anchor['limitAspect'];
+            if (limit) {
+                this.widgetOrigin.x = MATH.clamp(widgetOrigin.x, -limit/2, limit/2);
             }
-        };
+        }
 
-        var layoutId;
-        var layout;
-        var limit;
+        this.offset.set(layout.offset.x * this.widgetExtents.x, layout.offset.y * this.widgetExtents.y, layout.offset.z * this.widgetExtents.z);
+        this.anchor.set(layout.anchor.x * this.parentExtents.x, layout.anchor.y * this.parentExtents.y, layout.anchor.z * this.parentExtents.z);
 
-        var offset = new THREE.Vector3();
-        var anchor = new THREE.Vector3();
-        var widgetOrigin = new THREE.Vector3();
-        var widgetExtents = new THREE.Vector3();
-        var parentExtents = new THREE.Vector3();
-
-        var screenPos = new THREE.Vector3();
-
-        ElementStateProcessor.applyElementLayout = function(widget) {
-            layoutId = widget.getLayoutConfigId();
-            layout =  GuiAPI.getGuiSettingConfig('SURFACE_LAYOUT', 'SURFACES', layoutId);
-
-            widget.getWidgetSurface().getSurfaceExtents(widgetExtents);
+        if (layout.offset.center) {
 
             if (widget.parent) {
-                widget.parent.getWidgetSurface().getSurfaceExtents(parentExtents);
-                if (widget.parent.parent) {
-
-                    widgetOrigin.copy(widget.parent.originalPosition);
-                } else {
-
-                    widgetOrigin.copy(widget.parent.pos);
-                }
-
-            } else {
-                parentExtents.set(1, 1, 1);
-                GuiAPI.applyAspectToScreenPosition(widget.originalPosition, widgetOrigin);
-
-                limit = layout.anchor['limitAspect'];
-                if (limit) {
-                    widgetOrigin.x = MATH.clamp(widgetOrigin.x, -limit/2, limit/2);
-                }
+                widget.pos.copy(widget.parent.pos);
             }
 
-            offset.set(layout.offset.x * widgetExtents.x, layout.offset.y * widgetExtents.y, layout.offset.z * widgetExtents.z);
-            anchor.set(layout.anchor.x * parentExtents.x, layout.anchor.y * parentExtents.y, layout.anchor.z * parentExtents.z);
+        } else {
 
-            if (layout.offset.center) {
+            this.widgetOrigin.add(offset);
+            this.widgetOrigin.add(anchor);
+            widget.pos.copy(this.widgetOrigin);
+        }
+
+        widget.pos.add(widget.offsetPosition);
+
+        layoutSize = function(widget, layout, offset, parentExtents) {
+
+            let child;
+            let children;
+            let sourcePos = new THREE.Vector3();
+            let pExt = new THREE.Vector3();
+            let tempVec1 = new THREE.Vector3();
+            let tempVec2 = new THREE.Vector3();
+            let tempMin = new THREE.Vector3();
+            let tempMax = new THREE.Vector3();
+            let gridMinXY = new THREE.Vector3();
+            let gridMaxXY = new THREE.Vector3();
+            let gridSize = new THREE.Vector3();
+            let padx = 0;
+            let pady = 0;
+            let columns;
+            let col;
+            let row;
+            let gridX;
+            let gridY;
+            let osx;
+            let osy;
+
+            let layoutGridX = function(widget, layout, offset) {
 
                 if (widget.parent) {
-                    widget.pos.copy(widget.parent.pos);
+                    widget.parent.getWidgetSurface().getSurfaceExtents(pExt);
+                } else {
+                    pExt.set(0, 0, 0);
                 }
 
-            } else {
+                children = widget.children;
 
-                widgetOrigin.add(offset);
-                widgetOrigin.add(anchor);
-                widget.pos.copy(widgetOrigin);
-            }
+                tempVec1.set(0, 0, 0);
+                gridMinXY.set(9, 9, 0);
+                gridMaxXY.set( -9,  -9, 0);
 
+                gridX = layout.size.gridx || 1;
+                gridY = layout.size.gridy || 1;
 
-            widget.pos.add(widget.offsetPosition);
+                padx = layout.size.pad || 0;
+                pady = layout.size.pad || 0;
+                columns = layout.size.cols || 1;
 
-            layoutSize(widget, layout, anchor);
+                col = 0;
+                row = 0;
 
-            if (widget.text) {
-                widget.text.setTextLayout(layout.text)
-            }
+                for (let i = 0; i < children.length; i++) {
+                    child = children[i];
+                    child.getWidgetOuterSize(tempVec2);
 
-        };
+                    col = i % columns;
+                    row = Math.floor(i / columns) +1;
 
-        var layoutSize = function(widget, layout, offset, parentExtents) {
+                    osx = (tempVec2.x+padx)*col;
+                    osy = (tempVec2.y+pady)*row;
+
+                    tempVec1.x = osx*gridX + layout.offset.x * pExt.x; //+ offset.x;
+                    tempVec1.y = osy*gridY + layout.offset.y * pExt.y; // -0.1 //+ offset.y;
+
+                    //    tempVec1.add(offset);
+                    child.offsetWidgetPosition(tempVec1);
+                    child.getWidgetMinMax(tempMin, tempMax);
+
+                    if (gridMinXY.x > tempMin.x-padx) {
+                        gridMinXY.x = tempMin.x-padx
+                    }
+
+                    if (gridMinXY.y > tempMin.y-pady) {
+                        gridMinXY.y = tempMin.y-pady
+                    }
+
+                    if (gridMaxXY.x < tempMax.x+padx) {
+                        gridMaxXY.x = tempMax.x+padx
+                    }
+
+                    if (gridMaxXY.y < tempMax.y+pady) {
+                        gridMaxXY.y = tempMax.y+pady
+                    }
+
+                }
+
+                gridSize.subVectors(gridMaxXY, gridMinXY);
+
+                widget.size.copy(gridSize);
+
+                gridSize.multiplyScalar(0.5);
+
+                widget.pos.copy(gridMinXY);
+                widget.pos.add(gridSize);
+                //    widget.pos.add(sourcePos);
+
+            };
 
             if (layout.size.x === 'auto') {
                 layoutGridX(widget, layout, offset, parentExtents)
@@ -190,111 +248,15 @@ define([
 
         };
 
-        var child;
-        var children;
+        layoutSize(widget, layout, anchor);
 
-        var sourcePos = new THREE.Vector3();
-        var pExt = new THREE.Vector3();
-
-        var tempVec1 = new THREE.Vector3();
-        var tempVec2 = new THREE.Vector3();
-        var tempMin = new THREE.Vector3();
-        var tempMax = new THREE.Vector3();
-
-        var gridMinXY = new THREE.Vector3();
-        var gridMaxXY = new THREE.Vector3();
-        var gridSize = new THREE.Vector3();
-
-        var padx = 0;
-        var pady = 0;
-        var columns;
-        var col;
-        var row;
-        var gridX;
-        var gridY;
-
-        var osx;
-        var osy;
-
-        var layoutGridX = function(widget, layout, offset) {
-
-            if (widget.parent) {
-                widget.parent.getWidgetSurface().getSurfaceExtents(pExt);
-            } else {
-                pExt.set(0, 0, 0);
-            }
-
-
-            children = widget.children;
-
-            tempVec1.set(0, 0, 0);
-            gridMinXY.set(9, 9, 0);
-            gridMaxXY.set( -9,  -9, 0);
-
-            gridX = layout.size.gridx || 1;
-            gridY = layout.size.gridy || 1;
-
-            padx = layout.size.pad || 0;
-            pady = layout.size.pad || 0;
-            columns = layout.size.cols || 1;
-
-            col = 0;
-            row = 0;
-
-            for (var i = 0; i < children.length; i++) {
-                child = children[i];
-                child.getWidgetOuterSize(tempVec2);
-
-                col = i % columns;
-                row = Math.floor(i / columns) +1;
-
-                osx = (tempVec2.x+padx)*col;
-                osy = (tempVec2.y+pady)*row;
-
-                tempVec1.x = osx*gridX + layout.offset.x * pExt.x; //+ offset.x;
-                tempVec1.y = osy*gridY + layout.offset.y * pExt.y; // -0.1 //+ offset.y;
-
-
-            //    tempVec1.add(offset);
-                child.offsetWidgetPosition(tempVec1);
-                child.getWidgetMinMax(tempMin, tempMax);
-
-                if (gridMinXY.x > tempMin.x-padx) {
-                    gridMinXY.x = tempMin.x-padx
-                }
-
-                if (gridMinXY.y > tempMin.y-pady) {
-                    gridMinXY.y = tempMin.y-pady
-                }
-
-                if (gridMaxXY.x < tempMax.x+padx) {
-                    gridMaxXY.x = tempMax.x+padx
-                }
-
-                if (gridMaxXY.y < tempMax.y+pady) {
-                    gridMaxXY.y = tempMax.y+pady
-                }
-
-            }
-
-            gridSize.subVectors(gridMaxXY, gridMinXY);
-
-            widget.size.copy(gridSize);
-
-            gridSize.multiplyScalar(0.5);
-
-            widget.pos.copy(gridMinXY);
-            widget.pos.add(gridSize);
-        //    widget.pos.add(sourcePos);
-
-
-        };
-
-        var layoutGridY = function(widget, layout) {
-
+        if (widget.text) {
+            widget.text.setTextLayout(layout.text)
         }
 
-        return ElementStateProcessor;
+    };
 
-    });
+}
+
+export { ElementStateProcessor }
 

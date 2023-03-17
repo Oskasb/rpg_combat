@@ -1,21 +1,12 @@
-"use strict";
+import { ElementStateProcessor } from "../states/ElementStateProcessor";
+import { GuiSurface } from "./GuiSurface";
+import { GuiIcon } from "./GuiIcon";
 
-define([
-        'client/js/workers/main/ui/states/ElementStateProcessor',
-        'client/js/workers/main/ui/elements/GuiSurface',
-        'client/js/workers/main/ui/elements/GuiIcon'
-    ],
-    function(
-        ElementStateProcessor,
-        GuiSurface,
-        GuiIcon
-    ) {
-
-        var uiKey = 'WIDGET';
-        var settingKey = "STANDARD_WIDGETS";
-
-
-        var GuiWidget = function(configId) {
+class GuiWidget {
+    constructor(configId) {
+        this.progString = '';
+            this.uiKey = 'WIDGET';
+        this.settingKey = "STANDARD_WIDGETS";
 
             this.configId = configId;
 
@@ -34,23 +25,23 @@ define([
             this.children = [];
 
 
-            var onAspectChange = function() {
+            let onAspectChange = function() {
                 this.notifyAspectChange();
             }.bind(this);
 
-            var onStringReady = function() {
+        let onStringReady = function() {
                 this.notifyStringReady();
             }.bind(this);
 
-            var onElementActivate = function(inputIndex) {
+        let onElementActivate = function(inputIndex) {
                 this.notifyElementActivate(inputIndex);
             }.bind(this);
 
-            var onElementPressStart = function(inputIndex) {
+        let onElementPressStart = function(inputIndex) {
                 this.notifyElementPressStart(inputIndex);
             }.bind(this);
 
-            var testWidgetIsActive = function() {
+        let testWidgetIsActive = function() {
                 return this.testElementIsActive();
             }.bind(this);
 
@@ -70,7 +61,7 @@ define([
 
 
 
-        GuiWidget.prototype.initGuiWidget = function(pos, cb) {
+        initGuiWidget = function(pos, cb) {
 
             if (pos) {
                 this.originalPosition.copy(pos);
@@ -80,18 +71,18 @@ define([
 
             this.offsetPosition.set(0, 0, 0);
 
-            var config = GuiAPI.getGuiSettings().getSettingConfig(uiKey, settingKey)[this.configId];
+            let config = GuiAPI.getGuiSettings().getSettingConfig(this.uiKey, this.settingKey)[this.configId];
 
             this.setLayoutConfigId(config['layout']);
 
-            var rq = 0;
-            var rd = 0;
+            let rq = 0;
+            let rd = 0;
 
-            var onWidgetStateUpdate = function() {
+            let onWidgetStateUpdate = function() {
                 this.updateWidgetStateFeedback();
             }.bind(this);
 
-            var checkRd = function() {
+            let checkRd = function() {
 
                 rd++;
                 if (rq===rd) {
@@ -111,7 +102,7 @@ define([
 
             }.bind(this);
 
-            var surfaceReady = function() {
+            let surfaceReady = function() {
 
                 rq++;
 
@@ -138,7 +129,7 @@ define([
 
         };
 
-        GuiWidget.prototype.applyWidgetOptions = function(options) {
+        applyWidgetOptions = function(options) {
 
             if (typeof(options.testActive) === 'function') {
                 this.addTestActiveCallback(options.testActive);
@@ -178,19 +169,19 @@ define([
 
 
 
-        GuiWidget.prototype.setLayoutConfigId = function(layoutConfigId) {
+        setLayoutConfigId = function(layoutConfigId) {
             this.layoutConfigId = layoutConfigId;
         };
 
-        GuiWidget.prototype.getLayoutConfigId = function() {
+        getLayoutConfigId = function() {
             return this.layoutConfigId;
         };
 
 
 
-        GuiWidget.prototype.initWidgetSurface = function(surfaceConf, surfaceReady) {
+        initWidgetSurface = function(surfaceConf, surfaceReady) {
 
-            var setupSurface = function() {
+            let setupSurface = function() {
                 surfaceReady();
             };
 
@@ -199,9 +190,9 @@ define([
 
         };
 
-        GuiWidget.prototype.initWidgetText = function(txtConf, cb) {
+        initWidgetText = function(txtConf, cb) {
 
-            var textCB = function (txtElem) {
+            let textCB = function (txtElem) {
                 txtElem.setFeedbackConfigId(txtConf.feedback);
                 this.text = txtElem;
                 cb()
@@ -213,9 +204,9 @@ define([
 
 
 
-        GuiWidget.prototype.initWidgetIcon = function(iconConf, cb) {
+        initWidgetIcon = function(iconConf, cb) {
 
-            var addLetterCb = function(bufferElem) {
+            let addLetterCb = function(bufferElem) {
                 this.icon.initIconBuffers(bufferElem);
                 cb()
             }.bind(this);
@@ -228,9 +219,9 @@ define([
 
         };
 
-        GuiWidget.prototype.updateWidgetStateFeedback = function() {
+        updateWidgetStateFeedback = function() {
 
-            var state = this.guiSurface.getInteractiveState();
+            let state = this.guiSurface.getInteractiveState();
             ElementStateProcessor.applyElementStateFeedback(this.guiSurface, state);
 
             if (this.text) {
@@ -245,16 +236,16 @@ define([
 
         };
 
-        GuiWidget.prototype.updateIconPosition = function() {
+        updateIconPosition = function() {
             this.guiSurface.getSurfaceExtents(this.extents);
             this.icon.updateGuiIconPosition(this.guiSurface.minXY, this.extents);
         };
 
-        GuiWidget.prototype.updateTextPositions = function() {
+        updateTextPositions = function() {
             this.text.updateTextMinMaxPositions(this.guiSurface);
         };
 
-        GuiWidget.prototype.updateSurfacePositions = function() {
+        updateSurfacePositions = function() {
 
             this.guiSurface.setSurfaceCenterAndSize(this.pos, this.size);
             this.guiSurface.positionOnCenter();
@@ -262,15 +253,15 @@ define([
         };
 
 
-        GuiWidget.prototype.notifyAspectChange = function() {
+        notifyAspectChange = function() {
 
             this.applyWidgetPosition();
         //    this.applyWidgetPosition();
         //    this.setPosition(this.originalPosition);
         };
 
-        GuiWidget.prototype.notifyStringReady = function() {
-            //    var state = this.guiSurface.getInteractiveState();
+        notifyStringReady = function() {
+            //    let state = this.guiSurface.getInteractiveState();
             //    ElementStateProcessor.applyStateToTextElement(this.text, state);
             this.updateTextPositions();
             this.updateSurfacePositions();
@@ -278,7 +269,7 @@ define([
             this.updateWidgetStateFeedback();
         };
 
-        GuiWidget.prototype.printWidgetText = function(string) {
+        printWidgetText = function(string) {
 
             if (!this.text) {
                 console.log("No text element present!", this);
@@ -288,47 +279,47 @@ define([
             this.text.drawTextString(GuiAPI.getTextSysKey(), string, this.callbacks.onStringReady);
         };
 
-        GuiWidget.prototype.notifyElementActivate = function(inputIndex) {
+        notifyElementActivate = function(inputIndex) {
 
-            for (var i = 0; i < this.callbacks.onActivate.length; i++) {
+            for (let i = 0; i < this.callbacks.onActivate.length; i++) {
                 this.callbacks.onActivate[i](inputIndex, this)
             }
 
         };
 
 
-        GuiWidget.prototype.addOnActiaveCallback = function(cb) {
+        addOnActiaveCallback = function(cb) {
             this.callbacks.onActivate.push(cb)
         };
 
-        GuiWidget.prototype.removeOnActiaveCallback = function(cb) {
+        removeOnActiaveCallback = function(cb) {
             MATH.quickSplice(this.callbacks.onActivate, cb);
         };
 
 
-        GuiWidget.prototype.notifyElementPressStart = function(inputIndex) {
+        notifyElementPressStart = function(inputIndex) {
 
-            for (var i = 0; i < this.callbacks.onPressStart.length; i++) {
+            for (let i = 0; i < this.callbacks.onPressStart.length; i++) {
                 this.callbacks.onPressStart[i](inputIndex, this)
             }
 
         };
 
 
-        GuiWidget.prototype.addOnPressStartCallback = function(cb) {
+        addOnPressStartCallback = function(cb) {
             this.callbacks.onPressStart.push(cb)
         };
 
-        GuiWidget.prototype.removePressStartCallback = function(cb) {
+        removePressStartCallback = function(cb) {
             MATH.quickSplice(this.callbacks.onPressStart, cb);
         };
 
 
-        GuiWidget.prototype.testElementIsActive = function() {
+        testElementIsActive = function() {
 
-            var active = false;
+            let active = false;
 
-            for (var i = 0; i < this.callbacks.testActive.length; i++) {
+            for (let i = 0; i < this.callbacks.testActive.length; i++) {
                 if (this.callbacks.testActive[i](this)) {
                     active = true;
                 }
@@ -337,41 +328,41 @@ define([
             return active;
         };
 
-        GuiWidget.prototype.addTestActiveCallback = function(cb) {
+        addTestActiveCallback = function(cb) {
             this.callbacks.testActive.push(cb)
         };
 
-        GuiWidget.prototype.removeTestActiveCallback = function(cb) {
+        removeTestActiveCallback = function(cb) {
             MATH.quickSplice(this.callbacks.testActive, cb);
         };
 
 
 
-        GuiWidget.prototype.getWidgetSurface = function() {
+        getWidgetSurface = function() {
             return this.guiSurface;
         };
 
-        GuiWidget.prototype.getWidgetOuterSize = function(store) {
+        getWidgetOuterSize = function(store) {
             this.guiSurface.getSurfaceExtents(store)
         };
 
-        GuiWidget.prototype.getWidgetMinMax = function(minXY, maxXY) {
+        getWidgetMinMax = function(minXY, maxXY) {
             minXY.copy(this.guiSurface.minXY);
             maxXY.copy(this.guiSurface.maxXY);
         };
 
-        GuiWidget.prototype.setPosition = function(pos) {
+        setPosition = function(pos) {
             this.originalPosition.copy(pos);
             this.applyWidgetPosition();
         };
 
 
-        GuiWidget.prototype.offsetWidgetPosition = function(offset) {
+        offsetWidgetPosition = function(offset) {
             this.offsetPosition.copy(offset);
             this.applyWidgetPosition();
         };
 
-        GuiWidget.prototype.applyWidgetPosition = function() {
+        applyWidgetPosition = function() {
         //    GuiAPI.debugDrawGuiPosition(this.originalPosition.x, this.originalPosition.y);
 
 
@@ -389,25 +380,25 @@ define([
                 this.updateIconPosition();
             }
 
-            for (var i = 0; i < this.children.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 this.children[i].setPosition(this.pos);
             }
 
         };
 
-        GuiWidget.prototype.removeChild = function(guiWidget) {
+        removeChild = function(guiWidget) {
             guiWidget.parent = null;
             MATH.quickSplice(this.children, guiWidget);
         };
 
 
-        GuiWidget.prototype.removeChildren = function() {
+        removeChildren = function() {
             while (this.children.length) {
                this.children.pop().recoverGuiWidget();
             }
         };
 
-        GuiWidget.prototype.addChild = function(guiWidget) {
+        addChild = function(guiWidget) {
             if (guiWidget.parent) {
                 guiWidget.parent.removeChild(guiWidget)
             }
@@ -419,7 +410,7 @@ define([
         };
 
 
-        GuiWidget.prototype.detatchFromParent = function() {
+        detatchFromParent = function() {
 
             if (this.parent) {
                 this.parent.removeChild(this)
@@ -427,15 +418,15 @@ define([
         };
 
 
-        GuiWidget.prototype.attachToAnchor = function(key) {
-            var anchor = GuiAPI.getAnchorWidget(key);
+        attachToAnchor = function(key) {
+            let anchor = GuiAPI.getAnchorWidget(key);
             anchor.applyWidgetPosition();
             anchor.addChild(this);
             anchor.applyWidgetPosition();
         };
 
 
-        GuiWidget.prototype.setWidgetIconKey = function(iconKey) {
+        setWidgetIconKey = function(iconKey) {
 
             if (!this.icon) {
                 console.log("Widget requires icon configureation", iconKey, this);
@@ -446,9 +437,9 @@ define([
 
         };
 
-        var progString = '';
 
-        GuiWidget.prototype.setFirstSTringText = function(string) {
+
+        setFirstSTringText = function(string) {
 
             if (this.text.guiStrings.length) {
                 if (this.text.guiStrings[0].string !== string) {
@@ -461,7 +452,7 @@ define([
         };
 
 
-        GuiWidget.prototype.setWidgetInteractiveState = function(state) {
+        setWidgetInteractiveState = function(state) {
 
             this.guiSurface.setSurfaceInteractiveState(state);
 
@@ -477,23 +468,23 @@ define([
 
         };
 
-        GuiWidget.prototype.numberToDigits = function(current, digits, min) {
+        numberToDigits = function(current, digits, min) {
             if (digits) {
-                progString = parseFloat((current).toFixed(digits)).toString().replace(/\.([0-9])$/, ".$"+digits)
-                if (progString.length < digits + min) {
-                    progString += '.';
-                    for (var i = 0; i < digits; i++) {
-                        progString+= '0';
+                this.progString = parseFloat((current).toFixed(digits)).toString().replace(/\.([0-9])$/, ".$"+digits)
+                if (this.progString.length < digits + min) {
+                    this.progString += '.';
+                    for (let i = 0; i < digits; i++) {
+                        this.progString+= '0';
                     }
                 }
             } else {
-                progString = ''+digits;
+                this.progString = ''+digits;
             }
 
-            return progString;
+            return this.progString;
         };
 
-        GuiWidget.prototype.indicateProgress = function(min, max, current, digits) {
+        indicateProgress = function(min, max, current, digits) {
 
             if (this.text) {
                 this.setFirstSTringText(this.numberToDigits(current, digits, 1))
@@ -506,14 +497,14 @@ define([
 
         };
 
-        GuiWidget.prototype.enableWidgetInteraction = function() {
+        enableWidgetInteraction = function() {
             if (!this.interactive) {
                 this.interactive = true;
                 GuiAPI.registerInteractiveGuiElement(this.guiSurface);
             }
         };
 
-        GuiWidget.prototype.disableWidgetInteraction = function() {
+        disableWidgetInteraction = function() {
             if (this.interactive) {
                 GuiAPI.unregisterInteractiveGuiElement(this.guiSurface);
                 this.interactive = false;
@@ -521,7 +512,7 @@ define([
 
         };
 
-        GuiWidget.prototype.recoverGuiWidget = function() {
+        recoverGuiWidget = function() {
             this.disableWidgetInteraction();
             GuiAPI.removeAspectUpdateCallback(this.callbacks.onAspectChange);
 
@@ -550,7 +541,6 @@ define([
             }
 
         };
+    }
 
-        return GuiWidget;
-
-    });
+export { GuiWidget }

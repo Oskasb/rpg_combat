@@ -1,23 +1,13 @@
-"use strict";
+import { ExpandingPool } from "../../../utils/ExpandingPool";
+import { GuiTextElement } from "../elements/GuiTextElement";
+class TextSystem {
+    constructor(spriteKey) {
 
-define([
-        'application/ExpandingPool',
-        'client/js/workers/main/ui/elements/GuiTextElement'
-    ],
-    function(
-        ExpandingPool,
-        GuiTextElement
-    ) {
-
-        var tempVec1 = new THREE.Vector3();
-
-        var TextSystem = function(spriteKey) {
             this.elements = [];
-
             this.spriteKey = spriteKey;
 
-            var addElement = function(sysKey, callback) {
-                var element = new GuiTextElement();
+            let addElement = function(sysKey, callback) {
+                let element = new GuiTextElement();
                 callback(element)
             };
 
@@ -25,11 +15,11 @@ define([
         };
 
 
-        TextSystem.prototype.initTextSystem = function(callback) {
+        initTextSystem = function(callback) {
 
-            var textSystem = this;
+            let textSystem = this;
 
-            var onTextSetting = function(src, data) {
+            let onTextSetting = function(src, data) {
             //    console.log("UI TXT DATA", src, data.config);
                 textSystem.spriteKey = data.config["sprite_atlas"];
                 GuiAPI.addUiSystem(src, data.config["sprite_atlas"],  data.config["mesh_asset"],   data.config["pool_size"], data.config["render_order"]);
@@ -44,18 +34,18 @@ define([
 
 
 
-        TextSystem.prototype.getSpriteKey = function() {
+        getSpriteKey = function() {
             return this.spriteKey;
         };
 
 
 
-        TextSystem.prototype.addTextElement = function(element) {
+        addTextElement = function(element) {
             this.elements.unshift(element);
         };
 
 
-        TextSystem.prototype.removeTextElement = function(element) {
+        removeTextElement = function(element) {
 
             element.recoverTextElement();
             this.expandingPool.returnToExpandingPool(element);
@@ -63,9 +53,9 @@ define([
         };
 
 
-        TextSystem.prototype.buildTextElement = function(cb, dataId) {
+        buildTextElement = function(cb, dataId) {
 
-            var getElement = function(elem) {
+            let getElement = function(elem) {
 
                 elem.setElementDataKeys('SPRITE_FONT', this.spriteKey, dataId);
 
@@ -77,7 +67,6 @@ define([
         };
 
 
+    }
 
-        return TextSystem;
-
-    });
+export { TextSystem }

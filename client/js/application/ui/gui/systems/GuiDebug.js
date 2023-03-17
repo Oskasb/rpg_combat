@@ -1,50 +1,40 @@
-"use strict";
-
-define([
-
-    ],
-    function(
-
-    ) {
-
-        var debugElements = [];
-
-        var releaseElems = [];
-        var frameDraws = 0;
-
-        var debugText;
-
-        var sprite = {x:8, y:0, z:0.025, w:0.025};
-        var scale  = {x:0.2, y:0.2, z:1.0};
-        var pos  = {x:0, y:0, z:0.0};
-        var rgba = {r:1, g:1, b:1, a:1};
-
-
-        var debugTxtPos = new THREE.Vector3();
-
-        var GuiDebug = function() {
-
+class GuiDebug {
+    constructor() {
+        this.holdIt = false;
+        this.debugControlContainer;
+        this.debugControlContainer2;
+        this.debugElements = [];
+        this.releaseElems = [];
+        this.frameDraws = 0;
+        this.debugText;
+        this.debugButtons = [];
+        this.debugAnimsChar;
+        this.sprite = {x:8, y:0, z:0.025, w:0.025};
+        this.scale  = {x:0.2, y:0.2, z:1.0};
+        this.pos  = {x:0, y:0, z:0.0};
+        this.rgba = {r:1, g:1, b:1, a:1};
+        this.debugTxtPos = new THREE.Vector3();
         };
 
 
-        var applyElem = function(elem, x, y) {
+        applyElem = function(elem, x, y) {
 
-            debugElements.push(elem);
+            this.debugElements.push(elem);
 
-            elem.setSprite(sprite);
-            elem.setScaleVec3(scale);
+            elem.setSprite(this.sprite);
+            elem.setScaleVec3(this.scale);
 
-            rgba.r = Math.sin(elem.index*0.2152)*0.25+0.75;
-            rgba.g = Math.cos(elem.index*0.3315)*0.25+0.75;
+            this.rgba.r = Math.sin(elem.index*0.2152)*0.25+0.75;
+            this.rgba.g = Math.cos(elem.index*0.3315)*0.25+0.75;
 
-            rgba.b = Math.random()*0.75+0.25;
+            this.rgba.b = Math.random()*0.75+0.25;
 
-            elem.setColorRGBA(rgba);
+            elem.setColorRGBA(this.rgba);
 
-            pos.x = x;
-            pos.y = y;
+            this.pos.x = x;
+            this.pos.y = y;
 
-            elem.setPositionVec3(pos);
+            elem.setPositionVec3(this.pos);
 
             elem.setAttackTime(0.0);
             elem.setReleaseTime(0.2);
@@ -53,30 +43,30 @@ define([
         };
 
 
-        var reqElem = function(xx, yy) {
+        reqElem = function(xx, yy) {
 
             var elemcb = function(e) {
-                applyElem(e, xx, yy);
-            };
+                this.applyElem(e, xx, yy);
+            }.bind(this);
 
             GuiAPI.buildBufferElement("UI_ELEMENTS_MAIN", elemcb)
         };
 
 
-        var drawPointXY = function(x, y) {
-            frameDraws++;
-            reqElem(x, y);
+        drawPointXY = function(x, y) {
+         this.frameDraws++;
+        this.reqElem(x, y);
         };
 
-        var holdIt = false;
-        var setupDebugText = function() {
+
+        setupDebugText = function() {
             if (!GuiAPI.getAnchorWidget('bottom_left')) return;
-            if (holdIt) return;
-            holdIt = true;
+            if (this.holdIt) return;
+            this.holdIt = true;
             var onReady = function(textBox) {
-                debugText = textBox;
+                this.debugText = textBox;
                 textBox.updateTextContent("Text ready...")
-            };
+            }.bind(this);
 
             var onActivate = function(inputIndex, widget) {
                 widget.text.clearTextContent()
@@ -87,44 +77,43 @@ define([
             GuiAPI.buildGuiWidget('GuiTextBox', opts, onReady);
         };
 
-        GuiDebug.debugDrawPoint = function(x, y) {
-            drawPointXY(x, y);
+        debugDrawPoint = function(x, y) {
+        this.drawPointXY(x, y);
         };
 
-        GuiDebug.drawRectExtents = function(minVec, maxVec) {
-            drawPointXY(minVec.x, minVec.y);
-            drawPointXY(maxVec.x, minVec.y);
-            drawPointXY(minVec.x, maxVec.y);
-            drawPointXY(maxVec.x, maxVec.y);
+        drawRectExtents = function(minVec, maxVec) {
+            this.drawPointXY(minVec.x, minVec.y);
+            this.drawPointXY(maxVec.x, minVec.y);
+            this.drawPointXY(minVec.x, maxVec.y);
+            this.drawPointXY(maxVec.x, maxVec.y);
         };
 
 
-        GuiDebug.addDebugTextString = function(string) {
-            if (!debugText) {
-                setupDebugText();
+        addDebugTextString = function(string) {
+            if (!this.debugText) {
+                this.setupDebugText();
                 return;
             }
-            debugText.updateTextContent(string)
+            this.debugText.updateTextContent(string)
         };
 
-        var debugControlContainer;
-        var debugControlContainer2;
 
-        GuiDebug.setupDebugControlContainer = function() {
+
+        setupDebugControlContainer = function() {
             var onReady = function(expcont) {
-                debugControlContainer = expcont;
-            };
+                this.debugControlContainer = expcont;
+            }.bind(this);
 
             var opts = GuiAPI.buildWidgetOptions('widget_vertical_container', false, false, false, null, 0, 0, 'top_left');
 
             GuiAPI.buildGuiWidget('GuiExpandingContainer', opts, onReady);
         };
 
-        GuiDebug.setupDebugControlContainer2 = function() {
+        setupDebugControlContainer2 = function() {
             var onReady = function(expcont) {
-                debugControlContainer2 = expcont;
-                debugControlContainer2.addToOffsetXY(15, 0)
-            };
+                this.debugControlContainer2 = expcont;
+                this.debugControlContainer2.addToOffsetXY(15, 0)
+            }.bind(this);
 
             var opts = GuiAPI.buildWidgetOptions('widget_expanding_container', false, false, false, null, 0, 0, 'mid_q_right');
 
@@ -134,8 +123,7 @@ define([
 
 
 
-        var addDebugButton = function(text, onActivate, testActive, container, buttonStore) {
-
+        addDebugButton = function(text, onActivate, testActive, container, buttonStore) {
             var onReady = function(widget) {
                 container.addChildWidgetToContainer(widget.guiWidget);
 
@@ -169,7 +157,7 @@ define([
 
         };
 
-        var showAnimationState = function(animState, gamePiece, buttonStore) {
+        showAnimationState = function(animState, gamePiece, buttonStore) {
 
             var testActive = function() {
                 return gamePiece.getPlayingAnimation(animState.key)
@@ -181,30 +169,28 @@ define([
             //    }
             };
 
-            addDebugButton(animState.key, onActivate, testActive, debugControlContainer, buttonStore)
+            this.addDebugButton(animState.key, onActivate, testActive, this.debugControlContainer, buttonStore)
 
 
         };
 
 
-        GuiDebug.removeDebugAnimations = function() {
-            while (debugButtons.length) {
-                var w = debugButtons.pop();
+        removeDebugAnimations = function() {
+            while (this.debugButtons.length) {
+                var w = this.debugButtons.pop();
                 GuiAPI.removeGuiUpdateCallback(w.checkActive);
                 w.removeGuiWidget();
             }
-            debugControlContainer.fitContainerChildren();
+            this.debugControlContainer.fitContainerChildren();
         };
 
-        var debugButtons = [];
 
-        var debugAnimsChar;
 
-        GuiDebug.debugPieceAnimations = function(character) {
+        debugPieceAnimations = function(character) {
 
-            if (debugAnimsChar) {
+            if (this.debugAnimsChar) {
                 GuiDebug.removeDebugAnimations();
-                debugAnimsChar = null;
+                this.debugAnimsChar = null;
                 return;
             }
 
@@ -213,17 +199,17 @@ define([
             }
 
             var gamePiece = character.getGamePiece();
-            debugAnimsChar = character;
+        this.debugAnimsChar = character;
             for (var i = 0; i < gamePiece.worldEntity.animationStates.length; i++) {
-                showAnimationState(gamePiece.worldEntity.animationStates[i], gamePiece, debugButtons);
+                this.showAnimationState(gamePiece.worldEntity.animationStates[i], gamePiece, this.debugButtons);
             }
         };
 
-        GuiDebug.getDebugAnimChar = function() {
-            return debugAnimsChar;
+        getDebugAnimChar = function() {
+            return this.debugAnimsChar;
         };
 
-        var showAttachmentButton = function(attachmentJoint, gamePiece, testWeapon) {
+        showAttachmentButton = function(attachmentJoint, gamePiece, testWeapon) {
 
             var testActive = function() {
                 return gamePiece.getJointActiveAttachment(attachmentJoint.key)
@@ -235,25 +221,25 @@ define([
                 //    }
             };
 
-            addDebugButton(attachmentJoint.key, onActivate, testActive, debugControlContainer2)
+            addDebugButton(attachmentJoint.key, onActivate, testActive, this.debugControlContainer2)
         };
 
-        GuiDebug.debugPieceAttachmentPoints = function(gamePiece, testWeapon) {
+        debugPieceAttachmentPoints = function(gamePiece, testWeapon) {
 
             for (var i = 0; i < gamePiece.worldEntity.attachmentJoints.length; i++) {
-                showAttachmentButton(gamePiece.worldEntity.attachmentJoints[i], gamePiece, testWeapon);
+                this.showAttachmentButton(gamePiece.worldEntity.attachmentJoints[i], gamePiece, testWeapon);
             }
         };
 
-        GuiDebug.updateDebugElements = function() {
-            frameDraws = 0;
+        updateDebugElements = function() {
+            this.frameDraws = 0;
 
-            while (debugElements.length) {
-                debugElements.pop().releaseElement();
+            while (this.debugElements.length) {
+                this.debugElements.pop().releaseElement();
             }
 
         };
-
-        return GuiDebug;
 
     });
+
+export { GuiDebug }

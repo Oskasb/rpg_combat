@@ -1,13 +1,6 @@
-"use strict";
+class InteractiveElement {
 
-define([
-
-    ],
-    function(
-
-    ) {
-
-        var InteractiveElement = function(surface) {
+    constructor(surface) {
             this.surfaceElement = surface;
             this.state = ENUMS.ElementState.NONE;
             this.hoverIndices = [];
@@ -15,15 +8,15 @@ define([
             this.pressActive = false;
         };
 
-        InteractiveElement.prototype.getSurfaceElement = function() {
+        getSurfaceElement = function() {
             return this.surfaceElement;
         };
 
-        InteractiveElement.prototype.testSurfaceIntersects = function(vec3) {
+        testSurfaceIntersects = function(vec3) {
             return this.surfaceElement.testIntersection(vec3.x, vec3.y);
         };
 
-        InteractiveElement.prototype.setInteractiveState = function(state) {
+        setInteractiveState = function(state) {
 
     //        GuiAPI.printDebugText("" + ENUMS.getKey('ElementState', state));
 
@@ -32,19 +25,19 @@ define([
         };
 
 
-        InteractiveElement.prototype.getInteractiveElementState = function() {
+        getInteractiveElementState = function() {
             return this.state;
         };
 
-        InteractiveElement.prototype.releasePressIndex = function(inputIndex) {
+        releasePressIndex = function(inputIndex) {
             MATH.quickSplice(this.pressIndices, inputIndex);
         };
 
-        InteractiveElement.prototype.releaseHoverIndex = function(inputIndex) {
+        releaseHoverIndex = function(inputIndex) {
             MATH.quickSplice(this.hoverIndices, inputIndex);
         };
 
-        InteractiveElement.prototype.notifyPointerPress = function(inputIndex) {
+        notifyPointerPress = function(inputIndex) {
             this.pressActive = true;
             if (this.pressIndices.indexOf(inputIndex) === -1) {
                 this.pressIndices.push(inputIndex);
@@ -55,7 +48,7 @@ define([
         };
 
 
-        InteractiveElement.prototype.notifyHoverStateOn = function(inputIndex) {
+        notifyHoverStateOn = function(inputIndex) {
 
             if (this.hoverIndices.indexOf(inputIndex) === -1) {
                 this.hoverIndices.push(inputIndex);
@@ -71,7 +64,7 @@ define([
             }
         };
 
-        InteractiveElement.prototype.notifyInputOutside = function(inputIndex) {
+        notifyInputOutside = function(inputIndex) {
             this.pressActive = false;
             if (this.hoverIndices.indexOf(inputIndex) !== -1) {
 
@@ -85,26 +78,26 @@ define([
         };
 
 
-        InteractiveElement.prototype.onHover = function() {
+        onHover = function() {
             this.applyHoverState()
         };
 
-        InteractiveElement.prototype.onHoverEnd = function() {
+        onHoverEnd = function() {
             this.applyActiveState();
         };
 
-        InteractiveElement.prototype.onPressStart = function(inputIndex) {
+        onPressStart = function(inputIndex) {
             this.getSurfaceElement().triggerPressStart(inputIndex);
             this.applyPressState();
         };
 
-        InteractiveElement.prototype.onPressActivate = function(inputIndex) {
+        onPressActivate = function(inputIndex) {
             this.getSurfaceElement().triggerActiveate(inputIndex);
             this.applyActiveState();
         };
 
 
-        InteractiveElement.prototype.applyHoverState = function() {
+        applyHoverState = function() {
 
             GuiAPI.debugDrawRectExtents(this.surfaceElement.minXY, this.surfaceElement.maxXY);
 
@@ -116,7 +109,7 @@ define([
             }
         };
 
-        InteractiveElement.prototype.applyActiveState = function() {
+        applyActiveState = function() {
 
             if ( this.getSurfaceElement().getActive()) {
                 this.setInteractiveState(ENUMS.ElementState.ACTIVE);
@@ -125,7 +118,7 @@ define([
             }
         };
 
-        InteractiveElement.prototype.applyPressState = function() {
+        applyPressState = function() {
 
             if ( this.getSurfaceElement().getActive()) {
                 this.setInteractiveState(ENUMS.ElementState.ACTIVE_PRESS);
@@ -135,7 +128,8 @@ define([
 
         };
 
-        return InteractiveElement;
 
-    });
+    }
+
+    export { InteractiveElement }
 
