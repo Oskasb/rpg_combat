@@ -155,7 +155,7 @@ class ThreeEnvironment {
                     this.ambientColor.setRGB(config[key].color[0],config[key].color[1],config[key].color[2]);
                 }
 
-                this.applyColor(world[key], config[key].color);
+                this.applyColor(this.world[key], config[key].color);
             }
 
             if (config[key].density) {
@@ -169,7 +169,7 @@ class ThreeEnvironment {
 
         let config = this.currentSkyConfig;
 
-        let uniforms = sky.uniforms;
+        let uniforms = this.sky.uniforms;
         uniforms.turbidity.value = config.turbidity;
         uniforms.rayleigh.value = config.rayleigh;
         uniforms.luminance.value = config.luminance;
@@ -493,7 +493,7 @@ class ThreeEnvironment {
         _this.sky = sky;
         _this.ctx = sky.ctx;
 
-        this.setCanvasColor(sky.ctx, sky.tx);
+    //    this.setCanvasColor(sky.ctx, sky.tx);
 
         this.sky.meshClone = this.sky.mesh.clone();
         // Add Sun Helper
@@ -535,7 +535,7 @@ class ThreeEnvironment {
 
 
         let environmentListLoaded = function(scr, data) {
-            let _this = this;
+
 
             for (let i = 0; i < data.length; i++){
 

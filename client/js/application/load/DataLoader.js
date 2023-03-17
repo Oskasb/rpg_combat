@@ -78,7 +78,7 @@ class DataLoader {
                     _this.loadState = loadStates.CONFIGS;
                     _this.assetLoader.initAssetConfigs();
                     ThreeAPI.initThreeLoaders(_this.assetLoader);
-                    ThreeAPI.loadShaders();
+
                     loadStateChange(_this.loadState);
                 }
             }

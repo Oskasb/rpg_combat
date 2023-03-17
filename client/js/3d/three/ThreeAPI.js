@@ -18,7 +18,7 @@ class ThreeAPI {
         this.threeTextureMaker = new ThreeTextureMaker();
         this.threeMaterialMaker = new ThreeMaterialMaker();
         this.threeModelLoader = new ThreeModelLoader();
-        this.shaderBuilder = null;
+        this.shaderBuilder = new ThreeShaderBuilder();
         this.glContext;
         this.renderer;
         this.camera;
@@ -35,11 +35,10 @@ class ThreeAPI {
         this.dynamicGlobalUnifs = {};
     }
     initThreeLoaders = function(assetLoader) {
-        this.shaderBuilder = new ThreeShaderBuilder();
         this.spatialFunctions = new ThreeSpatialFunctions();
         this.assetLoader = assetLoader;
     //    this.renderFilter = new ThreeRenderFilter();
-        //    this.threeEnvironment.loadEnvironmentData();
+    //    this.threeEnvironment.loadEnvironmentData();
     };
 
     initEnvironment = function(store) {
@@ -58,7 +57,7 @@ class ThreeAPI {
     };
 
     initThreeScene = function(containerElement, pxRatio, antialias) {
-        var store = {};
+        let store = {};
         store = this.threeSetup.initThreeRenderer(pxRatio, antialias, containerElement, store);
         this.scene = store.scene;
         this.scene.autoUpdate = false;
@@ -67,12 +66,13 @@ class ThreeAPI {
         this.reflectionScene = store.reflectionScene;
 
         this.initEnvironment(store);
-        this.glContext = store.renderer.context;
+        this.glContext = store.renderer.getContext();
 
         this.threeSetup.addPrerenderCallback(this.threeModelLoader.updateActiveMixers);
 
         this.threeSetup.addToScene(this.threeSetup.getCamera());
         this.assetLoader = new AssetLoader();
+        this.shaderBuilder.loadShaderData(this.glContext);
     };
 
     updateSceneMatrixWorld = function() {
@@ -98,9 +98,6 @@ class ThreeAPI {
         this.threeMaterialMaker.loadMaterialist();
     };
 
-    loadShaders = function() {
-        this.shaderBuilder.loadShaderData(this.glContext);
-    };
 
     buildAsset = function(assetId, callback) {
         new ThreeAsset(assetId, callback);

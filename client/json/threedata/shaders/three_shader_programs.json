@@ -488,7 +488,7 @@
 
         "fragmentFogExp2Verts":[
 
-          "float fogFactor = whiteCompliment( exp2( - fogDensity * fogDensity * fogDepth * fogDepth * LOG2 ) );",
+          "float fogFactor = 1.0 - exp( - fogDensity * fogDensity * fogDepth * fogDepth );",
           "gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );"
 
         ],
