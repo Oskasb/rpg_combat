@@ -30,11 +30,11 @@ class ThreeSetup {
 
     }
 
-    callPrerender = function(time) {
+    callPrerender = function(frame) {
         //    requestAnimationFrame( ThreeSetup.callPrerender );
 
-        time = performance.now()  - this.initTime;
-        this.tpf = (time - this.lastTime)*0.001;
+        let time = frame.elapsedTime;
+        this.tpf = frame.tpf;
 
         //    if (tpf < 0.03) return;
 
@@ -47,7 +47,7 @@ class ThreeSetup {
         this.avgTfp = this.tpf*0.3 + this.avgTfp*0.7;
 
         for (let i = 0; i < this.prerenderCallbacks.length; i++) {
-            this.prerenderCallbacks[i](avgTfp);
+            this.prerenderCallbacks[i](this.avgTfp);
         }
 
         if (this.camera) {
@@ -104,14 +104,7 @@ class ThreeSetup {
             this.renderer = renderer;
 
             containerElement.appendChild(renderer.domElement);
-
-        this.lastTime = 0;
-
-        this.callPrerender(0.016);
-
-
-
-        //    console.log("initThreeRenderer",pxRatio, antialias, containerElement, store);
+            //    console.log("initThreeRenderer",pxRatio, antialias, containerElement, store);
 
         return store;
     };
@@ -187,7 +180,7 @@ class ThreeSetup {
     setCameraLookAt = function(x, y, z) {
         this.lookAt.set(x, y, z);
         this.camera.up.set(0, 1, 0);
-        this.camera.lookAt(lookAt)
+        this.camera.lookAt(this.lookAt)
     };
 
     updateCameraMatrix = function() {
@@ -196,10 +189,10 @@ class ThreeSetup {
 
         this.camera.updateMatrixWorld(true);
 
-        this.frustum.setFromMatrix(frustumMatrix.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+        this.frustum.setFromProjectionMatrix(this.frustumMatrix.multiplyMatrices(this.camera.projectionMatrix, this.camera.matrixWorldInverse));
         this.camera.needsUpdate = true;
 
-        for (var i = 0; i < camera.children.length; i++) {
+        for (var i = 0; i < this.camera.children.length; i++) {
             this.camera.children[i].updateMatrixWorld(true);
         }
 
@@ -229,9 +222,6 @@ class ThreeSetup {
 
         this.scene.remove(model);
     };
-
-
-
 
     setRenderParams = function(width, height, aspect, pxRatio) {
         this.renderer.setSize( width, height);

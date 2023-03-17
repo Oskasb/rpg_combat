@@ -85,17 +85,17 @@ class ThreeEnvironment {
         let ambColor = config.ambient.color;
         let sunColor = config.sun.color;
 
-        var evFact = 1;// Math.min(camera.position.y*0.00005, 0.099);
+        var evFact = Math.min(this.camera.position.y*0.00005, 0.099);
 
         var grd = ctx.createLinearGradient(0,0,0, _this.ctxHeight);
 
-        grd.addColorStop(1-1, ThreeAPI.toRgb(0.0, 0.0, fogColor.b));
+        grd.addColorStop(1-1, ThreeAPI.toRgb(0.0, 0.0, fogColor[2]));
         //	grd.addColorStop(0.8+evFact,toRgb([color[0]*(0.5)*(1-evFact)+fog[0]*(0.5)*evFact*evFact, color[1]*0.5*(1-evFact)+fog[1]*(0.5)*evFact*evFact, color[2]*0.5*(1-evFact)+fog[2]*0.5*evFact*evFact]));
-        grd.addColorStop(1-(0.577+evFact), ThreeAPI.toRgb(fogColor.r*0.6, fogColor.g*0.6, 1));
+        grd.addColorStop(1-(0.577+evFact), ThreeAPI.toRgb(fogColor[0]*0.6, fogColor[1]*0.6, 1));
 
         //    grd.addColorStop(0.45,toRgb(ambient));
 
-        grd.addColorStop(0.5, ThreeAPI.toRgb(fogColor.r, fogColor.g, fogColor.b));
+        grd.addColorStop(0.5, ThreeAPI.toRgb(fogColor[0], fogColor[1], fogColor[2]));
         ctx.fillStyle=grd;
         ctx.fillRect(0, 0, _this.ctxWidth, _this.ctxHeight);
         tx.needsUpdate = true;
@@ -184,22 +184,20 @@ class ThreeEnvironment {
 
     updateDynamigFog = function(sunInTheBack) {
 
-        dynamicFogColor.copy(fogColor);
+        this.dynamicFogColor.copy(this.fogColor);
 
-        sunRedness = world.sun.color.r * 0.5;
-        sunFactor = (sunRedness - sunInTheBack * (sunRedness-1)) * 0.15;
-        dynamicFogColor.lerp(world.sun.color,   sunFactor);
-        dynamicFogColor.lerp(ambientColor,      sunFactor);
-        world.fog.color.copy(dynamicFogColor)
+        let sunRedness = this.world.sun.color.r * 0.5;
+        let sunFactor = (sunRedness - sunInTheBack * (sunRedness-1)) * 0.15;
+        this.dynamicFogColor.lerp(this.world.sun.color,   sunFactor);
+        this.dynamicFogColor.lerp(this.ambientColor,      sunFactor);
+        this.world.fog.color.copy(this.dynamicFogColor)
 
     };
 
     updateDynamigAmbient = function(sunInTheBack) {
 
-        dynamicAmbientColor.copy(ambientColor);
-        //    dynamicAmbientColor.lerp(world.fog.color, 0.2 + sunInTheBack * 0.2);
-        //    dynamicAmbientColor.lerp(ambientColor, 0.2 - sunInTheBack * 0.2);
-        world.ambient.color.copy(dynamicAmbientColor)
+        this.dynamicAmbientColor.copy(this.ambientColor);
+        this.world.ambient.color.copy(this.dynamicAmbientColor)
     };
 
     interpolateEnv = function(current, target, fraction) {
@@ -252,7 +250,7 @@ class ThreeEnvironment {
 
     updateUnderwater = function() {
 
-        uniforms = sky.uniforms;
+        uniforms = this.sky.uniforms;
         uniforms.turbidity.value = 13;
         uniforms.rayleigh.value = 2.3;
         uniforms.luminance.value = 1.1;
@@ -330,12 +328,13 @@ class ThreeEnvironment {
         //      elevationFactor =  MATH.airDensityAtAlt(currentElevation) ;
 
     //    this.comEnvIdx = 4 // WorkerAPI.getCom(ENUMS.BufferChannels.ENV_INDEX);
-        if (currentEnvIndex !== comEnvIdx) {
-            currentEnvIndex = comEnvIdx;
+        /*
+        if (this.currentEnvIndex !== comEnvIdx) {
+            this.currentEnvIndex = comEnvIdx;
             this.setEnvConfigId(this.envs[comEnvIdx], 45);
             return;
         }
-
+*/
         if (fraction > 1.01) {
                     return;
         }
@@ -350,14 +349,14 @@ class ThreeEnvironment {
         //   }
 
         this.theta = Math.PI * ( useSky.inclination - 0.5 );
-        this.phi = 2 * Math.PI * ( useSky.azimuth - 0.5 )+t;
+        this.phi = 2 * Math.PI * ( useSky.azimuth - 0.5 );
 
         this.worldCenter.copy(this.camera.position);
         this.worldCenter.y = 0;
 
-        this.sunSphere.position.x = 0.00001 * this.useSky.distance * Math.cos( this.phi );
-        this.sunSphere.position.y = 0.00001 * this.useSky.distance * Math.sin( this.phi ) * Math.sin( this.theta );
-        this.sunSphere.position.z = 0.00001 * this.useSky.distance * Math.sin( this.phi ) * Math.cos( this.theta );
+        this.sunSphere.position.x = 0.00001 * useSky.distance * Math.cos( this.phi );
+        this.sunSphere.position.y = 0.00001 * useSky.distance * Math.sin( this.phi ) * Math.sin( this.theta );
+        this.sunSphere.position.z = 0.00001 * useSky.distance * Math.sin( this.phi ) * Math.cos( this.theta );
 
         this.calcVec.set(0, 0, 0);
 
@@ -382,8 +381,8 @@ class ThreeEnvironment {
         this.calcVec2.y = 0;
         this.calcVec2.z = 1;
 
-        this.calcVec.applyQuaternion(sunSphere.quaternion);
-        this.calcVec2.applyQuaternion(camera.quaternion);
+        this.calcVec.applyQuaternion(this.sunSphere.quaternion);
+        this.calcVec2.applyQuaternion(this.camera.quaternion);
 
         //   calcVec.normalize();
         //   calcVec2.normalize();
@@ -471,7 +470,7 @@ class ThreeEnvironment {
 
         //    mat.depthWrite = false;
 
-        var skyGeo = new THREE.SphereBufferGeometry(15000, 36, 6 );
+        var skyGeo = new THREE.SphereGeometry(15000, 36, 6 );
         var skyMesh = new THREE.Mesh( skyGeo, mat);
 
         var uniforms = {
@@ -499,7 +498,7 @@ class ThreeEnvironment {
         // Add Sun Helper
 
         this.sunSphere = new THREE.Mesh(
-            new THREE.SphereBufferGeometry( 20, 16, 8 ),
+            new THREE.SphereGeometry( 20, 16, 8 ),
             new THREE.MeshBasicMaterial( { color: 0xffffff } )
         );
 

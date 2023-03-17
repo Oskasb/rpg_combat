@@ -45,6 +45,14 @@ class ThreeModelLoader {
         this.activeModels = activeModels;
         this.activeMixers = activeMixers;
 
+        this.updateActiveMixers = function(tpf) {
+
+            for (let i = 0; i < activeMixers.length; i++) {
+                activeMixers[i].update(tpf);
+            }
+
+        };
+
         let contentUrl = function (url) {
             return 'content' + url.slice(1);
         };
@@ -663,8 +671,8 @@ class ThreeModelLoader {
                                 let action = model.mixer.clipAction( model.animations[ 0 ] );
                                 //    action.play();
 
-                                if (activeMixers.indexOf(model.mixer) === -1) {
-                                    activeMixers.push(model.mixer);
+                                if (this.activeMixers.indexOf(model.mixer) === -1) {
+                                    this.activeMixers.push(model.mixer);
                                 } else {
                                     console.log("Mixer already active... clean up needed!", model);
                                 }
@@ -929,7 +937,7 @@ class ThreeModelLoader {
         };
 
         loadThreeModel = function(sx, sy, sz) {
-            let geometry = new THREE.SphereBufferGeometry( sx, 10, 10);
+            let geometry = new THREE.SphereGeometry( sx, 10, 10);
             return new THREE.Mesh( geometry, this.material2 );
         };
 
@@ -984,13 +992,7 @@ class ThreeModelLoader {
             return pool;
         };
 
-        updateActiveMixers = function(tpf) {
 
-            for (var i = 0; i < activeMixers.length; i++) {
-                activeMixers[i].update(tpf);
-            }
-
-        };
 
     }
 

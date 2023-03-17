@@ -17,7 +17,6 @@ define([
 ) {
 
 
-
     var SceneController = function() {
         this.canvasMain = new CanvasMain();
     };

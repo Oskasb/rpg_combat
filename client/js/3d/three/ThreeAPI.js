@@ -60,7 +60,7 @@ class ThreeAPI {
         let store = {};
         store = this.threeSetup.initThreeRenderer(pxRatio, antialias, containerElement, store);
         this.scene = store.scene;
-        this.scene.autoUpdate = false;
+        this.scene.matrixWorldAutoUpdate = false;
         this.camera = store.camera;
         this.renderer = store.renderer;
         this.reflectionScene = store.reflectionScene;
@@ -378,7 +378,7 @@ class ThreeAPI {
     };
 
     activateMixer = function(mixer) {
-        animationMixers.push(mixer);
+        this.animationMixers.push(mixer);
     };
 
     deActivateMixer = function(mixer) {
@@ -387,8 +387,8 @@ class ThreeAPI {
 
 
     updateAnimationMixers = function(tpf) {
-        for (let mx = 0; mx < animationMixers.length; mx ++) {
-            animationMixers[mx].update(tpf);
+        for (let mx = 0; mx < this.animationMixers.length; mx ++) {
+            this.animationMixers[mx].update(tpf);
         }
     };
 
@@ -449,8 +449,8 @@ class ThreeAPI {
         return 'rgb('+Math.floor(r*255)+','+Math.floor(g*255)+','+Math.floor(b*255)+')';
     };
 
-    requestFrameRender = function() {
-        requestAnimationFrame( this.threeSetup.callPrerender );
+    requestFrameRender = function(frame) {
+        this.threeSetup.callPrerender(frame);
     };
 
 }

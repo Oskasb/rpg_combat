@@ -44,19 +44,26 @@ class Client {
     createScene() {
         console.log("THREE:", THREE);
         const clock = new THREE.Clock(true);
+        const scene = ThreeAPI.getScene();
+        const camera = ThreeAPI.getCamera();
+        const renderer = ThreeAPI.getRenderer();
+        /*
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
+        */
+
 
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
         const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
         const cube = new THREE.Mesh( geometry, material );
         scene.add( cube );
 
-        camera.position.z = 5;
+        ThreeAPI.setCameraPos(0, 2, 5)
+
+        ThreeAPI.cameraLookAt(0, 0, 0)
 
         let touchCubes = [];
 
@@ -66,6 +73,19 @@ class Client {
         }
 
         const onFrameReadyCallback= function(frame) {
+
+            ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
+
+            ThreeAPI.applyDynamicGlobalUniforms();
+
+            ThreeAPI.setCameraPos(0, 2, 5);
+            ThreeAPI.cameraLookAt(0, 0, 0);
+            ThreeAPI.updateCamera();
+            ThreeAPI.updateAnimationMixers(frame.tpf);
+            ThreeAPI.updateSceneMatrixWorld(frame.tpf);
+
+
+
             if (client.INPUT_STATE.mouse.action[0]) {
                 cube.position.x = client.INPUT_STATE.mouse.dx*3
                 cube.position.y = -client.INPUT_STATE.mouse.dy*3
@@ -98,16 +118,16 @@ class Client {
             z:0.0
         };
 
-        function animate() {
-            requestAnimationFrame( animate );
+        function triggerFrame() {
+            requestAnimationFrame( triggerFrame );
             frame.z += 0.02;
             frame.tpf = clock.getDelta();
+            frame.elapsedTime = clock.elapsedTime;
             client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
-
-            renderer.render( scene, camera )
+            ThreeAPI.requestFrameRender(frame)
         }
 
-        animate();
+        triggerFrame();
 
     }
 
