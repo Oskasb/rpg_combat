@@ -81,16 +81,17 @@ class Client {
         }
 
         const onFrameReadyCallback= function(frame) {
-/*
+
             ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
 
             ThreeAPI.applyDynamicGlobalUniforms();
 
-            ThreeAPI.setCameraPos((Math.random()-0.5)*100, 3, (Math.random()-0.5)*100);
+            ThreeAPI.setCameraPos(Math.sin(frame.elapsedTime)*30, 10 + Math.sin(frame.elapsedTime*0.7)*7, Math.cos(frame.elapsedTime)*30);
             ThreeAPI.cameraLookAt(0, 0, 0);
             ThreeAPI.updateCamera();
             ThreeAPI.updateAnimationMixers(frame.tpf);
             ThreeAPI.updateSceneMatrixWorld(frame.tpf);
+            /*
 */
 
 
