@@ -3,176 +3,184 @@ import {InstanceSpatial} from './InstanceSpatial.js';
 
 class ThreeModel {
     constructor(id, config, callback) {
-            InstanceAPI.addToModelCount();
-            this.modelNr = InstanceAPI.getModelCount();
+        InstanceAPI.addToModelCount();
+        this.modelNr = InstanceAPI.getModelCount();
 
-            this.config = config;
+        this.config = config;
 
-            this.id = id;
+        this.id = id;
 
-            this.jointMap = {};
-            this.joints = {};
-            this.jointKeys = [];
+        this.jointMap = {};
+        this.joints = {};
+        this.jointKeys = [];
 
-            this.animMap = {};
-            this.animations = {};
-            this.animationKeys = [];
+        this.animMap = {};
+        this.animations = {};
+        this.animationKeys = [];
 
-            this.hasAnimations = false;
+        this.hasAnimations = false;
+        this.material;
+        let _this = this;
 
-            let materialLoaded = function(src, asset) {
+        let materialLoaded = function(src, asset) {
             //    console.log(src, asset);
-                this.material = asset;
+            _this.material = asset;
 
-                if (this.geometryInstancingSettings()) {
-                    this.setupGeometryInstancing()
-                }
+            if (this.geometryInstancingSettings()) {
+                this.setupGeometryInstancing()
+            }
 
-                callback(this);
-            }.bind(this);
+            callback(this);
+        }.bind(this);
+
+        this.settings = {};
+        let settings = this.settings;
 
         let modelSettingsLoaded = function(src, asset) {
-             //   console.log(src, asset);
-                this.settings = asset.settings;
-                ThreeAPI.loadThreeAsset('MATERIALS_', config.material, materialLoaded);
-            }.bind(this);
+            //   console.log(src, asset);
+            for (let key in asset.settings) {
+                settings[key] = asset.settings[key];
+                console.log("Apply settings", key, asset.settings)
+            }
+            ThreeAPI.loadThreeAsset('MATERIALS_', config.material, materialLoaded);
+        }.bind(this);
 
         let modelFilesLoaded = function(src, asset) {
-                 ThreeAPI.loadThreeAsset('MODEL_SETTINGS_', config.settings, modelSettingsLoaded);
-            }.bind(this);
+            ThreeAPI.loadThreeAsset('MODEL_SETTINGS_', config.settings, modelSettingsLoaded);
+        }.bind(this);
 
-            this.loadModelFiles(config, modelFilesLoaded)
+        this.loadModelFiles(config, modelFilesLoaded)
 
-        };
+    };
 
-        geometryInstancingSettings = function() {
+    geometryInstancingSettings = function() {
         //    console.log(this.settings.instancing)
-            return this.settings.instancing;
-        };
+        return this.settings.instancing;
+    };
 
-        setupGeometryInstancing = function() {
+    setupGeometryInstancing = function() {
 
-            var instancingSettings = this.geometryInstancingSettings();
-            this.instanceBuffers = InstanceAPI.registerGeometry(this.id, this.model, instancingSettings, this.material.getAssetMaterial());
+        var instancingSettings = this.geometryInstancingSettings();
+        this.instanceBuffers = InstanceAPI.registerGeometry(this.id, this.model, instancingSettings, this.material.getAssetMaterial());
 
-            var instantiateAsset = function(id, callback) {
+        var instantiateAsset = function(id, callback) {
 
-                var instanceCb = function(geomIns) {
-                    var spatial = new InstanceSpatial(geomIns.obj3d);
-                    spatial.setGeometryInstance(geomIns);
-                    callback(spatial);
-                };
-
-                InstanceAPI.instantiateGeometry(this.id, instanceCb);
-            }.bind(this);
-
-            this.expandingPool = new ExpandingPool(this.id, instantiateAsset);
-        };
-
-        getAnimationClip = function(animationClipKey) {
-            var animScene = this.animations[animationClipKey].scene;
-            return animScene.animations[0]
-        };
-
-        loadModelFiles = function(config, callback) {
-
-            var rqs = 0;
-            var rds = 0;
-
-            var loadCheck = function() {
-                if (rqs === rds) {
-                    callback()
-                }
+            var instanceCb = function(geomIns) {
+                var spatial = new InstanceSpatial(geomIns.obj3d);
+                spatial.setGeometryInstance(geomIns);
+                callback(spatial);
             };
 
-            var animLoaded = function(src, asset) {
-                rds++;
-                this.animations[this.animMap[asset.id]] = asset;
-                loadCheck()
-            }.bind(this);
+            InstanceAPI.instantiateGeometry(this.id, instanceCb);
+        }.bind(this);
 
-            var fileLoaded = function(src, asset) {
-                rds++;
-                this.model = asset;
-                loadCheck()
-            }.bind(this);
+        this.expandingPool = new ExpandingPool(this.id, instantiateAsset);
+    };
 
+    getAnimationClip = function(animationClipKey) {
+        var animScene = this.animations[animationClipKey].scene;
+        return animScene.animations[0]
+    };
 
-            var loadRig = function(src, rig) {
+    loadModelFiles = function(config, callback) {
 
-                if (rig.joints) {
-                    for (var i = 0; i < rig.joints.length; i++) {
-                        var bone_name = rig.joints[i]['bone_name'];
-                        var key = rig.joints[i].key;
-                        this.jointMap[key] = bone_name;
-                        if (typeof(ENUMS.Joints[key]) !== 'number') {
-                            console.log("No joint ENUM mapped for key: ", key)
-                        }
-                        this.jointKeys.push(ENUMS.Joints[key]);
-                    }
-                }
+        var rqs = 0;
+        var rds = 0;
 
-                if (rig.animations) {
-                    this.hasAnimations = true;
-                    for (var i = 0; i < rig.animations.length; i++) {
-                        var id = rig.animations[i].id;
-                        var key = rig.animations[i].key;
-                        this.animMap[id] = key;
-                        if (typeof(ENUMS.Animations[key]) !== 'number') {
-                            console.log("No animation ENUM mapped for key: ", key)
-                        }
-                        this.animationKeys.push(ENUMS.Animations[key]);
-
-                        rqs++;
-                        ThreeAPI.loadThreeAsset('FILES_GLB_', id, animLoaded);
-                    }
-                }
-                rds++;
-            }.bind(this);
-
-            if (config['rig']) {
-                rqs++;
-                ThreeAPI.loadThreeAsset('RIGS_', config['rig'], loadRig);
+        var loadCheck = function() {
+            if (rqs === rds) {
+                callback()
             }
-
-            ThreeAPI.loadThreeAsset('FILES_GLB_', config.model, fileLoaded);
-            rqs++;
-            loadCheck();
-
         };
 
-        recoverModelClone = function(spatial) {
+        var animLoaded = function(src, asset) {
+            rds++;
+            this.animations[this.animMap[asset.id]] = asset;
+            loadCheck()
+        }.bind(this);
 
-            if (this.geometryInstancingSettings()) {
-                spatial.setPosXYZ(20+this.modelNr*5, 5+this.expandingPool.poolEntryCount()*0.3, 30);
-                spatial.setScaleXYZ(0.2, 0.2, 0.2);
+        var fileLoaded = function(src, asset) {
+            rds++;
+            this.model = asset;
+            loadCheck()
+        }.bind(this);
 
-                if (this.expandingPool.pool.indexOf(spatial) !== -1) {
-                    console.log("Bad pool recovery", this.id, spatial, this);
-                    return;
+
+        var loadRig = function(src, rig) {
+
+            if (rig.joints) {
+                for (var i = 0; i < rig.joints.length; i++) {
+                    var bone_name = rig.joints[i]['bone_name'];
+                    var key = rig.joints[i].key;
+                    this.jointMap[key] = bone_name;
+                    if (typeof(ENUMS.Joints[key]) !== 'number') {
+                        console.log("No joint ENUM mapped for key: ", key)
+                    }
+                    this.jointKeys.push(ENUMS.Joints[key]);
                 }
+            }
+
+            if (rig.animations) {
+                this.hasAnimations = true;
+                for (var i = 0; i < rig.animations.length; i++) {
+                    var id = rig.animations[i].id;
+                    var key = rig.animations[i].key;
+                    this.animMap[id] = key;
+                    if (typeof(ENUMS.Animations[key]) !== 'number') {
+                        console.log("No animation ENUM mapped for key: ", key)
+                    }
+                    this.animationKeys.push(ENUMS.Animations[key]);
+
+                    rqs++;
+                    ThreeAPI.loadThreeAsset('FILES_GLB_', id, animLoaded);
+                }
+            }
+            rds++;
+        }.bind(this);
+
+        if (config['rig']) {
+            rqs++;
+            ThreeAPI.loadThreeAsset('RIGS_', config['rig'], loadRig);
+        }
+
+        ThreeAPI.loadThreeAsset('FILES_GLB_', config.model, fileLoaded);
+        rqs++;
+        loadCheck();
+
+    };
+
+    recoverModelClone = function(spatial) {
+
+        if (this.geometryInstancingSettings()) {
+            spatial.setPosXYZ(20+this.modelNr*5, 5+this.expandingPool.poolEntryCount()*0.3, 30);
+            spatial.setScaleXYZ(0.2, 0.2, 0.2);
+
+            if (this.expandingPool.pool.indexOf(spatial) !== -1) {
+                console.log("Bad pool recovery", this.id, spatial, this);
+                return;
+            }
 
             //    this.expandingPool.returnToExpandingPool(spatial);
-            } else {
+        } else {
             //    this.model.returnCloneToPool(spatial);
-                ThreeAPI.hideModel(spatial.obj3d);
-            }
+            ThreeAPI.hideModel(spatial.obj3d);
+        }
 
-        };
+    };
 
-        getModelMaterial = function() {
-            return this.material.getAssetMaterial();
-        };
+    getModelMaterial = function() {
+        return this.material.getAssetMaterial();
+    };
 
-        getModelClone = function(callback) {
+    getModelClone = function(callback) {
 
-            if (this.geometryInstancingSettings()) {
-                this.expandingPool.getFromExpandingPool(callback);
-            } else {
-                this.model.getCloneFromPool(callback);
-            }
-        };
+        if (this.geometryInstancingSettings()) {
+            this.expandingPool.getFromExpandingPool(callback);
+        } else {
+            this.model.getCloneFromPool(callback);
+        }
+    };
 
-    }
+}
 
 export { ThreeModel }

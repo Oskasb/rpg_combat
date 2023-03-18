@@ -343,6 +343,8 @@ class ThreeModelLoader {
 
         };
 
+        this.loadGLB = loadGLB;
+
         let loadCollada = function (modelId, pool) {
 
             let loader = new THREE.ColladaLoader();
@@ -520,7 +522,7 @@ class ThreeModelLoader {
 
                 for (let i = 0; i < data.length; i++){
                     modelList[data[i].id] = data[i];
-                    //    ThreeModelLoader.loadModelId(data[i].id);
+               //     _this.loadGLB(data[i].config);
                 }
             };
 
@@ -532,7 +534,7 @@ class ThreeModelLoader {
                 new PipelineObject("MODELS", "THREE_PHYSICS", modelListLoaded)
             };
 
-            new PipelineObject("MODELS", "FILES", modelFileIndexLoaded);
+            new PipelineObject("ASSETS", "FILES_GLB", modelListLoaded);
 
         };
 

@@ -1,10 +1,11 @@
 import { InputSystem } from "./systems/InputSystem.js";
 import { TextSystem } from "./systems/TextSystem.js";
 import { GuiAnchors } from "./widgets/GuiAnchors.js";
+import { UiTestSetup } from "./UiTestSetup.js";
 
 class UiSetup {
     constructor() {
-         //   this.uiTestSetup = new UiTestSetup();
+            this.uiTestSetup = new UiTestSetup();
             this.guiAnchors = new GuiAnchors();
         };
 
@@ -22,8 +23,22 @@ class UiSetup {
             };
 
             GuiAPI.getInputSystem().initInputSystem(inputReady);
-            this.guiAnchors.initGuiAnchors();
 
+
+
+
+
+
+        };
+
+        setupDefaultUi = function() {
+            this.guiAnchors.initGuiAnchors();
+            GuiAPI.getGuiDebug().setupDebugControlContainer();
+            GuiAPI.getGuiDebug().setupDebugControlContainer2();
+            this.uiTestSetup.initUiTestSetup();
+        //    this.uiTestSetup.addMatrixText();
+
+            return;
 
             var onReady = function(textBox) {
                 textBox.updateTextContent("Text ready...")
@@ -38,14 +53,6 @@ class UiSetup {
 
             GuiAPI.buildGuiWidget('GuiTextBox', opts, onReady);
 
-
-        };
-
-        setupDefaultUi = function() {
-
-            GuiAPI.getGuiDebug().setupDebugControlContainer();
-            GuiAPI.getGuiDebug().setupDebugControlContainer2();
-        //    this.uiTestSetup.initUiTestSetup();
         };
 
     }

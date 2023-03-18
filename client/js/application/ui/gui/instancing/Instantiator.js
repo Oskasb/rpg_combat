@@ -5,68 +5,77 @@ import { InstancingBufferElement } from "./InstancingBufferElement.js";
 class  Instantiator {
     constructor() {
 
-            this.elementPools = {};
-            this.elementBuffers = {};
+        this.elementPools = {};
+        this.elementBuffers = {};
 
-            let elementBuffers = this.elementBuffers;
+        let elementBuffers = this.elementBuffers;
         let elementPools = this.elementPools;
 
-        let buildElement = function(sysKey, cb) {
-            let getElement = function(elem) {
-                    elem.initGuiBufferElement(elementBuffers[sysKey]);
-                    cb(elem, sysKey);
-                };
-                if (!elementPools[sysKey]) {
-                    console.log("Bad pool", sysKey, [elementPools])
-                }
-
-                elementPools[sysKey].getFromExpandingPool(getElement)
-            };
-
-        let recoverElement = function(sysKey, elem) {
-                elem.releaseElement();
-                elementPools[sysKey].returnToExpandingPool(elem)
-            };
-
-            this.callbacks = {
-                buildElement:buildElement,
-                recoverElement:recoverElement,
-            }
-
+        let getElementBuffers = function() {
+            return elementBuffers;
         };
 
+        let getEelementPools = function() {
+            return elementPools;
+        };
 
-        addInstanceSystem = function(elementKey, bufferSysKey, assetId, poolSize, renderOrder) {
+        let buildElement = function(sysKey, cb) {
+        //    console.log("Build Instantiator elem:", sysKey)
+            let getElement = function(elem) {
+                elem.initGuiBufferElement(getElementBuffers()[sysKey]);
+                cb(elem, sysKey);
+            };
+            if (!getEelementPools()[sysKey]) {
+                console.log("Bad pool", sysKey, [getEelementPools()])
+            }
 
-                this.elementBuffers[elementKey] = new InstancingBuffers(bufferSysKey, assetId, poolSize, renderOrder);
+            getEelementPools()[sysKey].getFromExpandingPool(getElement)
+        };
+
+        let recoverElement = function(sysKey, elem) {
+            elem.releaseElement();
+            elementPools[sysKey].returnToExpandingPool(elem)
+        };
+
+        this.callbacks = {
+            buildElement:buildElement,
+            recoverElement:recoverElement,
+        }
+
+    };
+
+
+    addInstanceSystem = function(elementKey, bufferSysKey, assetId, poolSize, renderOrder) {
+
+        this.elementBuffers[elementKey] = new InstancingBuffers(bufferSysKey, assetId, poolSize, renderOrder);
 
         let addElement = function(poolKey, callback) {
             let element = new InstancingBufferElement();
-                    callback(element)
-                };
-                this.elementPools[elementKey] = new ExpandingPool(elementKey, addElement);
-            };
-
-        buildBufferElement = function(sysKey, cb) {
-            this.callbacks.buildElement(sysKey, cb);
+            callback(element)
         };
+        this.elementPools[elementKey] = new ExpandingPool(elementKey, addElement);
+    };
 
-        recoverBufferElement = function(sysKey, bufferElem) {
-            this.callbacks.recoverElement(sysKey, bufferElem);
-        };
+    buildBufferElement = function(sysKey, cb) {
+        this.callbacks.buildElement(sysKey, cb);
+    };
 
-        updateInstantiatorBuffers = function() {
+    recoverBufferElement = function(sysKey, bufferElem) {
+        this.callbacks.recoverElement(sysKey, bufferElem);
+    };
 
-            for (let key in this.elementBuffers) {
-                this.elementBuffers[key].updateGuiBuffer()
-            }
+    updateInstantiatorBuffers = function() {
 
-        };
+        for (let key in this.elementBuffers) {
+            this.elementBuffers[key].updateGuiBuffer()
+        }
 
-        monitorBufferStats = function() {
-            InstancingBuffers.monitorBufferStats();
-        };
+    };
 
-    }
+    monitorBufferStats = function() {
+        InstancingBuffers.monitorBufferStats();
+    };
+
+}
 
 export {Instantiator}

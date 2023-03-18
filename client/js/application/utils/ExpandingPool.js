@@ -8,6 +8,12 @@ class ExpandingPool {
 
     };
 
+    setPoolCreateFunction = function(dataKey, createFunction) {
+        this.generatePoolEntry = function(callback) {
+            createFunction(dataKey, callback)
+        };
+    };
+
     poolEntryCount = function() {
         return this.pool.length
     };

@@ -1,52 +1,32 @@
-"use strict";
+import {GuiStatsPanel} from "./widgets/GuiStatsPanel.js";
+import {GuiActionButton} from "./widgets/GuiActionButton.js";
+import {GuiSimpleButton} from "./widgets/GuiSimpleButton.js";
+import {GuiExpandingContainer} from "./widgets/GuiExpandingContainer.js";
+import {GuiThumbstick} from "./widgets/GuiThumbstick.js";
+import {GuiTextBox} from "./widgets/GuiTextBox.js";
+import {GuiScreenSpaceText} from "./widgets/GuiScreenSpaceText.js";
+import {GuiProgressBar} from "./widgets/GuiProgressBar.js";
 
-define([
-    'evt',
-        'ui/widgets/GuiStatsPanel',
-        'ui/widgets/GuiActionPointStatus',
-        'ui/widgets/GuiActionButton',
-        'ui/widgets/GuiSimpleButton',
-        'ui/widgets/GuiExpandingContainer',
-        'ui/widgets/GuiThumbstick',
-        'ui/widgets/GuiTextBox',
-        'ui/widgets/GuiScreenSpaceText',
-        'ui/widgets/GuiProgressBar'
-    ],
-    function(
-        evt,
-        GuiStatsPanel,
-        GuiActionPointStatus,
-        GuiActionButton,
-        GuiSimpleButton,
-        GuiExpandingContainer,
-        GuiThumbstick,
-        GuiTextBox,
-        GuiScreenSpaceText,
-        GuiProgressBar
-    ) {
+class UiTestSetup {
+    constructor() {
 
-        var tempVec1 = new THREE.Vector3();
-        var tempVec2 = new THREE.Vector3();
+        this.thumbstick;
+        this.matrixText;
+        this.container;
+        this.statsButton;
+        this.mainButton;
 
-        var testButtons = [];
-        var progressBars = [];
-        var textBoxes = [];
-        var actionButtons = [];
-        var thumbstick;
-        var matrixText;
-        var container;
+        this.tempVec1 = new THREE.Vector3();
+        this.tempVec2 = new THREE.Vector3();
+        this.progressBars = [];
+        this.textBoxes = [];
+        this.actionButtons = [];
+        this.testUiActive = false;
+        this.setupUiTestCallbacks();
 
-        var statsButton;
-
-        var actionPointStatus;
-
-        var testUiActive = false;
-
-        var UiTestSetup = function() {
-            this.setupUiTestCallbacks();
         };
 
-        UiTestSetup.prototype.setupUiTestCallbacks = function() {
+        setupUiTestCallbacks = function() {
 
             var addTextBox = function() {
                 this.addTextBox();
@@ -56,8 +36,8 @@ define([
                 this.addProgressBar();
             }.bind(this);
 
-            var addMatrixText = function(inputIndex) {
-                this.addMatrixText(inputIndex);
+            var addMatrixText = function() {
+                this.addMatrixText();
             }.bind(this);
 
             var addThumbstick = function(inputIndex) {
@@ -78,7 +58,7 @@ define([
 
             var toggleTestUi = function(inputIndex) {
             //    console.log("Button: ", inputIndex);
-                if (testUiActive) {
+                if (this.testUiActive) {
                     this.closeTestUi();
                 } else {
                     this.openTestUi();
@@ -99,23 +79,23 @@ define([
 
         };
 
-        var mainButton;
 
-        UiTestSetup.prototype.initUiTestSetup = function() {
+
+        initUiTestSetup = function() {
 
             GuiAPI.printDebugText("INIT TEST UI");
 
             var buttonReady = function(button) {
-                mainButton = button;
+                this.mainButton = button;
 
                 setTimeout(function() {
-                    mainButton.pressButtonFromCode()
+                    button.pressButtonFromCode()
                 }, 0)
-            };
+            }.bind(this)
 
             var testActive = function(widget) {
-                return testUiActive;
-            };
+                return this.testUiActive;
+            }.bind(this);
 
             var opts = GuiAPI.buildWidgetOptions(
                 'button_big_blue',
@@ -130,18 +110,19 @@ define([
 
             GuiAPI.buildGuiWidget('GuiSimpleButton', opts, buttonReady);
 
+            /*
             var statsReady = function(button) {
-                statsButton = button;
-            };
+                this.statsButton = button;
+            }.bind(this);
 
             var addStatsPanel = function() {
-                DebugAPI.setDebugDrawStats(!DebugAPI.getDebugDrawStats(), statsButton)
-            };
+                this.debugAPI.setDebugDrawStats(!this.debugAPI.getDebugDrawStats(), this.statsButton)
+            }.bind(this);
 
             opts = GuiAPI.buildWidgetOptions(
                 'button_big_blue',
                 addStatsPanel,
-                DebugAPI.getDebugDrawStats,
+                this.debugAPI.getDebugDrawStats,
                 true,
                 'STATS',
                 -0.12,
@@ -151,23 +132,28 @@ define([
 
 
             GuiAPI.buildGuiWidget('GuiSimpleButton', opts, statsReady);
-
-        };
-
-        var addTopButton = function(text, onActivate, testActive) {
-
-            var onReady = function(widget) {
-                container.addChildWidgetToContainer(widget.guiWidget);
-            };
-
-            var opts = GuiAPI.buildWidgetOptions('button_big_blue', onActivate, testActive, true, text);
-
-            GuiAPI.buildGuiWidget('GuiSimpleButton', opts, onReady);
-
+*/
         };
 
 
-        UiTestSetup.prototype.addTestButtons = function() {
+
+
+        addTestButtons = function() {
+
+
+            let addTopButton = function(text, onActivate, testActive) {
+
+                let container = this.container;
+
+                var onReady = function(widget) {
+                    container.addChildWidgetToContainer(widget.guiWidget);
+                };
+
+                var opts = GuiAPI.buildWidgetOptions('button_big_blue', onActivate, testActive, true, text);
+
+                GuiAPI.buildGuiWidget('GuiSimpleButton', opts, onReady);
+
+            }.bind(this)
 
             this.addContainer();
 
@@ -187,15 +173,15 @@ define([
             addTopButton('txtbox', this.callbacks.addTextBox, null);
 
             var matrixActive = function() {
-                if (matrixText) {
+                if (this.matrixText) {
                     return true;
                 }
-            };
+            }.bind(this);
 
             addTopButton('MATRIX', this.callbacks.addMatrixText, matrixActive);
 
             var stickActive = function() {
-                if (thumbstick) {
+                if (this.thumbstick) {
                     return true;
                 }
             };
@@ -203,7 +189,7 @@ define([
             addTopButton('STICK', this.callbacks.addThumbstick, stickActive);
 
             var abPresent = function() {
-                if (actionButtons.length) {
+                if (this.actionButtons.length) {
                     return true;
                 }
             };
@@ -219,7 +205,7 @@ define([
             addTopButton('APS', this.callbacks.addActionPointStatus, apsPresent);
 
 
-            addTopButton('PIECE', GameAPI.loadTestPiece, GameAPI.testPieceLoaded);
+    //        addTopButton('PIECE', GameAPI.loadTestPiece, GameAPI.testPieceLoaded);
 
 
 
@@ -247,6 +233,8 @@ define([
             };
 
             addTopButton('STEPENV', advanceEnv, dummy);
+
+            return;
 
             var dropItem = function() {
                 GameAPI.dropCharacterItem(GameAPI.getPlayerCharacter());
@@ -292,10 +280,10 @@ define([
 
         };
 
-        UiTestSetup.prototype.addProgressBar = function() {
+        addProgressBar = function() {
 
-            tempVec1.set(0.1, -0.2, 0);
-            tempVec1.y += progressBars.length * 0.06;
+            this.tempVec1.set(0.1, -0.2, 0);
+            this.tempVec1.y += this.progressBars.length * 0.06;
 
             var progressBar = new GuiProgressBar();
 
@@ -307,19 +295,19 @@ define([
                 }
             };
 
-            progressBar.initProgressBar('progress_indicator_big_red', onActivate, null, tempVec1);
-            progressBars.push(progressBar);
+            progressBar.initProgressBar('progress_indicator_big_red', onActivate, null, this.tempVec1);
+            this.progressBars.push(progressBar);
         };
 
 
-        UiTestSetup.prototype.addTextBox = function() {
+        addTextBox = function() {
 
-            tempVec1.set(0.25, -0.3, 0);
-            tempVec1.y += textBoxes.length * 0.14;
+            this.tempVec1.set(0.25, -0.3, 0);
+            this.tempVec1.y += this.textBoxes.length * 0.14;
 
             var onReady = function(textBox) {
                 textBox.updateTextContent("Text ready...")
-                textBoxes.push(textBox);
+                this.textBoxes.push(textBox);
             };
 
             var onActivate = function(inputIndex, widget) {
@@ -333,35 +321,36 @@ define([
         };
 
 
-        UiTestSetup.prototype.addMatrixText = function(inputIndex) {
+        addMatrixText = function() {
 
-            if (!matrixText) {
+            if (!this.matrixText) {
 
                 var onReady = function(ssTxt) {
-                    tempVec1.set(-0.5, -0.5, 0);
-                    tempVec2.set(1.0, 1.0, 0);
+                    this.tempVec1.set(-0.5, -0.5, 0);
+                    this.tempVec2.set(1.0, 1.0, 0);
 
-                    ssTxt.setTextDimensions(tempVec1, tempVec2);
-                    ssTxt.activateScreenSpaceText()
-                };
+                    ssTxt.setTextDimensions(this.tempVec1, this.tempVec2);
+                    ssTxt.activateScreenSpaceText();
+                    ssTxt.updateTextContent('screenspace text....')
+                }.bind(this);
 
-                matrixText = new GuiScreenSpaceText();
+                this.matrixText = new GuiScreenSpaceText();
 
-                matrixText.initScreenSpaceText(onReady);
+                this.matrixText.initScreenSpaceText(onReady);
 
             } else {
-                if (matrixText) {
-                    matrixText.removeGuiWidget();
-                    matrixText = null
+                if (this.matrixText) {
+                    this.matrixText.removeGuiWidget();
+                    this.matrixText = null
                 }
             }
 
         };
 
 
-        UiTestSetup.prototype.addThumbstick = function(inputIndex) {
+        addThumbstick = function(inputIndex) {
 
-            if (!thumbstick) {
+            if (!this.thumbstick) {
 
                 var onReady = function(tmbstick) {
                 //    tempVec1.set(-0.22, -0.22, 0);
@@ -372,40 +361,40 @@ define([
 
                 };
 
-                thumbstick = new GuiThumbstick();
-                thumbstick.initThumbstick('widget_thumbstick', onReady);
+                this.thumbstick = new GuiThumbstick();
+                this.thumbstick.initThumbstick('widget_thumbstick', onReady);
 
             } else {
-                if (thumbstick) {
-                    thumbstick.removeGuiWidget();
-                    thumbstick = null
+                if (this.thumbstick) {
+                    this.thumbstick.removeGuiWidget();
+                    this.thumbstick = null
                 }
             }
 
         };
 
-        UiTestSetup.prototype.addContainer = function(inputIndex) {
+        addContainer = function(inputIndex) {
 
 
         //    console.log("Add Container", inputIndex);
 
-            if (!container) {
+            if (!this.container) {
 
                 var onReady = function(widget) {
-                    tempVec1.set(0.3, 0.33, 0);
-                    widget.setPosition(tempVec1)
-                    mainButton.guiWidget.addChild(widget);
+                    this.tempVec1.set(0.3, 0.33, 0);
+                    widget.setPosition(this.tempVec1)
+                    this.mainButton.guiWidget.addChild(widget);
                 //    includeButton();
-                };
+                }.bind(this);
 
-                container = new GuiExpandingContainer();
-                container.initExpandingContainer('widget_expanding_container', onReady);
+                this.container = new GuiExpandingContainer();
+                this.container.initExpandingContainer('widget_expanding_container', onReady);
             }
         };
 
 
 
-        UiTestSetup.prototype.addActionButton = function(inputIndex) {
+        addActionButton = function(inputIndex) {
 
 
 
@@ -441,10 +430,10 @@ define([
 
                 var actionButton = new GuiActionButton();
                 actionButton.initActionButton('widget_action_button', onReady);
-                actionButtons.push(actionButton);
+                this.actionButtons.push(actionButton);
             };
 
-            if (!actionButtons.length) {
+            if (!this.actionButtons.length) {
 
                 addAB();
                 addAB();
@@ -453,15 +442,15 @@ define([
                 addAB();
 
             } else {
-                while (actionButtons.length) {
-                    actionButtons.pop().removeGuiWidget();
+                while (this.actionButtons.length) {
+                    this.actionButtons.pop().removeGuiWidget();
                 }
             }
         };
 
-        var actionPointStatus;
 
-        UiTestSetup.prototype.addActionPointStatus = function(inputIndex) {
+
+        addActionPointStatus = function(inputIndex) {
 
             console.log("Add GuiActionPointStatus", inputIndex);
 
@@ -485,45 +474,44 @@ define([
         };
 
 
-        UiTestSetup.prototype.openTestUi = function() {
-            testUiActive = true;
+        openTestUi = function() {
+            this.testUiActive = true;
 
             this.addTestButtons();
 
-        //    console.log("Open test Ui");
+            console.log("Open test Ui");
         };
 
-        UiTestSetup.prototype.closeTestUi = function() {
+        closeTestUi = function() {
 
-            if (!testUiActive) {
+            if (!this.testUiActive) {
                 console.log("Not active");
                 return;
             }
 
-            testUiActive = false;
+            this.testUiActive = false;
 
-            while (progressBars.length) {
-                progressBars.pop().removeGuiWidget();
+            while (this.progressBars.length) {
+                this.progressBars.pop().removeGuiWidget();
             }
 
-            while (textBoxes.length) {
-                textBoxes.pop().removeGuiWidget();
+            while (this.textBoxes.length) {
+                this.textBoxes.pop().removeGuiWidget();
             }
 
-            if (matrixText) {
-                matrixText.removeGuiWidget();
-                matrixText = null
+            if (this.matrixText) {
+                this.matrixText.removeGuiWidget();
+                this.matrixText = null
             }
 
-            if (container) {
-                container.removeGuiWidget();
-                container = null
+            if (this.container) {
+                this.container.removeGuiWidget();
+                this.container = null
             }
 
         };
 
 
+    }
 
-        return UiTestSetup;
-
-    });
+export {UiTestSetup}

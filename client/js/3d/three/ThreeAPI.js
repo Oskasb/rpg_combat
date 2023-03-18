@@ -96,7 +96,7 @@ class ThreeAPI {
 
     loadThreeData = function(TAPI) {
         this.threeModelLoader.loadData();
-        this.threeModelLoader.loadTerrainData(TAPI);
+    //    this.threeModelLoader.loadTerrainData(TAPI);
         this.threeTextureMaker.loadTextures();
         this.threeMaterialMaker.loadMaterialist();
     };

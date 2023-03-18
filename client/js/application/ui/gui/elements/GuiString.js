@@ -1,5 +1,6 @@
 import { ExpandingPool} from "../../../utils/ExpandingPool.js";
-import { GuiLetter} from "./GuiLetter.js";
+import { GuiLetter} from "../elements/GuiLetter.js";
+
 
 class GuiString {
     constructor() {
@@ -7,7 +8,6 @@ class GuiString {
         this.sprite = {x:7, y:0, z:0.0, w:0.0};
         this.lifecycle = {x:0, y:0, z:0, w:0.25};
         this.letterPools = {};
-
         this.string = '';
         this.letters = [];
         this.minXY = new THREE.Vector3();
@@ -66,7 +66,7 @@ class GuiString {
                 GuiAPI.buildBufferElement(sysKey, addLetterCb)
             };
 
-            this.letterPools[guiSysId] = new ExpandingPool(guiSysId, fetch)
+            this.letterPools[guiSysId] = PipelineAPI.addExpandingPool(guiSysId, fetch)
         }
 
         _this.setupLetters(string, guiSysId);

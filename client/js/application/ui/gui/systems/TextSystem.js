@@ -1,5 +1,5 @@
-import { ExpandingPool } from "../../../utils/ExpandingPool.js";
 import { GuiTextElement } from "../elements/GuiTextElement.js";
+
 class TextSystem {
     constructor(spriteKey) {
 
@@ -7,11 +7,10 @@ class TextSystem {
             this.spriteKey = spriteKey;
 
             let addElement = function(sysKey, callback) {
-                let element = new GuiTextElement();
-                callback(element)
+                callback(new GuiTextElement())
             };
 
-            this.expandingPool = new ExpandingPool('text_elements', addElement);
+            this.expandingPool = PipelineAPI.addExpandingPool('text_elements', addElement);
         };
 
         initTextSystem = function(callback) {

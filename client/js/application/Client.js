@@ -29,6 +29,7 @@ class Client {
         let uiSysReady = function(msg) {
             console.log("Ui sys ready", msg)
             client.createScene();
+
         }
         this.setup.initUiSetup(uiSysReady)
     }
@@ -55,6 +56,8 @@ class Client {
     };
 
     createScene() {
+        client.setup.initDefaultUi()
+        GuiAPI.printDebugText("DEBUG TEXT")
         console.log("THREE:", THREE);
         const clock = new THREE.Clock(true);
 
@@ -91,6 +94,7 @@ class Client {
         }
 
         const onFrameReadyCallback= function(frame) {
+
             GuiAPI.updateGui(frame.tpf, frame.elapsedTime)
             InstanceAPI.updateInstances(frame.tpf)
             ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);

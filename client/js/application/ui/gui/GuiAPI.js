@@ -5,6 +5,7 @@ import { GuiDebug } from "./systems/GuiDebug.js";
 
 class GuiAPI {
     constructor() {
+        this.guiDebug = new GuiDebug();
         this.aspect = 1;
         this.elementPools = {};
         this.inputSystem;
@@ -90,6 +91,7 @@ class GuiAPI {
     };
 
     buildBufferElement = function(uiSysKey, cb) {
+    //    console.log("buildBufferElement", uiSysKey)
         this.instantiator.buildBufferElement(uiSysKey, cb)
     };
 
@@ -137,7 +139,7 @@ class GuiAPI {
     };
 
     getGuiDebug = function() {
-        return GuiDebug;
+        return this.guiDebug;
     };
 
     getUiSprites = function(spriteKey) {
@@ -154,15 +156,15 @@ class GuiAPI {
 
 
     debugDrawGuiPosition = function(x, y) {
-        GuiDebug.debugDrawPoint(x, y)
+        this.guiDebug.debugDrawPoint(x, y)
     };
 
     debugDrawRectExtents = function(minVec, maxVec) {
-        GuiDebug.drawRectExtents(minVec, maxVec)
+        this.guiDebug.drawRectExtents(minVec, maxVec)
     };
 
     printDebugText = function(string) {
-        GuiDebug.addDebugTextString(string)
+        this.guiDebug.addDebugTextString(string)
     };
 
     attachGuiToActor = function(actor) {
@@ -268,7 +270,7 @@ class GuiAPI {
             textWidget.printWidgetText("MOO "+Math.random(), 7)
         };
 
-    //    GuiDebug.updateDebugElements();
+        this.guiDebug.updateDebugElements();
         this.instantiator.updateInstantiatorBuffers();
     //    this.instantiator.monitorBufferStats();
 

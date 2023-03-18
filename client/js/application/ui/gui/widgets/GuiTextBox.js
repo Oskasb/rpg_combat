@@ -49,12 +49,6 @@ class GuiTextBox {
             this.guiWidget.printWidgetText(text)
         };
 
-        activateTextBox = function() {
-            this.activated = true;
-            this.time = 0;
-            GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress);
-        };
-
         deactivateTextBox = function() {
             this.activated = false;
             GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);

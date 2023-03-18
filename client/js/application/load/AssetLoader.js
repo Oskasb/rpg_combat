@@ -56,7 +56,9 @@ class AssetLoader {
             PipelineAPI.setCategoryKeyValue('CONFIGS', assetType+'_'+assetId, data);
         };
 
-
+        getAsset(assetKey) {
+            return this.assets[assetKey]
+        }
 
         loadAsset = function(assetType, assetId, callback) {
 

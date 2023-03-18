@@ -13,6 +13,31 @@ class Setup {
         this.uiSetup = new UiSetup();
     }
 
+    initDefaultUi = function() {
+
+        this.uiSetup.setupDefaultUi()
+
+        let loadCallback = function(msg) {
+            console.log("AssetLoader returns: ", msg)
+        };
+
+        this.dataLoader.loadDataAsset('MODELS_', 'asset_tree_1', loadCallback)
+
+        let modelCallback = function(msg, model) {
+            console.log("PipelineAPI returns: ", msg, model)
+            let assets = this.dataLoader.assetLoader.assets
+            console.log(assets);
+            let tree = this.dataLoader.assetLoader.getAsset('MODELS_asset_tree_1')
+            console.log(tree)
+        //    tree.setupGeometryInstancing()
+
+        }.bind(this);
+
+
+        PipelineAPI.subscribeToCategoryKey('ASSET', 'FILES_GLB_file_tree_1', modelCallback);
+
+    }
+
     initUiSetup(callback) {
         this.uiSetup.initUiSetup(callback)
     }

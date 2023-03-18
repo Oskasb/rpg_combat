@@ -17,6 +17,10 @@ class DataLoader {
 
     }
 
+    loadDataAsset = function(assetType, assetId, callback) {
+        this.assetLoader.loadAsset(assetType, assetId, callback)
+    };
+
     getLoadScreen = function() {
         return this.loadProgress
     };
@@ -73,7 +77,7 @@ class DataLoader {
                  //   console.log( "json cached:", PipelineAPI.getCachedConfigs());
 
                     _this.loadState = loadStates.COMPLETED;
-                //        ThreeAPI.loadThreeData();
+
                     GuiAPI.initGuiApi(guiAPIRdyCB)
                     loadStateChange(_this.loadState);
                 }
@@ -84,7 +88,13 @@ class DataLoader {
 
                     _this.assetLoader.initAssetConfigs();
                     ThreeAPI.initThreeLoaders(_this.assetLoader);
-
+                    ThreeAPI.loadThreeData();
+                    let modelCb = function(msg, data) {
+                        console.log("pre-load:", msg, data)
+                        remaining--
+                    }
+                        remaining++
+                    PipelineAPI.subscribeToCategoryKey('ASSET', 'FILES_GLB_file_tree_1', modelCb);
                     loadStateChange(_this.loadState);
                 }
             }

@@ -1,10 +1,21 @@
 import { ConfigCache } from './data/ConfigCache.js';
+import { ExpandingPool} from "../application/utils/ExpandingPool.js";
 
 class PipelineAPI {
     constructor() {
         this.configCache = null;
         this.pipeOptions = {};
+        this.expandingPools = {};
     };
+
+    addExpandingPool = function(dataKey, createFuntcion) {
+        if(!this.expandingPools[dataKey]) {
+            this.expandingPools[dataKey] = new ExpandingPool(dataKey, createFuntcion);
+        }
+        return this.expandingPools[dataKey];
+    };
+
+
 
     initConfigCache = function(pipeReadyCB, pipeMsgCB) {
         this.configCache = new ConfigCache(pipeReadyCB, pipeMsgCB)
