@@ -4,8 +4,8 @@ import { GameScreen } from './ui/GameScreen.js';
 import { PointerCursor } from './ui/input/PointerCursor.js';
 import { Setup } from './setup/Setup.js';
 import * as THREE from '../../libs/three/three.module.js';
-import { ThreeController } from '../3D/ThreeController.js';
-import { DynamicMain } from '../3D/DynamicMain.js';
+import { ThreeController } from '../3d/ThreeController.js';
+import { DynamicMain } from '../3d/DynamicMain.js';
 
 class Client {
 

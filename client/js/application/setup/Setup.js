@@ -1,7 +1,7 @@
-import { ThreeAPI } from '../../3D/three/ThreeAPI.js';
+import { ThreeAPI } from '../../3d/three/ThreeAPI.js';
 import { GuiAPI} from "../ui/gui/GuiAPI.js";
 import { UiSetup } from "../ui/gui/UiSetup.js";
-import { InstanceAPI } from '../../3D/three/instancer/InstanceAPI.js';
+import { InstanceAPI } from '../../3d/three/instancer/InstanceAPI.js';
 import { DomUtils } from '../ui/dom/DomUtils.js';
 import { DataLoader } from '../load/DataLoader.js';
 
