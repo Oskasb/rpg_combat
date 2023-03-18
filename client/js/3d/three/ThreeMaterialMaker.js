@@ -123,7 +123,6 @@ class ThreeMaterialMaker {
         loadMaterialist = function() {
             
             var textureListLoaded = function(scr, data) {
-                materials = {};
                 for (var i = 0; i < data.length; i++){
                     materialList[data[i].id] = data[i];
                     createMaterial(data[i].id, data[i]);

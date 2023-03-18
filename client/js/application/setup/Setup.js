@@ -31,6 +31,12 @@ class Setup {
             console.log(tree)
         //    tree.setupGeometryInstancing()
 
+            let threeCB = function(model) {
+                console.log('threeCB:', model)
+            }
+
+            this.dataLoader.assetLoader.loadAsset('MODELS_', 'FILES_GLB_file_tree_1', threeCB);
+
         }.bind(this);
 
 

@@ -85,10 +85,11 @@ class DataLoader {
                 if (_this.loadState === loadStates.SHARED_FILES && remaining === 0) {
                 //    console.log( "shared loaded....");
                     _this.loadState = loadStates.CONFIGS;
-
                     _this.assetLoader.initAssetConfigs();
+
                     ThreeAPI.initThreeLoaders(_this.assetLoader);
                     ThreeAPI.loadThreeData();
+
                     let modelCb = function(msg, data) {
                         console.log("pre-load:", msg, data)
                         remaining--

@@ -65,25 +65,26 @@ class AssetLoader {
             let assetMap = this.assetMap;
             let assets = this.assets;
 
-            let setupAsset = function(assetType, assetId) {
+            let setupAsset = function(assetType, assetId, scallback) {
 
                 let assetKey = assetType+assetId;
 
                 if (assets[assetKey]) {
+                    scallback(assetKey, assets[assetKey])
                     return;
                 }
 
                 let configLoaded = function(src, data) {
 
-                    let callback = function(asset) {
+                    let acallback = function(asset) {
                         PipelineAPI.setCategoryKeyValue('ASSET', assetKey, asset);
                         //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, callback)
                     };
 
                     if (assets[assetKey]) {
-
+                        acallback(assetKey, assets[assetKey])
                     } else {
-                        assets[assetKey] = new assetMap[assetType](assetId, data.config, callback);
+                        assets[assetKey] = new assetMap[assetType](assetId, data.config, acallback);
                     }
 
                 };
@@ -98,15 +99,15 @@ class AssetLoader {
             };
 
 
-            let initLoadAsset = function(assetType, assetId, callback) {
+            let initLoadAsset = function(assetType, assetId, lcallback) {
                 let assetKey = assetType+assetId;
                 let cachedAsset = PipelineAPI.readCachedConfigKey('ASSET', assetKey);
                 if (cachedAsset === assetKey) {
-                    PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, callback);
-                    setupAsset(assetType, assetId);
+                    PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, lcallback);
+                    setupAsset(assetType, assetId, lcallback);
                 } else {
-                    //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, callback)
-                    callback(assetKey, cachedAsset);
+                    //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, lcallback)
+                    lcallback(assetKey, cachedAsset);
                 }
             };
 

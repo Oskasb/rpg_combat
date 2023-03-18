@@ -5,8 +5,6 @@
         {"id": "file_pilot_bind",         "config": { "url": "./client/assets/models/characters/pilot/pilot_bind"                     }},
         {"id": "file_pilot_run" ,         "config": { "url": "./client/assets/models/characters/pilot/movement/run"                   }},
         {"id": "file_pilot_idle",         "config": { "url": "./client/assets/models/characters/pilot/idle/basic_idle"                }},
-
-
         {"id": "file_fighter_bind",       "config": { "url": "./client/assets/models/characters/fighter/SKIN_fighter_male"            }},
         {"id": "file_idle_legs"   ,       "config": { "url": "./client/assets/models/characters/fighter/idle/pose_idle"               }},
         {"id": "file_walk_legs"   ,       "config": { "url": "./client/assets/models/characters/fighter/movement/WALK_legs"           }},

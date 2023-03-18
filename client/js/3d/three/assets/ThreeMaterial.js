@@ -215,9 +215,10 @@ class ThreeMaterial {
             };
 
             if ( this.textures['map']) {
-                var mapTexture = this.textures['map'].texture;
+                let mapTexture = this.textures['map'].texture;
+                let userData = mapTexture.userData;
                 uniforms['map'] = {value:mapTexture};
-                uniforms['tiles'] = {value:new THREE.Vector2(mapTexture.userData.tiles_x, mapTexture.userData.tiles_y)};
+                uniforms['tiles'] = {value:new THREE.Vector2(userData.tiles_x, userData.tiles_y)};
             }
 
             if (props['texture_uniforms']) {
