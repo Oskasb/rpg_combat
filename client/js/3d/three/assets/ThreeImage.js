@@ -10,11 +10,12 @@ class ThreeImage {
 
         let setBitmap = function(bmp) {
             _this.bitmap = bmp;
+        //    console.log('set bitmap', bmp)
             callback(_this)
         }
 
         let bitmapLoaded = function(bmp) {
-            console.log('bitmap loaded', bmp)
+        //    console.log('bitmap loaded', bmp)
             setBitmap(bmp);
         };
 

@@ -71,15 +71,15 @@ class Client {
 
         let assets = client.dynamicMain.assets;
 
-    //    for (let key in assets) {
+        for (let key in assets) {
            console.log("inst:", assets)
             for (let i = 0; i < 10; i++) {
-                client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
+                client.dynamicMain.requestAssetInstance(key, instanceReturns)
             //    client.dynamicMain.requestAssetInstance('asset_tree_2', instanceReturns)
             //    client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
             }
 
-     //   }
+        }
 
 
 

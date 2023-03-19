@@ -3,12 +3,14 @@ class ThreeTexture {
 
         this.id = id;
         this.config = {};
+        let _this = this;
 
         let imgLoaded = function(asset) {
-               console.log("image loaded", asset);
-            this.texture = new THREE.CanvasTexture( asset.bitmap);
-            this.applyTxSettings(this.texture, this.config.settings);
-            this.texture.sourceUrl = asset.url;
+        //       console.log("image loaded", asset);
+            _this.texture = new THREE.CanvasTexture( asset.bitmap);
+        //    console.log('CanvasTexture', this.id, this.texture)
+            _this.applyTxSettings(_this.texture, _this.config.settings);
+            _this.texture.sourceUrl = asset.url;
             callback(this)
         }.bind(this);
 

@@ -12,11 +12,11 @@
       "TEXTURES"
     ],
     "LOAD_MODELS":[
-     "asset_tree_3"
+      "asset_helmetviking"
 
     ],
     "NOT_LOADED_MODELS":[
-      "asset_helmetviking",
+      "asset_tree_3",
       "asset_tree_2",
       "asset_tree_1",
       "asset_tree_4",

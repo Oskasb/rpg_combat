@@ -4,27 +4,27 @@ class ThreeMaterial {
     constructor(id, config, callback) {
 
         this.id = id;
-
+        this.txLoads = 0;
         this.textureMap = {};
-
         this.textures = {};
 
         let matReady = function() {
-
+            console.log("Material Ready", this);
             for (let key in this.textureMap) {
                 this.mat[this.textureMap[key]] = this.textures[this.textureMap[key]].texture;
             }
-
+            console.log("Material Ready", this);
             callback(this);
         }.bind(this);
 
         let materialSettingsLoaded = function(asset) {
-
+            console.log("Material materialSettingsLoaded", asset);
             this.applyMaterialSettings(asset.config.shader, asset.config.properties, matReady);
         }.bind(this);
 
 
         let txReady = function() {
+            console.log("Material txReady", this);
             ThreeAPI.loadThreeAsset('MATERIAL_SETTINGS_', config.settings, materialSettingsLoaded);
         }.bind(this);
 
@@ -38,25 +38,27 @@ class ThreeMaterial {
 
     setupTextureMap = function(config, cb) {
 
-        var txLds = 0;
+        let loadCheck = function() {
 
-        var loadCheck = function() {
-            if (config.textures.length === txLds) {
+            if (config.textures.length === this.txLoads) {
                 cb();
             }
         }.bind(this);
 
-        var textureAssetLoaded = function(asset) {
-            txLds++;
+        let textureAssetLoaded = function(asset) {
+            this.txLoads++;
+            console.log("texture loaded:", asset.id)
             this.textures[this.textureMap[asset.id]] = asset;
             loadCheck()
         }.bind(this);
 
         if (config.textures) {
-            for (var i = 0; i < config.textures.length; i++) {
-                var id = config.textures[i].id;
-                var key = config.textures[i].key;
+            for (let i = 0; i < config.textures.length; i++) {
+
+                let id = config.textures[i].id;
+                let key = config.textures[i].key;
                 this.textureMap[id] = key;
+                console.log("Request texture:", id)
                 ThreeAPI.loadThreeAsset('TEXTURES_', config.textures[i].id, textureAssetLoaded);
             }
         }
