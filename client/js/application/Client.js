@@ -56,6 +56,13 @@ class Client {
     };
 
     createScene() {
+
+        let loadCallback = function(msg) {
+            console.log("requestAsset returns: ", msg)
+        };
+
+        this.dynamicMain.requestAsset('asset_tree_1', loadCallback)
+
         client.setup.initDefaultUi()
         GuiAPI.printDebugText("DEBUG TEXT")
         console.log("THREE:", THREE);

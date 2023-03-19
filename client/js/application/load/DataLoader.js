@@ -90,12 +90,6 @@ class DataLoader {
                     ThreeAPI.initThreeLoaders(_this.assetLoader);
                     ThreeAPI.loadThreeData();
 
-                    let modelCb = function(msg, data) {
-                        console.log("pre-load:", msg, data)
-                        remaining--
-                    }
-                        remaining++
-                    PipelineAPI.subscribeToCategoryKey('ASSET', 'FILES_GLB_file_tree_1', modelCb);
                     loadStateChange(_this.loadState);
                 }
             }

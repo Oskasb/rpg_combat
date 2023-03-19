@@ -16,33 +16,7 @@ class Setup {
     initDefaultUi = function() {
 
         this.uiSetup.setupDefaultUi()
-
-        let loadCallback = function(msg) {
-            console.log("AssetLoader returns: ", msg)
-        };
-
-        this.dataLoader.loadDataAsset('MODELS_', 'asset_tree_1', loadCallback)
-
-        let modelCallback = function(msg, model) {
-            console.log("PipelineAPI returns: ", msg, model)
-            let assets = this.dataLoader.assetLoader.assets
-            console.log(assets);
-            let tree = this.dataLoader.assetLoader.getAsset('MODELS_asset_tree_1')
-            console.log(tree)
-        //    tree.setupGeometryInstancing()
-
-            let threeCB = function(model) {
-                console.log('threeCB:', model)
-            }
-
-            this.dataLoader.assetLoader.loadAsset('MODELS_', 'FILES_GLB_file_tree_1', threeCB);
-
-        }.bind(this);
-
-
-        PipelineAPI.subscribeToCategoryKey('ASSET', 'FILES_GLB_file_tree_1', modelCallback);
-
-    }
+    };
 
     initUiSetup(callback) {
         this.uiSetup.initUiSetup(callback)

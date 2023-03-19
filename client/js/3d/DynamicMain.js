@@ -20,7 +20,7 @@ class DynamicMain {
 
     };
 
-    requestAsset = function(msg) {
+    requestAsset = function(modelAssetId, assetReadyCB) {
 
         var onAssetReady = function(asset) {
         //    console.log("AssetReady:", asset);
@@ -41,11 +41,11 @@ class DynamicMain {
             if (modelSettings.skin) {
                 message.skin = modelSettings.skin
             }
+            assetReadyCB(asset)
+        //    WorkerAPI.callWorker(ENUMS.Worker.MAIN_WORKER,  [ENUMS.Message.REGISTER_ASSET, [asset.id, message]])
+        }.bind(this);
 
-            WorkerAPI.callWorker(ENUMS.Worker.MAIN_WORKER,  [ENUMS.Message.REGISTER_ASSET, [asset.id, message]])
-        };
-
-        ThreeAPI.buildAsset(msg,   onAssetReady);
+        ThreeAPI.buildAsset(modelAssetId,   onAssetReady);
 
 
 
