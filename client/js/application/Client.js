@@ -26,18 +26,7 @@ class Client {
     }
 
     activateGui() {
-   //     let uiSysReady = function(msg) {
-   //         console.log("Ui sys ready", msg)
-
-        let loadCallback = function(asset) {
-            console.log("requestAsset returns: ", asset)
-            client.createScene();
-        };
-
-        this.dynamicMain.requestAsset('asset_tree_1', loadCallback)
-
-     //   }
-    //    this.setup.initUiSetup(uiSysReady)
+        client.createScene();
     }
 
     initUiSystem() {
@@ -55,6 +44,7 @@ class Client {
         let pipeWorkersReadyCB = function() {
             client.setup.initConfigCache(client.pipelineAPI, dataPipelineOptions);
             client.initUiSystem();
+
         };
 
         this.setup.initDataPipeline(this.pipelineAPI, pipeWorkersReadyCB)

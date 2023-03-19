@@ -45,7 +45,7 @@ class DataLoader {
 
             let loadStateChange = function(state) {
                 //    console.log('loadStateChange', state)
-                if (state === _this.getStates().IMAGES) {
+                    if (state === _this.getStates().IMAGES) {
 
                 }
 
@@ -56,16 +56,19 @@ class DataLoader {
 
             };
 
+            let assetCount = 0;
+
             function pipelineCallback(started, remaining, loaded, files) {
-                //    console.log("SRL", _this.loadState, started, remaining, loaded, [files]);
+                 console.log("SRL", _this.loadState, started, remaining, loaded, [files]);
 
                 PipelineAPI.setCategoryKeyValue("STATUS", "FILE_CACHE", loaded);
 
                 loadScreen.setProgress(loaded / started);
 
-                if (_this.loadState === loadStates.THREEDATA) {
+                if (_this.loadState === loadStates.THREEDATA && remaining === 0) {
                     //    console.log( "loadThreeData:", _this.loadState, started, remaining, loaded, [files]);
                     //   loadState = loadStates.COMPLETED;
+
                        loadStateChange(loadStates.COMPLETED);
                 }
 
@@ -76,10 +79,31 @@ class DataLoader {
                 if (_this.loadState === loadStates.CONFIGS && remaining === 0) {
                  //   console.log( "json cached:", PipelineAPI.getCachedConfigs());
 
-                    _this.loadState = loadStates.COMPLETED;
+
+                remaining++
+                    let loadCallback = function(asset) {
+                        console.log("requestAsset returns: ", asset)
+                        assetCount--
+                        remaining--
+                        if (!assetCount) {
+                            _this.loadState = loadStates.COMPLETED;
+                            remaining--
+                            loadStateChange(_this.loadState);
+                        }
+                    };
+
+                    let subCallback = function(src, data) {
+                        for (let i = 0; i < data.length; i++) {
+                            assetCount++
+                            remaining++
+                            client.dynamicMain.requestAsset(data[i], loadCallback)
+                        }
+                    }
+
+                    PipelineAPI.subscribeToCategoryKey("ASSETS", "LOAD_MODELS", subCallback);
 
                     GuiAPI.initGuiApi(guiAPIRdyCB)
-                    loadStateChange(_this.loadState);
+
                 }
 
                 if (_this.loadState === loadStates.SHARED_FILES && remaining === 0) {
@@ -107,8 +131,9 @@ class DataLoader {
         };
 
         notifyCompleted = function() {
-            client.activateGui();
             this.loadProgress.removeProgress();
+            client.activateGui();
+
         };
     }
 

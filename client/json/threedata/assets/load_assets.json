@@ -10,6 +10,42 @@
       "FILES_GLB",
       "FILES_IMAGES",
       "TEXTURES"
+    ],
+    "LOAD_MODELS":[
+     "asset_tree_1",
+     "asset_tree_2",
+     "asset_tree_3",
+     "asset_tree_4",
+     "asset_tree_5"
+    ],
+    "NOT_LOADED_MODELS":[
+      "animated_fighter_male",
+      "animated_pilot",
+      "animated_barbarian",
+      "skinned_barb_bp",
+      "skinned_barb_greaves",
+      "asset_chain_shirt",
+      "asset_chain_legs",
+      "asset_scale_shirt",
+      "asset_bronze_legs",
+      "asset_bronze_bp",
+      "asset_scale_legs",
+      "asset_scale_boots",
+      "asset_scale_gloves",
+      "asset_vegQuad",
+      "asset_letterQuad",
+      "asset_normalStamp",
+      "asset_normalQuad",
+      "asset_additiveQuad",
+      "asset_nineQuad",
+      "asset_nine_back",
+      "asset_bullet",
+      "asset_cross3d",
+      "asset_beltplate",
+      "asset_helmetviking",
+      "asset_helmet_bronze",
+      "asset_bracer_bronze",
+      "asset_ninjablade"
     ]
   }
 }]
