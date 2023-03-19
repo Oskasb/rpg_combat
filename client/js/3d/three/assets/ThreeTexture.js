@@ -2,18 +2,22 @@ class ThreeTexture {
     constructor(id, config, callback) {
 
         this.id = id;
+        this.config = {};
 
-        let imgLoaded = function(src, asset) {
-            //   console.log(src, asset);
+        let imgLoaded = function(asset) {
+               console.log("image loaded", asset);
             this.texture = new THREE.CanvasTexture( asset.bitmap);
             this.applyTxSettings(this.texture, this.config.settings);
             this.texture.sourceUrl = asset.url;
             callback(this)
         }.bind(this);
 
-        let txSettingsLoaded = function(src, asset) {
+        let txSettingsLoaded = function(asset) {
             //        console.log(src, asset);
-            this.config = asset.config;
+            for (let key in asset.config) {
+                this.config[key] = asset.config[key];
+            }
+
             ThreeAPI.loadThreeAsset('FILES_IMAGES_', config.img, imgLoaded);
         }.bind(this);
 

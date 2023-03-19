@@ -3,6 +3,7 @@ import {InstanceDynamicJoint} from './InstanceDynamicJoint.js';
 
 class InstancedModel {
     constructor(originalAsset) {
+        this.ptr = null;
             this.originalAsset = originalAsset;
             this.originalModel = originalAsset.model;
             this.unifVec = {x:0, y:0, z:0};
@@ -24,10 +25,11 @@ class InstancedModel {
             return this.originalAsset.id;
         };
 
+
         setPointer = function(ptr) {
-            this.clearEventListener();
+        //    client.evt.removeListener(this.ptr, this.callbacks.onUpdateEvent)
             this.ptr = ptr;
-            this.setupEventListener();
+        //    client.evt.on(this.ptr, this.callbacks.onUpdateEvent)
         };
 
         getPointer = function() {
@@ -57,35 +59,29 @@ class InstancedModel {
         };
 
 
-        setupEventListener = function() {
-            client.evt.on(this.ptr, this.callbacks.onUpdateEvent)
-        };
-
-        clearEventListener = function() {
-            client.evt.removeListener(this.ptr, this.callbacks.onUpdateEvent)
-        };
-
-        initModelInstance = function(callback) {
-
-            var cloned = function(spatial) {
-                this.spatial = spatial;
-                this.obj3d = spatial.obj3d;
-                this.applyModelMaterial(this.obj3d , this.originalModel.getModelMaterial());
 
 
-                if (this.originalModel.hasAnimations) {
-                    if (this.obj3d.animator) {
-                        this.animator = this.obj3d.animator
+        initModelInstance = function(callback, _this) {
+
+            let cloned = function(spatial) {
+                _this.spatial = spatial;
+                _this.obj3d = spatial.obj3d;
+                _this.applyModelMaterial(_this.obj3d , _this.originalModel.getModelMaterial());
+
+
+                if (_this.originalModel.hasAnimations) {
+                    if (_this.obj3d.animator) {
+                        _this.animator = _this.obj3d.animator
                     } else {
-                        this.animator = new InstanceAnimator(this);
-                        this.obj3d.animator = this.animator;
+                        _this.animator = new InstanceAnimator(_this);
+                        _this.obj3d.animator = _this.animator;
                     }
                 }
 
-                callback(this)
-            }.bind(this);
+                callback(_this)
+            };
 
-            this.originalModel.getModelClone(cloned)
+            _this.originalModel.getModelClone(cloned)
         };
 
         applyModelMaterial = function(clone, material) {
@@ -258,14 +254,11 @@ class InstancedModel {
 
         };
 
-
-
         updateAnimationState = function(animationKey, weight, timeScale, fade, channel, loop, clamp, sync) {
             this.animator.updateAnimationAction(animationKey, weight, timeScale, fade, channel, loop, clamp, sync);
         };
 
         activateInstancedModel = function() {
-            this.isDecomiisisoned = false;
             ThreeAPI.addToScene(this.obj3d);
             if (this.animator) {
                 this.animator.activateAnimator();

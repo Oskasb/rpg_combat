@@ -34,116 +34,133 @@ class InstanceAPI {
         return this.modelCount;
     }
 
-        registerGeometry = function(id, model, settings, material) {
-
-            if (this.materials.indexOf(material) === -1) {
-                this.materials.push(material);
-            }
-
-            var count = settings.instances;
-            var attribs = settings.attributes;
-
-            var buffers = {};
-            var insBufs = new InstanceBuffer(buffers.verts, buffers.uvs, buffers.indices, buffers.normals);
-            insBufs.extractFirstMeshGeometry(model.scene.children[0], buffers);
 
 
-            for (var i = 0; i < attribs.length; i++) {
-                var attrib = attributes[attribs[i]];
-                var buffer = insBufs.buildBuffer(attrib.dimensions, count);
-                insBufs.attachAttribute(buffer, attribs[i], attrib.dimensions, attrib.dynamic);
-            }
+    registerGeometry = function(id, model, settings, material) {
 
-            insBufs.setMaterial(material);
-            instanceBuffers[id] = insBufs;
-            instanceBuffers[id].setInstancedCount(0);
-            insBufs.addToScene(settings.cameraspace);
-            return insBufs;
-        };
+        let extractFirstMeshGeometry = function(child, buffers) {
 
-        instantiateGeometry = function(id, callback) {
-            if (!instances[id]) {
-                instances[id] = []
-            }
-            var idx = instances[id].length;
-            instanceBuffers[id].setInstancedCount(idx+1);
-            var instance = new GeometryInstance(id, idx, instanceBuffers[id]);
-            instances[id].push(instance);
-            callback(instance);
-        };
-
-        setupInstancingBuffers = function(msg) {
-
-            let _this = this;
-            let uiSysId     = msg[0];
-            let assetId     = msg[1];
-            let bufferNames = msg[2];
-            let buffers     = msg[3];
-            let order       = msg[4];
-
-            if (!this.uiSystems[uiSysId]) {
-                this.uiSystems[uiSysId] = [];
-            }
-
-            let assetLoaded = function(src, asset) {
-
-                let instanceBuffers = asset.instanceBuffers;
-                for (let i = 0; i < bufferNames.length; i++) {
-                    let attrib = attributes[bufferNames[i]];
-                    instanceBuffers.attachAttribute(buffers[i], bufferNames[i], attrib.dimensions, attrib.dynamic)
+            child.traverse(function(node) {
+                if (node.type === 'Mesh') {
+                    let geometry = node.geometry;
+                    buffers.verts   = geometry.attributes.position.array;
+                    buffers.normals = geometry.attributes.normal.array;
+                    buffers.uvs     = geometry.attributes.uv.array;
+                    buffers.indices = geometry.index.array;
                 }
+            });
 
-                instanceBuffers.setRenderOrder(order)
-                _this.uiSystems[uiSysId].push(instanceBuffers);
+        };
+
+        if (this.materials.indexOf(material) === -1) {
+            this.materials.push(material);
+        }
+
+        let count = settings.instances;
+        let attribs = settings.attributes;
+
+        let buffers = {};
+        extractFirstMeshGeometry(model.scene.children[0], buffers);
+        let insBufs = new InstanceBuffer(buffers.verts, buffers.uvs, buffers.indices, buffers.normals);
+     //   insBufs.extractFirstMeshGeometry(model.scene.children[0], buffers);
+
+
+        for (let i = 0; i < attribs.length; i++) {
+            let attrib = this.attributes[attribs[i]];
+            let buffer = insBufs.buildBuffer(attrib.dimensions, count);
+            insBufs.attachAttribute(buffer, attribs[i], attrib.dimensions, attrib.dynamic);
+        }
+
+        insBufs.setMaterial(material);
+        this.instanceBuffers[id] = insBufs;
+        this.instanceBuffers[id].setInstancedCount(0);
+        insBufs.addToScene(settings.cameraspace);
+        return insBufs;
+    };
+
+    instantiateGeometry = function(id, callback) {
+        if (!this.instances[id]) {
+            this.instances[id] = []
+        }
+        var idx = this.instances[id].length;
+        this.instanceBuffers[id].setInstancedCount(idx+1);
+        var instance = new GeometryInstance(id, idx, this.instanceBuffers[id]);
+        this.instances[id].push(instance);
+        callback(instance);
+    };
+
+    setupInstancingBuffers = function(msg) {
+
+        let _this = this;
+        let uiSysId     = msg[0];
+        let assetId     = msg[1];
+        let bufferNames = msg[2];
+        let buffers     = msg[3];
+        let order       = msg[4];
+
+        if (!this.uiSystems[uiSysId]) {
+            this.uiSystems[uiSysId] = [];
+        }
+
+        let assetLoaded = function(src, asset) {
+
+            let instanceBuffers = asset.instanceBuffers;
+            for (let i = 0; i < bufferNames.length; i++) {
+                let attrib = attributes[bufferNames[i]];
+                instanceBuffers.attachAttribute(buffers[i], bufferNames[i], attrib.dimensions, attrib.dynamic)
             }
 
-            ThreeAPI.loadThreeAsset('MODELS_', assetId, assetLoaded);
+            instanceBuffers.setRenderOrder(order)
+            _this.uiSystems[uiSysId].push(instanceBuffers);
+        }
 
+        ThreeAPI.loadThreeAsset('MODELS_', assetId, assetLoaded);
+
+    };
+
+
+
+    updateInstances = function(tpf) {
+
+        let updateUiSystemBuffers = function(instanceBuffers) {
+
+            instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates( this.systemTime));
         };
 
 
 
-        updateInstances = function(tpf) {
+        this.systemTime += tpf;
 
-            let updateUiSystemBuffers = function(instanceBuffers) {
+        for (let key in this.uiSystems) {
+            for (let i = 0; i < this.uiSystems[key].length; i++) {
+                updateUiSystemBuffers(this.uiSystems[key][i])
+            }
+        }
 
-                instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates( this.systemTime));
-            };
+        ThreeAPI.setGlobalUniform( 'fogDensity', ThreeAPI.readEnvironmentUniform('fog', 'density'));
+        ThreeAPI.setGlobalUniform( 'fogColor' ,ThreeAPI.readEnvironmentUniform('fog', 'color'));
+        ThreeAPI.setGlobalUniform( 'sunLightColor' ,ThreeAPI.readEnvironmentUniform('sun', 'color'));
+        ThreeAPI.setGlobalUniform( 'ambientLightColor' ,ThreeAPI.readEnvironmentUniform('ambient', 'color'));
 
+        let quat = ThreeAPI.readEnvironmentUniform('sun', 'quaternion');
+        this.tempVec.set(0, 0, -1);
+        this.tempVec.applyQuaternion(quat);
+        ThreeAPI.setGlobalUniform( 'sunLightDirection' ,this.tempVec);
 
-
-            this.systemTime += tpf;
-
-            for (let key in this.uiSystems) {
-                for (let i = 0; i < this.uiSystems[key].length; i++) {
-                    updateUiSystemBuffers(this.uiSystems[key][i])
+        for (let i = 0; i < this.materials.length; i++) {
+            let mat = this.materials[i];
+            if (mat.uniforms) {
+                if (mat.uniforms.systemTime) {
+                    mat.uniforms.systemTime.value = this.systemTime;
+                } else {
+                    console.log("no uniform yet...")
                 }
             }
 
-            ThreeAPI.setGlobalUniform( 'fogDensity', ThreeAPI.readEnvironmentUniform('fog', 'density'));
-            ThreeAPI.setGlobalUniform( 'fogColor' ,ThreeAPI.readEnvironmentUniform('fog', 'color'));
-            ThreeAPI.setGlobalUniform( 'sunLightColor' ,ThreeAPI.readEnvironmentUniform('sun', 'color'));
-            ThreeAPI.setGlobalUniform( 'ambientLightColor' ,ThreeAPI.readEnvironmentUniform('ambient', 'color'));
+        }
 
-            let quat = ThreeAPI.readEnvironmentUniform('sun', 'quaternion');
-            this.tempVec.set(0, 0, -1);
-            this.tempVec.applyQuaternion(quat);
-            ThreeAPI.setGlobalUniform( 'sunLightDirection' ,this.tempVec);
+    };
 
-            for (let i = 0; i < this.materials.length; i++) {
-                let mat = this.materials[i];
-                if (mat.uniforms) {
-                    if (mat.uniforms.systemTime) {
-                        mat.uniforms.systemTime.value = this.systemTime;
-                    } else {
-                        console.log("no uniform yet...")
-                    }
-                }
-
-            }
-
-        };
-
-    }
+}
 
 export { InstanceAPI };

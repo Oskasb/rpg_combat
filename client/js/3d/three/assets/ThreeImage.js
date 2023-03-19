@@ -5,11 +5,18 @@ class ThreeImage {
 
         this.id = id;
         this.url = config.url;
+        this.bitmap;
+        let _this = this;
+
+        let setBitmap = function(bmp) {
+            _this.bitmap = bmp;
+            callback(_this)
+        }
 
         let bitmapLoaded = function(bmp) {
-            this.bitmap = bmp;
-            callback(this)
-        }.bind(this);
+            console.log('bitmap loaded', bmp)
+            setBitmap(bmp);
+        };
 
         this.loader.load( config.url, function ( imageBitmap ) {
             bitmapLoaded(imageBitmap);

@@ -18,7 +18,7 @@ class ThreeMaterial {
             callback(this);
         }.bind(this);
 
-        let materialSettingsLoaded = function(src, asset) {
+        let materialSettingsLoaded = function(asset) {
 
             this.applyMaterialSettings(asset.config.shader, asset.config.properties, matReady);
         }.bind(this);
@@ -46,7 +46,7 @@ class ThreeMaterial {
             }
         }.bind(this);
 
-        var textureAssetLoaded = function(src, asset) {
+        var textureAssetLoaded = function(asset) {
             txLds++;
             this.textures[this.textureMap[asset.id]] = asset;
             loadCheck()
@@ -215,10 +215,9 @@ class ThreeMaterial {
             };
 
             if ( this.textures['map']) {
-                let mapTexture = this.textures['map'].texture;
-                let userData = mapTexture.userData;
+                var mapTexture = this.textures['map'].texture;
                 uniforms['map'] = {value:mapTexture};
-                uniforms['tiles'] = {value:new THREE.Vector2(userData.tiles_x, userData.tiles_y)};
+                uniforms['tiles'] = {value:new THREE.Vector2(mapTexture.userData.tiles_x, mapTexture.userData.tiles_y)};
             }
 
             if (props['texture_uniforms']) {

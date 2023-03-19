@@ -22,8 +22,8 @@ class ThreeModel {
         this.material;
         let _this = this;
 
-        let materialLoaded = function(src, asset) {
-            //    console.log(src, asset);
+        let materialLoaded = function(asset) {
+                console.log('materialLoaded', asset);
             _this.material = asset;
 
             if (this.geometryInstancingSettings()) {
@@ -36,11 +36,10 @@ class ThreeModel {
         this.settings = {};
         let settings = this.settings;
 
-        let modelSettingsLoaded = function(src, asset) {
-            //   console.log(src, asset);
+        let modelSettingsLoaded = function(asset) {
+               console.log('modelSettingsLoaded', asset, config);
             for (let key in asset.settings) {
                 settings[key] = asset.settings[key];
-                console.log("Apply settings", key, asset.settings)
             }
             ThreeAPI.loadThreeAsset('MATERIALS_', config.material, materialLoaded);
         }.bind(this);
@@ -93,20 +92,20 @@ class ThreeModel {
             }
         };
 
-        var animLoaded = function(src, asset) {
+        var animLoaded = function(asset) {
             rds++;
             this.animations[this.animMap[asset.id]] = asset;
             loadCheck()
         }.bind(this);
 
-        var fileLoaded = function(src, asset) {
+        var fileLoaded = function(asset) {
             rds++;
             this.model = asset;
             loadCheck()
         }.bind(this);
 
 
-        var loadRig = function(src, rig) {
+        var loadRig = function(rig) {
 
             if (rig.joints) {
                 for (var i = 0; i < rig.joints.length; i++) {

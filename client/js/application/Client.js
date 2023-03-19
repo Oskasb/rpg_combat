@@ -3,7 +3,7 @@ import { evt } from './event/evt.js';
 import { GameScreen } from './ui/GameScreen.js';
 import { PointerCursor } from './ui/input/PointerCursor.js';
 import { Setup } from './setup/Setup.js';
-import * as THREE from '../../libs/three/three.module.js';
+import * as THREE from '../../libs/three/Three.js';
 import { ThreeController } from '../3d/ThreeController.js';
 import { DynamicMain } from '../3d/DynamicMain.js';
 
@@ -26,12 +26,18 @@ class Client {
     }
 
     activateGui() {
-        let uiSysReady = function(msg) {
-            console.log("Ui sys ready", msg)
-            client.createScene();
+   //     let uiSysReady = function(msg) {
+   //         console.log("Ui sys ready", msg)
 
-        }
-        this.setup.initUiSetup(uiSysReady)
+        let loadCallback = function(asset) {
+            console.log("requestAsset returns: ", asset)
+            client.createScene();
+        };
+
+        this.dynamicMain.requestAsset('asset_tree_1', loadCallback)
+
+     //   }
+    //    this.setup.initUiSetup(uiSysReady)
     }
 
     initUiSystem() {
@@ -57,14 +63,30 @@ class Client {
 
     createScene() {
 
-        let loadCallback = function(msg) {
-            console.log("requestAsset returns: ", msg)
+        client.treeInstances = [];
+
+        let instanceReturns = function(instance) {
+        //    console.log(instance)
+            instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE)
+            instance.spatial.setScaleXYZ(0.2, 0.2, 0.2)
+            instance.spatial.obj3d.rotateX(-1.7);
+            instance.spatial.setQuatXYZW(
+                instance.spatial.obj3d.quaternion.x,
+                instance.spatial.obj3d.quaternion.y,
+                instance.spatial.obj3d.quaternion.z,
+                instance.spatial.obj3d.quaternion.w
+            );
+            client.treeInstances.push(instance);
         };
 
-        this.dynamicMain.requestAsset('asset_tree_1', loadCallback)
+        for (let i = 0; i < 50; i++) {
+            client.dynamicMain.requestAssetInstance("asset_tree_1", instanceReturns)
+        }
 
-        client.setup.initDefaultUi()
-        GuiAPI.printDebugText("DEBUG TEXT")
+
+
+    //    client.setup.initDefaultUi()
+    //    GuiAPI.printDebugText("DEBUG TEXT")
         console.log("THREE:", THREE);
         const clock = new THREE.Clock(true);
 
@@ -108,7 +130,7 @@ class Client {
 
             ThreeAPI.applyDynamicGlobalUniforms();
 
-            ThreeAPI.setCameraPos(Math.sin(frame.elapsedTime)*30, 10 + Math.sin(frame.elapsedTime*0.7)*7, Math.cos(frame.elapsedTime)*30);
+            ThreeAPI.setCameraPos(Math.sin(frame.elapsedTime*0.02)*30, 10 + Math.sin(frame.elapsedTime*0.7)*7, Math.cos(frame.elapsedTime*0.02)*30);
             ThreeAPI.cameraLookAt(0, 0, 0);
             ThreeAPI.updateCamera();
             ThreeAPI.updateAnimationMixers(frame.tpf);
@@ -132,6 +154,16 @@ class Client {
                 }
 
             }
+
+            for (let i = 0; i < client.treeInstances.length;i++) {
+                client.treeInstances[i].spatial.setPosXYZ(
+                    Math.sin(frame.z+i)*(0.4+i*0.3),
+                    Math.sin(frame.z*2+i)*1,
+                    Math.cos(frame.z+i)*(0.4+i*0.3)
+                )
+            }
+
+
 
 
            cube.rotation.x += 0.01;

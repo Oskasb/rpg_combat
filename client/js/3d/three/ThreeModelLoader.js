@@ -410,7 +410,7 @@ class ThreeModelLoader {
                 let meshObj = PipelineAPI.readCachedConfigKey('THREE_MODEL', mid);
 
                 //        console.log(meshObj, uv2mesh, uv2mesh.geometry.attributes.uv);
-                meshObj.geometry.addAttribute('uv2', uv2mesh.geometry.attributes.uv);
+                meshObj.geometry.setAttribute('uv2', uv2mesh.geometry.attributes.uv);
                 uv2mesh.geometry.dispose();
                 uv2mesh.material.dispose();
                 cacheMesh(mid, meshObj, pool);

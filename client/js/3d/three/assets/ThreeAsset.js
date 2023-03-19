@@ -10,7 +10,7 @@ class ThreeAsset  {
         let instantiateAsset = function(assetId, callback) {
             let modelInstance = new InstancedModel(this);
             modelInstance.assetId = assetId;
-            modelInstance.initModelInstance(callback);
+            modelInstance.initModelInstance(callback, modelInstance);
         }.bind(this);
 
         this.expandingPool = new ExpandingPool(this.id, instantiateAsset);
@@ -19,7 +19,7 @@ class ThreeAsset  {
 
     initAssetConfigs = function(assetId, cb, _this) {
 
-        let assetLoaded = function(src, asset) {
+        let assetLoaded = function(asset) {
             _this.finaliseAsset(asset, cb)
         };
 

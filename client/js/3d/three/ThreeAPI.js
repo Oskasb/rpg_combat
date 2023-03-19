@@ -103,6 +103,7 @@ class ThreeAPI {
 
 
     buildAsset = function(assetId, callback) {
+        console.log('Three API build asset:', assetId);
         new ThreeAsset(assetId, callback);
     };
 
@@ -307,10 +308,10 @@ class ThreeAPI {
             //    bufferGeo.attributes.color.array = buffers[2];
             //    bufferGeo.attributes.uv.array = buffers[3];
 
-            bufferGeo.addAttribute( 'position', new THREE.Float32BufferAttribute( buffers[0], 3 ) );
-            bufferGeo.addAttribute( 'normal', new THREE.Float32BufferAttribute( buffers[1], 3 ) );
-            bufferGeo.addAttribute( 'color', new THREE.Float32BufferAttribute(  buffers[2], 3 ) );
-            bufferGeo.addAttribute( 'uv', new THREE.Float32BufferAttribute(  buffers[3], 2 ) );
+            bufferGeo.setAttribute( 'position', new THREE.Float32BufferAttribute( buffers[0], 3 ) );
+            bufferGeo.setAttribute( 'normal', new THREE.Float32BufferAttribute( buffers[1], 3 ) );
+            bufferGeo.setAttribute( 'color', new THREE.Float32BufferAttribute(  buffers[2], 3 ) );
+            bufferGeo.setAttribute( 'uv', new THREE.Float32BufferAttribute(  buffers[3], 2 ) );
 
 
             bufferGeo.needsUpdate = true;
@@ -447,8 +448,8 @@ class ThreeAPI {
 
     applyDynamicGlobalUniforms = function() {
 
-        for (let val in this.dynamicGlobalUnifs) {
-            ThreeAPI.setGlobalUniform(val, this.dynamicGlobalUnifs[val].value)
+        for (let val in ThreeAPI.dynamicGlobalUnifs) {
+            ThreeAPI.setGlobalUniform(val, ThreeAPI.dynamicGlobalUnifs[val].value)
         }
 
         this.frameRegs = 0;

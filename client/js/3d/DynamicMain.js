@@ -1,7 +1,7 @@
 class DynamicMain {
     constructor() {
 
-    this.assets = [];
+    this.assets = {};
     this.assetIndex = {};
     this.instances = [];
 
@@ -21,11 +21,11 @@ class DynamicMain {
     };
 
     requestAsset = function(modelAssetId, assetReadyCB) {
-
+        let assets = this.assets;
         var onAssetReady = function(asset) {
         //    console.log("AssetReady:", asset);
             this.assetIndex[asset.id] = assets.length;
-            assets.push(asset);
+            assets[modelAssetId] = asset;
 
             var idx = this.assetIndex[asset.id];
             var anims = asset.model.animationKeys;
@@ -47,13 +47,7 @@ class DynamicMain {
 
         ThreeAPI.buildAsset(modelAssetId,   onAssetReady);
 
-
-
     };
-
-
-
-
 
 
     getInstanceByPointer = function(ptr) {
@@ -68,22 +62,28 @@ class DynamicMain {
         MATH.quickSplice(this.instances, instancedModel);
     };
 
-
-    instanceReady = function(modelInstance) {
-        this.instancePointer++;
-        this.instances.push(modelInstance);
-        modelInstance.setPointer(this.instancePointer);
-        this.instanceEvt[1] = this.assetIndex[modelInstance.getAssetId()];
-        this.instanceEvt[3] = modelInstance.getPointer();
-        evt.dispatch(ENUMS.Event.REGISTER_INSTANCE, this.instanceEvt);
-    };
-
-    requestAssetInstance = function(event) {
+    requestAssetInstance = function(assetId, callback) {
 
 
 
-        var asset = assets[event[1]];
+
+        let instanceReady = function(modelInstance) {
+            this.instancePointer++;
+            this.instances.push(modelInstance);
+            modelInstance.setPointer(this.instancePointer);
+            this.instanceEvt[1] = this.assetIndex[modelInstance.getAssetId()];
+            this.instanceEvt[3] = modelInstance.getPointer();
+            evt.dispatch(ENUMS.Event.REGISTER_INSTANCE, this.instanceEvt);
+            callback(modelInstance);
+        }.bind(this);
+
+
+
+        let asset = this.assets[assetId];
         asset.instantiateAsset(instanceReady);
+
+
+
     };
 
     updateDynamicInstances = function() {

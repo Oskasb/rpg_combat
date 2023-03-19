@@ -34,7 +34,7 @@ define([
 
             if (normals) {
                 var normal = new THREE.BufferAttribute(normals , 3 );
-                geometry.addAttribute( 'vertexNormal', normal );
+                geometry.setAttribute( 'vertexNormal', normal );
             }
 
 
@@ -44,10 +44,10 @@ define([
             geometry.index.needsUpdate = true;
 
             var vertices = new THREE.BufferAttribute(posBuffer , 3 );
-            geometry.addAttribute( 'vertexPosition', vertices );
+            geometry.setAttribute( 'vertexPosition', vertices );
 
             var uvs = new THREE.BufferAttribute( uvBuffer , 2 );
-            geometry.addAttribute( 'uv', uvs );
+            geometry.setAttribute( 'uv', uvs );
 
 
             this.geometry = geometry;

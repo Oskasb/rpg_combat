@@ -122,7 +122,7 @@ define([
 
         RendererAttributes.prototype.attachParticleBuffer = function(particleBuffer) {
             for (var key in this.attributes) {
-                particleBuffer.geometry.addAttribute( key, this.attributes[key] );
+                particleBuffer.geometry.setAttribute( key, this.attributes[key] );
             }
 
         };

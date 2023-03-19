@@ -12,11 +12,11 @@ class ThreeInstanceBufferModel {
 
             // per mesh data
             let vertices = new THREE.BufferAttribute(vertexBuffer, 3 );
-            geometry.addAttribute( 'vertexPosition', vertices );
+            geometry.setAttribute( 'vertexPosition', vertices );
 
             let uvs = new THREE.BufferAttribute(  uvScaled, 2 );
 
-            geometry.addAttribute( 'uv', uvs );
+            geometry.setAttribute( 'uv', uvs );
 
             geometry.setIndex( new THREE.BufferAttribute(indexBuffer, 1 ) );
 

@@ -78,11 +78,12 @@ class AssetLoader {
 
                     let acallback = function(asset) {
                         PipelineAPI.setCategoryKeyValue('ASSET', assetKey, asset);
+                        callback(asset)
                         //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, callback)
                     };
 
                     if (assets[assetKey]) {
-                        acallback(assetKey, assets[assetKey])
+                        acallback(assets[assetKey])
                     } else {
                         assets[assetKey] = new assetMap[assetType](assetId, data.config, acallback);
                     }
@@ -103,7 +104,7 @@ class AssetLoader {
                 let assetKey = assetType+assetId;
                 let cachedAsset = PipelineAPI.readCachedConfigKey('ASSET', assetKey);
                 if (cachedAsset === assetKey) {
-                    PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, lcallback);
+                //    PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, lcallback);
                     setupAsset(assetType, assetId, lcallback);
                 } else {
                     //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, lcallback)

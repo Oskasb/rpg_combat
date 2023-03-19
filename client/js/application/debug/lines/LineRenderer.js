@@ -12,13 +12,13 @@ define([],
 
 
             var positions = new Float32Array( this.MAX_NUM_LINES * 6 ); // 3 vertices per point
-            this.geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+            this.geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
 
             this.positions = this.geometry.attributes.position.array;
 
 
             var colors = new Float32Array( this.MAX_NUM_LINES * 6 ); // 3 vertices per point
-            this.geometry.addAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+            this.geometry.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 
 
             this.positions = this.geometry.attributes.position.array;

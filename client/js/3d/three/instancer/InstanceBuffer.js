@@ -26,7 +26,7 @@ class InstanceBuffer {
 
         if (normals) {
             let normal = new THREE.BufferAttribute(normals , 3 );
-            geometry.addAttribute( 'normal', normal );
+            geometry.setAttribute( 'normal', normal );
         }
 
 
@@ -36,10 +36,10 @@ class InstanceBuffer {
         geometry.index.needsUpdate = true;
 
         let vertices = new THREE.BufferAttribute(posBuffer , 3 );
-        geometry.addAttribute( 'vertexPosition', vertices );
-        geometry.addAttribute( 'position', vertices );
+        geometry.setAttribute( 'vertexPosition', vertices );
+        geometry.setAttribute( 'position', vertices );
         let uvs = new THREE.BufferAttribute( uvBuffer , 2 );
-        geometry.addAttribute( 'uv', uvs );
+        geometry.setAttribute( 'uv', uvs );
 
 
         this.geometry = geometry;
@@ -68,8 +68,13 @@ class InstanceBuffer {
             this.buffers[name] = buffer;
         }
 
-        let attribute = new THREE.InstancedBufferAttribute(buffer, dimensions, false).setDynamic( dynamic );
-        this.geometry.addAttribute(name, attribute);
+        let attribute = new THREE.InstancedBufferAttribute(buffer, dimensions, false)
+        if (dynamic) {
+            console.log('setDynamic expected, not supported so fix..')
+            attribute.setDynamic( dynamic );
+        }
+
+        this.geometry.setAttribute(name, attribute);
         this.attributes[name] = attribute;
     };
 
@@ -176,19 +181,7 @@ class InstanceBuffer {
     };
 
 
-    extractFirstMeshGeometry = function(child, buffers) {
 
-        child.traverse(function(node) {
-            if (node.type === 'Mesh') {
-                let geometry = node.geometry;
-                buffers.verts   = geometry.attributes.position.array;
-                buffers.normals = geometry.attributes.normal.array;
-                buffers.uvs     = geometry.attributes.uv.array;
-                buffers.indices = geometry.index.array;
-            }
-        });
-
-    };
 }
 
 export { InstanceBuffer }
