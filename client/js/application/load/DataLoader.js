@@ -115,7 +115,10 @@ class DataLoader {
 
                     ThreeAPI.initThreeLoaders(_this.assetLoader);
                     ThreeAPI.loadThreeData();
-
+                    let apiReadyCB = function(msg) {
+                        console.log('initEffectAPI', msg)
+                    }
+                    EffectAPI.initEffectAPI(apiReadyCB)
                     loadStateChange(_this.loadState);
                 }
             }

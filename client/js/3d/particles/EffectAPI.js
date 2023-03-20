@@ -7,10 +7,6 @@ import { EffectBuilder } from "./EffectBuilder.js";
 class EffectAPI {
     constructor() {
 
-        let createEffect = function (key, cb) {
-            cb(key, new ParticleEffect());
-        };
-
         let rebuildFx = function () {
             let rebuild = {};
 
@@ -29,6 +25,10 @@ class EffectAPI {
             }
 
         }.bind(this);
+
+        let createEffect = function (key, cb) {
+            cb(key, new ParticleEffect());
+        };
 
         this.effectPool = new ExpandingPool('effect', createEffect);
         this.effectBuilders = {};
@@ -50,7 +50,7 @@ class EffectAPI {
         let effectBuilders = this.effectBuilders;
 
         let onParticlesReady = function(src, data) {
-        //    console.log(src, data)
+            //    console.log(src, data)
             for (let i = 0; i < data.length; i++) {
                 applyParticleConfigs(data[i]);
                 if (!effectBuilders[data[i].id]) {
@@ -62,7 +62,7 @@ class EffectAPI {
         };
 
         let applyParticleConfigs = function(data) {
-        //    console.log(data)
+            //    console.log(data)
             for (let i in data) {
 
                 let particleId = data[i].particle_id;
@@ -81,7 +81,7 @@ class EffectAPI {
         };
 
         let applyEffectConfigs = function(data) {
-        //    console.log(data)
+            //    console.log(data)
             for (let i in data) {
                 let spawner = data[i].spawner;
 
@@ -149,8 +149,11 @@ class EffectAPI {
         this.effectPool.getFromExpandingPool(callback)
     };
 
-    buildEffectClassByConfigId = function(configId, callback) {
-        this.effectBuilder.buildEffectByConfigId(configId, callback)
+    buildEffectClassByConfigId = function(builderId, effectName, callback) {
+        console.log("buildEffectClassByConfigId",builderId, effectName )
+        let builder = this.effectBuilders[builderId];
+        console.log("buildEffectClassByConfigId",builder, effectName )
+        builder.buildEffectByConfigId(effectName, callback)
     };
 
     addParticleToEffectOfClass = function(particleId, particleEffect, effectOfClass) {

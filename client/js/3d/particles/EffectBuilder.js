@@ -39,7 +39,11 @@ class EffectBuilder {
             let _this = this;
 
             let onDataReady = function(src, data) {
-                _this.applyConfigs(data.data);
+
+                for (let i = 0; i<data.length;i++) {
+                    _this.applyConfigs(data[i]);
+                }
+
                 if (!this.isUpdate) {
                     onReady('effectBuilder ready: '+dataId);
                     this.isUpdate = true;
@@ -57,6 +61,8 @@ class EffectBuilder {
 
         applyConfigs = function(data) {
 
+            console.log("Apply data", data);
+
             var createEffect = function(key, cb) {
                 let fx = new this.effectClass[this.configs[key].effect_class](this.callbacks.activateEffect, this.callbacks.recoverEffect);
                 fx.setEffectId(key);
@@ -64,7 +70,7 @@ class EffectBuilder {
                 cb(fx)
             }.bind(this);
 
-            for (var key in data) {
+            for (var key in data.data) {
 
 
                 if (this.activeEffects[key]) {
@@ -76,7 +82,7 @@ class EffectBuilder {
                     this.activeEffects[key] = [];
                 }
 
-                this.configs[key] = data[key];
+                this.configs[key] = data.data[key];
                 this.effectPools[key] = new ExpandingPool(key, createEffect)
             }
 
@@ -84,8 +90,9 @@ class EffectBuilder {
 
 
         buildEffectByConfigId = function(configId, callback) {
-
-            this.effectPools[configId].getFromExpandingPool(callback)
+            let pool = this.effectPools[configId];
+            console.log("get pool", pool, configId, this.effectPools)
+            pool.getFromExpandingPool(callback)
         };
 
 

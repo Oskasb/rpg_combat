@@ -55,6 +55,8 @@ class Client {
 
         client.treeInstances = [];
 
+        client.particleEffects = [];
+
         let instanceReturns = function(instance) {
        //     console.log(instance)
             instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE)
@@ -79,6 +81,16 @@ class Client {
             //    client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
             }
 
+        }
+
+        let effectCb = function(effect) {
+            console.log("effect add: ", effect)
+
+        };
+
+        for (let i = 0; i < 2; i++) {
+            EffectAPI.buildEffectClassByConfigId('particle_default', 'effect_action_point_wisp',  effectCb)
+            // EffectAPI.buildEffect(effectCb)
         }
 
 
