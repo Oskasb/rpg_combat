@@ -72,9 +72,7 @@ class DataLoader {
                        loadStateChange(loadStates.COMPLETED);
                 }
 
-                let guiAPIRdyCB = function(msg) {
-            //        console.log(msg)
-                }
+
 
                 if (_this.loadState === loadStates.CONFIGS && remaining === 0) {
                  //   console.log( "json cached:", PipelineAPI.getCachedConfigs());
@@ -102,7 +100,11 @@ class DataLoader {
 
                     PipelineAPI.subscribeToCategoryKey("ASSETS", "LOAD_MODELS", subCallback);
 
-                    GuiAPI.initGuiApi(guiAPIRdyCB)
+                    let apiReadyCB = function(msg) {
+                                console.log(msg)
+                    }
+                    EffectAPI.initEffectAPI(apiReadyCB)
+                    GuiAPI.initGuiApi(apiReadyCB)
 
                 }
 

@@ -7,7 +7,6 @@ import { EffectBuilder } from "./EffectBuilder.js";
 class EffectAPI {
     constructor() {
 
-
         let createEffect = function (key, cb) {
             cb(key, new ParticleEffect());
         };
@@ -15,7 +14,7 @@ class EffectAPI {
         let rebuildFx = function () {
             let rebuild = {};
 
-            for (let key in activeEffects) {
+            for (let key in this.activeEffects) {
                 rebuild[key] = [];
 
                 while (activeEffects[key].length) {
@@ -25,11 +24,11 @@ class EffectAPI {
                 }
 
                 while (rebuild[key].length) {
-                    EffectAPI.activateParticleEffect(rebuild[key].pop())
+                    this.activateParticleEffect(rebuild[key].pop())
                 }
             }
 
-        };
+        }.bind(this);
 
         this.effectPool = new ExpandingPool('effect', createEffect);
         this.effectBuilders = {};
@@ -39,80 +38,74 @@ class EffectAPI {
         this.activateEffects = {};
 
         this.callbacks = {
-            rebuildFx:rebuildFx
+            rebuildFx:rebuildFx,
         }
     }
-
 
     initEffectAPI = function(onReady) {
 
         let callbacks = this.callbacks;
-        let onParticlesReady = function(data) {
+        let effectSpawners =  this.effectSpawners;
+        let particleConfigs = this.particleConfigs;
+        let effectBuilders = this.effectBuilders;
 
+        let onParticlesReady = function(src, data) {
+        //    console.log(src, data)
             for (let i = 0; i < data.length; i++) {
-                EffectAPI.applyParticleConfigs(data[i].data);
-                if (!this.effectBuilders[data[i].id]) {
-                    this.effectBuilders[data[i].id] = new EffectBuilder(data[i].id)
+                applyParticleConfigs(data[i]);
+                if (!effectBuilders[data[i].id]) {
+                    effectBuilders[data[i].id] = new EffectBuilder(data[i].id)
                 }
-                let effectBuilder = this.effectBuilders[data[i].id];
+                let effectBuilder = effectBuilders[data[i].id];
                 effectBuilder.initEffectBuilder(data[i].id, onReady, callbacks.rebuildFx)
             }
+        };
+
+        let applyParticleConfigs = function(data) {
+        //    console.log(data)
+            for (let i in data) {
+
+                let particleId = data[i].particle_id;
+                if (!particleConfigs[particleId]) {
+                    particleConfigs[particleId] = {}
+                }
+
+                for (let key in data[i]) {
+                    particleConfigs[particleId][key] = data[i][key]
+                }
+
+            }
+
+            callbacks.rebuildFx()
+
+        };
+
+        let applyEffectConfigs = function(data) {
+        //    console.log(data)
+            for (let i in data) {
+                let spawner = data[i].spawner;
+
+                if (effectSpawners[spawner]) {
+                    effectSpawners[spawner].resetEffectSpawner()
+                }
+
+                effectSpawners[spawner] = new EffectSpawner();
+                effectSpawners[spawner].applyConfig(data[i]);
+                effectSpawners[spawner].setupInstantiator()
+            }
+            callbacks.rebuildFx()
         };
 
         let onDataReady = function(src, data) {
             console.log("Particle BUFFER data:", data, src)
             for (let i = 0; i < data.length; i++) {
-                EffectAPI.applyEffectConfigs(data[i].data);
+                applyEffectConfigs(data[i]);
             }
             new PipelineObject('EFFECT', 'PARTICLES', onParticlesReady);
         };
 
         new PipelineObject('EFFECT', 'BUFFERS', onDataReady);
     };
-
-    applyEffectConfigs = function(data) {
-
-        let effectSpawners =  this.effectSpawners;
-
-        for (let i in data) {
-            let spawner = data[i].spawner;
-
-            if (effectSpawners[spawner]) {
-                effectSpawners[spawner].resetEffectSpawner()
-            }
-
-            effectSpawners[spawner] = new EffectSpawner();
-            effectSpawners[spawner].applyConfig(data[i]);
-            effectSpawners[spawner].setupInstantiator()
-        }
-        this.callbacks.rebuildFx()
-    };
-
-    applyParticleConfigs = function(data) {
-
-        console.log(data)
-
-        let particleConfigs = this.particleConfigs;
-
-        for (let i in data) {
-
-            let particleId = data[i].particle_id;
-
-            if (!particleConfigs[particleId]) {
-                particleConfigs[particleId] = {}
-            }
-
-            for (let key in data[i]) {
-                particleConfigs[particleId][key] = data[i][key]
-            }
-
-        }
-
-        this.callbacks.rebuildFx()
-
-
-    };
-
 
     setupParticleEffect = function(bufferElement, spawnerId) {
         let effect = this.activateEffects[spawnerId].pop();
@@ -124,8 +117,6 @@ class EffectAPI {
 
         this.activeEffects[spawnerId].push(effect);
     };
-
-
 
     activateParticleEffect = function(effect) {
         effect.setConfig(this.getEffectConfig( effect.getParticleId()));
@@ -158,7 +149,6 @@ class EffectAPI {
         this.effectPool.getFromExpandingPool(callback)
     };
 
-
     buildEffectClassByConfigId = function(configId, callback) {
         this.effectBuilder.buildEffectByConfigId(configId, callback)
     };
@@ -167,7 +157,6 @@ class EffectAPI {
         particleEffect.setParticleId(particleId);
         this.effectBuilders[particleEffect.getSpawnerId()].addParticle(particleEffect, effectOfClass)
     };
-
 
     setupJointEffect = function(joint, configId) {
         console.log("setupJointEffect", joint, configId)

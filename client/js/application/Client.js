@@ -188,6 +188,7 @@ class Client {
             frame.elapsedTime = clock.elapsedTime;
             client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
             //     renderer.render(scene, camera)
+            EffectAPI.updateEffectAPI();
            ThreeAPI.requestFrameRender(frame)
         }
 

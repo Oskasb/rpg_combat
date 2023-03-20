@@ -41,7 +41,7 @@ class EffectBuilder {
             let onDataReady = function(src, data) {
                 _this.applyConfigs(data.data);
                 if (!this.isUpdate) {
-                    onReady();
+                    onReady('effectBuilder ready: '+dataId);
                     this.isUpdate = true;
                 } else {
                     rebuildFx();
