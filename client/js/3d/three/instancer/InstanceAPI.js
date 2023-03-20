@@ -3,6 +3,7 @@ import {GeometryInstance} from './GeometryInstance.js';
 
 class InstanceAPI {
     constructor() {
+        console.log('INIT InstanceAPI');
         this.modelCount = 0;
         this.tempVec = new THREE.Vector3();
         this.instanceBuffers = {};
@@ -82,16 +83,15 @@ class InstanceAPI {
         if (!this.instances[id]) {
             this.instances[id] = []
         }
-        var idx = this.instances[id].length;
+        let idx = this.instances[id].length;
         this.instanceBuffers[id].setInstancedCount(idx+1);
-        var instance = new GeometryInstance(id, idx, this.instanceBuffers[id]);
+        let instance = new GeometryInstance(id, idx, this.instanceBuffers[id]);
         this.instances[id].push(instance);
         callback(instance);
     };
 
     setupInstancingBuffers = function(msg) {
 
-        let _this = this;
         let uiSysId     = msg[0];
         let assetId     = msg[1];
         let bufferNames = msg[2];
@@ -111,7 +111,7 @@ class InstanceAPI {
             }
 
             instanceBuffers.setRenderOrder(order)
-            _this.uiSystems[uiSysId].push(instanceBuffers);
+            this.uiSystems[uiSysId].push(instanceBuffers);
         }
 
         ThreeAPI.loadThreeAsset('MODELS_', assetId, assetLoaded);
@@ -149,12 +149,16 @@ class InstanceAPI {
 
         for (let i = 0; i < this.materials.length; i++) {
             let mat = this.materials[i];
-            if (mat.uniforms) {
-                if (mat.uniforms.systemTime) {
-                    mat.uniforms.systemTime.value = this.systemTime;
-                } else {
-                    console.log("no uniform yet...")
+            if (mat) {
+                if (mat.uniforms) {
+                    if (mat.uniforms.systemTime) {
+                        mat.uniforms.systemTime.value = this.systemTime;
+                    } else {
+                        console.log("no uniform yet...")
+                    }
                 }
+            } else {
+                console.log("no material yet...")
             }
 
         }

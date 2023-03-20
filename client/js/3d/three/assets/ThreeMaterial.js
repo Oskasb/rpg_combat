@@ -7,11 +7,23 @@ class ThreeMaterial {
         this.txLoads = 0;
         this.textureMap = {};
         this.textures = {};
-
-        let matReady = function() {
+        this.mat = null;
+        let _this = this;
+        this.getAssetMaterial = function() {
+            return _this.mat;
+        }.bind(this);
+        let matReady = function(mat) {
+            _this.mat = mat;
             console.log("Material Ready", this);
             for (let key in this.textureMap) {
-                this.mat[this.textureMap[key]] = this.textures[this.textureMap[key]].texture;
+
+                if (!this.textures[this.textureMap[key]]) {
+                    console.error("No such texture", key, this)
+                    return;
+//                    this.textures[this.textureMap[key]]
+                }
+
+                mat[this.textureMap[key]] = this.textures[this.textureMap[key]].texture;
             }
             console.log("Material Ready", this);
             callback(this);
@@ -30,24 +42,28 @@ class ThreeMaterial {
 
         this.setupTextureMap(config, txReady);
 
+
+
     };
 
-    getAssetMaterial = function() {
-        return this.mat;
-    };
+
 
     setupTextureMap = function(config, cb) {
 
         let loadCheck = function() {
 
             if (config.textures.length === this.txLoads) {
+                console.log('all textures loaded for material', config)
                 cb();
             }
         }.bind(this);
 
-        let textureAssetLoaded = function(asset) {
+        let textureAssetLoaded = function(asset, arg2) {
             this.txLoads++;
-            console.log("texture loaded:", asset.id)
+            if (!asset.id) {
+                console.log("texture not asset:", asset, arg2, this.txLoads)
+            }
+            console.log("texture loaded:", asset.id, this.txLoads)
             this.textures[this.textureMap[asset.id]] = asset;
             loadCheck()
         }.bind(this);
@@ -58,7 +74,7 @@ class ThreeMaterial {
                 let id = config.textures[i].id;
                 let key = config.textures[i].key;
                 this.textureMap[id] = key;
-                console.log("Request texture:", id)
+            //    console.log("Request texture:", id)
                 ThreeAPI.loadThreeAsset('TEXTURES_', config.textures[i].id, textureAssetLoaded);
             }
         }
@@ -68,7 +84,7 @@ class ThreeMaterial {
 
     updateMaterialSettings = function(props) {
 
-        var mat = this.mat;
+        let mat = this.mat;
 
         for (var key in props.settings) {
             mat[key] = props.settings[key]
@@ -111,7 +127,7 @@ class ThreeMaterial {
 
     applyMaterialSettings = function(shader, props, cb) {
 
-        if (this.mat) {
+        if (this.mat !== null) {
             this.updateMaterialSettings(props);
             return;
         }
@@ -152,8 +168,8 @@ class ThreeMaterial {
             }
         }
 
-        this.mat = mat;
-        cb(this);
+
+        cb(mat);
     };
 
 
@@ -197,7 +213,7 @@ class ThreeMaterial {
 
         var applyShaders = function(src, data) {
 
-            if (this.mat) {
+            if (this.mat !== null) {
 
                 this.mat.vertexShader = data.vertex;
                 this.mat.fragmentShader = data.fragment;
@@ -218,8 +234,13 @@ class ThreeMaterial {
 
             if ( this.textures['map']) {
                 var mapTexture = this.textures['map'].texture;
-                uniforms['map'] = {value:mapTexture};
-                uniforms['tiles'] = {value:new THREE.Vector2(mapTexture.userData.tiles_x, mapTexture.userData.tiles_y)};
+                if (!mapTexture) {
+                    console.log("No mapTexture in ", this.textures)
+                } else {
+                    console.log("Yes mapTexture in ", this.textures)
+                    uniforms['map'] = {value:mapTexture};
+                    uniforms['tiles'] = {value:new THREE.Vector2(mapTexture.userData.tiles_x, mapTexture.userData.tiles_y)};
+                }
             }
 
             if (props['texture_uniforms']) {

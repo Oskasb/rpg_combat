@@ -59,7 +59,7 @@ class DataLoader {
             let assetCount = 0;
 
             function pipelineCallback(started, remaining, loaded, files) {
-                 console.log("SRL", _this.loadState, started, remaining, loaded, [files]);
+            //     console.log("SRL", _this.loadState, started, remaining, loaded, [files]);
 
                 PipelineAPI.setCategoryKeyValue("STATUS", "FILE_CACHE", loaded);
 
@@ -82,7 +82,7 @@ class DataLoader {
 
                 remaining++
                     let loadCallback = function(asset) {
-                        console.log("requestAsset returns: ", asset)
+                //        console.log("requestAsset returns: ", asset)
                         assetCount--
                         remaining--
                         if (!assetCount) {

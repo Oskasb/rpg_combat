@@ -56,9 +56,9 @@ class Client {
         client.treeInstances = [];
 
         let instanceReturns = function(instance) {
-            console.log(instance)
+       //     console.log(instance)
             instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE)
-            instance.spatial.setScaleXYZ(0.2, 0.2, 0.2)
+            instance.spatial.setScaleXYZ(1.2, 1.2, 1.2)
             instance.spatial.obj3d.rotateX(-1.7);
             instance.spatial.setQuatXYZW(
                 instance.spatial.obj3d.quaternion.x,
