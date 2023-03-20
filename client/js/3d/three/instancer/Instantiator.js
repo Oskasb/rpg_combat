@@ -1,4 +1,4 @@
-import { ExpandingPool } from "../../../utils/ExpandingPool.js";
+import { ExpandingPool } from "../../../application/utils/ExpandingPool.js";
 import { InstancingBuffers} from "./InstancingBuffers.js";
 import { InstancingBufferElement } from "./InstancingBufferElement.js";
 
