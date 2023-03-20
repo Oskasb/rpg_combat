@@ -58,7 +58,7 @@ class Client {
         let instanceReturns = function(instance) {
        //     console.log(instance)
             instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE)
-            instance.spatial.setScaleXYZ(1.2, 1.2, 1.2)
+            instance.spatial.setScaleXYZ(0.2, 0.2, 0.2)
             instance.spatial.obj3d.rotateX(-1.7);
             instance.spatial.setQuatXYZW(
                 instance.spatial.obj3d.quaternion.x,
@@ -73,7 +73,7 @@ class Client {
 
         for (let key in assets) {
            console.log("inst:", assets)
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 40; i++) {
                 client.dynamicMain.requestAssetInstance(key, instanceReturns)
             //    client.dynamicMain.requestAssetInstance('asset_tree_2', instanceReturns)
             //    client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
@@ -156,9 +156,9 @@ class Client {
 
             for (let i = 0; i < client.treeInstances.length;i++) {
                 client.treeInstances[i].spatial.setPosXYZ(
-                    Math.sin(frame.z+i)*(0.4+i*0.3),
-                    Math.sin(frame.z*2+i)*1,
-                    Math.cos(frame.z+i)*(0.4+i*0.3)
+                    Math.sin(0.01*frame.z+i)*(0.4+i*0.3),
+                    Math.sin(0.4*frame.z*2+i)*1,
+                    Math.cos(0.01*frame.z+i)*(0.4+i*0.3)
                 )
             }
 
