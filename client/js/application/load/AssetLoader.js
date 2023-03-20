@@ -7,7 +7,8 @@ import {ThreeModelFile} from '../../3d/three/assets/ThreeModelFile.js';
 import {ThreeMaterialSettings} from '../../3d/three/assets/ThreeMaterialSettings.js';
 import {ThreeTextureSettings} from '../../3d/three/assets/ThreeTextureSettings.js';
 import {ThreeImage} from '../../3d/three/assets/ThreeImage.js';
-import {PipelineObject} from "./PipelineObject.js";
+import {LoadSequencer} from "./LoadSequencer.js";
+
 
 class AssetLoader {
     constructor() {
@@ -66,51 +67,13 @@ class AssetLoader {
             let assetMap = this.assetMap;
             let assets = this.assets;
 
-            let setupAsset = function(assetType, assetId, scallback) {
-
-                let assetKey = assetType+assetId;
-
-                if (assets[assetKey]) {
-                    scallback(assets[assetKey])
-                }
-
-                let configLoaded = function(src, data) {
-
-                    let acallback = function(asset) {
-                //        console.log('asset loaded:', assetKey)
-                        PipelineAPI.setCategoryKeyValue('ASSET', assetKey, asset);
-
-                        scallback(asset)
-                    //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, callback)
-                    };
-
-                    if (assets[assetKey]) {
-                        console.log('ALREADY loaded asset:', assetKey, assets[assetKey])
-                        scallback(assets[assetKey])
-                    } else {
-                //        console.log('load asset:', assetKey)
-                        assets[assetKey] = new assetMap[assetType](assetId, data.config, acallback);
-                    }
-
-                };
-
-                let cachedConfig = PipelineAPI.readCachedConfigKey('CONFIGS', assetKey);
-                if (cachedConfig === assetKey) {
-                    new PipelineObject('CONFIGS', assetKey, configLoaded)
-                //    PipelineAPI.subscribeToCategoryKey('CONFIGS', assetKey, configLoaded);
-                } else {
-                    configLoaded(assetKey, cachedConfig);
-                }
-
-            };
-
-
             let initLoadAsset = function(assetType, assetId, lcallback) {
                 let assetKey = assetType+assetId;
                 let cachedAsset = PipelineAPI.readCachedConfigKey('ASSET', assetKey);
                 if (cachedAsset === assetKey) {
                 //    PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, lcallback);
-                    setupAsset(assetType, assetId, lcallback);
+                    console.log("Request LoadSequencer", assetKey);
+                    new LoadSequencer(assets, assetMap, assetType, assetId, lcallback);
                 } else {
                     //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, lcallback)
                 //    console.log('asset cached', assetKey);

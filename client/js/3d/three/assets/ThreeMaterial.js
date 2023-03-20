@@ -30,7 +30,7 @@ class ThreeMaterial {
         }.bind(this);
 
         let materialSettingsLoaded = function(asset) {
-            console.log("Material materialSettingsLoaded", asset);
+            console.log("Material materialSettingsLoaded", asset, config);
             this.applyMaterialSettings(asset.config.shader, asset.config.properties, matReady);
         }.bind(this);
 
@@ -86,7 +86,7 @@ class ThreeMaterial {
 
         let mat = this.mat;
 
-        for (var key in props.settings) {
+        for (let key in props.settings) {
             mat[key] = props.settings[key]
         }
 
@@ -96,7 +96,7 @@ class ThreeMaterial {
 
             mat.defines = mat.defines || {};
 
-            for (var key in props.defines) {
+            for (let key in props.defines) {
                 mat.defines[key] = props.defines[key]
 
             }
@@ -107,7 +107,7 @@ class ThreeMaterial {
         }
 
         if (props.customBlending) {
-            for (var key in props.customBlending) {
+            for (let key in props.customBlending) {
                 mat[key] =  THREE[props.customBlending[key]]
             }
         }
@@ -138,7 +138,7 @@ class ThreeMaterial {
         }
 
 
-        var mat = new THREE[shader](props.settings);
+        let mat = new THREE[shader](props.settings);
 
         if (props.blending) {
             mat.blending = THREE[props.blending];
@@ -162,7 +162,7 @@ class ThreeMaterial {
 
             mat.defines = mat.defines || {};
 
-            for (var key in props.defines) {
+            for (let key in props.defines) {
                 mat.defines[key] = props.defines[key]
 
             }
@@ -176,9 +176,9 @@ class ThreeMaterial {
     addTextureUniform = function(uniforms, texConf) {
         //        console.log("TEXTURE addTextureUniform:", uniforms, texConf);;
 
-        var key = texConf.key;
+        let key = texConf.key;
 
-        var tx = this.textures[key].texture;
+        let tx = this.textures[key].texture;
 
         uniforms[key] = {};
 
@@ -209,9 +209,7 @@ class ThreeMaterial {
             }
         };
 
-        if (props.data_texture) var dataTx = this.textures[props.data_texture].texture;
-
-        var applyShaders = function(src, data) {
+        let applyShaders = function(src, data) {
 
             if (this.mat !== null) {
 
@@ -227,13 +225,13 @@ class ThreeMaterial {
 
             props.shaders = data;
 
-            var uniforms = {
+            let uniforms = {
                 systemTime: {value:0},
                 alphaTest:  {value:props.settings.alphaTest},
             };
 
             if ( this.textures['map']) {
-                var mapTexture = this.textures['map'].texture;
+                let mapTexture = this.textures['map'].texture;
                 if (!mapTexture) {
                     console.log("No mapTexture in ", this.textures)
                 } else {
@@ -245,7 +243,7 @@ class ThreeMaterial {
 
             if (props['texture_uniforms']) {
 
-                for (var i = 0; i < props['texture_uniforms'].length; i++) {
+                for (let i = 0; i < props['texture_uniforms'].length; i++) {
                     this.addTextureUniform(uniforms, props['texture_uniforms'][i])
                 }
 
@@ -253,15 +251,16 @@ class ThreeMaterial {
 
 
             if (props.data_texture) {
+                let dataTx = this.textures[props.data_texture].texture;
                 uniforms.data_texture =  {value:dataTx};
                 uniforms.data_rows    =  {value:dataTx.userData.data_rows}
             }
 
             if (props.global_uniforms) {
 
-                var globalUniforms = ThreeAPI.getGlobalUniforms();
+                let globalUniforms = ThreeAPI.getGlobalUniforms();
 
-                for (var key in props.global_uniforms) {
+                for (let key in props.global_uniforms) {
                     if (!globalUniforms[key]) {
                         globalUniforms[key] = props.global_uniforms[key]
                     }
@@ -270,20 +269,20 @@ class ThreeMaterial {
             }
 
             if (props['lib_uniforms']) {
-                for (var i = 0; i < props['lib_uniforms'].length; i++) {
+                for (let i = 0; i < props['lib_uniforms'].length; i++) {
                     updateUniforms(uniforms, THREE.UniformsLib[props['lib_uniforms'][i]]);
                 }
             }
 
 
-            var opts = {
+            let opts = {
                 uniforms: uniforms,
                 side: THREE.DoubleSide,
                 vertexShader: props.shaders.vertex,
                 fragmentShader: props.shaders.fragment
             };
 
-            for (var key in props.settings) {
+            for (let key in props.settings) {
                 opts[key] = props.settings[key]
             };
 
@@ -295,7 +294,7 @@ class ThreeMaterial {
 
 
             if (props.customBlending) {
-                for (var key in props.customBlending) {
+                for (let key in props.customBlending) {
                     opts[key] =  THREE[props.customBlending[key]]
                 }
             }
@@ -305,11 +304,11 @@ class ThreeMaterial {
             if (props.side) opts.side = THREE[props.side];
 
 
-            var mat = new THREE[shader](opts);
+            let mat = new THREE[shader](opts);
 
-            setInterval(function() {
+        //    setInterval(function() {
                 mat.needsUpdate = true
-            }, 500)
+        //    }, 500)
 
             if (props.color) {
                 mat.color.r = props.color.r;
