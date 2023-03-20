@@ -317,9 +317,7 @@ class ThreeMaterial {
                 mat.color.b = props.color.b;
             }
 
-            this.mat = mat;
-
-            cb(this);
+            cb(mat);
 
         }.bind(this);
 
