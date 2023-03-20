@@ -73,7 +73,7 @@ class DataLoader {
                 }
 
                 let guiAPIRdyCB = function(msg) {
-                    console.log(msg)
+            //        console.log(msg)
                 }
 
                 if (_this.loadState === loadStates.CONFIGS && remaining === 0) {

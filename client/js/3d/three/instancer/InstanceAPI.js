@@ -3,7 +3,7 @@ import {GeometryInstance} from './GeometryInstance.js';
 
 class InstanceAPI {
     constructor() {
-        console.log('INIT InstanceAPI');
+    //    console.log('INIT InstanceAPI');
         this.modelCount = 0;
         this.tempVec = new THREE.Vector3();
         this.instanceBuffers = {};

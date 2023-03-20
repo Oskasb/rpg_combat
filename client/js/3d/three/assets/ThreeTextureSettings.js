@@ -5,7 +5,7 @@ class ThreeTextureSettings {
         this.config = {};
 
         let assetLoaded = function(src, asset) {
-                console.log('TEXTURE_SETTINGS_',src, asset);
+       //         console.log('TEXTURE_SETTINGS_',src, asset);
             for (let key in asset.config) {
                 this.config[key] = asset.config[key];
             }

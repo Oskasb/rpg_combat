@@ -103,7 +103,7 @@ class ThreeSetup {
         // document.body.appendChild( renderer.domElement );
 
             containerElement.appendChild(renderer.domElement);
-                console.log("initThreeRenderer", store);
+       //         console.log("initThreeRenderer", store);
 
         return store;
     };

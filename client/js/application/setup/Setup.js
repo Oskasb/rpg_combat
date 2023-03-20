@@ -1,9 +1,11 @@
 import { ThreeAPI } from '../../3d/three/ThreeAPI.js';
+import { EffectAPI } from "../../3d/particles/EffectAPI.js";
 import { GuiAPI} from "../ui/gui/GuiAPI.js";
 import { UiSetup } from "../ui/gui/UiSetup.js";
 import { InstanceAPI } from '../../3d/three/instancer/InstanceAPI.js';
 import { DomUtils } from '../ui/dom/DomUtils.js';
 import { DataLoader } from '../load/DataLoader.js';
+
 
 class Setup {
 
@@ -23,6 +25,7 @@ class Setup {
     }
 
     initGlobalAPIs(pipelineAPI) {
+        window.EffectAPI = new EffectAPI();
         window.PipelineAPI = pipelineAPI;
         window.InstanceAPI = new InstanceAPI();
         window.ThreeAPI = new ThreeAPI();

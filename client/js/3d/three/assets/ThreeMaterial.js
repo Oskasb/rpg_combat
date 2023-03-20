@@ -14,7 +14,7 @@ class ThreeMaterial {
         }.bind(this);
         let matReady = function(mat) {
             _this.mat = mat;
-            console.log("Material Ready", this);
+           //   console.log("Material Ready", this);
             for (let key in this.textureMap) {
 
                 if (!this.textures[this.textureMap[key]]) {
@@ -25,35 +25,31 @@ class ThreeMaterial {
 
                 mat[this.textureMap[key]] = this.textures[this.textureMap[key]].texture;
             }
-            console.log("Material Ready", this);
+           //   console.log("Material Ready", this);
             callback(this);
         }.bind(this);
 
         let materialSettingsLoaded = function(asset) {
-            console.log("Material materialSettingsLoaded", asset, config);
+           //   console.log("Material materialSettingsLoaded", asset, config);
             this.applyMaterialSettings(asset.config.shader, asset.config.properties, matReady);
         }.bind(this);
 
 
         let txReady = function() {
-            console.log("Material txReady", this);
+           //     console.log("Material txReady", this);
             ThreeAPI.loadThreeAsset('MATERIAL_SETTINGS_', config.settings, materialSettingsLoaded);
         }.bind(this);
 
         this.setupTextureMap(config, txReady);
 
-
-
     };
-
-
 
     setupTextureMap = function(config, cb) {
 
         let loadCheck = function() {
 
             if (config.textures.length === this.txLoads) {
-                console.log('all textures loaded for material', config)
+                //      console.log('all textures loaded for material', config)
                 cb();
             }
         }.bind(this);
@@ -63,7 +59,7 @@ class ThreeMaterial {
             if (!asset.id) {
                 console.log("texture not asset:", asset, arg2, this.txLoads)
             }
-            console.log("texture loaded:", asset.id, this.txLoads)
+          //   console.log("texture loaded:", asset.id, this.txLoads)
             this.textures[this.textureMap[asset.id]] = asset;
             loadCheck()
         }.bind(this);
@@ -137,7 +133,6 @@ class ThreeMaterial {
             return;
         }
 
-
         let mat = new THREE[shader](props.settings);
 
         if (props.blending) {
@@ -154,14 +149,9 @@ class ThreeMaterial {
         if (props.combine) mat.combine = THREE[props.combine];
         if (props.depthTest) mat.depthTest = props.depthTest;
 
-
-
         if (props.defines) {
-
-            console.log("Add defines: ", mat.defines);
-
+      //      console.log("Add defines: ", mat.defines);
             mat.defines = mat.defines || {};
-
             for (let key in props.defines) {
                 mat.defines[key] = props.defines[key]
 
@@ -193,8 +183,6 @@ class ThreeMaterial {
         //   tx.needsUpdate = true;
     };
 
-
-
     setupCustomShaderMaterial = function(shader, props, cb) {
 
         //    if ( this.id === "material_terrain") console.log("material_terrain", this);
@@ -216,7 +204,7 @@ class ThreeMaterial {
                 this.mat.vertexShader = data.vertex;
                 this.mat.fragmentShader = data.fragment;
 
-                console.log("Update custom material shaders");
+                //    console.log("Update custom material shaders");
 
                 //    this.mat.needsUpdate = true;
                 return;
@@ -235,7 +223,7 @@ class ThreeMaterial {
                 if (!mapTexture) {
                     console.log("No mapTexture in ", this.textures)
                 } else {
-                    console.log("Yes mapTexture in ", this.textures)
+                    //      console.log("Yes mapTexture in ", this.textures)
                     uniforms['map'] = {value:mapTexture};
                     uniforms['tiles'] = {value:new THREE.Vector2(mapTexture.userData.tiles_x, mapTexture.userData.tiles_y)};
                 }

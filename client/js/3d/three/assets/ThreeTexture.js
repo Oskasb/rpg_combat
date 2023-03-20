@@ -15,7 +15,7 @@ class ThreeTexture {
         }.bind(this);
 
         let txSettingsLoaded = function(asset, xx) {
-                    console.log("txSettingsLoaded", asset, xx, config);
+      //              console.log("txSettingsLoaded", asset, xx, config);
             for (let key in asset.config) {
                 this.config[key] = asset.config[key];
             }

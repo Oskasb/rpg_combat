@@ -1,6 +1,6 @@
 import { WidgetBuilder } from "./widgets/WidgetBuilder.js";
 import { GuiSettings } from "./GuiSettings.js";
-import { Instantiator } from "./instancing/Instantiator.js";
+import { Instantiator } from "../../../3d/three/instancer/Instantiator.js";
 import { GuiDebug } from "./systems/GuiDebug.js";
 
 class GuiAPI {

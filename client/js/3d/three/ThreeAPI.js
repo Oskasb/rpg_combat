@@ -103,7 +103,7 @@ class ThreeAPI {
 
 
     buildAsset = function(assetId, callback) {
-        console.log('Three API build asset:', assetId);
+    //    console.log('Three API build asset:', assetId);
         new ThreeAsset(assetId, callback);
     };
 

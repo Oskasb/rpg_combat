@@ -72,7 +72,7 @@ class Client {
         let assets = client.dynamicMain.assets;
 
         for (let key in assets) {
-           console.log("inst:", assets)
+        //   console.log("inst:", assets)
             for (let i = 0; i < 40; i++) {
                 client.dynamicMain.requestAssetInstance(key, instanceReturns)
             //    client.dynamicMain.requestAssetInstance('asset_tree_2', instanceReturns)
@@ -86,7 +86,7 @@ class Client {
 
     //    client.setup.initDefaultUi()
     //    GuiAPI.printDebugText("DEBUG TEXT")
-        console.log("THREE:", THREE);
+   //     console.log("THREE:", THREE);
         const clock = new THREE.Clock(true);
 
         const scene = ThreeAPI.getScene();
