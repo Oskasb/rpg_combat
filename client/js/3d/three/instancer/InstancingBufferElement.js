@@ -23,16 +23,10 @@ class InstancingBufferElement {
         // x:lutColor, y:lutAlpha
         this.texelRowSelect = {x:105, y:42, z:42, w:42}; // 42 = fullWhite;
 
-
-
     };
 
     setAttackTime = function(time) {
         this.lifecycle.y = time;
-    };
-
-    setEndTime = function(time) {
-        this.lifecycle.z = time;
     };
 
     setReleaseTime = function(time) {
@@ -45,10 +39,6 @@ class InstancingBufferElement {
 
     setIndex = function(index) {
         this.index = index;
-    };
-
-    setAttribX = function(name, index, x) {
-
     };
 
     setTileXY = function(xy) {
@@ -103,6 +93,7 @@ class InstancingBufferElement {
 
     applyDuration = function(duration) {
         this.endTime = duration + this.guiBuffers.getSystemTime();
+   //     console.log("End time: ", this.endTime);
     };
 
     startLifecycleNow = function() {
@@ -144,6 +135,7 @@ class InstancingBufferElement {
 
     testLifetimeIsOver = function(systemTime) {
         if ((this.lifecycle.z + this.lifecycle.w) < systemTime) {
+        //    console.log("Lifetime over: ", this.lifecycle.z , this.lifecycle.w, this);
             return true;
         }
 

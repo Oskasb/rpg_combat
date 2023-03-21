@@ -7,7 +7,6 @@ class ParticleEffect {
         this.normal = new THREE.Vector3(0, 1, 0);
         this.rotZ = 0;
         this.size = 2+Math.random()*3;
-
         this.attackTime = 1;
         this.releaseTime = 1;
         this.colorRgba = {r:1, g:1, b:1, a: 1};
@@ -115,11 +114,6 @@ class ParticleEffect {
 
     };
 
-    recoverParticleEffect = function() {
-        //    this.bufferElement.endLifecycleNow();
-        //    this.bufferElement.releaseElement()
-    };
-
     getParticleEffectBuffer = function() {
         return this.bufferElement;
     };
@@ -140,8 +134,8 @@ class ParticleEffect {
         this.bufferElement.setColorRGBA(this.colorRgba);
 
         this.bufferElement.setAttackTime(this.attackTime);
-
         if (this.duration) {
+        //    console.log("Duration: ", this.duration);
             this.bufferElement.applyDuration(this.duration);
         }
 

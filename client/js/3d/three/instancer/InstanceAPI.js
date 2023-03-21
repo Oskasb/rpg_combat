@@ -131,13 +131,10 @@ class InstanceAPI {
     updateInstances = function(tpf, systemTime) {
 
         let updateUiSystemBuffers = function(instanceBuffers) {
-
             instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates( systemTime));
         };
 
-
-
-        this.systemTime += tpf;
+        this.systemTime = systemTime;
 
         for (let key in this.uiSystems) {
             for (let i = 0; i < this.uiSystems[key].length; i++) {

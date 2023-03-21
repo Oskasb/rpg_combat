@@ -34,7 +34,7 @@ class Client {
         this.threeController.setupThreeRenderer();
         this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
         this.INPUT_STATE =  this.pointerCursor.getInputState();
-   //     console.log(this.INPUT_STATE);
+        //     console.log(this.INPUT_STATE);
 
 
     }
@@ -75,7 +75,7 @@ class Client {
 
         for (let key in assets) {
             //   console.log("inst:", assets)
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < 70; i++) {
                 client.dynamicMain.requestAssetInstance(key, instanceReturns)
                 //    client.dynamicMain.requestAssetInstance('asset_tree_2', instanceReturns)
                 //    client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
@@ -84,19 +84,6 @@ class Client {
         }
 
         client.gameEffects = [];
-
-        let effectCb = function(effect) {
-       //     console.log("effect add: ", effect)
-            effect.activateEffectFromConfigId()
-            client.gameEffects.push(effect);
-        };
-
-        for (let i = 0; i < 1; i++) {
-        //    EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
-            // EffectAPI.buildEffect(effectCb)
-        }
-
-
 
 
         //    client.setup.initDefaultUi()
@@ -177,14 +164,26 @@ class Client {
                 )
             }
 
-            for (let i = 0; i < client.gameEffects.length;i++) {
-                let eftc = client.gameEffects[i];
-                eftc.pos.x = Math.sin(0.61*frame.z+i)*(20.4+i*0.2);
-                eftc.pos.y =Math.sin(0.1*frame.z*2+i);
-                eftc.pos.z =Math.cos(0.61*frame.z+i)*(20.4+i*0.2);
-                eftc.setEffectPosition(eftc.pos)
+            if (client.gameEffects.length > 10) {
+                let effect = client.gameEffects.shift();
+                effect.recoverEffectOfClass();
             }
-            if (Math.random() < 0.25) {
+
+            for (let i = 0; i < client.gameEffects.length;i++) {
+
+            }
+
+            let effectCb = function(eftc) {
+                //     console.log("effect add: ", effect)
+                eftc.activateEffectFromConfigId()
+                //    client.gameEffects.push(effect);
+                eftc.pos.x = Math.sin(2.61*frame.z)*(20);
+                eftc.pos.y =Math.sin(0.4*frame.z*5);
+                eftc.pos.z =Math.cos(2.61*frame.z)*(20);
+                eftc.setEffectPosition(eftc.pos)
+            };
+
+            if (Math.random() < 0.22) {
                 EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
             }
 

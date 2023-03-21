@@ -149,11 +149,8 @@ class EffectBuilder {
             }
 
             particleEffect.setParticlePos(effectOfClass.pos);
-
             particleEffect.setParticleQuat(effectOfClass.quat);
-
             effectOfClass.activeParticles.push(particleEffect);
-
             EffectAPI.activateParticleEffect(particleEffect)
 
         };

@@ -119,11 +119,15 @@ class InstanceBuffer {
         this.mesh.material = material;;
     };
 
+    setDrawRange = function(count) {
+        this.mesh.geometry.drawRange.count = count;
+        this.mesh.geometry.needsUpdate = true;
+    };
+
     setInstancedCount = function(count) {
         if (count) {
-            console.log("Set draw range: ", count);
+        //    console.log("Set draw range: ", count);
         }
-        this.mesh.geometry.drawRange.count = count;
         this.mesh.geometry.maxInstancedCount = count;
         this.mesh.geometry.needsUpdate = true;
     };
@@ -145,7 +149,7 @@ class InstanceBuffer {
 
             if (key === 'offset') {
                 drawRange = buffer[lastIndex-2];
-                this.setInstancedCount(drawRange)
+                this.setDrawRange(drawRange)
             }
 
             if (buffer[lastIndex]) {

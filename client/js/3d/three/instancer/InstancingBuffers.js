@@ -204,13 +204,8 @@ class InstancingBuffers {
             buffer[buffer.length-3] = this.highestRenderingIndex+1;
             let instBufs = InstanceAPI.getUiSysInstanceBuffers(this.uiSysKey);
             for (let i = 0; i<instBufs.length;i++) {
-                instBufs[i].setInstancedCount(buffer[buffer.length-3])
+                instBufs[i].setDrawRange(buffer[buffer.length-3])
             }
-        };
-
-        getDrawRAnge = function() {
-            let buffer = this.buffers['offset'];
-            return buffer[buffer.length-3]
         };
 
         drawFromAvailableIndex = function() {

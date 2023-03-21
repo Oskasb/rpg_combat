@@ -105,7 +105,9 @@ class GameEffect {
         }
 
         while (this.activeParticles.length) {
-            EffectAPI.recoverParticleEffect(this.activeParticles.pop())
+            let particleEffect = this.activeParticles.pop()
+         //   console.log("Recover ", particleEffect)
+            EffectAPI.recoverParticleEffect(particleEffect)
         }
 
         this.callbacks.recoverEffect(this);

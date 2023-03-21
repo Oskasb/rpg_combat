@@ -6,7 +6,7 @@ import { EffectBuilder } from "./EffectBuilder.js";
 
 class EffectAPI {
     constructor() {
-
+        this.systemTime = 0;
         let rebuildFx = function () {
             let rebuild = {};
 
@@ -119,7 +119,7 @@ class EffectAPI {
 
         let setupParticleEffect = function(bufferElement, spawnerId) {
             let partEffect = this.activateEffects[spawnerId].pop();
-            partEffect.setBufferElement(bufferElement);
+            partEffect.setBufferElement(bufferElement, this.systemTime);
 
             if (!this.activeEffects[spawnerId]) {
                 this.activeEffects[spawnerId] = []
@@ -180,6 +180,7 @@ class EffectAPI {
     };
 
     updateEffectAPI = function(systemTime) {
+        this.systemTime = systemTime;
         for (let spn in this.effectSpawners) {
             this.effectSpawners[spn].updateEffectSpawner(systemTime)
         }

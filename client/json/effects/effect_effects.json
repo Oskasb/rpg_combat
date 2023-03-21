@@ -19,7 +19,10 @@
                             "duration": [1, 2],
                             "spread_pos":[0.15, 0.01, 0.15],
                             "particles": [
-                                {"id":"particle_wisp_additive",   "count": [4, 5]}
+                                {
+                                    "id":"particle_wisp_additive",
+                                    "count": [4, 5]
+                                }
                             ]
                         }
                     }

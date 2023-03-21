@@ -45,9 +45,7 @@ class  Instantiator {
             buildElement:buildElement,
             recoverElement:recoverElement,
         }
-
     };
-
 
     addInstanceSystem = function(elementKey, bufferSysKey, assetId, poolSize, renderOrder) {
 

@@ -41,6 +41,7 @@ class EffectSpawner {
         };
 
         deactivateEffect = function(effect) {
+        //    console.log("Deactivate effect", effect)
             effect.getParticleEffectBuffer().scaleUniform(0)
             this.instantiator.recoverBufferElement(effect.getSpawnerId(), effect.getParticleEffectBuffer());
             effect.bufferElement = null;
