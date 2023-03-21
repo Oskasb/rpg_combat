@@ -1,7 +1,7 @@
 [{
     "ASSETS": {
       "WORLD":{
-        "defaultEnvId":"sunny_day",
+        "defaultEnvId":"evening",
         "params":[
           {"id":"sun",      "THREE":"DirectionalLight"},
           {"id":"ambient",  "THREE":"AmbientLight"    },

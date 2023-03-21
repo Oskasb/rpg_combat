@@ -194,14 +194,12 @@ class InstancingBuffers {
             return true
         };
 
-
         updateDrawRange = function() {
 
             let buffer = this.buffers['offset'];
             buffer[buffer.length-3] = this.highestRenderingIndex+1;
 
         };
-
 
         drawFromAvailableIndex = function() {
 
@@ -211,8 +209,6 @@ class InstancingBuffers {
 
             return this.highestRenderingIndex+1;
         };
-
-
 
         getAvailableIndex = function() {
 

@@ -4,6 +4,7 @@ import {GeometryInstance} from './GeometryInstance.js';
 class InstanceAPI {
     constructor() {
     //    console.log('INIT InstanceAPI');
+        this.bufferCuont = 0;
         this.modelCount = 0;
         this.tempVec = new THREE.Vector3();
         this.instanceBuffers = {};
@@ -38,7 +39,7 @@ class InstanceAPI {
 
 
     registerGeometry = function(id, model, settings, material) {
-
+        this.bufferCuont++
         let extractFirstMeshGeometry = function(child, buffers) {
 
             child.traverse(function(node) {
@@ -63,6 +64,7 @@ class InstanceAPI {
         let buffers = {};
         extractFirstMeshGeometry(model.scene.children[0], buffers);
         let insBufs = new InstanceBuffer(buffers.verts, buffers.uvs, buffers.indices, buffers.normals);
+        insBufs.mesh.name = id+' '+this.bufferCuont+' '+material.id;
      //   insBufs.extractFirstMeshGeometry(model.scene.children[0], buffers);
 
 
@@ -98,13 +100,15 @@ class InstanceAPI {
         let buffers     = msg[3];
         let order       = msg[4];
 
+        console.log("setupInstancingBuffers: ", assetId);
+
         if (!this.uiSystems[uiSysId]) {
             this.uiSystems[uiSysId] = [];
         }
 
-        let assetLoaded = function(src, asset) {
-
-            let instanceBuffers = asset.instanceBuffers;
+        let assetLoaded = function(threeModel) {
+            console.log("assetLoaded: ", threeModel.id);
+            let instanceBuffers = threeModel.instanceBuffers;
             for (let i = 0; i < bufferNames.length; i++) {
                 let attrib = attributes[bufferNames[i]];
                 instanceBuffers.attachAttribute(buffers[i], bufferNames[i], attrib.dimensions, attrib.dynamic)
@@ -114,7 +118,7 @@ class InstanceAPI {
             this.uiSystems[uiSysId].push(instanceBuffers);
         }
 
-        ThreeAPI.loadThreeAsset('MODELS_', assetId, assetLoaded);
+       ThreeAPI.loadThreeAsset('MODELS_', assetId, assetLoaded);
 
     };
 

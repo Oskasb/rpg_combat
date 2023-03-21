@@ -17,19 +17,19 @@
                             "sprite": [0, 3, 1, 0]
                         },
                         {
-                            "particle_id": "normal",
+                            "particle_id": "normal_particle",
                             "spawner_id": "normal_particles_6x6",
-                            "size_min": 14,
-                            "size_max": 18,
-                            "color_min": [0.95, 0.95, 0.95, 0.8],
+                            "size_min": 214,
+                            "size_max": 218,
+                            "color_min": [0.25, 0.25, 0.25, 0.8],
                             "color_max": [1, 1, 1, 1],
                             "sprite": [1, 1, 1, 0]
                         },
                         {
                             "particle_id": "particle_wisp_additive",
                             "spawner_id": "additive_particles_6x6",
-                            "size_min": 65,
-                            "size_max": 92,
+                            "size_min": 265,
+                            "size_max": 292,
                             "attack_time": 0.45,
                             "release_time": 1.5,
                             "color_min": [0.25, 0.45, 0.45, 0.95],

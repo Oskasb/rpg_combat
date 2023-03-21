@@ -14,6 +14,8 @@ class ThreeMaterial {
         }.bind(this);
         let matReady = function(mat) {
             _this.mat = mat;
+            mat.name = _this.id;
+        //    console.log(mat.name)
            //   console.log("Material Ready", this);
             for (let key in this.textureMap) {
 

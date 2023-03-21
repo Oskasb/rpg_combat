@@ -6,15 +6,15 @@ class EffectSpawner {
             this.config = {};
             this.instantiator = new Instantiator();
 
-            var populateSector = function(sector, area, plantCount, parentPlant) {
+            let populateSector = function(sector, area, plantCount, parentPlant) {
                 this.populateVegetationSector(sector, area, plantCount, parentPlant)
             }.bind(this);
 
-            var depopulateSector = function(sector, area) {
+        let depopulateSector = function(sector, area) {
                 this.depopulateVegetationSector(sector, area)
             }.bind(this);
 
-            var getPlantConfigs = function(key) {
+        let getPlantConfigs = function(key) {
                 return this.plantConfigs[key]
             }.bind(this);
 
@@ -39,7 +39,6 @@ class EffectSpawner {
         buildBufferElement = function(poolKey, cb) {
             this.instantiator.buildBufferElement(poolKey, cb)
         };
-
 
         deactivateEffect = function(effect) {
             effect.getParticleEffectBuffer().scaleUniform(0)

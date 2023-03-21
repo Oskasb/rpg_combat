@@ -101,7 +101,8 @@ class ThreeSetup {
             this.renderer = renderer;
 
         // document.body.appendChild( renderer.domElement );
-
+        PipelineAPI.setCategoryKeyValue('SYSTEM', 'SCENE', scene);
+        PipelineAPI.setCategoryKeyValue('SYSTEM', 'RENDERER', renderer);
             containerElement.appendChild(renderer.domElement);
        //         console.log("initThreeRenderer", store);
 

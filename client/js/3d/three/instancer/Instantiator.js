@@ -23,6 +23,7 @@ class  Instantiator {
         //    console.log("Build Instantiator elem:", sysKey)
             let getElement = function(elem) {
                 elem.initGuiBufferElement(getElementBuffers()[sysKey]);
+                elem.setDefaultBuffers();
                 cb(elem, sysKey);
             };
             if (!getEelementPools()[sysKey]) {

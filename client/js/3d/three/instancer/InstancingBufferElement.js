@@ -23,7 +23,7 @@ class InstancingBufferElement {
         // x:lutColor, y:lutAlpha
         this.texelRowSelect = {x:105, y:42, z:42, w:42}; // 42 = fullWhite;
 
-        this.setDefaultBuffers();
+
 
     };
 
@@ -143,7 +143,6 @@ class InstancingBufferElement {
     };
 
     testLifetimeIsOver = function(systemTime) {
-
         if ((this.lifecycle.z + this.lifecycle.w) < systemTime) {
             return true;
         }

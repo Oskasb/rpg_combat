@@ -1,97 +1,117 @@
 class GameEffect {
     constructor(activateEffect, recoverEffect) {
 
+        this.effectId = null;
+        this.pos = new THREE.Vector3();
+        this.normal = new THREE.Vector3();
+        this.quat = new THREE.Quaternion();
 
-            this.pos = new THREE.Vector3();
-            this.normal = new THREE.Vector3();
-            this.quat = new THREE.Quaternion();
+        this.config = null;
 
-            this.config = null;
+        this.joint = null;
 
-            this.joint = null;
+        this.attachParticles = [];
+        this.activeParticles = [];
 
-            this.attachParticles = [];
-            this.activeParticles = [];
+        let addEffectParticle = function(key, particle) {
+            EffectAPI.addParticleToEffectOfClass(this.attachParticles.pop(), particle, this)
+        }.bind(this);
 
-            let addEffectParticle = function(key, particle) {
-                EffectAPI.addParticleToEffectOfClass(this.attachParticles.pop(), particle, this)
-            }.bind(this);
+        let positionUpdated = function(pos) {
+            this.setEffectPosition(pos);
+        }.bind(this);
 
-            let positionUpdated = function(pos) {
-                this.setEffectPosition(pos);
-            }.bind(this);
+        let getConfig = function() {
+            return this.config;
+        }.bind(this);
 
-            this.callbacks = {
-                activateEffect : activateEffect,
-                recoverEffect : recoverEffect,
-                addEffectParticle:addEffectParticle,
-                positionUpdated:positionUpdated
-            }
-
-        };
-
-        setConfig = function(config) {
+        let setConfig = function(config){
             this.config = config;
-        };
+        }.bind(this);
 
-        setEffectId = function(id) {
-            this.effectId = id;
-        };
+        let setEffectId = function(effectId) {
+            this.effectId = effectId;
+        }.bind(this);
 
-        getEffectId = function() {
-            return this.effectId;
-        };
+        let getEffectId = function() {
+            return this.effectId
+        }.bind(this);
 
-        attachParticleId = function(particleId) {
-            this.attachParticles.push(particleId)
-        };
+        this.callbacks = {
+            activateEffect : activateEffect,
+            recoverEffect : recoverEffect,
+            addEffectParticle:addEffectParticle,
+            positionUpdated:positionUpdated,
+            setConfig:setConfig,
+            getConfig:getConfig,
+            setEffectId:setEffectId,
+            getEffectId:getEffectId
+        }
 
-        activateEffectParticle = function() {
-            EffectAPI.buildEffect(this.callbacks.addEffectParticle)
-        };
+    };
 
-        activateEffectFromConfigId = function() {
-            this.callbacks.activateEffect(this);
-        };
+    setConfig = function(config) {
+        this.callbacks.setConfig(config);
+    };
 
-        setEffectPosition = function(pos) {
-            this.pos.copy(pos);
-            for (var i = 0; i < this.activeParticles.length; i++) {
-                this.activeParticles[i].setParticlePos(this.pos)
-            }
-        };
+    setEffectId = function(id) {
+        this.callbacks.setEffectId(id);
+    };
 
-        setEffectNormal = function(normal) {
-            this.normal.copy(normal);
-        };
+    getEffectId = function() {
+        return this.callbacks.getEffectId();
+    };
 
-        setEffectQuaternion = function(quat) {
-            this.quat.copy(quat);
-        };
+    attachParticleId = function(particleId) {
+        this.attachParticles.push(particleId)
+    };
 
-        attachToJoint = function(joint) {
+    activateEffectParticle = function() {
+        EffectAPI.buildEffect(this.callbacks.addEffectParticle)
+    };
 
-            joint.getDynamicPosition(this.pos);
-            joint.addPositionUpdateCallback(this.callbacks.positionUpdated);
-            this.activateEffectFromConfigId();
-            this.joint = joint;
-        };
+    activateEffectFromConfigId = function() {
+        this.callbacks.activateEffect(this);
+    };
 
-        recoverEffectOfClass = function() {
+    setEffectPosition = function(pos) {
+        this.pos.copy(pos);
+        for (var i = 0; i < this.activeParticles.length; i++) {
+            this.activeParticles[i].setParticlePos(this.pos)
+        }
+    };
 
-            if (this.joint) {
-                this.joint.removePositionUpdateCallback(this.callbacks.positionUpdated);
-                this.joint = null
-            }
+    setEffectNormal = function(normal) {
+        this.normal.copy(normal);
+    };
 
-            while (this.activeParticles.length) {
-                EffectAPI.recoverParticleEffect(this.activeParticles.pop())
-            }
+    setEffectQuaternion = function(quat) {
+        this.quat.copy(quat);
+    };
 
-            this.callbacks.recoverEffect(this);
-        };
+    attachToJoint = function(joint) {
+
+        joint.getDynamicPosition(this.pos);
+        joint.addPositionUpdateCallback(this.callbacks.positionUpdated);
+        this.activateEffectFromConfigId();
+        this.joint = joint;
+    };
+
+    recoverEffectOfClass = function() {
+
+        if (this.joint) {
+            this.joint.removePositionUpdateCallback(this.callbacks.positionUpdated);
+            this.joint = null
+        }
+
+        while (this.activeParticles.length) {
+            EffectAPI.recoverParticleEffect(this.activeParticles.pop())
+        }
+
+        this.callbacks.recoverEffect(this);
+    };
 
 
-    }
+}
 
 export { GameEffect };

@@ -10,6 +10,8 @@ class ThreeModel {
 
         this.id = id;
 
+    //    console.log('Load Model', id)
+
         this.jointMap = {};
         this.joints = {};
         this.jointKeys = [];
@@ -23,7 +25,7 @@ class ThreeModel {
         let _this = this;
 
         let materialLoaded = function(asset) {
-      //          console.log('materialLoaded', asset.mat);
+        //    console.log('materialLoaded', asset.mat);
             _this.material = asset;
 
             if (this.geometryInstancingSettings()) {

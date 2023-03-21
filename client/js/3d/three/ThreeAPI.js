@@ -65,6 +65,7 @@ class ThreeAPI {
 
         const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.3, 11000 );
         this.setCamera(camera);
+        PipelineAPI.setCategoryKeyValue('SYSTEM', 'CAMERA', camera);
         store.camera = camera;
         camera.matrixWorldAutoUpdate = false;
 

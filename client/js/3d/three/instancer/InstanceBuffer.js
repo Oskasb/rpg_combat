@@ -8,7 +8,7 @@ class InstanceBuffer {
     buildGeometry = function(verts, uvarray, indices, normals) {
 
         let geometry = new THREE.InstancedBufferGeometry();
-
+        geometry.name = 'InstanceBuffer buildGeometry'
         let posBuffer   =     verts;
         let uvBuffer    =     uvarray;
 
@@ -129,10 +129,6 @@ class InstanceBuffer {
         this.geometry.dispose();
     };
 
-
-
-
-
     updateBufferStates = function(systemTime) {
 
         let drawRange =0;
@@ -160,8 +156,6 @@ class InstanceBuffer {
         let buffer = this.buffers['offset'];
         buffer[buffer.length - 2] = systemTime;
     };
-
-
 
     removeFromScene = function() {
         ThreeAPI.hideModel(this.mesh);

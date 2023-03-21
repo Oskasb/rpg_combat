@@ -13,6 +13,8 @@ import {LoadSequencer} from "./LoadSequencer.js";
 class AssetLoader {
     constructor() {
 
+        this.loadRequests = {};
+
         this.assetMap = {
             MODELS_:            ThreeModel,
             RIGS_:              ThreeRig,
@@ -27,63 +29,74 @@ class AssetLoader {
 
         this.assets = {};
 
-        };
+    };
 
-        initAssetConfigs = function() {
+    initAssetConfigs = function() {
 
-            let loadList = function(src, data) {
-                this.loadAssetConfigs(data);
-            }.bind(this);
+        let loadList = function(src, data) {
+            this.loadAssetConfigs(data);
+        }.bind(this);
 
-            PipelineAPI.subscribeToCategoryKey('ASSETS', 'LOAD', loadList);
-        };
+        PipelineAPI.subscribeToCategoryKey('ASSETS', 'LOAD', loadList);
+    };
 
-        loadAssetConfigs = function(assets) {
+    loadAssetConfigs = function(assets) {
 
-            let assetData = function(src, data) {
+        let assetData = function(src, data) {
 
-                for (let i = 0; i < data.length; i++) {
-                    this.setAssetConfig(src, data[i].id, data[i]);
-                }
-
-            }.bind(this);
-
-            for (let i = 0; i < assets.length; i++) {
-                PipelineAPI.subscribeToCategoryKey('ASSETS', assets[i], assetData);
+            for (let i = 0; i < data.length; i++) {
+                this.setAssetConfig(src, data[i].id, data[i]);
             }
 
-        };
+        }.bind(this);
 
-        setAssetConfig = function(assetType, assetId, data) {
-            PipelineAPI.setCategoryKeyValue('CONFIGS', assetType+'_'+assetId, data);
-        };
-
-        getAsset(assetKey) {
-            return this.assets[assetKey]
+        for (let i = 0; i < assets.length; i++) {
+            PipelineAPI.subscribeToCategoryKey('ASSETS', assets[i], assetData);
         }
 
-        loadAsset = function(assetType, assetId, callback) {
+    };
 
-            let assetMap = this.assetMap;
-            let assets = this.assets;
+    setAssetConfig = function(assetType, assetId, data) {
+        PipelineAPI.setCategoryKeyValue('CONFIGS', assetType+'_'+assetId, data);
+    };
 
-            let initLoadAsset = function(assetType, assetId, lcallback) {
-                let assetKey = assetType+assetId;
-                let cachedAsset = PipelineAPI.readCachedConfigKey('ASSET', assetKey);
-                if (cachedAsset === assetKey) {
-                //    PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, lcallback);
-                //    console.log("Request LoadSequencer", assetKey);
-                    new LoadSequencer(assets, assetMap, assetType, assetId, lcallback);
-                } else {
-                    //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, lcallback)
-                //    console.log('asset cached', assetKey);
-                    lcallback(cachedAsset);
-                }
-            };
-
-
-            initLoadAsset(assetType, assetId, callback)
-        };
+    getAsset(assetKey) {
+        return this.assets[assetKey]
     }
+
+    loadAsset = function(assetType, assetId, callback) {
+
+        let assetMap = this.assetMap;
+        let assets = this.assets;
+        let loadRequests = this.loadRequests;
+
+
+
+        let initLoadAsset = function(assetType, assetId, lcallback) {
+            let assetKey = assetType+assetId;
+            let cachedAsset = PipelineAPI.readCachedConfigKey('ASSET', assetKey);
+
+            if (cachedAsset === assetKey) {
+
+                if (!loadRequests[assetKey]) {
+                    loadRequests[assetKey] = [];
+                    loadRequests[assetKey].push(lcallback);
+                    new LoadSequencer(assets, assetMap, assetType, assetId, loadRequests);
+                } else {
+                    loadRequests[assetKey].push(lcallback);
+                //    console.log("Load Asset: ", assetKey, assetId);
+                }
+
+            } else {
+                //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, lcallback)
+                //    console.log('asset cached', assetKey);
+                lcallback(cachedAsset);
+            }
+        };
+
+
+        initLoadAsset(assetType, assetId, callback)
+    };
+}
 
 export { AssetLoader };

@@ -1,72 +1,92 @@
 class DurableStamp {
     constructor(activateEffect, recoverEffect) {
+        this.effectId = null;
+        this.pos = new THREE.Vector3();
+        this.normal = new THREE.Vector3();
+        this.quat = new THREE.Quaternion();
 
-            this.pos = new THREE.Vector3();
-            this.normal = new THREE.Vector3();
-            this.quat = new THREE.Quaternion();
+        this.config = null;
 
-            this.config = null;
+        this.attachParticles = [];
+        this.activeParticles = [];
 
-            this.attachParticles = [];
-            this.activeParticles = [];
+        let addEffectParticle = function(key, particle) {
+            EffectAPI.addParticleToEffectOfClass(this.attachParticles.pop(), particle, this)
+        }.bind(this);
 
-            let addEffectParticle = function(key, particle) {
-                EffectAPI.addParticleToEffectOfClass(this.attachParticles.pop(), particle, this)
-            }.bind(this);
+        let getConfig = function() {
+            return this.config;
+        }.bind(this);
 
-            this.callbacks = {
-                activateEffect : activateEffect,
-                recoverEffect : recoverEffect,
-                addEffectParticle:addEffectParticle
-            }
-
-        };
-
-        setConfig = function(config) {
+        let setConfig = function(config){
             this.config = config;
-        };
+        }.bind(this);
 
-        setEffectId = function(id) {
-            this.effectId = id;
-        };
+        let setEffectId = function(effectId) {
+            this.effectId = effectId;
+        }.bind(this);
 
-        getEffectId = function() {
-            return this.effectId;
-        };
+        let getEffectId = function() {
+            return this.effectId
+        }.bind(this);
 
-        attachParticleId = function(particleId) {
-            this.attachParticles.push(particleId)
-        };
+        this.callbacks = {
+            activateEffect : activateEffect,
+            recoverEffect : recoverEffect,
+            addEffectParticle:addEffectParticle,
+            setConfig:setConfig,
+            getConfig:getConfig,
+            setEffectId:setEffectId,
+            getEffectId:getEffectId
+        }
 
-        activateEffectParticle = function() {
-            EffectAPI.buildEffect(this.callbacks.addEffectParticle)
-        };
+    };
 
-        activateEffectFromConfigId = function() {
-            this.callbacks.activateEffect(this);
-        };
+    setConfig = function(config) {
+        this.callbacks.setConfig(config);
+    };
 
-        setEffectPosition = function(pos) {
-            this.pos.copy(pos);
-        };
+    setEffectId = function(id) {
+        this.callbacks.setEffectId(id);
+    };
 
-        setEffectNormal = function(normal) {
-            this.normal.copy(normal);
-        };
+    getEffectId = function() {
+        return this.callbacks.getEffectId();
+    };
 
-        setEffectQuaternion = function(quat) {
-            this.quat.copy(quat);
-        };
+    attachParticleId = function(particleId) {
+        this.attachParticles.push(particleId)
+    };
 
-        recoverEffectOfClass = function() {
+    activateEffectParticle = function() {
+        EffectAPI.buildEffect(this.callbacks.addEffectParticle)
+    };
 
-            while (this.activeParticles.length) {
-                EffectAPI.recoverParticleEffect(this.activeParticles.pop())
-            }
+    activateEffectFromConfigId = function() {
+        this.callbacks.activateEffect(this);
+    };
 
-            this.callbacks.recoverEffect(this);
-        };
+    setEffectPosition = function(pos) {
+        this.pos.copy(pos);
+    };
 
-    }
+    setEffectNormal = function(normal) {
+        this.normal.copy(normal);
+    };
 
-    export { DurableStamp }
+    setEffectQuaternion = function(quat) {
+        this.quat.copy(quat);
+    };
+
+    recoverEffectOfClass = function() {
+
+        while (this.activeParticles.length) {
+            EffectAPI.recoverParticleEffect(this.activeParticles.pop())
+        }
+
+        this.callbacks.recoverEffect(this);
+    };
+
+}
+
+export { DurableStamp }

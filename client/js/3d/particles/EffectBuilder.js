@@ -28,7 +28,8 @@ class EffectBuilder {
 
             this.callbacks = {
                 activateEffect:activateEffect,
-                recoverEffect:recoverEffect
+                recoverEffect:recoverEffect,
+                addParticleGroup:this.addParticleGroup
             };
 
             this.isUpdate = false;
@@ -91,7 +92,7 @@ class EffectBuilder {
 
         buildEffectByConfigId = function(configId, callback) {
             let pool = this.effectPools[configId];
-            console.log("get pool", pool, configId, this.effectPools)
+        //    console.log("get pool", pool, configId, this.effectPools)
             pool.getFromExpandingPool(callback)
         };
 
@@ -109,7 +110,7 @@ class EffectBuilder {
 
             let particles = config.particles;
             for (var i = 0; i < particles.length; i++) {
-                this.addParticleGroup(effectOfClass, particles[i])
+                this.callbacks.addParticleGroup(effectOfClass, particles[i])
             }
 
             if (this.activeEffects[cfgId].length > maxActive) {

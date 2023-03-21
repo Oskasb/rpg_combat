@@ -34,7 +34,7 @@ class Client {
         this.threeController.setupThreeRenderer();
         this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
         this.INPUT_STATE =  this.pointerCursor.getInputState();
-        console.log(this.INPUT_STATE);
+   //     console.log(this.INPUT_STATE);
 
 
     }
@@ -58,7 +58,7 @@ class Client {
         client.particleEffects = [];
 
         let instanceReturns = function(instance) {
-       //     console.log(instance)
+            //     console.log(instance)
             instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE)
             instance.spatial.setScaleXYZ(0.2, 0.2, 0.2)
             instance.spatial.obj3d.rotateX(-1.7);
@@ -74,39 +74,42 @@ class Client {
         let assets = client.dynamicMain.assets;
 
         for (let key in assets) {
-        //   console.log("inst:", assets)
-            for (let i = 0; i < 40; i++) {
+            //   console.log("inst:", assets)
+            for (let i = 0; i < 2; i++) {
                 client.dynamicMain.requestAssetInstance(key, instanceReturns)
-            //    client.dynamicMain.requestAssetInstance('asset_tree_2', instanceReturns)
-            //    client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
+                //    client.dynamicMain.requestAssetInstance('asset_tree_2', instanceReturns)
+                //    client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
             }
 
         }
 
-        let effectCb = function(effect) {
-            console.log("effect add: ", effect)
+        client.gameEffects = [];
 
+        let effectCb = function(effect) {
+       //     console.log("effect add: ", effect)
+            effect.activateEffectFromConfigId()
+            client.gameEffects.push(effect);
         };
 
-        for (let i = 0; i < 2; i++) {
-            EffectAPI.buildEffectClassByConfigId('particle_default', 'effect_action_point_wisp',  effectCb)
+        for (let i = 0; i < 55; i++) {
+       //     EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
             // EffectAPI.buildEffect(effectCb)
         }
 
 
 
 
-    //    client.setup.initDefaultUi()
-    //    GuiAPI.printDebugText("DEBUG TEXT")
-   //     console.log("THREE:", THREE);
+        //    client.setup.initDefaultUi()
+        //    GuiAPI.printDebugText("DEBUG TEXT")
+        //     console.log("THREE:", THREE);
         const clock = new THREE.Clock(true);
 
         const scene = ThreeAPI.getScene();
 
         //    const camera = ThreeAPI.getCamera();
-       const renderer = ThreeAPI.getRenderer();
+        const renderer = ThreeAPI.getRenderer();
 
-    //    const scene = new THREE.Scene();
+        //    const scene = new THREE.Scene();
 
         const camera = ThreeAPI.getCamera();
         //    const renderer = new THREE.WebGLRenderer();
@@ -119,11 +122,11 @@ class Client {
         const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
         const cube = new THREE.Mesh( geometry, material );
         scene.add( cube );
-/*
-        ThreeAPI.setCameraPos(0, 2, 5)
+        /*
+                ThreeAPI.setCameraPos(0, 2, 5)
 
-        ThreeAPI.cameraLookAt(0, 0, 0)
-*/
+                ThreeAPI.cameraLookAt(0, 0, 0)
+        */
         let touchCubes = [];
 
         for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
@@ -174,15 +177,21 @@ class Client {
                 )
             }
 
+            for (let i = 0; i < client.gameEffects.length;i++) {
+                let eftc = client.gameEffects[i];
+                eftc.pos.x = Math.sin(0.61*frame.z+i)*(0.4+i*0.2);
+                eftc.pos.y =Math.sin(0.1*frame.z*2+i);
+                eftc.pos.z =Math.cos(0.61*frame.z+i)*(0.4+i*0.2);
+                eftc.setEffectPosition(eftc.pos)
+            }
 
 
-
-           cube.rotation.x += 0.01;
-           cube.rotation.y += 0.01;
-           cube.rotation.z = Math.sin(frame.z)*3.14;
-           client.pipelineAPI.tickPipelineAPI(frame.tpf)
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            cube.rotation.z = Math.sin(frame.z)*3.14;
+            client.pipelineAPI.tickPipelineAPI(frame.tpf)
             //     cube.rotation.z += response.z;
-        //    console.log("onFrameReadyCallback:",response);
+            //    console.log("onFrameReadyCallback:",response);
         };
 
         client.evt.on(ENUMS.Event.FRAME_READY, onFrameReadyCallback);
@@ -201,7 +210,7 @@ class Client {
             client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
             //     renderer.render(scene, camera)
             EffectAPI.updateEffectAPI();
-           ThreeAPI.requestFrameRender(frame)
+            ThreeAPI.requestFrameRender(frame)
         }
 
         triggerFrame();
