@@ -103,7 +103,6 @@ class DataLoader {
                     let apiReadyCB = function(msg) {
                                 console.log(msg)
                     }
-                    EffectAPI.initEffectAPI(apiReadyCB)
                     GuiAPI.initGuiApi(apiReadyCB)
 
                 }

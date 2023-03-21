@@ -10,7 +10,7 @@ class GuiAPI {
         this.elementPools = {};
         this.inputSystem;
         this.textSystem;
-        this.instantiator = new Instantiator();
+        this.instantiator = new Instantiator('guiInstantiator');
         this.worldSpacePointers = [];
         this.guiSettings = new GuiSettings();
         this.widgetBuilder = new WidgetBuilder();

@@ -4,7 +4,7 @@ class EffectSpawner {
     constructor() {
 
             this.config = {};
-            this.instantiator = new Instantiator();
+            this.instantiator = new Instantiator('fxInstantiator');
 
             let populateSector = function(sector, area, plantCount, parentPlant) {
                 this.populateVegetationSector(sector, area, plantCount, parentPlant)

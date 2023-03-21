@@ -3,8 +3,11 @@ import { InstancingBuffers} from "./InstancingBuffers.js";
 import { InstancingBufferElement } from "./InstancingBufferElement.js";
 
 class  Instantiator {
-    constructor() {
+    constructor(name) {
 
+
+        this.name = name;
+    //    console.log("Instantiator ", name)
         this.elementPools = {};
         this.elementBuffers = {};
 
