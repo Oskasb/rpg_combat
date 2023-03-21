@@ -75,7 +75,7 @@ class Client {
 
         for (let key in assets) {
             //   console.log("inst:", assets)
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 20; i++) {
                 client.dynamicMain.requestAssetInstance(key, instanceReturns)
                 //    client.dynamicMain.requestAssetInstance('asset_tree_2', instanceReturns)
                 //    client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
@@ -183,7 +183,7 @@ class Client {
                 eftc.setEffectPosition(eftc.pos)
             };
 
-            if (Math.random() < 0.22) {
+            if (Math.random() < 0.05) {
                 EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
             }
 
