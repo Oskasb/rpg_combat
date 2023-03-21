@@ -179,9 +179,9 @@ class EffectAPI {
         this.effectBuilders[configId].buildEffectByConfigId(configId, joint.getAttachEffectCallback());
     };
 
-    updateEffectAPI = function() {
+    updateEffectAPI = function(systemTime) {
         for (let spn in this.effectSpawners) {
-            this.effectSpawners[spn].updateEffectSpawner()
+            this.effectSpawners[spn].updateEffectSpawner(systemTime)
         }
     };
 

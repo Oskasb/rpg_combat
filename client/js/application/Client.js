@@ -91,7 +91,7 @@ class Client {
             client.gameEffects.push(effect);
         };
 
-        for (let i = 0; i < 55; i++) {
+        for (let i = 0; i < 1; i++) {
             EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
             // EffectAPI.buildEffect(effectCb)
         }
@@ -179,10 +179,13 @@ class Client {
 
             for (let i = 0; i < client.gameEffects.length;i++) {
                 let eftc = client.gameEffects[i];
-                eftc.pos.x = Math.sin(0.61*frame.z+i)*(0.4+i*0.2);
+                eftc.pos.x = Math.sin(0.61*frame.z+i)*(20.4+i*0.2);
                 eftc.pos.y =Math.sin(0.1*frame.z*2+i);
-                eftc.pos.z =Math.cos(0.61*frame.z+i)*(0.4+i*0.2);
+                eftc.pos.z =Math.cos(0.61*frame.z+i)*(20.4+i*0.2);
                 eftc.setEffectPosition(eftc.pos)
+            }
+            if (Math.random() < 0.25) {
+                EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
             }
 
 
@@ -209,7 +212,7 @@ class Client {
             frame.elapsedTime = clock.elapsedTime;
             client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
             //     renderer.render(scene, camera)
-            EffectAPI.updateEffectAPI();
+            EffectAPI.updateEffectAPI(frame.elapsedTime);
             ThreeAPI.requestFrameRender(frame)
         }
 

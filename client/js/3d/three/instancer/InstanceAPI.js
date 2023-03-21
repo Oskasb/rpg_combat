@@ -92,6 +92,10 @@ class InstanceAPI {
         callback(instance);
     };
 
+    getUiSysInstanceBuffers = function(uiSysKey) {
+        return this.uiSystems[uiSysKey];
+    };
+
     setupInstancingBuffers = function(msg) {
 
         let uiSysId     = msg[0];
@@ -110,13 +114,13 @@ class InstanceAPI {
             console.log("assetLoaded: ", threeModel.id);
             let instanceBuffers = threeModel.instanceBuffers;
             for (let i = 0; i < bufferNames.length; i++) {
-                let attrib = attributes[bufferNames[i]];
+                let attrib = this.attributes[bufferNames[i]];
                 instanceBuffers.attachAttribute(buffers[i], bufferNames[i], attrib.dimensions, attrib.dynamic)
             }
 
             instanceBuffers.setRenderOrder(order)
             this.uiSystems[uiSysId].push(instanceBuffers);
-        }
+        }.bind(this);
 
        ThreeAPI.loadThreeAsset('MODELS_', assetId, assetLoaded);
 

@@ -46,12 +46,12 @@ class EffectSpawner {
             effect.bufferElement = null;
         };
 
-        updateEffectSpawner = function() {
-            this.instantiator.updateInstantiatorBuffers();
+        updateEffectSpawner = function(systemTime) {
+            this.instantiator.updateInstantiatorBuffers(systemTime);
         };
 
-        resetEffectSpawner = function() {
-            this.instantiator.updateInstantiatorBuffers();
+        resetEffectSpawner = function(systemTime) {
+            this.instantiator.updateInstantiatorBuffers(systemTime);
         };
 
     }

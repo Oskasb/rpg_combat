@@ -68,10 +68,10 @@ class  Instantiator {
         this.callbacks.recoverElement(sysKey, bufferElem);
     };
 
-    updateInstantiatorBuffers = function() {
+    updateInstantiatorBuffers = function(systemTime) {
 
         for (let key in this.elementBuffers) {
-            this.elementBuffers[key].updateGuiBuffer()
+            this.elementBuffers[key].updateGuiBuffer(systemTime)
         }
 
     };

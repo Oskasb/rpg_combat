@@ -105,6 +105,12 @@ class InstancingBuffers {
             this.setUpdated(buffer);
         };
 
+
+    setSystemTime = function(systemTime) {
+        let buffer = this.buffers['offset'];
+        buffer[buffer.length - 2] = systemTime;
+    };
+
         getSystemTime = function() {
             let buffer = this.buffers['offset'];
             return buffer[buffer.length - 2];
@@ -115,9 +121,7 @@ class InstancingBuffers {
         };
 
 
-
         updateReleaseIndices = function(releasedIndices) {
-
 
             while (releasedIndices.length) {
                 let elemIndex = releasedIndices.pop();
@@ -157,8 +161,9 @@ class InstancingBuffers {
 
 
 
-        updateGuiBuffer = function() {
+        updateGuiBuffer = function(systemTime) {
 
+            this.setSystemTime(systemTime);
             let releasedIndices = this.getBookState(ENUMS.IndexState.INDEX_RELEASING);
 
             this.relCount+=releasedIndices.length;
@@ -195,10 +200,17 @@ class InstancingBuffers {
         };
 
         updateDrawRange = function() {
-
             let buffer = this.buffers['offset'];
             buffer[buffer.length-3] = this.highestRenderingIndex+1;
+            let instBufs = InstanceAPI.getUiSysInstanceBuffers(this.uiSysKey);
+            for (let i = 0; i<instBufs.length;i++) {
+                instBufs.setInstancedCount(buffer[buffer.length-3])
+            }
+        };
 
+        getDrawRAnge = function() {
+            let buffer = this.buffers['offset'];
+            return buffer[buffer.length-3]
         };
 
         drawFromAvailableIndex = function() {

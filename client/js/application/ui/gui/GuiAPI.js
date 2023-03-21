@@ -271,7 +271,7 @@ class GuiAPI {
         };
 
         this.guiDebug.updateDebugElements();
-        this.instantiator.updateInstantiatorBuffers();
+        this.instantiator.updateInstantiatorBuffers(time);
     //    this.instantiator.monitorBufferStats();
 
         if (this.registeredTextElements['main_text_box']) {
