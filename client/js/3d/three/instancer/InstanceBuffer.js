@@ -123,6 +123,7 @@ class InstanceBuffer {
         if (count) {
             console.log("Set draw range: ", count);
         }
+        this.mesh.geometry.drawRange.count = count;
         this.mesh.geometry.maxInstancedCount = count;
         this.mesh.geometry.needsUpdate = true;
     };

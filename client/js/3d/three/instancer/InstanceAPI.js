@@ -128,11 +128,11 @@ class InstanceAPI {
 
 
 
-    updateInstances = function(tpf) {
+    updateInstances = function(tpf, systemTime) {
 
         let updateUiSystemBuffers = function(instanceBuffers) {
 
-            instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates( this.systemTime));
+            instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates( systemTime));
         };
 
 

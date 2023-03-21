@@ -99,10 +99,10 @@ class DynamicMain {
     };
 
 
-    tickDynamicMain = function(tpf) {
+    tickDynamicMain = function(tpf, systemTime) {
         this.updateDynamicMatrices();
         this.updateDynamicInstances();
-        InstanceAPI.updateInstances(tpf);
+        InstanceAPI.updateInstances(tpf, systemTime);
 
     };
 

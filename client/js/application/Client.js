@@ -92,7 +92,7 @@ class Client {
         };
 
         for (let i = 0; i < 1; i++) {
-            EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
+        //    EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
             // EffectAPI.buildEffect(effectCb)
         }
 
@@ -149,7 +149,7 @@ class Client {
             ThreeAPI.updateCamera();
             ThreeAPI.updateAnimationMixers(frame.tpf);
             ThreeAPI.updateSceneMatrixWorld(frame.tpf);
-            client.dynamicMain.tickDynamicMain(frame.tpf);
+            client.dynamicMain.tickDynamicMain(frame.tpf, frame.elapsedTime);
             /*
 */
 
