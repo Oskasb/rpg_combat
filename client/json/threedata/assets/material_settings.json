@@ -356,7 +356,7 @@
                 "blendDst": "OneMinusSrcAlphaFactor"
               },
               "data_texture": "data_texture",
-              "side": "DoubleSide",
+              "side": "BackSide",
               "settings": {
                 "depthTest": false,
                 "alphaTest": 0.05,

@@ -108,7 +108,7 @@ class UiTestSetup {
                 'top_right'
             );
 
-            GuiAPI.buildGuiWidget('GuiSimpleButton', opts, buttonReady);
+        //    GuiAPI.buildGuiWidget('GuiSimpleButton', opts, buttonReady);
 
             /*
             var statsReady = function(button) {
@@ -156,7 +156,7 @@ class UiTestSetup {
             }.bind(this)
 
             this.addContainer();
-
+return
 
             var spamActive = function() {
                 return MainWorldAPI.getWorldSimulation().readWorldStatusValue('randomSpawn');
@@ -168,10 +168,8 @@ class UiTestSetup {
             };
 
             addTopButton('SPAWN', spawnSpam, spamActive);
-
             addTopButton('Prg Bar', this.callbacks.addProgressBar, null);
             addTopButton('txtbox', this.callbacks.addTextBox, null);
-
             var matrixActive = function() {
                 if (this.matrixText) {
                     return true;

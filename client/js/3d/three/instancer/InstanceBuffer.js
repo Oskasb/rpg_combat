@@ -124,12 +124,20 @@ class InstanceBuffer {
         this.mesh.geometry.needsUpdate = true;
     };
 
+    getDrawRange = function() {
+        return this.mesh.geometry.drawRange.count;
+    };
+
     setInstancedCount = function(count) {
         if (count) {
         //    console.log("Set draw range: ", count);
         }
         this.mesh.geometry.maxInstancedCount = count;
         this.mesh.geometry.needsUpdate = true;
+    };
+
+    getInstancedCount = function() {
+        return this.mesh.geometry.maxInstancedCount;
     };
 
     dispose = function() {
@@ -139,31 +147,29 @@ class InstanceBuffer {
 
     updateBufferStates = function(systemTime) {
 
-        let drawRange =0;
 
         this.setSystemTime(systemTime);
 
         for (let key in this.buffers) {
-            let buffer = this.buffers[key];
-            let lastIndex = buffer.length -1;
+        //    let buffer = this.buffers[key];
+        //    let lastIndex = buffer.length -1;
 
-            if (key === 'offset') {
-                    drawRange = buffer[lastIndex-2];
-                    this.setDrawRange(drawRange)
-            }
+        //    if (key === 'offset') {
+             //       drawRange = buffer[lastIndex-2];
+             //   this.setDrawRange(this.drawRange)
+        //    }
 
-            if (buffer[lastIndex]) {
-                buffer[lastIndex] = 0;
+         //   if (buffer[lastIndex]) {
+         //       buffer[lastIndex] = 0;
                 this.attributes[key].needsUpdate = true;
-            }
+         //   }
         }
 
-        return drawRange;
+        return this.getInstancedCount();
     };
 
     setSystemTime = function(systemTime) {
-        let buffer = this.buffers['offset'];
-        buffer[buffer.length - 2] = systemTime;
+        this.systemTime = systemTime;
     };
 
     removeFromScene = function() {
@@ -177,7 +183,7 @@ class InstanceBuffer {
             offset.position.z = -1;
             offset.add(this.mesh);
 
-            console.log("Screen Space MEsh:", this.mesh.geometry.drawRange, this.mesh);
+            console.log("Screen Space MEsh:", this.mesh.geometry.drawRange.count, this.mesh);
 
             ThreeAPI.attachObjectToCamera(offset);
 

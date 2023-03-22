@@ -13,7 +13,7 @@
                 "image": {
                   "layer": "UI_ELEMENTS_BACK",
                   "atlas_key": "GUI_16x16",
-                  "border_thickness": {"x": 0.0, "y": 0.0}
+                  "border_thickness": {"x": 0.01, "y": 0.01}
                 }
               }
             },

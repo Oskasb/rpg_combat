@@ -36,8 +36,6 @@ class ThreeAPI {
     initThreeLoaders = function(assetLoader) {
         this.spatialFunctions = new ThreeSpatialFunctions();
         this.assetLoader = assetLoader;
-    //    this.renderFilter = new ThreeRenderFilter();
-    //    this.threeEnvironment.loadEnvironmentData();
     };
 
     initEnvironment = function(store) {
@@ -96,10 +94,10 @@ class ThreeAPI {
     };
 
     loadThreeData = function(TAPI) {
-        this.threeModelLoader.loadData();
+    //    this.threeModelLoader.loadData();
     //    this.threeModelLoader.loadTerrainData(TAPI);
-        this.threeTextureMaker.loadTextures();
-        this.threeMaterialMaker.loadMaterialist();
+    //    this.threeTextureMaker.loadTextures();
+    //    this.threeMaterialMaker.loadMaterialist();
     };
 
 

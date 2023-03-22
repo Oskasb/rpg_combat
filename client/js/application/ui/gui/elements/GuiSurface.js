@@ -2,7 +2,7 @@ import { InteractiveElement } from "../states/InteractiveElement.js";
 
 class GuiSurface {
     constructor() {
-            this.sprite = {x:7, y:0, z:0.0, w:0.0};
+            this.sprite = {x:7, y:0, z:1, w:1};
             this.scale  = {x:1.0, y:1.0, z:1.0};
             this.centerXY = new THREE.Vector3();
             this.minXY = new THREE.Vector3();
@@ -122,7 +122,7 @@ class GuiSurface {
         };
 
         setSurfaceCenterAndSize = function(centerPos, sizeVec3) {
-
+         //   console.log('setSurfaceCenterAndSize', centerPos, sizeVec3)
             this.centerXY.copy(centerPos);
             this.maxXY.copy(sizeVec3).multiplyScalar(0.5);
             this.maxXY.add(this.centerXY);
@@ -179,6 +179,10 @@ class GuiSurface {
 
         configureNineslice = function() {
 
+            if (isNaN(this.scale.x)) {
+                console.log("NaN maxXY x", this)
+            }
+
             let calcNincesliceAxis = function(min, max, scale) {
                 let extent  = max - min;
                 let stretch = 0.5 * extent / scale; // stretch width of center quad
@@ -189,9 +193,16 @@ class GuiSurface {
             this.sprite.w = calcNincesliceAxis(this.minXY.x, this.maxXY.x, this.scale.x);
             this.sprite.z = calcNincesliceAxis(this.minXY.y, this.maxXY.y, this.scale.y);
 
+
+        //    console.log("scale x y", this.scale.x, this.scale.y)
+        //    console.log("sprite w z", this.sprite.w, this.sprite.z)
+            if (isNaN(this.sprite.z)) {
+                console.log("NaN sprite z", this)
+            }
+
             this.bufferElement.setSprite(this.sprite);
             this.bufferElement.setScaleVec3(this.scale);
-
+         //   console.log("confNineslice ", this.sprite)
         };
 
         fitToExtents = function() {

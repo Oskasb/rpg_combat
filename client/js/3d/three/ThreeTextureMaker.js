@@ -192,7 +192,7 @@ class ThreeTextureMaker {
                     */
                 }
 
-                createTexture(textureStore);
+            //    createTexture(textureStore);
             };
 
 
@@ -223,8 +223,8 @@ class ThreeTextureMaker {
 
 
             let loadTextures = function() {
-                new PipelineObject("MATERIALS", "THREE", textureListLoaded);
-                new PipelineObject("PARTICLE_MATERIALS", "THREE", loadParticleTexture);
+            //    new PipelineObject("MATERIALS", "THREE", textureListLoaded);
+            //    new PipelineObject("PARTICLE_MATERIALS", "THREE", loadParticleTexture);
             };
 
 
@@ -237,7 +237,7 @@ class ThreeTextureMaker {
                 }
             };
 
-            new PipelineObject("TEXTURES", "FILES", registerTextureFiles);
+        //    new PipelineObject("TEXTURES", "FILES", registerTextureFiles);
 
         };
 
