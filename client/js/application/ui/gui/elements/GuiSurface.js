@@ -28,7 +28,6 @@ class GuiSurface {
             let addSurfaceCb = function(bufferElem) {
                 this.setBufferElement(bufferElem);
                 this.applySurfaceConfig();
-
                 callback(this)
             }.bind(this);
 

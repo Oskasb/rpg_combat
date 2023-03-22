@@ -264,7 +264,8 @@ class GuiAPI {
     updateGui = function(tpf, time) {
 
         let dymmy1 = function(textWidget) {
-            textWidget.printWidgetText("MOO "+Math.random(), 7)
+            textWidget.updateTextContent("MOO "+tpf)
+         //   printWidgetText("MOO "+tpf, 7)
         };
 
         this.guiDebug.updateDebugElements();

@@ -28,9 +28,6 @@ class InstancingBuffers {
         ];
 
             this.highestRenderingIndex = 0;
-            this.drawRange = 0;
-            this.systemTime = 0;
-            this.buffersUpdated = []
             this.activeCount = 0;
 
             this.renderOrder = renderOrder;
@@ -110,23 +107,17 @@ class InstancingBuffers {
 
 
     setSystemTime = function(systemTime) {
-        this.systemTime = systemTime;
-        let instBufs = InstanceAPI.getUiSysInstanceBuffers(this.uiSysKey);
-        for (let i = 0; i<instBufs.length;i++) {
-            instBufs[i].setSystemTime(this.systemTime)
-        }
+        let buffer = this.buffers['offset'];
+        buffer[buffer.length - 2] = systemTime;
     };
 
         getSystemTime = function() {
-            return this.systemTime;
+            let buffer = this.buffers['offset'];
+            return buffer[buffer.length - 2];
         };
 
         setUpdated = function(buffer) {
-           // if (this.buffersUpdated.indexOf(buffer) === -1) {
-           //     this.buffersUpdated.push(buffer)
-           // }
-
-            // buffer[buffer.length - 1] = 1
+            buffer[buffer.length-1] = 1
         };
 
 
@@ -193,14 +184,15 @@ class InstancingBuffers {
 
 
         bufferRangeOk = function() {
-            let currentDrawRange = this.highestRenderingIndex+1;
+            let buffer = this.buffers['offset'];
+            let currentDrawRange = buffer[buffer.length-3];
 
             if (Math.floor(currentDrawRange) !== currentDrawRange) {
                 console.log("Buffer not int!", currentDrawRange,  buffer);
                 return
             }
 
-            if (this.highestRenderingIndex > (this.drawRange) / 3) {
+            if (this.highestRenderingIndex > (buffer.length-3) / 3) {
                 console.log("Buffer out of draw range...")
                 return
             }
@@ -208,9 +200,11 @@ class InstancingBuffers {
         };
 
         updateDrawRange = function() {
+            let buffer = this.buffers['offset'];
+            buffer[buffer.length-3] = this.highestRenderingIndex+1;
             let instBufs = InstanceAPI.getUiSysInstanceBuffers(this.uiSysKey);
             for (let i = 0; i<instBufs.length;i++) {
-                instBufs[i].setDrawRange(this.highestRenderingIndex+1)
+                instBufs[i].setDrawRange(buffer[buffer.length-3])
             }
         };
 
@@ -231,9 +225,9 @@ class InstancingBuffers {
 
             if (availableIndex > this.highestRenderingIndex) {
 
-            //    if (!this.bufferRangeOk()) {
-             //       return false;
-             //   }
+                if (!this.bufferRangeOk()) {
+                    return false;
+                }
 
                 this.highestRenderingIndex = availableIndex;
                 this.updateDrawRange();

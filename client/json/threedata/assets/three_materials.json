@@ -145,7 +145,7 @@
           "config":{
             "settings": "instancing_ui_back_settings",
             "textures":[
-              {"key":"map"           , "id":"data_texture"  },
+              {"key":"map"           , "id":"gui_atlas_16x16"  },
               {"key":"data_texture"  , "id":"data_texture"     }
             ]
           }

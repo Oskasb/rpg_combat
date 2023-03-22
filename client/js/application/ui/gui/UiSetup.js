@@ -33,10 +33,14 @@ class UiSetup {
             this.uiTestSetup.initUiTestSetup();
         //    this.uiTestSetup.addMatrixText();
 
-            var onReady = function(textBox) {
-                textBox.updateTextContent("Text ready...")
-                //textBoxes.push(textBox);
-            };
+                var onReady = function(textBox) {
+                    textBox.updateTextContent("Text ready...")
+                    GuiAPI.registerTextSurfaceElement('main_text_box', textBox);
+
+            }
+
+
+
 
             var onActivate = function(inputIndex, widget) {
                 widget.printWidgetText('pressed')

@@ -14,6 +14,12 @@ class InstanceBuffer {
 
         // per mesh data
 
+        let ninequad = false;
+
+        if (indices.length === 54) {
+            ninequad = true;
+        }
+
         if (indices) {
             posBuffer   =      new Float32Array( verts );
             uvBuffer    =      new Float32Array( uvarray );
@@ -34,20 +40,24 @@ class InstanceBuffer {
         geometry.setIndex( new THREE.BufferAttribute( indexBuffer , 1 ) );
 
         geometry.index.needsUpdate = true;
+        geometry.needsUpdate = true;
 
         let vertices = new THREE.BufferAttribute(posBuffer , 3 );
-        geometry.setAttribute( 'vertexPosition', vertices );
+     //   geometry.setAttribute( 'vertexPosition', vertices );
         geometry.setAttribute( 'position', vertices );
         let uvs = new THREE.BufferAttribute( uvBuffer , 2 );
         geometry.setAttribute( 'uv', uvs );
-
+        geometry.getAttribute('position').needsUpdate = true;
 
         this.geometry = geometry;
 
         let mesh = new THREE.Mesh(geometry);
         mesh.matrixAutoUpdate = false;
         mesh.frustumCulled = false;
+        mesh.userData.ninequad = ninequad;
         //    mesh.scale.set(1, 1, 1);
+
+        mesh.needsUpdate = true;
         this.mesh = mesh;
 
     };
@@ -55,6 +65,7 @@ class InstanceBuffer {
     setRenderOrder = function(order) {
         this.mesh.renderOrder = order;
         this.mesh.needsUpdate = true;
+
     };
 
     buildBuffer = function(dimensions, count) {
@@ -86,9 +97,6 @@ class InstanceBuffer {
                 this.attributes[name] = attribute;
             };
     */
-    buildBuffer = function(dimensions, count) {
-        return new Float32Array(count * dimensions);
-    };
 
     setAttribXYZ = function(name, index, x, y, z) {
         this.attributes[name].setXYZ( index, x, y, z);
@@ -120,12 +128,14 @@ class InstanceBuffer {
     };
 
     setDrawRange = function(count) {
+        if (this.mesh.userData.ninequad) {
+            // what the hell is going on with this...
+            // is this even needed for instancing now?
+            // why is only the gui surface suffering?
+            count = 54 
+        }
         this.mesh.geometry.drawRange.count = count;
         this.mesh.geometry.needsUpdate = true;
-    };
-
-    getDrawRange = function() {
-        return this.mesh.geometry.drawRange.count;
     };
 
     setInstancedCount = function(count) {
@@ -136,10 +146,6 @@ class InstanceBuffer {
         this.mesh.geometry.needsUpdate = true;
     };
 
-    getInstancedCount = function() {
-        return this.mesh.geometry.maxInstancedCount;
-    };
-
     dispose = function() {
         ThreeAPI.hideModel(this.mesh);
         this.geometry.dispose();
@@ -147,29 +153,32 @@ class InstanceBuffer {
 
     updateBufferStates = function(systemTime) {
 
+        let drawRange =0;
 
         this.setSystemTime(systemTime);
 
         for (let key in this.buffers) {
-        //    let buffer = this.buffers[key];
-        //    let lastIndex = buffer.length -1;
+            let buffer = this.buffers[key];
+            let lastIndex = buffer.length -1;
 
-        //    if (key === 'offset') {
-             //       drawRange = buffer[lastIndex-2];
-             //   this.setDrawRange(this.drawRange)
-        //    }
+            if (key === 'offset') {
+                    drawRange = buffer[lastIndex-2];
+                    this.setDrawRange(drawRange)
+            }
 
-         //   if (buffer[lastIndex]) {
-         //       buffer[lastIndex] = 0;
+            if (buffer[lastIndex]) {
+                buffer[lastIndex] = 0;
                 this.attributes[key].needsUpdate = true;
-         //   }
+            }
         }
 
-        return this.getInstancedCount();
+        return drawRange;
     };
 
     setSystemTime = function(systemTime) {
-        this.systemTime = systemTime;
+        let buffer = this.buffers['offset'];
+        buffer[buffer.length - 2] = systemTime;
+
     };
 
     removeFromScene = function() {
@@ -183,7 +192,7 @@ class InstanceBuffer {
             offset.position.z = -1;
             offset.add(this.mesh);
 
-            console.log("Screen Space MEsh:", this.mesh.geometry.drawRange.count, this.mesh);
+            console.log("Screen Space MEsh:", this.mesh.geometry.drawRange, this.mesh);
 
             ThreeAPI.attachObjectToCamera(offset);
 
