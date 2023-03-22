@@ -65,7 +65,9 @@ class Setup {
 
         let onPipelineReadyCallback = function(msg) {
             console.log("Pipeline:", msg)
-            dataLoader.notifyCompleted();
+            setTimeout(function() {
+                dataLoader.notifyCompleted();
+            }, 50);
         };
 
         dataLoader.loadData(dataPipelineSetup, onPipelineReadyCallback, onErrorCallback);

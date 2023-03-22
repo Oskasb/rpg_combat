@@ -86,7 +86,11 @@ class DataLoader {
                         if (!assetCount) {
                             _this.loadState = loadStates.COMPLETED;
                             remaining--
-                            loadStateChange(_this.loadState);
+
+                            setTimeout(function() {
+                                loadStateChange(_this.loadState);
+                            }, 220)
+
                         }
                     };
 
@@ -118,7 +122,10 @@ class DataLoader {
                         console.log('initEffectAPI', msg)
                     }
                     EffectAPI.initEffectAPI(apiReadyCB)
-                    loadStateChange(_this.loadState);
+                    setTimeout(function() {
+                        loadStateChange(_this.loadState);
+                    }, 220)
+
                 }
             }
 

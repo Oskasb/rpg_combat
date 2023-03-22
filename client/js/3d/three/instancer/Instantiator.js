@@ -30,7 +30,7 @@ class  Instantiator {
                 cb(elem, sysKey);
             };
             if (!getEelementPools()[sysKey]) {
-                console.log("Bad pool", sysKey, [getEelementPools()])
+                console.log("Bad pool", name, sysKey, [getEelementPools()])
             }
 
             getEelementPools()[sysKey].getFromExpandingPool(getElement)

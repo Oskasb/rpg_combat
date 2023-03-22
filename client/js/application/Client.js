@@ -36,7 +36,6 @@ class Client {
         this.INPUT_STATE =  this.pointerCursor.getInputState();
         //     console.log(this.INPUT_STATE);
 
-
     }
 
     initClientSetup(dataPipelineOptions) {
@@ -44,7 +43,6 @@ class Client {
         let pipeWorkersReadyCB = function() {
             client.setup.initConfigCache(client.pipelineAPI, dataPipelineOptions);
             client.initUiSystem();
-
         };
 
         this.setup.initDataPipeline(this.pipelineAPI, pipeWorkersReadyCB)
@@ -86,8 +84,17 @@ class Client {
         client.gameEffects = [];
 
 
-        //    client.setup.initDefaultUi()
-        //    GuiAPI.printDebugText("DEBUG TEXT")
+        setTimeout(function() {
+            let callback = function() {
+                setTimeout(function() {
+                    client.setup.initDefaultUi();
+                }, 50)
+            };
+            client.setup.initUiSetup(callback);
+        }, 50);
+
+
+        //   GuiAPI.printDebugText("DEBUG TEXT")
         //     console.log("THREE:", THREE);
         const clock = new THREE.Clock(true);
 

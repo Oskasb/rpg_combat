@@ -24,11 +24,6 @@ class UiSetup {
 
             GuiAPI.getInputSystem().initInputSystem(inputReady);
 
-
-
-
-
-
         };
 
         setupDefaultUi = function() {
@@ -37,8 +32,6 @@ class UiSetup {
             GuiAPI.getGuiDebug().setupDebugControlContainer2();
             this.uiTestSetup.initUiTestSetup();
         //    this.uiTestSetup.addMatrixText();
-
-            return;
 
             var onReady = function(textBox) {
                 textBox.updateTextContent("Text ready...")

@@ -87,15 +87,14 @@ class GuiAPI {
     };
 
     addUiSystem = function(sysKey, uiSysKey, assetId, poolSize, renderOrder) {
+        console.log("addInstanceSystem", sysKey, uiSysKey, assetId, poolSize, renderOrder)
         this.instantiator.addInstanceSystem(sysKey, uiSysKey, assetId, poolSize, renderOrder)
     };
 
     buildBufferElement = function(uiSysKey, cb) {
-    //    console.log("buildBufferElement", uiSysKey)
+        console.log("buildBufferElement", uiSysKey)
         this.instantiator.buildBufferElement(uiSysKey, cb)
     };
-
-
 
     registerTextSurfaceElement = function(elemKey, txtElem) {
         this.registeredTextElements[elemKey] = txtElem;
