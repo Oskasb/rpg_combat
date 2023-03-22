@@ -83,13 +83,13 @@ class Client {
 
         client.gameEffects = [];
 
+        let callback = function() {
+            setTimeout(function() {
+                client.setup.initDefaultUi();
+            }, 250)
+        };
 
         setTimeout(function() {
-            let callback = function() {
-                setTimeout(function() {
-                    client.setup.initDefaultUi();
-                }, 50)
-            };
             client.setup.initUiSetup(callback);
         }, 50);
 
@@ -151,7 +151,7 @@ class Client {
             if (client.INPUT_STATE.mouse.action[0]) {
                 cube.position.x = client.INPUT_STATE.mouse.dx*3
                 cube.position.y = -client.INPUT_STATE.mouse.dy*3
-                console.log(client.INPUT_STATE.mouse.dx)
+            //    console.log(client.INPUT_STATE.mouse.dx)
             }
             for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
 

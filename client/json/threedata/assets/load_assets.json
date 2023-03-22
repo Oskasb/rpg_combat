@@ -18,10 +18,21 @@
       "asset_tree_4",
       "asset_tree_5",
       "asset_tree_1"
-
+    ],
+    "PRELOAD_FILES": [
+      "file_quad",
+      "file_flatQuad",
+      "file_nineQuad",
+      "file_vegQuad",
+      "file_cross3d",
+      "file_bullet",
+      "file_tree_1",
+      "file_tree_2",
+      "file_tree_3",
+      "file_tree_4",
+      "file_tree_5_big"
     ],
     "NOT_LOADED_MODELS":[
-
       "animated_fighter_male",
       "animated_pilot",
       "animated_barbarian",

@@ -92,7 +92,7 @@ class GuiAPI {
     };
 
     buildBufferElement = function(uiSysKey, cb) {
-        console.log("buildBufferElement", uiSysKey)
+    //    console.log("buildBufferElement", uiSysKey)
         this.instantiator.buildBufferElement(uiSysKey, cb)
     };
 
@@ -249,8 +249,6 @@ class GuiAPI {
     getWorldSpacePointers = function() {
         return this.worldSpacePointers
     };
-
-
 
     getTextSysKey = function() {
         return this.txtSysKey;

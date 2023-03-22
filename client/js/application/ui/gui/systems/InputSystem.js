@@ -13,8 +13,8 @@ class InputSystem {
     initInputSystem = function(callback) {
 
         let _this = this;
-        var onInputSetting = function(src, data) {
 
+        var onInputSetting = function(src, data) {
             _this.uiSysId = src;
             GuiAPI.addUiSystem(src, data.config["sprite_atlas"],  data.config["mesh_asset"],   data.config["pool_size"], data.config["render_order"]);
             callback();

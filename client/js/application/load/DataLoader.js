@@ -1,6 +1,7 @@
 import { DomLoadScreen } from '../ui/dom/DomLoadScreen.js';
 import { AssetLoader } from './AssetLoader.js';
 
+
 class DataLoader {
     constructor() {
         this.loadStates= {
@@ -77,8 +78,8 @@ class DataLoader {
                 if (_this.loadState === loadStates.CONFIGS && remaining === 0) {
                  //   console.log( "json cached:", PipelineAPI.getCachedConfigs());
 
-
                 remaining++
+
                     let loadCallback = function(asset) {
                 //        console.log("requestAsset returns: ", asset)
                         assetCount--
@@ -100,9 +101,28 @@ class DataLoader {
                             remaining++
                             client.dynamicMain.requestAsset(data[i], loadCallback)
                         }
-                    }
+                    };
 
-                    PipelineAPI.subscribeToCategoryKey("ASSETS", "LOAD_MODELS", subCallback);
+                    let filesCallback = function(src, data) {
+                    //    console.log("Preload Files: ", data);
+                        let loadCB = function(msg) {
+                            console.log("Preload Asset: ", msg)
+                            assetCount--
+                            remaining--
+                        };
+
+                        for (let i = 0; i < data.length; i++) {
+
+                            assetCount++
+                            remaining++
+                            ThreeAPI.loadThreeAsset('FILES_GLB_', data[i], loadCB)
+                        }
+
+                        PipelineAPI.subscribeToCategoryKey("ASSETS", "LOAD_MODELS", subCallback);
+
+                    };
+
+                    PipelineAPI.subscribeToCategoryKey("ASSETS", "PRELOAD_FILES", filesCallback);
 
                     let apiReadyCB = function(msg) {
                                 console.log(msg)
@@ -124,7 +144,7 @@ class DataLoader {
                     EffectAPI.initEffectAPI(apiReadyCB)
                     setTimeout(function() {
                         loadStateChange(_this.loadState);
-                    }, 220)
+                    }, 120)
 
                 }
             }

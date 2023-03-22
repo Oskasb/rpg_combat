@@ -148,8 +148,8 @@ class InstanceBuffer {
             let lastIndex = buffer.length -1;
 
             if (key === 'offset') {
-                drawRange = buffer[lastIndex-2];
-                this.setDrawRange(drawRange)
+                    drawRange = buffer[lastIndex-2];
+                    this.setDrawRange(drawRange)
             }
 
             if (buffer[lastIndex]) {
@@ -176,6 +176,9 @@ class InstanceBuffer {
             let offset = new THREE.Object3D();
             offset.position.z = -1;
             offset.add(this.mesh);
+
+            console.log("Screen Space MEsh:", this.mesh.geometry.drawRange, this.mesh);
+
             ThreeAPI.attachObjectToCamera(offset);
 
         } else {
