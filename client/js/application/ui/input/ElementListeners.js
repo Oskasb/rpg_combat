@@ -6,6 +6,7 @@ class ElementListeners {
         this.gameScreen = gameScreen;
         this.POINTER_STATE = P_STATE;
         this.actionListener = new InputActionListener();
+
         this.x = 0;
         this.y = 0;
         this.dx = 0;
@@ -118,6 +119,11 @@ class ElementListeners {
 
         inputState.x = this.x;
         inputState.y = this.y;
+
+        let width = this.gameScreen.getWidth();
+        let height = this.gameScreen.getHeight();
+        inputState.posX = ((this.x) - width / 2) / width;
+        inputState.posY = -((this.y) - height / 2) / height;
         inputState.dx = this.dx;
         inputState.dy = this.dy;
         inputState.wheelDelta = this.wheelDelta;

@@ -1,14 +1,32 @@
+import { GuiPointerWidget} from "../widgets/GuiPointerWidget.js";
+
 class GuiPointer {
-    constructor(element) {
+    constructor(pos, callback) {
             this.intersects = false;
-            this.pos = new THREE.Vector3(0, 0, 0);
-            this.bufferElement = element;
+            this.pos = new THREE.Vector3(pos.x, pos.y, pos.z);
+            this.scale = new THREE.Vector3(1, 1, 1);
             this.pointerState = null;
             this.interactiveElement = null;
             this.targetElementState = null;
             this.inputIndex = null;
             this.isSeeking = false;
+            this.guiPointerWidget = new GuiPointerWidget();
+            this.setupPointerElement("widget_thumbstick", callback)
         };
+
+    setupPointerElement = function(configId, callback) {
+
+        let addWidgetCb = function(guiPointerWidget) {
+            console.log('Add guiPointerWidget ', guiPointerWidget);
+            guiPointerWidget.setElementPosition(this.pos);
+            callback(this)
+        }.bind(this);
+
+        this.guiPointerWidget.initPointerWidget(configId, addWidgetCb)
+
+    };
+
+
 
         setPointerInteractiveElement = function(interactiveElement) {
             this.interactiveElement = interactiveElement;
@@ -72,12 +90,12 @@ class GuiPointer {
 
         setPointerPosition = function(vec3) {
             this.pos.copy(vec3);
-            this.bufferElement.setPositionVec3(vec3)
+            this.guiPointerWidget.setElementPosition(this.pos);
         };
 
         releasePointer = function() {
             GuiAPI.unregisterWorldSpacePointer(this);
-            this.bufferElement.releaseElement()
+            this.guiPointerWidget.removeGuiWidget()
         };
 
 

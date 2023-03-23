@@ -27,6 +27,9 @@ class InputState {
             index++;
             this.POINTER_STATE.touches[i] = new pointerState(index)
         }
+
+        this.POINTER_STATE.touches.unshift(this.POINTER_STATE.mouse);
+
         this.elementListeners = new ElementListeners(this.POINTER_STATE, gameScreen);
     }
 

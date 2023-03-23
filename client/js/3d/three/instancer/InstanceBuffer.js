@@ -192,7 +192,7 @@ class InstanceBuffer {
             offset.position.z = -1;
             offset.add(this.mesh);
 
-            console.log("Screen Space MEsh:", this.mesh.geometry.drawRange, this.mesh);
+        //    console.log("Screen Space Mesh:", this.mesh.geometry.drawRange, this.mesh);
 
             ThreeAPI.attachObjectToCamera(offset);
 

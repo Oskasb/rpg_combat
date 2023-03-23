@@ -3,6 +3,7 @@ import { GuiSettings } from "./GuiSettings.js";
 import { Instantiator } from "../../../3d/three/instancer/Instantiator.js";
 import { GuiDebug } from "./systems/GuiDebug.js";
 
+
 class GuiAPI {
     constructor() {
         this.guiDebug = new GuiDebug();
@@ -25,8 +26,8 @@ class GuiAPI {
 
         let _this = this;
 
-        let callInputUpdateCallbacks = function(input, buffer) {
-            MATH.callAll(_this.inputUpdateCallbacks, input, buffer);
+        let callInputUpdateCallbacks = function(inputIndex, pointerState) {
+            MATH.callAll(_this.inputUpdateCallbacks, inputIndex, pointerState);
         };
 
         let callAspectUpdateCallbacks = function(aspect) {
@@ -35,13 +36,8 @@ class GuiAPI {
         };
 
 
-        let updateInput = function(INPUT_BUFFER) {
-            let inputs = ENUMS.Numbers.POINTER_TOUCH0 + ENUMS.Numbers.TOUCHES_COUNT;
-            for (let ib = 0; ib < inputs; ib++) {
-                if (_this.readInputBufferValue(ib, INPUT_BUFFER, ENUMS.InputState.HAS_UPDATE )) {
-                    callInputUpdateCallbacks(ib, INPUT_BUFFER)
-                }
-            }
+        let updateInput = function(pointerState) {
+            callInputUpdateCallbacks(pointerState.index, pointerState)
         };
 
         this.calls = {
@@ -83,11 +79,11 @@ class GuiAPI {
         loadUiConfig("SPRITE_FONT", "FONT_16x16");
         loadUiConfig("SURFACE_NINESLICE", "GUI_16x16");
 
-        onReadyCB('initGuiApi done loads: '+loads);
+    //    onReadyCB('initGuiApi done loads: '+loads);
     };
 
     addUiSystem = function(sysKey, uiSysKey, assetId, poolSize, renderOrder) {
-        console.log("addInstanceSystem", sysKey, uiSysKey, assetId, poolSize, renderOrder)
+    //    console.log("addInstanceSystem", sysKey, uiSysKey, assetId, poolSize, renderOrder)
         this.instantiator.addInstanceSystem(sysKey, uiSysKey, assetId, poolSize, renderOrder)
     };
 
@@ -258,14 +254,12 @@ class GuiAPI {
         return this.txtSysKey;
     };
 
-    sampleInputState = function(INPUT_BUFFER) {
-
-        this.calls.updateInput(INPUT_BUFFER);
-    //    GuiDebug.updateDebugElements();
-    };
 
 
     updateGui = function(tpf, time) {
+
+
+
 
         let dymmy1 = function(textWidget) {
             textWidget.updateTextContent("MOO "+tpf)

@@ -111,7 +111,7 @@ class InstanceAPI {
         }
 
         let assetLoaded = function(threeModel) {
-            console.log("assetLoaded: ", threeModel.id);
+        //    console.log("assetLoaded: ", threeModel.id);
             let instanceBuffers = threeModel.instanceBuffers;
             for (let i = 0; i < bufferNames.length; i++) {
                 let attrib = this.attributes[bufferNames[i]];

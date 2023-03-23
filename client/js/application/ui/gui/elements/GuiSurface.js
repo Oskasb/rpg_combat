@@ -34,6 +34,8 @@ class GuiSurface {
             GuiAPI.buildBufferElement(this.config.image.layer, addSurfaceCb);
         };
 
+
+
         updateInterativeState = function() {
             this.interactiveElement.applyActiveState();
         };
@@ -226,7 +228,7 @@ class GuiSurface {
         };
 
         registerStateUpdateCallback = function(cb) {
-            console.log("registerStateUpdateCallback", this);
+        //    console.log("registerStateUpdateCallback", this);
             this.onUpdateCallbacks.push(cb);
         };
 

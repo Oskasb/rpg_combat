@@ -47,7 +47,7 @@ class InputSystem {
 
     updateInteractiveElements = function(inputIndex, x, y, pointer) {
         let interactiveElem;
-        GuiAPI.debugDrawGuiPosition(x, y);
+    //    GuiAPI.debugDrawGuiPosition(x, y);
 
         if (pointer) {
 
@@ -78,44 +78,46 @@ class InputSystem {
 
 
     stupListener = function() {
-        let pointers = this.pointers;
+
         let _this = this;
-        var sampleInput = function(input, buffer) {
-            let inputIndex = input;
+        let sampleInput = function(inputIndex, pointerState) {
+            let pointers = this.pointers;
+        //    console.log("Sample input: ", inputIndex, pointerState);
 
-            let startIndex = input // * ENUMS.InputState.BUFFER_SIZE;
 
-            let inputBuffer = buffer;
+        //    let startIndex = inputIndex // * ENUMS.InputState.BUFFER_SIZE;
+
+        //    let inputBuffer = buffer;
 
             //    if (inputBuffer[startIndex + ENUMS.InputState.HAS_UPDATE] === 200) {
-            GuiAPI.setInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE, 1)
+        //    GuiAPI.setInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE, 1)
             //    inputBuffer[startIndex + ENUMS.InputState.HAS_UPDATE] = 1;
             //    }
 
             let pointer = null;
+            let tempVec = this.tempVec1;
 
-            if (GuiAPI.readInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.ACTION_0) ) {
+            if (pointerState.action[0]) {
 
-                this.tempVec1.x = GuiAPI.readInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.MOUSE_X)  ;
-                this.tempVec1.y = GuiAPI.readInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.MOUSE_Y)  ;
-                this.tempVec1.z = 0 // (Math.random()-0.5 ) * 5 //;
+                tempVec.x = pointerState.posX ;
+                tempVec.y = pointerState.posY ;
+                tempVec.z = -0.5;
 
                 if (!pointers[inputIndex]) {
 
-                    var addPointer = function(bufferElem) {
-                        pointer = new GuiPointer(bufferElem);
-                        pointer.setPointerPosition(tempVec1);
+                    let pointerReadyCB = function(guiPointer) {
+                        pointerState.guiPointer = guiPointer;
+                    };
+
+                        pointer = new GuiPointer(tempVec, pointerReadyCB);
                         pointer.setIsSeeking(true);
                         pointers[inputIndex] = pointer;
-                    };
-                    pointers[inputIndex] = true;
-                    GuiAPI.buildBufferElement(_this.uiSysId, addPointer)
 
                 } else {
 
                     pointer = pointers[inputIndex];
-                    pointer.setInputIndex(inputIndex);
-                    pointer.setPointerPosition(tempVec1)
+                //    pointer.setInputIndex(inputIndex);
+                    pointer.setPointerPosition(tempVec)
 
                 }
 
@@ -130,16 +132,12 @@ class InputSystem {
 
             }
 
-            let hasUpdate =  GuiAPI.readInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE);
+            let hasUpdate = true //GuiAPI.readInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE);
 
             if (hasUpdate) {
                 hasUpdate++;
-                GuiAPI.setInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE, hasUpdate);
-                _this.updateInteractiveElements(
-                    inputIndex,
-                    GuiAPI.readInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.MOUSE_X),
-                    GuiAPI.readInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.MOUSE_Y),
-                    pointer)
+            //    GuiAPI.setInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE, hasUpdate);
+                _this.updateInteractiveElements( inputIndex, pointerState.posX, pointerState.posY, pointer)
             }
 
         }.bind(this);
@@ -148,6 +146,7 @@ class InputSystem {
     };
 
     registerInteractiveSurfaceElement = function(surfaceElement) {
+    //    console.log("registerInteractiveSurfaceElement: ", surfaceElement)
         if (this.surfaceElements.indexOf(surfaceElement) === -1) {
             this.surfaceElements.push(surfaceElement);
         } else {

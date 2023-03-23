@@ -62,7 +62,7 @@ class EffectBuilder {
 
         applyConfigs = function(data) {
 
-            console.log("Apply data", data);
+        //    console.log("Apply data", data);
 
             var createEffect = function(key, cb) {
                 let fx = new this.effectClass[this.configs[key].effect_class](this.callbacks.activateEffect, this.callbacks.recoverEffect);

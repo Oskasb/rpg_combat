@@ -26,6 +26,8 @@ class PointerCursor {
 
     updatePointerState = function(pointerState) {
         this.inputState.updateInputState(pointerState);
+
+        GuiAPI.calls.updateInput(pointerState);
         // console.log(this.INPUT_STATE)
     };
 

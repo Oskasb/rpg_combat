@@ -61,7 +61,7 @@ class GuiSettings {
             for (let i = 0; i < data.length; i ++) {
                 sprites[src][data[i].id] = [data[i].tiles[0][0], data[i].tiles[0][1]]
             }
-                console.log("GUI SPRITES:", sprites[src]);
+        //        console.log("GUI SPRITES:", sprites[src]);
         };
 
         PipelineAPI.fetchConfigData("ASSETS", key, dataId, dataSprites);

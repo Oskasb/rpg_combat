@@ -87,7 +87,7 @@ class EffectAPI {
 
         let applyEffectConfigs = function(spawnerConfigs) {
             let data = spawnerConfigs.data;
-                console.log(data)
+        //        console.log(data)
             for (let i in data) {
                 let spawner = data[i].spawner;
 
