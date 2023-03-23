@@ -158,12 +158,14 @@ class UiTestSetup {
             this.addContainer();
 
             var spamActive = function() {
-                return MainWorldAPI.getWorldSimulation().readWorldStatusValue('randomSpawn');
+                console.log("Debug not wired up...")
+           //     return MainWorldAPI.getWorldSimulation().readWorldStatusValue('randomSpawn');
             };
 
             var spawnSpam = function() {
-                var wstatus = MainWorldAPI.getWorldSimulation().getWorldStatus();
-                wstatus.randomSpawn = !wstatus.randomSpawn
+                console.log("Debug not wired up...")
+            //    var wstatus = MainWorldAPI.getWorldSimulation().getWorldStatus();
+            //    wstatus.randomSpawn = !wstatus.randomSpawn
             };
 
             addTopButton('SPAWN', spawnSpam, spamActive);
@@ -178,25 +180,28 @@ class UiTestSetup {
             addTopButton('MATRIX', this.callbacks.addMatrixText, matrixActive);
 
             var stickActive = function() {
-                if (this.thumbstick) {
-                    return true;
-                }
+                console.log("Debug not wired up...")
+            //    if (this.thumbstick) {
+             //       return true;
+             //   }
             };
 
             addTopButton('STICK', this.callbacks.addThumbstick, stickActive);
 
             var abPresent = function() {
-                if (this.actionButtons.length) {
-                    return true;
-                }
+                console.log("Debug not wired up...")
+            //    if (this.actionButtons.length) {
+            //        return true;
+            //    }
             };
 
             addTopButton('ACTION', this.callbacks.addActionButton, abPresent);
 
             var apsPresent = function() {
-                if (actionPointStatus) {
-                    return true;
-                }
+                console.log("Debug not wired up...")
+            //    if (actionPointStatus) {
+              //      return true;
+              //  }
             };
 
             addTopButton('APS', this.callbacks.addActionPointStatus, apsPresent);
@@ -207,7 +212,9 @@ class UiTestSetup {
 
 
             var debugAnims = function() {
-                GuiAPI.getGuiDebug().debugPieceAnimations(GameAPI.getPlayerCharacter())
+                console.log("Debug not wired up...")
+
+            //    GuiAPI.getGuiDebug().debugPieceAnimations(GameAPI.getPlayerCharacter())
             }
 
             addTopButton('ANIMS', debugAnims, GuiAPI.getGuiDebug().getDebugAnimChar);
@@ -234,18 +241,21 @@ class UiTestSetup {
             return;
 
             var dropItem = function() {
-                GameAPI.dropCharacterItem(GameAPI.getPlayerCharacter());
+                console.log("Debug not wired up...")
+           //     GameAPI.dropCharacterItem(GameAPI.getPlayerCharacter());
             };
 
 
             addTopButton('DROPITEM', dropItem, dummy);
 
-
+return
             var physDebug = function() {
-                DebugAPI.setDebugDrawPhysics(!DebugAPI.getDebugDrawPhysics())
+                console.log("Debug not wired up...")
+            //    DebugAPI.setDebugDrawPhysics(!DebugAPI.getDebugDrawPhysics())
             };
             var physIsDebug = function() {
-                return DebugAPI.getDebugDrawPhysics()
+                console.log("Debug not wired up...")
+            //    return DebugAPI.getDebugDrawPhysics()
             };
 
 
