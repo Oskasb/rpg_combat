@@ -22,7 +22,13 @@ class GuiLetter {
 
         };
 
+    setGuiSysId = function(guiSysId) {
+        this.guiSysId = guiSysId;
+    };
 
+    getGuiSysId = function() {
+        return this.guiSysId;
+    };
 
         setLetter = function(letter) {
             this.letter = letter;

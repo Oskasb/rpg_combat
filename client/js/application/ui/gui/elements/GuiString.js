@@ -15,7 +15,10 @@ class GuiString {
         this.centerXY = new THREE.Vector3();
 
         let _this = this;
-        let addLetter = function(guiLetter, letter, index) {
+        let addLetter = function(guiLetter, letter, index, guiSysId) {
+            guiLetter.setGuiSysId(guiSysId);
+        //    let bufferElem = GuiAPI.getBufferElementByUiSysKey(guiSysId);
+        //    guiLetter.initLetterBuffers(bufferElem);
             _this.hideLetter(guiLetter);
             _this.letters[index] = guiLetter;
             guiLetter.setLetter(letter);
@@ -58,9 +61,9 @@ class GuiString {
 
                 let addLetterCb = function(bufferElem) {
 
-                    let letter = new GuiLetter();
-                    letter.initLetterBuffers(bufferElem);
-                    cb(letter)
+                    let guiLetter = new GuiLetter();
+                    guiLetter.initLetterBuffers(bufferElem);
+                    cb(guiLetter)
                 };
 
                 GuiAPI.buildBufferElement(sysKey, addLetterCb)
@@ -73,16 +76,12 @@ class GuiString {
 
     };
 
-
-
-
-
     setupLetters = function(string, guiSysId) {
         let letterPools = this.letterPools;
         let createLetter = function(guiSysId, letter, index, cb) {
 
             let getLetter = function(guiLetter) {
-                cb(guiLetter, letter, index);
+                cb(guiLetter, letter, index, guiSysId);
             };
 
             letterPools[guiSysId].getFromExpandingPool(getLetter);
@@ -100,11 +99,11 @@ class GuiString {
     recoverGuiString = function() {
 
         while (this.letters.length) {
-            this.letters.pop().releaseGuiLetter();
-            //    this.expandingPool.returnToExpandingPool(letter);
+            let letter = this.letters.pop()
+        //    letter.releaseGuiLetter();
+            this.letterPools[letter.getGuiSysId()].returnToExpandingPool(letter);
         }
     };
-
 
 
     applyStringData = function() {

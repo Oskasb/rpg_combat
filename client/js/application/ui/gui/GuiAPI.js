@@ -91,6 +91,10 @@ class GuiAPI {
         this.instantiator.addInstanceSystem(sysKey, uiSysKey, assetId, poolSize, renderOrder)
     };
 
+    getBufferElementByUiSysKey = function(uiSysKey) {
+        return this.instantiator.getElementBufferByKey(uiSysKey);
+    }
+
     buildBufferElement = function(uiSysKey, cb) {
     //    console.log("buildBufferElement", uiSysKey)
         this.instantiator.buildBufferElement(uiSysKey, cb)

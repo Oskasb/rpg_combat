@@ -18,6 +18,7 @@ class  Instantiator {
             return elementBuffers;
         };
 
+
         let getEelementPools = function() {
             return elementPools;
         };
@@ -44,7 +45,12 @@ class  Instantiator {
         this.callbacks = {
             buildElement:buildElement,
             recoverElement:recoverElement,
+            getElementBuffers:getElementBuffers
         }
+    };
+
+    getElementBufferByKey = function(key) {
+        return this.callbacks.getElementBuffers()[key];
     };
 
     addInstanceSystem = function(elementKey, bufferSysKey, assetId, poolSize, renderOrder) {
