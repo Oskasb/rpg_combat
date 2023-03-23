@@ -3,7 +3,7 @@
     "ASSETS": {
       "MATERIAL_SETTINGS":[
         {
-          "id": "glass_settings" ,
+          "id": "mat_settings_glass" ,
           "config": {
             "shader":"MeshStandardMaterial",
             "properties": {
@@ -24,7 +24,7 @@
           }
         },
         {
-          "id": "lambert_instancing_settings"  ,
+          "id": "mat_settings_lambert_instancing"  ,
           "config": {
             "shader": "MeshLambertMaterial",
             "properties": {
@@ -38,7 +38,7 @@
           }
         },
         {
-          "id": "standard_instancing_settings"  ,
+          "id": "mat_settings_standard_instancing"  ,
           "config": {
             "shader": "MeshStandardMaterial",
             "properties": {
@@ -55,7 +55,7 @@
           }
         },
         {
-          "id": "standard_opaque_settings"  ,
+          "id": "mat_settings_standard_opaque"  ,
           "config": {
             "shader": "MeshStandardMaterial",
             "properties": {
@@ -72,7 +72,7 @@
         },
 
         {
-          "id": "phong_opaque_settings"  ,
+          "id": "mat_settings_phong_opaque"  ,
           "config": {
             "shader": "MeshPhongMaterial",
             "properties": {
@@ -87,7 +87,7 @@
         },
 
         {
-          "id": "terrain_basic_settings"  ,
+          "id": "mat_settings_terrain_basic"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -117,7 +117,7 @@
         },
 
         {
-          "id": "instancing_basic_settings"  ,
+          "id": "mat_settings_instancing_basic"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -138,7 +138,7 @@
           }
         },
         {
-          "id": "particle_stamp_settings"  ,
+          "id": "mat_settings_particle_stamp"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -169,7 +169,7 @@
           }
         },
         {
-          "id": "instancing_normal_settings"  ,
+          "id": "mat_settings_instancing_normal"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -193,7 +193,7 @@
           }
         },
         {
-          "id": "additive_particle_settings"  ,
+          "id": "mat_settings_particle_additive"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -218,7 +218,7 @@
           }
         },
         {
-          "id": "instancing_additive_settings"  ,
+          "id": "mat_settings_instancing_additive"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -274,7 +274,7 @@
           }
         },
         {
-          "id": "instancing_nature_settings"  ,
+          "id": "mat_settings_nature_instancing"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -296,7 +296,7 @@
           }
         },
         {
-          "id": "instancing_ui_back_settings"  ,
+          "id": "mat_settings_ui_back"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -320,7 +320,7 @@
           }
         },
         {
-          "id": "instancing_ui_settings"  ,
+          "id": "mat_settings_ui"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -344,7 +344,7 @@
           }
         },
         {
-          "id": "instancing_font_settings"  ,
+          "id": "mat_settings_font"  ,
           "config": {
             "shader": "RawShaderMaterial",
             "properties": {
@@ -368,7 +368,7 @@
           }
         },
         {
-          "id": "phong_nature_settings"  ,
+          "id": "mat_settings_phong_nature"  ,
           "config": {
             "shader": "MeshPhongMaterial",
             "properties": {
@@ -383,24 +383,6 @@
                 "lightMapIntensity": 1,
                 "emissiveIntensity": 1
               }
-            }
-          }
-        },
-        {
-          "id": "standard_settings"   ,
-          "config": {
-            "shader": "MeshStandardMaterial",
-            "color": {"r": 1, "g": 1, "b": 1},
-            "settings": {
-              "blending": "NoBlending",
-              "alphaTest": 0.8,
-              "roughness": 1.0,
-              "metalness": 1.0,
-              "envMapIntensity": 1.8,
-              "emissiveIntensity": 1,
-              "lightMapIntensity": 1,
-              "refractionRatio": 0.1,
-              "aoMapIntensity": 1.0
             }
           }
         }

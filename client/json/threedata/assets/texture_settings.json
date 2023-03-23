@@ -3,7 +3,7 @@
     "ASSETS": {
       "TEXTURE_SETTINGS":[
         {
-          "id": "model_settings" ,
+          "id": "tx_settings_model_normal" ,
           "config":{
             "settings" : {
               "wrapS": "RepeatWrapping",
@@ -18,7 +18,7 @@
           }
         } ,
         {
-          "id": "data_settings"  ,
+          "id": "tx_settings_data"  ,
           "config":{
             "settings" : {
               "wrapS": "ClampToEdgeWrapping",
@@ -45,7 +45,7 @@
           }
         } ,
         {
-          "id": "ui_tx_tiles_6x6"  ,
+          "id": "tx_settings_tiles_6x6"  ,
           "config":{
             "settings" : {
               "wrapS": "RepeatWrapping",
@@ -60,7 +60,7 @@
           }
         },
         {
-          "id": "ui_tx_tiles_8x8"  ,
+          "id": "tx_settings_tiles_8x8"  ,
           "config":{
             "settings" : {
               "wrapS": "RepeatWrapping",
@@ -75,7 +75,7 @@
           }
         },
         {
-          "id": "ui_tx_tiles_16x16"  ,
+          "id": "tx_settings_tiles_16x16"  ,
           "config":{
             "settings" : {
               "wrapS": "RepeatWrapping",
@@ -90,7 +90,7 @@
           }
         },
         {
-          "id": "env_settings"   ,
+          "id": "tx_settings_environment"   ,
           "config":{
             "settings" : {
               "combine": "AddOperation",
@@ -105,7 +105,7 @@
           }
         },
         {
-          "id": "terrain_settings" ,
+          "id": "tx_settings_terrain" ,
           "config":{
             "settings" : {
               "wrapS": "RepeatWrapping",
