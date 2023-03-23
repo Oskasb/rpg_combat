@@ -226,6 +226,7 @@ class GuiSurface {
         };
 
         registerStateUpdateCallback = function(cb) {
+            console.log("registerStateUpdateCallback", this);
             this.onUpdateCallbacks.push(cb);
         };
 

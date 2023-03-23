@@ -104,7 +104,7 @@ class InstanceAPI {
         let buffers     = msg[3];
         let order       = msg[4];
 
-        console.log("setupInstancingBuffers: ", assetId);
+    //    console.log("setupInstancingBuffers: ", assetId);
 
         if (!this.uiSystems[uiSysId]) {
             this.uiSystems[uiSysId] = [];

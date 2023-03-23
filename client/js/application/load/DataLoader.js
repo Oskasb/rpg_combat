@@ -106,7 +106,7 @@ class DataLoader {
                     let filesCallback = function(src, data) {
                     //    console.log("Preload Files: ", data);
                         let loadCB = function(msg) {
-                            console.log("Preload Asset: ", msg)
+                        //    console.log("Preload Asset: ", msg)
                             assetCount--
                             remaining--
                         };
@@ -139,7 +139,7 @@ class DataLoader {
                     ThreeAPI.initThreeLoaders(_this.assetLoader);
                 //    ThreeAPI.loadThreeData();
                     let apiReadyCB = function(msg) {
-                        console.log('initEffectAPI', msg)
+                     //   console.log('initEffectAPI', msg)
                     }
                     EffectAPI.initEffectAPI(apiReadyCB)
                     setTimeout(function() {
