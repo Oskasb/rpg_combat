@@ -151,6 +151,15 @@
           }
         },
         {
+          "id":"material_instancing_tileset",
+          "config":{
+            "settings": "instancing_normal_settings",
+            "textures":[
+              {"key":"map"           , "id":"gui_atlas_16x16"      }
+            ]
+          }
+        },
+        {
           "id":"material_instancing_font",
           "config":{
             "settings": "instancing_font_settings",

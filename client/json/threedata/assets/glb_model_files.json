@@ -83,6 +83,7 @@
         {"id": "file_scale_boots",   "config": { "url": "./client/assets/models/items_skinned/fighter_rig/armor/scale_boots"      }},
         {"id": "file_scale_gloves",  "config": { "url": "./client/assets/models/items_skinned/fighter_rig/armor/scale_gloves"     }},
 
+        {"id": "file_box",           "config": { "url": "./client/assets/models/shapes/box"                                          }},
         {"id": "file_quad",          "config": { "url": "./client/assets/models/shapes/quad"                                         }},
         {"id": "file_flatQuad",      "config": { "url": "./client/assets/models/shapes/flatQuad"                                     }},
         {"id": "file_nineQuad",      "config": { "url": "./client/assets/models/shapes/nineQuad"                                     }},
