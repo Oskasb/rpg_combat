@@ -58,16 +58,9 @@ class GuiString {
         if (!this.letterPools[guiSysId]) {
 
             let fetch = function(sysKey, cb) {
-
-                let addLetterCb = function(bufferElem) {
-
                     let guiLetter = new GuiLetter();
-                    guiLetter.initLetterBuffers(bufferElem);
                     cb(guiLetter)
                 };
-
-                GuiAPI.buildBufferElement(sysKey, addLetterCb)
-            };
 
             this.letterPools[guiSysId] = PipelineAPI.addExpandingPool(guiSysId, fetch)
         }
@@ -81,7 +74,12 @@ class GuiString {
         let createLetter = function(guiSysId, letter, index, cb) {
 
             let getLetter = function(guiLetter) {
-                cb(guiLetter, letter, index, guiSysId);
+
+                let addLetterCb = function(bufferElem) {
+                    guiLetter.initLetterBuffers(bufferElem);
+                    cb(guiLetter, letter, index, guiSysId);
+                };
+                GuiAPI.buildBufferElement(guiSysId, addLetterCb)
             };
 
             letterPools[guiSysId].getFromExpandingPool(getLetter);
@@ -100,7 +98,7 @@ class GuiString {
 
         while (this.letters.length) {
             let letter = this.letters.pop()
-        //    letter.releaseGuiLetter();
+            letter.releaseGuiLetter();
             this.letterPools[letter.getGuiSysId()].returnToExpandingPool(letter);
         }
     };
