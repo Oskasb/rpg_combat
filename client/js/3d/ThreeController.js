@@ -12,7 +12,7 @@ class ThreeController {
 
         let antialias = PipelineAPI.readCachedConfigKey('SETUP', 'ANTIALIAS');
     //    antialias = false;
-        this.pxRatio =  PipelineAPI.readCachedConfigKey('SETUP', 'PX_SCALE');
+     //   this.pxRatio =  PipelineAPI.readCachedConfigKey('SETUP', 'PX_SCALE');
 
         ThreeAPI.initThreeScene(GameScreen.getElement(), this.pxRatio, antialias);
 
@@ -20,24 +20,16 @@ class ThreeController {
 
         let notRez = this.notifyResize;
         window.addEventListener('resize', notRez);
-    //    this.monkeypatchCustomEngine();
-
+        this.monkeypatchCustomEngine();
 
     };
 
     notifyRezize = function() {
+        console.log("notifyRezize")
         ThreeAPI.updateWindowParameters(GameScreen.getWidth(), GameScreen.getHeight(), GameScreen.getAspect(), this.pxRatio);
     };
 
     monkeypatchCustomEngine = function() {
-
-    //    document.getElementById(divId).style.left = '122em';
-    //    document.getElementById(divId).style.right = '122em';
-    //    document.getElementById(divId).style.top = '0em';
-    //    document.getElementById(divId).style.bottom = '0em';
-    //    document.getElementById(divId).style.width = 'auto';
-    //    document.getElementById(divId).style.height = 'auto';
-    //    document.getElementById(divId).style.position = 'fixed';
 
         let width = window.innerWidth;
         let height = window.innerHeight;
@@ -46,7 +38,7 @@ class ThreeController {
         let _this = this;
         let divId = this.divId;
 
-        var handleResize = function() {
+        let handleResize = function() {
 
             width = window.innerWidth;
             height = window.innerHeight;
