@@ -100,6 +100,7 @@ class InputSystem {
                     };
 
                         pointer = new GuiPointer(tempVec, pointerReadyCB);
+                        pointer.originalInputIndex = inputIndex;
                         pointer.setIsSeeking(true);
                         pointers[inputIndex] = pointer;
 
@@ -122,7 +123,7 @@ class InputSystem {
                         interactiveElem.onPressActivate(inputIndex);
                 //        pointer.pointerPressElementStart(interactiveElem);
                     } else {
-                        GuiAPI.printDebugText("RELEASE POINTER");
+                        GuiAPI.printDebugText("RELEASE POINTER "+inputIndex+" "+pointer.originalInputIndex);
                     }
 
                     pointer.releasePointer();
