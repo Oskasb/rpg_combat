@@ -101,7 +101,9 @@ class InputSystem {
 
                 tempVec.x = pointerState.posX ;
                 tempVec.y = pointerState.posY ;
-                tempVec.z = -0.5;
+                tempVec.z = 0;
+
+            //    GameScreen.fitView(tempVec);
 
                 if (!pointers[inputIndex]) {
 

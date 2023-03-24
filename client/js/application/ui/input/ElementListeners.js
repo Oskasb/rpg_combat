@@ -6,7 +6,7 @@ class ElementListeners {
         this.gameScreen = gameScreen;
         this.POINTER_STATE = P_STATE;
         this.actionListener = new InputActionListener();
-
+        this.tempVec = new THREE.Vector3();
         this.x = 0;
         this.y = 0;
         this.dx = 0;
@@ -120,10 +120,15 @@ class ElementListeners {
         inputState.x = this.x;
         inputState.y = this.y;
 
+
+
         let width = this.gameScreen.getWidth();
         let height = this.gameScreen.getHeight();
-        inputState.posX = ((this.x) - width / 2) / width;
-        inputState.posY = -((this.y) - height / 2) / height;
+        this.tempVec.x = ((this.x) - width / 2) / width;
+        this.tempVec.y = -((this.y) - height / 2) / height;
+        GameScreen.fitView(this.tempVec);
+        inputState.posX = this.tempVec.x;
+        inputState.posY = this.tempVec.y;
         inputState.dx = this.dx;
         inputState.dy = this.dy;
         inputState.wheelDelta = this.wheelDelta;

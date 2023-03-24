@@ -119,6 +119,18 @@
               }
             },
             {
+              "id":"widget_input_pointer",
+              "layout":"layout_input_pointer",
+              "icon": {
+                "icon_config": "stick_center_icon",
+                "feedback": "feedback_stick_icon"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_thumbstick",
+                "feedback": "feedback_surface_thumbstick"
+              }
+            },
+            {
               "id":"widget_thumbstick",
               "layout":"layout_thumbstick",
               "icon": {

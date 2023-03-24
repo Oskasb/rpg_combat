@@ -11,7 +11,7 @@ class GuiPointer {
             this.inputIndex = null;
             this.isSeeking = false;
             this.guiPointerWidget = new GuiPointerWidget();
-            this.setupPointerElement("widget_thumbstick", callback)
+            this.setupPointerElement("widget_input_pointer", callback)
         };
 
     setupPointerElement = function(configId, callback) {
