@@ -59,8 +59,6 @@ class InstancedModel {
         };
 
 
-
-
         initModelInstance = function(callback, _this) {
 
             let cloned = function(spatial) {
@@ -236,7 +234,6 @@ class InstancedModel {
                         dynJoint.updateSpatialFrame()
                     }
 
-            //
                 }
             }
 
@@ -269,12 +266,12 @@ class InstancedModel {
 
             // WorkerAPI.getDynamicMain().removeFromIsntanceIndex(this);
 
-            if (this.isDecomiisisoned) {
-                console.log("Already Decomissioned");
-            }
-            this.isDecomiisisoned = true;
+       //     if (this.isDecomiisisoned) {
+        //        console.log("Already Decomissioned");
+        //    }
+       //     this.isDecomiisisoned = true;
 
-            this.clearEventListener();
+        //    this.clearEventListener();
             if (this.animator) {
                 this.animator.deActivateAnimator();
             }

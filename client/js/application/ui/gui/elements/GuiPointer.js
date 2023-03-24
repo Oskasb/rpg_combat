@@ -17,7 +17,7 @@ class GuiPointer {
     setupPointerElement = function(configId, callback) {
 
         let addWidgetCb = function(guiPointerWidget) {
-            console.log('Add guiPointerWidget ', guiPointerWidget);
+       //     console.log('Add guiPointerWidget ', guiPointerWidget);
             guiPointerWidget.setElementPosition(this.pos);
             callback(this)
         }.bind(this);

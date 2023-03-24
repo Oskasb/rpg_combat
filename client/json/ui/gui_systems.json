@@ -38,7 +38,7 @@
             "config": {
               "sprite_atlas": "FONT_16x16",
               "mesh_asset":  "asset_letterQuad",
-              "pool_size": 1000,
+              "pool_size": 2000,
               "render_order": 21
             }
           }

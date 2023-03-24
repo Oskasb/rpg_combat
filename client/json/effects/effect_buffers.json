@@ -10,7 +10,7 @@
                         {
                             "spawner": "additive_particles_6x6",
                             "asset_id":  "asset_additiveQuad",
-                            "pool_size": 500,
+                            "pool_size": 800,
                             "render_order": 4
                         }
                     ]

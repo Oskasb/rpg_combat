@@ -47,7 +47,9 @@ if(typeof(ENUMS) === "undefined"){
         DYNAMIC_JOINT:          22,
         TRACK_STAT:             23,
         DATA_PIPELINE_READY:    24,
-        BUILD_BUTTON:           25
+        BUILD_BUTTON:           25,
+        SCENARIO_ACTIVATE:      26,
+        SCENARIO_CLOSE:         27
     };
 
     ENUMS.Args = {

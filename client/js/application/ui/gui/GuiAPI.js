@@ -118,6 +118,7 @@ class GuiAPI {
         opts.offset_x       = options.offset_x || null;
         opts.offset_y       = options.offset_y || null;
         opts.anchor         = options.anchor || false;
+        opts.container      = options.container || false;
 
         return opts
     };

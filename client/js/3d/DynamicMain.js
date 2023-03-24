@@ -49,7 +49,6 @@ class DynamicMain {
 
     };
 
-
     getInstanceByPointer = function(ptr) {
         for (var i = 0; i < this.instances.length; i++) {
             if (this.instances[i].getPointer() === ptr) {
@@ -64,25 +63,18 @@ class DynamicMain {
 
     requestAssetInstance = function(assetId, callback) {
 
-
-
-
         let instanceReady = function(modelInstance) {
             this.instancePointer++;
             this.instances.push(modelInstance);
             modelInstance.setPointer(this.instancePointer);
-            this.instanceEvt[1] = this.assetIndex[modelInstance.getAssetId()];
-            this.instanceEvt[3] = modelInstance.getPointer();
-            evt.dispatch(ENUMS.Event.REGISTER_INSTANCE, this.instanceEvt);
+        //    this.instanceEvt[1] = this.assetIndex[modelInstance.getAssetId()];
+        //    this.instanceEvt[3] = modelInstance.getPointer();
+        //    evt.dispatch(ENUMS.Event.REGISTER_INSTANCE, this.instanceEvt);
             callback(modelInstance);
         }.bind(this);
 
-
-
         let asset = this.assets[assetId];
         asset.instantiateAsset(instanceReady);
-
-
 
     };
 
@@ -97,7 +89,6 @@ class DynamicMain {
             this.instances[i].updateSpatialWorldMatrix();
         }
     };
-
 
     tickDynamicMain = function(tpf, systemTime) {
         this.updateDynamicMatrices();

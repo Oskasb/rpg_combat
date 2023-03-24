@@ -1,7 +1,7 @@
 import { GuiWidget} from "../elements/GuiWidget.js";
 
 class GuiProgressBar {
-    constructor(ptions) {
+    constructor(options) {
 
         this.options = {};
         for (let key in options) {

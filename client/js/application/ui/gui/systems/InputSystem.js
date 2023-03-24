@@ -47,7 +47,7 @@ class InputSystem {
 
     updateInteractiveElements = function(inputIndex, x, y, pointer) {
         let interactiveElem;
-        GuiAPI.debugDrawGuiPosition(x, y);
+    //    GuiAPI.debugDrawGuiPosition(x, y);
 
         if (pointer) {
 
@@ -67,8 +67,6 @@ class InputSystem {
         } else {
 
             interactiveElem = this.getIntersectingElement(x, y, inputIndex);
-
-
             if (interactiveElem) {
                 interactiveElem.notifyHoverStateOn(inputIndex);
             }
@@ -121,11 +119,12 @@ class InputSystem {
 
                     if (interactiveElem === pointers[inputIndex].getPointerInteractiveElement()) {
                         GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
+                        interactiveElem.onPressActivate(inputIndex);
                 //        pointer.pointerPressElementStart(interactiveElem);
                     } else {
                         GuiAPI.printDebugText("RELEASE POINTER");
                     }
-                    
+
                     pointer.releasePointer();
                     pointer = null;
                     pointers[inputIndex] = null;

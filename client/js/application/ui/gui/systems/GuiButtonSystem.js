@@ -13,12 +13,20 @@ class GuiButtonSystem {
         console.log(evtArgs)
 
         let buttonReady = function(button) {
-            console.log("Button Ready, no callback registered...", button)
+            if (evtArgs.container) {
+                evtArgs.container.addChildWidgetToContainer(button.guiWidget);
+            }
+            if (evtArgs.widgetCallback) {
+                evtArgs.widgetCallback(button);
+            } else {
+            //    console.log("Button Ready, no callback registered...", button)
+            }
+
         };
 
         let opts = GuiAPI.buildWidgetOptions(evtArgs);
 
-        GuiAPI.buildGuiWidget(evtArgs.widgetClass || 'GuiSimpleButton', opts, evtArgs.widgetCallback || buttonReady);
+        GuiAPI.buildGuiWidget(evtArgs.widgetClass || 'GuiSimpleButton', opts, buttonReady);
 
     }
 

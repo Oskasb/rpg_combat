@@ -445,23 +445,27 @@ class ThreeEnvironment {
         this.currentEnvId = envConfId;
     };
 
-    advanceEnv = function(envArgs) {
-        let keys = Object.keys(this.envList);
-        let key = keys[envArgs[0] % keys.length];
-        this.setEnvConfigId(key, envArgs[1]);
-        console.log("Advance ENV ", key, envArgs, this.currentEnvId, this.envList);
-    };
+
 
 
 
     initEnvironment = function(store, ready) {
 
         let _this = this;
+
+        let advanceEnv = function(envArgs) {
+            let keys = Object.keys(_this.envList);
+            let key = keys[envArgs[0] % keys.length];
+            _this.setEnvConfigId(key, envArgs[1]);
+            console.log("Advance ENV ", key, envArgs, _this.currentEnvId, _this.envList);
+        };
+
         let scene = store.scene;
         this.scene = scene;
         this.renderer = store.renderer;
         this.camera = store.camera;
-        evt.on(ENUMS.Event.ADVANCE_ENVIRONMENT, _this.advanceEnv);
+
+        evt.on(ENUMS.Event.ADVANCE_ENVIRONMENT, advanceEnv);
 
         var canvas = document.createElement("canvas");
 

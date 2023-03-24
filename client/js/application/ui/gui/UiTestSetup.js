@@ -110,84 +110,63 @@ class UiTestSetup {
 
             evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts)
 
-/*
-
-
-
-*/
-
-
-            /*
-            var statsReady = function(button) {
-                this.statsButton = button;
-            }.bind(this);
-
-            var addStatsPanel = function() {
-                this.debugAPI.setDebugDrawStats(!this.debugAPI.getDebugDrawStats(), this.statsButton)
-            }.bind(this);
-
-            opts = GuiAPI.buildWidgetOptions(
-                'button_big_blue',
-                addStatsPanel,
-                this.debugAPI.getDebugDrawStats,
-                true,
-                'STATS',
-                -0.12,
-                -0.05,
-                'top_right'
-            );
-
-
-            GuiAPI.buildGuiWidget('GuiSimpleButton', opts, statsReady);
-*/
         };
-
-
-
 
         addTestButtons = function() {
 
 
             let addTopButton = function(text, onActivate, testActive) {
 
-                let container = this.container;
-
                 var onReady = function(widget) {
-                    container.addChildWidgetToContainer(widget.guiWidget);
+                //    console.log("Button widget: ", widget);
                 };
 
                 var opts = GuiAPI.buildWidgetOptions(
 
                     {
+                        widgetClass:'GuiSimpleButton',
                         configId: 'button_big_blue',
                         onActivate: onActivate,
                         testActive: testActive,
                         interactive: true,
                         text: text,
+                        container:this.container
                     }
 
                 );
 
-                GuiAPI.buildGuiWidget('GuiSimpleButton', opts, onReady);
+                evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts, onReady)
 
             }.bind(this)
 
             this.addContainer();
 
-            var spamActive = function() {
-                console.log("Debug not wired up...")
-           //     return MainWorldAPI.getWorldSimulation().readWorldStatusValue('randomSpawn');
-            };
+            let activeScenario = {}
 
-            var spawnSpam = function() {
-                console.log("Debug not wired up...")
+            let scenarioCallback = function(gameScenario) {
+                console.log("scenarioCallback", gameScenario)
+                activeScenario = gameScenario;
+            }.bind(this);
+
+            let spamActive = function() {
+            //    console.log("Debug not wired up...")
+            //   evt.dispatch(ENUMS.Event.SCENARIO_CLOSE,    {scenarioId:'test'})
+                if (activeScenario.isActive) {
+                    return true;
+                }
+            //     return MainWorldAPI.getWorldSimulation().readWorldStatusValue('randomSpawn');
+            }.bind(this);
+
+            let spawnSpam = function() {
+            //    console.log("Debug not wired up...")
+                evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {scenarioId:'test', callback:scenarioCallback})
             //    var wstatus = MainWorldAPI.getWorldSimulation().getWorldStatus();
             //    wstatus.randomSpawn = !wstatus.randomSpawn
             };
 
-            addTopButton('SPAWN', spawnSpam, spamActive);
-            addTopButton('Prg Bar', this.callbacks.addProgressBar, null);
-            addTopButton('txtbox', this.callbacks.addTextBox, null);
+            addTopButton('START', spawnSpam, spamActive);
+         //   addTopButton('Prg Bar', this.callbacks.addProgressBar, null);
+        //    addTopButton('txtbox', this.callbacks.addTextBox, null);
             var matrixActive = function() {
                 if (this.matrixText) {
                     return true;
@@ -203,7 +182,7 @@ class UiTestSetup {
              //   }
             };
 
-            addTopButton('STICK', this.callbacks.addThumbstick, stickActive);
+        //    addTopButton('STICK', this.callbacks.addThumbstick, stickActive);
 
             var abPresent = function() {
                 console.log("Debug not wired up...")
@@ -212,7 +191,7 @@ class UiTestSetup {
             //    }
             };
 
-            addTopButton('ACTION', this.callbacks.addActionButton, abPresent);
+        //    addTopButton('ACTION', this.callbacks.addActionButton, abPresent);
 
             var apsPresent = function() {
                 console.log("Debug not wired up...")
@@ -221,7 +200,7 @@ class UiTestSetup {
               //  }
             };
 
-            addTopButton('APS', this.callbacks.addActionPointStatus, apsPresent);
+        //    addTopButton('APS', this.callbacks.addActionPointStatus, apsPresent);
 
 
     //        addTopButton('PIECE', GameAPI.loadTestPiece, GameAPI.testPieceLoaded);
@@ -234,7 +213,7 @@ class UiTestSetup {
             //    GuiAPI.getGuiDebug().debugPieceAnimations(GameAPI.getPlayerCharacter())
             }
 
-            addTopButton('ANIMS', debugAnims, GuiAPI.getGuiDebug().getDebugAnimChar);
+        //    addTopButton('ANIMS', debugAnims, GuiAPI.getGuiDebug().getDebugAnimChar);
 
 
             var envArgs = [];
@@ -250,7 +229,7 @@ class UiTestSetup {
             };
 
             var dummy = function() {
-                console.log("Debug not wired up...")
+            //    console.log("Debug not wired up...")
             };
 
             addTopButton('STEPENV', advanceEnv, dummy);
@@ -263,9 +242,9 @@ class UiTestSetup {
             };
 
 
-            addTopButton('DROPITEM', dropItem, dummy);
+        //    addTopButton('DROPITEM', dropItem, dummy);
 
-return
+
             var physDebug = function() {
                 console.log("Debug not wired up...")
             //    DebugAPI.setDebugDrawPhysics(!DebugAPI.getDebugDrawPhysics())
@@ -276,7 +255,7 @@ return
             };
 
 
-            addTopButton('PHYS_DBG', physDebug, physIsDebug);
+        //    addTopButton('PHYS_DBG', physDebug, physIsDebug);
 
 
             var charDebug = function() {
@@ -287,7 +266,7 @@ return
             };
 
 
-            addTopButton('CHAR_DBG', charDebug, charIsDebug);
+        //    addTopButton('CHAR_DBG', charDebug, charIsDebug);
 
 
 
@@ -300,7 +279,7 @@ return
 
 
 
-            addTopButton('JNT_DBG', jntDebug, jntIsDebug);
+        //    addTopButton('JNT_DBG', jntDebug, jntIsDebug);
 
         };
 
@@ -309,7 +288,7 @@ return
             this.tempVec1.set(0.1, -0.2, 0);
             this.tempVec1.y += this.progressBars.length * 0.06;
 
-            var progressBar = new GuiProgressBar();
+            var progressBar = new GuiProgressBar({});
 
             var onActivate = function(bool, widget) {
                 if (bool) {

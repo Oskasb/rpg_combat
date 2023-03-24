@@ -6,6 +6,7 @@ import { Setup } from './setup/Setup.js';
 import * as THREE from '../../libs/three/Three.js';
 import { ThreeController } from '../3d/ThreeController.js';
 import { DynamicMain } from '../3d/DynamicMain.js';
+import { GameMain } from "../game/GameMain.js";
 
 class Client {
 
@@ -19,6 +20,7 @@ class Client {
         this.threeController = new ThreeController();
         this.pipelineAPI = new PipelineAPI();
         this.gameScreen = new GameScreen();
+        this.gameMain = new GameMain();
         this.dynamicMain = new DynamicMain();
         window.GameScreen = this.gameScreen;
         this.setup = new Setup();
@@ -27,6 +29,7 @@ class Client {
 
     activateGui() {
         client.createScene();
+        this.gameMain.initGameMain();
     }
 
     initUiSystem() {
@@ -51,35 +54,7 @@ class Client {
 
     createScene() {
 
-        client.treeInstances = [];
 
-        client.particleEffects = [];
-
-        let instanceReturns = function(instance) {
-            //     console.log(instance)
-            instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE)
-            instance.spatial.setScaleXYZ(0.2, 0.2, 0.2)
-            instance.spatial.obj3d.rotateX(-1.7);
-            instance.spatial.setQuatXYZW(
-                instance.spatial.obj3d.quaternion.x,
-                instance.spatial.obj3d.quaternion.y,
-                instance.spatial.obj3d.quaternion.z,
-                instance.spatial.obj3d.quaternion.w
-            );
-            client.treeInstances.push(instance);
-        };
-
-        let assets = client.dynamicMain.assets;
-
-        for (let key in assets) {
-            //   console.log("inst:", assets)
-            for (let i = 0; i < 20; i++) {
-                client.dynamicMain.requestAssetInstance(key, instanceReturns)
-                //    client.dynamicMain.requestAssetInstance('asset_tree_2', instanceReturns)
-                //    client.dynamicMain.requestAssetInstance('asset_tree_3', instanceReturns)
-            }
-
-        }
 
         client.gameEffects = [];
 
@@ -132,18 +107,11 @@ class Client {
 
         const onFrameReadyCallback= function(frame) {
 
-            GuiAPI.updateGui(frame.tpf, frame.elapsedTime)
-            InstanceAPI.updateInstances(frame.tpf)
-            ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
 
-            ThreeAPI.applyDynamicGlobalUniforms();
+        //    ThreeAPI.setCameraPos(Math.sin(frame.elapsedTime*0.02)*30, 10 + Math.sin(frame.elapsedTime*0.7)*7, Math.cos(frame.elapsedTime*0.02)*30);
+        //    ThreeAPI.cameraLookAt(0, 0, 0);
 
-            ThreeAPI.setCameraPos(Math.sin(frame.elapsedTime*0.02)*30, 10 + Math.sin(frame.elapsedTime*0.7)*7, Math.cos(frame.elapsedTime*0.02)*30);
-            ThreeAPI.cameraLookAt(0, 0, 0);
-            ThreeAPI.updateCamera();
-            ThreeAPI.updateAnimationMixers(frame.tpf);
-            ThreeAPI.updateSceneMatrixWorld(frame.tpf);
-            client.dynamicMain.tickDynamicMain(frame.tpf, frame.elapsedTime);
+
             /*
 */
 
@@ -163,13 +131,7 @@ class Client {
 
             }
 
-            for (let i = 0; i < client.treeInstances.length;i++) {
-                client.treeInstances[i].spatial.setPosXYZ(
-                    Math.sin(0.01*frame.z+i)*(0.4+i*0.3),
-                    Math.sin(0.4*frame.z*2+i)*1,
-                    Math.cos(0.01*frame.z+i)*(0.4+i*0.3)
-                )
-            }
+
 
             if (client.gameEffects.length > 10) {
                 let effect = client.gameEffects.shift();
@@ -217,6 +179,17 @@ class Client {
             frame.tpf = clock.getDelta();
             frame.elapsedTime = clock.elapsedTime;
             client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
+
+            GuiAPI.updateGui(frame.tpf, frame.elapsedTime)
+            InstanceAPI.updateInstances(frame.tpf)
+            ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
+            ThreeAPI.applyDynamicGlobalUniforms();
+
+            ThreeAPI.updateCamera();
+            ThreeAPI.updateAnimationMixers(frame.tpf);
+            ThreeAPI.updateSceneMatrixWorld(frame.tpf);
+            client.dynamicMain.tickDynamicMain(frame.tpf, frame.elapsedTime);
+
             //     renderer.render(scene, camera)
             EffectAPI.updateEffectAPI(frame.elapsedTime);
             ThreeAPI.requestFrameRender(frame)

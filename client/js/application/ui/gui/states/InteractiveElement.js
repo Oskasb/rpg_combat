@@ -58,7 +58,7 @@ class InteractiveElement {
 
                 if (this.pressActive) {
                     this.releasePressIndex(inputIndex);
-                    this.onPressActivate(inputIndex);
+                //    this.onPressActivate(inputIndex);
                     this.pressActive = false;
                 }
             }
@@ -99,7 +99,7 @@ class InteractiveElement {
 
         applyHoverState = function() {
 
-            GuiAPI.debugDrawRectExtents(this.surfaceElement.minXY, this.surfaceElement.maxXY);
+        //    GuiAPI.debugDrawRectExtents(this.surfaceElement.minXY, this.surfaceElement.maxXY);
 
             if ( this.getSurfaceElement().getActive()) {
                 this.setInteractiveState(ENUMS.ElementState.ACTIVE_HOVER);
