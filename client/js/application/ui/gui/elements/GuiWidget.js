@@ -65,6 +65,7 @@ class GuiWidget {
 
             if (pos) {
                 this.originalPosition.copy(pos);
+            //    GameScreen.fitView(this.originalPosition)
             } else {
                 this.originalPosition.set(0, 0, 0);
             }

@@ -27,6 +27,7 @@ class ThreeController {
     notifyRezize = function() {
         console.log("notifyRezize")
         ThreeAPI.updateWindowParameters(GameScreen.getWidth(), GameScreen.getHeight(), GameScreen.getAspect(), this.pxRatio);
+        GuiAPI.setCameraAspect(GameScreen.getAspect())
     };
 
     monkeypatchCustomEngine = function() {
@@ -70,6 +71,7 @@ class ThreeController {
 
             PipelineAPI.setCategoryData('SETUP', {SCREEN:[width, height], LANDSCAPE:landscape});
             GameScreen.notifyResize();
+            GameScreen.setLandscape(landscape);
             setTimeout(function() {
                 GameScreen.notifyResize();
                 _this.notifyRezize();

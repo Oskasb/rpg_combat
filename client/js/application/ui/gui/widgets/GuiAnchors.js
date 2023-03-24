@@ -17,14 +17,14 @@ class GuiAnchors {
             mid_q_left:{x:-0.4, y:0}
         };
 
-        this.frustumFactor = 0.825;
+        this.frustumFactor = 0.828;
 
     };
 
     initGuiAnchors = function() {
 
         for (let key in this.anchors) {
-            this.addAnchor(key, this.anchors[key].x, this.anchors[key].y)
+            this.addAnchor(key)
         }
     };
 
@@ -33,7 +33,9 @@ class GuiAnchors {
         let anchorReady = function(widget) {
             widget.originalPosition.x = widget.anchor.x * this.frustumFactor;
             widget.originalPosition.y = widget.anchor.y * this.frustumFactor;
+        //    GameScreen.fitView(widget.originalPosition);
             widget.pos.copy(widget.originalPosition);
+
             widget.applyWidgetPosition();
             GuiAPI.setAnchorWidget(widget.anchor.key, widget)
         }.bind(this);

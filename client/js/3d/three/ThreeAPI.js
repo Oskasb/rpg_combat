@@ -173,6 +173,7 @@ class ThreeAPI {
     updateWindowParameters = function(width, height, aspect, pxRatio) {
         console.log(width, height, aspect, pxRatio)
         this.threeSetup.setRenderParams(width, height, aspect, pxRatio);
+
     };
 
     registerUpdateCallback = function(callback) {
