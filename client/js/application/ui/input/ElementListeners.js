@@ -59,7 +59,7 @@ class ElementListeners {
         });
 
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {
-            //	e.preventDefault();
+            	e.preventDefault();
 
             for (let i = 0; i < e.touches.length; i++) {
                 _this.x = (e.touches[i].clientX);
@@ -74,7 +74,7 @@ class ElementListeners {
         });
 
         this.gameScreen.getElement().addEventListener('touchmove', function(e) {
-            //	e.preventDefault();
+            	e.preventDefault();
             for (let i = 0; i < e.touches.length; i++) {
                 _this.x = (e.touches[0].clientX);
                 _this.y = (e.touches[0].clientY);
@@ -85,7 +85,7 @@ class ElementListeners {
         });
 
         let touchend = function(e) {
-            //	e.preventDefault();
+            	e.preventDefault();
             for (let i = 0; i < _this.POINTER_STATE.touches.length; i++) {
 
                 if (!e.touches[i]) {

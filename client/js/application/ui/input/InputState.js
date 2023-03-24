@@ -20,15 +20,18 @@ class InputState {
             this.pressFrames = 0
         };
 
-        this.POINTER_STATE.mouse = new pointerState(index);
+
+
         this.POINTER_STATE.touches = [];
 
         for (let i = 0; i < ENUMS.Numbers.TOUCHES_COUNT; i++) {
-            index++;
-            this.POINTER_STATE.touches[i] = new pointerState(index)
-        }
 
-        this.POINTER_STATE.touches.unshift(this.POINTER_STATE.mouse);
+            this.POINTER_STATE.touches[i] = new pointerState(index)
+            index++;
+        }
+        this.POINTER_STATE.mouse = new pointerState(index);
+
+        this.POINTER_STATE.touches.push(this.POINTER_STATE.mouse);
 
         this.elementListeners = new ElementListeners(this.POINTER_STATE, gameScreen);
     }
