@@ -75,6 +75,21 @@
           }
         },
         {
+          "id": "tx_settings_tiles_8x8"  ,
+          "config":{
+            "settings" : {
+              "wrapS": "RepeatWrapping",
+              "wrapT": "RepeatWrapping",
+              "generateMipmaps": false,
+              "magFilter": "LinearFilter",
+              "minFilter": "LinearFilter",
+              "tiles_x":8,
+              "tiles_y":8,
+              "flipY": false
+            }
+          }
+        },
+        {
           "id": "tx_settings_tiles_16x16"  ,
           "config":{
             "settings" : {

@@ -158,12 +158,12 @@
                 "sunLightColor": { "value": {"r":1, "g":1, "b":1}},
                 "sunLightDirection": { "value": {"x":1, "y":1, "z":1}}
               },
-              "side": "DoubleSide",
+              "side": "FrontSide",
               "settings": {
                 "depthTest": true,
                 "alphaTest": 0.05,
                 "transparent": false,
-                "depthWrite": false,
+                "depthWrite": true,
                 "premultipliedAlpha": true
               }
             }

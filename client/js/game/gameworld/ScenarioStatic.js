@@ -79,7 +79,8 @@ class ScenarioStatic {
 
             instance.spatial.setPosXYZ(2*boxSize*x, -boxSize, 2*boxSize*y);
 
-            instance.setAttributev4('sprite', {x:2, y:1, z:1, w:1});
+            instance.setAttributev4('sprite', {x:Math.floor(Math.random()*3), y:Math.floor(Math.random()*3) , z:1, w:1});
+
 
             setTimeout(function() {
                 instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)

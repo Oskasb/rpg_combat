@@ -155,7 +155,7 @@
           "config":{
             "settings": "mat_settings_instancing_tileset",
             "textures":[
-              {"key":"map"           , "id":"gui_atlas_16x16"      },
+              {"key":"map"           , "id":"tx_box_tiles8x8"      },
               {"key":"data_texture"  , "id":"data_texture"         }
             ]
           }
