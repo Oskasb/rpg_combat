@@ -2,7 +2,7 @@ class InstanceSpatial{
 
         constructor(obj3d) {
             this.obj3d = obj3d;
-            this.frameMovement = new THREE.Vector3();
+            this.frameMovement = new THREE.Vector3(0.0, 0.01, 0.0);
         };
 
         getFrameMovement = function() {
@@ -83,9 +83,12 @@ class InstanceSpatial{
 
         };
 
-
         setGeometryInstance = function(geomIns) {
             this.geometryInstance = geomIns;
+            this.geometryInstance.applyObjPos();
+            this.geometryInstance.applyObjQuat();
+            this.geometryInstance.applyObjScale();
+
         };
 
     }

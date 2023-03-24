@@ -18,7 +18,7 @@ class GameScenario {
     }
 
     updateGameScenario() {
-        ThreeAPI.setCameraPos(Math.sin(this.scenarioTime*0.02)*30, 10 + Math.sin(this.scenarioTime*0.7)*7, Math.cos(this.scenarioTime*0.02)*30);
+        ThreeAPI.setCameraPos(Math.sin(this.scenarioTime*0.04)*30, 6 + Math.sin(this.scenarioTime*0.7)*2, Math.cos(this.scenarioTime*0.04)*30);
         ThreeAPI.cameraLookAt(0, 0, 0);
     }
 

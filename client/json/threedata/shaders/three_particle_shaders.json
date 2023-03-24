@@ -5,6 +5,7 @@
         "VEGETATION_INSTANCING",
         "PARTICLE_INSTANCING",
         "STAMP_INSTANCING",
+        "BOX_INSTANCING",
         "GUI_INSTANCING_STANDARD",
         "GEOMETRY_INSTANCING_STANDARD",
         "TERRAIN_SHADER",
@@ -852,6 +853,22 @@
           }
         ]
       },
+
+      "BOX_INSTANCING": {
+        "vertex": [
+          {
+            "source": "INSTANCING_PROGRAMS",
+            "chunk": "vertexBoxInstancing"
+          }
+        ],
+        "fragment": [
+          {
+            "source": "INSTANCING_PROGRAMS",
+            "chunk": "fragmentBoxInstancing"
+          }
+        ]
+      },
+
       "STAMP_INSTANCING": {
         "vertex": [
           {

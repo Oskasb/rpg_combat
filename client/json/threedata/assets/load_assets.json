@@ -12,14 +12,16 @@
       "TEXTURES"
     ],
     "LOAD_MODELS":[
+      "asset_box",
       "asset_tree_3",
-      "asset_helmetviking",
       "asset_tree_2",
       "asset_tree_4",
       "asset_tree_5",
-      "asset_tree_1"
+      "asset_tree_1",
+      "asset_helmetviking"
     ],
     "PRELOAD_FILES": [
+      "file_box",
       "file_quad",
       "file_flatQuad",
       "file_nineQuad",

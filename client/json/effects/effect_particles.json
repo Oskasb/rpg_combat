@@ -28,12 +28,12 @@
                         {
                             "particle_id": "particle_wisp_additive",
                             "spawner_id": "additive_particles_6x6",
-                            "size_min": 265,
-                            "size_max": 292,
+                            "size_min": 65,
+                            "size_max": 92,
                             "attack_time": 0.45,
                             "release_time": 1.5,
-                            "color_min": [0.25, 0.45, 0.45, 0.95],
-                            "color_max": [0.4, 0.9, 1, 1],
+                            "color_min": [0.15, 0.25, 0.25, 0.25],
+                            "color_max": [0.4, 0.6, 1, 0.4],
                             "sprite": [3, 3, 1, 0]
                         }
                     ]

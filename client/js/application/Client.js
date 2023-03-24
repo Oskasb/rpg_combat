@@ -133,30 +133,6 @@ class Client {
 
 
 
-            if (client.gameEffects.length > 10) {
-                let effect = client.gameEffects.shift();
-                effect.recoverEffectOfClass();
-            }
-
-            for (let i = 0; i < client.gameEffects.length;i++) {
-
-            }
-
-            let effectCb = function(eftc) {
-                //     console.log("effect add: ", effect)
-                eftc.activateEffectFromConfigId()
-                //    client.gameEffects.push(effect);
-                eftc.pos.x = Math.sin(2.61*frame.z)*(20);
-                eftc.pos.y =Math.sin(0.4*frame.z*5);
-                eftc.pos.z =Math.cos(2.61*frame.z)*(20);
-                eftc.setEffectPosition(eftc.pos)
-            };
-
-            if (Math.random() < 0.05) {
-                EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
-            }
-
-
             cube.rotation.x += 0.01;
             cube.rotation.y += 0.01;
             cube.rotation.z = Math.sin(frame.z)*3.14;

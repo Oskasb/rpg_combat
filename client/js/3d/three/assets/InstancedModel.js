@@ -58,6 +58,14 @@ class InstancedModel {
             attachInstance.getSpatial().attachToDynamicJoint(dynJoint);
         };
 
+        getGeometryInstance = function() {
+            return this.spatial.geometryInstance;
+        };
+
+    setAttributev4(attribName, vec4) {
+        this.getGeometryInstance().setAttributeVec4(attribName, vec4)
+    };
+
 
         initModelInstance = function(callback, _this) {
 
@@ -98,6 +106,8 @@ class InstancedModel {
             });
             this.mapBones();
         };
+
+
 
         setActive = function(ENUM) {
             this.active = ENUM;

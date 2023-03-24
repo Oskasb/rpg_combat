@@ -109,8 +109,8 @@ class GuiAPI {
     buildWidgetOptions = function(options) {
 
         let opts = {};
-
         opts.configId       = options.configId || 'button_big_blue';
+        opts.widgetCallback = options.widgetCallback || null;
         opts.onActivate     = options.onActivate || null;
         opts.testActive     = options.testActive || null;
         opts.interactive    = options.interactive || false;
@@ -267,18 +267,18 @@ class GuiAPI {
 
 
 
-        let dymmy1 = function(textWidget) {
-            textWidget.updateTextContent("MOO "+tpf)
+    //    let dymmy1 = function(textWidget) {
+    //        textWidget.updateTextContent("MOO "+tpf)
          //   printWidgetText("MOO "+tpf, 7)
-        };
+    //    };
 
         this.guiDebug.updateDebugElements();
         this.instantiator.updateInstantiatorBuffers(time);
     //    this.instantiator.monitorBufferStats();
 
-        if (this.registeredTextElements['main_text_box']) {
-            dymmy1(this.registeredTextElements['main_text_box']);
-        }
+    //    if (this.registeredTextElements['main_text_box']) {
+    //        dymmy1(this.registeredTextElements['main_text_box']);
+    //    }
 
         MATH.callAll(this.guiUpdateCallbacks, tpf, time);
      //   DebugAPI.generateTrackEvent('GUI_DT', time, 'ms', 2)

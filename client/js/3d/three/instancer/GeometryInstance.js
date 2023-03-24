@@ -38,6 +38,10 @@ class GeometryInstance {
         this.instancingBuffers.setBufferVec4("orientation", this.index, quaternion)
     };
 
+    setAttributeVec4 = function(attribName, vec4) {
+        this.instancingBuffers.setBufferVec4(attribName, this.index, vec4)
+    };
+
     setScale = function (scale) {
         this.obj3d.scale.copy(scale);
         this.tempVec1.x = this.baseScale * this.obj3d.scale.x;

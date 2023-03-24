@@ -115,16 +115,13 @@ class UiTestSetup {
         addTestButtons = function() {
 
 
-            let addTopButton = function(text, onActivate, testActive) {
+            let addTopButton = function(text, onActivate, testActive, onReady) {
 
-                var onReady = function(widget) {
-                //    console.log("Button widget: ", widget);
-                };
-
-                var opts = GuiAPI.buildWidgetOptions(
+                let opts = GuiAPI.buildWidgetOptions(
 
                     {
                         widgetClass:'GuiSimpleButton',
+                        widgetCallback:onReady,
                         configId: 'button_big_blue',
                         onActivate: onActivate,
                         testActive: testActive,
@@ -135,7 +132,7 @@ class UiTestSetup {
 
                 );
 
-                evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts, onReady)
+                evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts)
 
             }.bind(this)
 
@@ -148,6 +145,14 @@ class UiTestSetup {
                 activeScenario = gameScenario;
             }.bind(this);
 
+            let onButtonCb = function(button) {
+                console.log("onButtonCb", button)
+                // setTimeout(function() {
+                    button.pressButtonFromCode()
+                    console.log("pressButtonFromCode");
+                // }, 2200)
+            };
+
             let spamActive = function() {
             //    console.log("Debug not wired up...")
             //   evt.dispatch(ENUMS.Event.SCENARIO_CLOSE,    {scenarioId:'test'})
@@ -155,7 +160,7 @@ class UiTestSetup {
                     return true;
                 }
             //     return MainWorldAPI.getWorldSimulation().readWorldStatusValue('randomSpawn');
-            }.bind(this);
+            };
 
             let spawnSpam = function() {
             //    console.log("Debug not wired up...")
@@ -164,7 +169,7 @@ class UiTestSetup {
             //    wstatus.randomSpawn = !wstatus.randomSpawn
             };
 
-            addTopButton('START', spawnSpam, spamActive);
+            addTopButton('HOME', spawnSpam, spamActive, onButtonCb);
          //   addTopButton('Prg Bar', this.callbacks.addProgressBar, null);
         //    addTopButton('txtbox', this.callbacks.addTextBox, null);
             var matrixActive = function() {

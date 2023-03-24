@@ -137,6 +137,38 @@
             }
           }
         },
+
+        {
+          "id": "mat_settings_instancing_tileset"  ,
+          "config": {
+            "shader": "RawShaderMaterial",
+            "properties": {
+              "program": "BOX_INSTANCING",
+              "blending": "CustomBlending",
+              "customBlending": {
+                "blendEquation": "AddEquation",
+                "blendSrc": "SrcAlphaFactor",
+                "blendDst": "OneMinusSrcAlphaFactor"
+              },
+              "data_texture": "data_texture",
+              "global_uniforms":{
+                "fogDensity": { "value": 0.00025 },
+                "fogColor": { "value": {"r":1, "g":1, "b":1}},
+                "ambientLightColor": { "value": {"r":1, "g":1, "b":1}},
+                "sunLightColor": { "value": {"r":1, "g":1, "b":1}},
+                "sunLightDirection": { "value": {"x":1, "y":1, "z":1}}
+              },
+              "side": "DoubleSide",
+              "settings": {
+                "depthTest": true,
+                "alphaTest": 0.05,
+                "transparent": false,
+                "depthWrite": false,
+                "premultipliedAlpha": true
+              }
+            }
+          }
+        },
         {
           "id": "mat_settings_particle_stamp"  ,
           "config": {

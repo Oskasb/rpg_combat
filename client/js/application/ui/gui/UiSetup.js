@@ -35,34 +35,6 @@ class UiSetup {
             GuiAPI.getGuiDebug().setupDebugControlContainer();
             GuiAPI.getGuiDebug().setupDebugControlContainer2();
             this.uiTestSetup.initUiTestSetup();
-        //    this.uiTestSetup.addMatrixText();
-
-                var onReady = function(textBox) {
-                    textBox.updateTextContent("Text ready...")
-                    GuiAPI.registerTextSurfaceElement('main_text_box', textBox);
-
-            }
-
-
-
-
-            var onActivate = function(inputIndex, widget) {
-                widget.printWidgetText('pressed')
-            };
-
-            var opts = GuiAPI.buildWidgetOptions(
-
-                {
-                    configId: 'main_text_box',
-                    onActivate: onActivate,
-                    interactive: true,
-                    text: 'TRY ME',
-                    anchor:'center'
-                }
-
-            );
-
-            GuiAPI.buildGuiWidget('GuiTextBox', opts, onReady);
 
         };
 

@@ -153,9 +153,10 @@
         {
           "id":"material_instancing_tileset",
           "config":{
-            "settings": "mat_settings_instancing_normal",
+            "settings": "mat_settings_instancing_tileset",
             "textures":[
-              {"key":"map"           , "id":"gui_atlas_16x16"      }
+              {"key":"map"           , "id":"gui_atlas_16x16"      },
+              {"key":"data_texture"  , "id":"data_texture"         }
             ]
           }
         },

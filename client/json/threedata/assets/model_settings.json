@@ -12,6 +12,20 @@
             }
           }
         },
+        {"id": "model_settings_tileset" ,
+          "config": {
+            "instancing": {
+              "instances": 4096,
+              "attributes": ["offset", "vertexColor", "scale3d", "orientation", "sprite"],
+              "cameraspace": false
+            },
+            "transform": {
+              "pos":   [0, 0, 0],
+              "rot":   [0, 0, 0],
+              "scale": [1, 1, 1]
+            }
+          }
+        },
         {"id": "model_settings_vegetation" ,
           "config": {
             "instancing": {
@@ -68,20 +82,7 @@
             }
           }
         },
-        {"id": "model_settings_tileset" ,
-          "config": {
-            "instancing": {
-              "instances": 200,
-              "attributes": ["offset", "vertexColor", "scale3d", "orientation", "sprite"],
-              "cameraspace": false
-            },
-            "transform": {
-              "pos":   [0, 0, 0],
-              "rot":   [0, 0, 0],
-              "scale": [1, 1, 1]
-            }
-          }
-        },
+
         {"id": "model_settings_instancing" ,
           "config": {
             "instancing": {
