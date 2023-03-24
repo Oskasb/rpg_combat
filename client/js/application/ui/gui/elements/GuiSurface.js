@@ -202,6 +202,7 @@ class GuiSurface {
             }
 
             this.bufferElement.setSprite(this.sprite);
+
             this.bufferElement.setScaleVec3(this.scale);
          //   console.log("confNineslice ", this.sprite)
         };

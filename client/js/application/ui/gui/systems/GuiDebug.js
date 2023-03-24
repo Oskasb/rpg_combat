@@ -75,7 +75,17 @@ class GuiDebug {
             widget.text.clearTextContent()
         };
 
-        let opts = GuiAPI.buildWidgetOptions('debug_text_box', onActivate, false, true, "DEBUG TEXT", 0, 0, 'bottom_left');
+        let opts = GuiAPI.buildWidgetOptions(
+
+            {
+                configId: 'debug_text_box',
+                onActivate: onActivate,
+                interactive: true,
+                text: 'DEBUG TEXT',
+                anchor: 'bottom_left'
+            }
+
+        );
 
         GuiAPI.buildGuiWidget('GuiTextBox', opts, onReady);
     };
@@ -107,7 +117,14 @@ class GuiDebug {
             this.debugControlContainer = expcont;
         }.bind(this);
 
-        var opts = GuiAPI.buildWidgetOptions('widget_vertical_container', false, false, false, null, 0, 0, 'top_left');
+        var opts = GuiAPI.buildWidgetOptions(
+
+            {
+                configId: 'widget_vertical_container',
+                anchor: 'top_left'
+            }
+
+        );
 
         GuiAPI.buildGuiWidget('GuiExpandingContainer', opts, onReady);
     };
@@ -118,7 +135,12 @@ class GuiDebug {
             this.debugControlContainer2.addToOffsetXY(15, 0)
         }.bind(this);
 
-        var opts = GuiAPI.buildWidgetOptions('widget_expanding_container', false, false, false, null, 0, 0, 'mid_q_right');
+        var opts = GuiAPI.buildWidgetOptions(
+            {
+                configId: 'widget_expanding_container',
+                anchor: 'mid_q_right'
+            }
+        );
 
         GuiAPI.buildGuiWidget('GuiExpandingContainer', opts, onReady);
     };
@@ -154,7 +176,17 @@ class GuiDebug {
             }
         };
 
-        var opts = GuiAPI.buildWidgetOptions('button_sharp_blue', onActivate, testActive, true, text);
+        let opts = GuiAPI.buildWidgetOptions(
+
+            {
+                configId: 'button_sharp_blue',
+                onActivate: onActivate,
+                testActive:testActive,
+                interactive: true,
+                text: text
+            }
+
+        );
 
         GuiAPI.buildGuiWidget('GuiSimpleButton', opts, onReady);
 

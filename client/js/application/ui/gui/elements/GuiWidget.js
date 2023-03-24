@@ -10,6 +10,7 @@ class GuiWidget {
     this.elementStateProcessor = new ElementStateProcessor();
             this.configId = configId;
 
+            this.tempVec = new THREE.Vector3();
             this.pos  = new THREE.Vector3();
             this.originalPosition = new THREE.Vector3();
             this.offsetPosition = new THREE.Vector3();
@@ -248,7 +249,13 @@ class GuiWidget {
 
         updateSurfacePositions = function() {
 
-            this.guiSurface.setSurfaceCenterAndSize(this.pos, this.size);
+            this.tempVec.copy(this.size);
+
+            if (!GameScreen.getLandscape()) {
+        //        this.tempVec.multiplyScalar(GameScreen.getAspect());
+            }
+
+            this.guiSurface.setSurfaceCenterAndSize(this.pos, this.tempVec);
             this.guiSurface.positionOnCenter();
             this.guiSurface.fitToExtents();
         };

@@ -46,7 +46,8 @@ if(typeof(ENUMS) === "undefined"){
         DEBUG_DRAW_AABOX:       21,
         DYNAMIC_JOINT:          22,
         TRACK_STAT:             23,
-        DATA_PIPELINE_READY:    24
+        DATA_PIPELINE_READY:    24,
+        BUILD_BUTTON:           25
     };
 
     ENUMS.Args = {

@@ -47,7 +47,7 @@ class InputSystem {
 
     updateInteractiveElements = function(inputIndex, x, y, pointer) {
         let interactiveElem;
-    //    GuiAPI.debugDrawGuiPosition(x, y);
+        GuiAPI.debugDrawGuiPosition(x, y);
 
         if (pointer) {
 
@@ -68,6 +68,7 @@ class InputSystem {
 
             interactiveElem = this.getIntersectingElement(x, y, inputIndex);
 
+
             if (interactiveElem) {
                 interactiveElem.notifyHoverStateOn(inputIndex);
             }
@@ -82,17 +83,6 @@ class InputSystem {
         let _this = this;
         let sampleInput = function(inputIndex, pointerState) {
             let pointers = this.pointers;
-        //    console.log("Sample input: ", inputIndex, pointerState);
-
-
-        //    let startIndex = inputIndex // * ENUMS.InputState.BUFFER_SIZE;
-
-        //    let inputBuffer = buffer;
-
-            //    if (inputBuffer[startIndex + ENUMS.InputState.HAS_UPDATE] === 200) {
-        //    GuiAPI.setInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE, 1)
-            //    inputBuffer[startIndex + ENUMS.InputState.HAS_UPDATE] = 1;
-            //    }
 
             let pointer = null;
             let tempVec = this.tempVec1;
@@ -124,23 +114,25 @@ class InputSystem {
                 }
 
             } else {
-
                 if (pointers[inputIndex]) {
                     pointer = pointers[inputIndex];
+
+                    let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);
+
+                    if (interactiveElem === pointers[inputIndex].getPointerInteractiveElement()) {
+                        GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
+                //        pointer.pointerPressElementStart(interactiveElem);
+                    } else {
+                        GuiAPI.printDebugText("RELEASE POINTER");
+                    }
+                    
                     pointer.releasePointer();
                     pointer = null;
                     pointers[inputIndex] = null;
                 }
-
             }
 
-            let hasUpdate = true //GuiAPI.readInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE);
-
-            if (hasUpdate) {
-                hasUpdate++;
-            //    GuiAPI.setInputBufferValue(startIndex, inputBuffer, ENUMS.InputState.HAS_UPDATE, hasUpdate);
-                _this.updateInteractiveElements( inputIndex, pointerState.posX, pointerState.posY, pointer)
-            }
+            _this.updateInteractiveElements( inputIndex, pointerState.posX, pointerState.posY, pointer)
 
         }.bind(this);
 

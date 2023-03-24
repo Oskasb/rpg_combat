@@ -452,7 +452,7 @@ class ThreeEnvironment {
         console.log("Advance ENV ", key, envArgs, this.currentEnvId, this.envList);
     };
 
-//    evt.on(ENUMS.Event.ADVANCE_ENVIRONMENT, ThreeEnvironment.advanceEnv);
+
 
     initEnvironment = function(store, ready) {
 
@@ -461,7 +461,7 @@ class ThreeEnvironment {
         this.scene = scene;
         this.renderer = store.renderer;
         this.camera = store.camera;
-
+        evt.on(ENUMS.Event.ADVANCE_ENVIRONMENT, _this.advanceEnv);
 
         var canvas = document.createElement("canvas");
 

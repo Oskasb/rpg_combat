@@ -18,7 +18,7 @@ class InteractiveElement {
 
         setInteractiveState = function(state) {
 
-    //        GuiAPI.printDebugText("" + ENUMS.getKey('ElementState', state));
+            GuiAPI.printDebugText("INT STATE: " + ENUMS.getKey('ElementState', state));
 
             this.state = state;
             this.getSurfaceElement().applyStateFeedback()

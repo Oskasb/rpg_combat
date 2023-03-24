@@ -72,16 +72,16 @@
             {
               "id":"layout_major_button",
               "config": {
-                "text":   {"x":0.5, "y": 0.5, "fontsize": 12},
+                "text":   {"x":0.5, "y": 0.5, "fontsize": 9},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
-                "size":   {"x":0.13, "y":0.04,"z":  0.0}
+                "size":   {"x":0.09, "y":0.03,"z":  0.0}
               }
             },
             {
               "id":"layout_big_icon_button",
               "config": {
-                "text":   {"x":0.5, "y": 0.1, "fontsize": 9},
+                "text":   {"x":0.5, "y": 0.1, "fontsize": 8},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
                 "size":   {"x":0.2, "y":0.06,"z":  0.0}
@@ -128,8 +128,8 @@
               "config": {
                 "text":   {"x": 1.0, "y":0.0, "fontsize": 8},
                 "anchor": {"x":-0.0, "y":0.0, "z":  0.0},
-                "offset": {"x": 0.0, "y":0.0, "z":  0.0},
-                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 4, "pad": 0.005, "gridx": -1, "gridy":-1}
+                "offset": {"x": 0.0, "y":-0.25, "z":  0.0},
+                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 3, "pad": 0.002, "gridx": -1, "gridy":-1}
               }
             },
             {

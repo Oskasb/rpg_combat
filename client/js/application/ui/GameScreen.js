@@ -40,9 +40,9 @@ class GameScreen {
         _this.notifyResize();
     };
 
-    getResolution = function(width, height) {
-        //	if (width < height) return height;
-        return width;
+    getResolution = function() {
+        if (this.width < this.height) return this.height;
+        return this.width;
     };
 
     notifyResize = function() {
@@ -50,7 +50,7 @@ class GameScreen {
         this.height = this.gameScreen.offsetHeight;
         this.left = this.gameScreen.offsetLeft;
         this.top = this.gameScreen.offsetTop;
-        this.resolution = this.width;
+        this.resolution = this.getResolution();
         this.sizeFactor = this.resolution / this.percentZoom;
         document.body.style.fontSize = this.sizeFactor+"px";
         this.scalePercentToX = (1/this.percentZoom) * this.width * ( this.resolution / this.width);

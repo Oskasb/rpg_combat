@@ -11,6 +11,7 @@ class GuiAPI {
         this.elementPools = {};
         this.inputSystem;
         this.textSystem;
+        this.buttonSystem;
         this.instantiator = new Instantiator('guiInstantiator');
         this.worldSpacePointers = [];
         this.guiSettings = new GuiSettings();
@@ -105,18 +106,18 @@ class GuiAPI {
         this.widgetBuilder.buildWidget(widgetClassName, options, onReady);
     };
 
-    buildWidgetOptions = function(configId, onActivate, testActive, interactive, text, offset_x, offset_y, anchor) {
+    buildWidgetOptions = function(options) {
 
         let opts = {};
 
-        opts.configId = configId || 'button_big_blue';
-        opts.onActivate = onActivate || null;
-        opts.testActive = testActive || null;
-        opts.interactive = interactive || false;
-        opts.text = text || false;
-        opts.offset_x = offset_x || null;
-        opts.offset_y = offset_y || null;
-        opts.anchor = anchor || false;
+        opts.configId       = options.configId || 'button_big_blue';
+        opts.onActivate     = options.onActivate || null;
+        opts.testActive     = options.testActive || null;
+        opts.interactive    = options.interactive || false;
+        opts.text           = options.text || false;
+        opts.offset_x       = options.offset_x || null;
+        opts.offset_y       = options.offset_y || null;
+        opts.anchor         = options.anchor || false;
 
         return opts
     };
@@ -136,6 +137,10 @@ class GuiAPI {
     getTextSystem = function() {
         return this.textSystem;
     };
+
+    setButtonSystem(buttonSys) {
+        this.buttonSystem = buttonSys
+    }
 
     getGuiDebug = function() {
         return this.guiDebug;

@@ -42,11 +42,6 @@ class GuiSettings {
     };
 
 
-
-
-
-
-
     initGuiSprite = function(key, dataId) {
         let sprites = this.settings.sprites;
 

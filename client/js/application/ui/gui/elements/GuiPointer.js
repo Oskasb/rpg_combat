@@ -26,8 +26,6 @@ class GuiPointer {
 
     };
 
-
-
         setPointerInteractiveElement = function(interactiveElement) {
             this.interactiveElement = interactiveElement;
         };
@@ -39,7 +37,7 @@ class GuiPointer {
         pointerPressElementStart = function(interactiveElem) {
             if (this.getIsSeeking()) {
                 this.setPointerInteractiveElement(interactiveElem);
-                GuiAPI.printDebugText("ELEMENT POINTER");
+                GuiAPI.printDebugText("ELEMENT POINTER - STATE: "+ENUMS.getKey('ElementState', interactiveElem.state));
                 GuiAPI.unregisterWorldSpacePointer(this);
             } else {
 

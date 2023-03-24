@@ -1,5 +1,6 @@
 import { InputSystem } from "./systems/InputSystem.js";
 import { TextSystem } from "./systems/TextSystem.js";
+import { GuiButtonSystem } from "./systems/GuiButtonSystem.js";
 import { GuiAnchors } from "./widgets/GuiAnchors.js";
 import { UiTestSetup } from "./UiTestSetup.js";
 
@@ -13,6 +14,9 @@ class UiSetup {
 
             GuiAPI.setInputSystem( new InputSystem());
             GuiAPI.setTextSystem( new TextSystem());
+            let buttonSystem = new GuiButtonSystem();
+            buttonSystem.initGuiButtonSystem();
+            GuiAPI.setButtonSystem(buttonSystem);
 
             let textSysCb = function() {
                 callback('textSysCb loaded');
@@ -46,7 +50,17 @@ class UiSetup {
                 widget.printWidgetText('pressed')
             };
 
-            var opts = GuiAPI.buildWidgetOptions('main_text_box', onActivate, false, true, "TRY ME", 0, 0, 'center');
+            var opts = GuiAPI.buildWidgetOptions(
+
+                {
+                    configId: 'main_text_box',
+                    onActivate: onActivate,
+                    interactive: true,
+                    text: 'TRY ME',
+                    anchor:'center'
+                }
+
+            );
 
             GuiAPI.buildGuiWidget('GuiTextBox', opts, onReady);
 

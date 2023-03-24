@@ -79,13 +79,11 @@ class UiTestSetup {
 
         };
 
-
-
         initUiTestSetup = function() {
 
             GuiAPI.printDebugText("INIT TEST UI");
 
-            var buttonReady = function(button) {
+            let buttonReady = function(button) {
                 this.mainButton = button;
 
                 setTimeout(function() {
@@ -93,22 +91,31 @@ class UiTestSetup {
                 }, 0)
             }.bind(this)
 
-            var testActive = function(widget) {
+            let testActive = function(widget) {
                 return this.testUiActive;
             }.bind(this);
 
-            var opts = GuiAPI.buildWidgetOptions(
-                'button_big_blue',
-                this.callbacks.toggleTestUi,
-                testActive,
-                true,
-                'TESTS',
-                -0.3,
-                -0.05,
-                'top_right'
-            );
+            let opts = {
+                    widgetClass:'GuiSimpleButton',
+                    widgetCallback:buttonReady,
+                    configId: 'button_big_blue',
+                    onActivate: this.callbacks.toggleTestUi,
+                    testActive: testActive,
+                    interactive: true,
+                    text: 'TESTS',
+                    offset_x: -0.1,
+                    offset_y: -0.06,
+                    anchor: 'top_right'
+                };
 
-            GuiAPI.buildGuiWidget('GuiSimpleButton', opts, buttonReady);
+            evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts)
+
+/*
+
+
+
+*/
+
 
             /*
             var statsReady = function(button) {
@@ -149,7 +156,17 @@ class UiTestSetup {
                     container.addChildWidgetToContainer(widget.guiWidget);
                 };
 
-                var opts = GuiAPI.buildWidgetOptions('button_big_blue', onActivate, testActive, true, text);
+                var opts = GuiAPI.buildWidgetOptions(
+
+                    {
+                        configId: 'button_big_blue',
+                        onActivate: onActivate,
+                        testActive: testActive,
+                        interactive: true,
+                        text: text,
+                    }
+
+                );
 
                 GuiAPI.buildGuiWidget('GuiSimpleButton', opts, onReady);
 
@@ -224,16 +241,16 @@ class UiTestSetup {
 
             var env = 0;
 
-            var advanceEnv = function() {
+            let advanceEnv = function() {
                 envArgs[0] = env;
                 envArgs[1] = 20;
-                evt.fire(ENUMS.Event.ADVANCE_ENVIRONMENT, envArgs);
+                evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT, envArgs);
                 env++;
                 GuiAPI.printDebugText("STEP ENVIRONMENT "+env);
             };
 
             var dummy = function() {
-
+                console.log("Debug not wired up...")
             };
 
             addTopButton('STEPENV', advanceEnv, dummy);
@@ -321,7 +338,18 @@ return
                 widget.printWidgetText('pressed')
             };
 
-            var opts = GuiAPI.buildWidgetOptions('main_text_box', onActivate, false, true, "TRY ME", tempVec1.x, tempVec1.y, false);
+            var opts = GuiAPI.buildWidgetOptions(
+
+                {
+                    configId: 'main_text_box',
+                    onActivate: onActivate,
+                    interactive: true,
+                    text: 'TRY ME',
+                    offset_x: tempVec1.x,
+                    offset_y: tempVec1.y
+                }
+
+            );
 
             GuiAPI.buildGuiWidget('GuiTextBox', opts, onReady);
 
