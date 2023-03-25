@@ -65,10 +65,9 @@ class ScenarioStatic {
                 client.dynamicMain.requestAssetInstance('asset_tree_5', instanceReturns)
         }
 
-
         count = 0;
         let boxSize = 2;
-        let maxBoxes = 2048;
+        let maxBoxes = 4096;
         let tempVec = this.tempVec;
 
         let boxReturns = function(instance) {
@@ -79,7 +78,7 @@ class ScenarioStatic {
 
             instance.spatial.setPosXYZ(2*boxSize*ThreeAPI.tempVec1.x, -boxSize, 2*boxSize*ThreeAPI.tempVec1.y);
 
-            instance.setAttributev4('sprite', {x:Math.floor(Math.random()*4), y:Math.floor(Math.random()*4) , z:1, w:1});
+            instance.setAttributev4('sprite', {x:Math.floor(Math.random()*3)+1, y:Math.floor(Math.random()*3)+1 , z:1, w:1});
 
             instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)
 
