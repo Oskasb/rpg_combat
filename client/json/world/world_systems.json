@@ -1,14 +1,18 @@
 [{
   "WORLD":{
-    "WORLD_SYSTEMS":[
+    "STATIC_SCENARIOS":[
       {
-
-        "id":"NO_WORLD_YET",
+        "id":"encounter_scenarios",
         "data": [
           {
-            "id":"world_main",
+            "id":"encounter_static_rock_cave",
             "config": {
-              "key": "value"
+              "environment": "evening",
+              "box_grid":{
+                "box_size":1,
+                "grid_width":20,
+                "grid_depth":60
+              }
             }
           }
         ]

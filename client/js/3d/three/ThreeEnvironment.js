@@ -454,10 +454,16 @@ class ThreeEnvironment {
         let _this = this;
 
         let advanceEnv = function(envArgs) {
-            let keys = Object.keys(_this.envList);
-            let key = keys[envArgs[0] % keys.length];
-            _this.setEnvConfigId(key, envArgs[1]);
-            console.log("Advance ENV ", key, envArgs, _this.currentEnvId, _this.envList);
+            if (envArgs[2]) {
+
+                _this.setEnvConfigId(envArgs[2], envArgs[1]);
+            } else {
+                let keys = Object.keys(_this.envList);
+                let key = keys[envArgs[0] % keys.length];
+                _this.setEnvConfigId(key, envArgs[1]);
+            }
+
+            console.log("Advance ENV ", envArgs, _this.currentEnvId, _this.envList);
         };
 
         let scene = store.scene;

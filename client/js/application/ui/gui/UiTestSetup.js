@@ -146,30 +146,55 @@ class UiTestSetup {
             }.bind(this);
 
             let onButtonCb = function(button) {
-                console.log("onButtonCb", button)
-                // setTimeout(function() {
                     button.pressButtonFromCode()
                     console.log("pressButtonFromCode");
-                // }, 2200)
             };
 
-            let spamActive = function() {
-            //    console.log("Debug not wired up...")
-            //   evt.dispatch(ENUMS.Event.SCENARIO_CLOSE,    {scenarioId:'test'})
+            let homeScenarioId = 'home_scenario';
+            let homeScenarioStaticId = 'home_scenariostatic';
+
+            let homeActive = function() {
                 if (activeScenario.isActive) {
+                    if (activeScenario.scenarioId === homeScenarioId)
                     return true;
+
                 }
-            //     return MainWorldAPI.getWorldSimulation().readWorldStatusValue('randomSpawn');
             };
 
-            let spawnSpam = function() {
-            //    console.log("Debug not wired up...")
-                evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {scenarioId:'test', callback:scenarioCallback})
-            //    var wstatus = MainWorldAPI.getWorldSimulation().getWorldStatus();
-            //    wstatus.randomSpawn = !wstatus.randomSpawn
+            let homeActivate = function() {
+                evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {scenarioId:homeScenarioId, scenarioStaticId:homeScenarioStaticId ,callback:scenarioCallback})
             };
 
-            addTopButton('HOME', spawnSpam, spamActive, onButtonCb);
+            addTopButton('HOME', homeActivate, homeActive, onButtonCb);
+
+
+            let onCaveButtonCb = function(button) {
+            //    button.pressButtonFromCode()
+            };
+
+            let caveScenarioId = 'cave_scenario';
+            let caveStaticId = 'encounter_static_rock_cave';
+
+            let caveActive = function() {
+                if (activeScenario.isActive) {
+                    if (activeScenario.scenarioId === caveScenarioId)
+                        return true;
+                }
+            };
+
+            let caveActivate = function() {
+                evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {
+                    scenarioId:caveScenarioId,
+                    scenarioStaticId:caveStaticId,
+                    callback:scenarioCallback})
+            };
+
+
+            addTopButton('CAVE', caveActivate, caveActive, onCaveButtonCb);
+
+
+
+
          //   addTopButton('Prg Bar', this.callbacks.addProgressBar, null);
         //    addTopButton('txtbox', this.callbacks.addTextBox, null);
             var matrixActive = function() {
@@ -231,7 +256,7 @@ class UiTestSetup {
             };
 
             let advanceEnv = function() {
-                envArgs[0] = env;
+                envArgs[0] = 0;
                 envArgs[1] = 20;
                 evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT, envArgs);
                 env++;
@@ -404,7 +429,7 @@ class UiTestSetup {
 
             if (!this.container) {
 
-                var onReady = function(widget) {
+                let onReady = function(widget) {
                     this.tempVec1.set(0.3, 0.33, 0);
                     widget.setPosition(this.tempVec1)
                     this.mainButton.guiWidget.addChild(widget);

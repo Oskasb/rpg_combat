@@ -12,9 +12,9 @@ class GameScenario {
         this.staticScenario = new ScenarioStatic(eArgs);
     }
 
-    initGameScenario() {
+    initGameScenario(eArgs) {
         this.scenarioTime = 0;
-        this.staticScenario.initStaticScenario()
+        this.staticScenario.initStaticScenario(eArgs)
     }
 
     updateGameScenario() {
@@ -29,7 +29,7 @@ class GameScenario {
 
     exitGameScenario(eArgs) {
         this.isActive = false;
-        this.staticScenario.exitStaticScenario();
+        this.staticScenario.exitStaticScenario(eArgs);
     }
 
     tickGameScenario(frame) {

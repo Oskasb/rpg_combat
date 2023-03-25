@@ -38,7 +38,7 @@ class GameMain {
             return;
         }
         this.activeScenario = new GameScenario(eArgs);
-        this.activeScenario.initGameScenario()
+        this.activeScenario.initGameScenario(eArgs)
     }
 
     closeGameScenario(eArgs) {
