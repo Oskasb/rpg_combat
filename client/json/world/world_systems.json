@@ -24,19 +24,26 @@
           {
             "id":"encounter_dynamic_cave_basic",
             "config": {
-              "environment": "cave_dusty",
-              "box_grid":{
-                "box_size":1,
-                "grid_width":8,
-                "grid_depth":28,
-                "wall_height": 4
-              }
+              "camera":{
+                  "pos": [0, 14, -8],
+                  "lookAt": [0, 0, 6]
+              },
+              "spawn":[
+                {
+                  "assetId":"asset_box",
+                  "pos": [3, 1, 8],
+                  "scale": [0.01, 0.01, 0.01]
+                },
+                {
+                  "assetId":"asset_box",
+                  "pos": [-5, 1, 12],
+                  "scale": [0.01, 0.01, 0.01]
+                }
+              ]
             }
           }
         ]
       }
-
-
     ]
   }
 }]

@@ -5,6 +5,8 @@ import { UiSetup } from "../ui/gui/UiSetup.js";
 import { InstanceAPI } from '../../3d/three/instancer/InstanceAPI.js';
 import { DomUtils } from '../ui/dom/DomUtils.js';
 import { DataLoader } from '../load/DataLoader.js';
+import { GameAPI } from "../../game/GameAPI.js";
+
 
 
 class Setup {
@@ -30,6 +32,7 @@ class Setup {
         window.InstanceAPI = new InstanceAPI();
         window.ThreeAPI = new ThreeAPI();
         window.GuiAPI = new GuiAPI();
+        window.GameAPI = new GameAPI();
         window.evt = client.evt;
     }
 

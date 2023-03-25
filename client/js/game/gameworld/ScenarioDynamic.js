@@ -1,4 +1,4 @@
-import { EncounterDynamicScenario } from "./EncounterDynamicScenario.js";
+import { EncounterDynamicScenario } from "../gamescenarios/EncounterDynamicScenario.js";
 
 class ScenarioDynamic {
     constructor(eArgs) {

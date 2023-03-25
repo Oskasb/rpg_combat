@@ -1,5 +1,5 @@
-import {HomeScenario} from "./HomeScenario.js";
-import {EncounterStaticScenario} from "./EncounterStaticScenario.js";
+import {HomeScenario} from "../gamescenarios/HomeScenario.js";
+import {EncounterStaticScenario} from "../gamescenarios/EncounterStaticScenario.js";
 
 class ScenarioStatic {
     constructor(eArgs) {

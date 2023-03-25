@@ -186,20 +186,15 @@ class HomeScenario {
         if (Math.random() < 0.15) {
             EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
         }
-        let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
 
-        let maxBoxes = this.boxes.length;
-        let boxSize = 2;
-        for (let i = 0; i < this.boxes.length; i++) {
-            let count = i;
+        ThreeAPI.setCameraPos(
+            Math.cos(scenarioTime*0.2)*3+5,
+            Math.sin(scenarioTime*0.4)*1+11,
+            Math.sin(scenarioTime*0.2)*3-32
+        );
 
-            let instance = this.boxes[i];
-        }
+        ThreeAPI.cameraLookAt(0, 0, 0);
 
-        if (this.house) {
-            //  this.house.spatial.setPosXYZ(0, 0.01, 0);
-            //  this.house.spatial.setScaleXYZ(0.1, 0,1, 0.1);
-        }
     }
 
 }
