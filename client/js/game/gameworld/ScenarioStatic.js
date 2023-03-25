@@ -67,42 +67,30 @@ class ScenarioStatic {
 
 
         count = 0;
-        let boxSize = 4;
-        let maxBoxes = 1048;
+        let boxSize = 2;
+        let maxBoxes = 2048;
+        let tempVec = this.tempVec;
+
         let boxReturns = function(instance) {
             count++;
-            //    console.log("Add boxes", instance)
+
             instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
+            MATH.gridXYfromCountAndIndex(maxBoxes, count, ThreeAPI.tempVec1);
 
-            let y = Math.floor(count / Math.sqrt(maxBoxes)) - Math.sqrt(maxBoxes)*0.5;
-            let x = count % Math.sqrt(maxBoxes) - Math.sqrt(maxBoxes)*0.5;
+            instance.spatial.setPosXYZ(2*boxSize*ThreeAPI.tempVec1.x, -boxSize, 2*boxSize*ThreeAPI.tempVec1.y);
 
-            instance.spatial.setPosXYZ(2*boxSize*x, -boxSize, 2*boxSize*y);
+            instance.setAttributev4('sprite', {x:Math.floor(Math.random()*4), y:Math.floor(Math.random()*4) , z:1, w:1});
 
-            instance.setAttributev4('sprite', {x:Math.floor(Math.random()*3), y:Math.floor(Math.random()*3) , z:1, w:1});
-
-
-            setTimeout(function() {
-                instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)
-            }, 20)
+            instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)
 
             this.instances.push(instance);
 
             this.boxes.push(instance);
         }.bind(this);
 
-        //    let loadCallback = function(asset) {
-        //     console.log("Box ", asset);
         for (let i = 0; i < maxBoxes; i++) {
             client.dynamicMain.requestAssetInstance('asset_box', boxReturns)
         }
-    //    };
-
-    //    let loadCB = function() {
-   //         client.dynamicMain.requestAsset('asset_box', loadCallback)
-   //     };
-
-    //    ThreeAPI.loadThreeAsset('FILES_GLB_', 'file_box', loadCB)
 
     }
 
@@ -122,11 +110,18 @@ class ScenarioStatic {
             EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
         }
 
+        let maxBoxes = this.boxes.length;
+        let boxSize = 2;
         for (let i = 0; i < this.boxes.length; i++) {
-        //    let y = 2*Math.floor(i / Math.sqrt(this.boxes.length))
-        //    let x = 2* i % Math.sqrt(this.boxes.length);
+            let count = i;
 
-       //     this.boxes[i].spatial.setScaleXYZ(0.02, 0.02, 0.02);
+            let instance = this.boxes[i];
+
+            let y = Math.floor(count / Math.sqrt(maxBoxes)) - Math.sqrt(maxBoxes)*0.5;
+            let x = count % Math.round(Math.sqrt(maxBoxes)) - Math.sqrt(maxBoxes)*0.5;
+
+            instance.spatial.setPosXYZ(2*boxSize*x, -boxSize, 2*boxSize*y);
+
         }
 
     }

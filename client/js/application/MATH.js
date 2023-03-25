@@ -81,6 +81,11 @@ if(typeof(MATH) === "undefined") {
 	};
 
 
+	MATH.gridXYfromCountAndIndex = function(count, index, store) {
+        store.y = Math.floor(index / Math.sqrt(count)) - Math.sqrt(count)*0.5;
+        store.x = index % Math.round(Math.sqrt(count)) - Math.sqrt(count)*0.5;
+	};
+
 
 	MATH.getRandomArrayEntry = function(array) {
 		return array[Math.floor(Math.random()*array.length)]

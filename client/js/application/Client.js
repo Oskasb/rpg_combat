@@ -55,47 +55,26 @@ class Client {
     createScene() {
 
 
-
         client.gameEffects = [];
 
         let callback = function() {
             setTimeout(function() {
                 client.setup.initDefaultUi();
-            }, 250)
+            }, 10)
         };
 
         setTimeout(function() {
             client.setup.initUiSetup(callback);
-        }, 50);
+        }, 10);
 
-
-        //   GuiAPI.printDebugText("DEBUG TEXT")
-        //     console.log("THREE:", THREE);
         const clock = new THREE.Clock(true);
 
         const scene = ThreeAPI.getScene();
 
-        //    const camera = ThreeAPI.getCamera();
-        const renderer = ThreeAPI.getRenderer();
-
-        //    const scene = new THREE.Scene();
-
-        const camera = ThreeAPI.getCamera();
-        //    const renderer = new THREE.WebGLRenderer();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
-
-
 
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
         const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        const cube = new THREE.Mesh( geometry, material );
-        scene.add( cube );
-        /*
-                ThreeAPI.setCameraPos(0, 2, 5)
 
-                ThreeAPI.cameraLookAt(0, 0, 0)
-        */
         let touchCubes = [];
 
         for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
@@ -108,19 +87,6 @@ class Client {
         const onFrameReadyCallback= function(frame) {
 
 
-        //    ThreeAPI.setCameraPos(Math.sin(frame.elapsedTime*0.02)*30, 10 + Math.sin(frame.elapsedTime*0.7)*7, Math.cos(frame.elapsedTime*0.02)*30);
-        //    ThreeAPI.cameraLookAt(0, 0, 0);
-
-
-            /*
-*/
-
-
-            if (client.INPUT_STATE.mouse.action[0]) {
-                cube.position.x = client.INPUT_STATE.mouse.dx*3
-                cube.position.y = -client.INPUT_STATE.mouse.dy*3
-            //    console.log(client.INPUT_STATE.mouse.dx)
-            }
             for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
 
                 if (client.INPUT_STATE.touches[i].action[0]) {
@@ -131,11 +97,6 @@ class Client {
 
             }
 
-
-
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-            cube.rotation.z = Math.sin(frame.z)*3.14;
             client.pipelineAPI.tickPipelineAPI(frame.tpf)
             //     cube.rotation.z += response.z;
             //    console.log("onFrameReadyCallback:",response);
