@@ -4,7 +4,12 @@ class EncounterDynamicScenario {
     }
 
     initEncounterDynamicScenario(eArgs) {
-        this.scenarioStaticId = eArgs.scenarioStaticId;
+        this.scenarioDynamicId = eArgs.scenarioDynamicId;
+
+        if (!this.scenarioDynamicId) {
+            console.log("No dynamic scenario, exit...")
+            return;
+        }
 
         let config = {};
         let dataKey = "encounter_scenarios_dynamic";
@@ -16,7 +21,7 @@ class EncounterDynamicScenario {
         let onEncData = function(configData) {
             let data = configData.data;
             for (let i = 0; i < data.length; i++) {
-                if (data[i].id === eArgs.scenarioStaticId) {
+                if (data[i].id === eArgs.scenarioDynamicId) {
                     for (let key in data[i].config) {
                         config[key] = data[i].config[key]
                     }
@@ -36,6 +41,11 @@ class EncounterDynamicScenario {
 
         this.config = config;
         PipelineAPI.subscribeToCategoryKey("WORLD", "STATIC_SCENARIOS", onDataCb)
+    }
+
+    applyScenarioConfig = function(config) {
+
+
 
     }
 
