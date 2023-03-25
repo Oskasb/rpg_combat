@@ -66,6 +66,14 @@ class InstancedModel {
         this.getGeometryInstance().setAttributeVec4(attribName, vec4)
     };
 
+        setSprite(sprite) {
+            ThreeAPI.tempVec4.x =  sprite[0];
+            ThreeAPI.tempVec4.y =     sprite[1];
+                ThreeAPI.tempVec4.z =     1;
+                ThreeAPI.tempVec4.w =     1;
+
+            this.setAttributev4('sprite', ThreeAPI.tempVec4)
+    };
 
         initModelInstance = function(callback, _this) {
 

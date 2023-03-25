@@ -90,6 +90,7 @@
         {"id": "file_vegQuad",       "config": { "url": "./client/assets/models/shapes/vegQuad"                                      }},
         {"id": "file_cross3d",       "config": { "url": "./client/assets/models/shapes/cross3d"                                      }},
         {"id": "file_bullet",        "config": { "url": "./client/assets/models/shapes/bullet"                                       }},
+        {"id": "file_house_small",   "config": { "url": "./client/assets/models/buildings/house_small"                                        }},
         {"id": "file_tree_1",        "config": { "url": "./client/assets/models/trees/tree_1"                                        }},
         {"id": "file_tree_2",        "config": { "url": "./client/assets/models/trees/tree_2"                                        }},
         {"id": "file_tree_3",        "config": { "url": "./client/assets/models/trees/tree_3"                                        }},

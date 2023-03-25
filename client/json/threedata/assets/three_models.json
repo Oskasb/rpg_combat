@@ -46,6 +46,7 @@
         {"id": "asset_helmet_bronze", "config": { "model": "file_helmet_bronze", "material": "mat_instancing_standard",  "settings": "model_settings_items"  }},
         {"id": "asset_bracer_bronze", "config": { "model": "file_bracer_bronze", "material": "mat_instancing_standard",  "settings": "model_settings_items"  }},
 
+        {"id": "asset_house_small", "config": { "model": "file_house_small",  "material": "mat_instancing_basic",     "settings": "model_settings_instancing" }},
         {"id": "asset_ninjablade",  "config": { "model": "file_ninjablade",   "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
         {"id": "asset_tree_1",      "config": { "model": "file_tree_1" ,      "material": "mat_instancing_basic",     "settings": "model_settings_instancing"     }},
         {"id": "asset_tree_2",      "config": { "model": "file_tree_2" ,      "material": "mat_instancing_basic",     "settings": "model_settings_instancing"     }},

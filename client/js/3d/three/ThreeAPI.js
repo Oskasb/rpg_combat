@@ -32,8 +32,9 @@ class ThreeAPI {
         this.frameRegs = 0;
 
         this.dynamicGlobalUnifs = {};
-        this.tempVec1 = new THREE.Vector3();
-        this.tempObj1 = new THREE.Object3D();
+        this.tempVec3 = new THREE.Vector3();
+        this.tempVec4 = new THREE.Vector4();
+        this.tempObj = new THREE.Object3D();
     }
     initThreeLoaders = function(assetLoader) {
         this.spatialFunctions = new ThreeSpatialFunctions();

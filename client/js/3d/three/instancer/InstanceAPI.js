@@ -48,7 +48,13 @@ class InstanceAPI {
                     buffers.verts   = geometry.attributes.position.array;
                     buffers.normals = geometry.attributes.normal.array;
                     buffers.uvs     = geometry.attributes.uv.array;
-                    buffers.indices = geometry.index.array;
+
+                    if (geometry.index) {
+                        buffers.indices = geometry.index.array;
+                    } else {
+                        console.log("No indices for geometry... ", id, model);
+                    }
+
                 }
             });
 

@@ -70,6 +70,7 @@ class GuiAPI {
 
         this.guiSettings.initGuiSprite("SPRITES", "FONT_16x16");
         this.guiSettings.initGuiSprite("SPRITES", "GUI_16x16");
+        this.guiSettings.initGuiSprite("SPRITES", "box_tiles_8x8");
 
         loadUiConfig("ICON_ELEMENTS", "GUI_16x16");
         loadUiConfig("SURFACE_LAYOUT", "SURFACES");

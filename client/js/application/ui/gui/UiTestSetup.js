@@ -225,6 +225,11 @@ class UiTestSetup {
 
             var env = 0;
 
+            var envButton = function(button) {
+                button.pressButtonFromCode();
+                //    console.log("Debug not wired up...")
+            };
+
             let advanceEnv = function() {
                 envArgs[0] = env;
                 envArgs[1] = 20;
@@ -237,7 +242,7 @@ class UiTestSetup {
             //    console.log("Debug not wired up...")
             };
 
-            addTopButton('STEPENV', advanceEnv, dummy);
+            addTopButton('STEPENV', advanceEnv, dummy, envButton);
 
             return;
 
