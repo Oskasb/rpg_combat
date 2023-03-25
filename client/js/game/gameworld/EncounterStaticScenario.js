@@ -7,7 +7,7 @@ class EncounterStaticScenario {
         this.scenarioStaticId = eArgs.scenarioStaticId;
 
         let config = {};
-        let dataKey = "encounter_scenarios";
+        let dataKey = "encounter_scenarios_static";
 
         let onConfig = function(config) {
             this.applyScenarioConfig(config);
@@ -26,7 +26,7 @@ class EncounterStaticScenario {
         };
 
         let onDataCb = function(src, config) {
-            console.log("Scenario data: ", eArgs, config)
+        //    console.log("Scenario data: ", eArgs, config)
             for (let i = 0; i < config.length; i++) {
                 if (config[i].id === dataKey) {
                     onEncData(config[i])
@@ -38,8 +38,6 @@ class EncounterStaticScenario {
         PipelineAPI.subscribeToCategoryKey("WORLD", "STATIC_SCENARIOS", onDataCb)
 
     }
-
-
 
     applyScenarioConfig(config) {
         let boxGrid = config.box_grid;

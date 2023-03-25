@@ -2,7 +2,7 @@
   "WORLD":{
     "STATIC_SCENARIOS":[
       {
-        "id":"encounter_scenarios",
+        "id":"encounter_scenarios_static",
         "data": [
           {
             "id":"encounter_static_rock_cave",
@@ -17,7 +17,26 @@
             }
           }
         ]
+      },
+      {
+        "id":"encounter_scenarios_dynamic",
+        "data": [
+          {
+            "id":"encounter_dynamic_cave_basic",
+            "config": {
+              "environment": "cave_dusty",
+              "box_grid":{
+                "box_size":1,
+                "grid_width":8,
+                "grid_depth":28,
+                "wall_height": 4
+              }
+            }
+          }
+        ]
       }
+
+
     ]
   }
 }]

@@ -66,6 +66,9 @@ class UiTestSetup {
 
             }.bind(this);
 
+
+            this.testActiveElementCalls = [];
+
             this.callbacks = {
                 toggleTestUi:toggleTestUi,
                 addProgressBar:addProgressBar,
@@ -147,8 +150,12 @@ class UiTestSetup {
 
             let onButtonCb = function(button) {
                     button.pressButtonFromCode()
-                    console.log("pressButtonFromCode");
-            };
+                    let surface = button.guiWidget.getWidgetSurface();
+
+                if (this.testActiveElementCalls.indexOf(surface.updateInterativeState)=== -1) {
+              //      this.testActiveElementCalls.push(surface.updateInterativeState)
+                }
+            }.bind(this);
 
             let homeScenarioId = 'home_scenario';
             let homeScenarioStaticId = 'home_scenariostatic';
@@ -156,35 +163,53 @@ class UiTestSetup {
             let homeActive = function() {
                 if (activeScenario.isActive) {
                     if (activeScenario.scenarioId === homeScenarioId)
+                    //    MATH.callAll(this.testActiveElementCalls)
                     return true;
 
                 }
-            };
+            }.bind(this);
+
 
             let homeActivate = function() {
-                evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {scenarioId:homeScenarioId, scenarioStaticId:homeScenarioStaticId ,callback:scenarioCallback})
+                evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {
+                    scenarioId:homeScenarioId,
+                    scenarioStaticId:homeScenarioStaticId ,
+                    callback:scenarioCallback
+                })
             };
 
             addTopButton('HOME', homeActivate, homeActive, onButtonCb);
 
 
             let onCaveButtonCb = function(button) {
-            //    button.pressButtonFromCode()
-            };
+
+                let surface = button.guiWidget.getWidgetSurface();
+                if (this.testActiveElementCalls.indexOf(surface.updateInterativeState)=== -1) {
+               //     this.testActiveElementCalls.push(surface.updateInterativeState)
+                }
+
+            }.bind(this);
 
             let caveScenarioId = 'cave_scenario';
             let caveStaticId = 'encounter_static_rock_cave';
+            let caveDynamicId = 'encounter_dynamic_cave_basic';
+
 
             let caveActive = function() {
                 if (activeScenario.isActive) {
-                    if (activeScenario.scenarioId === caveScenarioId)
+                    if (activeScenario.scenarioId === caveScenarioId) {
+                  //      MATH.callAll(this.testActiveElementCalls)
                         return true;
+                    }
                 }
-            };
+            }.bind(this);
+
+
 
             let caveActivate = function() {
                 evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {
                     scenarioId:caveScenarioId,
+                    scenarioDynamicId:caveDynamicId,
                     scenarioStaticId:caveStaticId,
                     callback:scenarioCallback})
             };
@@ -546,8 +571,11 @@ class UiTestSetup {
 
             if (!this.testUiActive) {
                 console.log("Not active");
+
                 return;
             }
+
+            this.testActiveElementCalls = [];
 
             this.testUiActive = false;
 

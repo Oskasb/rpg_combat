@@ -22,11 +22,7 @@ class ScenarioStatic {
         this.loadedStatisScenarios.push(staticScenario)
     }
 
-    updateStaticScenario(tpf, scenarioTime) {
-        for (let i = 0; i < this.loadedStatisScenarios.length; i++) {
-            this.loadedStatisScenarios[i].tickScenario(tpf, scenarioTime);
-        }
-    }
+
 
     exitStaticScenario(eArgs) {
         let staticScenarioIdToClose = eArgs.staticScenarioId;
@@ -39,7 +35,11 @@ class ScenarioStatic {
     }
 
     tickStaticScenario(tpf, scenarioTime) {
-        this.updateStaticScenario(tpf, scenarioTime)
+
+        for (let i = 0; i < this.loadedStatisScenarios.length; i++) {
+            this.loadedStatisScenarios[i].tickScenario(tpf, scenarioTime);
+        }
+
     }
 
 }

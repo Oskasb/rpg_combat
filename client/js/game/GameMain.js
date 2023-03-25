@@ -32,10 +32,11 @@ class GameMain {
 
     initGameScenario(eArgs) {
         if (this.activeScenario.isActive) {
-
-            console.log("Game Scenario already active... cancelling it")
+            if (this.activeScenario.scenarioId === eArgs.scenarioId) {
+                console.log("Game Scenario already active... cancelling change")
+                return;
+            }
             this.closeGameScenario(eArgs);
-            return;
         }
         this.activeScenario = new GameScenario(eArgs);
         this.activeScenario.initGameScenario(eArgs)
