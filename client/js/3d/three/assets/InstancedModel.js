@@ -282,14 +282,8 @@ class InstancedModel {
 
         decommissionInstancedModel = function() {
 
-            // WorkerAPI.getDynamicMain().removeFromIsntanceIndex(this);
+            // this.getSpatial().setScaleXYZ(0, 0, 0);
 
-       //     if (this.isDecomiisisoned) {
-        //        console.log("Already Decomissioned");
-        //    }
-       //     this.isDecomiisisoned = true;
-
-        //    this.clearEventListener();
             if (this.animator) {
                 this.animator.deActivateAnimator();
             }

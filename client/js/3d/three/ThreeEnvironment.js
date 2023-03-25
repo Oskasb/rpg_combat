@@ -3,16 +3,6 @@ import { PipelineObject } from "../../application/load/PipelineObject.js";
 
 class ThreeEnvironment {
     constructor() {
-        this.envs = [
-            "flat",
-            "pre_dawn",
-            "dawn",
-            "morning",
-            "sunny_day",
-            "high_noon",
-            "evening",
-            "night"
-        ];
 
         let _this = this;
 
@@ -454,15 +444,7 @@ class ThreeEnvironment {
         let _this = this;
 
         let advanceEnv = function(envArgs) {
-            if (envArgs[2]) {
-
-                _this.setEnvConfigId(envArgs[2], envArgs[1]);
-            } else {
-                let keys = Object.keys(_this.envList);
-                let key = keys[envArgs[0] % keys.length];
-                _this.setEnvConfigId(key, envArgs[1]);
-            }
-
+                _this.setEnvConfigId(envArgs.envId, envArgs.time);
             console.log("Advance ENV ", envArgs, _this.currentEnvId, _this.envList);
         };
 

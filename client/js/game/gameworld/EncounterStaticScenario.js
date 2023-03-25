@@ -42,12 +42,8 @@ class EncounterStaticScenario {
 
 
     applyScenarioConfig(config) {
-        let envArgs = [];
-        envArgs[0] = 0;
-        envArgs[1] = 20;
-        envArgs[2] = config.environment;
         let boxGrid = config.box_grid;
-        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT, envArgs);
+        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config.environment, time:1});
 
         let instances = this.instances;
 
@@ -59,7 +55,18 @@ class EncounterStaticScenario {
         ];
 
         let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
-        let setupFloorGrid = function(boxSize, gridWidth, gridDepth) {
+
+        let groundReturns = function(box) {
+            box.spatial.setPosXYZ(0, -1, 0)
+            box.spatial.setScaleXYZ(50, 0.01, 50);
+            box.setSprite(iconSprites['mud']);
+            this.instances.push(box);
+        }.bind(this);
+
+        client.dynamicMain.requestAssetInstance('asset_box', groundReturns)
+
+
+        let setupGrid = function(boxSize, gridWidth, gridDepth, wallHeight) {
 
             let offset = boxSize*gridWidth;
 
@@ -67,22 +74,62 @@ class EncounterStaticScenario {
 
                 for (let j = 0; j < gridDepth; j++) {
 
-                    let addBox = function(instance) {
+                    let wallOffsetX = 0;
+                    let wallOffsetY = 0;
+                    let floorOffset = 0;
+
+                    let iconSprite = iconSprites[iconKeysCave[Math.floor(Math.random()*iconKeysCave.length)]];
+
+                    let addSceneBox = function(instance) {
                         instances.push(instance)
                         instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
-                        instance.spatial.setPosXYZ(2*boxSize*i -offset, -boxSize, 2*boxSize*j - offset);
+                        instance.spatial.setPosXYZ(
+                            2*boxSize*i - offset + wallOffsetX,
+                            -boxSize + floorOffset,
+                            2*boxSize*j - offset + wallOffsetY
+                        );
                         instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)
-                        let iconSprite = iconSprites[iconKeysCave[Math.floor(Math.random()*iconKeysCave.length)]];
                         instance.setSprite(iconSprite);
                     };
 
-                    client.dynamicMain.requestAssetInstance('asset_box', addBox)
+                    client.dynamicMain.requestAssetInstance('asset_box', addSceneBox)
+
+                    for (let floor = 0; floor < wallHeight; floor++) {
+                        let add = false;
+
+                        wallOffsetX = 0;
+                        wallOffsetY = 0;
+                        floorOffset = 0;
+
+                        if (j === gridDepth-1) {
+                            wallOffsetY = boxSize*2  // // - boxSize*2;
+                            floorOffset = (boxSize + floor*boxSize)*2
+                            client.dynamicMain.requestAssetInstance('asset_box', addSceneBox)
+                        }
+
+                        if (i === 0) {
+                            wallOffsetX = -boxSize*2;
+                            floorOffset = (boxSize + floor*boxSize)*2
+                            add = true;
+                        }
+                        if (i === gridWidth-1) {
+                            wallOffsetX = boxSize*2  // // - boxSize*2;
+                            floorOffset = (boxSize + floor*boxSize)*2
+                            add = true;
+                        }
+
+                        if (add) {
+                            client.dynamicMain.requestAssetInstance('asset_box', addSceneBox)
+                        }
+
+                    }
+
                 }
             }
 
         };
 
-        setupFloorGrid(boxGrid['box_size'], boxGrid['grid_width'], boxGrid['grid_depth'])
+        setupGrid(boxGrid['box_size'], boxGrid['grid_width'], boxGrid['grid_depth'], boxGrid['wall_height'])
 
     }
 

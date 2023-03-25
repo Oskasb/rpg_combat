@@ -6,6 +6,7 @@ class HomeScenario {
 
     initHomeScenario() {
         this.effects = [];
+        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'high_noon', time:1});
 
         client.treeInstances = [];
         client.particleEffects = [];
@@ -62,7 +63,7 @@ class HomeScenario {
 
         count = 0;
         let boxSize = 2;
-        let maxBoxes = 4096;
+        let maxBoxes = 1024;
 
         let iconKeysAll = [
             "grass",
@@ -122,8 +123,9 @@ class HomeScenario {
         }
 
         let groundReturns = function(box) {
-            box.spatial.setPosXYZ(0, -2, 0)
-            box.spatial.setScaleXYZ(1000, 0.01, 1000)
+            box.spatial.setPosXYZ(0, -1, 0)
+            box.spatial.setScaleXYZ(50, 0.01, 50);
+            box.setSprite(iconSprites['mud']);
             this.instances.push(box);
         }.bind(this);
 

@@ -7,11 +7,12 @@
           {
             "id":"encounter_static_rock_cave",
             "config": {
-              "environment": "evening",
+              "environment": "cave_dusty",
               "box_grid":{
                 "box_size":1,
-                "grid_width":20,
-                "grid_depth":60
+                "grid_width":8,
+                "grid_depth":28,
+                "wall_height": 4
               }
             }
           }

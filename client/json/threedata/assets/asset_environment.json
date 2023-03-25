@@ -102,7 +102,20 @@
           "configs":[
             {"id":"sun",     "color":[0.21,   0.20,  0.78]},
             {"id":"ambient", "color":[0.12,   0.01,  0.49]},
-            {"id":"fog",     "color":[0.13,   0.01,  -0.22], "density":0.029}
+            {"id":"fog",     "color":[0.13,   0.01,  -0.22], "density":0.018}
+          ]
+        },
+        {
+          "id":"cave_dusty",
+          "sky":{
+            "inclination":       0.05,
+            "azimuth":           0.15,
+            "distance":          1000000
+          },
+          "configs":[
+            {"id":"sun",     "color":[0.99,  0.88,  0.26]},
+            {"id":"ambient", "color":[0.25,  0.54,  0.91]},
+            {"id":"fog",     "color":[0.05,  0.15,  0.41], "density":0.028}
           ]
         }
       ]

@@ -248,17 +248,28 @@ class UiTestSetup {
 
             var envArgs = [];
 
-            var env = 0;
+            let env = 0;
+
+            let envs = [
+                "flat",
+                "pre_dawn",
+                "dawn",
+                "morning",
+                "sunny_day",
+                "high_noon",
+                "evening",
+                "night",
+                "cave_dusty"
+            ];
 
             var envButton = function(button) {
-                button.pressButtonFromCode();
+             //   button.pressButtonFromCode();
                 //    console.log("Debug not wired up...")
             };
 
             let advanceEnv = function() {
-                envArgs[0] = 0;
-                envArgs[1] = 20;
-                evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT, envArgs);
+                let key = envs[env % envs.length];
+                evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT, {envId:envs[key], time:20});
                 env++;
                 GuiAPI.printDebugText("STEP ENVIRONMENT "+env);
             };
