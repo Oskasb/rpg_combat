@@ -40,7 +40,7 @@ class InstanceDynamicJoint {
             this.jointArgs[3] = this.obj3d.position.y;
             this.jointArgs[4] = this.obj3d.position.z;
 
-            evt.fire(this.instancedModel.getPointer()+ENUMS.Numbers.PTR_PING_OFFSET, this.jointArgs);
+        //    evt.fire(this.instancedModel.getPointer()+ENUMS.Numbers.PTR_PING_OFFSET, this.jointArgs);
 
         };
 

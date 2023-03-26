@@ -68,11 +68,6 @@ class InstanceSpatial{
 
         updateSpatialFrame = function() {
 
-            if (this.dynamicJoint) {
-            //    this.dynamicJoint.stickToBoneWorldMatrix();
-                this.stickToDynamicJoint()
-            }
-
         };
 
         updateSpatialMatrix = function() {

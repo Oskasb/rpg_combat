@@ -5,8 +5,9 @@ class PieceAttachment {
             this.attachmentJoint = attachmentJoint;
         };
 
-        setAttachedSpatial = function(spatial) {
-            return this.attachmentJoint.registerAttachedSpatial(spatial, this.joint);
+        setAttachedSpatial = function(spatial, modelInstance) {
+            console.log(modelInstance);
+            return this.attachmentJoint.registerAttachedSpatial(spatial, this.joint, modelInstance.boneMap);
         };
 
         releaseAttachedWorldEntity = function() {

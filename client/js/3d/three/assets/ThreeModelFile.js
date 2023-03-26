@@ -82,53 +82,6 @@ import * as SkeletonUtils from "../../../../libs/three/SkeletonUtils.js";
         };
 
         cloneSkinnedModelOriginal = function(callback) {
-
-            let cloneGltf = function(mesh, clone) {
-
-                var skinnedMeshes = {};
-
-                mesh.traverse(function(node) {
-                    if (node.isSkinnedMesh) {
-                        skinnedMeshes[node.name] = node;
-                    }
-                });
-
-                var cloneBones = {};
-                var cloneSkinnedMeshes = {};
-
-                clone.traverse(function(node) {
-                    node.frustumCulled = false;
-                    if (node.isBone) {
-                        cloneBones[node.name] = node;
-                    }
-
-                    if (node.isSkinnedMesh) {
-                        cloneSkinnedMeshes[node.name] = node;
-                    }
-                });
-
-                for (var name in skinnedMeshes) {
-                    var skinnedMesh = skinnedMeshes[name];
-                    var skeleton = skinnedMesh.skeleton;
-                    var cloneSkinnedMesh = cloneSkinnedMeshes[name];
-
-                    var orderedCloneBones = [];
-
-                    for (var i = 0; i < skeleton.bones.length; ++i) {
-                        var cloneBone = cloneBones[skeleton.bones[i].name];
-                        orderedCloneBones.push(cloneBone);
-                    }
-
-                    cloneSkinnedMesh.bind(
-                        new THREE.Skeleton(orderedCloneBones, skeleton.boneInverses),
-                        cloneSkinnedMesh.matrixWorld);
-                }
-
-                return clone
-            };
-
-
-         //   let skelUtils = new SkeletonUtils();
             let clone = SkeletonUtils.clone(this.scene);  // cloneGltf(this.scene, this.cloneMeshModelOriginal());
             clone.frustumCulled = false;
             let spatial = new InstanceSpatial(clone);

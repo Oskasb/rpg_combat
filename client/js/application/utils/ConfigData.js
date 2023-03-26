@@ -6,7 +6,6 @@ class ConfigData {
     };
 
     fetchData = function(dataId) {
-        console.log(dataId)
         let dataUpdate = function(src, data) {
             for (let key in data) {
                 this.data[key] = data[key];

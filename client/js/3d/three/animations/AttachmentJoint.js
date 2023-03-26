@@ -1,84 +1,97 @@
 class AttachmentJoint {
-    constructor(key, parentScale) {
-            this.key = key;
+    constructor(key, parentScale, dynamicBoneId) {
+        this.key = key;
+        this.dynamicBoneId = dynamicBoneId;
+        this.parentScale = parentScale;
+        this.obj3d = new THREE.Object3D();
 
-            this.parentScale = parentScale;
-            this.obj3d = new THREE.Object3D();
+        this.dynamicPosition = new THREE.Vector3();
 
-            this.dynamicPosition = new THREE.Vector3();
+        this.attachedSpatial = null;
 
-            this.attachedSpatial = null;
+        this.positionUpdateCallbacks = [];
 
-            this.positionUpdateCallbacks = [];
+        let attachEffect = function(effect) {
+            effect.attachToJoint(this)
+        }.bind(this);
 
-            let attachEffect = function(effect) {
-                effect.attachToJoint(this)
-            }.bind(this);
+        this.callbacks = {
+            attachEffect:attachEffect
+        }
 
-            this.callbacks = {
-                attachEffect:attachEffect
-            }
+    };
 
-        };
+    getJointKey = function() {
+        return this.key;
+    };
 
-        getJointKey = function() {
-            return this.key;
-        };
+    getAttachEffectCallback = function() {
+        return this.callbacks.attachEffect;
+    };
 
-        getAttachEffectCallback = function() {
-            return this.callbacks.attachEffect;
-        };
+    inheritJointDynamicPosition = function() {
+        this.dynamicBone.stickToBoneWorldMatrix();
+        this.attachedSpatial.stickToDynamicJoint();
 
-        setDynamicPositionXYZ = function(x, y, z) {
-            this.attachedSpatial.setPosXYZ(x, y, z);
-            MATH.callAll(this.positionUpdateCallbacks, this.dynamicPosition)
-        };
+        let spatObj = this.attachedSpatial.obj3d;
+        spatObj.position.add(this.obj3d.position);
+        spatObj.quaternion.multiply(this.obj3d.quaternion);
+        spatObj.scale.add(this.obj3d.scale);
 
-        addPositionUpdateCallback = function(cb) {
-            this.positionUpdateCallbacks.push(cb)
-        };
+        MATH.callAll(this.positionUpdateCallbacks, this.dynamicPosition)
 
-        removePositionUpdateCallback = function(cb) {
-            MATH.quickSplice(this.positionUpdateCallbacks, cb);
-        };
+    };
 
-        getDynamicPosition = function(storeVec) {
-            storeVec.copy(this.dynamicPosition);
-        };
+    addPositionUpdateCallback = function(cb) {
+        this.positionUpdateCallbacks.push(cb)
+    };
 
-        applyJointData = function(jointData) {
-            this.obj3d.position.x = jointData.offset[0];
-            this.obj3d.position.y = jointData.offset[1];
-            this.obj3d.position.z = jointData.offset[2];
+    removePositionUpdateCallback = function(cb) {
+        MATH.quickSplice(this.positionUpdateCallbacks, cb);
+    };
 
-            this.obj3d.quaternion.set(0, 0, 0, 1);
-            this.obj3d.rotateX(jointData.rot[0]);
-            this.obj3d.rotateY(jointData.rot[1]);
-            this.obj3d.rotateZ(jointData.rot[2]);
+    getDynamicPosition = function(storeVec) {
+        storeVec.copy(this.dynamicPosition);
+    };
 
-            this.obj3d.scale.x = jointData.scale[0];
-            this.obj3d.scale.y = jointData.scale[1];
-            this.obj3d.scale.z = jointData.scale[2];
-            this.obj3d.scale.multiply(this.parentScale);
-            this.obj3d.position.multiply(this.obj3d.scale)
-        };
+    applyJointData = function(jointData) {
+        this.obj3d.position.x = jointData.offset[0];
+        this.obj3d.position.y = jointData.offset[1];
+        this.obj3d.position.z = jointData.offset[2];
 
-        detatchAttachedEntity = function() {
-            return this.attachedSpatial;
-        };
+        this.obj3d.quaternion.set(0, 0, 0, 1);
+        this.obj3d.rotateX(jointData.rot[0]);
+        this.obj3d.rotateY(jointData.rot[1]);
+        this.obj3d.rotateZ(jointData.rot[2]);
 
-        getAttachedEntity = function() {
-            return this.attachedSpatial;
-        };
+        this.obj3d.scale.x = jointData.scale[0];
+        this.obj3d.scale.y = jointData.scale[1];
+        this.obj3d.scale.z = jointData.scale[2];
+        this.obj3d.scale.multiply(this.parentScale);
+        this.obj3d.position.multiply(this.obj3d.scale)
+    };
 
-        registerAttachedSpatial = function(spatial, jointData) {
-            this.attachedSpatial = spatial;
-            this.applyJointData(jointData);
-            console.log("registerAttachedEntity", spatial);
-            return this;
+    detatchAttachedEntity = function() {
+        this.attachedSpatial.dynamicJoint = null;
+        return this.attachedSpatial;
+    };
 
-        };
+    getAttachedEntity = function() {
+        return this.attachedSpatial;
+    };
 
-    }
+    registerAttachedSpatial = function(spatial, joint, dynamicBones) {
+        this.attachedSpatial = spatial;
+        this.joint = joint;
+        this.applyJointData(joint);
+        this.dynamicBone = dynamicBones[this.dynamicBoneId]
+        spatial.attachToDynamicJoint(this.dynamicBone);
+
+     //   console.log("registerAttachedEntity", spatial, this.dynamicBone);
+        return this;
+
+    };
+
+}
 
 export { AttachmentJoint }

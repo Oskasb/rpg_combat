@@ -26,36 +26,24 @@
               {"key":"WALK"           , "id":"file_walk_legs"            },
               {"key":"WALK_COMBAT"    , "id":"file_walk_legs_combat"     },
               {"key":"WALK_BODY"      , "id":"file_walk_body"            },
-
               {"key":"GD_LFT_FF"      , "id":"file_gd_left_ff"           },
               {"key":"SET_LFT_FF"     , "id":"file_set_left_ff"          },
               {"key":"GD_RT_FF"       , "id":"file_gd_right_ff"          },
               {"key":"SET_RT_FF"      , "id":"file_set_right_ff"         },
-
               {"key":"GD_MID_R"       , "id":"file_guard_mid_rff"        },
               {"key":"GD_LOW_R"       , "id":"file_guard_low_rff"        },
               {"key":"GD_LNG_R"       , "id":"file_guard_long_rff"       },
               {"key":"GD_SHT_R"       , "id":"file_guard_short_rff"      },
-
               {"key":"GD_HNG_R"       , "id":"file_guard_hanging_rff"    },
-              
               {"key":"GD_INS_R"       , "id":"file_guard_inside_rff"     },
-
               {"key":"SW_BCK_R"       , "id":"file_swing_back_rff"       },
-
               {"key":"GD_HI_R"        , "id":"file_guard_high_rff"       },
-
               {"key":"CT_TC_R"       , "id":"file_cut_topcenter_rff"     },
               {"key":"CT_TR_R"       , "id":"file_cut_topright_rff"      },
-
               {"key":"GD_SID_R"       , "id":"file_guard_side_rff"       },
-
               {"key":"CT_MR_R"       , "id":"file_cut_midright_rff"      },
-
               {"key":"GD_BCK_R"       , "id":"file_guard_back_rff"       },
-
               {"key":"CT_ML_R"       , "id":"file_cut_midleft_rff"       },
-
               {"key":"SW_SID_R"       , "id":"file_swing_side_rff"       }
             ]
           }

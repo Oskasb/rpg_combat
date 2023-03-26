@@ -13,10 +13,14 @@ class PieceAttacher {
     };
 
     setupPieceAttachments = function (rigData) {
-        console.log(rigData);
+
         let joints = rigData['joints'];
 
-        for (let key in joints) {
+        this.gamePiece.jointData = joints;
+
+        let jointMap = this.gamePiece.modelInstance.originalModel.jointMap;
+
+        console.log(jointMap);        for (let key in joints) {
             this.pieceAttachments[key] = new PieceAttachment(key, joints[key], this.gamePiece.pieceAnimator.attachmentJoints[key]);
         }
         return this.pieceAttachments;
@@ -24,7 +28,7 @@ class PieceAttacher {
 
     attachSpatialToJoint = function (spatial, jointKey) {
         this.attachedWorldEntities.push(spatial);
-        let joint = this.getAttachmentJoint(jointKey).setAttachedSpatial(spatial);
+        let joint = this.getAttachmentJoint(jointKey).setAttachedSpatial(spatial, this.gamePiece.modelInstance);
         this.activeJoints.push(joint);
     };
 
@@ -48,7 +52,7 @@ class PieceAttacher {
 
     tickAttacher(){
         for (let i = 0; i < this.activeJoints.length;i++) {
-            this.activeJoints[i].setDynamicPositionXYZ(Math.random(), Math.random(),Math.random())
+            this.activeJoints[i].inheritJointDynamicPosition()
         }
     }
 
