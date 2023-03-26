@@ -110,7 +110,7 @@ class InstanceAnimator {
         };
 
         startChannelAction = function(channel, action, weight, fade, loop, clamp, timeScale, sync) {
-            console.log("start chan action", action);
+        //    console.log("start chan action", action);
 
                 action.reset();
                 action.enabled = true;

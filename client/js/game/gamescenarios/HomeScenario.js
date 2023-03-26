@@ -35,9 +35,9 @@ class HomeScenario {
 
 
             instance.spatial.setPosXYZ(
-                Math.sin(1.0 * offsetValue) *  (12 +  count * (Math.sin(offsetValue*0.015)+1) * 0.2),
+                Math.sin(1.0 * offsetValue) *  (8 +  count * (Math.sin(offsetValue*0.015)+1) * 0.2),
                 Math.sin(1.0 + offsetValue) *  0.4*0.6,
-                Math.cos(1.0 * offsetValue) *  (12 +  count * (Math.cos(offsetValue*0.015)+1) * 0.2) + 5
+                Math.cos(1.0 * offsetValue) *  (8 +  count * (Math.cos(offsetValue*0.015)+1) * 0.2) + 3
             );
 
             this.instances.push(instance);
@@ -150,7 +150,7 @@ class HomeScenario {
             this.house = instance;
             instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
             instance.spatial.setPosXYZ(-1, 0, 6);
-            instance.spatial.setScaleXYZ(0.003, 0.003, 0.003);
+            instance.spatial.setScaleXYZ(0.0025, 0.0025, 0.0025);
             instance.spatial.setQuatXYZW(
                 ThreeAPI.tempObj.quaternion.x,
                 ThreeAPI.tempObj.quaternion.y,
@@ -187,7 +187,7 @@ class HomeScenario {
             tempObj.quaternion.y = 1;
             tempObj.quaternion.z = 0;
             tempObj.quaternion.w = 0;
-            tempObj.rotateY(-0.2);
+            tempObj.rotateY(-0.86);
             player.getSpatial().setQuatXYZW(
                 tempObj.quaternion.x,
                 tempObj.quaternion.y,
@@ -195,11 +195,11 @@ class HomeScenario {
                 tempObj.quaternion.w
             );
             player.getSpatial().setPosXYZ(
-                -1.5, 0, -1.8
+                -1.3, 0, 0.8
             );
 
 
-            if (Math.random() < 0.2) {
+            if (Math.random() < 0.05) {
 
                 let animMap = player.animStateMap;
 
@@ -222,8 +222,8 @@ class HomeScenario {
                     'GD_SHT_R',
                     'GD_SID_R',
                     'IDLE',
-                    'IDL_HI_CB',
-                    'IDL_LO_CB',
+                //    'IDL_HI_CB',
+                //    'IDL_LO_CB',
                 //    'RUN',
                     //   'SET_LFT_FF',  // broken
                     'SET_RT_FF',
@@ -264,8 +264,8 @@ class HomeScenario {
 
         ThreeAPI.setCameraPos(
             Math.cos(scenarioTime*0.2)*1.2+2,
-            Math.sin(scenarioTime*0.4)*0.5+6,
-            Math.sin(scenarioTime*0.2)*1.2-13
+            Math.sin(scenarioTime*0.4)*0.5+5,
+            Math.sin(scenarioTime*0.2)*1.2-8
         );
 
         ThreeAPI.cameraLookAt(0, 3, 0);
