@@ -196,10 +196,10 @@ class HomeScenario {
             );
             player.getSpatial().setPosXYZ(
                 -1.5, 0, -1.8
-            )
+            );
+            player.tickGamePiece(tpf, scenarioTime);
         }
 
-        player.tickGamePiece(tpf, scenarioTime);
 
         let effectCb = function(eftc) {
             //     console.log("effect add: ", effect)

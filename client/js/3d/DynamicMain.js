@@ -22,21 +22,30 @@ class DynamicMain {
 
     requestAsset = function(modelAssetId, assetReadyCB) {
         let assets = this.assets;
-        let onAssetReady = function(asset) {
+        var onAssetReady = function(asset) {
         //    console.log("AssetReady:", asset);
             this.assetIndex[asset.id] = assets.length;
             assets[modelAssetId] = asset;
 
-            asset.idx = this.assetIndex[asset.id];
-            if (asset.model.animationKeys) {
-                asset.anims = asset.model.animationKeys;
-                asset.joints = asset.model.jointKeys;
-                let modelSettings = asset.model.settings;
-                if (modelSettings.skin) {
-                    asset.skin = modelSettings.skin
-                }
+            var idx = this.assetIndex[asset.id];
+
+            var anims = asset.model.animKeys;
+            var joints = asset.model.jointKeys;
+            var message = {};
+
+
+            message.index = idx;
+            message.animKeys = anims;
+            message.jointKeys = joints;
+
+            var modelSettings = asset.model.settings;
+            if (modelSettings.skin) {
+                asset.model.skin = modelSettings.skin;
+                message.skin = modelSettings.skin
             }
-            
+
+            assetReadyCB(asset)
+        //    WorkerAPI.callWorker(ENUMS.Worker.MAIN_WORKER,  [ENUMS.Message.REGISTER_ASSET, [asset.id, message]])
         }.bind(this);
 
         ThreeAPI.buildAsset(modelAssetId,   onAssetReady);

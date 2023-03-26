@@ -24,7 +24,7 @@ class AnimationState {
             } else {
                 this.weight = 0;
             }
-            this.callbacks.notifyUpdated();
+        //    this.callbacks.notifyUpdated();
         };
 
         getAnimationKey = function() {
@@ -33,7 +33,7 @@ class AnimationState {
 
         setAnimationChannel = function(channel) {
             this.channel = channel;
-            this.callbacks.notifyUpdated();
+        //    this.callbacks.notifyUpdated();
         };
 
         setAnimationSync = function(sync) {
@@ -66,7 +66,7 @@ class AnimationState {
 
         setAnimationFade = function(fade) {
             this.fade = fade;
-            this.callbacks.notifyUpdated()
+         //   this.callbacks.notifyUpdated()
         };
 
         getAnimationFade = function() {
@@ -75,7 +75,7 @@ class AnimationState {
 
         setAnimationTimeScale = function(timeScale) {
             this.timeScale = timeScale;
-            this.callbacks.notifyUpdated()
+         //   this.callbacks.notifyUpdated()
         };
 
         getAnimationWeight = function() {
@@ -86,17 +86,14 @@ class AnimationState {
             if (this.targetWeight === weight) return;
             this.targetWeight = weight;
             this.weight = weight;
-            this.callbacks.notifyUpdated()
+        //    this.callbacks.notifyUpdated()
         };
 
         getAnimationTimeScale = function() {
             return this.timeScale;
         };
 
-        setAnimationTimeScale = function(timeScale) {
-            this.timeScale = timeScale;
-            this.callbacks.notifyUpdated()
-        };
+
 
     }
 

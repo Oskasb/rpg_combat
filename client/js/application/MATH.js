@@ -94,8 +94,9 @@ if(typeof(MATH) === "undefined") {
 	var idx;
 
 	MATH.getFromArrayByKeyValue = function(array, key, value) {
-		for (idx = 0; idx < array.length; idx++) {
+		for (let idx = 0; idx < array.length; idx++) {
 			if (array[idx][key] === value) {
+			//	console.lof("Get ", array, idx, key)
 				return array[idx];
 			}
 		}

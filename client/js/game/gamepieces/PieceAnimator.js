@@ -26,44 +26,50 @@ class PieceAnimator {
     }
 
     initPieceAnimator = function(piece, rigData) {
-        this.setupAnimations();
         this.gamePiece = piece;
-        this.setupPieceAnimations(piece, rigData)
+        this.setupPieceAnimations(rigData)
+
     };
 
-    setupAnimations = function(anims, joints) {
+    setupAnimations = function(model, scale) {
+
+        let joints = model.jointMap;
+        let anims = model.animMap;
 
         let key;
         let joint;
 
-        for (let i = 0; i < joints.length; i ++) {
-            key = ENUMS.getKey('Joints',joints[i]);
-            joint = new AttachmentJoint(key, this.gamePiece.getSpatial().scale, this.callbacks.setAttachmentUpdated);
-            this.attachmentJoints[i] = joint;
-            this.jointMap[joints[i]] = i;
+        for (let key in joints) {
+            joint = new AttachmentJoint(key, scale, this.callbacks.setAttachmentUpdated);
+            this.attachmentJoints[key] = joint;
         }
 
-        for (let i = 0; i < anims.length; i ++) {
-            let animKey = ENUMS.getKey('Animations', anims[i]);
-            let animState = new AnimationState(animKey);
+        this.jointMap = joints;
+
+        for (let key in anims) {
+            let animState = new AnimationState(anims[key]);
             this.animationStates.push(animState);
         }
+
+
     };
 
     addAttachmentUpdate = function(attachmentUpdate) {
         this.attachmentUpdates.push(attachmentUpdate);
     };
 
-    getAnimationState = function(key) {
-        return MATH.getFromArrayByKeyValue(this.animationStates, 'key', key)
-    };
 
     setupPieceAnimations = function(rigData) {
 
         let animations = rigData['animations'];
-
+        console.log("Anim states: ", this.animationStates);
         for (let key in animations) {
-            this.animations[key] = new PieceAnim(key, rigData, this.getAnimationState(key));
+
+            let animState = MATH.getFromArrayByKeyValue(this.animationStates, 'key', key)
+            console.log("Anim state: ", animState);
+
+            this.animations[key] = new PieceAnim(key, animations[key], animState);
+            console.log("Add anim: ", key);
         }
 
     };
