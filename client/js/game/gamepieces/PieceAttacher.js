@@ -1,29 +1,22 @@
-"use strict";
+import { PieceAttachment } from "./PieceAttachment.js";
 
-define([
-        'game/pieces/PieceAttachment'
-    ],
-    function(
-        PieceAttachment
-    ) {
-
-        var PieceAttacher = function() {
+class PieceAttacher {
+    constructor() {
             this.pieceAttachments = {};
             this.attachedWorldEntities = [];
         };
 
-        PieceAttacher.prototype.initPieceAttacher = function(piece) {
+        initPieceAttacher = function(piece) {
             this.gamePiece = piece;
             this.worldEntity = piece.getWorldEntity();
             piece.setPieceAttacher(this);
             this.setupPieceAttachments()
         };
 
-        PieceAttacher.prototype.setupPieceAttachments = function() {
+        setupPieceAttachments = function() {
 
-            var skeleton_rig = this.gamePiece.readConfigData('skeleton_rig');
+            let skeleton_rig = this.gamePiece.readConfigData('skeleton_rig');
             this.gamePiece.setRigKey(skeleton_rig);
-
 
             if (skeleton_rig) {
 
@@ -42,33 +35,30 @@ define([
             }
         };
 
-
-        PieceAttacher.prototype.attachEntityToJoint = function(entity, jointKey) {
+        attachEntityToJoint = function(entity, jointKey) {
             this.attachedWorldEntities.push(entity);
             this.getAttachmentJoint(jointKey).setAttachedWorldEntity(entity);
         };
 
-        PieceAttacher.prototype.getAttachmentJoint = function(key) {
+        getAttachmentJoint = function(key) {
             return this.pieceAttachments[key];
         };
 
-        PieceAttacher.prototype.isActiveJointKey = function(key) {
+        isActiveJointKey = function(key) {
             return this.getAttachmentJoint(key).getActiveAttachment();
         };
 
-        PieceAttacher.prototype.releaseJointKey = function(key) {
+        releaseJointKey = function(key) {
             return this.getAttachmentJoint(key).releaseActiveAttachment();
         };
 
-        PieceAttacher.prototype.removeAttachedEntities = function() {
+        removeAttachedEntities = function() {
 
             while (this.attachedWorldEntities.length) {
                 MainWorldAPI.getWorldSimulation().despawnWorldEntity(this.attachedWorldEntities.pop());
             }
-
         };
+    }
 
-        return PieceAttacher;
-
-    });
+    export { PieceAttachment }
 

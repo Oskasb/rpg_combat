@@ -107,10 +107,8 @@ define([
 
 
         GamePiece.prototype.updateGamePiece = function(tpf, time) {
-
             MATH.callAll(this.gamePieceUpdateCallbacks, tpf, time);
             this.pieceAnimator.updatePieceAnimations(tpf, time);
-
         };
 
         GamePiece.prototype.disposeGamePiece = function() {

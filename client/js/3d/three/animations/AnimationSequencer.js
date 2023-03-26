@@ -1,135 +1,116 @@
-"use strict";
+class AnimationSequencer {
+    constructor() {
 
-define([
-
-    ],
-    function(
-
-    ) {
-
-        var actionStateMap = {};
-        actionStateMap[ENUMS.ActionState.ACTIVATING]     = 'prep';
-        actionStateMap[ENUMS.ActionState.ACTIVE]         = 'exec';
-        actionStateMap[ENUMS.ActionState.ON_COOLDOWN]    = 'end';
+        this.actionStateMap = {};
+        this.actionStateMap[ENUMS.ActionState.ACTIVATING]     = 'prep';
+        this.actionStateMap[ENUMS.ActionState.ACTIVE]         = 'exec';
+        this.actionStateMap[ENUMS.ActionState.ON_COOLDOWN]    = 'end';
         //    actionStateMap[ENUMS.ActionState.AVAILABLE]      = 'end';
 
-        var AnimationSequencer = function() {
+        this.moveStateMap = {};
+        this.moveStateMap[ENUMS.CharacterState.COMBAT] = 'WALK_COMBAT';
+        this.moveStateMap[ENUMS.CharacterState.IDLE] = 'WALK';
 
-        };
+        this.stationaryStateMap = {};
+        this.stationaryStateMap[ENUMS.CharacterState.COMBAT] = 'GD_RT_FF';
+        this.stationaryStateMap[ENUMS.CharacterState.IDLE] = 'IDLE';
 
-        var actionMap;
-        var animKeys;
-        var actionState;
-        var key;
-        var targetTime;
 
-        AnimationSequencer.getGamePieceActionStateKey = function(action, gamePiece) {
+        this.bodyIdleMap = {};
+        this.bodyIdleMap[ENUMS.CharacterState.COMBAT] = 'GD_RT_FF';
+        this.bodyIdleMap[ENUMS.CharacterState.IDLE] = 'IDLE';
 
-            actionState = action.getActionState();
+        this.speedRefMap = {};
+        this.speedRefMap[ENUMS.CharacterState.COMBAT] = 'walk_combat_speed';
+        this.speedRefMap[ENUMS.CharacterState.IDLE] = 'walk_cycle_speed';
 
-            actionMap = gamePiece.getPieceAnimator().getActionMap(action.getActionType());
+        this.combatMoveIdles = ['GD_SID_R', 'GD_MID_R', 'GD_HNG_R', 'GD_HI_R'];
+        this.combatIdles = ['GD_SID_R', 'GD_MID_R', 'GD_BCK_R', 'GD_HNG_R', 'GD_INS_R', 'GD_HI_R'];
 
-            animKeys = actionMap[actionStateMap[actionState]];
-            if (!animKeys) {
-                GuiAPI.printDebugText("NO ANIM KEY "+action.getActionType()+" "+actionState);
-                //    console.log("No Keys", action.getActionState(), actionStateMap, actionMap)
+        this.peaceMoveIdle = ['WALK_BODY'];
+        this.peaceIdle = ['GD_BCK_R'];
+
+        this.poseTimeLimit = 1.3;
+    }
+
+    getGamePieceActionStateKey = function(action, gamePiece) {
+
+        let actionState = action.getActionState();
+
+        let actionMap = gamePiece.getPieceAnimator().getActionMap(action.getActionType());
+
+        let animKeys = this.actionMap[actionStateMap[actionState]];
+        if (!animKeys) {
+            GuiAPI.printDebugText("NO ANIM KEY "+action.getActionType()+" "+actionState);
+            //    console.log("No Keys", action.getActionState(), actionStateMap, actionMap)
+            return;
+        }
+        let key = MATH.getRandomArrayEntry(animKeys);
+
+        return key;
+    };
+
+    sequenceLegAnimation = function(state, movement, gamePiece) {
+
+        let speed = movement.getMovementSpeed();
+        let key;
+        let animRefSpeed;
+
+        if (speed) {
+            key = moveStateMap[state] ;
+            animRefSpeed = movement.readConfig(this.speedRefMap[state]);
+        } else {
+            key = this.stationaryStateMap[state];
+            speed = 1;
+            animRefSpeed = 1;
+        }
+
+        gamePiece.activatePieceAnimation(key, 1, speed / animRefSpeed, 1)
+    };
+
+
+    sequenceBodyAnimation = function(state, movement, gamePiece) {
+
+        if (gamePiece.activeActions.length === 0) {
+
+            let animator = gamePiece.getPieceAnimator();
+
+            if (animator.getTimeAtKey() < this.poseTimeLimit) {
                 return;
             }
-            key = MATH.getRandomArrayEntry(animKeys);
 
-            return key;
-        };
+            let speed = movement.getMovementSpeed();
+            let key;
 
+            if (state === ENUMS.CharacterState.IDLE) {
 
-        var moveStateMap = {};
-        moveStateMap[ENUMS.CharacterState.COMBAT] = 'WALK_COMBAT';
-        moveStateMap[ENUMS.CharacterState.IDLE] = 'WALK';
-
-        var stationaryStateMap = {};
-        stationaryStateMap[ENUMS.CharacterState.COMBAT] = 'GD_RT_FF';
-        stationaryStateMap[ENUMS.CharacterState.IDLE] = 'IDLE';
-
-
-        var bodyIdleMap = {};
-        bodyIdleMap[ENUMS.CharacterState.COMBAT] = 'GD_RT_FF';
-        bodyIdleMap[ENUMS.CharacterState.IDLE] = 'IDLE';
-
-        var speedRefMap = {};
-        speedRefMap[ENUMS.CharacterState.COMBAT] = 'walk_combat_speed';
-        speedRefMap[ENUMS.CharacterState.IDLE] = 'walk_cycle_speed';
-
-
-        var speed;
-        var animRefSpeed = 1;
-
-
-        AnimationSequencer.sequenceLegAnimation = function(state, movement, gamePiece) {
-
-            speed = movement.getMovementSpeed();
-
-            if (speed) {
-                key = moveStateMap[state] ;
-                animRefSpeed = movement.readConfig(speedRefMap[state]);
-            } else {
-                key = stationaryStateMap[state];
-                speed = 1;
-                animRefSpeed = 1;
-            }
-
-            gamePiece.activatePieceAnimation(key, 1, speed / animRefSpeed, 1)
-        };
-
-        var combatMoveIdles = ['GD_SID_R', 'GD_MID_R', 'GD_HNG_R', 'GD_HI_R'];
-        var combatIdles = ['GD_SID_R', 'GD_MID_R', 'GD_BCK_R', 'GD_HNG_R', 'GD_INS_R', 'GD_HI_R'];
-
-        var peaceMoveIdle = ['WALK_BODY'];
-        var peaceIdle = ['GD_BCK_R'];
-
-        var animator;
-
-        var poseTimeLimit = 1.3;
-
-        AnimationSequencer.sequenceBodyAnimation = function(state, movement, gamePiece) {
-
-            if (gamePiece.activeActions.length === 0) {
-
-                animator = gamePiece.getPieceAnimator();
-
-                if (animator.getTimeAtKey() < poseTimeLimit) {
-                    return;
-                }
-
-                speed = movement.getMovementSpeed();
-
-                if (state === ENUMS.CharacterState.IDLE) {
-
-                    if (speed) {
-                        key = MATH.getRandomArrayEntry(peaceMoveIdle);
-                        gamePiece.activatePieceAnimation(key, 1, 1, 0.25)
-                    } else {
-                        key = MATH.getRandomArrayEntry(peaceIdle);
-                        gamePiece.activatePieceAnimation(key, 1, 1, 0.25)
-                    }
-
+                if (speed) {
+                    key = MATH.getRandomArrayEntry(this.peaceMoveIdle);
+                    gamePiece.activatePieceAnimation(key, 1, 1, 0.25)
                 } else {
-
-                    if (speed) {
-                        key =  MATH.getRandomArrayEntry(combatMoveIdles);
-                    } else {
-                        key = MATH.getRandomArrayEntry(combatIdles);
-                    }
-
-                    gamePiece.activatePieceAnimation(key, 1, 1, 0.25);
-
+                    key = MATH.getRandomArrayEntry(this.peaceIdle);
+                    gamePiece.activatePieceAnimation(key, 1, 1, 0.25)
                 }
 
-                animator.setPoseKey(key);
+            } else {
+
+                if (speed) {
+                    key =  MATH.getRandomArrayEntry(this.combatMoveIdles);
+                } else {
+                    key = MATH.getRandomArrayEntry(this.combatIdles);
+                }
+
+                gamePiece.activatePieceAnimation(key, 1, 1, 0.25);
 
             }
 
-        };
+            animator.setPoseKey(key);
 
-        return AnimationSequencer;
+        }
 
-    });
+    };
+
+}
+
+export { AnimationSequencer }
 

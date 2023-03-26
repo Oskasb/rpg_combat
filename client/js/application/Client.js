@@ -6,7 +6,7 @@ import { Setup } from './setup/Setup.js';
 import * as THREE from '../../libs/three/Three.js';
 import { ThreeController } from '../3d/ThreeController.js';
 import { DynamicMain } from '../3d/DynamicMain.js';
-import { GameMain } from "../game/GameMain.js";
+
 
 class Client {
 
@@ -20,7 +20,6 @@ class Client {
         this.threeController = new ThreeController();
         this.pipelineAPI = new PipelineAPI();
         this.gameScreen = new GameScreen();
-        this.gameMain = new GameMain();
         this.dynamicMain = new DynamicMain();
         window.GameScreen = this.gameScreen;
         this.setup = new Setup();
@@ -29,7 +28,8 @@ class Client {
 
     activateGui() {
         client.createScene();
-        this.gameMain.initGameMain();
+        GameAPI.initGameMain();
+
     }
 
     initUiSystem() {

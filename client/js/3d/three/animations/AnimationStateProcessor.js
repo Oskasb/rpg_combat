@@ -1,27 +1,21 @@
-"use strict";
+import { AnimationSequencer } from "./AnimationSequencer.js";
 
-define([
-        'game/actions/AnimationSequencer'
-    ],
-    function(
-        AnimationSequencer
-    ) {
+class AnimationStateProcessor {
+    constructor() {
 
-        var AnimationStateProcessor = function() {};
+    }
 
-        var actionState;
-        var key;
-        var targetTime;
+        applyActionStateToGamePiece = function(action, gamePiece) {
 
-        AnimationStateProcessor.applyActionStateToGamePiece = function(action, gamePiece) {
-
-            actionState = action.getActionState();
+            let actionState = action.getActionState();
 
             if (actionState === ENUMS.ActionState.AVAILABLE) {
                 return;
             }
 
-            key = AnimationSequencer.getGamePieceActionStateKey(action, gamePiece);
+            let targetTime;
+
+            let key = AnimationSequencer.getGamePieceActionStateKey(action, gamePiece);
 
             if (actionState === ENUMS.ActionState.ON_COOLDOWN) {
                 targetTime = action.getActionRecoverTime();
@@ -35,14 +29,12 @@ define([
 
         };
 
-
-        AnimationStateProcessor.applyMovementStateToGamePiece = function(state, movement, gamePiece) {
+        applyMovementStateToGamePiece = function(state, movement, gamePiece) {
             AnimationSequencer.sequenceLegAnimation(state, movement, gamePiece);
             AnimationSequencer.sequenceBodyAnimation(state, movement, gamePiece);
-
         };
 
-        return AnimationStateProcessor;
+    }
 
-    });
+    export { AnimationStateProcessor }
 
