@@ -20,7 +20,6 @@ class ElementListeners {
     setupInputListener = function(_this) {
 
         let callInputUpdate = function(pState) {
-
             for (let i = 0; i < _this.inputUpdateCallbacks.length; i++) {
                 _this.inputUpdateCallbacks[i](pState);
             }
