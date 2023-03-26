@@ -187,14 +187,19 @@ class HomeScenario {
             tempObj.quaternion.y = 1;
             tempObj.quaternion.z = 0;
             tempObj.quaternion.w = 0;
-            tempObj.rotateY(0.1);
+            tempObj.rotateY(-0.2);
             player.getSpatial().setQuatXYZW(
                 tempObj.quaternion.x,
                 tempObj.quaternion.y,
                 tempObj.quaternion.z,
                 tempObj.quaternion.w
+            );
+            player.getSpatial().setPosXYZ(
+                -1.5, 0, -1.8
             )
         }
+
+        player.tickGamePiece(tpf, scenarioTime);
 
         let effectCb = function(eftc) {
             //     console.log("effect add: ", effect)

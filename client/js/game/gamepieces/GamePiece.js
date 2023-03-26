@@ -8,6 +8,10 @@ class GamePiece {
         this.pieceAnimator = new PieceAnimator();
         this.modelInstance = null;
         this.rigData = null;
+
+
+
+
         new PieceComposer(this, configName, callback)
     }
 
@@ -83,18 +87,6 @@ class GamePiece {
         MATH.callAll(this.gamePieceUpdateCallbacks, tpf, scenarioTime);
         this.pieceAnimator.updatePieceAnimations(tpf, scenarioTime);
 
-        let spatial = this.getSpatial();
-        let tempVec = ThreeAPI.tempVec3;
-        tempVec.copy(spatial.getSpatialPosition());
-        tempVec.x += Math.sin(scenarioTime*0.7)*0.004;
-        tempVec.y = 0;
-        tempVec.z += Math.cos(scenarioTime*0.7)*0.004;
-
-        spatial.setPosXYZ(
-            tempVec.x,
-            tempVec.y,
-            tempVec.z
-        )
     }
 
 

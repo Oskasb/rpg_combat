@@ -1,4 +1,6 @@
 import { PieceAnim } from "./PieceAnim.js";
+import { AttachmentJoint } from "../../3d/three/animations/AttachmentJoint.js";
+import { AnimationState } from "../../3d/three/animations/AnimationState.js";
 
 class PieceAnimator {
     constructor() {
@@ -6,16 +8,56 @@ class PieceAnimator {
         this.activeAnimations = [];
         this.removes = [];
 
+        this.animationStates = [];
+        this.attachmentJoints = [];
+        this.attachmentUpdates = [];
+
         this.timeAtKey = 0;
         this.poseKey = ENUMS.getKey('Animations', ENUMS.Animations.IDLE);
+
+        let setAttachmentUpdated = function(joint) {
+            this.addAttachmentUpdate(joint)
+        }.bind(this);
+
+        this.callbacks = {
+            setAttachmentUpdated:setAttachmentUpdated
+        }
+
     }
 
     initPieceAnimator = function(piece, onReady) {
         this.gamePiece = piece;
-        this.worldEntity = piece.getWorldEntity();
-        piece.setPieceAnimator(this);
         this.setupPieceAnimations(onReady)
     };
+
+
+    setupAnimations = function(data) {
+
+        let key;
+        let joint;
+
+        for (let i = 0; i < data.jointKeys.length; i ++) {
+            key = ENUMS.getKey('Joints',data.jointKeys[i]);
+            joint = new AttachmentJoint(key, this.gamePiece.getSpatial().scale, this.callbacks.setAttachmentUpdated);
+            this.attachmentJoints[i] = joint;
+            this.jointMap[this.data.jointKeys[i]] = i;
+        }
+
+        for (let i = 0; i < data.animKeys.length; i ++) {
+            let animKey = ENUMS.getKey('Animations',data.animKeys[i]);
+            let animState = new AnimationState(animKey);
+            this.animationStates.push(animState);
+        }
+    };
+
+    addAttachmentUpdate = function(attachmentUpdate) {
+        this.attachmentUpdates.push(attachmentUpdate);
+    };
+
+    getAnimationState = function(key) {
+        return MATH.getFromArrayByKeyValue(this.animationStates, 'key', key)
+    };
+
 
     setupPieceAnimations = function(onReady) {
 
@@ -29,7 +71,7 @@ class PieceAnimator {
                 let animations = this.gamePiece.getRigData().readDataKey('animations');
 
                 for (let key in animations) {
-                    this.animations[key] = new PieceAnim(key, this.gamePiece.getRigData(), this.worldEntity.getAnimationState(key));
+                    this.animations[key] = new PieceAnim(key, this.gamePiece.getRigData(), this.getAnimationState(key));
                 }
 
             }.bind(this);
