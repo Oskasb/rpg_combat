@@ -197,6 +197,53 @@ class HomeScenario {
             player.getSpatial().setPosXYZ(
                 -1.5, 0, -1.8
             );
+
+
+            if (Math.random() < 0.2) {
+
+                let animMap = player.animStateMap;
+
+                let randomAnims = [
+                    'CT_ML_R',
+                    'CT_MR_R',
+                    'CT_TC_R',
+                    'CT_TR_R',
+                //    'DEAD',
+                //    'FALL',
+                    'GD_BCK_R',
+                    'GD_HI_R',
+                    'GD_HNG_R',
+                    'GD_INS_R',
+                //    'GD_LFT_FF',  // broken
+                    'GD_LNG_R',
+                    'GD_LOW_R',
+                    'GD_MID_R',
+                    'GD_RT_FF',
+                    'GD_SHT_R',
+                    'GD_SID_R',
+                    'IDLE',
+                    'IDL_HI_CB',
+                    'IDL_LO_CB',
+                //    'RUN',
+                    //   'SET_LFT_FF',  // broken
+                    'SET_RT_FF',
+                    'SW_BCK_R',
+                    'SW_SID_R',
+                //    'WALK',
+                //    'WALK_BODY',
+                //    'WALK_COMBAT'
+                ];
+
+                let count = randomAnims.length;
+
+                let key = randomAnims[ Math.floor( scenarioTime*2) % count];
+
+                GuiAPI.printDebugText("ANIM KEY: "+key);
+
+                player.applyPieceAnimationState(key)
+            }
+
+
             player.tickGamePiece(tpf, scenarioTime);
         }
 

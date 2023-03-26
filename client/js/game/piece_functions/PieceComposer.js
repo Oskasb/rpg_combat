@@ -28,7 +28,7 @@ class PieceComposer {
                 let scaleVec = ThreeAPI.tempVec3;
                 scaleVec.set(1, 1, 1);
                 gamePiece.pieceAnimator.setupAnimations(assetInstance.originalModel, scaleVec);
-                gamePiece.pieceAnimator.initPieceAnimator(gamePiece, rigData.data);
+                gamePiece.animStateMap = gamePiece.pieceAnimator.initPieceAnimator(gamePiece, rigData.data);
                 gamePiece.pieceAnimator.activatePieceAnimation('IDLE', 1, 1, 1)
             }
 

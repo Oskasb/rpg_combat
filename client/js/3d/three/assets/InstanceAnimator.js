@@ -16,6 +16,28 @@ class InstanceAnimator {
             this.mixer = new THREE.AnimationMixer( clone );
         };
 
+        applyAnimationState = function(stateId, animMap) {
+            if (!animMap[stateId]) {
+                console.log("Bad Anim request, ", stateId, animMap);
+                return;
+            }
+
+            let params = animMap[stateId];
+
+            this.updateAnimationAction(
+                stateId,
+                params['weight'],
+                params['time_scale'],
+                params['fade'],
+                params['channel'],
+                params['loop'],
+                params['clamp'],
+                params['sync'],
+                params['weight']
+            )
+
+        };
+
         setupAnimations = function(animMap) {
 
             this.actionKeys = [];
@@ -147,13 +169,12 @@ class InstanceAnimator {
 
         updateAnimationAction = function(animKey, weight, timeScale, fade, chan, loop, clamp, sync) {
             let action = this.animationActions[animKey];
-            action.channel = chan;
-            console.log("anim event:", animKey, weight, timeScale, fade, chan);
-
             if (!action) {
-                console.log("Bad anim event");
+                console.log("Action not configured:", animKey)
                 return;
             }
+            action.channel = chan;
+        //    console.log("anim event:", animKey, weight, timeScale, fade, chan);
 
             if (!this.channels[chan]) {
         //        console.log("Add anim channel", chan);

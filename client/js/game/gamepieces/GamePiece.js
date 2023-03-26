@@ -7,7 +7,6 @@ class GamePiece {
         this.gamePieceUpdateCallbacks = [];
         this.pieceAnimator = new PieceAnimator();
         this.modelInstance = null;
-        this.rigData = null;
         new PieceComposer(this, configName, callback)
     }
 
@@ -19,9 +18,9 @@ class GamePiece {
         this.modelInstance = modelInstance;
     };
 
-    setRigData(ridGata) {
-        this.rigData = ridGata;
-    };
+    applyPieceAnimationState(stateId) {
+        this.modelInstance.animator.applyAnimationState(stateId, this.animStateMap)
+    }
 
     activatePieceAnimation = function(key, weight, timeScale, fadeTime) {
         this.pieceAnimator.activatePieceAnimation(key, weight, timeScale, fadeTime);

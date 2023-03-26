@@ -27,7 +27,7 @@ class PieceAnimator {
 
     initPieceAnimator = function(piece, rigData) {
         this.gamePiece = piece;
-        this.setupPieceAnimations(rigData)
+        return this.setupPieceAnimations(rigData)
 
     };
 
@@ -62,6 +62,7 @@ class PieceAnimator {
     setupPieceAnimations = function(rigData) {
 
         let animations = rigData['animations'];
+
      //   console.log("Anim states: ", this.animationStates);
         for (let key in animations) {
 
@@ -72,6 +73,7 @@ class PieceAnimator {
         //    console.log("Add anim: ", key);
         }
 
+        return animations;
     };
 
     getPieceAnim = function(animationKey) {
