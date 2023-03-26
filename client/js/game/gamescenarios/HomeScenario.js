@@ -163,11 +163,35 @@ class HomeScenario {
         }.bind(this);
 
         let houseLoaded = function(asset) {
-        //    console.log("House loaded", asset)
+            //    console.log("House loaded", asset)
             client.dynamicMain.requestAssetInstance('asset_house_small', houseReturns)
-        }
+        };
 
-        client.dynamicMain.requestAsset('asset_house_small', houseLoaded)
+        client.dynamicMain.requestAsset('asset_house_small', houseLoaded);
+
+        let swordReturns = function(instance) {
+            this.sword = instance;
+            instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
+            instance.spatial.setPosXYZ(-1.4, 0.1, 0.25);
+            instance.spatial.setScaleXYZ(1, 1, 1);
+            instance.spatial.setQuatXYZW(
+                ThreeAPI.tempObj.quaternion.x,
+                ThreeAPI.tempObj.quaternion.y,
+                ThreeAPI.tempObj.quaternion.z,
+                ThreeAPI.tempObj.quaternion.w
+            );
+
+            this.instances.push(instance);
+
+        }.bind(this);
+
+        let swordLoaded = function(asset) {
+            //    console.log("House loaded", asset)
+            client.dynamicMain.requestAssetInstance(asset.id, swordReturns)
+        };
+
+        client.dynamicMain.requestAsset('asset_ninjablade', swordLoaded)
+
     };
 
     exitScenario() {
@@ -198,9 +222,15 @@ class HomeScenario {
                 -1.3, 0, 0.8
             );
 
-
             if (Math.random() < 0.05) {
 
+                if (this.sword) {
+
+                    if (!this.sword.attached) {
+                        player.attachPieceSpatialToJoint(this.sword.spatial, 'HAND_R');
+                        this.sword.attached = true;
+                    }
+                }
                 let animMap = player.animStateMap;
 
                 let randomAnims = [
@@ -208,13 +238,13 @@ class HomeScenario {
                     'CT_MR_R',
                     'CT_TC_R',
                     'CT_TR_R',
-                //    'DEAD',
-                //    'FALL',
+                    //    'DEAD',
+                    //    'FALL',
                     'GD_BCK_R',
                     'GD_HI_R',
                     'GD_HNG_R',
                     'GD_INS_R',
-                //    'GD_LFT_FF',  // broken
+                    //    'GD_LFT_FF',  // broken
                     'GD_LNG_R',
                     'GD_LOW_R',
                     'GD_MID_R',
@@ -222,16 +252,16 @@ class HomeScenario {
                     'GD_SHT_R',
                     'GD_SID_R',
                     'IDLE',
-                //    'IDL_HI_CB',
-                //    'IDL_LO_CB',
-                //    'RUN',
+                    //    'IDL_HI_CB',
+                    //    'IDL_LO_CB',
+                    //    'RUN',
                     //   'SET_LFT_FF',  // broken
                     'SET_RT_FF',
                     'SW_BCK_R',
                     'SW_SID_R',
-                //    'WALK',
-                //    'WALK_BODY',
-                //    'WALK_COMBAT'
+                    //    'WALK',
+                    //    'WALK_BODY',
+                    //    'WALK_COMBAT'
                 ];
 
                 let count = randomAnims.length;

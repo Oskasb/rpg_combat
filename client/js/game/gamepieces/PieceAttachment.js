@@ -1,17 +1,12 @@
 class PieceAttachment {
-    constructor(key, workerData, attachmentJoint) {
+    constructor(key, joint, attachmentJoint) {
             this.key = key;
-            this.dataKey = 'joints';
-            this.workerData = workerData;
+            this.joint = joint;
             this.attachmentJoint = attachmentJoint;
         };
 
-        getData = function() {
-            return this.workerData.readDataKey(this.dataKey)[this.key];
-        };
-
-        setAttachedWorldEntity = function(worldEntity) {
-            this.attachmentJoint.registerAttachedEntity(worldEntity, this.getData());
+        setAttachedSpatial = function(spatial) {
+            return this.attachmentJoint.registerAttachedSpatial(spatial, this.joint);
         };
 
         releaseAttachedWorldEntity = function() {

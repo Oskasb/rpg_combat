@@ -1,28 +1,21 @@
 class AttachmentJoint {
-    constructor(key, parentScale, dirtyCallback) {
+    constructor(key, parentScale) {
             this.key = key;
-            this.isDirty = false;
 
             this.parentScale = parentScale;
             this.obj3d = new THREE.Object3D();
 
             this.dynamicPosition = new THREE.Vector3();
 
-            this.attachedEntity = null;
+            this.attachedSpatial = null;
 
             this.positionUpdateCallbacks = [];
-
-            let notifyUpdated = function(msg) {
-                this.isDirty = true;
-                dirtyCallback(msg);
-            }.bind(this);
 
             let attachEffect = function(effect) {
                 effect.attachToJoint(this)
             }.bind(this);
 
             this.callbacks = {
-                notifyUpdated:notifyUpdated,
                 attachEffect:attachEffect
             }
 
@@ -37,7 +30,7 @@ class AttachmentJoint {
         };
 
         setDynamicPositionXYZ = function(x, y, z) {
-            this.dynamicPosition.set(x, y, z);
+            this.attachedSpatial.setPosXYZ(x, y, z);
             MATH.callAll(this.positionUpdateCallbacks, this.dynamicPosition)
         };
 
@@ -71,19 +64,19 @@ class AttachmentJoint {
         };
 
         detatchAttachedEntity = function() {
-            return this.attachedEntity;
+            return this.attachedSpatial;
         };
 
         getAttachedEntity = function() {
-            return this.attachedEntity;
+            return this.attachedSpatial;
         };
 
-        registerAttachedEntity = function(worldEntity, jointData) {
-            this.attachedEntity = worldEntity;
+        registerAttachedSpatial = function(spatial, jointData) {
+            this.attachedSpatial = spatial;
             this.applyJointData(jointData);
-            //    console.log("registerAttachedEntity", worldEntity);
-        //    let msg = {attachedEntity:worldEntity, obj3d:this.obj3d, key:this.key};
-        //    this.callbacks.notifyUpdated(msg);
+            console.log("registerAttachedEntity", spatial);
+            return this;
+
         };
 
     }

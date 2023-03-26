@@ -1,11 +1,13 @@
 import { AnimationStateProcessor } from "../../3d/three/animations/AnimationStateProcessor.js";
 import { PieceAnimator } from "./PieceAnimator.js";
 import { PieceComposer } from "../piece_functions/PieceComposer.js";
+import { PieceAttacher } from "./PieceAttacher.js";
 
 class GamePiece {
     constructor(configName, callback) {
         this.gamePieceUpdateCallbacks = [];
         this.pieceAnimator = new PieceAnimator();
+        this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
         new PieceComposer(this, configName, callback)
     }
@@ -22,7 +24,7 @@ class GamePiece {
         this.modelInstance.animator.applyAnimationState(stateId, this.animStateMap)
     }
 
-    activatePieceAnimation = function(key, weight, timeScale, fadeTime) {
+        activatePieceAnimation = function(key, weight, timeScale, fadeTime) {
         this.pieceAnimator.activatePieceAnimation(key, weight, timeScale, fadeTime);
     };
 
@@ -30,22 +32,12 @@ class GamePiece {
         return this.pieceAnimator.isActiveAnimationKey(key);
     };
 
-    setPieceAttacher = function( pieceAttacher) {
-        this.pieceAttacher = pieceAttacher;
+    attachPieceSpatialToJoint = function(spatial, jointKey) {
+        return this.pieceAttacher.attachSpatialToJoint(spatial, jointKey);
     };
-
-    getPieceAttacher = function( ) {
-        return this.pieceAttacher;
-    };
-
-
-    attachWorldEntityToJoint = function(worldEntity, jointKey) {
-        return this.getPieceAttacher().attachEntityToJoint(worldEntity, jointKey);
-    };
-
 
     getJointActiveAttachment = function(key) {
-        return this.getPieceAttacher().isActiveJointKey(key);
+        return this.pieceAttacher.isActiveJointKey(key);
     };
 
     addPieceUpdateCallback = function(cb) {
@@ -53,7 +45,6 @@ class GamePiece {
             this.gamePieceUpdateCallbacks.push(cb);
         }
     };
-
 
     removePieceUpdateCallback = function(cb) {
         MATH.quickSplice(this.gamePieceUpdateCallbacks, cb);
@@ -75,13 +66,11 @@ class GamePiece {
         AnimationStateProcessor.applyMovementStateToGamePiece(state, movement, this)
     };
 
-
-
     tickGamePiece(tpf, scenarioTime) {
 
         MATH.callAll(this.gamePieceUpdateCallbacks, tpf, scenarioTime);
         this.pieceAnimator.updatePieceAnimations(tpf, scenarioTime);
-
+        this.pieceAttacher.tickAttacher()
     }
 
 

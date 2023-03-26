@@ -2,63 +2,56 @@ import { PieceAttachment } from "./PieceAttachment.js";
 
 class PieceAttacher {
     constructor() {
-            this.pieceAttachments = {};
-            this.attachedWorldEntities = [];
-        };
+        this.pieceAttachments = {};
+        this.activeJoints = [];
+        this.attachedWorldEntities = [];
+    };
 
-        initPieceAttacher = function(piece) {
-            this.gamePiece = piece;
-            this.worldEntity = piece.getWorldEntity();
-            piece.setPieceAttacher(this);
-            this.setupPieceAttachments()
-        };
+    initPieceAttacher = function (piece, rigData) {
+        this.gamePiece = piece;
+        return this.setupPieceAttachments(rigData)
+    };
 
-        setupPieceAttachments = function() {
+    setupPieceAttachments = function (rigData) {
+        console.log(rigData);
+        let joints = rigData['joints'];
 
-            let skeleton_rig = this.gamePiece.readConfigData('skeleton_rig');
-            this.gamePiece.setRigKey(skeleton_rig);
+        for (let key in joints) {
+            this.pieceAttachments[key] = new PieceAttachment(key, joints[key], this.gamePiece.pieceAnimator.attachmentJoints[key]);
+        }
+        return this.pieceAttachments;
+    };
 
-            if (skeleton_rig) {
+    attachSpatialToJoint = function (spatial, jointKey) {
+        this.attachedWorldEntities.push(spatial);
+        let joint = this.getAttachmentJoint(jointKey).setAttachedSpatial(spatial);
+        this.activeJoints.push(joint);
+    };
 
-                var onDataReady = function() {
+    getAttachmentJoint = function (key) {
+        return this.pieceAttachments[key];
+    };
 
-                    var joints = this.gamePiece.getRigData().readDataKey('joints');
+    isActiveJointKey = function (key) {
+        return this.getAttachmentJoint(key).getActiveAttachment();
+    };
 
-                    for (var key in joints) {
-                        this.pieceAttachments[key] = new PieceAttachment(key, this.gamePiece.getRigData(), this.worldEntity.getAttachmentJoint(key));
-                    }
+    releaseJointKey = function (key) {
+        return this.getAttachmentJoint(key).releaseActiveAttachment();
+    };
 
-                }.bind(this);
+    removeAttachedEntities = function () {
+        while (this.attachedWorldEntities.length) {
+            MainWorldAPI.getWorldSimulation().despawnWorldEntity(this.attachedWorldEntities.pop());
+        }
+    };
 
-                this.gamePiece.rigData.fetchData(skeleton_rig, onDataReady);
-
-            }
-        };
-
-        attachEntityToJoint = function(entity, jointKey) {
-            this.attachedWorldEntities.push(entity);
-            this.getAttachmentJoint(jointKey).setAttachedWorldEntity(entity);
-        };
-
-        getAttachmentJoint = function(key) {
-            return this.pieceAttachments[key];
-        };
-
-        isActiveJointKey = function(key) {
-            return this.getAttachmentJoint(key).getActiveAttachment();
-        };
-
-        releaseJointKey = function(key) {
-            return this.getAttachmentJoint(key).releaseActiveAttachment();
-        };
-
-        removeAttachedEntities = function() {
-
-            while (this.attachedWorldEntities.length) {
-                MainWorldAPI.getWorldSimulation().despawnWorldEntity(this.attachedWorldEntities.pop());
-            }
-        };
+    tickAttacher(){
+        for (let i = 0; i < this.activeJoints.length;i++) {
+            this.activeJoints[i].setDynamicPositionXYZ(Math.random(), Math.random(),Math.random())
+        }
     }
 
-    export { PieceAttachment }
+}
+export { PieceAttacher }
 
