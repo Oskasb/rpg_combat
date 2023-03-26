@@ -25,26 +25,26 @@ class PieceAnimator {
 
     }
 
-    initPieceAnimator = function(piece, onReady) {
+    initPieceAnimator = function(piece, rigData) {
+        this.setupAnimations();
         this.gamePiece = piece;
-        this.setupPieceAnimations(onReady)
+        this.setupPieceAnimations(piece, rigData)
     };
 
-
-    setupAnimations = function(data) {
+    setupAnimations = function(anims, joints) {
 
         let key;
         let joint;
 
-        for (let i = 0; i < data.jointKeys.length; i ++) {
-            key = ENUMS.getKey('Joints',data.jointKeys[i]);
+        for (let i = 0; i < joints.length; i ++) {
+            key = ENUMS.getKey('Joints',joints[i]);
             joint = new AttachmentJoint(key, this.gamePiece.getSpatial().scale, this.callbacks.setAttachmentUpdated);
             this.attachmentJoints[i] = joint;
-            this.jointMap[this.data.jointKeys[i]] = i;
+            this.jointMap[joints[i]] = i;
         }
 
-        for (let i = 0; i < data.animKeys.length; i ++) {
-            let animKey = ENUMS.getKey('Animations',data.animKeys[i]);
+        for (let i = 0; i < anims.length; i ++) {
+            let animKey = ENUMS.getKey('Animations', anims[i]);
             let animState = new AnimationState(animKey);
             this.animationStates.push(animState);
         }
@@ -58,36 +58,19 @@ class PieceAnimator {
         return MATH.getFromArrayByKeyValue(this.animationStates, 'key', key)
     };
 
+    setupPieceAnimations = function(rigData) {
 
-    setupPieceAnimations = function(onReady) {
+        let animations = rigData['animations'];
 
-        //        console.log("Animator", this);
-        let skeleton_rig = this.gamePiece.readConfigData('skeleton_rig');
-        this.gamePiece.setRigKey(skeleton_rig);
-
-        if (skeleton_rig) {
-
-            let onDataReady = function() {
-                let animations = this.gamePiece.getRigData().readDataKey('animations');
-
-                for (let key in animations) {
-                    this.animations[key] = new PieceAnim(key, this.gamePiece.getRigData(), this.getAnimationState(key));
-                }
-
-            }.bind(this);
-
-            this.gamePiece.rigData.fetchData(skeleton_rig, onDataReady);
-
+        for (let key in animations) {
+            this.animations[key] = new PieceAnim(key, rigData, this.getAnimationState(key));
         }
 
-        onReady(this);
     };
-
 
     getPieceAnim = function(animationKey) {
         return this.animations[animationKey];
     };
-
 
     setPoseKey = function(key) {
         this.timeAtKey = 0;
@@ -106,9 +89,7 @@ class PieceAnimator {
         return this.gamePiece.getRigData().readDataKey('action_maps')[actionType];
     };
 
-
     activatePieceAnimation = function(animationKey, weight, timeScale, fadeTime) {
-
 
         let anim = this.getPieceAnim(animationKey);
 
@@ -116,7 +97,6 @@ class PieceAnimator {
             console.log("Bad animationKey: ", animationKey)
             return;
         }
-
 
         if (this.activeAnimations.indexOf(anim) === -1) {
             anim.activateNow(weight, timeScale, fadeTime);
@@ -131,7 +111,7 @@ class PieceAnimator {
         } else {
 
             if (anim.channel === 0) {
-                //        console.log("Refresh Legs")
+                // console.log("Refresh Legs")
             }
 
             anim.refreshDuration();

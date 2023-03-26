@@ -8,10 +8,6 @@ class GamePiece {
         this.pieceAnimator = new PieceAnimator();
         this.modelInstance = null;
         this.rigData = null;
-
-
-
-
         new PieceComposer(this, configName, callback)
     }
 

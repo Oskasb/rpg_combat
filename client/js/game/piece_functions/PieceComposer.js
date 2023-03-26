@@ -15,14 +15,18 @@ class PieceComposer {
 
         console.log(pieceData.data, rigData.data);
 
-        gamePiece.setRigData(rigData.data);
-
         let assetId = pieceData.data["model_asset"];
 
 
         let modelInstanceCB = function(assetInstance) {
             console.log(assetInstance);
             gamePiece.setModelInstance(assetInstance);
+
+            if (assetInstance.anims) {
+                gamePiece.pieceAnimator.setupAnimations(assetInstance.anims,assetInstance.joints );
+                gamePiece.pieceAnimator.initPieceAnimator(gamePiece, rigData.data)
+            }
+
             callback(gamePiece);
         };
 
