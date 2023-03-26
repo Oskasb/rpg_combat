@@ -88,7 +88,7 @@ class EncounterDynamicScenario {
 
 
         let pos = this.config.camera.pos;
-                
+
         let lookAt = this.config.camera.lookAt;
         ThreeAPI.setCameraPos(pos[0] + Math.sin(scenarioTime*0.3)*0.5, pos[1], pos[2]+ Math.cos(scenarioTime*0.15)*0.5);
         ThreeAPI.cameraLookAt(lookAt[0] + Math.sin(scenarioTime*0.2)*0.5, lookAt[1], lookAt[2]+ Math.cos(scenarioTime*0.1)*0.5)
