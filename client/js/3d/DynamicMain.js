@@ -22,20 +22,21 @@ class DynamicMain {
 
     requestAsset = function(modelAssetId, assetReadyCB) {
         let assets = this.assets;
-        var onAssetReady = function(asset) {
+        let onAssetReady = function(asset) {
         //    console.log("AssetReady:", asset);
             this.assetIndex[asset.id] = assets.length;
             assets[modelAssetId] = asset;
 
-            this.idx = this.assetIndex[asset.id];
-            this.anims = asset.model.animationKeys;
-            this.joints = asset.model.jointKeys;
-
-            let modelSettings = asset.model.settings;
-            if (modelSettings.skin) {
-                this.skin = modelSettings.skin
+            asset.idx = this.assetIndex[asset.id];
+            if (asset.model.animationKeys) {
+                asset.anims = asset.model.animationKeys;
+                asset.joints = asset.model.jointKeys;
+                let modelSettings = asset.model.settings;
+                if (modelSettings.skin) {
+                    asset.skin = modelSettings.skin
+                }
             }
-
+            
         }.bind(this);
 
         ThreeAPI.buildAsset(modelAssetId,   onAssetReady);
