@@ -1,8 +1,6 @@
 class InstanceAnimator {
     constructor(instancedModel) {
 
-        this.action = null;
-        this.animKey = null;
         this.loopModes = [THREE.LoopOnce, THREE.LoopRepeat, THREE.LoopPingPong];
         this.clampModes = [false, true];
             this.animationActions = {};
@@ -90,12 +88,12 @@ class InstanceAnimator {
         };
 
         startChannelAction = function(channel, action, weight, fade, loop, clamp, timeScale, sync) {
-    //        console.log("start chan action", action);
+            console.log("start chan action", action);
 
                 action.reset();
                 action.enabled = true;
-                action.loop = loopModes[loop];
-                action.clampWhenFinished = clampModes[clamp];
+                action.loop = this.loopModes[loop];
+                action.clampWhenFinished = this.clampModes[clamp];
 
                 action.setEffectiveWeight( weight );
                 action.setEffectiveTimeScale( timeScale );
@@ -147,11 +145,10 @@ class InstanceAnimator {
         };
 
 
-        updateAnimationAction = function(animationKey, weight, timeScale, fade, chan, loop, clamp, sync) {
-            let animKey = ENUMS.getKey('Animations', animationKey);
+        updateAnimationAction = function(animKey, weight, timeScale, fade, chan, loop, clamp, sync) {
             let action = this.animationActions[animKey];
             action.channel = chan;
-        //    console.log("anim event:", animationKey, weight, timeScale, fade, chan);
+            console.log("anim event:", animKey, weight, timeScale, fade, chan);
 
             if (!action) {
                 console.log("Bad anim event");

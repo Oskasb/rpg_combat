@@ -1,6 +1,7 @@
 import {ExpandingPool} from '../../../application/utils/ExpandingPool.js';
 import {InstanceSpatial} from './InstanceSpatial.js';
 import { GLTFLoader } from "../../../../libs/three/GLTFLoader.js";
+import * as SkeletonUtils from "../../../../libs/three/SkeletonUtils.js";
 
         class ThreeModelFile {
             constructor(id, config, callback) {
@@ -127,9 +128,10 @@ import { GLTFLoader } from "../../../../libs/three/GLTFLoader.js";
             };
 
 
-            var clone = cloneGltf(this.scene, this.cloneMeshModelOriginal());
+         //   let skelUtils = new SkeletonUtils();
+            let clone = SkeletonUtils.clone(this.scene);  // cloneGltf(this.scene, this.cloneMeshModelOriginal());
             clone.frustumCulled = false;
-            var spatial = new InstanceSpatial(clone);
+            let spatial = new InstanceSpatial(clone);
             callback(spatial)
         };
 

@@ -35,7 +35,7 @@ class GameMain {
 
     initPlayerPiece(pieceName) {
         let charCb = function(gamePiece) {
-            console.log("Player Piece: ", gamePiece);
+            console.log("Player Piece: ", gamePiece, gamePiece.getPlayingAnimation('idle'));
             GameAPI.setActivePlayerCharacter(gamePiece);
             this.playerPieces.push(gamePiece);
         }.bind(this);

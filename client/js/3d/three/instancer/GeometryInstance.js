@@ -68,14 +68,8 @@ class GeometryInstance {
         this.setScale(this.obj3d.scale)
     };
 
-
     initBuffers = function () {
-        //    this.obj3d.position.x = Math.random() * -40;
-        //    this.obj3d.position.z = Math.random() * -40;
-        //    this.obj3d.rotateX(-Math.PI*0.25);
         this.setVertexColor(1, 1, 1, 1)
-        //    this.setVertexColor(0.6+Math.random() * 0.6,0.7+Math.random() * 0.5,0.5+Math.random() * 0.5,0.5+Math.random() * 0.5)
-        //    this.applyObj3d()
     };
 
 

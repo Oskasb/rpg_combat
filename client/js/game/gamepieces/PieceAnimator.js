@@ -62,14 +62,14 @@ class PieceAnimator {
     setupPieceAnimations = function(rigData) {
 
         let animations = rigData['animations'];
-        console.log("Anim states: ", this.animationStates);
+     //   console.log("Anim states: ", this.animationStates);
         for (let key in animations) {
 
             let animState = MATH.getFromArrayByKeyValue(this.animationStates, 'key', key)
-            console.log("Anim state: ", animState);
+        //    console.log("Anim state: ", animState);
 
             this.animations[key] = new PieceAnim(key, animations[key], animState);
-            console.log("Add anim: ", key);
+        //    console.log("Add anim: ", key);
         }
 
     };
@@ -128,6 +128,7 @@ class PieceAnimator {
     };
 
     isActiveAnimationKey = function(key) {
+        console.log(this.activeAnimations)
         return MATH.getFromArrayByKeyValue(this.activeAnimations, 'key', key);
     };
 
@@ -136,6 +137,7 @@ class PieceAnimator {
         this.timeAtKey += tpf;
 
         for (let i = 0; i < this.activeAnimations.length; i++) {
+        //    console.log("Updateanim", this.activeAnimations)
             this.activeAnimations[i].updateAnimation(tpf, time, this.removes);
         }
 

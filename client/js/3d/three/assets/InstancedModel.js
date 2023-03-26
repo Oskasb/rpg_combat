@@ -90,6 +90,7 @@ class InstancedModel {
                         _this.animator = new InstanceAnimator(_this);
                         _this.obj3d.animator = _this.animator;
                     }
+                    _this.animator.initAnimatior();
                 }
 
                 callback(_this)
@@ -277,6 +278,7 @@ class InstancedModel {
             ThreeAPI.addToScene(this.obj3d);
             if (this.animator) {
                 this.animator.activateAnimator();
+                this.updateAnimationState('IDLE', 1, 1, 1, 'channel', true, false, false)
             }
         };
 
