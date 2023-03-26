@@ -62,7 +62,7 @@ class GuiDebug {
     setupDebugText = function() {
         if (!GuiAPI.getAnchorWidget('bottom_left')) return;
         if (this.holdIt) {
-            console.log("Hold debug text setup...")
+        //    console.log("Hold debug text setup...")
             return;
         }
         this.holdIt = true;

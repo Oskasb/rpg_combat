@@ -1,24 +1,27 @@
 import { AnimationStateProcessor } from "../../3d/three/animations/AnimationStateProcessor.js";
 import { PieceAnimator } from "./PieceAnimator.js";
+import { PieceComposer } from "../piece_functions/PieceComposer.js";
 
 class GamePiece {
-    constructor(config, callback) {
-        this.config = config;
+    constructor(configName, callback) {
         this.gamePieceUpdateCallbacks = [];
         this.pieceAnimator = new PieceAnimator();
-
-        let instanceCb = function(assetInstance) {
-            this.instance = assetInstance;
-            callback(this)
-        }.bind(this);
-
-        client.dynamicMain.requestAssetInstance(config.assetId, instanceCb)
+        this.modelInstance = null;
+        this.rigData = null;
+        new PieceComposer(this, configName, callback)
     }
 
-    getPieceSpatial() {
-        return this.instance.getSpatial();
-    }
+    getSpatial = function() {
+        return this.modelInstance.getSpatial();
+    };
 
+    setModelInstance(modelInstance) {
+        this.modelInstance = modelInstance;
+    };
+
+    setRigData(ridGata) {
+        this.rigData = ridGata;
+    };
 
     activatePieceAnimation = function(key, weight, timeScale, fadeTime) {
         this.pieceAnimator.activatePieceAnimation(key, weight, timeScale, fadeTime);
@@ -80,12 +83,12 @@ class GamePiece {
         MATH.callAll(this.gamePieceUpdateCallbacks, tpf, scenarioTime);
         this.pieceAnimator.updatePieceAnimations(tpf, scenarioTime);
 
-        let spatial = this.getPieceSpatial();
+        let spatial = this.getSpatial();
         let tempVec = ThreeAPI.tempVec3;
         tempVec.copy(spatial.getSpatialPosition());
-        tempVec.x += Math.sin(scenarioTime*0.7)*0.01;
-        tempVec.y = 2;
-        tempVec.z += Math.cos(scenarioTime*0.7)*0.01;
+        tempVec.x += Math.sin(scenarioTime*0.7)*0.004;
+        tempVec.y = 0;
+        tempVec.z += Math.cos(scenarioTime*0.7)*0.004;
 
         spatial.setPosXYZ(
             tempVec.x,

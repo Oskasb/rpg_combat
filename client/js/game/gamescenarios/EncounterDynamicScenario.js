@@ -8,7 +8,7 @@ class EncounterDynamicScenario {
         this.scenarioDynamicId = eArgs.scenarioDynamicId;
 
         if (!this.scenarioDynamicId) {
-            console.log("No dynamic scenario, exit...")
+        //    console.log("No dynamic scenario, exit...")
             return;
         }
 

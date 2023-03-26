@@ -10,7 +10,7 @@ class GuiButtonSystem {
 
     buildButton(evtArgs) {
 
-        console.log(evtArgs)
+    //    console.log(evtArgs)
 
         let buttonReady = function(button) {
             if (evtArgs.container) {

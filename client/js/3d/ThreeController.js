@@ -25,7 +25,7 @@ class ThreeController {
     };
 
     notifyRezize = function() {
-        console.log("notifyRezize")
+    //    console.log("notifyRezize")
         ThreeAPI.updateWindowParameters(GameScreen.getWidth(), GameScreen.getHeight(), GameScreen.getAspect(), this.pxRatio);
         GuiAPI.setCameraAspect(GameScreen.getAspect())
     };

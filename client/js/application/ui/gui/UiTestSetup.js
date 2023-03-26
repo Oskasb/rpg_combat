@@ -144,7 +144,7 @@ class UiTestSetup {
             let activeScenario = {}
 
             let scenarioCallback = function(gameScenario) {
-                console.log("scenarioCallback", gameScenario)
+          //      console.log("scenarioCallback", gameScenario)
                 activeScenario = gameScenario;
             }.bind(this);
 
@@ -565,7 +565,7 @@ class UiTestSetup {
 
             this.addTestButtons();
 
-            console.log("Open test Ui");
+        //    console.log("Open test Ui");
         };
 
         closeTestUi = function() {

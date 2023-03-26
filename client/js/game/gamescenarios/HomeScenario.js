@@ -35,9 +35,9 @@ class HomeScenario {
 
 
             instance.spatial.setPosXYZ(
-                Math.sin(1.0 * offsetValue) *  (16 +  count * (Math.sin(offsetValue*0.015)+1) * 0.2),
+                Math.sin(1.0 * offsetValue) *  (12 +  count * (Math.sin(offsetValue*0.015)+1) * 0.2),
                 Math.sin(1.0 + offsetValue) *  0.4*0.6,
-                Math.cos(1.0 * offsetValue) *  (16 +  count * (Math.cos(offsetValue*0.015)+1) * 0.2)
+                Math.cos(1.0 * offsetValue) *  (12 +  count * (Math.cos(offsetValue*0.015)+1) * 0.2) + 5
             );
 
             this.instances.push(instance);
@@ -57,8 +57,14 @@ class HomeScenario {
             }
         }
 
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 20; i++) {
             client.dynamicMain.requestAssetInstance('asset_tree_5', instanceReturns)
+        }
+
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < assets.length; j++) {
+                client.dynamicMain.requestAssetInstance(assets[j], instanceReturns)
+            }
         }
 
         count = 0;
@@ -143,8 +149,8 @@ class HomeScenario {
         let houseReturns = function(instance) {
             this.house = instance;
             instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
-            instance.spatial.setPosXYZ(0, 0, 0);
-            instance.spatial.setScaleXYZ(0.005, 0.005, 0.005);
+            instance.spatial.setPosXYZ(-1, 0, 6);
+            instance.spatial.setScaleXYZ(0.003, 0.003, 0.003);
             instance.spatial.setQuatXYZW(
                 ThreeAPI.tempObj.quaternion.x,
                 ThreeAPI.tempObj.quaternion.y,
@@ -157,7 +163,7 @@ class HomeScenario {
         }.bind(this);
 
         let houseLoaded = function(asset) {
-            console.log("House loaded", asset)
+        //    console.log("House loaded", asset)
             client.dynamicMain.requestAssetInstance('asset_house_small', houseReturns)
         }
 
@@ -173,13 +179,30 @@ class HomeScenario {
     };
 
     tickScenario(tpf, scenarioTime) {
+
+        let player = GameAPI.getActivePlayerCharacter();
+        if (player){
+            let tempObj = ThreeAPI.tempObj;
+            tempObj.quaternion.x = 0;
+            tempObj.quaternion.y = 1;
+            tempObj.quaternion.z = 0;
+            tempObj.quaternion.w = 0;
+            tempObj.rotateY(0.1);
+            player.getSpatial().setQuatXYZW(
+                tempObj.quaternion.x,
+                tempObj.quaternion.y,
+                tempObj.quaternion.z,
+                tempObj.quaternion.w
+            )
+        }
+
         let effectCb = function(eftc) {
             //     console.log("effect add: ", effect)
             eftc.activateEffectFromConfigId()
             //    client.gameEffects.push(effect);
-            eftc.pos.x = Math.sin(2.61*scenarioTime)*(20) * (Math.random()+0.2);
-            eftc.pos.y = Math.sin(0.4 *scenarioTime) * 2 * Math.random() +4;
-            eftc.pos.z = Math.cos(2.61*scenarioTime)*(20) * (Math.random()+0.2);
+            eftc.pos.x = Math.sin(261*scenarioTime)*(7) + (Math.random()*3.2);
+            eftc.pos.y = Math.sin(34 *scenarioTime) * 3  + 2 + Math.random() * 3;
+            eftc.pos.z = Math.cos(261*scenarioTime)*(18) + (Math.random()*3.2 + 16);
             eftc.setEffectPosition(eftc.pos)
         };
 
@@ -188,12 +211,14 @@ class HomeScenario {
         }
 
         ThreeAPI.setCameraPos(
-            Math.cos(scenarioTime*0.2)*3+5,
-            Math.sin(scenarioTime*0.4)*1+11,
-            Math.sin(scenarioTime*0.2)*3-32
+            Math.cos(scenarioTime*0.2)*1.2+2,
+            Math.sin(scenarioTime*0.4)*0.5+6,
+            Math.sin(scenarioTime*0.2)*1.2-13
         );
 
-        ThreeAPI.cameraLookAt(0, 0, 0);
+        ThreeAPI.cameraLookAt(0, 3, 0);
+
+
 
     }
 

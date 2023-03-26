@@ -7,9 +7,10 @@ class GuiSettings {
             sprites:this.sprites,
             textLayouts:this.textLayouts
         };
-        console.log("GUI SETTINGS: ", this.settings)
+    //    console.log("GUI SETTINGS: ", this.settings)
 
         let settings = this.settings;
+
         let fetchSetting = function(conf, key, dataId, cb) {
 
             if (!settings[key]) {

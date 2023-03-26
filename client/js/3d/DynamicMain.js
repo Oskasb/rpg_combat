@@ -66,6 +66,7 @@ class DynamicMain {
         let instanceReady = function(modelInstance) {
             this.instancePointer++;
             this.instances.push(modelInstance);
+            modelInstance.activateInstancedModel();
             modelInstance.setPointer(this.instancePointer);
         //    this.instanceEvt[1] = this.assetIndex[modelInstance.getAssetId()];
         //    this.instanceEvt[3] = modelInstance.getPointer();

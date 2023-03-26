@@ -4,7 +4,9 @@ class GameMain {
     constructor() {
         this.activeScenarios = [];
         this.callbacks = {};
-        this.playerCharacters = []
+        this.playerPieces = [];
+        this.gameTime = 0;
+
     }
 
     setupCallbacks = function() {
@@ -28,7 +30,19 @@ class GameMain {
         evt.on(ENUMS.Event.SCENARIO_ACTIVATE, this.callbacks.activateScenario);
         evt.on(ENUMS.Event.SCENARIO_CLOSE, this.callbacks.deActivateScenario);
         evt.on(ENUMS.Event.FRAME_READY, this.callbacks.updateGameFrame)
+        this.initPlayerPiece('PIECE_FIGHTER');
     }
+
+    initPlayerPiece(pieceName) {
+        let charCb = function(gamePiece) {
+            console.log("Player Piece: ", gamePiece);
+            GameAPI.setActivePlayerCharacter(gamePiece);
+            this.playerPieces.push(gamePiece);
+        }.bind(this);
+
+        GameAPI.createGamePiece(pieceName, charCb)
+    }
+
 
     initGameScenario(eArgs) {
 
@@ -58,6 +72,8 @@ class GameMain {
     }
 
     updateGameMain(frame) {
+        this.gameTime+= frame.tpf;
+
         for (let i = 0; i < this.activeScenarios.length; i++) {
             let scenario = this.activeScenarios[i];
             if (scenario.isActive) {
@@ -65,6 +81,9 @@ class GameMain {
             }
         }
 
+        for (let i = 0; i < this.playerPieces.length; i++) {
+            this.playerPieces[i].tickGamePiece(frame.tpf, this.gameTime)
+        }
     }
 
 }

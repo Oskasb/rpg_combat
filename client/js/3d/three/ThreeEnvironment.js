@@ -445,7 +445,7 @@ class ThreeEnvironment {
 
         let advanceEnv = function(envArgs) {
                 _this.setEnvConfigId(envArgs.envId, envArgs.time);
-            console.log("Advance ENV ", envArgs, _this.currentEnvId, _this.envList);
+        //    console.log("Advance ENV ", envArgs, _this.currentEnvId, _this.envList);
         };
 
         let scene = store.scene;
