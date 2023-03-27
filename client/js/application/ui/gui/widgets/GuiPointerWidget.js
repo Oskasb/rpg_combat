@@ -79,6 +79,7 @@ class GuiPointerWidget {
     };
 
     showPointerWidgetSeeking() {
+      //  GuiAPI.printDebugText('Element Seek');
         let count =this.surfaceElements.length;
         for (let i = 0; i < this.surfaceElements.length; i++) {
             let offset = i/count * 0.05 + 0.02;
@@ -90,6 +91,7 @@ class GuiPointerWidget {
     }
 
     showPointerWidgetHovering() {
+     //   GuiAPI.printDebugText('Hovering');
         let count =this.surfaceElements.length;
         for (let i = 0; i < count ; i++) {
 
@@ -102,7 +104,7 @@ class GuiPointerWidget {
     }
 
     showPointerWorldSeeking() {
-
+     //   GuiAPI.printDebugText('World Seek');
         let count = this.surfaceElements.length
         for (let i = 0; i < count; i++) {
             let offset = (i/count)-0.5;

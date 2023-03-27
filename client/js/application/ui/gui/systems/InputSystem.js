@@ -48,17 +48,18 @@ class InputSystem {
         let interactiveElem;
         if (pointer.getIsSeeking()) {
 
-            if (pointer.getPointerInteractiveElement()) {
-                pointer.updatePointerInteractiveElement();
-                return;
-            }
+          //  if (pointer.getPointerInteractiveElement()) {
+          //      pointer.updatePointerInteractiveElement();
+          //      return;
+          //  }
 
-            interactiveElem = this.getIntersectingElement(x, y, inputIndex);
+        //    interactiveElem = this.getIntersectingElement(x, y, inputIndex);
 
             if (interactiveElem) {
-                pointer.pointerPressElementStart(interactiveElem);
+        //        pointer.pointerPressElementStart(interactiveElem);
+        //        interactiveElem.notifyPointerPress(inputIndex);
             } else {
-                pointer.setIsSeeking(false);
+        //        pointer.setIsSeeking(false);
             }
 
         } else {
@@ -89,35 +90,58 @@ class InputSystem {
 
             guiPointer.setPointerPosition(tempVec)
 
+            let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);
+            let currentPressedElement = guiPointer.getPointerInteractiveElement();
+
+            // check if button is down
             if (pointerState.action[0]) {
 
-
-
+                // check is first frame
                 if (pointerState.pressFrames === 1) {
-                    GuiAPI.printDebugText("PRESSFRAME "+pointerState.pressFrames);
                     guiPointer.setIsSeeking(true);
+                    if (!interactiveElem) {
+                        // handle world pointer here
+                    } else {
+                        // pressing and interactive element;
+                        interactiveElem.notifyPointerPress(inputIndex);
+                        guiPointer.setPointerInteractiveElement(interactiveElem);
+                        // no more state handling this frame...
+                        return;
+                    }
+                } else {
+                    // handle mouse and touches that move around while pressed
+                    if (!interactiveElem) {
+                        if (currentPressedElement) {
+                            // enter hovering pointer state if pointer departs element while pressed
+                            guiPointer.setPointerInteractiveElement(null);
+                            guiPointer.setPointerHovering(true)
+                        }
+                    } else {
+                        interactiveElem.notifyHoverStateOn(inputIndex);
+                    }
                 }
 
             } else {
 
-                if (guiPointer.getIsSeeking()) {
+                    if (interactiveElem === currentPressedElement) {
+                    //    GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
 
-                    let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);
-
-                    if (interactiveElem === pointerState.guiPointer.getPointerInteractiveElement()) {
-                        GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
                         interactiveElem.onPressActivate(inputIndex);
-                    } else {
-                        GuiAPI.printDebugText("RELEASE POINTER ON OTHER ELEMENT");
                     }
-                    GuiAPI.printDebugText("RELEASE POINTER ON WORLD"+inputIndex);
+                //    GuiAPI.printDebugText("RELEASE POINTER ON WORLD"+inputIndex);
+                if (guiPointer.getIsSeeking()) {
                     guiPointer.releasePointer();
+                    guiPointer.setPointerHovering(true)
                 }
-                // hovering pointers... touches that left its starting button
-                guiPointer.setPointerHovering(true)
+
+                if (interactiveElem) {
+                    interactiveElem.notifyHoverStateOn(inputIndex);
+                } else {
+                    // handle world space hover here....
+                }
 
             }
-            _this.updateInteractiveElements( guiPointer, pointerState.posX, pointerState.posY)
+        //    _this.updateInteractiveElements( guiPointer, pointerState.posX, pointerState.posY)
 
 
         };
