@@ -66,7 +66,7 @@ class ElementListeners {
                 _this.y = touch.clientY;
                 _this.dx = 0;
                 _this.dy = 0;
-
+                _this.POINTER_STATE.touches[touch.identifier].lastAction[0] = 0;
                 _this.POINTER_STATE.touches[touch.identifier].action[0] = 1;
                 callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
@@ -83,6 +83,8 @@ class ElementListeners {
                 _this.y = touch.clientY;
                 _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
                 _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
+
+                _this.POINTER_STATE.touches[touch.identifier].action[0] = 1;
                 callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
         });

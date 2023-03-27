@@ -27,6 +27,7 @@ class GuiPointer {
     };
 
         setPointerInteractiveElement = function(interactiveElement) {
+            GuiAPI.printDebugText("SET POINTER ELEM");
             this.interactiveElement = interactiveElement;
         };
 
@@ -63,9 +64,6 @@ class GuiPointer {
         };
 
         updatePointerInteractiveElement = function() {
-
-
-            this.setIsSeeking(false);
 
            this.intersects = this.interactiveElement.testSurfaceIntersects(this.pos);
 

@@ -50,10 +50,11 @@ class InputSystem {
 
 
 
-    updateInteractiveElements = function(inputIndex, x, y, pointer) {
+    updateInteractiveElements = function(pointer, x, y) {
+        let inputIndex = pointer.inputIndex;
         let interactiveElem;
         //    GuiAPI.debugDrawGuiPosition(x, y);
-
+        console.log(pointer.getIsSeeking());
         if (pointer.getIsSeeking()) {
 
             if (pointer.getPointerInteractiveElement()) {
@@ -95,34 +96,35 @@ class InputSystem {
             tempVec.y = pointerState.posY ;
             tempVec.z = 0;
 
-            let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);
+
 
             if (pointerState.action[0]) {
 
                 guiPointer.setPointerPosition(tempVec)
 
-                if (!guiPointer.isSeeking && pointerState.pressFrames === 1) {
+                if (pointerState.pressFrames === 1) {
+                    GuiAPI.printDebugText("PRESSFRAME "+pointerState.pressFrames);
                     guiPointer.setIsSeeking(true);
                 }
 
             } else {
                 if (guiPointer.getIsSeeking()) {
+
+                    let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);
+
                     if (interactiveElem === pointerState.guiPointer.getPointerInteractiveElement()) {
                         GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
-
                         interactiveElem.onPressActivate(inputIndex);
-                    //    interactiveElem.notifyHoverStateOn(inputIndex);
-                        //        pointer.pointerPressElementStart(interactiveElem);
                     } else {
-                        GuiAPI.printDebugText("RELEASE POINTER "+inputIndex);
+                        GuiAPI.printDebugText("RELEASE POINTER ON OTHER ELEMENT");
                     }
-
+                    GuiAPI.printDebugText("RELEASE POINTER ON WORLD"+inputIndex);
                     guiPointer.releasePointer();
-
                 }
+                // hovering pointers... touches that left its starting button
             }
+            _this.updateInteractiveElements( guiPointer, pointerState.posX, pointerState.posY)
 
-            _this.updateInteractiveElements( inputIndex, pointerState.posX, pointerState.posY, guiPointer)
 
         };
 
