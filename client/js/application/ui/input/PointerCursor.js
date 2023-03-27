@@ -7,13 +7,14 @@ class PointerCursor {
 
         this.inputState = new InputState(gameScreen);
 
-        this.x = 0;
-        this.y = 0;
+    //    this.x = 0;
+    //    this.y = 0;
         this.INPUT_STATE = this.inputState.getPointerState();
         pipelineAPI.setCategoryData('INPUT_STATE', this.INPUT_STATE);
 
-        let onInputUpdate = function(pState) {
-            this.updatePointerState(pState);
+        let onInputUpdate = function(pointerState) {
+            this.inputState.updateInputState(pointerState);
+            GuiAPI.calls.updateInput(pointerState);
         }.bind(this);
 
         this.inputState.setupUpdateCallback(onInputUpdate);
@@ -24,12 +25,6 @@ class PointerCursor {
         return this.INPUT_STATE;
     };
 
-    updatePointerState = function(pointerState) {
-        this.inputState.updateInputState(pointerState);
-
-        GuiAPI.calls.updateInput(pointerState);
-        // console.log(this.INPUT_STATE)
-    };
 
 }
 

@@ -4,10 +4,8 @@ class InputSystem {
     constructor() {
         this.uiSysId;
         this.surfaceElements = [];
-        this.stupListener();
-        this.tempVec1 = new THREE.Vector3();
-        this.pointers = [];
-
+        this.setupListener();
+        this.preloadedPointers = [];
     };
 
     initInputSystem = function(callback) {
@@ -27,13 +25,16 @@ class InputSystem {
 
         GuiAPI.getGuiSettings().initGuiSettings(["UI_ELEMENTS_BACK"], backplates);
 
-
+        let tempVec = ThreeAPI.tempVec3;
+        for (let i = 0; i < 11; i++) {
+            this.preloadedPointers.push(new GuiPointer(i, tempVec))
+        }
 
     };
 
 
     getIntersectingElement = function(x, y, inputIndex) {
-        for (var i = 0; i < this.surfaceElements.length; i++) {
+        for (let i = 0; i < this.surfaceElements.length; i++) {
             let surface = this.surfaceElements[i];
             let intersects = surface.testIntersection(x, y);
             let interactiveElem = surface.getInteractiveElement();
@@ -49,9 +50,9 @@ class InputSystem {
 
     updateInteractiveElements = function(inputIndex, x, y, pointer) {
         let interactiveElem;
-    //    GuiAPI.debugDrawGuiPosition(x, y);
+        //    GuiAPI.debugDrawGuiPosition(x, y);
 
-        if (pointer) {
+        if (pointer.getIsSeeking()) {
 
             if (pointer.getPointerInteractiveElement()) {
                 pointer.updatePointerInteractiveElement();
@@ -76,73 +77,68 @@ class InputSystem {
 
     };
 
+    pickGuiPointer = function(inputIndex, pointerState) {
+        if (pointerState.guiPointer) {
+            if (pointerState.guiPointer.inputIndex !== inputIndex) {
+                console.log("index not for pointer...");
+                return;
+            }
 
+        } else {
+            pointerState.guiPointer = this.preloadedPointers.pop() //new GuiPointer(inputIndex, tempVec, pointerReadyCB);
+            pointerState.guiPointer.setInputIndex(inputIndex);
+        }
+        return pointerState.guiPointer;
+    };
 
-    stupListener = function() {
+    setupListener = function() {
 
         let _this = this;
-        let sampleInput = function(inputIndex, pointerState) {
-            let pointers = this.pointers;
 
-            let pointer = null;
-            let tempVec = this.tempVec1;
+        let sampleInput = function(inputIndex, pointerState) {
+            let guiPointer = _this.pickGuiPointer(inputIndex, pointerState)
+
+            let tempVec = ThreeAPI.tempVec3;
+            tempVec.x = pointerState.posX ;
+            tempVec.y = pointerState.posY ;
+            tempVec.z = 0;
+
+            let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);
 
             if (pointerState.action[0]) {
 
-                tempVec.x = pointerState.posX ;
-                tempVec.y = pointerState.posY ;
-                tempVec.z = 0;
+                guiPointer.setPointerPosition(tempVec)
 
-            //    GameScreen.fitView(tempVec);
-
-                if (!pointers[inputIndex]) {
-
-                    let pointerReadyCB = function(guiPointer) {
-                        pointerState.guiPointer = guiPointer;
-                    };
-
-                        pointer = new GuiPointer(tempVec, pointerReadyCB);
-                        pointer.originalInputIndex = inputIndex;
-                        pointer.setIsSeeking(true);
-                        pointers[inputIndex] = pointer;
-
-                } else {
-
-                    pointer = pointers[inputIndex];
-                //    pointer.setInputIndex(inputIndex);
-                    pointer.setPointerPosition(tempVec)
-
+                if (pointerState.pressFrames === 1) {
+                    guiPointer.setIsSeeking(true);
                 }
 
             } else {
-                if (pointers[inputIndex]) {
-                    pointer = pointers[inputIndex];
-
-                    let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);
-
-                    if (interactiveElem === pointers[inputIndex].getPointerInteractiveElement()) {
+                if (guiPointer.getIsSeeking()) {
+                    if (interactiveElem === pointerState.guiPointer.getPointerInteractiveElement()) {
                         GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
+
                         interactiveElem.onPressActivate(inputIndex);
-                //        pointer.pointerPressElementStart(interactiveElem);
+                        interactiveElem.notifyHoverStateOn(inputIndex);
+                        //        pointer.pointerPressElementStart(interactiveElem);
                     } else {
-                        GuiAPI.printDebugText("RELEASE POINTER "+inputIndex+" "+pointer.originalInputIndex);
+                        GuiAPI.printDebugText("RELEASE POINTER "+inputIndex);
                     }
 
-                    pointer.releasePointer();
-                    pointer = null;
-                    pointers[inputIndex] = null;
+                    guiPointer.releasePointer();
+
                 }
             }
 
-            _this.updateInteractiveElements( inputIndex, pointerState.posX, pointerState.posY, pointer)
+            _this.updateInteractiveElements( inputIndex, pointerState.posX, pointerState.posY, guiPointer)
 
-        }.bind(this);
+        };
 
         GuiAPI.addInputUpdateCallback(sampleInput);
     };
 
     registerInteractiveSurfaceElement = function(surfaceElement) {
-    //    console.log("registerInteractiveSurfaceElement: ", surfaceElement)
+        //    console.log("registerInteractiveSurfaceElement: ", surfaceElement)
         if (this.surfaceElements.indexOf(surfaceElement) === -1) {
             this.surfaceElements.push(surfaceElement);
         } else {

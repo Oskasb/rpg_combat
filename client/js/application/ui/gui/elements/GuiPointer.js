@@ -1,17 +1,16 @@
 import { GuiPointerWidget} from "../widgets/GuiPointerWidget.js";
 
 class GuiPointer {
-    constructor(pos, callback) {
+    constructor(inputIndex, pos, callback) {
             this.intersects = false;
             this.pos = new THREE.Vector3(pos.x, pos.y, pos.z);
             this.scale = new THREE.Vector3(1, 1, 1);
-            this.pointerState = null;
             this.interactiveElement = null;
-            this.targetElementState = null;
-            this.inputIndex = null;
+            this.inputIndex = inputIndex;
             this.isSeeking = false;
-            this.guiPointerWidget = new GuiPointerWidget();
-            this.setupPointerElement("widget_input_pointer", callback)
+            this.guiPointerWidget = new GuiPointerWidget(inputIndex);
+            this.setupPointerElement("widget_input_pointer" , callback)
+            this.setInputIndex(inputIndex)
         };
 
     setupPointerElement = function(configId, callback) {
@@ -19,7 +18,8 @@ class GuiPointer {
         let addWidgetCb = function(guiPointerWidget) {
        //     console.log('Add guiPointerWidget ', guiPointerWidget);
             guiPointerWidget.setElementPosition(this.pos);
-            callback(this)
+
+         //   callback(this)
         }.bind(this);
 
         this.guiPointerWidget.initPointerWidget(configId, addWidgetCb)
@@ -64,6 +64,7 @@ class GuiPointer {
 
         updatePointerInteractiveElement = function() {
 
+
             this.setIsSeeking(false);
 
            this.intersects = this.interactiveElement.testSurfaceIntersects(this.pos);
@@ -71,6 +72,7 @@ class GuiPointer {
             if (this.intersects) {
                 this.interactiveElement.notifyPointerPress(this.getInputIndex());
             } else {
+            //    this.interactiveElement.notifyPointerPress(this.getInputIndex());
                 this.interactiveElement = null;
             }
 
@@ -78,13 +80,14 @@ class GuiPointer {
 
 
         setInputIndex = function(inputIndex) {
+            this.guiPointerWidget.guiWidget.printWidgetText(''+this.inputIndex);
             this.inputIndex = inputIndex;
         };
 
         getInputIndex = function() {
             return this.inputIndex;
-        };
 
+        };
 
         setPointerPosition = function(vec3) {
             this.pos.copy(vec3);
@@ -92,8 +95,12 @@ class GuiPointer {
         };
 
         releasePointer = function() {
+            this.isSeeking = false;
+            this.intersects = false;
+            this.interactiveElement = null;
+
             GuiAPI.unregisterWorldSpacePointer(this);
-            this.guiPointerWidget.removeGuiWidget()
+        //    this.guiPointerWidget.removeGuiWidget()
         };
 
 

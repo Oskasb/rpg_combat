@@ -1,12 +1,12 @@
 import { GuiWidget} from "../elements/GuiWidget.js";
 
 class GuiPointerWidget {
-    constructor() {
+    constructor(inputIndex) {
 
         this.pos = new THREE.Vector3();
         this.origin = new THREE.Vector3();
         this.offset = new THREE.Vector3();
-
+        this.inputIndex = inputIndex;
         this.releaseTime = 0;
         this.releaseProgress = 0;
         this.releaseDuration = 0.75;
@@ -30,7 +30,7 @@ class GuiPointerWidget {
         //    widget.attachToAnchor('center');
             widget.setWidgetIconKey('directional_arrows');
         //    widget.addOnPressStartCallback(this.callbacks.onPressStart);
-        //    widget.enableWidgetInteraction();
+            widget.printWidgetText(this.inputIndex);
             onReady(this)
         }.bind(this);
 

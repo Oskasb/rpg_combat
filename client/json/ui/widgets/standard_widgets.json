@@ -121,6 +121,10 @@
             {
               "id":"widget_input_pointer",
               "layout":"layout_input_pointer",
+              "text": {
+                "sprite_font": "sprite_font_button_big",
+                "feedback": "feedback_text_blue"
+              },
               "icon": {
                 "icon_config": "stick_center_icon",
                 "feedback": "feedback_stick_icon"
