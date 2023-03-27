@@ -34,16 +34,18 @@ class InputSystem {
 
 
     getIntersectingElement = function(x, y, inputIndex) {
+        let element;
         for (let i = 0; i < this.surfaceElements.length; i++) {
             let surface = this.surfaceElements[i];
             let intersects = surface.testIntersection(x, y);
             let interactiveElem = surface.getInteractiveElement();
             if (intersects) {
-                return interactiveElem;
+                element = interactiveElem;
             } else {
                 interactiveElem.notifyInputOutside(inputIndex)
             }
         }
+        return element;
     };
 
 
@@ -77,26 +79,13 @@ class InputSystem {
 
     };
 
-    pickGuiPointer = function(inputIndex, pointerState) {
-        if (pointerState.guiPointer) {
-            if (pointerState.guiPointer.inputIndex !== inputIndex) {
-                console.log("index not for pointer...");
-                return;
-            }
-
-        } else {
-            pointerState.guiPointer = this.preloadedPointers.pop() //new GuiPointer(inputIndex, tempVec, pointerReadyCB);
-            pointerState.guiPointer.setInputIndex(inputIndex);
-        }
-        return pointerState.guiPointer;
-    };
 
     setupListener = function() {
 
         let _this = this;
 
         let sampleInput = function(inputIndex, pointerState) {
-            let guiPointer = _this.pickGuiPointer(inputIndex, pointerState)
+            let guiPointer = pointerState.guiPointer;
 
             let tempVec = ThreeAPI.tempVec3;
             tempVec.x = pointerState.posX ;

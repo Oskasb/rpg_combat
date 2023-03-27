@@ -18,7 +18,7 @@ class ElementListeners {
 
 
     setupInputListener = function(_this) {
-
+        let touch;
         let callInputUpdate = function(pState) {
             for (let i = 0; i < _this.inputUpdateCallbacks.length; i++) {
                 _this.inputUpdateCallbacks[i](pState);
@@ -33,14 +33,14 @@ class ElementListeners {
             _this.y = (e.clientY);
             _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
             _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
-            callInputUpdate(_this.POINTER_STATE.mouse);
+            callInputUpdate(_this.POINTER_STATE.touches[10]);
         });
 
         this.gameScreen.getElement().addEventListener('mouseout', function(e) {
             //	e.stopPropagation();
             _this.dx = 0;
             _this.dy = 0;
-            callInputUpdate(_this.POINTER_STATE.mouse);
+            callInputUpdate(_this.POINTER_STATE.touches[10]);
         });
 
         let zoomTimeout;
@@ -53,50 +53,54 @@ class ElementListeners {
                 zoomTimeout = false;
             }, 100);
             zoomTimeout = true;
-            _this.POINTER_STATE.mouse.wheelDelta = _this.wheelDelta;
-            callInputUpdate(_this.POINTER_STATE.mouse);
+            _this.POINTER_STATE.touches[10].wheelDelta = _this.wheelDelta;
+            callInputUpdate(_this.POINTER_STATE.touches[10]);
         });
 
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {
             //	e.preventDefault();
 
-            for (let i = 0; i < e.touches.length; i++) {
-                _this.x = (e.touches[i].clientX);
-                _this.y = (e.touches[i].clientY);
+            console.log(e);
+
+
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                touch = e.changedTouches[i];
+                _this.x = touch.clientX;
+                _this.y = touch.clientY;
                 _this.dx = 0;
                 _this.dy = 0;
 
-                _this.POINTER_STATE.touches[i].action[0] = 1;
-                callInputUpdate(_this.POINTER_STATE.touches[i]);
+                _this.POINTER_STATE.touches[touch.identifier].action[0] = 1;
+                callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
 
         });
 
         this.gameScreen.getElement().addEventListener('touchmove', function(e) {
             //	e.preventDefault();
-            for (let i = 0; i < e.touches.length; i++) {
-                _this.x = (e.touches[0].clientX);
-                _this.y = (e.touches[0].clientY);
+
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                touch = e.changedTouches[i];
+                _this.x = touch.clientX;
+                _this.y = touch.clientY;
                 _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
                 _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
-                callInputUpdate(_this.POINTER_STATE.touches[i]);
+                callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
         });
 
         let touchend = function(e) {
             //	e.preventDefault();
-            for (let i = 0; i < _this.POINTER_STATE.touches.length; i++) {
 
-                if (!e.touches[i]) {
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                touch = e.changedTouches[i];
+                    _this.dx = 0;
+                    _this.dy = 0;
+                    _this.POINTER_STATE.touches[i].action[0] = 0;
 
-                    if (_this.POINTER_STATE.touches[i].action[0]) {
-                        _this.dx = 0;
-                        _this.dy = 0;
-                        _this.POINTER_STATE.touches[i].action[0] = 0;
-                        callInputUpdate(_this.POINTER_STATE.touches[i]);
-                    }
-                }
+                callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
+            
         };
 
 
@@ -104,7 +108,7 @@ class ElementListeners {
         this.gameScreen.getElement().addEventListener('touchcancel', touchend, false);
 
         window.addEventListener('resize', function() {
-            callInputUpdate(_this.POINTER_STATE.mouse);
+            callInputUpdate(_this.POINTER_STATE.touches[10]);
         });
     };
 

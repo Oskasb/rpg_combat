@@ -28,6 +28,8 @@ class Client {
 
     activateGui() {
         client.createScene();
+        this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
+        this.INPUT_STATE =  this.pointerCursor.getInputState();
         GameAPI.initGameMain();
 
     }
@@ -35,8 +37,7 @@ class Client {
     initUiSystem() {
 
         this.threeController.setupThreeRenderer();
-        this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
-        this.INPUT_STATE =  this.pointerCursor.getInputState();
+
         //     console.log(this.INPUT_STATE);
 
     }
@@ -63,46 +64,10 @@ class Client {
             }, 10)
         };
 
-        setTimeout(function() {
-            client.setup.initUiSetup(callback);
-        }, 10);
+        client.setup.initUiSetup(callback);
+
 
         const clock = new THREE.Clock(true);
-
-        const scene = ThreeAPI.getScene();
-
-
-        const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-
-        let touchCubes = [];
-
-        for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
-            touchCubes[i] = new THREE.Mesh( geometry, material );
-            touchCubes[i].position.x = (Math.random()-0.5)*20;
-            touchCubes[i].position.z = (Math.random()-0.5)*20;
-            scene.add(touchCubes[i])
-        }
-
-        const onFrameReadyCallback= function(frame) {
-
-
-            for (let i = 0; i < client.INPUT_STATE.touches.length;i++) {
-
-                if (client.INPUT_STATE.touches[i].action[0]) {
-                    touchCubes[i].position.x = client.INPUT_STATE.touches[i].dx*3
-                    touchCubes[i].position.y = -client.INPUT_STATE.touches[i].dy*3
-                    //   console.log(client.INPUT_STATE.touches[0].dx)
-                }
-
-            }
-
-            client.pipelineAPI.tickPipelineAPI(frame.tpf)
-            //     cube.rotation.z += response.z;
-            //    console.log("onFrameReadyCallback:",response);
-        };
-
-        client.evt.on(ENUMS.Event.FRAME_READY, onFrameReadyCallback);
 
         let frame = {
             tpf:clock.getDelta(),
@@ -130,6 +95,7 @@ class Client {
             //     renderer.render(scene, camera)
             EffectAPI.updateEffectAPI(frame.elapsedTime);
             ThreeAPI.requestFrameRender(frame)
+            client.pipelineAPI.tickPipelineAPI(frame.tpf)
         }
 
         triggerFrame();

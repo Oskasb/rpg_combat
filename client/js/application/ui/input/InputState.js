@@ -1,4 +1,5 @@
 import {ElementListeners} from './ElementListeners.js';
+import { GuiPointer} from "../gui/elements/GuiPointer.js";
 
 class InputState {
 
@@ -17,7 +18,8 @@ class InputState {
             this.dragDistance = [0, 0];
             this.action = [0, 0];
             this.lastAction = [0, 0];
-            this.pressFrames = 0
+            this.pressFrames = 0;
+            this.guiPointer = new GuiPointer(index, ThreeAPI.tempVec3)
         };
 
 
