@@ -270,7 +270,7 @@ class HomeScenarioUtils {
 
                 let key = randomAnims[ Math.floor( scenarioTime*2) % count];
 
-                GuiAPI.printDebugText("ANIM KEY: "+key);
+            //    GuiAPI.printDebugText("ANIM KEY: "+key);
 
                 player.applyPieceAnimationState(key)
             }

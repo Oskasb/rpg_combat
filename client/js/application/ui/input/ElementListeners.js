@@ -60,9 +60,6 @@ class ElementListeners {
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {
             //	e.preventDefault();
 
-            console.log(e);
-
-
             for (let i = 0; i < e.changedTouches.length; i++) {
                 touch = e.changedTouches[i];
                 _this.x = touch.clientX;
@@ -81,6 +78,7 @@ class ElementListeners {
 
             for (let i = 0; i < e.changedTouches.length; i++) {
                 touch = e.changedTouches[i];
+            //    console.log(touch.identifier)
                 _this.x = touch.clientX;
                 _this.y = touch.clientY;
                 _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
@@ -92,15 +90,20 @@ class ElementListeners {
         let touchend = function(e) {
             //	e.preventDefault();
 
+
             for (let i = 0; i < e.changedTouches.length; i++) {
+            //    console.log(e)
                 touch = e.changedTouches[i];
-                    _this.dx = 0;
-                    _this.dy = 0;
-                    _this.POINTER_STATE.touches[i].action[0] = 0;
+                _this.x = touch.clientX;
+                _this.y = touch.clientY;
+                _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
+                _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
+                _this.POINTER_STATE.touches[touch.identifier].lastAction[0] = 1;
+                _this.POINTER_STATE.touches[touch.identifier].action[0] = 0;
 
                 callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
-            
+
         };
 
 

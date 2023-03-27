@@ -1,6 +1,6 @@
 import {InputState} from './InputState.js';
 
-class PointerCursor {
+class PointerAndTouchCursors {
 
     constructor (pipelineAPI, gameScreen) {
         this.gameScreen = gameScreen;
@@ -28,4 +28,4 @@ class PointerCursor {
 
 }
 
-export { PointerCursor }
+export { PointerAndTouchCursors }

@@ -1,7 +1,7 @@
 import { PipelineAPI } from '../data_pipeline/PipelineAPI.js';
 import { evt } from './event/evt.js';
 import { GameScreen } from './ui/GameScreen.js';
-import { PointerCursor } from './ui/input/PointerCursor.js';
+import { PointerAndTouchCursors } from './ui/input/PointerAndTouchCursors.js';
 import { Setup } from './setup/Setup.js';
 import * as THREE from '../../libs/three/Three.js';
 import { ThreeController } from '../3d/ThreeController.js';
@@ -28,7 +28,7 @@ class Client {
 
     activateGui() {
         client.createScene();
-        this.pointerCursor = new PointerCursor(this.pipelineAPI, this.gameScreen);
+        this.pointerCursor = new PointerAndTouchCursors(this.pipelineAPI, this.gameScreen);
         this.INPUT_STATE =  this.pointerCursor.getInputState();
         GameAPI.initGameMain();
 

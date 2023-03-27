@@ -70,7 +70,6 @@ class InputSystem {
             }
 
         } else {
-
             interactiveElem = this.getIntersectingElement(x, y, inputIndex);
             if (interactiveElem) {
                 interactiveElem.notifyHoverStateOn(inputIndex);
@@ -87,6 +86,10 @@ class InputSystem {
         let sampleInput = function(inputIndex, pointerState) {
             let guiPointer = pointerState.guiPointer;
 
+            if (inputIndex !== guiPointer.inputIndex) {
+                console.log("bad")
+            }
+
             let tempVec = ThreeAPI.tempVec3;
             tempVec.x = pointerState.posX ;
             tempVec.y = pointerState.posY ;
@@ -98,7 +101,7 @@ class InputSystem {
 
                 guiPointer.setPointerPosition(tempVec)
 
-                if (pointerState.pressFrames === 1) {
+                if (!guiPointer.isSeeking && pointerState.pressFrames === 1) {
                     guiPointer.setIsSeeking(true);
                 }
 
@@ -108,7 +111,7 @@ class InputSystem {
                         GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
 
                         interactiveElem.onPressActivate(inputIndex);
-                        interactiveElem.notifyHoverStateOn(inputIndex);
+                    //    interactiveElem.notifyHoverStateOn(inputIndex);
                         //        pointer.pointerPressElementStart(interactiveElem);
                     } else {
                         GuiAPI.printDebugText("RELEASE POINTER "+inputIndex);
