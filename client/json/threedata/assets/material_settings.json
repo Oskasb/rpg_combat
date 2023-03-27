@@ -328,6 +328,30 @@
           }
         },
         {
+          "id": "mat_settings_ui_add"  ,
+          "config": {
+            "shader": "RawShaderMaterial",
+            "properties": {
+              "program": "GUI_INSTANCING_STANDARD",
+              "blending": "CustomBlending",
+              "customBlending": {
+                "blendEquation": "AddEquation",
+                "blendSrc": "SrcColorFactor",
+                "blendDst": "OneFactor"
+              },
+              "data_texture": "data_texture",
+              "side": "DoubleSide",
+              "settings": {
+                "depthTest": false,
+                "alphaTest": 0.05,
+                "transparent": false,
+                "depthWrite": true,
+                "premultipliedAlpha": true
+              }
+            }
+          }
+        },
+        {
           "id": "mat_settings_ui_back"  ,
           "config": {
             "shader": "RawShaderMaterial",

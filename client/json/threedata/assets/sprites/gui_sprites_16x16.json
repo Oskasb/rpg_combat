@@ -39,8 +39,16 @@
             "tiles":[[6, 3]]
           },
           {
+            "id":"inverted_corners",
+            "tiles":[[7, 0]]
+          },
+          {
             "id":"container_box_framed",
             "tiles":[[7, 3]]
+          },
+          {
+            "id":"pinpoint_crosshair",
+            "tiles":[[8, 0]]
           },
           {
             "id":"button_sub_frame",

@@ -28,7 +28,7 @@ class GuiPointerWidget {
 
         let widgetRdy = function(widget) {
         //    widget.attachToAnchor('center');
-            widget.setWidgetIconKey('directional_arrows');
+            widget.setWidgetIconKey('pinpoint_crosshair');
         //    widget.addOnPressStartCallback(this.callbacks.onPressStart);
             widget.printWidgetText(this.inputIndex);
             onReady(this)

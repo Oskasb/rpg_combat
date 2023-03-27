@@ -141,6 +141,16 @@
           }
         },
         {
+          "id":"material_instancing_ui_add",
+          "config":{
+            "settings": "mat_settings_ui_add",
+            "textures":[
+              {"key":"map"           , "id":"gui_atlas_16x16"  },
+              {"key":"data_texture"  , "id":"data_texture"     }
+            ]
+          }
+        },
+        {
           "id":"material_instancing_ui_back",
           "config":{
             "settings": "mat_settings_ui_back",

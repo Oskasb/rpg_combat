@@ -123,7 +123,7 @@
               "layout":"layout_input_pointer",
               "text": {
                 "sprite_font": "sprite_font_button_big",
-                "feedback": "feedback_text_blue"
+                "feedback": "feedback_text_overlay"
               },
               "icon": {
                 "icon_config": "stick_center_icon",

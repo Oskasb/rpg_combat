@@ -53,8 +53,6 @@ class InputSystem {
     updateInteractiveElements = function(pointer, x, y) {
         let inputIndex = pointer.inputIndex;
         let interactiveElem;
-        //    GuiAPI.debugDrawGuiPosition(x, y);
-        console.log(pointer.getIsSeeking());
         if (pointer.getIsSeeking()) {
 
             if (pointer.getPointerInteractiveElement()) {

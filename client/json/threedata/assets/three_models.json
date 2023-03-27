@@ -32,7 +32,7 @@
         {"id": "asset_normalQuad",  "config": { "model": "file_flatQuad",  "material": "mat_particles_normal_6x6",    "settings": "model_settings_particles"  }},
         {"id": "asset_additiveQuad","config": { "model": "file_flatQuad",  "material": "mat_particles_additive_6x6",  "settings": "model_settings_particles"  }},
 
-        {"id": "asset_nineQuad",    "config": { "model": "file_quad",     "material": "material_instancing_ui",     "settings": "model_settings_ui"  }},
+        {"id": "asset_nineQuad",    "config": { "model": "file_quad",     "material": "material_instancing_ui_add", "settings": "model_settings_ui"  }},
         {"id": "asset_nine_back",   "config": { "model": "file_quad",     "material": "material_instancing_ui_back","settings": "model_settings_ui"  }},
         {"id": "asset_bullet",      "config": { "model": "file_bullet" ,  "material": "mat_instancing_basic",       "settings": "model_settings_instancing"     }},
         {"id": "asset_cross3d",     "config": { "model": "file_cross3d",  "material": "material_instancing_ui",     "settings": "model_settings_ui"  }},

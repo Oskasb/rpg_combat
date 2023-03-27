@@ -78,9 +78,9 @@
               "config": {
                 "padding": { "x":0.0, "y":0.0},
                 "image": {
-                  "layer": "UI_ELEMENTS_BACK",
+                  "layer": "UI_ELEMENTS_MAIN",
                   "atlas_key": "GUI_16x16",
-                  "border_thickness": {"x": 2.25, "y": 2.25}
+                  "border_thickness": {"x": 1.25, "y": 1.25}
                 }
               }
             },
