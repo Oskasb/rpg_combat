@@ -36,14 +36,16 @@ class GuiPointer {
         };
 
         pointerPressElementStart = function(interactiveElem) {
-            if (this.getIsSeeking()) {
+            this.guiPointerWidget.showPointerWidgetSeeking();
                 this.setPointerInteractiveElement(interactiveElem);
-
              //   GuiAPI.printDebugText("ELEMENT POINTER - STATE: "+ENUMS.getKey('ElementState', interactiveElem.state));
                 GuiAPI.unregisterWorldSpacePointer(this);
-            } else {
 
-            }
+        };
+
+        pointerPressWorldStart = function() {
+            GuiAPI.registerWorldSpacePointer(this);
+            this.guiPointerWidget.showPointerWorldSeeking();
         };
 
         setIsSeeking = function(bool) {
@@ -52,8 +54,7 @@ class GuiPointer {
 
                 if (bool) {
                //     GuiAPI.printDebugText("WORLD POINTER");
-                    GuiAPI.registerWorldSpacePointer(this);
-                    this.guiPointerWidget.showPointerWorldSeeking();
+
                 }
 
             } else {

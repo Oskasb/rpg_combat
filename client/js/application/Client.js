@@ -76,26 +76,26 @@ class Client {
         };
 
         function triggerFrame() {
-            requestAnimationFrame( triggerFrame );
             frame.z += 0.02;
             frame.tpf = clock.getDelta();
             frame.elapsedTime = clock.elapsedTime;
-            client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
+            ThreeAPI.updateCamera();
+            GuiAPI.updateGui(frame.tpf, frame.elapsedTime);
+            requestAnimationFrame( triggerFrame );
 
-            GuiAPI.updateGui(frame.tpf, frame.elapsedTime)
+            client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
             InstanceAPI.updateInstances(frame.tpf)
             ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
             ThreeAPI.applyDynamicGlobalUniforms();
-
-            ThreeAPI.updateCamera();
+            
             ThreeAPI.updateAnimationMixers(frame.tpf);
             ThreeAPI.updateSceneMatrixWorld(frame.tpf);
             client.dynamicMain.tickDynamicMain(frame.tpf, frame.elapsedTime);
-
             //     renderer.render(scene, camera)
             EffectAPI.updateEffectAPI(frame.elapsedTime);
             ThreeAPI.requestFrameRender(frame)
             client.pipelineAPI.tickPipelineAPI(frame.tpf)
+
         }
 
         triggerFrame();

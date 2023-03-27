@@ -101,10 +101,12 @@ class InputSystem {
                     guiPointer.setIsSeeking(true);
                     if (!interactiveElem) {
                         // handle world pointer here
+                        guiPointer.pointerPressWorldStart();
                     } else {
                         // pressing and interactive element;
                         interactiveElem.notifyPointerPress(inputIndex);
-                        guiPointer.setPointerInteractiveElement(interactiveElem);
+                    //    guiPointer.setPointerInteractiveElement(interactiveElem);
+                        guiPointer.pointerPressElementStart(interactiveElem);
                         // no more state handling this frame...
                         return;
                     }
@@ -113,6 +115,7 @@ class InputSystem {
                     if (!interactiveElem) {
                         if (currentPressedElement) {
                             // enter hovering pointer state if pointer departs element while pressed
+                            currentPressedElement.notifyInputOutside(inputIndex);
                             guiPointer.setPointerInteractiveElement(null);
                             guiPointer.setPointerHovering(true)
                         }
@@ -123,11 +126,16 @@ class InputSystem {
 
             } else {
 
+                // check world space pointer here for activating...
+
                     if (interactiveElem === currentPressedElement) {
                     //    GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
 
                         interactiveElem.onPressActivate(inputIndex);
                     }
+
+
+
                 //    GuiAPI.printDebugText("RELEASE POINTER ON WORLD"+inputIndex);
                 if (guiPointer.getIsSeeking()) {
                     guiPointer.releasePointer();
