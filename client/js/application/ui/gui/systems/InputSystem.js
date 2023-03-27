@@ -1,11 +1,8 @@
-import { GuiPointer } from "../elements/GuiPointer.js";
-
 class InputSystem {
     constructor() {
         this.uiSysId;
         this.surfaceElements = [];
         this.setupListener();
-        this.preloadedPointers = [];
     };
 
     initInputSystem = function(callback) {
@@ -25,10 +22,6 @@ class InputSystem {
 
         GuiAPI.getGuiSettings().initGuiSettings(["UI_ELEMENTS_BACK"], backplates);
 
-        let tempVec = ThreeAPI.tempVec3;
-        for (let i = 0; i < 11; i++) {
-            this.preloadedPointers.push(new GuiPointer(i, tempVec))
-        }
 
     };
 

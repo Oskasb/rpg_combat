@@ -343,7 +343,7 @@
               "side": "DoubleSide",
               "settings": {
                 "depthTest": false,
-                "alphaTest": 0.05,
+                "alphaTest": 0.03,
                 "transparent": false,
                 "depthWrite": true,
                 "premultipliedAlpha": true
