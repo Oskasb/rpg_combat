@@ -99,6 +99,7 @@ class InputSystem {
                 }
 
             } else {
+
                 if (guiPointer.getIsSeeking()) {
 
                     let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);
@@ -113,6 +114,8 @@ class InputSystem {
                     guiPointer.releasePointer();
                 }
                 // hovering pointers... touches that left its starting button
+                guiPointer.setPointerHovering(true)
+
             }
             _this.updateInteractiveElements( guiPointer, pointerState.posX, pointerState.posY)
 

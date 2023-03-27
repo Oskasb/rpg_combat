@@ -1,28 +1,28 @@
 import { GuiPointerWidget} from "../widgets/GuiPointerWidget.js";
 
 class GuiPointer {
-    constructor(inputIndex, pos, callback) {
+    constructor(inputIndex, pos) {
             this.intersects = false;
-            this.pos = new THREE.Vector3(pos.x, pos.y, pos.z);
+            this.pos = new THREE.Vector3(0, 0, 0);
             this.scale = new THREE.Vector3(1, 1, 1);
             this.interactiveElement = null;
             this.inputIndex = inputIndex;
             this.isSeeking = false;
+            this.isHovering = false;
             this.guiPointerWidget = new GuiPointerWidget(inputIndex);
-            this.setupPointerElement("widget_input_pointer" , callback)
+            this.setupPointerElement( this.configId);
             this.setInputIndex(inputIndex)
         };
 
-    setupPointerElement = function(configId, callback) {
+        setupPointerElement = function(configId) {
 
         let addWidgetCb = function(guiPointerWidget) {
-       //     console.log('Add guiPointerWidget ', guiPointerWidget);
             guiPointerWidget.setElementPosition(this.pos);
-
-         //   callback(this)
+        //    guiPointerWidget.guiWidget.printWidgetText(''+this.inputIndex);
+        //    this.deactivatePointerWidget(0.15);
         }.bind(this);
 
-        this.guiPointerWidget.initPointerWidget(configId, addWidgetCb)
+        this.guiPointerWidget.initPointerWidget(addWidgetCb)
 
     };
 
@@ -46,14 +46,19 @@ class GuiPointer {
         };
 
         setIsSeeking = function(bool) {
-
+            this.guiPointerWidget.showPointerWidgetSeeking();
             if (this.isSeeking !== bool){
 
                 if (bool) {
                     GuiAPI.printDebugText("WORLD POINTER");
                     GuiAPI.registerWorldSpacePointer(this);
+                    this.guiPointerWidget.showPointerWorldSeeking();
                 }
 
+            } else {
+                if (bool) {
+                //    this.setupPointerElement(this.configId);
+                }
             }
 
             this.isSeeking = bool;
@@ -78,7 +83,7 @@ class GuiPointer {
 
 
         setInputIndex = function(inputIndex) {
-            this.guiPointerWidget.guiWidget.printWidgetText(''+this.inputIndex);
+        //    this.guiPointerWidget.guiWidget.printWidgetText(''+this.inputIndex);
             this.inputIndex = inputIndex;
         };
 
@@ -92,12 +97,29 @@ class GuiPointer {
             this.guiPointerWidget.setElementPosition(this.pos);
         };
 
+        setPointerHovering(bool) {
+            this.isHovering = bool;
+        }
+
+        getPointerHoverig() {
+            return this.isHovering;
+        }
+
+        deactivatePointerWidget(time) {
+            this.guiPointerWidget.showPointerWidgetReleased(time);
+        }
+
         releasePointer = function() {
+            GuiAPI.printDebugText("RELEASE")
             this.isSeeking = false;
             this.intersects = false;
             this.interactiveElement = null;
 
             GuiAPI.unregisterWorldSpacePointer(this);
+            this.deactivatePointerWidget(0.15);
+
+        //    this.bufferElement.applyDuration(1);
+        //    this.bufferElement.startLifecycleNow();
         //    this.guiPointerWidget.removeGuiWidget()
         };
 

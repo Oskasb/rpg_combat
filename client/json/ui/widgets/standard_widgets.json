@@ -121,14 +121,6 @@
             {
               "id":"widget_input_pointer",
               "layout":"layout_input_pointer",
-              "text": {
-                "sprite_font": "sprite_font_button_big",
-                "feedback": "feedback_text_overlay"
-              },
-              "icon": {
-                "icon_config": "stick_center_icon",
-                "feedback": "feedback_stick_icon"
-              },
               "surface": {
                 "nineslice": "nineslice_surface_thumbstick",
                 "feedback": "feedback_surface_thumbstick"

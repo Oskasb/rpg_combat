@@ -28,7 +28,7 @@
             {
               "id":"stick_center_icon",
               "config": {
-                "innersize": { "x":0.23,  "y":0.23, "z": 0},
+                "innersize": { "x":2.0,  "y":2.0, "z": 0},
                 "offset":    { "x":0.5,  "y":0.5, "z": 0},
                 "atlas_key": "GUI_16x16",
                 "stretch": true

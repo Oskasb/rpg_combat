@@ -372,10 +372,7 @@ class GuiWidget {
 
         applyWidgetPosition = function() {
         //    GuiAPI.debugDrawGuiPosition(this.originalPosition.x, this.originalPosition.y);
-
-
-            this.elementStateProcessor.applyElementLayout(this);
-
+                this.elementStateProcessor.applyElementLayout(this);
         //    GuiAPI.debugDrawGuiPosition(this.pos.x, this.pos.y);
 
             this.updateSurfacePositions();

@@ -169,6 +169,10 @@ class GuiIcon {
 
         };
 
+    getBufferElement = function() {
+        return this.bufferElement;
+    };
+
         applyGuiIconPosition = function() {
             this.bufferElement.setPositionVec3(this.pos)
         };
