@@ -9,10 +9,10 @@
             {
               "id":"layout_input_pointer",
               "config": {
-                "text":   {"x":0.5, "y": 0.5, "fontsize": 50},
+                "text":   {"x":0.5, "y": 0.5, "fontsize": 5},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0},
-                "size":   {"x":0.05, "y":0.05,"z": 0}
+                "size":   {"x":0.01, "y":0.01,"z": 0}
               }
             },
             {

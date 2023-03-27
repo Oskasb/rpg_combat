@@ -12,7 +12,7 @@ class GuiPointerWidget {
         this.releaseProgress = 0;
         this.releaseDuration = 0.75;
 
-        this.numSurfaces = 4;
+        this.numSurfaces = 8;
         this.surfaceElements = [];
         this.hostWidgets = [];
         this.applyInputCallbacks = [];
@@ -79,20 +79,25 @@ class GuiPointerWidget {
     };
 
     showPointerWidgetSeeking() {
-
+        let count =this.surfaceElements.length;
         for (let i = 0; i < this.surfaceElements.length; i++) {
-            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 9999)
-            this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, 0.03+i*0.01, 0.03+i*0.01)
-            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.3, 0.6, 0.9, 0.8)
+            let offset = i/count * 0.05 + 0.02;
+            let fade = 1/Math.sqrt(i);
+            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 9999);
+            this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, offset, offset);
+            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.3*fade, 0.6*fade, 0.9*fade, 0.8)
         }
     }
 
     showPointerWidgetHovering() {
+        let count =this.surfaceElements.length;
+        for (let i = 0; i < count ; i++) {
 
-        for (let i = 0; i < this.surfaceElements.length; i++) {
-            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 0.5, true)
-            this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, 0.01+i*0.015, 0.01+i*0.015)
-            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.1, 0.2, 0.9, 0.3)
+            let offset = i/count * 0.1 - 0.03;
+            let fade = 1/Math.sqrt(i);
+            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.2, 999999, 0.5, true)
+            this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, offset, offset)
+            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.3*fade, 0.5*fade, 0.6*fade, 1.0)
         }
     }
 
@@ -100,11 +105,14 @@ class GuiPointerWidget {
 
         let count = this.surfaceElements.length
         for (let i = 0; i < count; i++) {
-            let offsetX = 0.025 + (count*0.5-i-1) * 0.015;
-            let offsetY = 0.025 + (-count*0.5 +i) * 0.015;
+            let offset = (i/count)-0.5;
+            let fade = 0.5-Math.abs(offset);
+            let offsetX = (0.012 + offset * 0.12) * (1-(1-fade*2));
+            let offsetY = (0.012 - offset * 0.12) * (2*fade);
+
             this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, offsetX, offsetY)
             this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 99999)
-            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.3, 0.9, 0.4, 0.5)
+            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.3*fade, 0.9*fade, 0.4*fade, 1)
         }
     }
 
