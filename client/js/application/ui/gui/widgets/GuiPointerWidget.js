@@ -3,6 +3,7 @@ import { GuiWidget} from "../elements/GuiWidget.js";
 class GuiPointerWidget {
     constructor(inputIndex) {
         let sprite = {x:7, y:0, z:0.1, w:0.1};
+        let color = {r:0.3, g:0.5, b:0.8, a:0.5};
         this.pos = new THREE.Vector3();
         this.origin = new THREE.Vector3();
         this.offset = new THREE.Vector3();
@@ -19,6 +20,14 @@ class GuiPointerWidget {
         let notifyInputUpdated = function(value) {
             console.log("Pointer state callback fires.. ", value, this)
         }.bind(this);
+
+        let applyColorToNineslice = function(bufferElem, r, g, b, a) {
+            color.r = r;
+            color.g = g;
+            color.b = b;
+            color.a = a;
+            bufferElem.setColorRGBA(color);
+        };
 
         let applySpriteToNineslice = function(bufferElem, x, y, z, w) {
             sprite.x = x;
@@ -42,6 +51,7 @@ class GuiPointerWidget {
         this.callbacks = {
             notifyInputUpdated:notifyInputUpdated,
             applySpriteToNineslice:applySpriteToNineslice,
+            applyColorToNineslice:applyColorToNineslice,
             applyLifecycle:applyLifecycle
         }
 
@@ -71,8 +81,18 @@ class GuiPointerWidget {
     showPointerWidgetSeeking() {
 
         for (let i = 0; i < this.surfaceElements.length; i++) {
-            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 0.5)
+            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 9999)
             this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, 0.03+i*0.01, 0.03+i*0.01)
+            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.3, 0.6, 0.9, 0.8)
+        }
+    }
+
+    showPointerWidgetHovering() {
+
+        for (let i = 0; i < this.surfaceElements.length; i++) {
+            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 0.5, true)
+            this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, 0.01+i*0.015, 0.01+i*0.015)
+            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.1, 0.2, 0.9, 0.3)
         }
     }
 
@@ -83,14 +103,15 @@ class GuiPointerWidget {
             let offsetX = 0.025 + (count*0.5-i-1) * 0.015;
             let offsetY = 0.025 + (-count*0.5 +i) * 0.015;
             this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, offsetX, offsetY)
+            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 99999)
+            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.3, 0.9, 0.4, 0.5)
         }
-
     }
 
     showPointerWidgetReleased() {
 
         for (let i = 0; i < this.surfaceElements.length; i++) {
-            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.0, 999999, 0.3, true)
+            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.0, 999999, 0.2, true)
         //    this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, 0.03+i*0.01, 0.03+i*0.01)
         }
     }
@@ -105,7 +126,7 @@ class GuiPointerWidget {
     //    posVec3.z = -1;
 
         for (let i = 0; i < this.hostWidgets.length; i++) {
-        //    this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 0.5, false)
+            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 0.5, true)
             this.surfaceElements[i].setPositionVec3(posVec3);
 
         //    this.hostWidgets[i].offsetWidgetPosition(posVec3)

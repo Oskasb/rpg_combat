@@ -87,11 +87,11 @@ class InputSystem {
             tempVec.y = pointerState.posY ;
             tempVec.z = 0;
 
-
+            guiPointer.setPointerPosition(tempVec)
 
             if (pointerState.action[0]) {
 
-                guiPointer.setPointerPosition(tempVec)
+
 
                 if (pointerState.pressFrames === 1) {
                     GuiAPI.printDebugText("PRESSFRAME "+pointerState.pressFrames);

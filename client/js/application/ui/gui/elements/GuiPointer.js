@@ -19,7 +19,7 @@ class GuiPointer {
         let addWidgetCb = function(guiPointerWidget) {
             guiPointerWidget.setElementPosition(this.pos);
         //    guiPointerWidget.guiWidget.printWidgetText(''+this.inputIndex);
-        //    this.deactivatePointerWidget(0.15);
+            this.deactivatePointerWidget();
         }.bind(this);
 
         this.guiPointerWidget.initPointerWidget(addWidgetCb)
@@ -98,6 +98,9 @@ class GuiPointer {
         };
 
         setPointerHovering(bool) {
+            if (bool) {
+                this.guiPointerWidget.showPointerWidgetHovering();
+            }
             this.isHovering = bool;
         }
 
@@ -105,8 +108,8 @@ class GuiPointer {
             return this.isHovering;
         }
 
-        deactivatePointerWidget(time) {
-            this.guiPointerWidget.showPointerWidgetReleased(time);
+        deactivatePointerWidget() {
+            this.guiPointerWidget.showPointerWidgetReleased();
         }
 
         releasePointer = function() {
@@ -116,7 +119,7 @@ class GuiPointer {
             this.interactiveElement = null;
 
             GuiAPI.unregisterWorldSpacePointer(this);
-            this.deactivatePointerWidget(0.15);
+            this.deactivatePointerWidget();
 
         //    this.bufferElement.applyDuration(1);
         //    this.bufferElement.startLifecycleNow();
