@@ -163,6 +163,14 @@
               }
             },
             {
+              "id":"page_top_bar_expanding_container",
+              "layout":"layout_top_bar_expanding_container",
+              "surface": {
+                "nineslice": "nineslice_surface_debug",
+                "feedback": "feedback_surface_header_text_box"
+              }
+            },
+            {
               "id":"widget_stats_container",
               "layout":"layout_stats_container",
               "surface": {

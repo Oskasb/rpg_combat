@@ -9,32 +9,38 @@ class GameMain {
 
     }
 
-    setupCallbacks = function() {
+    setupCallbacks = function () {
         let callbacks = this.callbacks;
         let _this = this;
 
-        callbacks.activateScenario = function(eArgs) {
+        callbacks.activateScenario = function (eArgs) {
             _this.initGameScenario(eArgs)
         };
-        callbacks.deActivateScenario = function(eArgs) {
+        callbacks.deActivateScenario = function (eArgs) {
             _this.closeGameScenario(eArgs)
         };
-        callbacks.updateGameFrame = function(frame) {
+        callbacks.updateGameFrame = function (frame) {
             _this.updateGameMain(frame)
+        }
+        callbacks.requestScenarioId = function (scenarioId) {
+            _this.requestScenarioId(scenarioId)
         }
 
     };
 
     initGameMain() {
         this.setupCallbacks();
+        evt.on(ENUMS.Event.REQUEST_SCENARIO, this.callbacks.requestScenarioId);
         evt.on(ENUMS.Event.SCENARIO_ACTIVATE, this.callbacks.activateScenario);
         evt.on(ENUMS.Event.SCENARIO_CLOSE, this.callbacks.deActivateScenario);
         evt.on(ENUMS.Event.FRAME_READY, this.callbacks.updateGameFrame)
+
         this.initPlayerPiece('PIECE_FIGHTER');
     }
 
+
     initPlayerPiece(pieceName) {
-        let charCb = function(gamePiece) {
+        let charCb = function (gamePiece) {
             console.log("Player Piece: ", gamePiece);
             GameAPI.setActivePlayerCharacter(gamePiece);
             this.playerPieces.push(gamePiece);
@@ -43,6 +49,9 @@ class GameMain {
         GameAPI.createGamePiece(pieceName, charCb)
     }
 
+    requestScenarioId(scenarioId) {
+        console.log("Scenario Requested: ", scenarioId);
+    }
 
     initGameScenario(eArgs) {
 

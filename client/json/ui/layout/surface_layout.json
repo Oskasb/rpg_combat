@@ -124,6 +124,14 @@
               }
             },
             {
+              "id":"layout_top_bar_expanding_container",
+              "config": {
+                "anchor": {"x":0, "y":0, "z":  0.0},
+                "offset": {"x": 4, "y":-1.8, "z":  0.0},
+                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 4, "pad": 0.002, "gridx": 1, "gridy":-1}
+              }
+            },
+            {
               "id":"layout_stats_container",
               "config": {
                 "text":   {"x":1.0, "y":0.0, "fontsize": 8},
@@ -138,7 +146,7 @@
                 "text":   {"x": 1.0, "y":0.0, "fontsize": 8},
                 "anchor": {"x":-0.0, "y":0.0, "z":  0.0},
                 "offset": {"x": 0.0, "y":-0.25, "z":  0.0},
-                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 4, "pad": 0.002, "gridx": -1, "gridy":-1}
+                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 1, "pad": 0.002, "gridx": -1, "gridy":-1}
               }
             },
             {

@@ -107,7 +107,7 @@ class UiTestSetup {
                     interactive: true,
                     text: 'TESTS',
                     offset_x: -0.1,
-                    offset_y: -0.06,
+                    offset_y: -0.16,
                     anchor: 'top_right'
                 };
 

@@ -21,11 +21,9 @@
                 {
                   "widget_id":"top_bar_home",
                   "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"widget_expanding_container",
+                  "widget_config_id":"page_top_bar_expanding_container",
                   "options": {
-                    "anchor":"top_center",
-                    "offset_x":0.1,
-                    "offset_y":0.1
+                    "anchor":"top_left"
                   }
                 },
                 {
@@ -49,17 +47,17 @@
                   "options":{
                     "text":"WORLD",
                     "container_id":"top_bar_home",
-                    "dispatch":{"event":"EVENT_GO_WORLD", "value":1}
+                    "dispatch":{"event":"REQUEST_SCENARIO", "value":"scenario_home_world"}
                   }
                 },
                 {
-                  "widget_id":"button_rest",
+                  "widget_id":"button_go_world",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"REST",
+                    "text":"CAVE",
                     "container_id":"top_bar_home",
-                    "dispatch":{"event":"EVENT_EVENT_GO_WORLD", "value":1}
+                    "dispatch":{"event":"REQUEST_SCENARIO", "value":"encounter_dynamic_cave_basic"}
                   }
                 }
               ]

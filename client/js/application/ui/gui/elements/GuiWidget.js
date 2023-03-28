@@ -138,7 +138,7 @@ class GuiWidget {
 
             if (typeof(options.dispatch) === 'object') {
                 options.onActivate = function() {
-                    evt.dispatch(ENUMS.event[options.dispatch.event], options.dispatch.value)
+                    evt.dispatch(ENUMS.Event[options.dispatch.event], options.dispatch.value)
                 }
 
             }
@@ -176,7 +176,7 @@ class GuiWidget {
             }
 
             if (typeof(options.container) === 'object') {
-                options.container.guiWidget.addChild(this);
+                options.container.addChildWidgetToContainer(this);
             }
 
             this.applyWidgetPosition();
