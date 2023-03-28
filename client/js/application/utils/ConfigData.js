@@ -31,7 +31,12 @@ class ConfigData {
         let config = {};
 
         let onData = function(data) {
-            config[data.id] = data;
+            if (data.id) {
+                config[data.id] = data;
+            } else {
+                console.log("funky data structure in config", data);
+            }
+
         };
 
         for (let i = 0; i < this.config.length;i++) {

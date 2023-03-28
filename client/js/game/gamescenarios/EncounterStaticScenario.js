@@ -1,22 +1,23 @@
 class EncounterStaticScenario {
-    constructor() {
+    constructor(staticId) {
         this.instances = [];
+        this.scenarioStaticId = staticId;
     }
 
-    initEncounterStaticScenario(eArgs) {
-        this.scenarioStaticId = eArgs.scenarioStaticId;
+    initEncounterStaticScenario(onReady) {
 
+        let staticId = this.scenarioStaticId;
         let config = {};
-        let dataKey = "encounter_scenarios_static";
+        let dataKey = "scenario_static_init";
 
         let onConfig = function(config) {
-            this.applyScenarioConfig(config);
+            this.applyScenarioConfig(config, onReady);
         }.bind(this)
 
         let onEncData = function(configData) {
             let data = configData.data;
             for (let i = 0; i < data.length; i++) {
-                if (data[i].id === eArgs.scenarioStaticId) {
+                if (data[i].id === dataKey) {
                     for (let key in data[i].config) {
                         config[key] = data[i].config[key]
                     }
@@ -28,18 +29,18 @@ class EncounterStaticScenario {
         let onDataCb = function(src, config) {
         //    console.log("Scenario data: ", eArgs, config)
             for (let i = 0; i < config.length; i++) {
-                if (config[i].id === dataKey) {
+                if (config[i].id === staticId) {
                     onEncData(config[i])
                 }
             }
         };
 
         this.config = config;
-        PipelineAPI.subscribeToCategoryKey("WORLD", "STATIC_SCENARIOS", onDataCb)
+        PipelineAPI.subscribeToCategoryKey("WORLD", "WORLD_STATIC", onDataCb)
 
     }
 
-    applyScenarioConfig(config) {
+    applyScenarioConfig(config, onReady) {
         let boxGrid = config.box_grid;
         evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config.environment, time:1});
 
@@ -128,7 +129,7 @@ class EncounterStaticScenario {
         };
 
         setupGrid(boxGrid['box_size'], boxGrid['grid_width'], boxGrid['grid_depth'], boxGrid['wall_height'])
-
+        onReady(this)
     }
 
     exitScenario() {

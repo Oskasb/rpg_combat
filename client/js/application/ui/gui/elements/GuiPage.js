@@ -5,7 +5,7 @@ class GuiPage {
     }
 
     activateGuiPage() {
-        console.log("Activate gui page ", this.config);
+    //    console.log("Activate gui page ", this.config);
 
 
 
@@ -21,7 +21,7 @@ class GuiPage {
             }
 
         }
-
+        return this;
     }
 
     buildOptionsFromWidgetConfig(conf) {
@@ -47,9 +47,7 @@ class GuiPage {
     setupContainer(conf) {
 
         let onWidgetReady = function(widget) {
-            console.log(conf);
             this.containers[conf.widget_id] = widget;
-            console.log(this.containers);
         }.bind(this);
 
         let options = this.buildOptionsFromWidgetConfig(conf);
@@ -61,7 +59,7 @@ class GuiPage {
 
     setupButton(conf) {
         let onWidgetReady = function(widget) {
-            console.log("Add button", widget);
+
         }.bind(this);
 
         let options = this.buildOptionsFromWidgetConfig(conf);
@@ -73,6 +71,11 @@ class GuiPage {
 
     closeGuiPage() {
         console.log("Close gui page ", this);
+        for (let key in this.containers) {
+            let widget = this.containers[key]
+            widget.guiWidget.recoverGuiWidget();
+        }
+        this.containers = {};
     }
 
 }

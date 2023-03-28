@@ -2,31 +2,47 @@ import {ScenarioStatic} from "./ScenarioStatic.js";
 import {ScenarioDynamic} from "./ScenarioDynamic.js";
 
 class GameScenario {
-    constructor(eArgs) {
-        this.scenarioId = eArgs.scenarioId || 'scenario_id_default'
+    constructor(scenarioId) {
+        this.scenarioId = scenarioId;
         this.scenarioTime = 0;
         this.isActive = true;
-        this.staticScenario = new ScenarioStatic(eArgs);
-        this.dynamicScenario = new ScenarioDynamic(eArgs);
 
-        eArgs.callback(this);
     }
 
     initGameScenario(eArgs) {
-        this.scenarioTime = 0;
-        this.staticScenario.initStaticScenario(eArgs)
-        this.dynamicScenario.initDynamicScenario((eArgs))
+
     }
 
-    exitGameScenario(eArgs) {
+    initGameStaticScenario(staticId, onReady) {
+        this.scenarioTime = 0;
+        this.staticScenario = new ScenarioStatic(staticId);
+        this.staticScenario.initStaticScenario(onReady)
+    }
+
+    initGameDynamicScenario(dynamicId) {
+        if (this.dynamicScenario) {
+            this.dynamicScenario.exitDynamicScenario()
+        }
+
+        let dynamicReady = function(dyn) {
+            console.log("Dynamic scenario loaded", dyn);
+        };
+
+        this.dynamicScenario = new ScenarioDynamic(dynamicId);
+        this.dynamicScenario.initDynamicScenario(dynamicReady)
+    }
+
+    exitGameScenario() {
         this.isActive = false;
-        this.staticScenario.exitStaticScenario(eArgs);
-        this.dynamicScenario.exitDynamicScenario((eArgs))
+        this.staticScenario.exitStaticScenario();
+        this.dynamicScenario.exitDynamicScenario()
     }
 
     tickGameScenario(frame) {
         this.scenarioTime+=frame.tpf;
-        this.dynamicScenario.tickDynamicScenario(frame.tpf, this.scenarioTime);
+        if (this.dynamicScenario) {
+            this.dynamicScenario.tickDynamicScenario(frame.tpf, this.scenarioTime);
+        }
         this.staticScenario.tickStaticScenario(frame.tpf, this.scenarioTime);
     }
 

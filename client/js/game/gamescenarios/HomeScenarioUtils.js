@@ -43,13 +43,14 @@ class HomeScenarioUtils {
         ThreeAPI.tempObj.rotateX(-1.7);
 
         let count = 0;
+        let scaleDown = 1;
 
         let instanceReturns = function(instance) {
             count++
             //     console.log(instance)
             let offsetValue = count;
             offsetValue += (count*0.7); // 0.01;
-            let offsetScale = (Math.sin(offsetValue*5)+0.5)*0.1 + 0.2;
+            let offsetScale = scaleDown*(Math.sin(offsetValue*5)+0.5)*0.1 + 0.2;
 
             ThreeAPI.tempObj.rotateZ(Math.sin(count)*4);
             instance.decomissioned = false;
@@ -85,11 +86,11 @@ class HomeScenarioUtils {
                 client.dynamicMain.requestAssetInstance(assets[j], instanceReturns)
             }
         }
-
-        for (let i = 0; i < 20; i++) {
+        scaleDown = 0.1;
+        for (let i = 0; i < 2; i++) {
             client.dynamicMain.requestAssetInstance('asset_tree_5', instanceReturns)
         }
-
+        scaleDown = 1;
         for (let i = 0; i < 10; i++) {
             for (let j = 0; j < assets.length; j++) {
                 client.dynamicMain.requestAssetInstance(assets[j], instanceReturns)
@@ -295,13 +296,13 @@ class HomeScenarioUtils {
             EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
         }
 
-        ThreeAPI.setCameraPos(
-            Math.cos(scenarioTime*0.2)*1.2+2,
-            Math.sin(scenarioTime*0.4)*0.5+5,
-            Math.sin(scenarioTime*0.2)*1.2-8
-        );
+     //   ThreeAPI.setCameraPos(
+     //       Math.cos(scenarioTime*0.2)*1.2+2,
+    //        Math.sin(scenarioTime*0.4)*0.5+5,
+     //       Math.sin(scenarioTime*0.2)*1.2-8
+     //   );
 
-        ThreeAPI.cameraLookAt(0, 3, 0);
+    //    ThreeAPI.cameraLookAt(0, 3, 0);
 
 
 

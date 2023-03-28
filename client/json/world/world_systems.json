@@ -1,11 +1,33 @@
 [{
   "WORLD":{
-    "STATIC_SCENARIOS":[
+    "GAME_SCENARIOS":[
       {
-        "id":"encounter_scenarios_static",
+        "id": "home_scenario",
+        "config": {
+          "scenario_static":"home_scenario_static",
+          "dynamic_scenarios": [
+            "home_hovel_dynamic",
+            "home_world_dynamic"
+          ]
+        }
+      },
+      {
+        "id": "cave_scenario",
+        "config": {
+          "scenario_static": "encounter_static_rock_cave",
+          "dynamic_scenarios": [
+            "encounter_dynamic_cave_basic"
+          ]
+        }
+      }
+    ],
+    "WORLD_STATIC":[
+
+      {
+        "id":"encounter_static_rock_cave",
         "data": [
           {
-            "id":"encounter_static_rock_cave",
+            "id":"scenario_static_init",
             "config": {
               "environment": "cave_dusty",
               "box_grid":{
@@ -17,16 +39,60 @@
             }
           }
         ]
-      },
+      }
+    ],
+    "WORLD_DYNAMIC":[
       {
-        "id":"encounter_scenarios_dynamic",
+        "id": "home_hovel_dynamic",
         "data": [
           {
-            "id":"encounter_dynamic_cave_basic",
+            "id":"dynamic_view_init",
             "config": {
               "camera":{
-                  "pos": [0, 14, -8],
-                  "lookAt": [0, 0, 6]
+                "pos": [2, 5, -8],
+                "lookAt": [0, 3, 0]
+              },
+              "spawn":[
+                {
+                  "assetId":"asset_box",
+                  "pos": [13, 4, 15],
+                  "scale": [2.01, 2.01, 2.01]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "home_world_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "camera":{
+                "pos": [0, 254, -168],
+                "lookAt": [0, 0, 6]
+              },
+              "spawn":[
+                {
+                  "assetId":"asset_box",
+                  "pos": [13, 4, 15],
+                  "scale": [2.01, 2.01, 2.01]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id":"encounter_dynamic_cave_basic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "camera":{
+                "pos": [0, 14, -8],
+                "lookAt": [0, 0, 6]
               },
               "spawn":[
                 {

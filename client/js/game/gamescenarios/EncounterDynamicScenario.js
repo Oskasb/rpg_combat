@@ -4,8 +4,8 @@ class EncounterDynamicScenario {
         this.pieces = [];
     }
 
-    initEncounterDynamicScenario(eArgs) {
-        this.scenarioDynamicId = eArgs.scenarioDynamicId;
+    initEncounterDynamicScenario(scenarioDynamicId, onReadyCB) {
+        this.scenarioDynamicId = scenarioDynamicId;
 
         if (!this.scenarioDynamicId) {
         //    console.log("No dynamic scenario, exit...")
@@ -13,16 +13,16 @@ class EncounterDynamicScenario {
         }
 
         let config = {};
-        let dataKey = "encounter_scenarios_dynamic";
+        let dataKey = scenarioDynamicId;
 
         let onConfig = function(config) {
-            this.applyScenarioConfig(config);
+            this.applyScenarioConfig(config, onReadyCB);
         }.bind(this)
 
         let onEncData = function(configData) {
             let data = configData.data;
             for (let i = 0; i < data.length; i++) {
-                if (data[i].id === eArgs.scenarioDynamicId) {
+                if (data[i].id === 'dynamic_view_init') {
                     for (let key in data[i].config) {
                         config[key] = data[i].config[key]
                     }
@@ -32,7 +32,7 @@ class EncounterDynamicScenario {
         };
 
         let onDataCb = function(src, config) {
-            console.log("Scenario data: ", eArgs, config)
+            console.log("Scenario data: ", config)
             for (let i = 0; i < config.length; i++) {
                 if (config[i].id === dataKey) {
                     onEncData(config[i])
@@ -41,10 +41,10 @@ class EncounterDynamicScenario {
         };
 
         this.config = config;
-        PipelineAPI.subscribeToCategoryKey("WORLD", "STATIC_SCENARIOS", onDataCb)
+        PipelineAPI.subscribeToCategoryKey("WORLD", "WORLD_DYNAMIC", onDataCb)
     }
 
-    applyScenarioConfig = function(config) {
+    applyScenarioConfig = function(config, onReadyCB) {
         let pieces = this.pieces;
 
         let pieceInstanceCallback = function(gamePiece) {
@@ -66,6 +66,7 @@ class EncounterDynamicScenario {
                 GameAPI.createGamePiece(config.spawn[i], pieceInstanceCallback)
             }
         }
+        onReadyCB(this);
     };
 
     updateScenarioPieces(tpf, scenarioTime) {

@@ -7,7 +7,7 @@ class HomeScenario {
         this.homeScenarioUtils = new HomeScenarioUtils()
     }
 
-    initHomeScenario() {
+    initHomeScenario(callback) {
         GuiAPI.activatePage('page_scene_home');
         evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'high_noon', time:1});
 
@@ -20,6 +20,7 @@ class HomeScenario {
 
         let itemCallback = function(instance) {
             this.sword = instance;
+            callback(this);
         }.bind(this);
 
         this.homeScenarioUtils.buildItem('asset_ninjablade', ThreeAPI.tempVec3.set(-1, 1, 1), ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1), itemCallback);
@@ -30,6 +31,8 @@ class HomeScenario {
         this.homeScenarioUtils.exitScenarioUtils()
 
     };
+
+
 
     tickScenario(tpf, scenarioTime) {
         this.homeScenarioUtils.tickScenarioUtils(tpf, scenarioTime)

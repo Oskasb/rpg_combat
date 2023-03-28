@@ -10,7 +10,7 @@
               "id":"feedback_text_page_header",
               "config": {
                 "NONE": {
-                  "color_rgba": {"r": 0.4, "g": 0.6, "b": 0.99, "a": 0.6}
+                  "color_rgba": {"r": 0.99, "g": 0.7, "b": -0.6, "a": 0.6}
                 }
               }
             },

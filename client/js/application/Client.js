@@ -61,6 +61,11 @@ class Client {
         let callback = function() {
             setTimeout(function() {
                 client.setup.initDefaultUi();
+                client.evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
+                    id:"home_scenario",
+                    dynamic:"home_hovel_dynamic"
+
+                });
             }, 10)
         };
 

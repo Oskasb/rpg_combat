@@ -1,11 +1,14 @@
 import { GameScenario}  from "./gameworld/GameScenario.js";
+import { ConfigData } from "../application/utils/ConfigData.js";
 
 class GameMain {
     constructor() {
-        this.activeScenarios = [];
+        this.activeScenario;
         this.callbacks = {};
         this.playerPieces = [];
         this.gameTime = 0;
+        this.configData = new ConfigData("WORLD", "GAME_SCENARIOS");
+
 
     }
 
@@ -13,27 +16,20 @@ class GameMain {
         let callbacks = this.callbacks;
         let _this = this;
 
-        callbacks.activateScenario = function (eArgs) {
-            _this.initGameScenario(eArgs)
-        };
-        callbacks.deActivateScenario = function (eArgs) {
-            _this.closeGameScenario(eArgs)
-        };
         callbacks.updateGameFrame = function (frame) {
             _this.updateGameMain(frame)
-        }
-        callbacks.requestScenarioId = function (scenarioId) {
-            _this.requestScenarioId(scenarioId)
+        };
+        callbacks.requestScenario = function (event) {
+            _this.requestScenario(event)
         }
 
     };
 
     initGameMain() {
         this.setupCallbacks();
-        evt.on(ENUMS.Event.REQUEST_SCENARIO, this.callbacks.requestScenarioId);
-        evt.on(ENUMS.Event.SCENARIO_ACTIVATE, this.callbacks.activateScenario);
-        evt.on(ENUMS.Event.SCENARIO_CLOSE, this.callbacks.deActivateScenario);
+        evt.on(ENUMS.Event.REQUEST_SCENARIO, this.callbacks.requestScenario);
         evt.on(ENUMS.Event.FRAME_READY, this.callbacks.updateGameFrame)
+
 
         this.initPlayerPiece('PIECE_FIGHTER');
     }
@@ -49,46 +45,70 @@ class GameMain {
         GameAPI.createGamePiece(pieceName, charCb)
     }
 
-    requestScenarioId(scenarioId) {
-        console.log("Scenario Requested: ", scenarioId);
+    requestScenario(scenarioEvent) {
+        let scenarioId = scenarioEvent['id']
+        let dynamicId = scenarioEvent['dynamic']
+        let data = this.configData.parseConfigData()[scenarioId];
+        console.log(data)
+        let config = data.config;
+        let staticId = config['scenario_static'];
+
+        console.log("Scenario Requested: ", scenarioId, dynamicId);
+
+        let staticReadyCB = function() {
+            this.activeScenario.initGameDynamicScenario(dynamicId)
+        }.bind(this)
+
+            if (this.activeScenario) {
+                if (this.activeScenario.scenarioId === scenarioId) {
+
+                    staticReadyCB();
+                    return;
+                }
+            }
+            this.closeGameScenario();
+        this.initGameScenario(scenarioId, staticId, staticReadyCB)
+
+
+
+
     }
 
-    initGameScenario(eArgs) {
-
-        for (let i = 0; i < this.activeScenarios.length; i++) {
-            let scenario = this.activeScenarios[i];
-            if (scenario.scenarioId !== eArgs.scenarioId) {
-                this.closeGameScenario(eArgs);
-            } else {
+    initGameScenario(scenarioId, staticId, staticReadyCB) {
+        if (this.activeScenario) {
+            if (this.activeScenario.scenarioId !== scenarioId) {
                 console.log("Game Scenario already active... cancelling change")
                 return;
+            } else {
+                this.closeGameScenario();
             }
         }
 
-        let scenario = new GameScenario(eArgs);
-        scenario.initGameScenario(eArgs);
-        this.activeScenarios.push(scenario);
+        let scenario = new GameScenario(scenarioId);
+        this.activeScenario = scenario;
+        scenario.initGameStaticScenario(staticId, staticReadyCB);
+
+
     }
 
-    closeGameScenario(eArgs) {
-        if (this.activeScenarios.length === 0) {
-            console.log("No Game Scenario active... cancelling")
-            return;
+    closeGameScenario() {
+        if (!this.activeScenario) {
+        //    console.log("No Game Scenario active... cancelling")
+        } else {
+            let scenario = this.activeScenario;
+            this.activeScenario = null;
+            scenario.exitGameScenario();
         }
 
-        let scenario = this.activeScenarios.pop();
-        scenario.exitGameScenario(eArgs);
+
     }
 
     updateGameMain(frame) {
         this.gameTime+= frame.tpf;
 
-        for (let i = 0; i < this.activeScenarios.length; i++) {
-            let scenario = this.activeScenarios[i];
-            if (scenario.isActive) {
-                scenario.tickGameScenario(frame);
+            if (this.activeScenario) {
+                this.activeScenario.tickGameScenario(frame);
             }
-        }
 
         for (let i = 0; i < this.playerPieces.length; i++) {
             this.playerPieces[i].tickGamePiece(frame.tpf, this.gameTime)

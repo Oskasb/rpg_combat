@@ -47,17 +47,29 @@
                   "options":{
                     "text":"WORLD",
                     "container_id":"top_bar_home",
-                    "dispatch":{"event":"REQUEST_SCENARIO", "value":"scenario_home_world"}
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_world_dynamic"
+                      }
+                    }
                   }
                 },
                 {
-                  "widget_id":"button_go_world",
+                  "widget_id":"button_go_cave",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"CAVE",
                     "container_id":"top_bar_home",
-                    "dispatch":{"event":"REQUEST_SCENARIO", "value":"encounter_dynamic_cave_basic"}
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"cave_scenario",
+                        "dynamic":"encounter_dynamic_cave_basic"
+                      }
+                    }
                   }
                 }
               ]

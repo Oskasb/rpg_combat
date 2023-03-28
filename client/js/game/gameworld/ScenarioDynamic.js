@@ -1,24 +1,23 @@
 import { EncounterDynamicScenario } from "../gamescenarios/EncounterDynamicScenario.js";
 
 class ScenarioDynamic {
-    constructor(eArgs) {
-        this.dynamicScenarioId = eArgs.scenarioDynamicId;
+    constructor(scenarioDynamicId) {
+        this.dynamicScenarioId = scenarioDynamicId;
         this.loadedDynamicScenarios = [];
     }
 
-    initDynamicScenario(eArgs) {
-        let dynamicScenario = new EncounterDynamicScenario(eArgs)
-        dynamicScenario.initEncounterDynamicScenario(eArgs);
+    initDynamicScenario(onReadyCB) {
+        let dynamicScenario = new EncounterDynamicScenario();
         this.loadedDynamicScenarios.push(dynamicScenario);
+        dynamicScenario.initEncounterDynamicScenario(this.dynamicScenarioId, onReadyCB);
     }
 
-    exitDynamicScenario(eArgs) {
-        let dynamicScenarioIdToClose = eArgs.dynamicScenarioId;
+    exitDynamicScenario() {
         let dynamicScenario = this.loadedDynamicScenarios.pop();
-        if (dynamicScenario.staticScenarioId === dynamicScenarioIdToClose) {
+        if (dynamicScenario) {
             dynamicScenario.exitScenario();
         } else {
-            console.log("Wrong dynamic scenario Id, look for error plz")
+            console.log("No dynamic scenario, look for error plz")
         }
     }
 

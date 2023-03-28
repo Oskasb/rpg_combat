@@ -2,42 +2,44 @@ import {HomeScenario} from "../gamescenarios/HomeScenario.js";
 import {EncounterStaticScenario} from "../gamescenarios/EncounterStaticScenario.js";
 
 class ScenarioStatic {
-    constructor(eArgs) {
-        this.homeScenarioId = 'home_scenariostatic';
+    constructor(staticId) {
+        this.homeScenarioId = 'home_scenario_static';
         this.tempObj = new THREE.Object3D();
-        this.staticScenarioId = eArgs.scenarioStaticId; // || 'home_scenariostatic'
-        this.loadedStatisScenarios = [];
+        this.staticScenarioId = staticId; // || 'home_scenariostatic'
+        this.loadedStatisScenario = null;
     }
 
-    initStaticScenario(eArgs) {
+    initStaticScenario(onReady) {
         let staticScenario;
-        if (this.staticScenarioId === this.homeScenarioId) {
-            staticScenario = new HomeScenario();
-            staticScenario.initHomeScenario();
-        } else {
-            staticScenario = new EncounterStaticScenario();
-            staticScenario.initEncounterStaticScenario(eArgs);
-        }
 
-        this.loadedStatisScenarios.push(staticScenario)
+        let callback = function(scenario) {
+            this.loadedStatisScenario = scenario;
+            onReady(scenario);
+        }.bind(this);
+
+
+        if (this.staticScenarioId === this.homeScenarioId) {
+
+            if (!this.loadedStatisScenario) {
+                    staticScenario = new HomeScenario();
+                    staticScenario.initHomeScenario(callback);
+            }
+        } else {
+            staticScenario = new EncounterStaticScenario(this.staticScenarioId);
+            staticScenario.initEncounterStaticScenario(callback);
+        }
     }
 
 
 
-    exitStaticScenario(eArgs) {
-        let staticScenarioIdToClose = eArgs.staticScenarioId;
-        let staticScenario = this.loadedStatisScenarios.pop();
-        if (staticScenario.staticScenarioId === staticScenarioIdToClose) {
-            staticScenario.exitScenario();
-        } else {
-            console.log("Wrong scenario Id, look for error plz")
-        }
+    exitStaticScenario() {
+        this.loadedStatisScenario.exitScenario();
     }
 
     tickStaticScenario(tpf, scenarioTime) {
 
-        for (let i = 0; i < this.loadedStatisScenarios.length; i++) {
-            this.loadedStatisScenarios[i].tickScenario(tpf, scenarioTime);
+        if (this.loadedStatisScenario) {
+            this.loadedStatisScenario.tickScenario(tpf, scenarioTime);
         }
 
     }

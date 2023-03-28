@@ -22,13 +22,15 @@ class GuiPageSystem {
     }
 
     activateGuiPage(pageId) {
-        GuiAPI.printDebugText("ACTIVATE PAGE "+pageId);
+        console.log("ACTIVATE PAGE "+pageId);
 
         if (this.activePages.length) {
-            this.activePages.pop().closeGuiPage();
+            let oldPage = this.activePages.pop();
+            oldPage.closeGuiPage();
         }
 
-        this.activePages.push(this.pages[pageId].activateGuiPage())
+        let page = this.pages[pageId].activateGuiPage();
+        this.activePages.push(page)
     }
 
 }

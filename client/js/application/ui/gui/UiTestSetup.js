@@ -91,7 +91,7 @@ class UiTestSetup {
 
                 setTimeout(function() {
                     button.pressButtonFromCode()
-                }, 0)
+                }, 10)
             }.bind(this)
 
             let testActive = function(widget) {
@@ -149,7 +149,7 @@ class UiTestSetup {
             }.bind(this);
 
             let onButtonCb = function(button) {
-                    button.pressButtonFromCode()
+                //    button.pressButtonFromCode()
                     let surface = button.guiWidget.getWidgetSurface();
 
                 if (this.testActiveElementCalls.indexOf(surface.updateInterativeState)=== -1) {
@@ -157,8 +157,7 @@ class UiTestSetup {
                 }
             }.bind(this);
 
-            let homeScenarioId = 'home_scenario';
-            let homeScenarioStaticId = 'home_scenariostatic';
+
 
             let homeActive = function() {
                 if (activeScenario.isActive) {
@@ -171,10 +170,11 @@ class UiTestSetup {
 
 
             let homeActivate = function() {
-                evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {
-                    scenarioId:homeScenarioId,
-                    scenarioStaticId:homeScenarioStaticId ,
-                    callback:scenarioCallback
+                evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
+
+                        id:"home_scenario",
+                        dynamic:"home_hovel_dynamic"
+
                 })
             };
 
@@ -207,11 +207,12 @@ class UiTestSetup {
 
 
             let caveActivate = function() {
-                evt.dispatch(ENUMS.Event.SCENARIO_ACTIVATE, {
-                    scenarioId:caveScenarioId,
-                    scenarioDynamicId:caveDynamicId,
-                    scenarioStaticId:caveStaticId,
-                    callback:scenarioCallback})
+                evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
+
+                    id:"cave_scenario",
+                    dynamic:"encounter_dynamic_cave_basic"
+
+                })
             };
 
 
