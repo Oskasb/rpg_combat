@@ -471,7 +471,7 @@ class ThreeEnvironment {
 
         //    mat.depthWrite = false;
 
-        var skyGeo = new THREE.SphereGeometry(1000, 36, 6 );
+        var skyGeo = new THREE.SphereGeometry(4000, 36, 9 );
         var skyMesh = new THREE.Mesh( skyGeo, mat);
 
         var uniforms = {

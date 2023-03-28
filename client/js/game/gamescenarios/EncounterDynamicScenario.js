@@ -45,6 +45,7 @@ class EncounterDynamicScenario {
     }
 
     applyScenarioConfig = function(config, onReadyCB) {
+        GuiAPI.activatePage(config['gui_page']);
         let pieces = this.pieces;
 
         let pieceInstanceCallback = function(gamePiece) {

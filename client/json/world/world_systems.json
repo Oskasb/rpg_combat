@@ -48,6 +48,7 @@
           {
             "id":"dynamic_view_init",
             "config": {
+              "gui_page":"page_scene_home",
               "camera":{
                 "pos": [2, 5, -8],
                 "lookAt": [0, 3, 0]
@@ -69,8 +70,9 @@
           {
             "id":"dynamic_view_init",
             "config": {
+              "gui_page":"page_scene_world",
               "camera":{
-                "pos": [0, 254, -168],
+                "pos": [0, 454, -268],
                 "lookAt": [0, 0, 6]
               },
               "spawn":[
@@ -90,6 +92,7 @@
           {
             "id":"dynamic_view_init",
             "config": {
+              "gui_page":"page_scene_dungeon",
               "camera":{
                 "pos": [0, 14, -8],
                 "lookAt": [0, 0, 6]

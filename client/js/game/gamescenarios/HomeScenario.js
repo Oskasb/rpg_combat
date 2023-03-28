@@ -8,7 +8,7 @@ class HomeScenario {
     }
 
     initHomeScenario(callback) {
-        GuiAPI.activatePage('page_scene_home');
+    //    GuiAPI.activatePage('page_scene_home');
         evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'high_noon', time:1});
 
         client.treeInstances = [];
