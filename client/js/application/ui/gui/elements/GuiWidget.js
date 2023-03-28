@@ -136,6 +136,13 @@ class GuiWidget {
 
         applyWidgetOptions = function(options) {
 
+            if (typeof(options.dispatch) === 'object') {
+                options.onActivate = function() {
+                    evt.dispatch(ENUMS.event[options.dispatch.event], options.dispatch.value)
+                }
+
+            }
+
             if (typeof(options.testActive) === 'function') {
                 this.addTestActiveCallback(options.testActive);
             }
@@ -166,6 +173,10 @@ class GuiWidget {
 
             if (options.interactive) {
                 this.enableWidgetInteraction();
+            }
+
+            if (typeof(options.container) === 'object') {
+                options.container.guiWidget.addChild(this);
             }
 
             this.applyWidgetPosition();

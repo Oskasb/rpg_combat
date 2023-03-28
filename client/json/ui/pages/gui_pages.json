@@ -1,50 +1,72 @@
 [
-    {
-        "UI": {
-            "PAGES":[
+  {
+    "UI": {
+      "PAGES":[
+        {
+          "id": "page_scene_home",
+          "data": [
+            {
+              "containers":[
                 {
-                    "id": "page_scene_home",
-                    "data": [
-                        {
-                            "containers":[
-                                {
-                                    "widget_id":"top_bar_header",
-                                    "widget_class":"GuiExpandingContainer",
-                                    "widget_config_id":"scene_page_header_text_box",
-                                    "options":{
-                                      "text":"HOME HOVEL",
-                                      "anchor":"top_left",
-                                      "offset_x": 0.155,
-                                      "offset_y":-0.025
-                                    }
-                                },
-                                {
-                                    "widget_id":"top_bar_home",
-                                    "widget_class":"GuiExpandingContainer",
-                                    "widget_config_id":"widget_expanding_container",
-                                    "options": {
-                                      "anchor":"top_center",
-                                      "offset_x":0.1,
-                                      "offset_y":0.1
-                                    }
-                                },
-                                {
-                                    "widget_id":"text_box_home",
-                                    "widget_class":"GuiExpandingContainer",
-                                    "widget_config_id":"main_text_box",
-                                    "options":{
-                                      "anchor":"bottom_left",
-                                      "offset_x":0.15,
-                                      "offset_y":0.04,
-                                      "text":"Welcome home Hero!"
-                                    }
+                  "widget_id":"top_bar_header",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"scene_page_header_text_box",
+                  "options":{
+                    "text":"HOME HOVEL",
+                    "anchor":"top_left",
+                    "offset_x": 0.155,
+                    "offset_y":-0.025
+                  }
+                },
+                {
+                  "widget_id":"top_bar_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_expanding_container",
+                  "options": {
+                    "anchor":"top_center",
+                    "offset_x":0.1,
+                    "offset_y":0.1
+                  }
+                },
+                {
+                  "widget_id":"text_box_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"main_text_box",
+                  "options":{
+                    "anchor":"bottom_left",
+                    "offset_x":0.15,
+                    "offset_y":0.04,
+                    "text":"Welcome home Hero!"
+                  }
 
-                                }
-                            ]
-                        }
-                    ]
                 }
-            ]
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_go_world",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"WORLD",
+                    "container_id":"top_bar_home",
+                    "dispatch":{"event":"EVENT_GO_WORLD", "value":1}
+                  }
+                },
+                {
+                  "widget_id":"button_rest",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"REST",
+                    "container_id":"top_bar_home",
+                    "dispatch":{"event":"EVENT_EVENT_GO_WORLD", "value":1}
+                  }
+                }
+              ]
+            }
+          ]
         }
+      ]
     }
+  }
 ]

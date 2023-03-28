@@ -1,7 +1,7 @@
 class GuiPage {
     constructor(config) {
         this.config = config
-        this.containers = [];
+        this.containers = {};
     }
 
     activateGuiPage() {
@@ -10,9 +10,14 @@ class GuiPage {
 
 
         for (let i = 0; i < this.config.length; i++) {
-            let containers = this.config[i].containers
+            let containers = this.config[i].containers;
+            let buttons = this.config[i].buttons;
+
             for (let j = 0; j < containers.length; j++) {
-                this.setupContainers(containers[j])
+                this.setupContainer(containers[j])
+            }
+            for (let j = 0; j < buttons.length; j++) {
+                this.setupButton(buttons[j])
             }
 
         }
@@ -28,18 +33,40 @@ class GuiPage {
         );
 
         for (let key in conf['options']) {
-            options[key] = conf['options'][key];
+            if (key === 'container_id') {
+                let id = conf['options'][key]
+                options.container = this.containers[id];
+            } else {
+                options[key] = conf['options'][key];
+            }
+
         }
         return options;
     }
 
-    setupContainers(conf) {
+    setupContainer(conf) {
+
         let onWidgetReady = function(widget) {
-            console.log("Add Container", widget);
-            this.containers.push(widget)
+            console.log(conf);
+            this.containers[conf.widget_id] = widget;
+            console.log(this.containers);
         }.bind(this);
 
         let options = this.buildOptionsFromWidgetConfig(conf);
+
+        GuiAPI.buildGuiWidget(conf['widget_class'], options, onWidgetReady)
+    }
+
+
+
+    setupButton(conf) {
+        let onWidgetReady = function(widget) {
+            console.log("Add button", widget);
+        }.bind(this);
+
+        let options = this.buildOptionsFromWidgetConfig(conf);
+
+        options.interactive = true;
 
         GuiAPI.buildGuiWidget(conf['widget_class'], options, onWidgetReady)
     }
