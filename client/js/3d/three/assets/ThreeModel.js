@@ -155,7 +155,7 @@ class ThreeModel {
 
         if (this.geometryInstancingSettings()) {
             spatial.setPosXYZ(20+this.modelNr*5, 5+this.expandingPool.poolEntryCount()*0.3, 30);
-            spatial.setScaleXYZ(0.2, 0.2, 0.2);
+            spatial.setScaleXYZ(0.0, 0.0, 0.0);
 
             if (this.expandingPool.pool.indexOf(spatial) !== -1) {
                 console.log("Bad pool recovery", this.id, spatial, this);

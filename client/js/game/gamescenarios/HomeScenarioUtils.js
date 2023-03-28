@@ -147,14 +147,7 @@ class HomeScenarioUtils {
 
         let iconKeysNice = [
             "grass",
-            "mud",
-            "gravel",
-            "rock",
-            "marsh",
-            "rock_layers",
-            "rock_stripes",
-            "rock_rusty",
-            "rock_grey"
+            "marsh"
         ];
 
         let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
@@ -168,7 +161,7 @@ class HomeScenarioUtils {
 
             instance.spatial.setPosXYZ(2*boxSize*ThreeAPI.tempVec3.x, -boxSize, 2*boxSize*ThreeAPI.tempVec3.y);
 
-            let spriteSelect = Math.floor(Math.abs(Math.sin(count*0.5))*iconKeysNice.length)
+            let spriteSelect = Math.floor(MATH.sillyRandom(count)*iconKeysNice.length)
             let iconSprite = iconSprites[iconKeysNice[spriteSelect]];
             instance.setSprite(iconSprite);
 
@@ -188,7 +181,7 @@ class HomeScenarioUtils {
         let groundReturns = function(box) {
             box.spatial.setPosXYZ(0, -1, 0)
             box.spatial.setScaleXYZ(50, 0.01, 50);
-            box.setSprite(iconSprites['mud']);
+            box.setSprite(iconSprites['marsh']);
             this.instances.push(box);
         }.bind(this);
 

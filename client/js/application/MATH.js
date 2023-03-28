@@ -188,7 +188,7 @@ if(typeof(MATH) === "undefined") {
 		"growShrink":   [[0, 1], [0.5,0], [1, -2]],
 		"shrink":   	[[0, -0.3], [0.3, -1]],
         "machByAlt":    [[0, 1], [12200, 0.867], [12200, 0.867], [20000, 0.867], [32000, 0.88]],
-        "densityByAlt": [[0, 1], [4000, 0.6], [12000, 0.2], [16000, 0.1], [20000, 0.05], [40000, 0.025], [80000, 0.01], [120000, 0]]
+        "densityByAlt": [[0, 1], [25, 0.9], [250, 0.4], [16000, 0.1], [20000, 0.05], [40000, 0.025], [80000, 0.01], [120000, 0]]
 	};
 
 
@@ -470,6 +470,12 @@ if(typeof(MATH) === "undefined") {
 		vec.y += spreadV.y * (Math.random()-0.5);
 		vec.z += spreadV.z * (Math.random()-0.5);
 	};
+
+	MATH.vec3FromArray = function(vec3, array) {
+		vec3.x = array[0];
+		vec3.y = array[1];
+		vec3.z = array[2];
+	}
 
 	MATH.vectorXZToAngleAxisY = function(vec) {
 		return Math.atan2(vec.x, vec.z);

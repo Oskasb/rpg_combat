@@ -9,12 +9,12 @@ class HomeScenario {
 
     initHomeScenario(callback) {
     //    GuiAPI.activatePage('page_scene_home');
-        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'high_noon', time:1});
+
 
         client.treeInstances = [];
         client.particleEffects = [];
 
-        this.homeScenarioUtils.buildGround(1024, 8)
+        this.homeScenarioUtils.buildGround(2048, 5)
         this.homeScenarioUtils.buildForest();
         this.homeScenarioUtils.buildStronghold('asset_house_small');
 

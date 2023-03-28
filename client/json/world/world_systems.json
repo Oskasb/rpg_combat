@@ -29,11 +29,11 @@
           {
             "id":"scenario_static_init",
             "config": {
-              "environment": "cave_dusty",
+
               "box_grid":{
-                "box_size":1,
+                "box_size":0.6,
                 "grid_width":8,
-                "grid_depth":28,
+                "grid_depth":48,
                 "wall_height": 4
               }
             }
@@ -49,16 +49,12 @@
             "id":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_home",
+              "environment": "sunny_day",
               "camera":{
-                "pos": [2, 5, -8],
-                "lookAt": [0, 3, 0]
+
               },
               "spawn":[
-                {
-                  "assetId":"asset_box",
-                  "pos": [13, 4, 15],
-                  "scale": [2.01, 2.01, 2.01]
-                }
+
               ]
             }
           }
@@ -71,16 +67,12 @@
             "id":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_world",
+              "environment": "sunny_day",
               "camera":{
-                "pos": [0, 454, -268],
-                "lookAt": [0, 0, 6]
+
               },
               "spawn":[
-                {
-                  "assetId":"asset_box",
-                  "pos": [13, 4, 15],
-                  "scale": [2.01, 2.01, 2.01]
-                }
+
               ]
             }
           }
@@ -93,21 +85,12 @@
             "id":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_dungeon",
+              "environment": "cave_dusty",
               "camera":{
-                "pos": [0, 14, -8],
-                "lookAt": [0, 0, 6]
+
               },
               "spawn":[
-                {
-                  "assetId":"asset_box",
-                  "pos": [3, 1, 8],
-                  "scale": [0.01, 0.01, 0.01]
-                },
-                {
-                  "assetId":"asset_box",
-                  "pos": [-5, 1, 12],
-                  "scale": [0.01, 0.01, 0.01]
-                }
+
               ]
             }
           }

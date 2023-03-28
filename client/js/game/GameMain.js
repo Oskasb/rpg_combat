@@ -1,4 +1,5 @@
-import { GameScenario}  from "./gameworld/GameScenario.js";
+import { GameScenario }  from "./gameworld/GameScenario.js";
+import { GameCamera } from "../3d/camera/GameCamera.js";
 import { ConfigData } from "../application/utils/ConfigData.js";
 
 class GameMain {
@@ -8,7 +9,7 @@ class GameMain {
         this.playerPieces = [];
         this.gameTime = 0;
         this.configData = new ConfigData("WORLD", "GAME_SCENARIOS");
-
+        this.gameCamera = new GameCamera();
 
     }
 
@@ -46,6 +47,7 @@ class GameMain {
     }
 
     requestScenario(scenarioEvent) {
+        evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, scenarioEvent);
         let scenarioId = scenarioEvent['id']
         let dynamicId = scenarioEvent['dynamic']
         let data = this.configData.parseConfigData()[scenarioId];

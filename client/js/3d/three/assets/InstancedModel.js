@@ -285,8 +285,8 @@ class InstancedModel {
 
         decommissionInstancedModel = function() {
 
-            // this.getSpatial().setScaleXYZ(0, 0, 0);
-
+        //    this.getSpatial().setScaleXYZ(0, 0, 0);
+        //    ThreeAPI.removeScene(this.obj3d)
             if (this.animator) {
                 this.animator.deActivateAnimator();
             }

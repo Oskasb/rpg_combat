@@ -62,7 +62,7 @@ class EncounterStaticScenario {
             this.instances.push(box);
         }.bind(this);
 
-        client.dynamicMain.requestAssetInstance('asset_box', groundReturns)
+    //    client.dynamicMain.requestAssetInstance('asset_box', groundReturns)
 
 
         let setupGrid = function(boxSize, gridWidth, gridDepth, wallHeight) {

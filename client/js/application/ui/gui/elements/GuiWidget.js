@@ -535,6 +535,7 @@ class GuiWidget {
             this.disableWidgetInteraction();
             GuiAPI.removeAspectUpdateCallback(this.callbacks.onAspectChange);
 
+            this.removeChildren();
             this.detatchFromParent();
 
             this.guiSurface.recoverGuiSurface();

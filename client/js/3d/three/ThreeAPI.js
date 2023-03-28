@@ -204,6 +204,10 @@ class ThreeAPI {
         this.threeSetup.setCameraLookAt(x, y, z);
     };
 
+    copyCameraLookAt = function(store) {
+        store.copy(this.threeSetup.lookAt);
+    };
+
     updateCamera = function() {
         this.threeSetup.updateCameraMatrix();
     };

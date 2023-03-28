@@ -63,8 +63,10 @@ class Client {
                 client.setup.initDefaultUi();
                 client.evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
                     id:"home_scenario",
-                    dynamic:"home_hovel_dynamic"
-
+                    dynamic:"home_hovel_dynamic",
+                    "time":1,
+                    "pos": [2, 5, -8],
+                    "lookAt": [0, 3, 0]
                 });
             }, 10)
         };

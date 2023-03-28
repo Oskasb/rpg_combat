@@ -50,7 +50,8 @@ if(typeof(ENUMS) === "undefined"){
         BUILD_BUTTON:               25,
         SCENARIO_ACTIVATE:          26,
         SCENARIO_CLOSE:             27,
-        REQUEST_SCENARIO:           28
+        REQUEST_SCENARIO:           28,
+        SET_CAMERA_TARGET:          29
     };
 
     ENUMS.Args = {

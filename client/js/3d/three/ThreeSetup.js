@@ -185,6 +185,10 @@ class ThreeSetup {
         this.camera.lookAt(this.lookAt)
     };
 
+    getCameraLookAt = function() {
+        return this.lookAt;
+    };
+
     updateCameraMatrix = function() {
 
         //    camera.updateProjectionMatrix();

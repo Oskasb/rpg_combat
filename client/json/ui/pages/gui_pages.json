@@ -51,7 +51,10 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_world_dynamic"
+                        "dynamic":"home_world_dynamic",
+                        "time":2,
+                        "pos": [0, 150, -230],
+                        "lookAt": [0, 0, -100]
                       }
                     }
                   }
@@ -61,13 +64,16 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"CAVE",
+                    "text":"STASH",
                     "container_id":"top_bar_home",
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
-                        "id":"cave_scenario",
-                        "dynamic":"encounter_dynamic_cave_basic"
+                        "id":"home_scenario",
+                        "dynamic":"home_world_dynamic",
+                        "time":2,
+                        "pos": [3, 4, -2],
+                        "lookAt": [2, 0, 5]
                       }
                     }
                   }
@@ -125,7 +131,10 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_hovel_dynamic"
+                        "dynamic":"home_hovel_dynamic",
+                        "time":2,
+                        "pos": [2, 5, -8],
+                        "lookAt": [0, 3, 0]
                       }
                     }
                   }
@@ -141,7 +150,10 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"cave_scenario",
-                        "dynamic":"encounter_dynamic_cave_basic"
+                        "dynamic":"encounter_dynamic_cave_basic",
+                        "time":2,
+                        "pos": [0, 6, -3],
+                        "lookAt": [0, 0, 4]
                       }
                     }
                   }
@@ -199,12 +211,14 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_world_dynamic"
+                        "dynamic":"home_world_dynamic",
+                        "time":2,
+                        "pos": [0, 150, -230],
+                        "lookAt": [0, 0, -100]
                       }
                     }
                   }
                 }
-
               ]
             }
           ]
