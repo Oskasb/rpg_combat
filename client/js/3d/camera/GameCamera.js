@@ -18,6 +18,7 @@ class GameCamera {
             if (fraction < 1) {
                 factor = MATH.curveSigmoid(fraction);
             } else {
+                factor = 1;
                 MATH.callAll(transitionEndCallbacks);
                 transitionEndCallbacks = [];
             }

@@ -52,7 +52,7 @@
                       "value":{
                         "id":"home_scenario",
                         "dynamic":"home_world_dynamic",
-                        "time":2,
+                        "time":4,
                         "pos": [0, 150, -230],
                         "lookAt": [0, 0, -100]
                       }
@@ -60,7 +60,7 @@
                   }
                 },
                 {
-                  "widget_id":"button_go_cave",
+                  "widget_id":"button_go_stash",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
@@ -70,10 +70,214 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_world_dynamic",
+                        "dynamic":"home_stash_dynamic",
                         "time":2,
                         "pos": [3, 4, -2],
                         "lookAt": [2, 0, 5]
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_go_hero",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"HERO",
+                    "container_id":"top_bar_home",
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_hero_dynamic",
+                        "time":3,
+                        "pos": [1.0, 2.2, -2.7],
+                        "lookAt": [0, 1.6, -1]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "page_scene_hero",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"top_bar_header",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"scene_page_header_text_box",
+                  "options":{
+                    "text":"HERO",
+                    "anchor":"top_left",
+                    "offset_x": 0.155,
+                    "offset_y":-0.025
+                  }
+                },
+                {
+                  "widget_id":"top_bar_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"page_top_bar_expanding_container",
+                  "options": {
+                    "anchor":"top_left"
+                  }
+                },
+                {
+                  "widget_id":"text_box_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"main_text_box",
+                  "options":{
+                    "anchor":"bottom_left",
+                    "offset_x":0.15,
+                    "offset_y":0.04,
+                    "text":"Ready to go right now"
+                  }
+
+                }
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_go_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"HOME",
+                    "container_id":"top_bar_home",
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_hovel_dynamic",
+                        "time":2,
+                        "pos": [2, 5, -8],
+                        "lookAt": [0, 3, 0]
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_hero_swing",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"SWING",
+                    "container_id":"top_bar_home",
+                    "dispatch":{
+                      "event":"SET_PLAYER_STATE",
+                      "value":{
+                        "state":"IDLE",
+                        "time":2
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_hero_rest",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"REST",
+                    "container_id":"top_bar_home",
+                    "dispatch":{
+                      "event":"SET_PLAYER_STATE",
+                      "value":{
+                        "state":"COMBAT",
+                        "time":2
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "page_scene_stash",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"top_bar_header",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"scene_page_header_text_box",
+                  "options":{
+                    "text":"STASH",
+                    "anchor":"top_left",
+                    "offset_x": 0.155,
+                    "offset_y":-0.025
+                  }
+                },
+                {
+                  "widget_id":"top_bar_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"page_top_bar_expanding_container",
+                  "options": {
+                    "anchor":"top_left"
+                  }
+                },
+                {
+                  "widget_id":"text_box_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"main_text_box",
+                  "options":{
+                    "anchor":"bottom_left",
+                    "offset_x":0.15,
+                    "offset_y":0.04,
+                    "text":"Bring loot here"
+                  }
+
+                }
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_go_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"HOME",
+                    "container_id":"top_bar_home",
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_hovel_dynamic",
+                        "time":2,
+                        "pos": [2, 5, -8],
+                        "lookAt": [0, 3, 0]
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_stash_grab",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"GRAB",
+                    "container_id":"top_bar_home",
+                    "dispatch":{
+                      "event":"EQUIP_ITEM",
+                      "value":{
+                        "time":2
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_stash_grab",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"DROP",
+                    "container_id":"top_bar_home",
+                    "dispatch":{
+                      "event":"DROP_ITEM",
+                      "value":{
+                        "id":"cave_scenario",
+                        "time":2
                       }
                     }
                   }
@@ -152,7 +356,7 @@
                         "id":"cave_scenario",
                         "dynamic":"encounter_dynamic_cave_basic",
                         "time":2,
-                        "pos": [0, 6, -3],
+                        "pos": [0, 8, -5],
                         "lookAt": [0, 0, 4]
                       }
                     }

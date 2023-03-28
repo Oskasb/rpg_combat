@@ -7,7 +7,9 @@
           "scenario_static":"home_scenario_static",
           "dynamic_scenarios": [
             "home_hovel_dynamic",
-            "home_world_dynamic"
+            "home_world_dynamic",
+            "home_stash_dynamic",
+            "home_hero_dynamic"
           ]
         }
       },
@@ -49,6 +51,42 @@
             "id":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_home",
+              "environment": "sunny_day",
+              "camera":{
+
+              },
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "home_stash_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_stash",
+              "environment": "morning",
+              "camera":{
+
+              },
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "home_hero_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_hero",
               "environment": "sunny_day",
               "camera":{
 

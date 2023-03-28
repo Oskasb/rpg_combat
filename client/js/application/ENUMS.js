@@ -51,7 +51,10 @@ if(typeof(ENUMS) === "undefined"){
         SCENARIO_ACTIVATE:          26,
         SCENARIO_CLOSE:             27,
         REQUEST_SCENARIO:           28,
-        SET_CAMERA_TARGET:          29
+        SET_CAMERA_TARGET:          29,
+        EQUIP_ITEM:                 30,
+        DROP_ITEM:                  31,
+        SET_PLAYER_STATE:           32
     };
 
     ENUMS.Args = {

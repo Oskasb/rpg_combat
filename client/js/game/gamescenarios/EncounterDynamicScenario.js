@@ -51,8 +51,6 @@ class EncounterDynamicScenario {
     //    let pos = this.config.camera.pos;
     //    let lookAt = this.config.camera.lookAt;
 
-
-
         let pieces = this.pieces;
 
         let pieceInstanceCallback = function(gamePiece) {
