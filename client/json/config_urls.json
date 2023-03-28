@@ -13,6 +13,7 @@
       "/ui/layout/surface_layout.json"                       ,
       "/ui/widgets/standard_widgets.json"                    ,
       "/ui/gui_systems.json"                                 ,
+      "/ui/pages/gui_pages.json"                             ,
       "/effects/effect_buffers.json"                         ,
       "/effects/effect_effects.json"                         ,
       "/effects/effect_particles.json"                       ,

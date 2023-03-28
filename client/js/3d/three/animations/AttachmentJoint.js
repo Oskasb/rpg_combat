@@ -31,12 +31,13 @@ class AttachmentJoint {
 
     inheritJointDynamicPosition = function() {
         this.dynamicBone.stickToBoneWorldMatrix();
-        this.attachedSpatial.stickToDynamicJoint();
 
-        let spatObj = this.attachedSpatial.obj3d;
+        let spatObj = this.dynamicBone.obj3d;
         spatObj.position.add(this.obj3d.position);
-        spatObj.quaternion.multiply(this.obj3d.quaternion);
         spatObj.scale.add(this.obj3d.scale);
+        spatObj.quaternion.multiply(this.obj3d.quaternion);
+
+        this.attachedSpatial.stickToDynamicJoint(this.dynamicBone);
 
         MATH.callAll(this.positionUpdateCallbacks, this.dynamicPosition)
 
@@ -55,6 +56,7 @@ class AttachmentJoint {
     };
 
     applyJointData = function(jointData) {
+    //    console.log("joint apply data");
         this.obj3d.position.x = jointData.offset[0];
         this.obj3d.position.y = jointData.offset[1];
         this.obj3d.position.z = jointData.offset[2];
@@ -85,7 +87,7 @@ class AttachmentJoint {
         this.joint = joint;
         this.applyJointData(joint);
         this.dynamicBone = dynamicBones[this.dynamicBoneId]
-        spatial.attachToDynamicJoint(this.dynamicBone);
+     //   spatial.attachToDynamicJoint(this.dynamicBone);
 
      //   console.log("registerAttachedEntity", spatial, this.dynamicBone);
         return this;

@@ -2,6 +2,7 @@ import { WidgetBuilder } from "./widgets/WidgetBuilder.js";
 import { GuiSettings } from "./GuiSettings.js";
 import { Instantiator } from "../../../3d/three/instancer/Instantiator.js";
 import { GuiDebug } from "./systems/GuiDebug.js";
+import { GuiPageSystem } from "./systems/GuiPageSystem.js";
 
 
 class GuiAPI {
@@ -16,6 +17,7 @@ class GuiAPI {
         this.worldSpacePointers = [];
         this.guiSettings = new GuiSettings();
         this.widgetBuilder = new WidgetBuilder();
+        this.guiPageSystem = new GuiPageSystem();
         this.basicText;
         this.txtSysKey = 'UI_TEXT_MAIN';
         this.guiUpdateCallbacks = [];
@@ -81,8 +83,13 @@ class GuiAPI {
         loadUiConfig("SPRITE_FONT", "FONT_16x16");
         loadUiConfig("SURFACE_NINESLICE", "GUI_16x16");
 
+        this.guiPageSystem.initGuiPageSystem();
     //    onReadyCB('initGuiApi done loads: '+loads);
     };
+
+    activatePage(pageId) {
+        this.guiPageSystem.activateGuiPage(pageId)
+    }
 
     addUiSystem = function(sysKey, uiSysKey, assetId, poolSize, renderOrder) {
     //    console.log("addInstanceSystem", sysKey, uiSysKey, assetId, poolSize, renderOrder)
@@ -92,6 +99,8 @@ class GuiAPI {
     getBufferElementByUiSysKey = function(uiSysKey) {
         return this.instantiator.getElementBufferByKey(uiSysKey);
     }
+
+
 
     buildBufferElement = function(uiSysKey, cb) {
     //    console.log("buildBufferElement", uiSysKey)

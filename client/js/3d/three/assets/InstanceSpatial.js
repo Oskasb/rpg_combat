@@ -49,9 +49,9 @@ class InstanceSpatial{
         };
 
 
-        stickToDynamicJoint = function() {
+        stickToDynamicJoint = function(dynamicJoint) {
 
-            let obj3d = this.dynamicJoint.obj3d;
+            let obj3d = dynamicJoint.obj3d;
 
             this.obj3d.position.copy(obj3d.position);
             this.obj3d.scale.copy(obj3d.scale);

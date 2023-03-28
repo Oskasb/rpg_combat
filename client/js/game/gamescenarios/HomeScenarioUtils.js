@@ -167,7 +167,8 @@ class HomeScenarioUtils {
 
             instance.spatial.setPosXYZ(2*boxSize*ThreeAPI.tempVec3.x, -boxSize, 2*boxSize*ThreeAPI.tempVec3.y);
 
-            let iconSprite = iconSprites[iconKeysNice[Math.floor(Math.random()*iconKeysNice.length)]];
+            let spriteSelect = Math.floor(Math.abs(Math.sin(count*0.5))*iconKeysNice.length)
+            let iconSprite = iconSprites[iconKeysNice[spriteSelect]];
             instance.setSprite(iconSprite);
 
             instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)
@@ -229,7 +230,7 @@ class HomeScenarioUtils {
 
 
                     if (!this.items[0].attached) {
-                        player.attachPieceSpatialToJoint(this.items[0].spatial, 'HAND_R');
+                        player.attachPieceSpatialToJoint(this.items[0].spatial, 'GRIP_R');
                         this.items[0].attached = true;
                     }
                 }

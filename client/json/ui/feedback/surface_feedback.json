@@ -19,7 +19,24 @@
                 }
               }
             },
-
+            {
+              "id":"feedback_surface_header_text_box",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.01, "g": 0.81, "b": 0.99, "a": 1.0},
+                  "sprite": "text_box_framed"
+                }
+              }
+            },
+            {
+              "id":"feedback_surface_page_text_box",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.01, "g": 0.31, "b": 0.69, "a": 1.0},
+                  "sprite": "text_box_framed"
+                }
+              }
+            },
             {
               "id":"feedback_surface_stat_label",
               "config": {

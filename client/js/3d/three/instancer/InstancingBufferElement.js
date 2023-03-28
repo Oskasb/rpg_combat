@@ -1,6 +1,6 @@
 class InstancingBufferElement {
     constructor() {
-        this.tempObj = new THREE.Object3D();
+        this.tempObj = ThreeAPI.tempObj;
         this.position = new THREE.Vector3();
         this.quaternion = new THREE.Quaternion();
         this.scale = new THREE.Vector3();

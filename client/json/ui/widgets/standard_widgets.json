@@ -139,15 +139,27 @@
               }
             },
             {
+              "id":"scene_page_header_text_box",
+              "layout":"layout_page_header_text_box",
+              "text": {
+                "sprite_font": "sprite_font_main_text",
+                "feedback": "feedback_text_page_header"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_header_text_box",
+                "feedback":  "feedback_surface_header_text_box"
+              }
+            },
+            {
               "id":"main_text_box",
               "layout":"layout_main_text_box",
               "text": {
                 "sprite_font": "sprite_font_main_text",
-                "feedback": "feedback_text_blue"
+                "feedback": "feedback_text_page_text_box"
               },
               "surface": {
-                "nineslice": "nineslice_surface_main_text",
-                "feedback":  "feedback_surface_blue"
+                "nineslice": "nineslice_surface_header_text_box",
+                "feedback":  "feedback_surface_page_text_box"
               }
             },
             {

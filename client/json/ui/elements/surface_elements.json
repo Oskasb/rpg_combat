@@ -51,6 +51,17 @@
               }
             },
             {
+              "id":"nineslice_surface_header_text_box",
+              "config": {
+                "padding": { "x":0.0, "y":0.0},
+                "image": {
+                  "layer": "UI_ELEMENTS_MAIN",
+                  "atlas_key": "GUI_16x16",
+                  "border_thickness": {"x": 0.23, "y": 0.23}
+                }
+              }
+            },
+            {
               "id":"nineslice_surface_debug",
               "config": {
                 "padding": { "x":0.004, "y":0.004},

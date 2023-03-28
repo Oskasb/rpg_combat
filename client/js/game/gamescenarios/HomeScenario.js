@@ -1,5 +1,6 @@
 import { HomeScenarioUtils } from "./HomeScenarioUtils.js";
 
+
 class HomeScenario {
     constructor() {
         this.instances = [];
@@ -7,12 +8,13 @@ class HomeScenario {
     }
 
     initHomeScenario() {
+        GuiAPI.activatePage('page_scene_home');
         evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'high_noon', time:1});
 
         client.treeInstances = [];
         client.particleEffects = [];
 
-        this.homeScenarioUtils.buildGround(1024, 2)
+        this.homeScenarioUtils.buildGround(1024, 8)
         this.homeScenarioUtils.buildForest();
         this.homeScenarioUtils.buildStronghold('asset_house_small');
 

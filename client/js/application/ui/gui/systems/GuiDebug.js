@@ -82,7 +82,9 @@ class GuiDebug {
                 onActivate: onActivate,
                 interactive: true,
                 text: 'DEBUG TEXT',
-                anchor: 'bottom_left'
+                anchor: 'bottom_left',
+                offset_y:0.14,
+                offset_x:0.01
             }
 
         );

@@ -7,6 +7,22 @@
           "data": [
 
             {
+              "id":"feedback_text_page_header",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.4, "g": 0.6, "b": 0.99, "a": 0.6}
+                }
+              }
+            },
+            {
+              "id":"feedback_text_page_text_box",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.4, "g": 0.6, "b": 0.99, "a": 0.9}
+                }
+              }
+            },
+            {
               "id":"feedback_text_action_button",
               "config": {
                 "NONE": {

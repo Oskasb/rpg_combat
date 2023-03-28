@@ -19,10 +19,6 @@ class  Instantiator {
         };
 
 
-        let getEelementPools = function() {
-            return elementPools;
-        };
-
         let buildElement = function(sysKey, cb) {
         //    console.log("Build Instantiator elem:", sysKey)
             let getElement = function(elem) {
@@ -30,11 +26,11 @@ class  Instantiator {
                 elem.setDefaultBuffers();
                 cb(elem, sysKey);
             };
-            if (!getEelementPools()[sysKey]) {
-                console.log("Bad pool", name, sysKey, [getEelementPools()])
+            if (!elementPools[sysKey]) {
+                console.log("Bad pool", name, sysKey, [elementPools])
             }
 
-            getEelementPools()[sysKey].getFromExpandingPool(getElement)
+            elementPools[sysKey].getFromExpandingPool(getElement)
         };
 
         let recoverElement = function(sysKey, elem) {
