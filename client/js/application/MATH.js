@@ -471,6 +471,12 @@ if(typeof(MATH) === "undefined") {
 		vec.z += spreadV.z * (Math.random()-0.5);
 	};
 
+    MATH.expandVector = function(vec, expand) {
+        vec.x += expand*Math.sign(vec.x);
+        vec.y += expand*Math.sign(vec.y);
+        vec.z += expand*Math.sign(vec.z);
+    };
+
 	MATH.vec3FromArray = function(vec3, array) {
 		vec3.x = array[0];
 		vec3.y = array[1];

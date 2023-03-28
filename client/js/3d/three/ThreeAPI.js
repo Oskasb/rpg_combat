@@ -33,6 +33,8 @@ class ThreeAPI {
 
         this.dynamicGlobalUnifs = {};
         this.tempVec3 = new THREE.Vector3();
+        this.tempVec3b = new THREE.Vector3();
+        this.tempVec3c = new THREE.Vector3();
         this.tempVec4 = new THREE.Vector4();
         this.tempObj = new THREE.Object3D();
     }
