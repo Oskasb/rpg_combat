@@ -47,6 +47,11 @@ class GameMain {
     }
 
     requestScenario(scenarioEvent) {
+        let camCallback = function() {
+            this.activeScenario.activateDynamicScenario()
+        }.bind(this);
+        scenarioEvent.callback = camCallback;
+
         evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, scenarioEvent);
         let scenarioId = scenarioEvent['id']
         let dynamicId = scenarioEvent['dynamic']
@@ -70,9 +75,6 @@ class GameMain {
             }
             this.closeGameScenario();
         this.initGameScenario(scenarioId, staticId, staticReadyCB)
-
-
-
 
     }
 

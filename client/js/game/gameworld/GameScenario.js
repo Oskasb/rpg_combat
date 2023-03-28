@@ -19,6 +19,10 @@ class GameScenario {
         this.staticScenario.initStaticScenario(onReady)
     }
 
+    activateDynamicScenario() {
+        this.dynamicScenario.dynamicScenarioActivate()
+    }
+
     initGameDynamicScenario(dynamicId) {
         if (this.dynamicScenario) {
             this.dynamicScenario.exitDynamicScenario()

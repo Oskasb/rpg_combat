@@ -12,6 +12,12 @@ class ScenarioDynamic {
         dynamicScenario.initEncounterDynamicScenario(this.dynamicScenarioId, onReadyCB);
     }
 
+    dynamicScenarioActivate() {
+        for (let i = 0; i < this.loadedDynamicScenarios.length; i++) {
+            this.loadedDynamicScenarios[i].activateEncDynScenario();
+        }
+    }
+
     exitDynamicScenario() {
         let dynamicScenario = this.loadedDynamicScenarios.pop();
         if (dynamicScenario) {

@@ -91,6 +91,7 @@ class GuiAPI {
         this.guiPageSystem.activateGuiPage(pageId)
     }
 
+
     addUiSystem = function(sysKey, uiSysKey, assetId, poolSize, renderOrder) {
     //    console.log("addInstanceSystem", sysKey, uiSysKey, assetId, poolSize, renderOrder)
         this.instantiator.addInstanceSystem(sysKey, uiSysKey, assetId, poolSize, renderOrder)

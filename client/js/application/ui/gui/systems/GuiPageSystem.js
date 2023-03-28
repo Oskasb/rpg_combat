@@ -28,9 +28,12 @@ class GuiPageSystem {
             let oldPage = this.activePages.pop();
             oldPage.closeGuiPage();
         }
+        if (pageId) {
+            let page = this.pages[pageId].activateGuiPage();
+            this.activePages.push(page)
+        }
 
-        let page = this.pages[pageId].activateGuiPage();
-        this.activePages.push(page)
+
     }
 
 }

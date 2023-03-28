@@ -16,7 +16,7 @@ class GameCamera {
             fraction = MATH.calcFraction(transitionStartTime, transitionEndTime, currentTime);
             let factor = 1;
             if (fraction < 1) {
-                factor = MATH.curveSigmoid(fraction);
+                factor = MATH.curveCube(fraction);
             } else {
                 factor = 1;
                 MATH.callAll(transitionEndCallbacks);
@@ -47,9 +47,12 @@ class GameCamera {
             fraction = 0;
             transitionStartTime = currentTime;
             transitionEndTime = currentTime + eventData.time;
+            cameraPos.copy(ThreeAPI.getCamera().position);
+            ThreeAPI.copyCameraLookAt(cameraLookAt);
             MATH.vec3FromArray(targetLookAt, eventData.lookAt)
             MATH.vec3FromArray(targetPos, eventData.pos)
             if (typeof(eventData.callback) === 'function') {
+                console.log("set cam callback")
                 transitionEndCallbacks.push(eventData.callback)
             }
         };

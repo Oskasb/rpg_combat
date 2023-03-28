@@ -16,6 +16,7 @@ class EncounterDynamicScenario {
         let dataKey = scenarioDynamicId;
 
         let onConfig = function(config) {
+
             this.applyScenarioConfig(config, onReadyCB);
         }.bind(this)
 
@@ -44,9 +45,14 @@ class EncounterDynamicScenario {
         PipelineAPI.subscribeToCategoryKey("WORLD", "WORLD_DYNAMIC", onDataCb)
     }
 
+    activateEncDynScenario() {
+        GuiAPI.activatePage(this.config['gui_page']);
+    }
+
     applyScenarioConfig = function(config, onReadyCB) {
-        GuiAPI.activatePage(config['gui_page']);
-        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:4});
+        GuiAPI.activatePage(null);
+
+        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:4, callback:onReadyCB});
 
     //    let pos = this.config.camera.pos;
     //    let lookAt = this.config.camera.lookAt;
@@ -72,7 +78,7 @@ class EncounterDynamicScenario {
                 GameAPI.createGamePiece(config.spawn[i], pieceInstanceCallback)
             }
         }
-        onReadyCB(this);
+
     };
 
     updateScenarioPieces(tpf, scenarioTime) {
