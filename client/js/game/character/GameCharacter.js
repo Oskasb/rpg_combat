@@ -6,11 +6,12 @@ class GameCharacter {
         this.characterName = name;
         this.gamePiece = null;
         this.characterInventory = new CharacterInventory();
-        this.characterEquipment = new CharacterEquipment();
+
     }
 
-    setCharacterPiece(gamePiece) {
+    setCharacterPiece(gamePiece, equipSlotConfigId) {
         this.gamePiece = gamePiece;
+        this.characterEquipment = new CharacterEquipment(equipSlotConfigId);
     }
 
     getCharacterPiece() {

@@ -2,8 +2,8 @@
 
 class PlayerStash {
     constructor() {
-        this.pos = new THREE.Vector3(1.4, 0.2, 3.5);
-        this.extents = new THREE.Vector3(1, 0.4, 1);
+        this.pos = new THREE.Vector3(1.5, 0.1, 3.3);
+        this.extents = new THREE.Vector3(1, 0.2, 1);
         this.pieces = [];
     }
 
@@ -11,10 +11,11 @@ class PlayerStash {
         this.pos.copy(pos);
     }
 
-    positionPieceInStash(piece) {
+    positionPieceInStash(gamePiece) {
         ThreeAPI.tempVec3.copy(this.pos);
         MATH.spreadVector(ThreeAPI.tempVec3, this.extents);
-        piece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
+        gamePiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
+        GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
     }
 
     addPieceToStash(piece) {
@@ -22,8 +23,9 @@ class PlayerStash {
         this.pieces.push(piece);
     }
 
-    takePieceFromStash(piece) {
-        return MATH.quickSplice(piece, this.pieces);
+    takePieceFromStash(gamePiece) {
+        let piece = MATH.quickSplice(gamePiece, this.pieces);
+        GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
     }
 
 

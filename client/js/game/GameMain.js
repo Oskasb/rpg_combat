@@ -3,6 +3,7 @@ import { GameCamera } from "../3d/camera/GameCamera.js";
 import { ConfigData } from "../application/utils/ConfigData.js";
 import { GameWorld } from "./gameworld/GameWorld.js";
 import { PlayerMain } from "./Player/PlayerMain.js";
+import { SetupPlayer } from "./Player/SetupPlayer.js";
 
 class GameMain {
     constructor() {
@@ -33,7 +34,8 @@ class GameMain {
     initGameMain() {
         this.setupCallbacks();
 
-        this.initPlayerPiece({piece:"PIECE_FIGHTER", pos: [0, 0, 0] });
+        new SetupPlayer()
+
 
         evt.on(ENUMS.Event.REQUEST_SCENARIO, this.callbacks.requestScenario);
         evt.on(ENUMS.Event.FRAME_READY, this.callbacks.updateGameFrame)
@@ -48,17 +50,7 @@ class GameMain {
         return MATH.quickSplice(callback);
     }
 
-    initPlayerPiece(pieceConf) {
-        let charCb = function (gamePiece) {
-            console.log("Player Piece: ", gamePiece);
-            let mainChar = GameAPI.createGameCharacter('James')
-            mainChar.setCharacterPiece(gamePiece);
-            GameAPI.setActivePlayerCharacter(gamePiece);
-            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
-        }.bind(this);
-        GameAPI.createGamePiece(pieceConf, charCb)
 
-    }
 
     requestScenario(scenarioEvent) {
         let scenarioId = scenarioEvent['id']
@@ -79,8 +71,6 @@ class GameMain {
         navPoint.callback = camCallback;
 
         evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, navPoint);
-
-
 
 
 
@@ -115,8 +105,6 @@ class GameMain {
         let scenario = new GameScenario(scenarioId);
         this.activeScenario = scenario;
         scenario.initGameStaticScenario(staticId, staticReadyCB);
-
-
     }
 
     closeGameScenario() {

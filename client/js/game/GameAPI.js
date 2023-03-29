@@ -13,6 +13,10 @@ class GameAPI {
         this.gameMain.initGameMain();
     }
 
+    getPlayerMain() {
+        return this.gameMain.playerMain;
+    }
+
     createGameCharacter(name) {
         return new GameCharacter(name);
     };
@@ -33,8 +37,8 @@ class GameAPI {
         return this.gameMain.gameWorld.gameWorldReleasePiece(piece)
     }
 
-    setActivePlayerCharacter(gamePiece) {
-        this.acticePlayerCharacter = gamePiece;
+    setActivePlayerCharacter(character) {
+        this.acticePlayerCharacter = character;
     }
 
     getActivePlayerCharacter() {

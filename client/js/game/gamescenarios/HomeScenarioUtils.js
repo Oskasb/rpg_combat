@@ -174,7 +174,7 @@ class HomeScenarioUtils {
     }
 
     tickScenarioUtils(tpf, scenarioTime) {
-        let player = GameAPI.getActivePlayerCharacter();
+        let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
         if (player){
             let tempObj = ThreeAPI.tempObj;
             tempObj.quaternion.x = 0;

@@ -4,6 +4,7 @@ class PlayerMain {
     constructor() {
         this.playerStash = new PlayerStash();
         this.playerCharacter = null;
+
     }
 
     setPlayerCharacter(character) {
@@ -15,13 +16,11 @@ class PlayerMain {
     }
 
     stashItemPiece(piece) {
-        this.playerStash.stashItemPiece(piece);
+        this.playerStash.addPieceToStash(piece);
     }
-
     takeStashedPiece(piece) {
         return this.playerStash.takePieceFromStash(piece);
     }
-
 }
 
 export { PlayerMain }

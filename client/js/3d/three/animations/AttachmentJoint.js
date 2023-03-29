@@ -34,7 +34,7 @@ class AttachmentJoint {
 
         let spatObj = this.dynamicBone.obj3d;
         spatObj.position.add(this.obj3d.position);
-        spatObj.scale.add(this.obj3d.scale);
+        spatObj.scale.multiply(this.obj3d.scale);
         spatObj.quaternion.multiply(this.obj3d.quaternion);
 
         this.attachedSpatial.stickToDynamicJoint(this.dynamicBone);

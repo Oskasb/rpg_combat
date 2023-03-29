@@ -140,7 +140,6 @@ class PieceAnimator {
         this.timeAtKey += tpf;
 
         for (let i = 0; i < this.activeAnimations.length; i++) {
-        //    console.log("Updateanim", this.activeAnimations)
             this.activeAnimations[i].updateAnimation(tpf, time, this.removes);
         }
 

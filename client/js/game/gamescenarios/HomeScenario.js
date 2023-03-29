@@ -34,13 +34,7 @@ class HomeScenario {
         this.homeScenarioUtils.instances.concat(instances);
 
 
-        let itemCallback = function(gamePiece) {
-            GameAPI.addPieceToWorld(gamePiece);
-            GameAPI.getActivePlayerCharacter().attachPieceSpatialToJoint(gamePiece.getSpatial(), 'GRIP_R');
-            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
-        }.bind(this);
 
-        GameAPI.createGamePiece({piece:"NINJASWORD", pos: [0, 0.2, 0], rot:[-1,7, 0.2, -3.14]}, itemCallback)
         callback(this);
 
     };
