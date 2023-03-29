@@ -50,7 +50,7 @@ class GuiSurface {
 
 
         triggerActiveate = function(inputIndex) {
-            GuiAPI.printDebugText("TRIGGER ACTIVATE");
+        //    GuiAPI.printDebugText("TRIGGER ACTIVATE");
             for (let i = 0; i < this.onActivateCallbacks.length; i++) {
 
                 this.onActivateCallbacks[i](inputIndex);
@@ -65,7 +65,7 @@ class GuiSurface {
         triggerPressStart = function(inputIndex) {
 
             for (let i = 0; i < this.onPressStartCallbacks.length; i++) {
-                console.log("Press activated")
+          //      console.log("Press activated")
                 this.onPressStartCallbacks[i](inputIndex);
             }
 

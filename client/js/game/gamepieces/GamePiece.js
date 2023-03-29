@@ -100,6 +100,23 @@ class GamePiece {
         AnimationStateProcessor.applyMovementStateToGamePiece(state, movement, this)
     };
 
+    hideGamePiece = function() {
+        if (this.getSpatial().geometryInstance) {
+            this.getSpatial().geometryInstance.setScale(0)
+        }else {
+            ThreeAPI.hideModel(this.modelInstance.obj3d)
+        }
+
+    };
+
+    showGamePiece = function() {
+        if (this.getSpatial().geometryInstance) {
+            this.getSpatial().geometryInstance.setScale(1)
+        }else {
+            ThreeAPI.showModel(this.modelInstance.obj3d)
+        }
+    };
+
     disbandGamePiece() {
         this.modelInstance.decommissionInstancedModel();
         this.gamePieceUpdateCallbacks.length = 0;

@@ -4,7 +4,7 @@ class CharacterInventory {
     }
 
     addItemToInventory(piece, time) {
-
+        piece.hideGamePiece();
         this.pieces.push(piece);
     //    console.log("Add inv item ", this.pieces);
     }
@@ -25,6 +25,9 @@ class CharacterInventory {
     takeItemFromInventory(gamePiece) {
         if (typeof (gamePiece) === 'string') {
             gamePiece = this.getInventoryItemByItemId(gamePiece);
+        }
+        if(gamePiece) {
+            gamePiece.showGamePiece();
         }
 
         return MATH.quickSplice(this.pieces, gamePiece );

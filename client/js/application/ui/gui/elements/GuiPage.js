@@ -70,7 +70,7 @@ class GuiPage {
     }
 
     closeGuiPage() {
-        console.log("Close gui page ", this);
+     //   console.log("Close gui page ", this);
         for (let key in this.containers) {
             let widget = this.containers[key]
             widget.guiWidget.recoverGuiWidget();

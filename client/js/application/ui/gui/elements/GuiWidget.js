@@ -35,17 +35,17 @@ class GuiWidget {
             }.bind(this);
 
         let onElementActivate = function(inputIndex) {
-            GuiAPI.printDebugText("GUI WIDGET - ACTIVATE");
+         //   GuiAPI.printDebugText("GUI WIDGET - ACTIVATE");
                 this.notifyElementActivate(inputIndex);
             }.bind(this);
 
         let onElementPressStart = function(inputIndex) {
-            GuiAPI.printDebugText("GUI WIDGET - PRESS START");
+        //    GuiAPI.printDebugText("GUI WIDGET - PRESS START");
                 this.notifyElementPressStart(inputIndex);
             }.bind(this);
 
         let testWidgetIsActive = function() {
-            GuiAPI.printDebugText("GUI WIDGET - TEST ACTIVE");
+         //   GuiAPI.printDebugText("GUI WIDGET - TEST ACTIVE");
                 return this.testElementIsActive();
             }.bind(this);
 

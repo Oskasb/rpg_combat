@@ -35,7 +35,7 @@ class InteractiveElement {
         };
 
         notifyPointerPress = function(inputIndex) {
-            GuiAPI.printDebugText("INTERACTIVE ELEM - PRESS START");
+        //    GuiAPI.printDebugText("INTERACTIVE ELEM - PRESS START");
             this.pressActive = true;
             if (this.pressIndices.indexOf(inputIndex) === -1) {
                 this.pressIndices.push(inputIndex);
@@ -78,24 +78,24 @@ class InteractiveElement {
 
         onHover = function() {
             this.applyHoverState()
-            GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
+        //    GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
         };
 
         onHoverEnd = function() {
             this.applyActiveState();
-            GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
+        //    GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
         };
 
         onPressStart = function(inputIndex) {
             this.getSurfaceElement().triggerPressStart(inputIndex);
             this.applyPressState();
-            GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
+         //   GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
         };
 
         onPressActivate = function(inputIndex) {
             this.getSurfaceElement().triggerActiveate(inputIndex);
             this.applyActiveState();
-            GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
+        //    GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
         };
 
 
@@ -107,7 +107,7 @@ class InteractiveElement {
             } else {
                 this.setInteractiveState(ENUMS.ElementState.HOVER);
             }
-            GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
+         //   GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
         };
 
         applyActiveState = function() {

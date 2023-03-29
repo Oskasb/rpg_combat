@@ -101,7 +101,7 @@ class GuiPointer {
         }
 
         releasePointer = function() {
-            GuiAPI.printDebugText("RELEASE")
+        //    GuiAPI.printDebugText("RELEASE")
             this.isSeeking = false;
             this.intersects = false;
             this.interactiveElement = null;
