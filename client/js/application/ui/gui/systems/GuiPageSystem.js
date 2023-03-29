@@ -22,7 +22,7 @@ class GuiPageSystem {
     }
 
     activateGuiPage(pageId) {
-        console.log("ACTIVATE PAGE "+pageId);
+     //   console.log("ACTIVATE PAGE "+pageId);
 
         if (this.activePages.length) {
             let oldPage = this.activePages.pop();

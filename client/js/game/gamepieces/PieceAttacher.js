@@ -20,7 +20,7 @@ class PieceAttacher {
 
         let jointMap = this.gamePiece.modelInstance.originalModel.jointMap;
 
-        console.log(jointMap);        for (let key in joints) {
+        for (let key in joints) {
             this.pieceAttachments[key] = new PieceAttachment(key, joints[key], this.gamePiece.pieceAnimator.attachmentJoints[key]);
         }
         return this.pieceAttachments;

@@ -4,9 +4,9 @@ class CharacterInventory {
     }
 
     addItemToInventory(piece, time) {
-        console.log("Add inv item ", piece);
-        this.pieces.push(piece);
 
+        this.pieces.push(piece);
+    //    console.log("Add inv item ", this.pieces);
     }
 
     getInventoryItemByItemId(itemId) {

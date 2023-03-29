@@ -19,7 +19,7 @@ class PieceAnim {
         activateNow = function(weight, timeScale, fadeTime) {
             this.currentTime = 0;
 
-            console.log(this.animData)
+        //    console.log(this.animData)
 
             this.animationState.setAnimationLoop(this.animData['loop']);
             this.animationState.setAnimationClamp(this.animData['clamp']);

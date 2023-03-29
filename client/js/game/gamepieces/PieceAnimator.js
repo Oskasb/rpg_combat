@@ -38,7 +38,7 @@ class PieceAnimator {
 
         let joint;
 
-        console.log(joints);
+     //   console.log(joints);
 
         for (let key in joints) {
             joint = new AttachmentJoint(key, scale, joints[key]);
@@ -64,7 +64,7 @@ class PieceAnimator {
 
         let animations = rigData['animations'];
 
-        console.log("Anim states: ", rigData);
+    //    console.log("Anim states: ", rigData);
         for (let key in animations) {
 
             let animState = MATH.getFromArrayByKeyValue(this.animationStates, 'key', key)

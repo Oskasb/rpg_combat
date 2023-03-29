@@ -25,13 +25,13 @@ class PieceComposer {
             let rigData = new ConfigData("ASSETS", "RIGS");
             rigData.fetchData(rigData.data['rig_fighter']);
             gamePiece.rigData = rigData.data;
-            console.log("Rig Piece:", assetId, pieceData.data, skeletonData.data);
+         //   console.log("Rig Piece:", assetId, pieceData.data, skeletonData.data);
         } else {
-            console.log("not rigged piece:", assetId, config)
+         //   console.log("not rigged piece:", assetId, config)
         }
 
         let modelInstanceCB = function(assetInstance) {
-            console.log(assetInstance);
+         //   console.log(assetInstance);
             gamePiece.setModelInstance(assetInstance);
 
             if (config.pos) {

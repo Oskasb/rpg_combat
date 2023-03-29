@@ -50,19 +50,22 @@ class PieceMovement {
         let now = GameAPI.getGameTime();
         if (this.targetTime+tpf > now) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
+            if (fraction > 1) {
+                fraction = 1
+            }
             MATH.interpolateVec3FromTo(this.startPos, this.targetPos, MATH.curveQuad(Math.sin(fraction*MATH.HALF_PI)), ThreeAPI.tempVec3);
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
         } else {
+            this.spatial.setPosVec3(this.targetPos);
             MATH.callAll(this.onArriveCallbacks, this.gamePiece);
             MATH.emptyArray(this.onArriveCallbacks);
             GameAPI.unregisterGameUpdateCallback(this.callbacks.onGameUpdate);
         }
     }
 
-    applyFrameToMovement(tpf, gameTime) {
-        if (this.targetTime+tpf > gameTime) {
-            this.interpolatePosition(tpf);
-        }
+    applyFrameToMovement(tpf) {
+        this.interpolatePosition(tpf);
+
     }
 
 

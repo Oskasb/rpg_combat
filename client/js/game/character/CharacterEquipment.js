@@ -2,10 +2,9 @@ import { ConfigData } from "../../application/utils/ConfigData.js";
 
 class CharacterEquipment {
     constructor(modelInstance, equipSlotConfigId) {
-        console.log(equipSlotConfigId)
+
         this.slots = new ConfigData("GAME", "EQUIP_SLOTS").parseConfigData()[equipSlotConfigId].data.slots;
         this.model = modelInstance;
-        console.log(this.slots, equipSlotConfigId);
 
         this.pieces = [];
     }

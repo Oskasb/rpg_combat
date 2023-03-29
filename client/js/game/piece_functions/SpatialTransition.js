@@ -41,14 +41,14 @@ class SpatialTransition {
         let now = GameAPI.getGameTime();
         if (this.targetTime > now) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
+            if (fraction > 1) fraction = 1;
             this.targetPos.copy(this.targetSpatial.getSpatialPosition());
-            this.targetPos.y+=Math.sin(fraction*3.64)*2;
+            this.targetPos.y+=Math.sin(fraction*Math.PI)*2;
             MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, ThreeAPI.tempVec3 , 'curveSigmoid');
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
-            console.log("Spatial Transit .." )
         } else {
+            this.spatial.setPosVec3(this.targetPos);
             this.targetSpatial = null;
-            console.log("Spatial Transit over", this.gamePiece)
             MATH.callAll(this.onArriveCallbacks, this.gamePiece);
             MATH.emptyArray(this.onArriveCallbacks);
             GameAPI.unregisterGameUpdateCallback(this.callbacks.onGameUpdate);

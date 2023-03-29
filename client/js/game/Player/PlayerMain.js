@@ -7,7 +7,6 @@ class PlayerMain {
         this.playerCharacter = null;
 
         let takeStashItem = function (event) {
-            console.log("Take")
             let item = this.playerStash.takePieceFromStash(event.item_id);
             if (!item) {
                 console.log("No item gotten from stash..")

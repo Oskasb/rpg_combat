@@ -18,14 +18,14 @@ class PlayerStash {
     }
 
     positionPieceInStash(gamePiece) {
-        this.findPositionInStash(ThreeAPI.tempVec3)
+        this.findPositionInStash(ThreeAPI.tempVec3);
         gamePiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
         GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
     }
 
     addPieceToStash(piece) {
-        this.positionPieceInStash(piece)
         this.pieces.push(piece);
+     //   console.log("Stash pieces ", this.pieces)
     }
 
     getStashedItemByItemId(itemId) {

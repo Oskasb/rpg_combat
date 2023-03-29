@@ -74,7 +74,7 @@ class GameMain {
 
 
 
-        console.log("Scenario Requested: ", scenarioId, dynamicId);
+    //    console.log("Scenario Requested: ", scenarioId, dynamicId);
 
         let staticReadyCB = function() {
             this.activeScenario.initGameDynamicScenario(dynamicId)

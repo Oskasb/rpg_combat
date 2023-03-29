@@ -4,11 +4,9 @@ class SetupPlayer {
     constructor()
     {
 
-
         let _this = this;
 
         let charConfig = new ConfigData("GAME", "CHARACTERS").parseConfigData()['CHARACTER_FIGHTER'].data;
-        console.log(charConfig);
 
         let pieceId = charConfig['game_piece'];
         let equipSlotConfigId = charConfig['equip_slots'];
@@ -35,7 +33,7 @@ class SetupPlayer {
 
     initPlayerPiece(pieceConf, equipSlotConfigId, playerReady) {
         let charCb = function (gamePiece) {
-            console.log("Player Piece: ", gamePiece);
+        //    console.log("Player Piece: ", gamePiece);
             let mainChar = GameAPI.createGameCharacter('James')
             mainChar.setCharacterPiece(gamePiece, equipSlotConfigId);
             GameAPI.getPlayerMain().setPlayerCharacter(mainChar);
@@ -48,6 +46,7 @@ class SetupPlayer {
 
     initPlayerStash() {
         let itemCallback = function(gamePiece) {
+            GameAPI.getPlayerMain().playerStash.findPositionInStash(gamePiece.getSpatial().getSpatialPosition());
             GameAPI.getPlayerMain().callbacks.addToStash(gamePiece);
         }.bind(this);
 

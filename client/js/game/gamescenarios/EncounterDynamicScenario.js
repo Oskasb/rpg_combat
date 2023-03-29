@@ -33,7 +33,7 @@ class EncounterDynamicScenario {
         };
 
         let onDataCb = function(src, config) {
-            console.log("Scenario data: ", config)
+        //    console.log("Scenario data: ", config)
             for (let i = 0; i < config.length; i++) {
                 if (config[i].id === dataKey) {
                     onEncData(config[i])
