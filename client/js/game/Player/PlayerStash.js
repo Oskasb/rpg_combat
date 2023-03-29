@@ -2,6 +2,7 @@
 
 class PlayerStash {
     constructor() {
+        this.tempVec = new THREE.Vector3()
         this.pos = new THREE.Vector3(1.5, 0.1, 3.3);
         this.extents = new THREE.Vector3(1, 0.2, 1);
         this.pieces = [];
@@ -11,9 +12,13 @@ class PlayerStash {
         this.pos.copy(pos);
     }
 
+    findPositionInStash(storeVec3) {
+        storeVec3.copy(this.pos);
+        MATH.spreadVector(storeVec3, this.extents);
+    }
+
     positionPieceInStash(gamePiece) {
-        ThreeAPI.tempVec3.copy(this.pos);
-        MATH.spreadVector(ThreeAPI.tempVec3, this.extents);
+        this.findPositionInStash(ThreeAPI.tempVec3)
         gamePiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
         GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
     }

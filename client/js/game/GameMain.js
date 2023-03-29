@@ -47,7 +47,7 @@ class GameMain {
     }
 
     removeGameUpdateCallback(callback) {
-        return MATH.quickSplice(callback);
+        return MATH.quickSplice(this.onUpdateCallbacks, callback);
     }
 
 

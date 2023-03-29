@@ -1,10 +1,6 @@
-import { SpatialTransition } from "./SpatialTransition.js";
+class SpatialTransition {
+    constructor() {
 
-class PieceMovement {
-    constructor(gamePiece) {
-        this.gamePiece = gamePiece;
-        this.spatial = gamePiece.getSpatial();
-        this.spatialTransition = new SpatialTransition();
         this.startTime = 0;
         this.targetTime = 1;
         this.targetSpatial = null;
@@ -21,26 +17,21 @@ class PieceMovement {
         }
 
         this.onArriveCallbacks = [];
-
     }
 
-    moveToTargetAtTime(mode, source, target, overTime, callback, ) {
-
-        if (mode === 'grab_loot') {
-            return this.spatialTransition.initSpatialTransition(mode, this.gamePiece, target, overTime, callback )
-        } else {
-
-        }
+    initSpatialTransition(mode, gamePiece, tSpatial, overTime, callback) {
+        this.gamePiece = gamePiece;
+        this.spatial = gamePiece.getSpatial();
 
         let now = GameAPI.getGameTime();
         if (this.onArriveCallbacks.length === 0) {
             GameAPI.registerGameUpdateCallback(this.callbacks.onGameUpdate);
         }
-
         this.startTime = now;
         this.targetTime = now+overTime;
-        this.targetPos.copy(target);
-        this.startPos.copy(source);
+        this.targetPos.copy(tSpatial.getSpatialPosition());
+        this.targetSpatial = tSpatial;
+        this.startPos.copy(this.spatial.getSpatialPosition());
         if (typeof(callback) === 'function') {
             this.onArriveCallbacks.push(callback);
         }
@@ -48,11 +39,16 @@ class PieceMovement {
 
     interpolatePosition(tpf) {
         let now = GameAPI.getGameTime();
-        if (this.targetTime+tpf > now) {
+        if (this.targetTime > now) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
-            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, MATH.curveQuad(Math.sin(fraction*MATH.HALF_PI)), ThreeAPI.tempVec3);
+            this.targetPos.copy(this.targetSpatial.getSpatialPosition());
+            this.targetPos.y+=Math.sin(fraction*3.64)*2;
+            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, ThreeAPI.tempVec3 , 'curveSigmoid');
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
+            console.log("Spatial Transit .." )
         } else {
+            this.targetSpatial = null;
+            console.log("Spatial Transit over", this.gamePiece)
             MATH.callAll(this.onArriveCallbacks, this.gamePiece);
             MATH.emptyArray(this.onArriveCallbacks);
             GameAPI.unregisterGameUpdateCallback(this.callbacks.onGameUpdate);
@@ -64,8 +60,6 @@ class PieceMovement {
             this.interpolatePosition(tpf);
         }
     }
-
-
 }
 
-export { PieceMovement }
+export { SpatialTransition }

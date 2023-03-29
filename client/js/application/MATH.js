@@ -29,7 +29,7 @@ if(typeof(MATH) === "undefined") {
     var remove;
 
 	MATH.TWO_PI = 2.0 * Math.PI;
-
+    MATH.HALF_PI = 0.5 * Math.PI;
     MATH.G = -9.81;
 
 	MATH.sign = Math.sign;

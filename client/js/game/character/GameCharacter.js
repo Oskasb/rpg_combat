@@ -8,6 +8,7 @@ class GameCharacter {
         this.characterInventory = new CharacterInventory();
 
         let pickupComplete = function(itemPiece) {
+            console.log("pickup ok")
             this.getInventory().addItemToInventory(itemPiece);
         }.bind(this);
 
@@ -28,7 +29,7 @@ class GameCharacter {
     }
 
     pickupItem(gamePiece, time) {
-        gamePiece.getPieceMovement().moveToTargetAtTime(this.gamePiece.getSpatial(), time);
+        gamePiece.getPieceMovement().moveToTargetAtTime('grab_loot', gamePiece, this.gamePiece.getSpatial(), time, this.callbacks.pickupComplete);
     }
 
     getInventory() {

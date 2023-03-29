@@ -38,6 +38,7 @@ class SetupPlayer {
             console.log("Player Piece: ", gamePiece);
             let mainChar = GameAPI.createGameCharacter('James')
             mainChar.setCharacterPiece(gamePiece, equipSlotConfigId);
+            GameAPI.getPlayerMain().setPlayerCharacter(mainChar);
             GameAPI.setActivePlayerCharacter(mainChar);
             GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
             playerReady();
@@ -47,7 +48,7 @@ class SetupPlayer {
 
     initPlayerStash() {
         let itemCallback = function(gamePiece) {
-            GameAPI.getPlayerMain().stashItemPiece(gamePiece);
+            GameAPI.getPlayerMain().callbacks.addToStash(gamePiece);
         }.bind(this);
 
         GameAPI.createGamePiece({piece:"HELMET_BRONZE"}, itemCallback);

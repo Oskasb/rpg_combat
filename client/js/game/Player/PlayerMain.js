@@ -2,6 +2,7 @@ import { PlayerStash } from "./PlayerStash.js";
 
 class PlayerMain {
     constructor() {
+        this.tempVec = new THREE.Vector3();
         this.playerStash = new PlayerStash();
         this.playerCharacter = null;
 
@@ -16,15 +17,33 @@ class PlayerMain {
 
         }.bind(this);
 
-        let callbacks = {
-        handleEquip : function (event) {        },
-        handleUnequip : function (event) {        },
-        handleDropItem : function (event) {        },
-        handleStashItem : function (event) {        },
-        handleTakeStashItem : takeStashItem,
-        handleTakeWorldItem : function (event) {        },
+        let stashInvItem = function(event) {
+            let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item_id);
+            if (!item) {
+                console.log("No item gotten from inventory..")
+                return;
+            }
+            this.stashItemPiece(item, event.time)
+        }.bind(this);
 
-    }
+
+
+        let addToStash = function(piece) {
+            this.playerStash.addPieceToStash(piece);
+        }.bind(this);
+
+        let callbacks = {
+            handleEquip : function (event) {        },
+            handleUnequip : function (event) {        },
+            handleDropItem : function (event) {        },
+            handleStashItem : stashInvItem,
+            handleTakeStashItem : takeStashItem,
+            handleTakeWorldItem : function (event) {        },
+            addToStash:addToStash
+
+        }
+
+        this.callbacks = callbacks;
 
         evt.on(ENUMS.Event.EQUIP_ITEM, callbacks.handleEquip);
         evt.on(ENUMS.Event.UNEQUIP_ITEM, callbacks.handleUnequip);
@@ -43,9 +62,13 @@ class PlayerMain {
         return this.playerCharacter;
     }
 
-    stashItemPiece(piece) {
-        this.playerStash.addPieceToStash(piece);
+    stashItemPiece(piece, time) {
+        let playerPiece = this.getPlayerCharacter().gamePiece;
+        this.playerStash.findPositionInStash(this.tempVec);
+
+        piece.getPieceMovement().moveToTargetAtTime('stash', playerPiece.getSpatial().getSpatialPosition(), this.tempVec, time, this.callbacks.addToStash);
     }
+
     takeStashedPiece(piece) {
         return this.playerStash.takePieceFromStash(piece);
     }
