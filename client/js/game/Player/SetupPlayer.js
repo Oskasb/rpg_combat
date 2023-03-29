@@ -50,8 +50,10 @@ class SetupPlayer {
             GameAPI.getPlayerMain().stashItemPiece(gamePiece);
         }.bind(this);
 
+        GameAPI.createGamePiece({piece:"HELMET_BRONZE"}, itemCallback);
         GameAPI.createGamePiece({piece:"LEGS_BRONZE"}, itemCallback);
         GameAPI.createGamePiece({piece:"BREASTPLATE_BRONZE"}, itemCallback);
+
     }
 
     initPlayerInventory() {
@@ -67,13 +69,7 @@ class SetupPlayer {
         };
 
         GameAPI.createGamePiece({piece:"NINJASWORD"}, itemCallback);
-        GameAPI.createGamePiece({piece:"SHIRT_CHAIN"}, itemCallback);
-//
-    //    GameAPI.createGamePiece({piece:"LEGS_CHAIN"}, itemCallback);
-    //    GameAPI.createGamePiece({piece:"BOOTS_SCALE"}, itemCallback);
-    //    GameAPI.createGamePiece({piece:"GLOVES_SCALE"}, itemCallback);
-    //    GameAPI.createGamePiece({piece:"HELMET_VIKING"}, itemCallback);
-        GameAPI.createGamePiece({piece:"BELT_PLATE"}, itemCallback);
+
 
     }
 

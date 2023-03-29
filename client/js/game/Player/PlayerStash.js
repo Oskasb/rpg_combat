@@ -23,9 +23,27 @@ class PlayerStash {
         this.pieces.push(piece);
     }
 
+    getStashedItemByItemId(itemId) {
+        if (!this.pieces.length) return;
+
+        if (itemId === 'random') {
+        //    console.log(this.pieces)
+            return this.pieces[Math.floor(Math.random()*this.pieces.length)]
+        } else {
+            console.log("Figure this out...")
+
+        }
+
+    }
+
     takePieceFromStash(gamePiece) {
-        let piece = MATH.quickSplice(gamePiece, this.pieces);
-        GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
+
+        if (typeof (gamePiece) === 'string') {
+            gamePiece = this.getStashedItemByItemId(gamePiece);
+        }
+
+        let piece = MATH.quickSplice(this.pieces, gamePiece);
+        return piece;
     }
 
 

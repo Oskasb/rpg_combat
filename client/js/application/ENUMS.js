@@ -53,8 +53,13 @@ if(typeof(ENUMS) === "undefined"){
         REQUEST_SCENARIO:           28,
         SET_CAMERA_TARGET:          29,
         EQUIP_ITEM:                 30,
-        DROP_ITEM:                  31,
-        SET_PLAYER_STATE:           32
+        UNEQUIP_ITEM:               31,
+        DROP_ITEM:                  32,
+        STASH_ITEM:                 33,
+        TAKE_STASH_ITEM:            34,
+        TAKE_WORLD_ITEM:            35,
+        SET_PLAYER_STATE:           36
+
     };
 
     ENUMS.Args = {
@@ -199,12 +204,6 @@ if(typeof(ENUMS) === "undefined"){
         GRIP_R:             9,
         FOOT_L:             10,
         FOOT_R:             11
-    };
-
-    ENUMS.AttachmentPoints = {
-        HANDHELD_RIGHT:      0,
-        HANDHELD_LEFT:       1,
-        AUX_PROP:            2
     };
 
     ENUMS.BufferType = {

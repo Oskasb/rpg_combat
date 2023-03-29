@@ -29,7 +29,7 @@ class CharacterEquipment {
     };
 
     takeEquippedItem(gamePiece) {
-        let piece = MATH.quickSplice(gamePiece, this.pieces);
+        let piece = MATH.quickSplice(this.pieces ,gamePiece );
         GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
     }
 

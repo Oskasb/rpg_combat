@@ -29,12 +29,20 @@ class GameAPI {
         piece.disbandGamePiece();
     }
 
+    addItemToPlayerInventory(itemPiece, transitionTime) {
+        this.acticePlayerCharacter.pickupItem(itemPiece, transitionTime)
+    }
+
     addPieceToWorld(piece) {
         this.gameMain.gameWorld.gameWorldRegisterPiece(piece)
     }
 
     takePieceFromWorld(piece) {
         return this.gameMain.gameWorld.gameWorldReleasePiece(piece)
+    }
+
+    getGameTime = function() {
+        return this.gameMain.gameTime;
     }
 
     setActivePlayerCharacter(character) {

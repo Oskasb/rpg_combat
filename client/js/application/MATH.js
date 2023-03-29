@@ -223,7 +223,6 @@ if(typeof(MATH) === "undefined") {
     };
 
 
-
     MATH.CurveState = function(curve, amplitude) {
 		this.curve = curve || MATH.curves.oneToZero;
 		this.amplitude = amplitude || 1;
@@ -244,6 +243,21 @@ if(typeof(MATH) === "undefined") {
 		this.value = MATH.valueFromCurve(this.fraction * (this.curve.length-1), this.curve);
 		return this.amplitude*this.value;
 	};
+
+
+        let calcVec1 = null;
+    MATH.interpolateVec3FromTo = function(startVec3, endVec3, fraction, storeVec3, mathCurveFuction) {
+        if (!calcVec1) calcVec1 = new THREE.Vector3();
+        calcVec1.copy(endVec3);
+        calcVec1.sub(startVec3);
+        if (typeof(mathCurveFuction) === 'string') {
+            fraction = MATH[mathCurveFuction](fraction);
+        }
+        calcVec1.multiplyScalar(fraction);
+        calcVec1.add(startVec3);
+        storeVec3.copy(calcVec1);
+
+    };
 
 	MATH.interpolateFromTo = function(start, end, fraction) {
 		return start + (end-start)*fraction;
@@ -468,7 +482,9 @@ if(typeof(MATH) === "undefined") {
 	MATH.addAngles = function(a, b) {
 		return Math.atan2(Math.sin(a+b), Math.cos(a+b));
 	};
-	
+
+
+
 	MATH.radialToVector = function(angle, distance, store) {
 		store.data[0] = Math.cos(angle)*distance;
 		store.data[2] = Math.sin(angle)*distance;
@@ -543,11 +559,6 @@ if(typeof(MATH) === "undefined") {
 		return value;
 	};
 
-	var calcVec;
-    MATH.setCalcVec = function(v) {
-        calcVec = v;
-    };
-
     var mag;
 
     MATH.pitchFromQuaternion = function(q) {
@@ -591,209 +602,7 @@ if(typeof(MATH) === "undefined") {
     MATH.rollAttitudeFromQuaternion = function(q) {
         var mag = Math.sqrt(q.w*q.w + q.z*q.z);
         return 2*Math.acos(-q.z / mag) - Math.PI;
-
     };
 
-	MATH.Vec3 = function(x,y,z){
-		this.data = new Float32Array([x,y,z]);
-	};
-
-	MATH.Vec3.prototype.setXYZ = function(x, y, z) {
-		this.data[0] = x;
-		this.data[1] = y;
-		this.data[2] = z;
-		return this;
-	};
-
-	MATH.Vec3.prototype.lerp = function(towardsVec, fraction) {
-		MATH.blendArray(this.data, towardsVec.data, fraction, this.data);
-		return this;
-	};
-
-
-	MATH.Vec3.prototype.setX = function(x) {
-		this.data[0] = x;
-		return this;
-	};
-
-	MATH.Vec3.prototype.setY = function(y) {
-		this.data[1] = y;
-		return this;
-	};
-
-	MATH.Vec3.prototype.setZ = function(z) {
-		this.data[2] = z;
-		return this;
-	};
-
-	MATH.Vec3.prototype.getX = function() {
-		return this.data[0];
-	};
-
-	MATH.Vec3.prototype.getY = function() {
-		return this.data[1];
-	};
-
-	MATH.Vec3.prototype.getZ = function() {
-		return this.data[2];
-	};
-
-	MATH.Vec3.prototype.getArray = function(array) {
-		array[0] = this.data[0];
-		array[1] = this.data[1];
-		array[2] = this.data[2];
-	};
-
-	MATH.Vec3.prototype.setArray = function(data) {
-		this.data[0] = data[0];
-		this.data[1] = data[1];
-		this.data[2] = data[2];
-		return this;
-	};
-
-	MATH.Vec3.prototype.setVec = function(vec3) {
-		this.data[0] = vec3.data[0];
-		this.data[1] = vec3.data[1];
-		this.data[2] = vec3.data[2];
-		return this;
-	};
-
-	MATH.Vec3.prototype.addVec = function(vec3) {
-		this.data[0] += vec3.data[0];
-		this.data[1] += vec3.data[1];
-		this.data[2] += vec3.data[2];
-		return this;
-	};
-
-	MATH.Vec3.prototype.addXYZ = function(x, y, z) {
-		this.data[0] += x;
-		this.data[1] += y;
-		this.data[2] += z;
-		return this;
-	};
-	
-	MATH.Vec3.prototype.subVec = function(vec3) {
-		this.data[0] -= vec3.data[0];
-		this.data[1] -= vec3.data[1];
-		this.data[2] -= vec3.data[2];
-		return this;
-	};
-
-	MATH.Vec3.prototype.interpolateFromTo = function(start, end, fraction) {
-		calcVec3.setVec(end);
-		calcVec3.subVec(start).scale(fraction);
-		this.setVec(start).addVec(calcVec3);
-		return this;
-	};
-
-	MATH.Vec3.prototype.rotateZ = function(angZ) {
-		var cs = Math.cos(angZ);
-		var sn = Math.sin(angZ);
-		this.setXYZ(this.data[0] * cs - this.data[1] * sn, this.data[0] * sn + this.data[1] * cs, this.data[2]);
-		return this;		
-	};
-
-	MATH.Vec3.prototype.rotateY = function(ang) {
-		var cs = Math.cos(ang);
-		var sn = Math.sin(ang);
-		this.setXYZ(this.data[0] * cs - this.data[2] * sn, this.data[1], this.data[0] * sn + this.data[2] * cs);
-		return this;
-	};
-
-	MATH.Vec3.prototype.rotateX = function(ang) {
-		var cs = Math.cos(ang);
-		var sn = Math.sin(ang);
-		this.setXYZ(this.data[0], this.data[1] * cs - this.data[2] * sn, this.data[0] * sn + this.data[2] * cs);
-		return this;
-	};
-	
-	MATH.Vec3.prototype.radialLerp = function(start, end, frac) {
-		this.data[0] = MATH.radialLerp(start.data[0], end.data[0], frac);
-		this.data[1] = MATH.radialLerp(start.data[1], end.data[1], frac);
-		this.data[2] = MATH.radialLerp(start.data[2], end.data[2], frac);
-	};
-
-
-	MATH.Vec3.prototype.scale = function(scale) {
-		this.data[0] *= scale;
-		this.data[1] *= scale;
-		this.data[2] *= scale;
-		return this;
-	};
-
-	MATH.Vec3.prototype.invert = function() {
-		this.data[0] *= -1;
-		this.data[1] *= -1;
-		this.data[2] *= -1;
-		return this;
-	};
-	
-    MATH.Vec3.prototype.dotVec = function(vec3) {
-        return this.data[0] * vec3.data[0] + this.data[1] * vec3.data[1] + this.data[2] * vec3.data[2];
-
-    };
-
-	MATH.Vec3.prototype.crossVec = function(vec3) {
-		this.setXYZ(
-            vec3.data[2] * this.data[1] - vec3.data[1] * this.data[2],
-		    vec3.data[0] * this.data[2] - vec3.data[2] * this.data[0],
-		    vec3.data[1] * this.data[0] - vec3.data[0] * this.data[1]
-        )
-	};
-
-
-	MATH.Vec3.prototype.normalize = function () {
-		var l = this.getLength();
-
-		if (l < 0.0000001) {
-			this.data[0] = 0;
-			this.data[1] = 0;
-			this.data[2] = 0;
-		} else {
-			l = 1.0 / l;
-			this.data[0] *= l;
-			this.data[1] *= l;
-			this.data[2] *= l;
-		}
-
-		return this;
-	};
-	
-    MATH.Vec3.prototype.mulVec = function(vec3) {
-        this.data[0] *= vec3.data[0];
-        this.data[1] *= vec3.data[1];
-        this.data[2] *= vec3.data[2];
-
-        return this;
-    };
-
-	MATH.Vec3.prototype.getLength = function() {
-		return Math.sqrt(this.dotVec(this));
-	};
-
-    MATH.Vec3.prototype.getLengthSquared = function() {
-        return this.dotVec(this);
-    };
-
-	MATH.Vec3.prototype.getDistanceSquared = function(vec3) {
-		var x = this.data[0] - vec3.data[0],
-			y = this.data[1] - vec3.data[1],
-			z = this.data[2] - vec3.data[2];
-		return x * x + y * y + z * z;
-	};
-
-	MATH.Vec3.prototype.getDistance = function(vec3) {
-		return Math.sqrt((this.getDistanceSquared(vec3)));
-	};
-	
-	MATH.Vec3.prototype.getLength = function() {
-		return Math.sqrt((this.data[0] * this.data[0]) + (this.data[1] * this.data[1]) + (this.data[2] * this.data[2]));
-	};
-
-	var calcVec3 = new MATH.Vec3(0, 0, 0);
-
-	MATH.AXIS_Y = new MATH.Vec3(0, 1, 0);
-	MATH.tempVec = new MATH.Vec3(0, 0, 0);
-	MATH.tempNormal = new MATH.Vec3(0, 1, 0)
 
 })(MATH);

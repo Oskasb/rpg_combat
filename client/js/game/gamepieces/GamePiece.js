@@ -2,6 +2,7 @@ import { AnimationStateProcessor } from "../../3d/three/animations/AnimationStat
 import { PieceAnimator } from "./PieceAnimator.js";
 import { PieceComposer } from "../piece_functions/PieceComposer.js";
 import { PieceAttacher } from "./PieceAttacher.js";
+import { PieceMovement } from "../piece_functions/PieceMovement.js";
 
 class GamePiece {
     constructor(config, callback) {
@@ -9,7 +10,6 @@ class GamePiece {
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
-
 
         let tickGamePiece = function(tpf, gameTime) {
             MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime);
@@ -21,7 +21,12 @@ class GamePiece {
             tickGamePiece:tickGamePiece
         };
 
-        new PieceComposer(this, config, callback)
+        let compositCb = function(piece) {
+            this.pieceMovement = new PieceMovement(piece);
+            callback(piece)
+        }.bind(this);
+
+        new PieceComposer(this, config, compositCb)
 
     }
 
@@ -37,6 +42,10 @@ class GamePiece {
         return this.callbacks.tickGamePiece;
     };
 
+    getPieceMovement() {
+        return this.pieceMovement;
+    }
+
     getSpatial = function() {
         return this.modelInstance.getSpatial();
     };
@@ -49,7 +58,7 @@ class GamePiece {
         this.modelInstance.animator.applyAnimationState(stateId, this.animStateMap)
     }
 
-        activatePieceAnimation = function(key, weight, timeScale, fadeTime) {
+    activatePieceAnimation = function(key, weight, timeScale, fadeTime) {
         this.pieceAnimator.activatePieceAnimation(key, weight, timeScale, fadeTime);
     };
 

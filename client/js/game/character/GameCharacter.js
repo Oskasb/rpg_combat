@@ -7,6 +7,15 @@ class GameCharacter {
         this.gamePiece = null;
         this.characterInventory = new CharacterInventory();
 
+        let pickupComplete = function(itemPiece) {
+            this.getInventory().addItemToInventory(itemPiece);
+        }.bind(this);
+
+
+        this.callbacks= {
+            pickupComplete:pickupComplete
+        }
+
     }
 
     setCharacterPiece(gamePiece, equipSlotConfigId) {
@@ -16,6 +25,10 @@ class GameCharacter {
 
     getCharacterPiece() {
         return this.gamePiece;
+    }
+
+    pickupItem(gamePiece, time) {
+        gamePiece.getPieceMovement().moveToTargetAtTime(this.gamePiece.getSpatial(), time);
     }
 
     getInventory() {

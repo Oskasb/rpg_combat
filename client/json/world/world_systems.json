@@ -82,9 +82,7 @@
             "config": {
               "gui_page":"page_scene_home",
               "environment": "sunny_day",
-              "camera":{
 
-              },
               "spawn":[
 
               ]
@@ -100,18 +98,9 @@
             "config": {
               "gui_page":"page_scene_stash",
               "environment": "morning",
-              "camera":{
 
-              },
               "spawn":[
-                {"piece":"HELMET_BRONZE",
-                  "pos": [1.4, 0.2, 3.5],
-                  "rot": [-1.7, 0.12, 2.8]
-                },
-                {"piece":"BREASTPLATE_BRONZE",
-                  "pos": [1.5, -0.8, 3.6],
-                  "rot": [-2.6, -0.12, 2.9]
-                }
+
               ]
             }
           }
@@ -125,9 +114,7 @@
             "config": {
               "gui_page":"page_scene_hero",
               "environment": "sunny_day",
-              "camera":{
 
-              },
               "spawn":[
 
               ]
@@ -143,9 +130,7 @@
             "config": {
               "gui_page":"page_scene_world",
               "environment": "sunny_day",
-              "camera":{
 
-              },
               "spawn":[
 
               ]
@@ -161,9 +146,7 @@
             "config": {
               "gui_page":"page_scene_dungeon",
               "environment": "cave_dusty",
-              "camera":{
 
-              },
               "spawn":[
 
               ]

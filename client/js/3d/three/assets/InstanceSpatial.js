@@ -59,6 +59,12 @@ class InstanceSpatial{
             }
         };
 
+        applySpatialUpdateToBuffers() {
+            if (this.geometryInstance) {
+                this.geometryInstance.applyObjQuat();
+            }
+        }
+
         attachToDynamicJoint = function(dynamicJoint) {
             this.dynamicJoint = dynamicJoint;
         };

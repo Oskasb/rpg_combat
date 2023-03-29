@@ -89,9 +89,9 @@ class UiTestSetup {
             let buttonReady = function(button) {
                 this.mainButton = button;
 
-                setTimeout(function() {
-                    button.pressButtonFromCode()
-                }, 10)
+             //   setTimeout(function() {
+                //    button.pressButtonFromCode()
+             //   }, 10)
             }.bind(this)
 
             let testActive = function(widget) {

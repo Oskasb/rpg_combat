@@ -152,13 +152,13 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"SWING",
+                    "text":"EQUIP",
                     "container_id":"top_bar_home",
                     "dispatch":{
-                      "event":"SET_PLAYER_STATE",
+                      "event":"EQUIP_ITEM",
                       "value":{
-                        "state":"IDLE",
-                        "time":2
+                        "item_id":"random",
+                        "time":1
                       }
                     }
                   }
@@ -168,13 +168,13 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"REST",
+                    "text":"UNEQUIP",
                     "container_id":"top_bar_home",
                     "dispatch":{
-                      "event":"SET_PLAYER_STATE",
+                      "event":"UNEQUIP_ITEM",
                       "value":{
-                        "state":"COMBAT",
-                        "time":2
+                        "item_id":"random",
+                        "time":1
                       }
                     }
                   }
@@ -248,9 +248,10 @@
                     "text":"GRAB",
                     "container_id":"top_bar_home",
                     "dispatch":{
-                      "event":"EQUIP_ITEM",
+                      "event":"TAKE_STASH_ITEM",
                       "value":{
-                        "time":2
+                        "item_id":"random",
+                        "time":1
                       }
                     }
                   }
@@ -263,10 +264,10 @@
                     "text":"DROP",
                     "container_id":"top_bar_home",
                     "dispatch":{
-                      "event":"DROP_ITEM",
+                      "event":"STASH_ITEM",
                       "value":{
-                        "id":"cave_scenario",
-                        "time":2
+                        "item_id":"random",
+                        "time":1
                       }
                     }
                   }
@@ -324,10 +325,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_hovel_dynamic",
-                        "time":2,
-                        "pos": [2, 5, -8],
-                        "lookAt": [0, 3, 0]
+                        "dynamic":"home_hovel_dynamic"
                       }
                     }
                   }
