@@ -9,6 +9,7 @@ class GameMain {
         this.playerPieces = [];
         this.gameTime = 0;
         this.configData = new ConfigData("WORLD", "GAME_SCENARIOS");
+        this.navPointConfigData = new ConfigData("WORLD", "WORLD_NAV_POINTS");
         this.gameCamera = new GameCamera();
 
     }
@@ -32,33 +33,46 @@ class GameMain {
         evt.on(ENUMS.Event.FRAME_READY, this.callbacks.updateGameFrame)
 
 
-        this.initPlayerPiece('PIECE_FIGHTER');
+        this.initPlayerPiece(
+            {
+                "piece":"PIECE_FIGHTER",
+                "pos": [0, 0, 0]
+            }
+            );
     }
 
 
-    initPlayerPiece(pieceName) {
+    initPlayerPiece(pieceConf) {
         let charCb = function (gamePiece) {
             console.log("Player Piece: ", gamePiece);
             GameAPI.setActivePlayerCharacter(gamePiece);
             this.playerPieces.push(gamePiece);
         }.bind(this);
 
-        GameAPI.createGamePiece(pieceName, charCb)
+        GameAPI.createGamePiece(pieceConf, charCb)
     }
 
     requestScenario(scenarioEvent) {
-        let camCallback = function() {
-            this.activeScenario.activateDynamicScenario()
-        }.bind(this);
-        scenarioEvent.callback = camCallback;
-
-        evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, scenarioEvent);
         let scenarioId = scenarioEvent['id']
         let dynamicId = scenarioEvent['dynamic']
         let data = this.configData.parseConfigData()[scenarioId];
-        console.log(data)
         let config = data.config;
         let staticId = config['scenario_static'];
+
+        let navPointData = this.navPointConfigData.parseConfigData()['world_dynamic_navpoints'];
+        let navConf = navPointData.config;
+        let navPoint = navConf[dynamicId];
+
+        let camCallback = function() {
+            this.activeScenario.activateDynamicScenario()
+        }.bind(this);
+        navPoint.callback = camCallback;
+
+        evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, navPoint);
+
+
+
+
 
         console.log("Scenario Requested: ", scenarioId, dynamicId);
 

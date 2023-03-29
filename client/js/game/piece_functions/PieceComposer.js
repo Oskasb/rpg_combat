@@ -1,33 +1,48 @@
 import { ConfigData } from "../../application/utils/ConfigData.js";
 
 class PieceComposer {
-    constructor(gamePiece, configName, callback) {
-        this.composeGamePiece(gamePiece, configName, callback)
+    constructor(gamePiece, config, callback) {
+        this.composeGamePiece(gamePiece, config, callback)
     }
 
-    composeGamePiece(gamePiece, configName, callback) {
+    composeGamePiece(gamePiece, config, callback) {
 
         let pieceData = new ConfigData("GAME", "PIECES")
-        pieceData.fetchData(configName); // .f
-
-        let skeletonData = new ConfigData("GAME", "SKELETON_RIGS");
-        skeletonData.fetchData(pieceData.data['skeleton_rig']);
-
-        let rigData = new ConfigData("ASSETS", "RIGS");
-        rigData.fetchData(rigData.data['rig_fighter']);
-
-        gamePiece.rigData = rigData.data;
-
-        console.log(pieceData.data, skeletonData.data);
-
+        pieceData.fetchData(config.piece); // .f
         let assetId = pieceData.data["model_asset"];
 
+        let skeletonData = new ConfigData("GAME", "SKELETON_RIGS");
+
+        let skellRig = pieceData.data['skeleton_rig']
+        if (skellRig) {
+            skeletonData.fetchData(skellRig);
+            let rigData = new ConfigData("ASSETS", "RIGS");
+            rigData.fetchData(rigData.data['rig_fighter']);
+            gamePiece.rigData = rigData.data;
+            console.log("Rig Piece:", assetId, pieceData.data, skeletonData.data);
+        } else {
+            console.log("not rigged piece:", assetId, config)
+        }
 
         let modelInstanceCB = function(assetInstance) {
             console.log(assetInstance);
             gamePiece.setModelInstance(assetInstance);
 
+            if (config.pos) {
+                gamePiece.getSpatial().setPosXYZ(
+                    config.pos[0],
+                    config.pos[1],
+                    config.pos[2]
+                )
+            }
 
+            if (config.rot) {
+                gamePiece.getSpatial().rotateXYZ(
+                    config.rot[0],
+                    config.rot[1],
+                    config.rot[2]
+                )
+            }
 
             if (assetInstance.originalModel.animMap) {
                 let scaleVec = ThreeAPI.tempVec3;

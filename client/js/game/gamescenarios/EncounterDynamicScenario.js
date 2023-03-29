@@ -61,16 +61,6 @@ class EncounterDynamicScenario {
 
         let pieceInstanceCallback = function(gamePiece) {
             pieces.push(gamePiece);
-            gamePiece.getPieceSpatial().setPosXYZ(
-                gamePiece.config.pos[0],
-                gamePiece.config.pos[1],
-                gamePiece.config.pos[2]
-            );
-            gamePiece.getPieceSpatial().setScaleXYZ(
-                gamePiece.config.scale[0],
-                gamePiece.config.scale[1],
-                gamePiece.config.scale[2]
-            )
         };
 
         if(config.spawn) {
@@ -88,6 +78,10 @@ class EncounterDynamicScenario {
     };
 
     exitScenario() {
+
+        while (this.pieces.length) {
+            GameAPI.removeGamePiece(this.pieces.pop())
+        }
 
     };
 

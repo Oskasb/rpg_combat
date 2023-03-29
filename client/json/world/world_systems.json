@@ -23,8 +23,38 @@
         }
       }
     ],
+    "WORLD_NAV_POINTS": [
+      {"id":"world_dynamic_navpoints",
+      "config":{
+        "home_hovel_dynamic":{
+          "time":1.3,
+          "pos": [2, 5, -8],
+          "lookAt": [0, 3, 0]
+        },
+        "home_world_dynamic":{
+          "time":1.5,
+          "pos": [0, 180, -200],
+          "lookAt": [0, 0, -70]
+        },
+        "home_stash_dynamic":{
+          "time":1.2,
+          "pos": [3, 4, -2],
+          "lookAt": [2, 0, 5]
+        },
+        "home_hero_dynamic":{
+          "time":1.2,
+          "pos": [1.0, 2.2, -2.7],
+          "lookAt": [0, 1.6, -1]
+        },
+        "encounter_dynamic_cave_basic":{
+          "time":2,
+          "pos": [0, 8, -5],
+          "lookAt": [0, 0, 4]
+        }
+      }
+      }
+    ],
     "WORLD_STATIC":[
-
       {
         "id":"encounter_static_rock_cave",
         "data": [
@@ -74,7 +104,10 @@
 
               },
               "spawn":[
-
+                {"piece":"HELMET_VIKING",
+                  "pos": [1.4, 0.2, 3.5],
+                  "rot": [-1.7, 0, 3.12]
+                }
               ]
             }
           }

@@ -7,7 +7,7 @@ class ScenarioUtils {
 
         ThreeAPI.tempVec3b.set(size)
 
-        let instances = []
+        let instances = [];
         let instanceReturns = function(instance) {
             //     console.log(instance)
             let offsetValue = count;

@@ -1,12 +1,13 @@
 class GameCamera {
     constructor() {
+        let tpf;
         let fraction = 1;
         let cameraPos = new THREE.Vector3();
         let cameraLookAt = new THREE.Vector3();
         let targetLookAt = new THREE.Vector3();
         let targetPos = new THREE.Vector3();
         let transitionStartTime = 0;
-        let transitionEndTime = 0;
+        let transitionEndTime = 1;
         let currentTime = 0;
         let transitionEndCallbacks = [];
 
@@ -15,9 +16,10 @@ class GameCamera {
             if (fraction > 1) return;
             fraction = MATH.calcFraction(transitionStartTime, transitionEndTime, currentTime);
             let factor = 1;
-            if (fraction < 1) {
-                factor = MATH.curveCube(fraction);
+            if (fraction < 0.95) {
+                factor =  MATH.curveSigmoid(fraction*0.5);
             } else {
+                fraction = 1;
                 factor = 1;
                 MATH.callAll(transitionEndCallbacks);
                 transitionEndCallbacks = [];
@@ -60,6 +62,7 @@ class GameCamera {
 
         let applyFrame = function(frame) {
                 currentTime = frame.elapsedTime;
+                tpf = frame.tpf;
                 applyFrameToCameraMotion()
             };
 

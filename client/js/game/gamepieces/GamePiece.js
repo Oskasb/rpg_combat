@@ -4,12 +4,12 @@ import { PieceComposer } from "../piece_functions/PieceComposer.js";
 import { PieceAttacher } from "./PieceAttacher.js";
 
 class GamePiece {
-    constructor(configName, callback) {
+    constructor(config, callback) {
         this.gamePieceUpdateCallbacks = [];
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
-        new PieceComposer(this, configName, callback)
+        new PieceComposer(this, config, callback)
     }
 
     getSpatial = function() {
@@ -64,6 +64,11 @@ class GamePiece {
 
     animateMovementState = function(state, movement) {
         AnimationStateProcessor.applyMovementStateToGamePiece(state, movement, this)
+    };
+
+    disbandGamePiece() {
+        this.modelInstance.decommissionInstancedModel();
+        this.gamePieceUpdateCallbacks.length = 0;
     };
 
     tickGamePiece(tpf, scenarioTime) {

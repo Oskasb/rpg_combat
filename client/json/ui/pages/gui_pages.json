@@ -51,10 +51,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_world_dynamic",
-                        "time":4,
-                        "pos": [0, 150, -230],
-                        "lookAt": [0, 0, -100]
+                        "dynamic":"home_world_dynamic"
                       }
                     }
                   }
@@ -70,10 +67,8 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_stash_dynamic",
-                        "time":2,
-                        "pos": [3, 4, -2],
-                        "lookAt": [2, 0, 5]
+                        "dynamic":"home_stash_dynamic"
+
                       }
                     }
                   }
@@ -89,10 +84,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_hero_dynamic",
-                        "time":3,
-                        "pos": [1.0, 2.2, -2.7],
-                        "lookAt": [0, 1.6, -1]
+                        "dynamic":"home_hero_dynamic"
                       }
                     }
                   }
@@ -150,10 +142,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_hovel_dynamic",
-                        "time":2,
-                        "pos": [2, 5, -8],
-                        "lookAt": [0, 3, 0]
+                        "dynamic":"home_hovel_dynamic"
                       }
                     }
                   }
@@ -354,10 +343,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"cave_scenario",
-                        "dynamic":"encounter_dynamic_cave_basic",
-                        "time":2,
-                        "pos": [0, 8, -5],
-                        "lookAt": [0, 0, 4]
+                        "dynamic":"encounter_dynamic_cave_basic"
                       }
                     }
                   }

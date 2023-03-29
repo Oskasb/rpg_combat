@@ -15,6 +15,10 @@ class GameAPI {
         return new GamePiece(pieceConfig, callback)
     }
 
+    removeGamePiece(piece) {
+        piece.disbandGamePiece();
+    }
+
     setActivePlayerCharacter(gamePiece) {
         this.acticePlayerCharacter = gamePiece;
     }

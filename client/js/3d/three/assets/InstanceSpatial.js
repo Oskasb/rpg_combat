@@ -43,6 +43,14 @@ class InstanceSpatial{
             }
         };
 
+        rotateXYZ = function(x, y, z) {
+            this.obj3d.rotateX(x);
+            this.obj3d.rotateY(y);
+            this.obj3d.rotateX(z);
+            if (this.geometryInstance) {
+                this.geometryInstance.applyObjQuat();
+            }
+        };
 
         attachToDynamicJoint = function(dynamicJoint) {
             this.dynamicJoint = dynamicJoint;
