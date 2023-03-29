@@ -66,7 +66,14 @@ class SetupPlayer {
             equip(gamePiece, 'GRIP_R')
         };
 
-        GameAPI.createGamePiece({piece:"NINJASWORD", pos: [0, 0.2, 0], rot:[-1,7, 0.2, -3.14]}, itemCallback);
+        GameAPI.createGamePiece({piece:"NINJASWORD"}, itemCallback);
+        GameAPI.createGamePiece({piece:"SHIRT_CHAIN"}, itemCallback);
+//
+    //    GameAPI.createGamePiece({piece:"LEGS_CHAIN"}, itemCallback);
+    //    GameAPI.createGamePiece({piece:"BOOTS_SCALE"}, itemCallback);
+    //    GameAPI.createGamePiece({piece:"GLOVES_SCALE"}, itemCallback);
+    //    GameAPI.createGamePiece({piece:"HELMET_VIKING"}, itemCallback);
+        GameAPI.createGamePiece({piece:"BELT_PLATE"}, itemCallback);
 
     }
 

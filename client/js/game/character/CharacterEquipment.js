@@ -1,10 +1,10 @@
 import { ConfigData } from "../../application/utils/ConfigData.js";
 
 class CharacterEquipment {
-    constructor(equipSlotConfigId) {
+    constructor(modelInstance, equipSlotConfigId) {
         console.log(equipSlotConfigId)
         this.slots = new ConfigData("GAME", "EQUIP_SLOTS").parseConfigData()[equipSlotConfigId].data.slots;
-
+        this.model = modelInstance;
         console.log(this.slots, equipSlotConfigId);
 
         this.pieces = [];
@@ -17,8 +17,15 @@ class CharacterEquipment {
 
         let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
 
-        GameAPI.getActivePlayerCharacter().getCharacterPiece().attachPieceSpatialToJoint(gamePiece.getSpatial(), slot.joint);
-        GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
+        if (slot.joint === 'SKIN') {
+
+            this.model.attachInstancedModel(gamePiece.modelInstance)
+
+        } else {
+            GameAPI.getActivePlayerCharacter().getCharacterPiece().attachPieceSpatialToJoint(gamePiece.getSpatial(), slot.joint);
+            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
+        }
+
     };
 
     takeEquippedItem(gamePiece) {

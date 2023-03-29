@@ -52,7 +52,10 @@ class PieceAttacher {
 
     tickAttacher(){
         for (let i = 0; i < this.activeJoints.length;i++) {
-            this.activeJoints[i].inheritJointDynamicPosition()
+            let joint = this.activeJoints[i];
+            if (joint.dynamicBone) {
+                joint.inheritJointDynamicPosition()
+            }
         }
     }
 
