@@ -25,6 +25,14 @@ class GamePiece {
 
     }
 
+    setEquipSlotId(slot) {
+        this.equipToSslotId = slot;
+    }
+
+    getEquipSlotId() {
+        return this.equipToSslotId;
+    }
+
     getOnUpdateCallback() {
         return this.callbacks.tickGamePiece;
     };

@@ -102,6 +102,15 @@ if(typeof(MATH) === "undefined") {
 		}
 	};
 
+    MATH.getFromArrayByKey = function(array, key, value) {
+        for (let idx = 0; idx < array.length; idx++) {
+            if (array[idx][key]) {
+
+                //	console.lof("Get ", array, idx, key)
+                return array[idx];
+            }
+        }
+    };
 
 	var all;
 	MATH.callAll = function(array, arg1, arg2, arg3, arg4, arg5) {

@@ -7,9 +7,15 @@ class PieceComposer {
 
     composeGamePiece(gamePiece, config, callback) {
 
+
+
         let pieceData = new ConfigData("GAME", "PIECES")
         pieceData.fetchData(config.piece); // .f
         let assetId = pieceData.data["model_asset"];
+
+        if (pieceData.data['slot']) {
+            gamePiece.setEquipSlotId(pieceData.data['slot'])
+        }
 
         let skeletonData = new ConfigData("GAME", "SKELETON_RIGS");
 

@@ -4,37 +4,44 @@
       {
         "id":"NINJASWORD",
         "data":{
-          "model_asset":"asset_ninjablade"
+          "model_asset":"asset_ninjablade",
+          "slot": "SLOT_HAND_R"
         }
       },
       {
         "id":"LEGS_BRONZE",
         "data":{
-          "model_asset":"asset_bronze_legs"
+          "model_asset":"asset_bronze_legs",
+          "slot": "SLOT_LEGS"
         }
       },
       {
         "id":"BREASTPLATE_BRONZE",
         "data":{
-          "model_asset":"asset_bronze_bp"
+          "model_asset":"asset_bronze_bp",
+          "slot": "SLOT_CHEST"
         }
       },
       {
         "id":"HELMET_BRONZE",
         "data":{
-          "model_asset":"asset_helmet_bronze"
+          "model_asset":"asset_helmet_bronze",
+          "slot": "SLOT_HEAD"
+
         }
       },
       {
         "id":"BRACER_BRONZE",
         "data":{
-          "model_asset":"asset_bracer_bronze"
+          "model_asset":"asset_bracer_bronze",
+          "slot": "SLOT_WRIST"
         }
       },
       {
         "id":"BELT_BRONZE",
         "data":{
-          "model_asset":"asset_belt_bronze"
+          "model_asset":"asset_belt_bronze",
+          "slot": "SLOT_WAIST"
         }
       },
 
@@ -42,49 +49,57 @@
       {
         "id":"HELMET_VIKING",
         "data":{
-          "model_asset":"asset_helmetviking"
+          "model_asset":"asset_helmetviking",
+          "slot": "SLOT_HEAD"
         }
       },
       {
         "id":"BELT_PLATE",
         "data":{
-          "model_asset":"asset_beltplate"
+          "model_asset":"asset_beltplate",
+          "slot": "SLOT_WAIST"
         }
       },
       {
         "id":"SHIRT_CHAIN",
         "data":{
-          "model_asset":"asset_chain_shirt"
+          "model_asset":"asset_chain_shirt",
+          "slot": "SLOT_BODY"
         }
       },
       {
         "id":"SHIRT_SCALE",
         "data":{
-          "model_asset":"asset_scale_shirt"
+          "model_asset":"asset_scale_shirt",
+          "slot": "SLOT_BODY"
         }
       },
       {
         "id":"LEGS_CHAIN",
         "data":{
-          "model_asset":"asset_chain_legs"
+          "model_asset":"asset_chain_legs",
+          "slot": "SLOT_LEGS"
         }
       },
       {
         "id":"LEGS_SCALE",
         "data":{
-          "model_asset":"asset_scale_legs"
+          "model_asset":"asset_scale_legs",
+          "slot": "SLOT_LEGS"
         }
       },
       {
         "id":"BOOTS_SCALE",
         "data":{
-          "model_asset":"asset_scale_boots"
+          "model_asset":"asset_scale_boots",
+          "slot": "SLOT_FEET"
         }
       },
       {
         "id":"GLOVES_SCALE",
         "data":{
-          "model_asset":"asset_scale_gloves"
+          "model_asset":"asset_scale_gloves",
+          "slot": "SLOT_HANDS"
         }
       }
     ]

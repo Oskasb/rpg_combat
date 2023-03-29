@@ -3,16 +3,21 @@ import { ConfigData } from "../../application/utils/ConfigData.js";
 class CharacterEquipment {
     constructor(equipSlotConfigId) {
         console.log(equipSlotConfigId)
-        this.slots = new ConfigData("GAME", "EQUIP_SLOTS").parseConfigData()[equipSlotConfigId].data;
+        this.slots = new ConfigData("GAME", "EQUIP_SLOTS").parseConfigData()[equipSlotConfigId].data.slots;
 
-        console.log(this.config, equipSlotConfigId);
+        console.log(this.slots, equipSlotConfigId);
 
         this.pieces = [];
     }
 
-    characterEquipItem(gamePiece, slotId) {
+    characterEquipItem(gamePiece) {
         this.pieces.push(gamePiece)
-        GameAPI.getActivePlayerCharacter().getCharacterPiece().attachPieceSpatialToJoint(gamePiece.getSpatial(), slotId);
+
+        let slotId = gamePiece.getEquipSlotId();
+
+        let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
+
+        GameAPI.getActivePlayerCharacter().getCharacterPiece().attachPieceSpatialToJoint(gamePiece.getSpatial(), slot.joint);
         GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
     };
 
