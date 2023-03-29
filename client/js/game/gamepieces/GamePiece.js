@@ -9,8 +9,25 @@ class GamePiece {
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
+
+
+        let tickGamePiece = function(tpf, gameTime) {
+            MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime);
+            this.pieceAnimator.updatePieceAnimations(tpf, gameTime);
+            this.pieceAttacher.tickAttacher()
+        }.bind(this);
+
+        this.callbacks = {
+            tickGamePiece:tickGamePiece
+        };
+
         new PieceComposer(this, config, callback)
+
     }
+
+    getOnUpdateCallback() {
+        return this.callbacks.tickGamePiece;
+    };
 
     getSpatial = function() {
         return this.modelInstance.getSpatial();
@@ -71,12 +88,7 @@ class GamePiece {
         this.gamePieceUpdateCallbacks.length = 0;
     };
 
-    tickGamePiece(tpf, scenarioTime) {
 
-        MATH.callAll(this.gamePieceUpdateCallbacks, tpf, scenarioTime);
-        this.pieceAnimator.updatePieceAnimations(tpf, scenarioTime);
-        this.pieceAttacher.tickAttacher()
-    }
 
 
 }

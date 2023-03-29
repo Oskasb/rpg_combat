@@ -60,7 +60,9 @@ class EncounterDynamicScenario {
         let pieces = this.pieces;
 
         let pieceInstanceCallback = function(gamePiece) {
-            pieces.push(gamePiece);
+            this.pieces.push(gamePiece);
+            GameAPI.addPieceToWorld(gamePiece);
+            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
         };
 
         if(config.spawn) {
@@ -72,17 +74,13 @@ class EncounterDynamicScenario {
     };
 
     updateScenarioPieces(tpf, scenarioTime) {
-        for (let i = 0; i < this.pieces.length; i++) {
-            this.pieces[i].tickGamePiece(tpf, scenarioTime)
-        }
+
     };
 
     exitScenario() {
-
         while (this.pieces.length) {
-            GameAPI.removeGamePiece(this.pieces.pop())
+            GameAPI.takePieceFromWorld(this.pieces.pop())
         }
-
     };
 
     tickScenario(tpf, scenarioTime) {

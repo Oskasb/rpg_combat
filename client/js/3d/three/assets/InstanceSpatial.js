@@ -43,10 +43,17 @@ class InstanceSpatial{
             }
         };
 
+        setPosVec3 = function(posVec3) {
+            this.obj3d.position.copy(posVec3);
+            if (this.geometryInstance) {
+                this.geometryInstance.applyObjPos();
+            }
+        };
+
         rotateXYZ = function(x, y, z) {
             this.obj3d.rotateX(x);
             this.obj3d.rotateY(y);
-            this.obj3d.rotateX(z);
+            this.obj3d.rotateZ(z);
             if (this.geometryInstance) {
                 this.geometryInstance.applyObjQuat();
             }

@@ -104,9 +104,13 @@
 
               },
               "spawn":[
-                {"piece":"HELMET_VIKING",
+                {"piece":"HELMET_BRONZE",
                   "pos": [1.4, 0.2, 3.5],
-                  "rot": [-1.7, 0, 3.12]
+                  "rot": [-1.7, 0.12, 2.8]
+                },
+                {"piece":"BREASTPLATE_BRONZE",
+                  "pos": [1.5, -0.8, 3.6],
+                  "rot": [-2.6, -0.12, 2.9]
                 }
               ]
             }

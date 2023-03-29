@@ -100,32 +100,6 @@ class HomeScenarioUtils {
         count = 0;
     }
 
-    buildItem(assetId, pos, rot, callback) {
-        let swordReturns = function(instance) {
-
-            instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
-            instance.spatial.setPosXYZ(-1.4, 0.1, 0.25);
-            instance.spatial.setScaleXYZ(1, 1, 1);
-            instance.spatial.setQuatXYZW(
-                ThreeAPI.tempObj.quaternion.x,
-                ThreeAPI.tempObj.quaternion.y,
-                ThreeAPI.tempObj.quaternion.z,
-                ThreeAPI.tempObj.quaternion.w
-            );
-
-            this.instances.push(instance);
-            this.items.push(instance);
-            callback(instance)
-        }.bind(this);
-
-        let swordLoaded = function(asset) {
-            //    console.log("House loaded", asset)
-            client.dynamicMain.requestAssetInstance(asset.id, swordReturns)
-        };
-
-        client.dynamicMain.requestAsset(assetId, swordLoaded)
-    }
-
     buildGround(maxBoxes, boxSize) {
         let iconKeysAll = [
             "grass",
@@ -218,16 +192,9 @@ class HomeScenarioUtils {
                 -1.3, 0, 0.8
             );
 
-            if (Math.random() < 0.05) {
-
-                if (this.items.length === 1) {
+            if (Math.random() < 0.02) {
 
 
-                    if (!this.items[0].attached) {
-                        player.attachPieceSpatialToJoint(this.items[0].spatial, 'GRIP_R');
-                        this.items[0].attached = true;
-                    }
-                }
 
 
                 let randomAnims = [
@@ -270,8 +237,6 @@ class HomeScenarioUtils {
                 player.applyPieceAnimationState(key)
             }
 
-
-            player.tickGamePiece(tpf, scenarioTime);
         }
 
 

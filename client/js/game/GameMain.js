@@ -1,17 +1,20 @@
 import { GameScenario }  from "./gameworld/GameScenario.js";
 import { GameCamera } from "../3d/camera/GameCamera.js";
 import { ConfigData } from "../application/utils/ConfigData.js";
+import { GameWorld } from "./gameworld/GameWorld.js";
+import { PlayerMain } from "./Player/PlayerMain.js";
 
 class GameMain {
     constructor() {
         this.activeScenario;
         this.callbacks = {};
-        this.playerPieces = [];
         this.gameTime = 0;
         this.configData = new ConfigData("WORLD", "GAME_SCENARIOS");
         this.navPointConfigData = new ConfigData("WORLD", "WORLD_NAV_POINTS");
         this.gameCamera = new GameCamera();
-
+        this.gameWorld = new GameWorld();
+        this.playerMain = new PlayerMain();
+        this.onUpdateCallbacks = [];
     }
 
     setupCallbacks = function () {
@@ -29,27 +32,32 @@ class GameMain {
 
     initGameMain() {
         this.setupCallbacks();
+
+        this.initPlayerPiece({piece:"PIECE_FIGHTER", pos: [0, 0, 0] });
+
         evt.on(ENUMS.Event.REQUEST_SCENARIO, this.callbacks.requestScenario);
         evt.on(ENUMS.Event.FRAME_READY, this.callbacks.updateGameFrame)
 
-
-        this.initPlayerPiece(
-            {
-                "piece":"PIECE_FIGHTER",
-                "pos": [0, 0, 0]
-            }
-            );
     }
 
+    addGameUpdateCallback(callback) {
+        this.onUpdateCallbacks.push(callback);
+    }
+
+    removeGameUpdateCallback(callback) {
+        return MATH.quickSplice(callback);
+    }
 
     initPlayerPiece(pieceConf) {
         let charCb = function (gamePiece) {
             console.log("Player Piece: ", gamePiece);
+            let mainChar = GameAPI.createGameCharacter('James')
+            mainChar.setCharacterPiece(gamePiece);
             GameAPI.setActivePlayerCharacter(gamePiece);
-            this.playerPieces.push(gamePiece);
+            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
         }.bind(this);
-
         GameAPI.createGamePiece(pieceConf, charCb)
+
     }
 
     requestScenario(scenarioEvent) {
@@ -64,7 +72,9 @@ class GameMain {
         let navPoint = navConf[dynamicId];
 
         let camCallback = function() {
-            this.activeScenario.activateDynamicScenario()
+            if (this.activeScenario) {
+                this.activeScenario.activateDynamicScenario()
+            }
         }.bind(this);
         navPoint.callback = camCallback;
 
@@ -128,9 +138,10 @@ class GameMain {
                 this.activeScenario.tickGameScenario(frame);
             }
 
-        for (let i = 0; i < this.playerPieces.length; i++) {
-            this.playerPieces[i].tickGamePiece(frame.tpf, this.gameTime)
+        for (let i = 0; i < this.onUpdateCallbacks.length; i++) {
+            this.onUpdateCallbacks[i](frame.tpf, this.gameTime)
         }
+
     }
 
 }

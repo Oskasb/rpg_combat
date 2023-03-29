@@ -33,12 +33,15 @@ class HomeScenario {
 
         this.homeScenarioUtils.instances.concat(instances);
 
-        let itemCallback = function(instance) {
-            this.sword = instance;
-            callback(this);
+
+        let itemCallback = function(gamePiece) {
+            GameAPI.addPieceToWorld(gamePiece);
+            GameAPI.getActivePlayerCharacter().attachPieceSpatialToJoint(gamePiece.getSpatial(), 'GRIP_R');
+            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
         }.bind(this);
 
-        this.homeScenarioUtils.buildItem('asset_ninjablade', ThreeAPI.tempVec3.set(-1, 1, 1), ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1), itemCallback);
+        GameAPI.createGamePiece({piece:"NINJASWORD", pos: [0, 0.2, 0], rot:[-1,7, 0.2, -3.14]}, itemCallback)
+        callback(this);
 
     };
 

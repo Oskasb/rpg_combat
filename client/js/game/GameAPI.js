@@ -1,15 +1,21 @@
+import { GameCharacter } from "./character/GameCharacter.js";
 import { GamePiece } from "./gamepieces/GamePiece.js";
 import { GameMain} from "./GameMain.js";
 
 class GameAPI {
     constructor() {
         this.acticePlayerCharacter = null;
+
     }
 
     initGameMain() {
         this.gameMain = new GameMain();
         this.gameMain.initGameMain();
     }
+
+    createGameCharacter(name) {
+        return new GameCharacter(name);
+    };
 
     createGamePiece(pieceConfig, callback) {
         return new GamePiece(pieceConfig, callback)
@@ -19,12 +25,28 @@ class GameAPI {
         piece.disbandGamePiece();
     }
 
+    addPieceToWorld(piece) {
+        this.gameMain.gameWorld.gameWorldRegisterPiece(piece)
+    }
+
+    takePieceFromWorld(piece) {
+        return this.gameMain.gameWorld.gameWorldReleasePiece(piece)
+    }
+
     setActivePlayerCharacter(gamePiece) {
         this.acticePlayerCharacter = gamePiece;
     }
 
     getActivePlayerCharacter() {
         return this.acticePlayerCharacter;
+    }
+
+    registerGameUpdateCallback(callback) {
+        this.gameMain.addGameUpdateCallback(callback);
+    }
+
+    unregisterGameUpdateCallback(callback) {
+        return this.gameMain.removeGameUpdateCallback(callback);
     }
 
 }
