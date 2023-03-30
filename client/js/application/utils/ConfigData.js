@@ -1,13 +1,18 @@
 
 class ConfigData {
-    constructor(configId, configKey) {
+    constructor(configId, configKey, onUpdate) {
         this.configId = configId;
         this.configKey = configKey;
         this.config = null;
         this.data = {};
+        this.updateCount = 0;
 
         let onConfig = function(src, data) {
             this.config = data;
+            if (typeof(onUpdate) === 'function') {
+                onUpdate(data, this.updateCount);
+            }
+            this.updateCount++
         }.bind(this);
 
         PipelineAPI.cacheCategoryKey(this.configId, this.configKey, onConfig)

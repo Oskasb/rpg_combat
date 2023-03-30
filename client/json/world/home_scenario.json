@@ -1,0 +1,40 @@
+[{
+  "SCENARIO":{
+    "STATIC":[
+      {
+        "id": "home_scenario_static",
+        "data": [
+          {
+            "data_key": "scenario_data",
+            "config": {
+              "environment": "sunny_day",
+              "box_grid": {
+                "box_size": 0.6,
+                "grid_width": 8,
+                "grid_depth": 48,
+                "wall_height": 4
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "cave_scenario_static",
+        "data": [
+          {
+            "data_key":"scenario_data",
+            "config": {
+              "environment": "cave_dusty",
+              "box_grid":{
+                "box_size":0.25,
+                "grid_width":12,
+                "grid_depth":48,
+                "wall_height": 16
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}]

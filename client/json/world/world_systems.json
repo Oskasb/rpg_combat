@@ -16,7 +16,7 @@
       {
         "id": "cave_scenario",
         "config": {
-          "scenario_static": "encounter_static_rock_cave",
+          "scenario_static": "cave_scenario_static",
           "dynamic_scenarios": [
             "encounter_dynamic_cave_basic"
           ]

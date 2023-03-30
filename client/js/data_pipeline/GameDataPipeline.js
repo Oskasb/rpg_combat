@@ -39,6 +39,7 @@ class GameDataPipeline {
             this.jsonPipe.pollUrl(url);
         };
 
+
         registerImageUrlForPoll = function(url) {
             this.imagePipe.pollUrl(url);
         };

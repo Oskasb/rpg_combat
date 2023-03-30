@@ -1,9 +1,11 @@
 [{
   "config_url_index": {
     "files": [
-      "/world/world_systems.json",
+      "/world/world_systems.json"                            ,
       "/threedata/assets/load_assets.json"                   ,
       "/geometry/terrain_configs.json"                       ,
+
+      "/world/home_scenario.json"                            ,
       "/ui/elements/icon_elements.json"                      ,
       "/ui/elements/surface_elements.json"                   ,
       "/ui/elements/text_elements.json"                      ,
@@ -17,6 +19,17 @@
       "/effects/effect_buffers.json"                         ,
       "/effects/effect_effects.json"                         ,
       "/effects/effect_particles.json"                       ,
+
+      "/threedata/shaders/three_shader_chunks.json"          ,
+      "/threedata/shaders/three_particle_shaders.json"       ,
+      "/threedata/shaders/three_shader_programs.json"        ,
+
+      "/threedata/assets/sprites/gui_sprites_16x16.json"     ,
+      "/threedata/assets/sprites/font_sprites_16x16.json"    ,
+      "/threedata/assets/sprites/veg_sprites_8x8.json"       ,
+      "/threedata/assets/sprites/tile_sprites_8x8.json"      ,
+      "/threedata/assets/sprites/particle_sprites_6x6.json"  ,
+
       "/game/actions/fighter_actions.json"                   ,
       "/game/actors/fighter.json"                            ,
       "/game/actors/game_items.json"                         ,
@@ -27,14 +40,7 @@
       "/game/pieces/animated/humans.json"                    ,
       "/game/pieces/equipable/equip_items.json"              ,
       "/game/skeletons/biped_rigs.json"                      ,
-      "/threedata/assets/sprites/gui_sprites_16x16.json"     ,
-      "/threedata/assets/sprites/font_sprites_16x16.json"    ,
-      "/threedata/assets/sprites/veg_sprites_8x8.json"       ,
-      "/threedata/assets/sprites/tile_sprites_8x8.json"      ,
-      "/threedata/assets/sprites/particle_sprites_6x6.json"  ,
-      "/threedata/shaders/three_shader_chunks.json"          ,
-      "/threedata/shaders/three_particle_shaders.json"       ,
-      "/threedata/shaders/three_shader_programs.json"        ,
+
       "/threedata/vegetation/vegetation_grids.json"          ,
       "/threedata/vegetation/vegetation_plants.json"         ,
       "/threedata/assets/asset_environment.json"             ,

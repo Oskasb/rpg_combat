@@ -40,8 +40,9 @@ class DataLoader {
             let loadScreen = _this.getLoadScreen();
             let loadStates = _this.loadStates;
             let loadingCompleted = function() {
+                if (done) return;
                 onPipelineReadyCallback('Loading Completed');
-
+                done = true;
             };
 
             let loadStateChange = function(state) {
@@ -59,9 +60,10 @@ class DataLoader {
 
             let assetCount = 0;
 
+            let done = false;
             function pipelineCallback(started, remaining, loaded, files) {
             //     console.log("SRL", _this.loadState, started, remaining, loaded, [files]);
-
+                if (done) return;
                 PipelineAPI.setCategoryKeyValue("STATUS", "FILE_CACHE", loaded);
 
                 loadScreen.setProgress(loaded / started);
@@ -71,6 +73,7 @@ class DataLoader {
                     //   loadState = loadStates.COMPLETED;
 
                        loadStateChange(loadStates.COMPLETED);
+
                 }
 
 
@@ -89,13 +92,15 @@ class DataLoader {
                             remaining--
 
                             setTimeout(function() {
+                                if (done) return;
                                 loadStateChange(_this.loadState);
-                            }, 220)
+                            }, 20)
 
                         }
                     };
 
                     let subCallback = function(src, data) {
+                        if (done) return;
                         for (let i = 0; i < data.length; i++) {
                             assetCount++
                             remaining++
@@ -104,6 +109,7 @@ class DataLoader {
                     };
 
                     let filesCallback = function(src, data) {
+                        if (done) return;
                     //    console.log("Preload Files: ", data);
                         let loadCB = function(msg) {
                         //    console.log("Preload Asset: ", msg)
@@ -144,7 +150,7 @@ class DataLoader {
                     EffectAPI.initEffectAPI(apiReadyCB)
                     setTimeout(function() {
                         loadStateChange(_this.loadState);
-                    }, 120)
+                    }, 20)
 
                 }
             }
@@ -164,6 +170,11 @@ class DataLoader {
         notifyCompleted = function() {
             this.loadProgress.removeProgress();
             client.activateGui();
+
+            let pollUrls = PipelineAPI.getCachedConfigs()['ASSETS']['POLL_INDEX'];
+            PipelineAPI.prunePollUrlsExceptFor(pollUrls)
+
+
 
         };
     }

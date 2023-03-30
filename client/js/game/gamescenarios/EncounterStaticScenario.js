@@ -1,46 +1,52 @@
+import { ConfigData } from "../../application/utils/ConfigData.js";
+
 class EncounterStaticScenario {
     constructor(staticId) {
         this.instances = [];
         this.scenarioStaticId = staticId;
+
+        this.ready = false;
+
     }
 
     initEncounterStaticScenario(onReady) {
 
         let staticId = this.scenarioStaticId;
-        let config = {};
-        let dataKey = "scenario_static_init";
 
-        let onConfig = function(config) {
-            this.applyScenarioConfig(config, onReady);
+        let _this = this;
+
+        let onConfig = function(config, updateCount) {
+            console.log("Update Count: ", updateCount)
+            if (updateCount) {
+                GuiAPI.printDebugText("REFLOW SCENARIO")
+                this.exitScenario();
+            } else {
+                setTimeout(function() {
+                    onReady(_this);
+                }, 0);
+            }
+            this.applyScenarioConfig(config);
         }.bind(this)
 
-        let onEncData = function(configData) {
-            let data = configData.data;
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].id === dataKey) {
-                    for (let key in data[i].config) {
-                        config[key] = data[i].config[key]
-                    }
-                    onConfig(config);
-                }
-            }
+        let postInit = function(count) {
+            let data = configData.parseConfigData()[staticId].data;
+            let config = MATH.getFromArrayByKeyValue(data, 'data_key', 'scenario_data').config;
+            onConfig(config, count)
         };
 
-        let onDataCb = function(src, config) {
-        //    console.log("Scenario data: ", eArgs, config)
-            for (let i = 0; i < config.length; i++) {
-                if (config[i].id === staticId) {
-                    onEncData(config[i])
-                }
-            }
+        let onDataCb = function(data, count) {
+            setTimeout(
+                function() {
+                    postInit(count), 0
+                })
         };
 
-        this.config = config;
-        PipelineAPI.cacheCategoryKey("WORLD", "WORLD_STATIC", onDataCb)
+        let configData = new ConfigData("SCENARIO", "STATIC", onDataCb)
+    //    PipelineAPI.cacheCategoryKey("SCENARIO", "STATIC", onDataCb)
 
     }
 
-    applyScenarioConfig(config, onReady) {
+    applyScenarioConfig(config) {
         let boxGrid = config.box_grid;
         evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config.environment, time:1});
 
@@ -129,7 +135,6 @@ class EncounterStaticScenario {
         };
 
         setupGrid(boxGrid['box_size'], boxGrid['grid_width'], boxGrid['grid_depth'], boxGrid['wall_height'])
-        onReady(this)
     }
 
     exitScenario() {

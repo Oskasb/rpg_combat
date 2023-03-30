@@ -23,6 +23,11 @@ class JsonPipe {
 			}
 		};
 
+    resetPollState() {
+        this.loadedData = {};
+        this.lastPolledIndex = 0;
+	}
+
 		registerPollCallback = function(url, onUpdateCallback) {
             this.pollCallbacks[url] = onUpdateCallback;
             this.pollIndex.push(url);
@@ -34,6 +39,27 @@ class JsonPipe {
                 this.pollIndex.push(url);
             }
         };
+
+    pruneUrlsExceptFor(urls) {
+        let keepCalls = []
+        this.pollIndex.length = 0;
+
+        for (let i =0; i < urls.length; i++) {
+            let url ='client/json'+urls[i];
+            if (typeof(this.pollCallbacks[url])) {
+                keepCalls.push([url,this.pollCallbacks[url]])
+            }
+        }
+
+        this.pollCallbacks = {};
+        for (let i = 0; i < keepCalls.length; i++) {
+            this.pollCallbacks[keepCalls[i][0]] = keepCalls[i][1];
+        }
+
+        for (let i = 0; i < urls.length; i++) {
+            this.pollIndex.push('client/json'+urls[i]);
+        }
+    }
 
         removeUrlPoll = function(url) {
             if (this.pollIndex.indexOf(url) !== -1) {
@@ -48,16 +74,16 @@ class JsonPipe {
 
 		loadJsonFromUrl = function(url, dataUpdated, fail) {
 		    let _this = this;
-			var onLoaded = function(config, fileUrl) {
+            let onLoaded = function(config, fileUrl) {
                 _this.storeConfig(fileUrl, config, dataUpdated);
                 _this.registerPollCallback(fileUrl, dataUpdated);
 			};
 
-			var onWorkerOk = function(resUrl, res) {
+            let onWorkerOk = function(resUrl, res) {
 				onLoaded(res, resUrl);
 
 			};
-			var onWorkerFail = function(res) {
+            let onWorkerFail = function(res) {
 				fail("Worker fail: "+ res)
 			};
 
@@ -77,7 +103,7 @@ class JsonPipe {
 				if (this.lastPolledIndex >= this.pollIndex.length) {
                     this.lastPolledIndex = 0;
 				}
-				var pollFail = function(err) {
+                let pollFail = function(err) {
                     this.errorCallback("Json: ", err);
 				};
 				this.loadJsonFromUrl(this.pollIndex[this.lastPolledIndex], this.pollCallbacks[this.pollIndex[this.lastPolledIndex]], pollFail, false);
@@ -88,8 +114,8 @@ class JsonPipe {
 		setJsonPipeOpts = function(opts, pipelineErrorCb, ConfigCache) {
             this.options = opts;
             this.errorCallback = pipelineErrorCb;
-			
-			var statusUpdate = function(key, value) {
+
+            let statusUpdate = function(key, value) {
 				if (value) {
 
 				} else {

@@ -11,17 +11,46 @@
       "FILES_IMAGES",
       "TEXTURES"
     ],
+    "POLL_INDEX":[
+      "/world/home_scenario.json"
+    ],
+    "NOT_POLL_INDEX":[
+      "/ui/elements/icon_elements.json"                      ,
+      "/ui/elements/surface_elements.json"                   ,
+      "/ui/elements/text_elements.json"                      ,
+      "/ui/feedback/icon_feedback.json"                      ,
+      "/ui/feedback/text_feedback.json"                      ,
+      "/ui/feedback/surface_feedback.json"                   ,
+      "/ui/layout/surface_layout.json"                       ,
+      "/ui/widgets/standard_widgets.json"                    ,
+      "/ui/gui_systems.json"                                 ,
+      "/ui/pages/gui_pages.json"                             ,
+      "/effects/effect_buffers.json"                         ,
+      "/effects/effect_effects.json"                         ,
+      "/effects/effect_particles.json"                       ,
+
+      "/threedata/shaders/three_shader_chunks.json"          ,
+      "/threedata/shaders/three_particle_shaders.json"       ,
+      "/threedata/shaders/three_shader_programs.json"        ,
+
+      "/threedata/assets/sprites/gui_sprites_16x16.json"     ,
+      "/threedata/assets/sprites/font_sprites_16x16.json"    ,
+      "/threedata/assets/sprites/veg_sprites_8x8.json"       ,
+      "/threedata/assets/sprites/tile_sprites_8x8.json"      ,
+      "/threedata/assets/sprites/particle_sprites_6x6.json"
+    ],
     "LOAD_MODELS":[
       "asset_box",
       "asset_tree_3",
       "asset_tree_2",
       "asset_tree_4",
       "asset_tree_5",
-      "asset_tree_1",
-      "asset_helmetviking"
-
+      "asset_tree_1"
     ],
     "PRELOAD_FILES": [
+      "file_house_small"
+    ],
+    "NOT_PRELOAD_FILES": [
       "file_fighter_bind",
       "file_walk_body"   ,
       "file_idle_legs"     ,
@@ -29,7 +58,6 @@
       "file_walk_legs_combat",
       "file_walk_body"   ,
       "file_idle_legs"     ,
-
       "file_gd_left_ff"  ,
       "file_set_left_ff"  ,
       "file_gd_right_ff"  ,
@@ -46,8 +74,21 @@
       "file_guard_side_rff"  ,
       "file_swing_back_rff"  ,
       "file_swing_side_rff"  ,
+      "file_ninjablade",
+      "file_beltplate",
+      "file_belt_bronze",
+      "file_helmet_bronze",
+      "file_helmetviking",
+      "file_bronze_bp",
+      "file_bronze_legs",
+      "file_chain_shirt",
+      "file_scale_shirt",
+      "file_chain_legs",
+      "file_scale_legs",
+      "file_scale_boots",
+      "file_scale_gloves",
 
-      "file_house_small",
+
       "file_box",
       "file_quad",
       "file_flatQuad",

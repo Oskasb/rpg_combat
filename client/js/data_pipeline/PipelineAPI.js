@@ -15,8 +15,6 @@ class PipelineAPI {
         return this.expandingPools[dataKey];
     };
 
-
-
     initConfigCache = function(pipeReadyCB, pipeMsgCB) {
         this.configCache = new ConfigCache(pipeReadyCB, pipeMsgCB)
     };
@@ -53,9 +51,13 @@ class PipelineAPI {
         this.configCache.unsubscribeCategoryKey(category, key, onDataCallback)
     };
 
+    removeAllSubscribers = function() {
+        this.configCache.removeAllConfigSubscribers()
+    };
+
     removeAllPollFiles = function() {
         this.configCache.removeAllPipelinePollUrls()
-    }
+    };
 
     meshCombineEntityList = function(entityList, combineDone) {
         this.configCache.combineEntities(entityList, combineDone);
@@ -113,6 +115,10 @@ class PipelineAPI {
         }
         this.configCache.applyDataPipelineOptions(jsonIndexUrl, options, pipelineReady, pipelineError);
     };
+
+    prunePollUrlsExceptFor = function(urlList) {
+        this.configCache.gameDataPipeline.jsonPipe.pruneUrlsExceptFor(urlList)
+    }
 
     pollFileUrl = function(url) {
         this.configCache.registerPollUrl(url);
