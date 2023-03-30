@@ -42,6 +42,11 @@ class DynamicMain {
             if (modelSettings.skin) {
                 asset.model.skin = modelSettings.skin;
                 message.skin = modelSettings.skin
+
+            //    asset.model.parent.traverse( function( object ) {
+            //        object.frustumCulled = false;
+            //    } );
+
             }
 
             assetReadyCB(asset)

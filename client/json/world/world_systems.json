@@ -43,8 +43,8 @@
         },
         "home_hero_dynamic":{
           "time":0.6,
-          "pos": [1.0, 2.2, -2.7],
-          "lookAt": [0, 1.6, -1]
+          "pos": [0.6, 1.7, -2.1],
+          "lookAt": [-0.4, 1.4, -0.5]
         },
         "encounter_dynamic_cave_basic":{
           "time":2,

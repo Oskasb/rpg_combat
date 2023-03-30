@@ -17,8 +17,9 @@ class GamePiece {
             this.pieceAttacher.tickAttacher()
         }.bind(this);
 
-        let tickPieceEquippedItem = function() {
-            this.getSpatial().stickToObj3D(this.getSpatial().obj3d.parent)
+        let tickPieceEquippedItem = function(tpf, gameTime) {
+            this.getSpatial().stickToObj3D(this.getSpatial().obj3d.parent.parent)
+        //    MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime);
         }.bind(this);
 
         this.callbacks = {

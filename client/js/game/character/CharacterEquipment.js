@@ -54,7 +54,12 @@ class CharacterEquipment {
         itemSlot.setSlotItemPiece(itemPiece);
         if (dynamicJoint.key === 'SKIN') {
     //        itemPiece.getSpatial().setScaleXYZ(1, 1, 1);
+            itemPiece.modelInstance.obj3d.frusumCulled = false;
+
+
+
             this.model().attachInstancedModel(itemPiece.modelInstance)
+            this.model()
             ThreeAPI.registerPrerenderCallback(itemPiece.callbacks.tickPieceEquippedItem);
 
         } else {
