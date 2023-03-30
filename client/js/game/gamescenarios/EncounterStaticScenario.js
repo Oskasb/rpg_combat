@@ -36,7 +36,7 @@ class EncounterStaticScenario {
         };
 
         this.config = config;
-        PipelineAPI.subscribeToCategoryKey("WORLD", "WORLD_STATIC", onDataCb)
+        PipelineAPI.cacheCategoryKey("WORLD", "WORLD_STATIC", onDataCb)
 
     }
 

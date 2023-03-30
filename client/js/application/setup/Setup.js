@@ -68,6 +68,7 @@ class Setup {
 
         let onPipelineReadyCallback = function(msg) {
         //    console.log("Pipeline:", msg)
+            PipelineAPI.removeAllPollFiles();
             setTimeout(function() {
                 dataLoader.notifyCompleted();
             }, 50);

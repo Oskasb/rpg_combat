@@ -24,7 +24,7 @@ class PipelineObject {
 
             this.dataCallback = dataCallback;
 
-            this.pipelineAPI.subscribeToCategoryKey(this.category, this.key, dataCallback);
+            this.pipelineAPI.cacheCategoryKey(this.category, this.key, dataCallback);
 
         };
 

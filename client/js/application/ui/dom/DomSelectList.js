@@ -77,7 +77,7 @@ define([
 
             var apply = buttonFunc;
 
-            PipelineAPI.subscribeToCategoryKey(category, key, buttonFunc);
+            PipelineAPI.cacheCategoryKey(category, key, buttonFunc);
         };
 
         DomSelectList.prototype.removeSelectList = function() {

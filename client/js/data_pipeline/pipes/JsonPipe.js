@@ -98,7 +98,7 @@ class JsonPipe {
 
                 opts.polling.enabled = value;
 			};
-			ConfigCache.subscribeToCategoryKey('STATUS', "PIPELINE", statusUpdate)
+			ConfigCache.cacheCategoryKey('STATUS', "PIPELINE", statusUpdate)
 		};
 
 

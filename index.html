@@ -37,7 +37,7 @@
         };
 
         if (window.location.href === 'http://127.0.0.1:3000/' || window.location.href ===  'http://localhost:3000/' || window.location.href ===  'http://192.168.0.100:3000/') {
-            window.pollingOn = false;
+            window.pollingOn = true;
        //     console.log("Pipeline is On")
         } else {
             window.pollingOn = false;
@@ -50,7 +50,7 @@
             "jsonPipe":{
                 "polling":{
                     "enabled":window.pollingOn,
-                    "frequency":2
+                    "frequency":12
                 }
             },
             "svgPipe":{

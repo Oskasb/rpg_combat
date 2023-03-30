@@ -12,7 +12,7 @@ class ThreeTextureSettings {
             callback(this)
         }.bind(this);
 
-        PipelineAPI.subscribeToCategoryKey('CONFIGS', 'TEXTURE_SETTINGS_'+id, assetLoaded);
+        PipelineAPI.cacheCategoryKey('CONFIGS', 'TEXTURE_SETTINGS_'+id, assetLoaded);
 
     };
 

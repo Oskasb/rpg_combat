@@ -1,7 +1,6 @@
 import { DomLoadScreen } from '../ui/dom/DomLoadScreen.js';
 import { AssetLoader } from './AssetLoader.js';
 
-
 class DataLoader {
     constructor() {
         this.loadStates= {
@@ -42,6 +41,7 @@ class DataLoader {
             let loadStates = _this.loadStates;
             let loadingCompleted = function() {
                 onPipelineReadyCallback('Loading Completed');
+
             };
 
             let loadStateChange = function(state) {
@@ -118,11 +118,11 @@ class DataLoader {
                             ThreeAPI.loadThreeAsset('FILES_GLB_', data[i], loadCB)
                         }
 
-                        PipelineAPI.subscribeToCategoryKey("ASSETS", "LOAD_MODELS", subCallback);
+                        PipelineAPI.cacheCategoryKey("ASSETS", "LOAD_MODELS", subCallback);
 
                     };
 
-                    PipelineAPI.subscribeToCategoryKey("ASSETS", "PRELOAD_FILES", filesCallback);
+                    PipelineAPI.cacheCategoryKey("ASSETS", "PRELOAD_FILES", filesCallback);
 
                     let apiReadyCB = function(msg) {
                                 console.log(msg)

@@ -57,7 +57,7 @@ define([
                     var data = {};
                     data[_this.conf.enableOnEvent.key] = false;
                     PipelineAPI.setCategoryData(_this.conf.enableOnEvent.category, data);
-                    PipelineAPI.subscribeToCategoryKey(_this.conf.enableOnEvent.category, _this.conf.enableOnEvent.key, toggleTriggered);
+                    PipelineAPI.cacheCategoryKey(_this.conf.enableOnEvent.category, _this.conf.enableOnEvent.key, toggleTriggered);
 
                 } else {
                     toggleTriggered(true);

@@ -94,11 +94,11 @@ define([
 
 
             if (buttonData.event.type === 'toggle') {
-                PipelineAPI.subscribeToCategoryKey(buttonData.event.category, buttonData.event.key, onActive);
+                PipelineAPI.cacheCategoryKey(buttonData.event.category, buttonData.event.key, onActive);
             }
 
             if (buttonData.event.type === 'float') {
-                PipelineAPI.subscribeToCategoryKey(buttonData.event.category, buttonData.event.key, onPress);
+                PipelineAPI.cacheCategoryKey(buttonData.event.category, buttonData.event.key, onPress);
             }
 
             var callback = function(key, data) {
@@ -118,7 +118,7 @@ define([
 
             };
 
-            PipelineAPI.subscribeToCategoryKey('ui_buttons', buttonData.id, callback);
+            PipelineAPI.cacheCategoryKey('ui_buttons', buttonData.id, callback);
             this.active = true;
         };
          

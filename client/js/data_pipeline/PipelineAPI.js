@@ -45,14 +45,17 @@ class PipelineAPI {
         return this.configCache.registerCategoryUpdatedCallback(category, onDataCallback)
     };
 
-    subscribeToCategoryKey = function(category, key, onDataCallback) {
-        this.configCache.subscribeToCategoryKey(category, key, onDataCallback)
+    cacheCategoryKey = function(category, key, onDataCallback) {
+        this.configCache.cacheCategoryKey(category, key, onDataCallback)
     };
 
     removeCategoryKeySubscriber = function(category, key, onDataCallback) {
         this.configCache.unsubscribeCategoryKey(category, key, onDataCallback)
     };
 
+    removeAllPollFiles = function() {
+        this.configCache.removeAllPipelinePollUrls()
+    }
 
     meshCombineEntityList = function(entityList, combineDone) {
         this.configCache.combineEntities(entityList, combineDone);

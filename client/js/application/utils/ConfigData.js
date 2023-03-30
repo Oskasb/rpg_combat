@@ -10,7 +10,7 @@ class ConfigData {
             this.config = data;
         }.bind(this);
 
-        PipelineAPI.subscribeToCategoryKey(this.configId, this.configKey, onConfig)
+        PipelineAPI.cacheCategoryKey(this.configId, this.configKey, onConfig)
     };
 
     fetchData = function(dataId) {

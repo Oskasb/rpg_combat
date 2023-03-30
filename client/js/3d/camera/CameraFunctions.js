@@ -104,8 +104,8 @@ define(['PipelineAPI', 'ui/GameScreen'], function(PipelineAPI, GameScreen) {
             }, 2000);
 
         };
-        PipelineAPI.subscribeToCategoryKey("CONTROL_STATE", "TOGGLE_TARGET_SELECTED", selected);
-        PipelineAPI.subscribeToCategoryKey("CONTROL_STATE", "TOGGLE_ATTACK_ENABLED", selected);
+        PipelineAPI.cacheCategoryKey("CONTROL_STATE", "TOGGLE_TARGET_SELECTED", selected);
+        PipelineAPI.cacheCategoryKey("CONTROL_STATE", "TOGGLE_ATTACK_ENABLED", selected);
     };
     var targetId;
 

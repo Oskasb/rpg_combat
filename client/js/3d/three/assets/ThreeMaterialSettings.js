@@ -7,7 +7,7 @@ class ThreeMaterialSettings {
             callback(this)
         }.bind(this);
 
-        PipelineAPI.subscribeToCategoryKey('CONFIGS', 'MATERIAL_SETTINGS_'+id, assetLoaded);
+        PipelineAPI.cacheCategoryKey('CONFIGS', 'MATERIAL_SETTINGS_'+id, assetLoaded);
     };
 
 }

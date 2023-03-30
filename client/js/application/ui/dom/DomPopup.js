@@ -34,7 +34,7 @@ define([
 
             this.elements = {};
             
-            PipelineAPI.subscribeToCategoryKey('popups', 'select_name', callback);
+            PipelineAPI.cacheCategoryKey('popups', 'select_name', callback);
 
             if (SYSTEM_SETUP.DEBUG.autoName) {
                 autoSubmit = setTimeout(function() {

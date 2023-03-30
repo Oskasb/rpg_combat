@@ -35,7 +35,7 @@ class AssetLoader {
                 this.loadAssetConfigs(data);
             }.bind(this);
 
-            PipelineAPI.subscribeToCategoryKey('ASSETS', 'LOAD', loadList);
+            PipelineAPI.cacheCategoryKey('ASSETS', 'LOAD', loadList);
         };
 
         loadAssetConfigs = function(assets) {
@@ -49,7 +49,7 @@ class AssetLoader {
             }.bind(this);
 
             for (let i = 0; i < assets.length; i++) {
-                PipelineAPI.subscribeToCategoryKey('ASSETS', assets[i], assetData);
+                PipelineAPI.cacheCategoryKey('ASSETS', assets[i], assetData);
             }
 
         };
@@ -71,7 +71,7 @@ class AssetLoader {
                 let assetKey = assetType+assetId;
                 let cachedAsset = PipelineAPI.readCachedConfigKey('ASSET', assetKey);
                 if (cachedAsset === assetKey) {
-                //    PipelineAPI.subscribeToCategoryKey('ASSET', assetKey, lcallback);
+                //    PipelineAPI.cacheCategoryKey('ASSET', assetKey, lcallback);
                 //    console.log("Request LoadSequencer", assetKey);
                     new LoadSequencer(assets, assetMap, assetType, assetId, lcallback);
                 } else {

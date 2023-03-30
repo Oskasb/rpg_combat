@@ -9,7 +9,7 @@ class ThreeModelSettings {
             callback(this);
         }.bind(this);
 
-        PipelineAPI.subscribeToCategoryKey('CONFIGS', 'MODEL_SETTINGS_'+id, assetLoaded);
+        PipelineAPI.cacheCategoryKey('CONFIGS', 'MODEL_SETTINGS_'+id, assetLoaded);
 
     };
 }

@@ -69,7 +69,7 @@ define([
             };
 
             dataTypeStyles = new PipelineObject('data_types', 'style_map').readData();
-            PipelineAPI.subscribeToCategoryKey(this.category, dataKey, callback);
+            PipelineAPI.cacheCategoryKey(this.category, dataKey, callback);
             
         };
 

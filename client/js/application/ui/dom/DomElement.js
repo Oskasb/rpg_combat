@@ -83,10 +83,10 @@ define([
 
             if (typeof(styleId) == 'string') {
             //    console.log("String style", styleId);
-                PipelineAPI.subscribeToCategoryKey('styles', styleId, styleCallback)
+                PipelineAPI.cacheCategoryKey('styles', styleId, styleCallback)
             } else {
                 for (var i = 0; i < styleId.length; i++) {
-                    PipelineAPI.subscribeToCategoryKey('styles', styleId[i], styleCallback)
+                    PipelineAPI.cacheCategoryKey('styles', styleId[i], styleCallback)
                 }
             }
         };

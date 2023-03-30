@@ -10,20 +10,14 @@
         {"id": "file_walk_legs"   ,       "config": { "url": "./client/assets/models/characters/fighter/movement/WALK_legs"           }},
         {"id": "file_walk_legs_combat",   "config": { "url": "./client/assets/models/characters/fighter/movement/WALK_legs_combat"    }},
         {"id": "file_walk_body"   ,       "config": { "url": "./client/assets/models/characters/fighter/movement/WALK_body"           }},
-
         {"id": "file_idle_legs"     ,      "config": { "url": "./client/assets/models/characters/fighter/legs/IDLE_legs"              }},
-
         {"id": "file_gd_left_ff"  ,       "config": { "url": "./client/assets/models/characters/fighter/legs/LEFT_gd_lt_ff"           }},
         {"id": "file_set_left_ff"  ,       "config": { "url": "./client/assets/models/characters/fighter/legs/LEFT_set_lt_ff"         }},
-
         {"id": "file_gd_right_ff"  ,       "config": { "url": "./client/assets/models/characters/fighter/legs/RIGHT_gd_rt_ff"         }},
         {"id": "file_set_right_ff"  ,      "config": { "url": "./client/assets/models/characters/fighter/legs/RIGHT_set_rt_ff"        }},
-
-
         {"id": "file_guard_high_rff" ,     "config": { "url": "./client/assets/models/characters/fighter/body/GUARD_high_rff"         }},
         {"id": "file_guard_mid_rff"  ,     "config": { "url": "./client/assets/models/characters/fighter/body/GUARD_middle_rff"       }},
         {"id": "file_guard_low_rff"  ,     "config": { "url": "./client/assets/models/characters/fighter/body/GUARD_low_rff"          }},
-
         {"id": "file_guard_long_rff"  ,    "config": { "url": "./client/assets/models/characters/fighter/body/GUARD_long_rff"         }},
         {"id": "file_guard_short_rff"  ,   "config": { "url": "./client/assets/models/characters/fighter/body/GUARD_short_rff"        }},
         {"id": "file_guard_back_rff"  ,    "config": { "url": "./client/assets/models/characters/fighter/body/GUARD_back_rff"         }},

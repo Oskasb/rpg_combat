@@ -42,7 +42,7 @@ class EncounterDynamicScenario {
         };
 
         this.config = config;
-        PipelineAPI.subscribeToCategoryKey("WORLD", "WORLD_DYNAMIC", onDataCb)
+        PipelineAPI.cacheCategoryKey("WORLD", "WORLD_DYNAMIC", onDataCb)
     }
 
     activateEncDynScenario() {

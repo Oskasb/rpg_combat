@@ -51,7 +51,7 @@ define([
             };
 
 
-            PipelineAPI.subscribeToCategoryKey('ui_panels', panelId, callback);
+            PipelineAPI.cacheCategoryKey('ui_panels', panelId, callback);
 
             if (adaptiveLayout) {
                 var orientationStyle = function(key, data) {
@@ -59,22 +59,22 @@ define([
                     _this.setLandscape();
                 };
 
-                PipelineAPI.subscribeToCategoryKey('styles', 'panel_portrait', orientationStyle);
-                PipelineAPI.subscribeToCategoryKey('styles', 'panel_landscape', orientationStyle);
+                PipelineAPI.cacheCategoryKey('styles', 'panel_portrait', orientationStyle);
+                PipelineAPI.cacheCategoryKey('styles', 'panel_landscape', orientationStyle);
 
 
                 var landscapeCallback = function(src, data) {
                     _this.updateLayout();
                 };
 
-                PipelineAPI.subscribeToCategoryKey('SETUP', 'LANDSCAPE', landscapeCallback);
+                PipelineAPI.cacheCategoryKey('SETUP', 'LANDSCAPE', landscapeCallback);
             }
 
             var updateLayout = function(src, data) {
                 _this.updateLayout(data);
             };
 
-            PipelineAPI.subscribeToCategoryKey('SETUP', 'SCREEN', updateLayout);
+            PipelineAPI.cacheCategoryKey('SETUP', 'SCREEN', updateLayout);
 
         };
 
@@ -88,7 +88,7 @@ define([
             if (PipelineAPI.readCachedConfigKey('SETUP', 'INPUT') == 'mouse' || PipelineAPI.readCachedConfigKey('SETUP', 'INPUT') == 'touch') {
                 setupReady();
             } else {
-                PipelineAPI.subscribeToCategoryKey('SETUP', 'INPUT', setupReady);
+                PipelineAPI.cacheCategoryKey('SETUP', 'INPUT', setupReady);
             }
 
         };
@@ -113,7 +113,7 @@ define([
                 console.log("Config Missing for 3d canvas:", confData);
             };
 
-            PipelineAPI.subscribeToCategoryKey('canvas2d', 'elements', confLoaded);
+            PipelineAPI.cacheCategoryKey('canvas2d', 'elements', confLoaded);
         };
 
 
@@ -136,7 +136,7 @@ define([
                 console.log("Config Missing for 3d canvas:", confData);
             };
 
-            PipelineAPI.subscribeToCategoryKey('canvas3d', 'elements', confLoaded);
+            PipelineAPI.cacheCategoryKey('canvas3d', 'elements', confLoaded);
         };
 
         DomPanel.prototype.getAvailableElementContainer = function() {
@@ -171,7 +171,7 @@ define([
                     }
                 };
 
-            //    PipelineAPI.subscribeToCategoryKey('gui_elements', 'containers', elemData);
+            //    PipelineAPI.cacheCategoryKey('gui_elements', 'containers', elemData);
 
             } else {
 

@@ -266,9 +266,6 @@ class ConfigCache {
 
     };
 
-
-
-
     registerCategoryUpdatedCallback = function(category, callback) {
         if (!this.categories[category]) {
             ConfigCache.addCategory(category);
@@ -283,6 +280,17 @@ class ConfigCache {
             //    console.log("reject string", data)
             this.cacheReads++;
             callback(key, data);
+        }
+        this.registerCategoryKeySubscriber(category, key, callback);
+    };
+
+    cacheCategoryKey = function(category, key, callback) {
+        var data = this.getConfigKey(category, key);
+        if (data != key) {
+            //    console.log("reject string", data)
+            this.cacheReads++;
+            callback(key, data);
+         //   this.unsubscribeCategoryKey(category, key, callback)
         }
         this.registerCategoryKeySubscriber(category, key, callback);
     };
@@ -359,18 +367,6 @@ class ConfigCache {
     };
 
 
-
-    cacheSvgFromUrl = function(url, success, fail) {
-        let _this = this;
-        _this.notifyUrlReadRequest(url);
-        var onLoaded = function(remoteUrl, svgData) {
-            _this.notifyUrlReceived(remoteUrl);
-            success(remoteUrl, svgData)
-        };
-
-        gameDataPipeline.loadSvgFromUrl(url, onLoaded, fail);
-    };
-
     cacheImageFromUrl = function(url, success, fail) {
         let _this = this;
         _this.notifyUrlReadRequest(url);
@@ -407,6 +403,10 @@ class ConfigCache {
         this.gameDataPipeline.tickDataLoader(tpf);
     };
 
+    removeAllPipelinePollUrls() {
+        this.gameDataPipeline.jsonPipe.pollIndex = [];
+        this.gameDataPipeline.imagePipe.pollIndex = [];
+    };
 
 }
 

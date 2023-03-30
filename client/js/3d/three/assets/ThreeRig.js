@@ -10,7 +10,7 @@ class ThreeRig {
             callback(asset.config);
         };
 
-        PipelineAPI.subscribeToCategoryKey('CONFIGS', 'RIGS_'+id, assetLoaded);
+        PipelineAPI.cacheCategoryKey('CONFIGS', 'RIGS_'+id, assetLoaded);
     };
 }
 
