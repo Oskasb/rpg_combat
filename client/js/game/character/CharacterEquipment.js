@@ -57,7 +57,7 @@ class CharacterEquipment {
             } else {
                 let attachment = this.gamePiece.releaseJointActiveAttachment(slot.joint, gamePiece.getSpatial);
                 console.log(attachment);
-                gamePiece.getSpatial().setScaleXYZ(2, 2, 2)
+                gamePiece.hideGamePiece();
             //    GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
             }
 

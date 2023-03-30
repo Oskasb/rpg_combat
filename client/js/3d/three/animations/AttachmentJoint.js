@@ -18,6 +18,7 @@ class AttachmentJoint {
         this.callbacks = {
             attachEffect:attachEffect
         }
+        this.jointDataApplied = false;
 
     };
 
@@ -56,8 +57,9 @@ class AttachmentJoint {
     };
 
     applyJointData = function(jointData) {
-    //    console.log("joint apply data");
-        this.obj3d.position.x = jointData.offset[0];
+        console.log("joint apply data");
+        this.jointDataApplied = true;
+            this.obj3d.position.x = jointData.offset[0];
         this.obj3d.position.y = jointData.offset[1];
         this.obj3d.position.z = jointData.offset[2];
 
@@ -85,9 +87,13 @@ class AttachmentJoint {
 
     registerAttachedSpatial = function(spatial, joint, dynamicBones) {
         this.attachedSpatial = spatial;
-        this.joint = joint;
-        this.applyJointData(joint);
-        this.dynamicBone = dynamicBones[this.dynamicBoneId]
+
+        if (!this.jointDataApplied) {
+            this.joint = joint;
+            this.applyJointData(joint);
+            this.dynamicBone = dynamicBones[this.dynamicBoneId]
+        }
+
      //   spatial.attachToDynamicJoint(this.dynamicBone);
 
      //   console.log("registerAttachedEntity", spatial, this.dynamicBone);
