@@ -20,7 +20,7 @@ class CharacterEquipment {
 
         if (slot.joint === 'SKIN') {
 
-            this.model.attachInstancedModel(gamePiece.modelInstance)
+            this.gamePiece.modelInstance.attachInstancedModel(gamePiece.modelInstance)
 
         } else {
             this.gamePiece.attachPieceSpatialToJoint(gamePiece.getSpatial(), slot.joint);
@@ -52,13 +52,11 @@ class CharacterEquipment {
             let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
 
             if (slot.joint === 'SKIN') {
-                this.gamePiece.modelInstance.detatchInstancedModel(gamePiece.modelInstance)
+                this.gamePiece.modelInstance.detatchInstancedModel(gamePiece.modelInstance);
                 gamePiece.hideGamePiece();
             } else {
                 let attachment = this.gamePiece.releaseJointActiveAttachment(slot.joint, gamePiece.getSpatial);
                 console.log(attachment);
-                gamePiece.hideGamePiece();
-            //    GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
             }
 
 

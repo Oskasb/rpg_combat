@@ -43,7 +43,7 @@ class SpatialTransition {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
             if (fraction > 1) fraction = 1;
             this.targetPos.copy(this.targetSpatial.getSpatialPosition());
-            this.targetPos.y+=Math.sin(fraction*Math.PI)*2;
+            this.targetPos.y+=Math.sin(fraction*Math.PI)*0.7+1.1;
             MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, ThreeAPI.tempVec3 , 'curveSigmoid');
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
         } else {
