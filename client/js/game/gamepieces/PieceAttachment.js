@@ -1,12 +1,12 @@
 class PieceAttachment {
     constructor(key, joint, attachmentJoint) {
             this.key = key;
-            this.joint = joint;
+            this.jointOffsets = joint;
             this.attachmentJoint = attachmentJoint;
         };
 
-        setAttachedSpatial = function(spatial, modelInstance) {
-            return this.attachmentJoint.registerAttachedSpatial(spatial, this.joint, modelInstance.boneMap);
+        setAttachedSpatial = function(spatial) {
+            return this.attachmentJoint.registerAttachedSpatial(spatial, this.joint);
         };
 
         releaseActiveAttachment = function() {
@@ -16,6 +16,10 @@ class PieceAttachment {
         getActiveAttachment = function() {
             return this.attachmentJoint.getAttachedEntity();
         };
+
+        getDynamicJoint() {
+            return this.attachmentJoint;
+        }
 
         activateNow = function(weight, timeScale) {
 

@@ -83,8 +83,8 @@ class GuiDebug {
                 interactive: true,
                 text: 'DEBUG TEXT',
                 anchor: 'top_left',
-                offset_y:-0.44,
-                offset_x:0.01
+                offset_y:-0.25,
+                offset_x:-0.01
             }
 
         );

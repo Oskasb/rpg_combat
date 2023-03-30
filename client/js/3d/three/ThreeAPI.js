@@ -181,8 +181,12 @@ class ThreeAPI {
 
     };
 
-    registerUpdateCallback = function(callback) {
+    registerPrerenderCallback = function(callback) {
         this.threeSetup.attachPrerenderCallback(callback);
+    };
+
+    unregisterPrerenderCallback = function(callback) {
+        this.threeSetup.removePrerenderCallback(callback);
     };
 
     sampleFrustum = function(store) {

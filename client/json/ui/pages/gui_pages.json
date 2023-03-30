@@ -157,7 +157,7 @@
                     "dispatch":{
                       "event":"EQUIP_ITEM",
                       "value":{
-                        "item_id":"random",
+                        "item":"random",
                         "time":1
                       }
                     }
@@ -173,7 +173,7 @@
                     "dispatch":{
                       "event":"UNEQUIP_ITEM",
                       "value":{
-                        "item_id":"random",
+                        "item":"random",
                         "time":1
                       }
                     }
@@ -250,7 +250,7 @@
                     "dispatch":{
                       "event":"TAKE_STASH_ITEM",
                       "value":{
-                        "item_id":"random",
+                        "item":"random",
                         "time":1
                       }
                     }
@@ -266,7 +266,7 @@
                     "dispatch":{
                       "event":"STASH_ITEM",
                       "value":{
-                        "item_id":"random",
+                        "item":"random",
                         "time":1
                       }
                     }

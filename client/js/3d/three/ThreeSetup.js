@@ -242,6 +242,9 @@ class ThreeSetup {
         }
         this.prerenderCallbacks.push(callback);
     };
+    removePrerenderCallback = function(callback) {
+        MATH.quickSplice(this.prerenderCallbacks, callback);
+    };
 
 
     getSceneChildrenCount = function() {

@@ -34,8 +34,12 @@ class PieceAttacher {
         this.activeJoints.push(attachmentJoint);
     };
 
+    getAttachmentJointOffsets(key) {
+        return this.pieceAttachments[key].jointOffsets;
+    }
+
     getAttachmentJoint = function (key) {
-        return this.pieceAttachments[key];
+        return this.pieceAttachments[key].getDynamicJoint();
     };
 
     isActiveJointKey = function (key) {
@@ -47,7 +51,6 @@ class PieceAttacher {
         let pieceAttachment = this.getAttachmentJoint(key)
         let attachmentJoint = pieceAttachment.releaseActiveAttachment();
         return MATH.quickSplice(this.activeJoints, attachmentJoint);
-
     };
 
     removeAttachedEntities = function () {

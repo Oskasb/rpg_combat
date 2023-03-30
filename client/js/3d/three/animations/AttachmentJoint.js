@@ -15,15 +15,20 @@ class AttachmentJoint {
             effect.attachToJoint(this)
         }.bind(this);
 
+        let inheritJoint = function() {
+            this.inheritJointDynamicPosition()
+        }.bind(this);
+
+        let applyBones = function(boneMap) {
+            this.applyBoneMap(boneMap)
+        }.bind(this);
+
         this.callbacks = {
+            updateAttachedSpatial:inheritJoint,
+            applyBoneMap:applyBones,
             attachEffect:attachEffect
         }
-        this.jointDataApplied = false;
 
-    };
-
-    getJointKey = function() {
-        return this.key;
     };
 
     getAttachEffectCallback = function() {
@@ -56,10 +61,8 @@ class AttachmentJoint {
         storeVec.copy(this.dynamicPosition);
     };
 
-    applyJointData = function(jointData) {
-        console.log("joint apply data");
-        this.jointDataApplied = true;
-            this.obj3d.position.x = jointData.offset[0];
+    applyJointOffsets = function(jointData) {
+        this.obj3d.position.x = jointData.offset[0];
         this.obj3d.position.y = jointData.offset[1];
         this.obj3d.position.z = jointData.offset[2];
 
@@ -85,18 +88,14 @@ class AttachmentJoint {
         return this.attachedSpatial;
     };
 
+    applyBoneMap(boneMap) {
+        this.dynamicBone = boneMap[this.dynamicBoneId]
+    };
+
     registerAttachedSpatial = function(spatial, joint, dynamicBones) {
         this.attachedSpatial = spatial;
 
-        if (!this.jointDataApplied) {
-            this.joint = joint;
-            this.applyJointData(joint);
-            this.dynamicBone = dynamicBones[this.dynamicBoneId]
-        }
-
      //   spatial.attachToDynamicJoint(this.dynamicBone);
-
-     //   console.log("registerAttachedEntity", spatial, this.dynamicBone);
         return this;
 
     };

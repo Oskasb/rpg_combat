@@ -7,7 +7,7 @@ class PlayerMain {
         this.playerCharacter = null;
 
         let takeStashItem = function (event) {
-            let item = this.playerStash.takePieceFromStash(event.item_id);
+            let item = this.playerStash.takePieceFromStash(event.item);
             if (!item) {
                 console.log("No item gotten from stash..")
                 return;
@@ -17,7 +17,7 @@ class PlayerMain {
         }.bind(this);
 
         let stashInvItem = function(event) {
-            let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item_id);
+            let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item);
             if (!item) {
                 console.log("No item gotten from inventory..")
                 return;
@@ -26,7 +26,7 @@ class PlayerMain {
         }.bind(this);
 
         let equipItem = function (event) {
-            let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item_id);
+            let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item);
             if (!item) {
                 console.log("No item gotten from stash..")
                 return;
@@ -35,7 +35,7 @@ class PlayerMain {
         }.bind(this);
 
         let unequipItem = function(event) {
-            let item = this.playerCharacter.getEquipment().takeEquippedItem(event.item_id);
+            let item = this.playerCharacter.getEquipment().takeEquippedItem(event.item);
             if (!item) {
                 console.log("No item gotten from equipment..")
                 return;

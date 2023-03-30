@@ -71,11 +71,11 @@ class InstanceSpatial{
             this.dynamicJoint = dynamicJoint;
         };
 
-
         stickToDynamicJoint = function(dynamicJoint) {
+            this.stickToObj3D(dynamicJoint.obj3d);
+        };
 
-            let obj3d = dynamicJoint.obj3d;
-
+        stickToObj3D(obj3d) {
             this.obj3d.position.copy(obj3d.position);
             this.obj3d.scale.copy(obj3d.scale);
             this.obj3d.quaternion.copy(obj3d.quaternion);
@@ -85,9 +85,7 @@ class InstanceSpatial{
                 this.geometryInstance.applyObjQuat();
                 this.geometryInstance.applyObjScale();
             }
-
-        };
-
+        }
 
         updateSpatialFrame = function() {
 

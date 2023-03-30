@@ -17,8 +17,13 @@ class GamePiece {
             this.pieceAttacher.tickAttacher()
         }.bind(this);
 
+        let tickPieceEquippedItem = function() {
+            this.getSpatial().stickToObj3D(this.getSpatial().obj3d.parent)
+        }.bind(this);
+
         this.callbacks = {
-            tickGamePiece:tickGamePiece
+            tickGamePiece:tickGamePiece,
+            tickPieceEquippedItem:tickPieceEquippedItem
         };
 
         let compositCb = function(piece) {

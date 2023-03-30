@@ -6,6 +6,7 @@ class CharacterInventory {
     addItemToInventory(piece, time) {
         piece.hideGamePiece();
         this.pieces.push(piece);
+        GuiAPI.printDebugText("Inventory Items: "+this.pieces.length)
     //    console.log("Add inv item ", this.pieces);
     }
 
@@ -29,8 +30,10 @@ class CharacterInventory {
         if(gamePiece) {
             gamePiece.showGamePiece();
         }
+        let removeItem = MATH.quickSplice(this.pieces, gamePiece );
+        GuiAPI.printDebugText("Inventory Items: "+this.pieces.length)
 
-        return MATH.quickSplice(this.pieces, gamePiece );
+        return removeItem
     }
 
 }

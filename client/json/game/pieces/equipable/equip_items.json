@@ -71,7 +71,7 @@
         "id":"SHIRT_SCALE",
         "data":{
           "model_asset":"asset_scale_shirt",
-          "slot": "SLOT_BODY"
+          "slot": "SLOT_CHEST"
         }
       },
       {

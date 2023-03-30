@@ -37,6 +37,8 @@
         {"id": "asset_bullet",      "config": { "model": "file_bullet" ,  "material": "mat_instancing_basic",       "settings": "model_settings_instancing"     }},
         {"id": "asset_cross3d",     "config": { "model": "file_cross3d",  "material": "material_instancing_ui",     "settings": "model_settings_ui"  }},
 
+        {"id": "asset_belt_bronze", "config": { "model": "file_belt_bronze",  "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
+
         {"id": "asset_beltplate",   "config": { "model": "file_beltplate",    "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
         {"id": "asset_helmetviking","config": { "model": "file_helmetviking", "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
 

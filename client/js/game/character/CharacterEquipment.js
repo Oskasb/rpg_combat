@@ -1,30 +1,65 @@
 import { ConfigData } from "../../application/utils/ConfigData.js";
+import { ItemSlot } from "../gamepieces/ItemSlot.js";
 
 class CharacterEquipment {
     constructor(gamePiece, equipSlotConfigId) {
         this.gamePiece = gamePiece;
         this.slots = new ConfigData("GAME", "EQUIP_SLOTS").parseConfigData()[equipSlotConfigId].data.slots;
+        this.itemSlots = {};
+        this.slotToJointMap = {};
+
+        this.pieceAttacher = this.gamePiece.pieceAttacher;
+
+        for (let i = 0; i < this.slots.length;i++) {
+            let slotId = this.slots[i]['slot_id'];
+            let jointKey = this.slots[i]['joint'];
+            this.itemSlots[slotId] = new ItemSlot(slotId);
+            let dynamicJoint = this.pieceAttacher.getAttachmentJoint(jointKey);
+
+            if (jointKey !== 'SKIN') {
+                let jointOffsets = this.pieceAttacher.getAttachmentJointOffsets(jointKey);
+                dynamicJoint.callbacks.applyBoneMap(this.model().boneMap);
+                dynamicJoint.applyJointOffsets(jointOffsets);
+            }
+
+            this.slotToJointMap[slotId] = dynamicJoint
+
+        }
+        console.log(this.slotToJointMap);
         this.pieces = [];
     }
 
-    getJointIdForItemPiece(gamePiece) {
-
+    model() {
+        return this.gamePiece.modelInstance;
     }
 
-    characterEquipItem(gamePiece) {
-        this.pieces.push(gamePiece)
+    getSlotForItemPiece = function(gamePiece) {
+        return this.itemSlots[gamePiece.getEquipSlotId()];
+    };
 
-        let slotId = gamePiece.getEquipSlotId();
+    getJointForItemPiece(gamePiece) {
+        return this.slotToJointMap[gamePiece.getEquipSlotId()]
+    }
 
-        let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
+    characterEquipItem(itemPiece) {
+        this.pieces.push(itemPiece)
 
-        if (slot.joint === 'SKIN') {
+        let dynamicJoint = this.getJointForItemPiece(itemPiece);
 
-            this.gamePiece.modelInstance.attachInstancedModel(gamePiece.modelInstance)
+        let itemSlot = this.getSlotForItemPiece(itemPiece);
+    //    let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
+
+        let oldItem = itemSlot.removeSlotItemPiece();
+        evt.dispatch(ENUMS.Event.UNEQUIP_ITEM, {item:oldItem, time:0.6});
+        itemSlot.setSlotItemPiece(itemPiece);
+        if (dynamicJoint.key === 'SKIN') {
+    //        itemPiece.getSpatial().setScaleXYZ(1, 1, 1);
+            this.model().attachInstancedModel(itemPiece.modelInstance)
+            ThreeAPI.registerPrerenderCallback(itemPiece.callbacks.tickPieceEquippedItem);
 
         } else {
-            this.gamePiece.attachPieceSpatialToJoint(gamePiece.getSpatial(), slot.joint);
-            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
+            dynamicJoint.registerAttachedSpatial(itemPiece.getSpatial());
+            ThreeAPI.registerPrerenderCallback(dynamicJoint.callbacks.updateAttachedSpatial);
         }
 
     };
@@ -39,29 +74,31 @@ class CharacterEquipment {
 
     }
 
-    takeEquippedItem(gamePiece) {
-        if (typeof (gamePiece) === 'string') {
-            gamePiece = this.getItemByItemId(gamePiece);
+    takeEquippedItem(itemPiece) {
+        if (typeof (itemPiece) === 'string') {
+            itemPiece = this.getItemByItemId(itemPiece);
         }
-        gamePiece = MATH.quickSplice(this.pieces ,gamePiece );
+        itemPiece = MATH.quickSplice(this.pieces ,itemPiece );
 
-        if(gamePiece) {
-        //    gamePiece.hideGamePiece();
-            let slotId = gamePiece.getEquipSlotId();
+        if(itemPiece) {
+
+            let dynamicJoint = this.getJointForItemPiece(itemPiece);
+            let itemSlot = this.getSlotForItemPiece(itemPiece);
+            itemSlot.setSlotItemPiece(null);
+            let slotId = itemPiece.getEquipSlotId();
 
             let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
 
             if (slot.joint === 'SKIN') {
-                this.gamePiece.modelInstance.detatchInstancedModel(gamePiece.modelInstance);
-                gamePiece.hideGamePiece();
+                this.model().detatchInstancedModel(itemPiece.modelInstance);
+                ThreeAPI.unregisterPrerenderCallback(itemPiece.callbacks.tickPieceEquippedItem);
             } else {
-                let attachment = this.gamePiece.releaseJointActiveAttachment(slot.joint, gamePiece.getSpatial);
-                console.log(attachment);
+                dynamicJoint.detachAttachedEntity();
+                ThreeAPI.unregisterPrerenderCallback(dynamicJoint.callbacks.updateAttachedSpatial);
             }
 
-
         }
-        return gamePiece
+        return itemPiece
     }
 
 }
