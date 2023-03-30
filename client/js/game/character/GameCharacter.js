@@ -20,7 +20,7 @@ class GameCharacter {
 
     setCharacterPiece(gamePiece, equipSlotConfigId) {
         this.gamePiece = gamePiece;
-        this.characterEquipment = new CharacterEquipment(gamePiece.modelInstance, equipSlotConfigId);
+        this.characterEquipment = new CharacterEquipment(gamePiece, equipSlotConfigId);
     }
 
     getCharacterPiece() {

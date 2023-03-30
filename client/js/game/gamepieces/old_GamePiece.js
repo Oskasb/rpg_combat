@@ -78,6 +78,10 @@ define([
            return this.getPieceAttacher().isActiveJointKey(key);
         };
 
+        GamePiece.prototype.releaseJointActiveAttachment = function(key) {
+            return this.getPieceAttacher().releaseJointKey(key);
+        };
+
         GamePiece.prototype.addPieceUpdateCallback = function(cb) {
             if (this.gamePieceUpdateCallbacks.indexOf(cb) === -1) {
                 this.gamePieceUpdateCallbacks.push(cb);

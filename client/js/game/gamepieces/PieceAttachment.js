@@ -6,17 +6,15 @@ class PieceAttachment {
         };
 
         setAttachedSpatial = function(spatial, modelInstance) {
-            console.log(modelInstance);
             return this.attachmentJoint.registerAttachedSpatial(spatial, this.joint, modelInstance.boneMap);
         };
 
-        releaseAttachedWorldEntity = function() {
-            console.log("Release WE PieceAttachment", this.getActiveAttachment());
-            this.attachmentJoint.detatchAttachedEntity();
+        releaseActiveAttachment = function() {
+            return this.attachmentJoint.detachAttachedEntity();
         };
 
         getActiveAttachment = function() {
-            this.attachmentJoint.getAttachedEntity();
+            return this.attachmentJoint.getAttachedEntity();
         };
 
         activateNow = function(weight, timeScale) {

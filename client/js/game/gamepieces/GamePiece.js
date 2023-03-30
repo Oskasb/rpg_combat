@@ -74,6 +74,10 @@ class GamePiece {
         return this.pieceAttacher.isActiveJointKey(key);
     };
 
+    releaseJointActiveAttachment = function(key, spatial) {
+        return this.pieceAttacher.releaseJointKey(key, spatial);
+    };
+
     addPieceUpdateCallback = function(cb) {
         if (this.gamePieceUpdateCallbacks.indexOf(cb) === -1) {
             this.gamePieceUpdateCallbacks.push(cb);

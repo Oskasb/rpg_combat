@@ -1,30 +1,29 @@
 import { ConfigData } from "../../application/utils/ConfigData.js";
 
 class CharacterEquipment {
-    constructor(modelInstance, equipSlotConfigId) {
-
+    constructor(gamePiece, equipSlotConfigId) {
+        this.gamePiece = gamePiece;
         this.slots = new ConfigData("GAME", "EQUIP_SLOTS").parseConfigData()[equipSlotConfigId].data.slots;
-        this.model = modelInstance;
-
         this.pieces = [];
     }
 
     getJointIdForItemPiece(gamePiece) {
-        let slotId = gamePiece.getEquipSlotId();
-        return MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId).slot;
+
     }
 
     characterEquipItem(gamePiece) {
         this.pieces.push(gamePiece)
 
-        let joint = this.getItemByItemId(gamePiece)
+        let slotId = gamePiece.getEquipSlotId();
 
-        if (joint === 'SKIN') {
+        let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
+
+        if (slot.joint === 'SKIN') {
 
             this.model.attachInstancedModel(gamePiece.modelInstance)
 
         } else {
-            GameAPI.getActivePlayerCharacter().getCharacterPiece().attachPieceSpatialToJoint(gamePiece.getSpatial(), joint);
+            this.gamePiece.attachPieceSpatialToJoint(gamePiece.getSpatial(), slot.joint);
             GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
         }
 
@@ -44,10 +43,25 @@ class CharacterEquipment {
         if (typeof (gamePiece) === 'string') {
             gamePiece = this.getItemByItemId(gamePiece);
         }
+        gamePiece = MATH.quickSplice(this.pieces ,gamePiece );
+
         if(gamePiece) {
-        //    gamePiece.showGamePiece();
-            let piece = MATH.quickSplice(this.pieces ,gamePiece );
-            GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
+        //    gamePiece.hideGamePiece();
+            let slotId = gamePiece.getEquipSlotId();
+
+            let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
+
+            if (slot.joint === 'SKIN') {
+                this.gamePiece.modelInstance.detatchInstancedModel(gamePiece.modelInstance)
+                gamePiece.hideGamePiece();
+            } else {
+                let attachment = this.gamePiece.releaseJointActiveAttachment(slot.joint, gamePiece.getSpatial);
+                console.log(attachment);
+                gamePiece.getSpatial().setScaleXYZ(2, 2, 2)
+            //    GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
+            }
+
+
         }
         return gamePiece
     }

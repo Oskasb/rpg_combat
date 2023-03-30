@@ -28,8 +28,10 @@ class PieceAttacher {
 
     attachSpatialToJoint = function (spatial, jointKey) {
         this.attachedWorldEntities.push(spatial);
-        let joint = this.getAttachmentJoint(jointKey).setAttachedSpatial(spatial, this.gamePiece.modelInstance);
-        this.activeJoints.push(joint);
+        let pieceAttachment = this.getAttachmentJoint(jointKey)
+        let attachmentJoint = pieceAttachment.setAttachedSpatial(spatial, this.gamePiece.modelInstance);
+
+        this.activeJoints.push(attachmentJoint);
     };
 
     getAttachmentJoint = function (key) {
@@ -40,13 +42,17 @@ class PieceAttacher {
         return this.getAttachmentJoint(key).getActiveAttachment();
     };
 
-    releaseJointKey = function (key) {
-        return this.getAttachmentJoint(key).releaseActiveAttachment();
+    releaseJointKey = function (key, spatial) {
+        MATH.quickSplice(this.attachedWorldEntities, spatial);
+        let pieceAttachment = this.getAttachmentJoint(key)
+        let attachmentJoint = pieceAttachment.releaseActiveAttachment();
+        return MATH.quickSplice(this.activeJoints, attachmentJoint);
+
     };
 
     removeAttachedEntities = function () {
         while (this.attachedWorldEntities.length) {
-            MainWorldAPI.getWorldSimulation().despawnWorldEntity(this.attachedWorldEntities.pop());
+            this.attachedWorldEntities.pop();
         }
     };
 

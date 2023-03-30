@@ -73,9 +73,10 @@ class AttachmentJoint {
         this.obj3d.position.multiply(this.obj3d.scale)
     };
 
-    detatchAttachedEntity = function() {
+    detachAttachedEntity = function() {
         this.attachedSpatial.dynamicJoint = null;
-        return this.attachedSpatial;
+        this.attachedSpatial = null;
+        return this;
     };
 
     getAttachedEntity = function() {
