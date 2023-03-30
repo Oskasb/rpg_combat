@@ -67,7 +67,7 @@ class SetupPlayer {
         let itemCallback = function(gamePiece) {
             equip(gamePiece)
         };
-        
+
         GameAPI.createGamePiece({piece:"HELMET_BRONZE"}, itemCallback);
         GameAPI.createGamePiece({piece:"NINJASWORD"}, itemCallback);
 

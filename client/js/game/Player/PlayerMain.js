@@ -37,7 +37,7 @@ class PlayerMain {
         let unequipItem = function(event) {
             let item = this.playerCharacter.getEquipment().takeEquippedItem(event.item_id);
             if (!item) {
-                console.log("No item gotten from inventory..")
+                console.log("No item gotten from equipment..")
                 return;
             }
             GameAPI.addItemToPlayerInventory(item, 0.5);

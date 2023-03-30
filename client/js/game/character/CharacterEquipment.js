@@ -9,27 +9,47 @@ class CharacterEquipment {
         this.pieces = [];
     }
 
+    getJointIdForItemPiece(gamePiece) {
+        let slotId = gamePiece.getEquipSlotId();
+        return MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId).slot;
+    }
+
     characterEquipItem(gamePiece) {
         this.pieces.push(gamePiece)
 
-        let slotId = gamePiece.getEquipSlotId();
+        let joint = this.getItemByItemId(gamePiece)
 
-        let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
-
-        if (slot.joint === 'SKIN') {
+        if (joint === 'SKIN') {
 
             this.model.attachInstancedModel(gamePiece.modelInstance)
 
         } else {
-            GameAPI.getActivePlayerCharacter().getCharacterPiece().attachPieceSpatialToJoint(gamePiece.getSpatial(), slot.joint);
+            GameAPI.getActivePlayerCharacter().getCharacterPiece().attachPieceSpatialToJoint(gamePiece.getSpatial(), joint);
             GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
         }
 
     };
 
+    getItemByItemId(itemId) {
+        if (!this.pieces.length) return;
+        if (itemId === 'random') {
+            return this.pieces[Math.floor(Math.random()*this.pieces.length)]
+        } else {
+            console.log("Figure this out...")
+        }
+
+    }
+
     takeEquippedItem(gamePiece) {
-        let piece = MATH.quickSplice(this.pieces ,gamePiece );
-        GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
+        if (typeof (gamePiece) === 'string') {
+            gamePiece = this.getItemByItemId(gamePiece);
+        }
+        if(gamePiece) {
+        //    gamePiece.showGamePiece();
+            let piece = MATH.quickSplice(this.pieces ,gamePiece );
+            GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback());
+        }
+        return gamePiece
     }
 
 }
