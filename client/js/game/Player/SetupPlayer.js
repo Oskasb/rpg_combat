@@ -50,7 +50,7 @@ class SetupPlayer {
             GameAPI.getPlayerMain().callbacks.addToStash(gamePiece);
         }.bind(this);
 
-        GameAPI.createGamePiece({piece:"HELMET_BRONZE"}, itemCallback);
+
         GameAPI.createGamePiece({piece:"LEGS_BRONZE"}, itemCallback);
         GameAPI.createGamePiece({piece:"BREASTPLATE_BRONZE"}, itemCallback);
 
@@ -61,15 +61,15 @@ class SetupPlayer {
     }
 
     initPlayerEquipment() {
-        let equip = function(piece, slot) {
-            GameAPI.getActivePlayerCharacter().getEquipment().characterEquipItem(piece, slot);
+        let equip = function(piece) {
+            GameAPI.getActivePlayerCharacter().getEquipment().characterEquipItem(piece);
         };
         let itemCallback = function(gamePiece) {
-            equip(gamePiece, 'GRIP_R')
+            equip(gamePiece)
         };
-
+        
+        GameAPI.createGamePiece({piece:"HELMET_BRONZE"}, itemCallback);
         GameAPI.createGamePiece({piece:"NINJASWORD"}, itemCallback);
-
 
     }
 

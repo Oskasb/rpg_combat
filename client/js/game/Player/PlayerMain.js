@@ -25,15 +25,33 @@ class PlayerMain {
             this.stashItemPiece(item, event.time)
         }.bind(this);
 
+        let equipItem = function (event) {
+            let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item_id);
+            if (!item) {
+                console.log("No item gotten from stash..")
+                return;
+            }
+            this.playerCharacter.getEquipment().characterEquipItem(item)
+        }.bind(this);
 
+        let unequipItem = function(event) {
+            let item = this.playerCharacter.getEquipment().takeEquippedItem(event.item_id);
+            if (!item) {
+                console.log("No item gotten from inventory..")
+                return;
+            }
+            GameAPI.addItemToPlayerInventory(item, 0.5);
+        }.bind(this);
 
         let addToStash = function(piece) {
             this.playerStash.addPieceToStash(piece);
+            piece.getOnUpdateCallback()(0.01, GameAPI.getGameTime())
+            piece.getSpatial().applySpatialUpdateToBuffers()
         }.bind(this);
 
         let callbacks = {
-            handleEquip : function (event) {        },
-            handleUnequip : function (event) {        },
+            handleEquip : equipItem,
+            handleUnequip : unequipItem,
             handleDropItem : function (event) {        },
             handleStashItem : stashInvItem,
             handleTakeStashItem : takeStashItem,

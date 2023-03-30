@@ -62,6 +62,8 @@ class InstanceSpatial{
         applySpatialUpdateToBuffers() {
             if (this.geometryInstance) {
                 this.geometryInstance.applyObjQuat();
+                this.geometryInstance.applyObjScale();
+                this.geometryInstance.applyObjPos();
             }
         }
 

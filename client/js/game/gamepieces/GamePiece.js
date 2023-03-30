@@ -102,7 +102,7 @@ class GamePiece {
 
     hideGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
-            this.getSpatial().geometryInstance.setScale(0)
+        //    this.getSpatial().geometryInstance.setScale(2)
         }else {
             ThreeAPI.hideModel(this.modelInstance.obj3d)
         }
@@ -111,7 +111,7 @@ class GamePiece {
 
     showGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
-            this.getSpatial().geometryInstance.setScale(1)
+        //    this.getSpatial().geometryInstance.setScale(1)
         }else {
             ThreeAPI.showModel(this.modelInstance.obj3d)
         }
