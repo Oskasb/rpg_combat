@@ -28,8 +28,8 @@
                     "asset_tree_1"
                   ],
                   "count": 3,
-                  "pos": [-10, 0, 50],
-                  "size": [50, 0, 15],
+                  "pos": [-50, 0, 70],
+                  "size": [12, 0, 25],
                   "spread_scale": [0.4, 0.6],
                   "spread_rot": [0.2, 0.2, 3.14]
                 },
@@ -40,9 +40,9 @@
                     "asset_tree_2"
                   ],
                   "count": 2,
-                  "pos": [-15, 0, 50],
-                  "size": [25, 0, 15],
-                  "spread_scale": [0.1, 0.4],
+                  "pos": [5, 0, 50],
+                  "size": [11, 0, 15],
+                  "spread_scale": [0.2, 0.5],
                   "spread_rot": [0.2, 0.2, 3.14]
                 },
                 {
@@ -53,9 +53,9 @@
                     "asset_tree_1"
                   ],
                   "count": 3,
-                  "pos": [30, 0, -80],
+                  "pos": [40, 0, -80],
                   "size": [30, 0, 25],
-                  "spread_scale": [0.5, 0.8],
+                  "spread_scale": [0.2, 0.6],
                   "spread_rot": [0.2, 0.2, 3.14]
                 },
                 {
@@ -65,10 +65,23 @@
                     "asset_tree_4",
                     "asset_tree_1"
                   ],
-                  "count": 3,
-                  "pos": [-60, 0, 40],
-                  "size": [30, 0, 55],
-                  "spread_scale": [0.6, 1.6],
+                  "count": 2,
+                  "pos": [-70, 0, 40],
+                  "size": [20, 0, 45],
+                  "spread_scale": [0.4, 1.1],
+                  "spread_rot": [0.2, 0.2, 3.14]
+                },
+                {
+                  "asset_list":[
+                    "asset_tree_3",
+                    "asset_tree_2",
+                    "asset_tree_4",
+                    "asset_tree_1"
+                  ],
+                  "count": 2,
+                  "pos": [-14, 0, 65],
+                  "size": [16, 0, 25],
+                  "spread_scale": [0.1, 0.3],
                   "spread_rot": [0.2, 0.2, 3.14]
                 },
                 {
@@ -210,7 +223,7 @@
                 },
                 { "id":"mansion_hut_1",
                   "asset_id": "asset_town_house",
-                  "pos": [-44, 0, 117],
+                  "pos": [-42, 0, 114],
                   "size": [2, 5, 2],
                   "scale": 0.0025,
                   "rot": [ 3.1415926, 2.2, 3.1415926]
@@ -218,7 +231,7 @@
               ,
                 { "id":"mansion_hut_2",
                   "asset_id": "asset_town_house",
-                  "pos": [-56, 0, 128],
+                  "pos": [-55, 0, 124],
                   "size": [2, 5, 2],
                   "scale": 0.0025,
                   "rot": [ 3.1415926, 3.1, 3.1415926]
@@ -229,6 +242,13 @@
                   "size": [2, 5, 2],
                   "scale": 0.006,
                   "rot": [ 3.1415926, -0.3, 3.1415926]
+                },
+                { "id":"village_house_t_1",
+                  "asset_id": "asset_house_t",
+                  "pos": [-0, 0, -221],
+                  "size": [2, 5, 2],
+                  "scale": 0.006,
+                  "rot": [ 3.1415926, 0.9, 3.1415926]
                 },
                 { "id":"village_hut_1",
                   "asset_id": "asset_town_house",
@@ -243,6 +263,36 @@
                   "size": [2, 5, 2],
                   "scale": 0.0025,
                   "rot": [ 3.1415926, 5, 3.1415926]
+                },
+                { "id":"village_hut_3",
+                  "asset_id": "asset_town_house",
+                  "pos": [-8, 0, -194],
+                  "size": [2, 5, 2],
+                  "scale": 0.0025,
+                  "rot": [ 3.1415926, 4, 3.1415926]
+                },
+                { "id":"village_tree_1",
+                  "asset_id": "asset_tree_4",
+                  "pos": [-15, 0, -213],
+                  "size": [2, 5, 2],
+                  "scale": 0.7,
+                  "rot": [ -1.5707964, -0.3, 0]
+                }
+              ,
+                { "id":"village_tree_2",
+                  "asset_id": "asset_tree_5",
+                  "pos": [-55, 0, -235],
+                  "size": [2, 5, 2],
+                  "scale": 0.3,
+                  "rot": [ -1.5707964, 0, -0.3]
+                }
+              ,
+                { "id":"village_tree_4",
+                  "asset_id": "asset_tree_5",
+                  "pos": [-45, 0, -185],
+                  "size": [2, 5, 2],
+                  "scale": 0.22,
+                  "rot": [ -1.5707964, 0, -4.3]
                 }
               ]
             }

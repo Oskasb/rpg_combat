@@ -79,11 +79,11 @@ class GuiDebug {
 
             {
                 configId: 'debug_text_box',
-                onActivate: onActivate,
-                interactive: true,
+                onActivate: null,
+                interactive: false,
                 text: 'DEBUG TEXT',
                 anchor: 'top_left',
-                offset_y:-0.25,
+                offset_y:-0.36,
                 offset_x:-0.01
             }
 
