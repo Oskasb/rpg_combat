@@ -1,0 +1,69 @@
+[
+  {
+    "UI": {
+      "PAGES":[
+        {
+          "id": "page_scene_dungeon",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"top_bar_header",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"scene_page_header_text_box",
+                  "options":{
+                    "text":"CREEPY CAVERNS",
+                    "anchor":"top_center",
+                    "offset_x": 0.0,
+                    "offset_y":-0.025
+                  }
+                },
+                {
+                  "widget_id":"page_home_center",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"page_top_bar_expanding_container",
+                  "options": {
+                    "anchor":"top_left"
+                  }
+                },
+                {
+                  "widget_id":"text_box_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"main_text_box",
+                  "options":{
+                    "anchor":"bottom_left",
+                    "offset_x":0.15,
+                    "offset_y":0.04,
+                    "text":"The scent of adventure..."
+                  }
+
+                }
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_go_world",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"WORLD",
+                    "container_id":"page_home_center",
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_world_dynamic",
+                        "time":2,
+                        "pos": [0, 150, -230],
+                        "lookAt": [0, 0, -100]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

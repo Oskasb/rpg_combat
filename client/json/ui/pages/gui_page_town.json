@@ -1,0 +1,123 @@
+[
+  {
+    "UI": {
+      "PAGES":[
+        {
+          "id": "page_scene_town",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"page_home_center",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"center"
+                  }
+                },
+                {
+                  "widget_id":"top_bar_header",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"scene_page_header_text_box",
+                  "options":{
+                    "text":"TREETOWN",
+                    "anchor":"top_center",
+                    "offset_x": 0.0,
+                    "offset_y":-0.025
+                  }
+                },
+
+                {
+                  "widget_id":"text_box_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"main_text_box",
+                  "options":{
+                    "anchor":"bottom_left",
+                    "offset_x":0.15,
+                    "offset_y":0.04,
+                    "text":"A friendly neighborhood."
+                  }
+
+                }
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_go_world",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"WORLD",
+                    "container_id":"page_home_center",
+                    "offset_x":-0.08,
+                    "offset_y":-0.24,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_world_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_go_cellar",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"CELLAR",
+                    "container_id":"page_home_center",
+                    "offset_x":-0.11,
+                    "offset_y":-0.07,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"cave_scenario",
+                        "dynamic":"encounter_dynamic_cave_basic"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_go_merchant",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"TRADER",
+                    "container_id":"page_home_center",
+                    "offset_x":0.10,
+                    "offset_y":0.10,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"town_merchant_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_go_inn",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"INN",
+                    "container_id":"page_home_center",
+                    "offset_x": 0.13,
+                    "offset_y": -0.07,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"town_inn_dynamic"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

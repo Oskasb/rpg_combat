@@ -99,8 +99,8 @@
             {
               "id":"layout_page_header_text_box",
               "config": {
-                "text":   {"x":0.25, "y":0.0, "fontsize": 15},
-                "anchor": {"x":0.0, "y":0.0, "z":  0.0},
+                "text":   {"x":0.5, "y":0.0, "fontsize": 15},
+                "anchor": {"x":0.5, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
                 "size":   {"x":0.3, "y":0.04, "z":  0.0}
               }

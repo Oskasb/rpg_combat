@@ -1,0 +1,105 @@
+[
+  {
+    "UI": {
+      "PAGES":[
+        {
+          "id": "page_scene_home",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"page_home_center",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"center"
+                  }
+                },
+                {
+                  "widget_id":"top_bar_header",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"scene_page_header_text_box",
+                  "options":{
+                    "text":"HOME HOVEL",
+                    "anchor":"top_center",
+                    "offset_x": 0.0,
+                    "offset_y":-0.025
+                  }
+                },
+                {
+                  "widget_id":"text_box_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"main_text_box",
+                  "options":{
+                    "anchor":"bottom_left",
+                    "offset_x":0.15,
+                    "offset_y":0.04,
+                    "text":"Welcome home Hero!"
+                  }
+
+                }
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_go_world",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"WORLD",
+                    "container_id":"page_home_center",
+                    "offset_x":-0.05,
+                    "offset_y":0.25,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_world_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_go_stash",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"STASH",
+                    "container_id":"page_home_center",
+                    "offset_x":-0.115,
+                    "offset_y":-0.21,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_stash_dynamic"
+
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_go_hero",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"HERO",
+                    "container_id":"page_home_center",
+                    "offset_x":0.115,
+                    "offset_y":-0.30,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_hero_dynamic"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

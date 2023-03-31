@@ -9,7 +9,13 @@
             "home_hovel_dynamic",
             "home_world_dynamic",
             "home_stash_dynamic",
-            "home_hero_dynamic"
+            "home_hero_dynamic",
+            "world_manor_dynamic",
+            "world_town_dynamic",
+            "world_woods_dynamic",
+            "manor_village_dynamic",
+            "village_house_dynamic",
+            "village_cottage_dynamic"
           ]
         }
       },
@@ -45,6 +51,51 @@
           "time":0.6,
           "pos": [0.6, 1.7, -2.1],
           "lookAt": [-0.4, 1.4, -0.5]
+        },
+         "world_manor_dynamic":{
+          "time":1.3,
+          "pos": [15, 65,   20],
+          "lookAt": [-125, 5, 143]
+        },
+        "manor_village_dynamic":{
+          "time":1.3,
+          "pos": [-75, 40,   110],
+          "lookAt": [-55, 0, 125]
+        },
+        "village_house_dynamic":{
+          "time":1.3,
+          "pos": [-55, 20,   120],
+          "lookAt": [-65, 0, 155]
+        },
+        "village_cottage_dynamic":{
+          "time":1.3,
+          "pos": [-55, 20,   120],
+          "lookAt": [-65, 0, 155]
+        },
+        "world_town_dynamic":{
+          "time":1.3,
+          "pos": [75, 50, -190],
+          "lookAt": [-15, 0, -208]
+        },
+        "town_merchant_dynamic":{
+          "time":1.3,
+          "pos": [35, 10, -210],
+          "lookAt": [-15, 0, -233]
+        },
+        "town_inn_dynamic":{
+          "time":1.3,
+          "pos": [35, 10, -210],
+          "lookAt": [-15, 0, -203]
+        },
+        "town_cellar_dynamic":{
+          "time":1.3,
+          "pos": [35, 10, -210],
+          "lookAt": [-15, 0, -203]
+        },
+        "world_woods_dynamic":{
+          "time":1.3,
+          "pos": [5, 180, -340],
+          "lookAt": [-5, 0, -120]
         },
         "encounter_dynamic_cave_basic":{
           "time":2,
@@ -129,6 +180,54 @@
             "id":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_world",
+              "environment": "sunny_day",
+
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "world_manor_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_manor",
+              "environment": "evening",
+
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "world_town_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_town",
+              "environment": "sunny_day",
+
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "town_merchant_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_town",
               "environment": "sunny_day",
 
               "spawn":[
