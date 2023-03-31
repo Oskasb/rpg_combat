@@ -19,11 +19,11 @@
                   }
                 },
                 {
-                  "widget_id":"top_bar_home",
+                  "widget_id":"page_home_center",
                   "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"page_top_bar_expanding_container",
+                  "widget_config_id":"widget_hidden_container",
                   "options": {
-                    "anchor":"top_left"
+                    "anchor":"center"
                   }
                 },
                 {
@@ -46,7 +46,9 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"WORLD",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
+                    "offset_x":0.0,
+                    "offset_y":0.28,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -62,7 +64,9 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"STASH",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
+                    "offset_x":-0.12,
+                    "offset_y":-0.19,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -79,7 +83,9 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"HERO",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
+                    "offset_x":0.11,
+                    "offset_y":-0.28,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -110,7 +116,7 @@
                   }
                 },
                 {
-                  "widget_id":"top_bar_home",
+                  "widget_id":"page_home_center",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"page_top_bar_expanding_container",
                   "options": {
@@ -137,7 +143,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"HOME",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -153,7 +159,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"EQUIP",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"EQUIP_ITEM",
                       "value":{
@@ -169,7 +175,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"UNEQUIP",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"UNEQUIP_ITEM",
                       "value":{
@@ -200,7 +206,7 @@
                   }
                 },
                 {
-                  "widget_id":"top_bar_home",
+                  "widget_id":"page_home_center",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"page_top_bar_expanding_container",
                   "options": {
@@ -227,7 +233,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"HOME",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -246,7 +252,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"GRAB",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"TAKE_STASH_ITEM",
                       "value":{
@@ -262,7 +268,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"DROP",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"STASH_ITEM",
                       "value":{
@@ -293,7 +299,7 @@
                   }
                 },
                 {
-                  "widget_id":"top_bar_home",
+                  "widget_id":"page_home_center",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"page_top_bar_expanding_container",
                   "options": {
@@ -320,7 +326,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"HOME",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -336,7 +342,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"CAVE",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -367,7 +373,7 @@
                   }
                 },
                 {
-                  "widget_id":"top_bar_home",
+                  "widget_id":"page_home_center",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"page_top_bar_expanding_container",
                   "options": {
@@ -394,7 +400,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"WORLD",
-                    "container_id":"top_bar_home",
+                    "container_id":"page_home_center",
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{

@@ -43,19 +43,20 @@ class JsonPipe {
     pruneUrlsExceptFor(urls) {
         let keepCalls = []
         this.pollIndex.length = 0;
+        /*
+                for (let i =0; i < urls.length; i++) {
+                    let url ='client/json'+urls[;
+                    /*
+                    if (typeof(this.pollCallbacks[url])) {
+                        keepCalls.push([url,this.pollCallbacks[url]])
+                    }
+                }
 
-        for (let i =0; i < urls.length; i++) {
-            let url ='client/json'+urls[i];
-            if (typeof(this.pollCallbacks[url])) {
-                keepCalls.push([url,this.pollCallbacks[url]])
-            }
-        }
-
-        this.pollCallbacks = {};
-        for (let i = 0; i < keepCalls.length; i++) {
-            this.pollCallbacks[keepCalls[i][0]] = keepCalls[i][1];
-        }
-
+                this.pollCallbacks = {};
+                for (let i = 0; i < keepCalls.length; i++) {
+                    this.pollCallbacks[keepCalls[i][0]] = keepCalls[i][1];
+                }
+        */
         for (let i = 0; i < urls.length; i++) {
             this.pollIndex.push('client/json'+urls[i]);
         }

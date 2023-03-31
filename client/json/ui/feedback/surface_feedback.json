@@ -11,10 +11,10 @@
               "id":"feedback_surface_anchor",
               "config": {
                 "NONE": {
-                  "color_rgba": {"r": 0.85, "g": 0.45, "b": 0.15, "a": 0.7}
+                  "color_rgba": {"r": 0.85, "g": 0.45, "b": 0.15, "a": 0.0}
                 },
                 "ACTIVE": {
-                  "color_rgba": {"r": 0.01, "g": 0.99, "b": 0.01, "a": 1.0},
+                  "color_rgba": {"r": 0.01, "g": 0.99, "b": 0.01, "a": 0.0},
                   "sprite": "container_box_framed"
                 }
               }
@@ -30,6 +30,15 @@
             },
             {
               "id":"feedback_surface_page_text_box",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.01, "g": 0.31, "b": 0.69, "a": 1.0},
+                  "sprite": "text_box_framed"
+                }
+              }
+            },
+            {
+              "id":"feedback_surface_hidden",
               "config": {
                 "NONE": {
                   "color_rgba": {"r": 0.01, "g": 0.31, "b": 0.69, "a": 1.0},

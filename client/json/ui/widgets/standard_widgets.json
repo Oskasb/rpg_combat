@@ -179,6 +179,14 @@
               }
             },
             {
+              "id":"widget_hidden_container",
+              "layout":"layout_gui_anchor_point",
+              "surface": {
+                "nineslice": "nineslice_surface_debug",
+                "feedback": "feedback_surface_anchor"
+              }
+            },
+            {
               "id":"widget_expanding_container",
               "layout":"layout_expanding_container",
               "surface": {

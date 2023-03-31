@@ -12,9 +12,6 @@
       "TEXTURES"
     ],
     "POLL_INDEX":[
-      "/world/home_scenario.json"
-    ],
-    "NOT_POLL_INDEX":[
       "/ui/elements/icon_elements.json"                      ,
       "/ui/elements/surface_elements.json"                   ,
       "/ui/elements/text_elements.json"                      ,
@@ -25,6 +22,11 @@
       "/ui/widgets/standard_widgets.json"                    ,
       "/ui/gui_systems.json"                                 ,
       "/ui/pages/gui_pages.json"                             ,
+
+      "/world/home_scenario.json"
+    ],
+    "NOT_POLL_INDEX":[
+
       "/effects/effect_buffers.json"                         ,
       "/effects/effect_effects.json"                         ,
       "/effects/effect_particles.json"                       ,
