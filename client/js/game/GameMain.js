@@ -65,7 +65,9 @@ class GameMain {
 
         let camCallback = function() {
             if (this.activeScenario) {
-                this.activeScenario.activateDynamicScenario()
+                if (this.activeScenario.activateDynamicScenario) {
+                    this.activeScenario.activateDynamicScenario()
+                }
             }
         }.bind(this);
         navPoint.callback = camCallback;

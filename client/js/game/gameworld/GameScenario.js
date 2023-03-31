@@ -1,5 +1,6 @@
 import {ScenarioStatic} from "./ScenarioStatic.js";
 import {ScenarioDynamic} from "./ScenarioDynamic.js";
+import { HomeScenario } from "../gamescenarios/HomeScenario.js";
 
 class GameScenario {
     constructor(scenarioId) {
@@ -14,6 +15,7 @@ class GameScenario {
     }
 
     initGameStaticScenario(staticId, onReady) {
+        this.homeScenario = new HomeScenario();
         this.scenarioTime = 0;
         this.staticScenario = new ScenarioStatic(staticId);
         this.staticScenario.initStaticScenario(onReady)

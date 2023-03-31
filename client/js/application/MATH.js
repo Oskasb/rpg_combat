@@ -463,6 +463,22 @@ if(typeof(MATH) === "undefined") {
 		return MATH.remainder(Math.sin(seed) * 9999.991 + Math.cos(seed));
 	};
 
+	MATH.sillyRandomBetween = function(min, max, seed) {
+		return MATH.sillyRandom(seed)*(max-min) + min;
+	};
+
+	MATH.randomRotateObj = function(obj3d, rotArray, seed) {
+		obj3d.rotateX((MATH.sillyRandom(seed)-0.5) * rotArray[0] * 2)
+		obj3d.rotateY((MATH.sillyRandom(seed+1)-0.5) * rotArray[1] *2)
+		obj3d.rotateZ((MATH.sillyRandom(seed+2)-0.5) * rotArray[2] *2)
+	}
+
+	MATH.rotateObj = function(obj3d, rotArray) {
+		obj3d.rotateX(rotArray[0])
+		obj3d.rotateY(rotArray[1])
+		obj3d.rotateZ(rotArray[2])
+	}
+
 	MATH.angleInsideCircle = function(angle) {
 		if (angle < -Math.PI) angle+= MATH.TWO_PI;
 		if (angle > Math.PI) angle-= MATH.TWO_PI;

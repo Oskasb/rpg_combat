@@ -1,53 +1,110 @@
-import { HomeScenarioUtils } from "./HomeScenarioUtils.js";
-import { ScenarioUtils } from "../gameworld/ScenarioUtils.js";
 
 class HomeScenario {
     constructor() {
-        this.scenarioUtils = new ScenarioUtils();
-        this.instances = [];
-        this.homeScenarioUtils = new HomeScenarioUtils()
+
+        let updateHome = function(value) {
+            if (value.scenario) {
+                if (value.scenario === 'home') {
+                    this.tickHomeScenario()
+                }
+            }
+        }.bind(this)
+
+        evt.on(ENUMS.Event.SCENARIO_UPDATE, updateHome);
     }
 
-    initHomeScenario(callback) {
-    //    GuiAPI.activatePage('page_scene_home');
+    tickHomeScenario() {
+        let scenarioTime = GameAPI.getGameTime();
+        let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
+        if (player){
+            let tempObj = ThreeAPI.tempObj;
+            tempObj.quaternion.x = 0;
+            tempObj.quaternion.y = 1;
+            tempObj.quaternion.z = 0;
+            tempObj.quaternion.w = 0;
+            tempObj.rotateY(-0.86);
+            player.getSpatial().setQuatXYZW(
+                tempObj.quaternion.x,
+                tempObj.quaternion.y,
+                tempObj.quaternion.z,
+                tempObj.quaternion.w
+            );
+            player.getSpatial().setPosXYZ(
+                -1.3, 0, 0.8
+            );
+
+            if (Math.random() < 0.02) {
 
 
-        client.treeInstances = [];
-        client.particleEffects = [];
+                let randomAnims = [
+                    'CT_ML_R',
+                    'CT_MR_R',
+                    'CT_TC_R',
+                    'CT_TR_R',
+                    //    'DEAD',
+                    //    'FALL',
+                    'GD_BCK_R',
+                    'GD_HI_R',
+                    'GD_HNG_R',
+                    'GD_INS_R',
+                    //    'GD_LFT_FF',  // broken
+                    'GD_LNG_R',
+                    'GD_LOW_R',
+                    'GD_MID_R',
+                    'GD_RT_FF',
+                    'GD_SHT_R',
+                    'GD_SID_R',
+                    'IDLE',
+                    //    'IDL_HI_CB',
+                    //    'IDL_LO_CB',
+                    //    'RUN',
+                    //   'SET_LFT_FF',  // broken
+                    'SET_RT_FF',
+                    'SW_BCK_R',
+                    'SW_SID_R',
+                    //    'WALK',
+                    //    'WALK_BODY',
+                    //    'WALK_COMBAT'
+                ];
 
-        this.homeScenarioUtils.buildGround(2048, 5)
-    //    this.homeScenarioUtils.buildForest();
+                let count = randomAnims.length;
 
-        let assets = [
-            "asset_tree_3",
-            "asset_tree_2",
-            "asset_tree_4",
-            "asset_tree_1"
-        ];
-        let pos = new THREE.Vector3(0, 0, 20)
-        let size = new THREE.Vector3(45, 0, 45)
+                let key = randomAnims[ Math.floor( scenarioTime*2) % count];
 
-        let instances = this.scenarioUtils.spawnPatch(assets, 15, pos, size, 8, 0.1, 0.1, 7);
+                //    GuiAPI.printDebugText("ANIM KEY: "+key);
 
-        this.homeScenarioUtils.buildStronghold('asset_house_small');
+                player.applyPieceAnimationState(key)
+            }
 
-        this.homeScenarioUtils.instances.concat(instances);
+        }
 
 
+        let effectCb = function(eftc) {
+            //     console.log("effect add: ", effect)
+            eftc.activateEffectFromConfigId()
+            //    client.gameEffects.push(effect);
+            eftc.pos.x = Math.sin(261*scenarioTime)*(7) + (Math.random()*3.2);
+            eftc.pos.y = Math.sin(34 *scenarioTime) * 3  + 2 + Math.random() * 3;
+            eftc.pos.z = Math.cos(261*scenarioTime)*(18) + (Math.random()*3.2 + 16);
+            eftc.setEffectPosition(eftc.pos)
+        };
 
-        callback(this);
+        if (Math.random() < 0.15) {
+            EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
+        }
 
-    };
+        //   ThreeAPI.setCameraPos(
+        //       Math.cos(scenarioTime*0.2)*1.2+2,
+        //        Math.sin(scenarioTime*0.4)*0.5+5,
+        //       Math.sin(scenarioTime*0.2)*1.2-8
+        //   );
 
-    exitScenario() {
-        this.homeScenarioUtils.exitScenarioUtils()
-
-    };
+        //    ThreeAPI.cameraLookAt(0, 3, 0);
 
 
-
+    }
     tickScenario(tpf, scenarioTime) {
-        this.homeScenarioUtils.tickScenarioUtils(tpf, scenarioTime)
+        this.tickHomeScenario(tpf, scenarioTime)
     }
 
 }

@@ -124,7 +124,7 @@ class PipelineAPI {
         this.configCache.registerPollUrl(url);
     };
 
-    fetchConfigData(configId, key, dataId, callback) {
+    fetchConfigData = function(configId, key, dataId, callback) {
     //    console.log("Fetch data ", configId, key, dataId)
         let configs = this.getCachedConfigs();
 

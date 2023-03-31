@@ -40,6 +40,9 @@
       "/threedata/assets/sprites/particle_sprites_6x6.json"
     ],
     "LOAD_MODELS":[
+      "asset_mansion_roof",
+      "asset_mansion_main",
+      "asset_house_small",
       "asset_box",
       "asset_tree_3",
       "asset_tree_2",
@@ -48,9 +51,15 @@
       "asset_tree_1"
     ],
     "PRELOAD_FILES": [
-      "file_house_small"
+
     ],
     "NOT_PRELOAD_FILES": [
+      "file_town_house",
+      "file_house_t",
+      "file_mansion_main",
+      "file_mansion_roof",
+      "file_house_small",
+
       "file_fighter_bind",
       "file_walk_body"   ,
       "file_idle_legs"     ,
