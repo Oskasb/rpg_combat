@@ -1,6 +1,6 @@
 [{
-  "SCENARIO":{
-    "STATIC":[
+  "STATIC_SCENARIOS":{
+    "MAIN_SCENARIOS":[
       {
         "id": "home_scenario_static",
         "data": [
@@ -295,23 +295,6 @@
                   "rot": [ -1.5707964, 0, -4.3]
                 }
               ]
-            }
-          }
-        ]
-      },
-      {
-        "id": "cave_scenario_static",
-        "data": [
-          {
-            "data_key":"scenario_data",
-            "config": {
-              "environment": "cave_dusty",
-              "box_grid":{
-                "box_size":0.25,
-                "grid_width":12,
-                "grid_depth":48,
-                "wall_height": 2
-              }
             }
           }
         ]

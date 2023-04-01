@@ -8,7 +8,7 @@ class EncounterDynamicScenario {
         this.scenarioDynamicId = scenarioDynamicId;
 
         if (!this.scenarioDynamicId) {
-        //    console.log("No dynamic scenario, exit...")
+        //    console.log("No home_dynamic scenario, exit...")
             return;
         }
 
@@ -46,6 +46,7 @@ class EncounterDynamicScenario {
         };
 
         this.config = config;
+        PipelineAPI.cacheCategoryKey("DYNAMIC_SCENARIOS", "GAME_SCENARIOS", onDataCb)
         PipelineAPI.cacheCategoryKey("WORLD_SYSTEMS", "WORLD_DYNAMIC", onDataCb)
     }
 

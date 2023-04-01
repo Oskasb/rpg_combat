@@ -26,7 +26,7 @@
         "config": {
           "scenario_static": "cave_scenario_static",
           "dynamic_scenarios": [
-            "encounter_dynamic_cave_basic"
+            "encounter_cave_basic_dynamic"
           ]
         }
       }
@@ -104,7 +104,7 @@
           "pos": [5, 180, -340],
           "lookAt": [-5, 0, -120]
         },
-        "encounter_dynamic_cave_basic":{
+        "encounter_cave_basic_dynamic":{
           "time":2,
           "pos": [0, 8, -5],
           "lookAt": [0, 0, 4]
@@ -112,25 +112,7 @@
       }
       }
     ],
-    "WORLD_STATIC":[
-      {
-        "id":"encounter_static_rock_cave",
-        "data": [
-          {
-            "id":"scenario_static_init",
-            "config": {
 
-              "box_grid":{
-                "box_size":0.6,
-                "grid_width":8,
-                "grid_depth":48,
-                "wall_height": 4
-              }
-            }
-          }
-        ]
-      }
-    ],
     "WORLD_DYNAMIC":[
       {
         "id": "home_hovel_dynamic",
@@ -293,7 +275,7 @@
         ]
       },
       {
-        "id":"encounter_dynamic_cave_basic",
+        "id":"encounter_cave_basic_dynamic",
         "data": [
           {
             "id":"dynamic_view_init",

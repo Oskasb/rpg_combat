@@ -23,7 +23,7 @@ class ScenarioDynamic {
         if (dynamicScenario) {
             dynamicScenario.exitScenario();
         } else {
-            console.log("No dynamic scenario, look for error plz")
+            console.log("No home_dynamic scenario, look for error plz")
         }
     }
 

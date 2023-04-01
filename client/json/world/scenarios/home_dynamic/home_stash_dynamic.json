@@ -1,0 +1,23 @@
+[{
+  "DYNAMIC_SCENARIOS":{
+
+    "GAME_SCENARIOS":[
+      {
+        "id": "home_stash_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_stash",
+              "environment": "morning",
+
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}]

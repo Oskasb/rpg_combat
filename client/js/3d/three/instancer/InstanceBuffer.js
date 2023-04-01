@@ -90,7 +90,7 @@ class InstanceBuffer {
     };
 
     /*
-            attachAttribute = function(name, dimensions, count, dynamic) {
+            attachAttribute = function(name, dimensions, count, home_dynamic) {
                 var buffer = new Float32Array(count * dimensions);
                 var attribute = new THREE.InstancedBufferAttribute(buffer, dimensions, false).setDynamic( true );
                 this.geometry.addAttribute(name, attribute);

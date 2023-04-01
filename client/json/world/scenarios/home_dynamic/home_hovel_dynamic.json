@@ -1,0 +1,26 @@
+[{
+  "DYNAMIC_SCENARIOS":{
+
+    "GAME_SCENARIOS":[
+      {
+        "id": "home_hovel_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_home",
+              "environment": "sunny_day",
+              "player": {
+                "pos": [],
+                "rot": []
+              },
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}]

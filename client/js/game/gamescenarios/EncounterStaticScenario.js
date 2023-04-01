@@ -5,7 +5,7 @@ class EncounterStaticScenario {
     constructor(staticId) {
         this.instances = [];
         this.scenarioStaticId = staticId;
-        this.configData =  new ConfigData("SCENARIO","STATIC", 'scenario_data', 'data_key', 'config')
+        this.configData =  new ConfigData("STATIC_SCENARIOS","MAIN_SCENARIOS", 'scenario_data', 'data_key', 'config')
         this.onUpdateCallbacks = []
     }
 

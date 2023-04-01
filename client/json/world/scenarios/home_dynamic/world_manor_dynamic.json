@@ -1,0 +1,24 @@
+[{
+  "DYNAMIC_SCENARIOS":{
+
+    "GAME_SCENARIOS":[
+
+      {
+        "id": "world_manor_dynamic",
+        "data": [
+          {
+            "id":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_manor",
+              "environment": "evening",
+
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}]

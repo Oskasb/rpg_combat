@@ -72,7 +72,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"cave_scenario",
-                        "dynamic":"encounter_dynamic_cave_basic"
+                        "dynamic":"encounter_cave_basic_dynamic"
                       }
                     }
                   }

@@ -48058,7 +48058,7 @@ class AnimationMixer extends EventDispatcher {
 	}
 
 	// return an action for a clip optionally using a custom root target
-	// object (this method allocates a lot of dynamic memory in case a
+	// object (this method allocates a lot of home_dynamic memory in case a
 	// previously unknown clip/root combination is specified)
 	clipAction( clip, optionalRoot, blendMode ) {
 
