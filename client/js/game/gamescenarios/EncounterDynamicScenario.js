@@ -1,3 +1,4 @@
+import * as ScenarioUtils from "../gameworld/ScenarioUtils.js";
 
 class EncounterDynamicScenario {
     constructor() {
@@ -47,7 +48,6 @@ class EncounterDynamicScenario {
 
         this.config = config;
         PipelineAPI.cacheCategoryKey("DYNAMIC_SCENARIOS", "GAME_SCENARIOS", onDataCb)
-        PipelineAPI.cacheCategoryKey("WORLD_SYSTEMS", "WORLD_DYNAMIC", onDataCb)
     }
 
     activateEncDynScenario() {
@@ -63,6 +63,8 @@ class EncounterDynamicScenario {
     //    let lookAt = this.config.camera.lookAt;
 
         let pieces = this.pieces;
+
+        if (config['player']) ScenarioUtils.positionPlayer(config['player']);
 
         let pieceInstanceCallback = function(gamePiece) {
             this.pieces.push(gamePiece);

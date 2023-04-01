@@ -17,6 +17,7 @@ class HomeScenario {
         let scenarioTime = GameAPI.getGameTime();
         let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
         if (player){
+            /*
             let tempObj = ThreeAPI.tempObj;
             tempObj.quaternion.x = 0;
             tempObj.quaternion.y = 1;
@@ -32,7 +33,7 @@ class HomeScenario {
             player.getSpatial().setPosXYZ(
                 -1.3, 0, 0.8
             );
-
+            */
             if (Math.random() < 0.02) {
 
 

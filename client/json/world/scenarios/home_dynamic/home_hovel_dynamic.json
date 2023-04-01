@@ -11,8 +11,8 @@
               "gui_page":"page_scene_home",
               "environment": "sunny_day",
               "player": {
-                "pos": [],
-                "rot": []
+                "pos": [-1.3, 0, 0.8],
+                "rot": [0, -0.92, 0]
               },
               "spawn":[
 

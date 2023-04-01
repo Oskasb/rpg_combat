@@ -10,7 +10,10 @@
             "config": {
               "gui_page":"page_scene_stash",
               "environment": "morning",
-
+              "player": {
+                "pos": [1.2, 0, 1.4],
+                "rot": [0, -2.26, 0]
+              },
               "spawn":[
 
               ]

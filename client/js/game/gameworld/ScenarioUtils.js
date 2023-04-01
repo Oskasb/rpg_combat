@@ -1,4 +1,30 @@
+function positionPlayer(config) {
+    console.log("Position player")
+    let pos = config['pos'];
+    let rot = config['rot'];
+    let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
+    MATH.vec3FromArray(ThreeAPI.tempVec3, pos);
+    let spatial =player.getSpatial()
+    spatial.getSpatialPosition().copy(ThreeAPI.tempVec3);
 
+
+
+    let tempObj = ThreeAPI.tempObj;
+    tempObj.quaternion.x = 0;
+    tempObj.quaternion.y = 1;
+    tempObj.quaternion.z = 0;
+    tempObj.quaternion.w = 0;
+    tempObj.rotateX(rot[0]);
+    tempObj.rotateY(rot[1]);
+    tempObj.rotateZ(rot[2])
+    player.getSpatial().setQuatXYZW(
+        tempObj.quaternion.x,
+        tempObj.quaternion.y,
+        tempObj.quaternion.z,
+        tempObj.quaternion.w
+    );
+
+}
 function setupBoxGrid(instances, boxGrid) {
     console.log("SETUP GRID")
     let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
@@ -160,6 +186,7 @@ function spawnLocation(instances, location) {
 }
 
 export {
+    positionPlayer,
     setupBoxGrid,
     spawnPatch,
     spawnLocation
