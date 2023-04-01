@@ -6,7 +6,7 @@
         "id": "home_world_dynamic",
         "data": [
           {
-            "id":"dynamic_view_init",
+            "data_key":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_world",
               "environment": "sunny_day",

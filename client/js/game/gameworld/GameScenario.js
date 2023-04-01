@@ -22,17 +22,17 @@ class GameScenario {
     }
 
     activateDynamicScenario() {
-        this.dynamicScenario.dynamicScenarioActivate()
+        if (this.dynamicScenario) this.dynamicScenario.dynamicScenarioActivate()
     }
 
-    initGameDynamicScenario(dynamicId) {
+    initGameDynamicScenario(dynamicId, dynamicReady) {
         if (this.dynamicScenario) {
             this.dynamicScenario.exitDynamicScenario()
         }
 
-        let dynamicReady = function(dyn) {
-            console.log("Dynamic scenario loaded", dyn);
-        };
+     //   let dynamicReady = function(dyn) {
+     //       console.log("Dynamic scenario loaded", dyn);
+     //   };
 
         this.dynamicScenario = new ScenarioDynamic(dynamicId);
         this.dynamicScenario.initDynamicScenario(dynamicReady)

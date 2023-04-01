@@ -87,8 +87,12 @@ class GameMain {
         let staticId = config['scenario_static'];
         this.applyNavPoint();
 
+        let dynamicReady = function(dynScen) {
+            console.log("Dynamic Ready")
+        }
+
         let staticReadyCB = function() {
-            this.activeScenario.initGameDynamicScenario(dynamicId)
+            this.activeScenario.initGameDynamicScenario(dynamicId, dynamicReady)
         }.bind(this)
 
             if (this.activeScenario) {

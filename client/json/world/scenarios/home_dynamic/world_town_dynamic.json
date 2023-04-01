@@ -5,9 +5,13 @@
         "id": "world_town_dynamic",
         "data": [
           {
-            "id":"dynamic_view_init",
+            "data_key":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_town",
+              "player": {
+                "pos": [-6, 0, -208],
+                "rot": [0, 1.4, 0]
+              },
               "environment": "sunny_day",
 
               "spawn":[

@@ -1,5 +1,5 @@
 function positionPlayer(config) {
-    console.log("Position player")
+
     let pos = config['pos'];
     let rot = config['rot'];
     let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
@@ -7,7 +7,7 @@ function positionPlayer(config) {
     let spatial =player.getSpatial()
     spatial.getSpatialPosition().copy(ThreeAPI.tempVec3);
 
-
+    console.log("Position player", pos, rot)
 
     let tempObj = ThreeAPI.tempObj;
     tempObj.quaternion.x = 0;
@@ -23,7 +23,7 @@ function positionPlayer(config) {
         tempObj.quaternion.z,
         tempObj.quaternion.w
     );
-
+    player.callbacks.tickGamePiece();
 }
 function setupBoxGrid(instances, boxGrid) {
     console.log("SETUP GRID")

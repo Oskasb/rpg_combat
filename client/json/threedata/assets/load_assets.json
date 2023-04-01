@@ -12,6 +12,19 @@
       "TEXTURES"
     ],
     "POLL_INDEX":[
+      "/world/scenarios/home_dynamic/home_hero_dynamic.json" ,
+      "/world/scenarios/home_dynamic/home_hovel_dynamic.json" ,
+      "/world/scenarios/home_dynamic/home_stash_dynamic.json" ,
+      "/world/scenarios/home_dynamic/home_world_dynamic.json" ,
+      "/world/scenarios/home_dynamic/manor_garden_dynamic.json" ,
+      "/world/scenarios/home_dynamic/manor_village_dynamic.json" ,
+      "/world/scenarios/home_dynamic/town_inn_dynamic.json" ,
+      "/world/scenarios/home_dynamic/town_merchant_dynamic.json" ,
+      "/world/scenarios/home_dynamic/world_manor_dynamic.json" ,
+      "/world/scenarios/home_dynamic/world_town_dynamic.json" ,
+      "/world/scenarios/encounter_dynamic/encounter_cave_basic_dynamic.json" ,
+
+
       "/ui/elements/surface_elements.json"                   ,
       "/ui/elements/text_elements.json"                      ,
       "/world/world_systems.json"                            ,

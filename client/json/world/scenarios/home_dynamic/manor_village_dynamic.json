@@ -6,9 +6,13 @@
         "id": "manor_village_dynamic",
         "data": [
           {
-            "id":"dynamic_view_init",
+            "data_key":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_village",
+              "player": {
+                "pos": [-1.3, 0, 0.8],
+                "rot": [0, -0.92, 0]
+              },
               "environment": "evening",
 
               "spawn":[

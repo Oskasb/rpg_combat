@@ -1,63 +1,47 @@
 import * as ScenarioUtils from "../gameworld/ScenarioUtils.js";
+import {ConfigData} from "../../application/utils/ConfigData.js";
 
 class EncounterDynamicScenario {
-    constructor() {
+    constructor(dataId) {
+        this.dataId = dataId;
         this.pieces = [];
+        this.onUpdateCallbacks = []
+        this.configData =  new ConfigData("DYNAMIC_SCENARIOS", "GAME_SCENARIOS",  'dynamic_view_init', 'data_key', 'config')
+        this.isActive = false;
     }
 
-    initEncounterDynamicScenario(scenarioDynamicId, onReadyCB) {
-        this.scenarioDynamicId = scenarioDynamicId;
-
-        if (!this.scenarioDynamicId) {
-        //    console.log("No home_dynamic scenario, exit...")
-            return;
-        }
-
-        let config = {};
-        let dataKey = scenarioDynamicId;
-
-        let onConfig = function(config) {
-
-            this.applyScenarioConfig(config, onReadyCB);
+    initEncounterDynamicScenario(onReady) {
+        this.isActive = true;
+        let onConfig = function(config, updateCount) {
+            if (!this.isActive) return;
+            console.log("Update Count: ", updateCount, config)
+            if (updateCount) {
+                GuiAPI.printDebugText("REFLOW DYNAMIC SCENARIO")
+                this.exitScenario();
+            } else {
+                setTimeout(function() {
+                    onReady(this);
+                }, 0);
+            }
+            this.applyScenarioConfig(config, updateCount);
         }.bind(this)
 
-        let initiated = false;
-        let onEncData = function(configData) {
-            let data = configData.data;
-            for (let i = 0; i < data.length; i++) {
-                if (!initiated) {
-                    if (data[i].id === 'dynamic_view_init') {
-                        for (let key in data[i].config) {
-                            config[key] = data[i].config[key]
-                        }
-                        onConfig(config);
-                    }
-                }
-                initiated = true;
-            }
-        };
+        this.configData.parseConfig(this.dataId, onConfig)
 
-        let onDataCb = function(src, config) {
-        //    console.log("Scenario data: ", config)
-            for (let i = 0; i < config.length; i++) {
-                if (config[i].id === dataKey) {
-                    onEncData(config[i])
-                }
-            }
-        };
-
-        this.config = config;
-        PipelineAPI.cacheCategoryKey("DYNAMIC_SCENARIOS", "GAME_SCENARIOS", onDataCb)
     }
 
     activateEncDynScenario() {
         GuiAPI.activatePage(this.config['gui_page']);
+
     }
 
-    applyScenarioConfig = function(config, onReadyCB) {
-        GuiAPI.activatePage(null);
+    applyScenarioConfig = function(config, isUpdate) {
 
-        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:50, callback:onReadyCB});
+        this.config = config;
+
+        if (!isUpdate) GuiAPI.activatePage(null);
+
+        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:50});
 
     //    let pos = this.config.camera.pos;
     //    let lookAt = this.config.camera.lookAt;
@@ -85,6 +69,7 @@ class EncounterDynamicScenario {
     };
 
     exitScenario() {
+        this.isActive = false;
         while (this.pieces.length) {
             GameAPI.takePieceFromWorld(this.pieces.pop())
         }

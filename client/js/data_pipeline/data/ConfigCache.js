@@ -176,7 +176,7 @@ class ConfigCache {
             if (s.id) {
                 for (let j = 0; j < t.length; j++) {
                     if (s.id === t[j].id) {
-                        t[i] = s;
+                        t[j] = s;
                         return true;
                     }
                 }
@@ -202,8 +202,10 @@ class ConfigCache {
                 this.configs[key][index] = data[key][index];
             } else {
                 if (this.configs[key][index] && data[key][index]) {
+
                     if (this.configs[key][index].length && typeof(this.configs[key][index]) !== 'string') {
                         this.combineArray(data[key][index], this.configs[key][index], index)
+                        //    this.configs[key][index] = data[key][index];
                     } else {
                         this.configs[key][index] = data[key][index];
                     }

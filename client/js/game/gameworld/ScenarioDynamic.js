@@ -7,9 +7,9 @@ class ScenarioDynamic {
     }
 
     initDynamicScenario(onReadyCB) {
-        let dynamicScenario = new EncounterDynamicScenario();
+        let dynamicScenario = new EncounterDynamicScenario(this.dynamicScenarioId);
         this.loadedDynamicScenarios.push(dynamicScenario);
-        dynamicScenario.initEncounterDynamicScenario(this.dynamicScenarioId, onReadyCB);
+        dynamicScenario.initEncounterDynamicScenario(onReadyCB);
     }
 
     dynamicScenarioActivate() {

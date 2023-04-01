@@ -6,13 +6,13 @@
         "id": "home_stash_dynamic",
         "data": [
           {
-            "id":"dynamic_view_init",
+            "data_key":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_stash",
               "environment": "morning",
               "player": {
-                "pos": [1.2, 0, 1.4],
-                "rot": [0, -2.26, 0]
+                "pos": [1.2, 0, 1.2],
+                "rot": [0, -2.22, 0]
               },
               "spawn":[
 

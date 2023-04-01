@@ -43,6 +43,7 @@ class ConfigData {
         let onDataCb = function(data) {
             if (typeof(this.configKey) === 'string') {
                 data = this.parseConfigData()[parseKey].data;
+
                 let config = MATH.getFromArrayByKeyValue(data, this.dataKey, this.dataId)[this.configKey];
                 onUpdate(config, updateCount)
             } else {
@@ -56,6 +57,7 @@ class ConfigData {
 
         let onConfig = function(src, data) {
             this.config = data;
+
             onDataCb(data);
         }.bind(this);
 

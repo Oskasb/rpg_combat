@@ -7,9 +7,13 @@
         "id": "town_inn_dynamic",
         "data": [
           {
-            "id":"dynamic_view_init",
+            "data_key":"dynamic_view_init",
             "config": {
               "gui_page":"page_scene_inn",
+              "player": {
+                "pos": [-9, 0, -217],
+                "rot": [0, 4.3, 0]
+              },
               "environment": "sunny_day",
 
               "spawn":[
