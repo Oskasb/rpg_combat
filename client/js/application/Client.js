@@ -89,7 +89,6 @@ class Client {
 
             client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
             InstanceAPI.updateInstances(frame.tpf)
-            ThreeAPI.getEnvironment().tickEnvironment(frame.tpf);
             ThreeAPI.applyDynamicGlobalUniforms();
 
             ThreeAPI.updateAnimationMixers(frame.tpf);

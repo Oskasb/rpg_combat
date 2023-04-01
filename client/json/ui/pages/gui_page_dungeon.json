@@ -45,7 +45,7 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"WORLD",
+                    "text":"LEAVE",
                     "container_id":"page_home_center",
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",

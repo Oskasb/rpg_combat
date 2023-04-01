@@ -106,9 +106,9 @@ class UiTestSetup {
                     testActive: testActive,
                     interactive: true,
                     text: 'TESTS',
-                    offset_x: 0.08,
-                    offset_y: -0.22,
-                    anchor: 'top_left'
+                    offset_x: -0.06,
+                    offset_y: -0.08,
+                    anchor: 'top_right'
                 };
 
             evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts)
@@ -223,7 +223,7 @@ class UiTestSetup {
                 let key = envs[env % envs.length];
                 console.log(key)
                 GuiAPI.printDebugText("STEP ENVIRONMENT "+key);
-                evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT, {envId:key, time:35});
+                evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT, {envId:key, time:5});
                 env++;
 
             };

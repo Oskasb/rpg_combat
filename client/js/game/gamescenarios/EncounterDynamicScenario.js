@@ -52,7 +52,7 @@ class EncounterDynamicScenario {
     applyScenarioConfig = function(config, onReadyCB) {
         GuiAPI.activatePage(null);
 
-        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:4, callback:onReadyCB});
+        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:50, callback:onReadyCB});
 
     //    let pos = this.config.camera.pos;
     //    let lookAt = this.config.camera.lookAt;

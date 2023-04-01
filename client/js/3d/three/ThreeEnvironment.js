@@ -22,6 +22,7 @@ class ThreeEnvironment {
         this.maxElevation = 10000;
         this.currentElevation = 0;
         this.elevationFactor = 0;
+        this.transitionTime = 23;
         this.currentEnvConfig;
         this.currentSkyConfig;
         this.worldCenter = new THREE.Vector3(0, 0, 0);
@@ -29,7 +30,7 @@ class ThreeEnvironment {
         this.calcVec2 = new THREE.Vector3();
         this.theta;
         this.phi;
-        this.transitionTime = 1;
+
         this.transitionProgress = 0;
         this.sky = null;
 
@@ -299,6 +300,7 @@ class ThreeEnvironment {
 
     calcTransitionProgress = function(tpf) {
         this.transitionProgress += tpf;
+
         return MATH.calcFraction(0, this.transitionTime, this.transitionProgress);
     };
 
@@ -429,11 +431,7 @@ class ThreeEnvironment {
     //    ThreeAPI.getSetup().removePostrenderCallback(tickEnvironment);
     };
 
-    setEnvConfigId = function(envConfId, time) {
-        this.transitionTime = time || 5;
-        this.transitionProgress = 0;
-        this.currentEnvId = envConfId;
-    };
+
 
 
 
@@ -443,8 +441,14 @@ class ThreeEnvironment {
 
         let _this = this;
 
+        let setEnvConfigId = function(envConfId, time) {
+            this.transitionTime = time || 225;
+            this.transitionProgress = 0;
+            this.currentEnvId = envConfId;
+        }.bind(this);
+
         let advanceEnv = function(envArgs) {
-                _this.setEnvConfigId(envArgs.envId, envArgs.time);
+                setEnvConfigId(envArgs.envId, envArgs.time);
         //    console.log("Advance ENV ", envArgs, _this.currentEnvId, _this.envList);
         };
 
