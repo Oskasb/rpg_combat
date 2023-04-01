@@ -42,11 +42,11 @@
               ],
               "buttons":[
                 {
-                  "widget_id":"button_go_world",
+                  "widget_id":"button_leave",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"MANOR",
+                    "text":"LEAVE",
                     "container_id":"page_home_center",
                     "offset_x": 0.12,
                     "offset_y":-0.27,
