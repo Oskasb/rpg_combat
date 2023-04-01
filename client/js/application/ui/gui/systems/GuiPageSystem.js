@@ -16,13 +16,14 @@ class GuiPageSystem {
         for (let key in config) {
             let pageId = config[key].id;
             let pageData = config[key].data;
-            this.pages[pageId]  = new GuiPage(pageData);
+            this.pages[pageId]  = new GuiPage(pageId);
         }
 
     }
 
     activateGuiPage(pageId) {
      //   console.log("ACTIVATE PAGE "+pageId);
+
 
         if (this.activePages.length) {
             let oldPage = this.activePages.pop();

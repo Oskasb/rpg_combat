@@ -20,15 +20,19 @@ class EncounterDynamicScenario {
             this.applyScenarioConfig(config, onReadyCB);
         }.bind(this)
 
+        let initiated = false;
         let onEncData = function(configData) {
             let data = configData.data;
             for (let i = 0; i < data.length; i++) {
-                if (data[i].id === 'dynamic_view_init') {
-                    for (let key in data[i].config) {
-                        config[key] = data[i].config[key]
+                if (!initiated) {
+                    if (data[i].id === 'dynamic_view_init') {
+                        for (let key in data[i].config) {
+                            config[key] = data[i].config[key]
+                        }
+                        onConfig(config);
                     }
-                    onConfig(config);
                 }
+                initiated = true;
             }
         };
 
@@ -42,7 +46,7 @@ class EncounterDynamicScenario {
         };
 
         this.config = config;
-        PipelineAPI.cacheCategoryKey("WORLD", "WORLD_DYNAMIC", onDataCb)
+        PipelineAPI.cacheCategoryKey("WORLD_SYSTEMS", "WORLD_DYNAMIC", onDataCb)
     }
 
     activateEncDynScenario() {

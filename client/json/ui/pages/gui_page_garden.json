@@ -3,7 +3,7 @@
     "UI": {
       "PAGES":[
         {
-          "id": "page_scene_merchant",
+          "id": "page_scene_garden",
           "data": [
             {
               "containers":[
@@ -20,7 +20,7 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"scene_page_header_text_box",
                   "options":{
-                    "text":"TRADER",
+                    "text":"UNKEMPT GARDEN",
                     "anchor":"top_center",
                     "offset_x": 0.0,
                     "offset_y":-0.025
@@ -35,7 +35,7 @@
                     "anchor":"bottom_left",
                     "offset_x":0.15,
                     "offset_y":0.04,
-                    "text":"Looks like a shopkeeper."
+                    "text":"Weeds everywhere."
                   }
 
                 }
@@ -46,51 +46,51 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"LEAVE",
+                    "text":"MANOR",
                     "container_id":"page_home_center",
-                    "offset_x":0.04,
-                    "offset_y":-0.26,
+                    "offset_x": 0.12,
+                    "offset_y":-0.27,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"world_town_dynamic"
+                        "dynamic":"world_manor_dynamic"
                       }
                     }
                   }
                 },
                 {
-                  "widget_id":"button_go_merchant",
+                  "widget_id":"button_go_house",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"TRADE",
+                    "text":"ENTER",
                     "container_id":"page_home_center",
-                    "offset_x":-0.13,
-                    "offset_y":-0.12,
+                    "offset_x": 0.09,
+                    "offset_y": 0.04,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"town_merchant_dynamic"
+                        "id":"cave_scenario",
+                        "dynamic":"encounter_dynamic_cave_basic"
                       }
                     }
                   }
                 },
                 {
-                  "widget_id":"button_go_inn",
+                  "widget_id":"button_go_cottage",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"INN",
+                    "text":"ENTER",
                     "container_id":"page_home_center",
-                    "offset_x":0.15,
-                    "offset_y":-0.02,
+                    "offset_x":-0.09,
+                    "offset_y":-0.04,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"town_inn_dynamic"
+                        "id":"cave_scenario",
+                        "dynamic":"encounter_dynamic_cave_basic"
                       }
                     }
                   }

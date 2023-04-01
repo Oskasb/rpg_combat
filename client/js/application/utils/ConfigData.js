@@ -12,6 +12,8 @@ class ConfigData {
         this.data = {};
         this.updateCount = 0;
 
+        this.onUpdateCallbacks = []
+
         if (dataId) {
             return;
         }
@@ -19,7 +21,8 @@ class ConfigData {
             if (typeof(onReady) === 'function') {
                 onReady()
             }
-        };
+            MATH.callAll(this.onUpdateCallbacks, this.config);
+        }.bind(this);
         let onDataCb = function(data) {
             setTimeout(function() { postInit(data), 0 })
         };
@@ -32,6 +35,9 @@ class ConfigData {
         PipelineAPI.cacheCategoryKey(this.root, this.folder, onConfig)
     };
 
+    addUpdateCallback = function(callback) {
+        this.onUpdateCallbacks.push(callback)
+    }
     parseConfig(parseKey, onUpdate) {
         let updateCount = 0;
         let onDataCb = function(data) {
@@ -71,23 +77,33 @@ class ConfigData {
         return this.data[dataKey];
     };
 
-    parseConfigData = function() {
+    parseConfigData = function(data) {
         let config = {};
 
-        let onData = function(data) {
-            if (data.id) {
-                config[data.id] = data;
-            } else {
-                console.log("funky data structure in config", data);
-            }
+        if (!data) {
+            data = this.config;
+        }
 
-        };
-
-        for (let i = 0; i < this.config.length;i++) {
-            onData(this.config[i])
+        for (let i = 0; i < data.length;i++) {
+            config[data[i].id] = data[i];
         }
         return config;
     };
+
+
+    reapplyDataToConfig(data, config, dataId) {
+        let applyData = function(conf, data) {
+            for (let key in data) {
+                conf[key] = data[key]
+            }
+        }
+
+        for (let i = 0; i < data.length;i++) {
+            if (data[i].id === dataId) {
+                applyData(config, data[i].data);
+            }
+        }
+    }
 
     readConfigKey = function(dataKey) {
         return this.config[dataKey];

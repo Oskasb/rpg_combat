@@ -1,12 +1,36 @@
+import {ConfigData} from "../../../utils/ConfigData.js";
+
 class GuiPage {
-    constructor(config) {
-        this.config = config
+    constructor(pageId) {
+        this.isActive = false;
+        this.pageId = pageId;
         this.containers = {};
+
+        this.configData = new ConfigData("UI", "PAGES")
+
+        this.config = this.configData.parseConfigData()[pageId].data;
+
+        let reactivate = function() {
+            this.activateGuiPage();
+        }.bind(this);
+
+        let onUpdate = function(data) {
+            console.log("UPDATE TO PAGE", data);
+            if (this.isActive) {
+                GuiAPI.printDebugText('REFLOW '+this.pageId)
+                this.configData.reapplyDataToConfig(data, this.config, pageId);
+                this.closeGuiPage();
+                setTimeout(reactivate,200);
+            }
+        }.bind(this);
+
+        this.configData.addUpdateCallback(onUpdate)
+
     }
 
     activateGuiPage() {
     //    console.log("Activate gui page ", this.config);
-
+        this.isActive = true;
 
 
         for (let i = 0; i < this.config.length; i++) {
@@ -70,7 +94,8 @@ class GuiPage {
     }
 
     closeGuiPage() {
-     //   console.log("Close gui page ", this);
+        this.isActive = false;
+        console.log("Close gui page ", this);
         for (let key in this.containers) {
             let widget = this.containers[key]
             widget.guiWidget.recoverGuiWidget();

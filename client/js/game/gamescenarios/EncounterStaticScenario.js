@@ -30,7 +30,7 @@ class EncounterStaticScenario {
     }
 
     applyScenarioConfig(config) {
-        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config.environment, time:250});
+        evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config.environment, time:2});
         let instances = this.instances;
         let updateDispatch = config['update_dispatch'];
 

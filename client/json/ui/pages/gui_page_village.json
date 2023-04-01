@@ -48,8 +48,8 @@
                   "options":{
                     "text":"MANOR",
                     "container_id":"page_home_center",
-                    "offset_x":-0.02,
-                    "offset_y":0.17,
+                    "offset_x": 0.12,
+                    "offset_y":-0.27,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -64,15 +64,15 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"HOUSE",
+                    "text":"ENTER",
                     "container_id":"page_home_center",
-                    "offset_x":-0.09,
-                    "offset_y":-0.08,
+                    "offset_x": 0.09,
+                    "offset_y": 0.04,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"village_house_dynamic"
+                        "id":"cave_scenario",
+                        "dynamic":"encounter_dynamic_cave_basic"
                       }
                     }
                   }
@@ -82,15 +82,15 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"COTTAGE",
+                    "text":"ENTER",
                     "container_id":"page_home_center",
                     "offset_x":-0.09,
-                    "offset_y":-0.08,
+                    "offset_y":-0.04,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"village_cottage_dynamic"
+                        "id":"cave_scenario",
+                        "dynamic":"encounter_dynamic_cave_basic"
                       }
                     }
                   }

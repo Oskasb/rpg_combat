@@ -7,7 +7,7 @@ import { GuiPageSystem } from "./systems/GuiPageSystem.js";
 
 class GuiAPI {
     constructor() {
-        this.guiDebug = new GuiDebug();
+
         this.aspect = 1;
         this.elementPools = {};
         this.inputSystem;
@@ -15,9 +15,7 @@ class GuiAPI {
         this.buttonSystem;
         this.instantiator = new Instantiator('guiInstantiator');
         this.worldSpacePointers = [];
-        this.guiSettings = new GuiSettings();
-        this.widgetBuilder = new WidgetBuilder();
-        this.guiPageSystem = new GuiPageSystem();
+
         this.basicText;
         this.txtSysKey = 'UI_TEXT_MAIN';
         this.guiUpdateCallbacks = [];
@@ -54,6 +52,11 @@ class GuiAPI {
 
 
     initGuiApi = function(onReadyCB) {
+
+        this.guiDebug = new GuiDebug();
+        this.guiSettings = new GuiSettings();
+        this.widgetBuilder = new WidgetBuilder();
+        this.guiPageSystem = new GuiPageSystem();
 
         let reqs = 0;
         let loads = 0;

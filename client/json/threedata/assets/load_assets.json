@@ -12,6 +12,7 @@
       "TEXTURES"
     ],
     "POLL_INDEX":[
+      "/world/world_systems.json"                            ,
       "/ui/elements/icon_elements.json"                      ,
       "/ui/elements/surface_elements.json"                   ,
       "/ui/elements/text_elements.json"                      ,
@@ -21,8 +22,15 @@
       "/ui/layout/surface_layout.json"                       ,
       "/ui/widgets/standard_widgets.json"                    ,
       "/ui/gui_systems.json"                                 ,
-      "/ui/pages/gui_pages.json"                             ,
-
+      "/ui/pages/gui_page_dungeon.json"                        ,
+      "/ui/pages/gui_page_hero.json"                        ,
+      "/ui/pages/gui_page_home.json"                        ,
+      "/ui/pages/gui_page_manor.json"                        ,
+      "/ui/pages/gui_page_merchant.json"                        ,
+      "/ui/pages/gui_page_stash.json"                        ,
+      "/ui/pages/gui_page_town.json"                        ,
+      "/ui/pages/gui_page_village.json"                        ,
+      "/ui/pages/gui_page_world.json"                        ,
       "/world/home_scenario.json"
     ],
     "NOT_POLL_INDEX":[

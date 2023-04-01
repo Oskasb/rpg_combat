@@ -66,8 +66,8 @@
                   "options":{
                     "text":"CELLAR",
                     "container_id":"page_home_center",
-                    "offset_x":-0.11,
-                    "offset_y":-0.07,
+                    "offset_x":-0.12,
+                    "offset_y":-0.11,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{

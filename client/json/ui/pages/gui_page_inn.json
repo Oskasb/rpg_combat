@@ -3,7 +3,7 @@
     "UI": {
       "PAGES":[
         {
-          "id": "page_scene_merchant",
+          "id": "page_scene_inn",
           "data": [
             {
               "containers":[
@@ -20,7 +20,7 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"scene_page_header_text_box",
                   "options":{
-                    "text":"TRADER",
+                    "text":"THE JOLLY KEG",
                     "anchor":"top_center",
                     "offset_x": 0.0,
                     "offset_y":-0.025
@@ -35,20 +35,20 @@
                     "anchor":"bottom_left",
                     "offset_x":0.15,
                     "offset_y":0.04,
-                    "text":"Looks like a shopkeeper."
+                    "text":"For all sorts of good times."
                   }
 
                 }
               ],
               "buttons":[
                 {
-                  "widget_id":"button_go_world",
+                  "widget_id":"button_leaved",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"LEAVE",
                     "container_id":"page_home_center",
-                    "offset_x":0.04,
+                    "offset_x":-0.04,
                     "offset_y":-0.26,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
@@ -64,7 +64,7 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"TRADE",
+                    "text":"TRADER",
                     "container_id":"page_home_center",
                     "offset_x":-0.13,
                     "offset_y":-0.12,
@@ -82,15 +82,15 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"INN",
+                    "text":"ENTER",
                     "container_id":"page_home_center",
-                    "offset_x":0.15,
+                    "offset_x":0.13,
                     "offset_y":-0.02,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"town_inn_dynamic"
+                        "id":"cave_scenario",
+                        "dynamic":"encounter_dynamic_cave_basic"
                       }
                     }
                   }

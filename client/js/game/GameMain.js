@@ -10,8 +10,15 @@ class GameMain {
         this.activeScenario;
         this.callbacks = {};
         this.gameTime = 0;
-        this.configData = new ConfigData("WORLD", "GAME_SCENARIOS");
-        this.navPointConfigData = new ConfigData("WORLD", "WORLD_NAV_POINTS");
+        this.configData = new ConfigData("WORLD_SYSTEMS", "GAME_SCENARIOS");
+        this.navPointConfigData = new ConfigData("WORLD_SYSTEMS", "WORLD_NAV_POINTS");
+
+        let updateNavpoint = function() {
+            this.applyNavPoint();
+        }.bind(this)
+
+        this.navPointConfigData.addUpdateCallback(updateNavpoint);
+
         this.gameCamera = new GameCamera();
         this.gameWorld = new GameWorld();
         this.playerMain = new PlayerMain();
@@ -51,17 +58,13 @@ class GameMain {
     }
 
 
+    applyNavPoint() {
 
-    requestScenario(scenarioEvent) {
-        let scenarioId = scenarioEvent['id']
-        let dynamicId = scenarioEvent['dynamic']
-        let data = this.configData.parseConfigData()[scenarioId];
-        let config = data.config;
-        let staticId = config['scenario_static'];
+        if (!this.dynamicId) return;
 
         let navPointData = this.navPointConfigData.parseConfigData()['world_dynamic_navpoints'];
         let navConf = navPointData.config;
-        let navPoint = navConf[dynamicId];
+        let navPoint = navConf[this.dynamicId];
 
         let camCallback = function() {
             if (this.activeScenario) {
@@ -73,10 +76,16 @@ class GameMain {
         navPoint.callback = camCallback;
 
         evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, navPoint);
+    }
 
-
-
-    //    console.log("Scenario Requested: ", scenarioId, dynamicId);
+    requestScenario(scenarioEvent) {
+        let scenarioId = scenarioEvent['id']
+        let dynamicId = scenarioEvent['dynamic']
+        this.dynamicId = dynamicId;
+        let data = this.configData.parseConfigData()[scenarioId];
+        let config = data.config;
+        let staticId = config['scenario_static'];
+        this.applyNavPoint();
 
         let staticReadyCB = function() {
             this.activeScenario.initGameDynamicScenario(dynamicId)

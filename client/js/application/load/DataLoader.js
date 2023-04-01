@@ -130,10 +130,7 @@ class DataLoader {
 
                     PipelineAPI.cacheCategoryKey("ASSETS", "PRELOAD_FILES", filesCallback);
 
-                    let apiReadyCB = function(msg) {
-                                console.log(msg)
-                    }
-                    GuiAPI.initGuiApi(apiReadyCB)
+
 
                 }
 
@@ -169,13 +166,15 @@ class DataLoader {
 
         notifyCompleted = function() {
             this.loadProgress.removeProgress();
-            client.activateGui();
 
             let pollUrls = PipelineAPI.getCachedConfigs()['ASSETS']['POLL_INDEX'];
             PipelineAPI.prunePollUrlsExceptFor(pollUrls)
 
-
-
+            let apiReadyCB = function(msg) {
+                console.log(msg)
+            }
+            GuiAPI.initGuiApi(apiReadyCB)
+            client.activateGui();
         };
     }
 
