@@ -41,17 +41,7 @@ class GuiStatsPanel {
             }
         }.bind(this);
 
-        let updateStat = function(key, value) {
-            this.updateStat(key, value);
-        }.bind(this);
-
-        let updateSamplers = function(key, value) {
-            this.updateSamplers(key, value);
-        }.bind(this);
-
         this.callbacks = {
-            updateStat:updateStat,
-            updateSamplers:updateSamplers,
             updateTrackedStats:updateTrackedStats,
         }
 
@@ -60,27 +50,32 @@ class GuiStatsPanel {
     setGuiWidget = function(guiWidget) {
         this.guiWidget = guiWidget;
 
+    //    this.addChildWidgetToContainer(this);
+
         guiWidget.guiStatsPanel = this;
         let cb = function() {
 
         }
         let addStatSampler = function(key, callback, unit, digits) {
-            return {key:key.key,   callback:callback || cb, unit:unit || '', digits:digits || 10}
+            return {key:key,   callback:callback || cb, unit:unit || '', digits:digits || 2}
         }
-
 
 
         let samplers = this.options['track_config']['samplers']
         for (let i= 0; i <  samplers.length; i++) {
             console.log("Add Track stats", samplers[i]);
-            this.addTrackStatFunction(addStatSampler(samplers[i]));
+            this.addTrackStatFunction(addStatSampler(samplers[i].key, '', '', samplers[i].digits));
         }
 
         GuiAPI.addGuiUpdateCallback(this.callbacks.updateTrackedStats)
+
     };
 
+    recoverGuiWidget = function() {
+        console.log("RECOVER STATS PANEL")
+    }
     removeGuiWidget = function() {
-        delete this.guiWidget.guiStatsPanel;
+        this.guiWidget.guiStatsPanel = null;
         console.log("Remove Stats Panel")
         GuiAPI.removeGuiUpdateCallback(this.callbacks.updateTrackedStats);
         this.guiWidget.removeChildren();
@@ -146,19 +141,7 @@ class GuiStatsPanel {
         this.statWidgets[key].keyWidget.setFirstSTringText(key);
         this.statWidgets[key].valueWidget.setFirstSTringText(valueString)
     };
-    /*
-            updateStatSampler = function(statSampler) {
-                statSampler.callback(statSampler.key, this.callbacks.updateStat);
-            };
 
-            updateSamplers = function() {
-
-                for (let i = 0; i < this.samplers.length; i++) {
-                    this.updateStatSampler(this.samplers[i]);
-                }
-
-            };
-    */
 }
 
 export { GuiStatsPanel }

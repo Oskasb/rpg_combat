@@ -8,8 +8,9 @@ class ExpandingPool {
         }
         if (!cache['DEBUG']['POOLS']) {
             cache.DEBUG.POOLS = {
-                active:0,
-                returned:0
+                added:0,
+                shifts:0,
+                pushes:0
             };
         }
 
@@ -17,7 +18,8 @@ class ExpandingPool {
 
         this.pool = [];
         this.generatePoolEntry = function(callback) {
-            this.track.active++;
+            this.track.added++
+            // effect and particles not returning to pool! -- fix also UI_TEXT_MAIN-- letters?
             createFunc(dataKey, callback)
         }.bind(this);
 
@@ -28,12 +30,14 @@ class ExpandingPool {
     };
 
     pushEP = function(entry) {
-        this.track.returned++
+        this.track.shifts--;
+        this.track.pushes++
         return this.pool.push(entry);
     };
 
     shiftEP = function() {
-        this.track.returned--
+        this.track.shifts++;
+        this.track.pushes--
         return this.pool.shift()
     };
 
@@ -42,6 +46,7 @@ class ExpandingPool {
         if (this.poolEntryCount() > 1) {
             callback(this.shiftEP());
         } else {
+            this.track.active++;
             this.generatePoolEntry(callback)
         }
     };

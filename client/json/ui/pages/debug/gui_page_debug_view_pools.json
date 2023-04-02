@@ -10,10 +10,10 @@
                 {
                   "widget_id":"page_pools_container",
                   "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"widget_expanding_container",
+                  "widget_config_id":"widget_hidden_container",
                   "options": {
-                    "offset_x": 0.20,
-                    "offset_y": -0.20
+                    "offset_x": 0.23,
+                    "offset_y": -0.08
                   }
                 },
                 {
@@ -21,16 +21,22 @@
                   "widget_class": "GuiStatsPanel",
                   "widget_config_id":"widget_stats_container",
                   "options": {
-                    "container": "page_pools_container",
+                    "container_id": "page_pools_container",
                     "offset_x": 0.0,
                     "offset_y": -0.0,
                     "track_config": {"category": "DEBUG","key": "POOLS",
                       "samplers": [
                         {
-                          "key": "active"
+                          "key": "added",
+                          "digits": 1
                         },
                         {
-                          "key": "returned"
+                          "key": "shifts",
+                          "digits": 1
+                        },
+                        {
+                          "key": "pushes",
+                          "digits": 1
                         }
                       ]
                     }
