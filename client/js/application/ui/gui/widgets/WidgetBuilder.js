@@ -1,5 +1,5 @@
 import { GuiWidget} from "../elements/GuiWidget.js";
-import {GuiStatsPanel } from "./GuiStatsPanel.js";
+import { GuiStatsPanel } from "./GuiStatsPanel.js";
 import { GuiActionButton } from "./GuiActionButton.js";
 import { GuiSimpleButton } from "./GuiSimpleButton.js";
 import { GuiExpandingContainer } from "./GuiExpandingContainer.js";
@@ -7,10 +7,12 @@ import { GuiThumbstick } from "./GuiThumbstick.js";
 import { GuiTextBox } from "./GuiTextBox.js";
 import { GuiScreenSpaceText } from "./GuiScreenSpaceText.js";
 import { GuiProgressBar } from "./GuiProgressBar.js";
+import { GuiSimpleWidget } from "./GuiSimpleWidget.js";
 
 class WidgetBuilder {
     constructor() {
             this.widgets = {
+                GuiSimpleWidget               : GuiSimpleWidget                          ,
                 GuiStatsPanel           : GuiStatsPanel                      ,
                 GuiActionButton         : GuiActionButton                    ,
                 GuiSimpleButton         : GuiSimpleButton                    ,
@@ -18,7 +20,7 @@ class WidgetBuilder {
                 GuiThumbstick           : GuiThumbstick                      ,
                 GuiTextBox              : GuiTextBox                         ,
                 GuiScreenSpaceText      : GuiScreenSpaceText                 ,
-                GuiProgressBar          : GuiProgressBar
+                GuiProgressBar          : GuiProgressBar                     ,
             };
         };
 

@@ -10,18 +10,40 @@
                 {
                   "widget_id":"page_pools_container",
                   "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"widget_expanding_container"
+                  "widget_config_id":"widget_expanding_container",
+                  "options": {
+                    "offset_x": 0.20,
+                    "offset_y": -0.20
+                  }
                 },
                 {
-                  "widget_id": "debug_text",
-                  "widget_class": "GuiExpandingContainer",
-                  "widget_config_id": "debug_text_box",
+                  "widget_id": "container_pool_stats",
+                  "widget_class": "GuiStatsPanel",
+                  "widget_config_id":"widget_stats_container",
+                  "options": {
+                    "container": "page_pools_container",
+                    "offset_x": 0.0,
+                    "offset_y": -0.0
+                  }
+                },
+                {
+                  "widget_id": "pool_stat_key_1",
+                  "widget_class": "GuiTextBox",
+                  "widget_config_id": "widget_stats_key_box",
                   "options": {
                     "on_event": {"event_id": "DEBUG_TEXT", "call": "printWidgetText"},
-                    "container": "page_pools_container",
-                    "offset_x": -0.01,
-                    "offset_y": 0.08,
-                    "text": "pool info here"
+                    "container": "container_pool_stats",
+                    "text": "key 1"
+                  }
+                },
+                {
+                  "widget_id": "pool_stat_value_1",
+                  "widget_class": "GuiTextBox",
+                  "widget_config_id": "widget_stats_value_box",
+                  "options": {
+                    "on_event": {"event_id": "DEBUG_TEXT", "call": "printWidgetText"},
+                    "container": "container_pool_stats",
+                    "text": "value 1"
                   }
                 }
               ],
