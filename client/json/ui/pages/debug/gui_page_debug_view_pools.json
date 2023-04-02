@@ -1,0 +1,37 @@
+[
+  {
+    "UI": {
+      "PAGES":[
+        {
+          "id": "page_debug_view_pools",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"page_pools_container",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_expanding_container"
+                },
+                {
+                  "widget_id": "debug_text",
+                  "widget_class": "GuiExpandingContainer",
+                  "widget_config_id": "debug_text_box",
+                  "options": {
+                    "on_event": {"event_id": "DEBUG_TEXT", "call": "printWidgetText"},
+                    "container": "page_pools_container",
+                    "offset_x": -0.01,
+                    "offset_y": 0.08,
+                    "text": "pool info here"
+                  }
+                }
+              ],
+              "buttons":[
+
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

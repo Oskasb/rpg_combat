@@ -1,0 +1,78 @@
+[
+  {
+    "UI": {
+      "PAGES":[
+        {
+          "id": "page_debug_view_models",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"page_models_container",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container"
+                }
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_view_models",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"NODES",
+                    "container_id":"page_models_container",
+                    "offset_x": 0.08,
+                    "offset_y": -0.12,
+                    "dispatch":{
+                      "event":"DEBUG_VIEW_MODELS",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_world_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_view_models",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"POINTS",
+                    "container_id":"page_models_container",
+                    "offset_x": 0.08,
+                    "offset_y": -0.16,
+                    "dispatch":{
+                      "event":"DEBUG_VIEW_MODELS",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_world_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_view_pools",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"BOUNDS",
+                    "container_id":"page_models_container",
+                    "offset_x": 0.08,
+                    "offset_y": -0.20,
+                    "dispatch":{
+                      "event":"DEBUG_VIEW_MODELS",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_world_dynamic"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

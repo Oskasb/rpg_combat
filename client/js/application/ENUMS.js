@@ -62,7 +62,8 @@ if(typeof(ENUMS) === "undefined"){
         SCENARIO_UPDATE:            37,
         DEBUG_VIEW_TOGGLE:          38,
         DEBUG_VIEW_MODELS:          39,
-        DEBUG_TEXT:                 40
+        DEBUG_TEXT:                 40,
+        TOGGLE_GUI_PAGE:            41,
 
     };
 

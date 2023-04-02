@@ -15,18 +15,7 @@
                     "anchor":"center"
                   }
                 },
-                {
-                  "widget_id": "debug_text",
-                  "widget_class": "GuiExpandingContainer",
-                  "widget_config_id": "debug_text_box",
-                  "options": {
-                    "on_event": {"event_id": "DEBUG_TEXT", "call": "printWidgetText"},
-                    "anchor": "bottom_left",
-                    "offset_x": -0.01,
-                    "offset_y": 0.06,
-                    "text": "debug text here"
-                  }
-                },
+
                 {
                   "widget_id":"page_debug_bottom_right",
                   "widget_class":"GuiExpandingContainer",
@@ -66,6 +55,34 @@
                   "options": {
                     "anchor":"bottom_left"
                   }
+                },
+                {
+                  "widget_id": "debug_text",
+                  "widget_class": "GuiExpandingContainer",
+                  "widget_config_id": "debug_text_box",
+                  "options": {
+                    "on_event": {"event_id": "DEBUG_TEXT", "call": "printWidgetText"},
+                    "anchor": "bottom_left",
+                    "offset_x": -0.01,
+                    "offset_y": 0.08,
+                    "text": "debug text here"
+                  }
+                },
+                {
+                  "widget_id": "button_container_models",
+                  "widget_class": "GuiExpandingContainer",
+                  "widget_config_id": "widget_gui_anchor",
+                  "options": {
+                    "container_id": "page_debug_top_left"
+                  }
+                },
+                {
+                  "widget_id": "button_container_pools",
+                  "widget_class": "GuiExpandingContainer",
+                  "widget_config_id": "widget_gui_anchor",
+                  "options": {
+                    "container_id": "page_debug_top_left"
+                  }
                 }
               ],
               "buttons":[
@@ -75,14 +92,15 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"MODELS",
-                    "container_id":"page_debug_top_left",
-                    "offset_x": 0.1,
-                    "offset_y": -0.1,
+                    "container_id":"button_container_models",
+                    "offset_x": 0.10,
+                    "offset_y": -0.08,
                     "dispatch":{
-                      "event":"DEBUG_VIEW_MODELS",
+                      "event":"TOGGLE_GUI_PAGE",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"home_world_dynamic"
+                        "page_id":"page_debug_view_models",
+                        "parent_page_id":"page_debug_view",
+                        "parent_container_id": "button_container_models"
                       }
                     }
                   }
@@ -93,14 +111,15 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"POOLS",
-                    "container_id":"page_debug_top_left",
-                    "offset_x": 0.2,
-                    "offset_y": -0.1,
+                    "container_id":"button_container_pools",
+                    "offset_x": 0.25,
+                    "offset_y": -0.08,
                     "dispatch":{
-                      "event":"DEBUG_VIEW_MODELS",
+                      "event":"TOGGLE_GUI_PAGE",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"home_world_dynamic"
+                        "page_id":"page_debug_view_pools",
+                        "parent_page_id":"page_debug_view",
+                        "parent_container_id": "button_container_pools"
                       }
                     }
                   }
