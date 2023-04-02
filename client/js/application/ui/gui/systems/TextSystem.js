@@ -8,7 +8,7 @@ class TextSystem {
 
             let addElement = function(sysKey, callback) {
                 callback(new GuiTextElement())
-            };
+            }.bind(this);
 
             this.expandingPool = PipelineAPI.addExpandingPool('text_elements', addElement);
         };
@@ -18,7 +18,7 @@ class TextSystem {
             let textSystem = this;
 
             let onTextSetting = function(src, data) {
-            //    console.log("UI TXT DATA", src, data.config);
+                console.log("UI TXT DATA", src, data.config);
                 textSystem.spriteKey = data.config["sprite_atlas"];
                 GuiAPI.addUiSystem(src, data.config["sprite_atlas"],  data.config["mesh_asset"],   data.config["pool_size"], data.config["render_order"]);
                 callback();

@@ -71,7 +71,7 @@
         {"id": "model_settings_items" ,
           "config": {
             "instancing": {
-              "instances": 50,
+              "instances": 20,
               "attributes": ["offset", "vertexColor", "scale3d", "orientation"],
               "cameraspace": false
             },
@@ -86,7 +86,7 @@
         {"id": "model_settings_instancing" ,
           "config": {
             "instancing": {
-              "instances": 50,
+              "instances": 100,
               "attributes": ["offset", "vertexColor", "scale3d", "orientation"],
               "cameraspace": false
             },

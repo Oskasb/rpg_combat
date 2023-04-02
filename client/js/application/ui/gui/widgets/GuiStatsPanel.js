@@ -10,7 +10,6 @@ class GuiStatsPanel {
             this.options[key] = options[key];
         }
 
-
         let catKey = options['track_config']['category'];
         let confKey = options['track_config']['key'];
         let trackValues = PipelineAPI.getCachedConfigs()[catKey][confKey];
