@@ -21,14 +21,16 @@ class GuiPageSystem {
 
     }
 
+    closeGuiPage(page) {
+        let oldPage = MATH.quickSplice(this.activePages, page)
+        oldPage.closeGuiPage();
+    }
+
     activateGuiPage(pageId) {
      //   console.log("ACTIVATE PAGE "+pageId);
 
         let page;
-        if (this.activePages.length) {
-            let oldPage = this.activePages.pop();
-            oldPage.closeGuiPage();
-        }
+
         if (pageId) {
             page = this.pages[pageId].activateGuiPage();
             this.activePages.push(page)

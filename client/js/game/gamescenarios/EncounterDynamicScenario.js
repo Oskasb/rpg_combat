@@ -1,6 +1,7 @@
 import * as ScenarioUtils from "../gameworld/ScenarioUtils.js";
 import {ConfigData} from "../../application/utils/ConfigData.js";
 
+
 class EncounterDynamicScenario {
     constructor(dataId) {
         this.dataId = dataId;
@@ -31,7 +32,7 @@ class EncounterDynamicScenario {
     }
 
     activateEncDynScenario() {
-        GuiAPI.activatePage(this.config['gui_page']);
+        this.page = GuiAPI.activatePage(this.config['gui_page']);
 
     }
 
@@ -70,6 +71,7 @@ class EncounterDynamicScenario {
 
     exitScenario() {
         this.isActive = false;
+        GuiAPI.guiPageSystem.closeGuiPage(this.page);
         while (this.pieces.length) {
             GameAPI.takePieceFromWorld(this.pieces.pop())
         }
