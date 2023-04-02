@@ -46,7 +46,7 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"LEAVE",
+                    "text":"BACK",
                     "container_id":"page_home_center",
                     "offset_x":-0.04,
                     "offset_y":-0.26,

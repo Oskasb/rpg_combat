@@ -81,8 +81,8 @@
         },
         "world_town_dynamic":{
           "time":1.3,
-          "pos": [75, 50, -190],
-          "lookAt": [-15, 0, -208]
+          "pos": [18, 20, -202],
+          "lookAt": [-18, 0, -211]
         },
         "town_merchant_dynamic":{
           "time":1.3,

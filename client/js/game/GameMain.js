@@ -7,7 +7,7 @@ import { SetupPlayer } from "./Player/SetupPlayer.js";
 
 class GameMain {
     constructor() {
-        this.activeScenario;
+        this.activeScenario = null;
         this.callbacks = {};
         this.gameTime = 0;
         this.configData = new ConfigData("WORLD_SYSTEMS", "GAME_SCENARIOS");

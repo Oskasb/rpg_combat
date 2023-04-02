@@ -1,29 +1,40 @@
-function positionPlayer(config) {
 
+function positionPlayer(config) {
+    let targetPos = ThreeAPI.tempVec3;
     let pos = config['pos'];
     let rot = config['rot'];
     let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
-    MATH.vec3FromArray(ThreeAPI.tempVec3, pos);
-    let spatial =player.getSpatial()
-    spatial.getSpatialPosition().copy(ThreeAPI.tempVec3);
+
+    let maxAllowedTravelDistance = 10;
+    let travelTimeMax = 3;
+
+    let playerMovement = player.getPieceMovement();
+    let spatial = player.getSpatial();
+    let sourcePos = spatial.getSpatialPosition()
+    MATH.vec3FromArray(targetPos, pos);
+
+    sourcePos.sub(targetPos);
+    let travelDistance = sourcePos.lengthSq();
+    if (travelDistance > maxAllowedTravelDistance) {
+        sourcePos.normalize();
+        sourcePos.multiplyScalar( maxAllowedTravelDistance );
+    } else {
+        travelTimeMax = travelTimeMax/(maxAllowedTravelDistance / travelDistance)
+    }
+
+
+    sourcePos.add(targetPos);
+    let arriveCallback = function() {
+        spatial.setRotXYZ(rot[0], rot[1], rot[2])
+    }
+
+    playerMovement.moveToTargetAtTime('walk', sourcePos, targetPos, travelTimeMax, arriveCallback)
+    // .copy(ThreeAPI.tempVec3);
 
     console.log("Position player", pos, rot)
 
-    let tempObj = ThreeAPI.tempObj;
-    tempObj.quaternion.x = 0;
-    tempObj.quaternion.y = 1;
-    tempObj.quaternion.z = 0;
-    tempObj.quaternion.w = 0;
-    tempObj.rotateX(rot[0]);
-    tempObj.rotateY(rot[1]);
-    tempObj.rotateZ(rot[2])
-    player.getSpatial().setQuatXYZW(
-        tempObj.quaternion.x,
-        tempObj.quaternion.y,
-        tempObj.quaternion.z,
-        tempObj.quaternion.w
-    );
-    player.callbacks.tickGamePiece();
+
+  //  player.callbacks.tickGamePiece();
 }
 function setupBoxGrid(instances, boxGrid) {
     console.log("SETUP GRID")
@@ -159,19 +170,8 @@ function spawnLocation(instances, location) {
 
     ThreeAPI.tempVec3b.set(size)
     let instanceReturns = function(instance) {
-        let obj3d = ThreeAPI.tempObj;
-        obj3d.quaternion.set(0, 0, 0, 1);
-    //    obj3d.rotateX(-MATH.HALF_PI);
-        MATH.rotateObj(obj3d, rot);
-
         instance.spatial.setScaleXYZ(scale, scale, scale);
-        instance.spatial.setQuatXYZW(
-            obj3d.quaternion.x,
-            obj3d.quaternion.y,
-            obj3d.quaternion.z,
-            obj3d.quaternion.w
-        );
-
+        instance.spatial.setRotXYZ( rot[0], rot[1], rot[2]);
         instance.spatial.setPosXYZ( position.x, position.y, position.z);
         instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
         instances.push(instance);

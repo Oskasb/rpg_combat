@@ -24,6 +24,19 @@ class InstanceSpatial{
             }
         };
 
+        setRotXYZ = function(x, y, z) {
+            let obj3d = this.obj3d;
+            obj3d.quaternion.x = 0;
+            obj3d.quaternion.y = 1;
+            obj3d.quaternion.z = 0;
+            obj3d.quaternion.w = 0;
+            obj3d.rotateX(x);
+            obj3d.rotateY(y);
+            obj3d.rotateZ(z)
+            if (this.geometryInstance) {
+                this.geometryInstance.applyObjQuat();
+            }
+        };
         setQuatXYZW = function(x, y, z, w) {
             this.obj3d.quaternion.x = x;
             this.obj3d.quaternion.y = y;
