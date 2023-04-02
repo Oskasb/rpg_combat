@@ -26,9 +26,9 @@ class Setup {
         this.uiSetup.initUiSetup(callback)
     }
 
-    initGlobalAPIs(pipelineAPI) {
+    initGlobalAPIs() {
         window.EffectAPI = new EffectAPI();
-        window.PipelineAPI = pipelineAPI;
+
         window.InstanceAPI = new InstanceAPI();
         window.ThreeAPI = new ThreeAPI();
         window.GuiAPI = new GuiAPI();
@@ -36,7 +36,7 @@ class Setup {
         window.evt = client.evt;
     }
 
-    initDataPipeline(pipelineAPI, pipelineReadyCB) {
+    initDataPipeline(pipelineReadyCB) {
         let dataLoader = this.dataLoader;
         let ready = {
             JSON_PIPE:false,
@@ -56,7 +56,7 @@ class Setup {
             dataLoader.getLoadScreen().logMessage(msg, '#af8', channel);
         };
 
-        pipelineAPI.initConfigCache(pipeReady, pipeMsgCB);
+        PipelineAPI.initConfigCache(pipeReady, pipeMsgCB);
 
     };
 

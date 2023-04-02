@@ -23,27 +23,17 @@
                   "options": {
                     "container": "page_pools_container",
                     "offset_x": 0.0,
-                    "offset_y": -0.0
-                  }
-                },
-                {
-                  "widget_id": "pool_stat_key_1",
-                  "widget_class": "GuiTextBox",
-                  "widget_config_id": "widget_stats_key_box",
-                  "options": {
-                    "on_event": {"event_id": "DEBUG_TEXT", "call": "printWidgetText"},
-                    "container": "container_pool_stats",
-                    "text": "key 1"
-                  }
-                },
-                {
-                  "widget_id": "pool_stat_value_1",
-                  "widget_class": "GuiTextBox",
-                  "widget_config_id": "widget_stats_value_box",
-                  "options": {
-                    "on_event": {"event_id": "DEBUG_TEXT", "call": "printWidgetText"},
-                    "container": "container_pool_stats",
-                    "text": "value 1"
+                    "offset_y": -0.0,
+                    "track_config": {"category": "DEBUG","key": "POOLS",
+                      "samplers": [
+                        {
+                          "key": "active"
+                        },
+                        {
+                          "key": "returned"
+                        }
+                      ]
+                    }
                   }
                 }
               ],

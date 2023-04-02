@@ -12,7 +12,7 @@ import { GuiSimpleWidget } from "./GuiSimpleWidget.js";
 class WidgetBuilder {
     constructor() {
             this.widgets = {
-                GuiSimpleWidget               : GuiSimpleWidget                          ,
+                GuiSimpleWidget         : GuiSimpleWidget                    ,
                 GuiStatsPanel           : GuiStatsPanel                      ,
                 GuiActionButton         : GuiActionButton                    ,
                 GuiSimpleButton         : GuiSimpleButton                    ,
@@ -36,8 +36,8 @@ class WidgetBuilder {
 
             let wReady = function(widget) {
 
-                widget.applyWidgetOptions(widgetOfClass.options);
                 widgetOfClass.setGuiWidget(widget);
+                widget.applyWidgetOptions(widgetOfClass.options);
                 onReady(widgetOfClass)
 
             };

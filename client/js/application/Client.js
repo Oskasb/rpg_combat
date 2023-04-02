@@ -18,7 +18,7 @@ class Client {
         this.evt = new evt(ENUMS.Event);
         window.evt = this.evt;
         this.threeController = new ThreeController();
-        this.pipelineAPI = new PipelineAPI();
+        window.PipelineAPI = new PipelineAPI();
         this.gameScreen = new GameScreen();
         this.dynamicMain = new DynamicMain();
         window.GameScreen = this.gameScreen;
@@ -28,7 +28,7 @@ class Client {
 
     activateGui() {
         client.createScene();
-        this.pointerCursor = new PointerAndTouchCursors(this.pipelineAPI, this.gameScreen);
+        this.pointerCursor = new PointerAndTouchCursors(window.PipelineAPI, this.gameScreen);
         this.INPUT_STATE =  this.pointerCursor.getInputState();
 
 
@@ -45,12 +45,12 @@ class Client {
     initClientSetup(dataPipelineOptions) {
         this.gameScreen.registerAppContainer(document.body);
         let pipeWorkersReadyCB = function() {
-            client.setup.initConfigCache(client.pipelineAPI, dataPipelineOptions);
+            client.setup.initConfigCache(window.PipelineAPI, dataPipelineOptions);
             client.initUiSystem();
         };
 
-        this.setup.initDataPipeline(this.pipelineAPI, pipeWorkersReadyCB)
-        this.setup.initGlobalAPIs(this.pipelineAPI);
+        this.setup.initDataPipeline(pipeWorkersReadyCB)
+        this.setup.initGlobalAPIs();
     };
 
     createScene() {
@@ -98,7 +98,7 @@ class Client {
             //     renderer.render(scene, camera)
             EffectAPI.updateEffectAPI(frame.elapsedTime);
 
-            client.pipelineAPI.tickPipelineAPI(frame.tpf)
+            window.PipelineAPI.tickPipelineAPI(frame.tpf)
 
         }
 

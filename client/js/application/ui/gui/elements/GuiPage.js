@@ -15,7 +15,6 @@ class GuiPage {
         }.bind(this);
 
         let onUpdate = function(data) {
-            console.log("UPDATE TO PAGE", data);
             if (this.isActive) {
                 GuiAPI.printDebugText('REFLOW '+this.pageId)
                 this.configData.reapplyDataToConfig(data, this.config, pageId);

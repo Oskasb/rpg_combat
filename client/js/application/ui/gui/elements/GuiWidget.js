@@ -548,6 +548,10 @@ class GuiWidget {
 
             this.guiSurface.recoverGuiSurface();
 
+            if (this.guiStatsPanel) {
+                this.guiStatsPanel.removeGuiWidget();
+            }
+
             if (this.text) {
                 this.text.recoverTextElement();
             }

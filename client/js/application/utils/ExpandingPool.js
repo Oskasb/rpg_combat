@@ -1,17 +1,26 @@
+
 class ExpandingPool {
     constructor(dataKey, createFunc) {
 
+        let cache = PipelineAPI.getCachedConfigs();
+        if (!cache['DEBUG']) {
+            cache.DEBUG = {};
+        }
+        if (!cache['DEBUG']['POOLS']) {
+            cache.DEBUG.POOLS = {
+                active:0,
+                returned:0
+            };
+        }
+
+        this.track = cache.DEBUG.POOLS
+
         this.pool = [];
         this.generatePoolEntry = function(callback) {
+            this.track.active++;
             createFunc(dataKey, callback)
-        };
+        }.bind(this);
 
-    };
-
-    setPoolCreateFunction = function(dataKey, createFunction) {
-        this.generatePoolEntry = function(callback) {
-            createFunction(dataKey, callback)
-        };
     };
 
     poolEntryCount = function() {
@@ -19,10 +28,12 @@ class ExpandingPool {
     };
 
     pushEP = function(entry) {
+        this.track.returned++
         return this.pool.push(entry);
     };
 
     shiftEP = function() {
+        this.track.returned--
         return this.pool.shift()
     };
 
@@ -41,10 +52,6 @@ class ExpandingPool {
         } else {
             console.log("Entry already in pool, no good!", entry)
         }
-    };
-
-    wipeExpandingPool = function() {
-        this.pool = [];
     };
 
 }
