@@ -10,33 +10,15 @@ class GuiStatsPanel {
             this.options[key] = options[key];
         }
 
-        //    if (options['track_config']) {
 
         let catKey = options['track_config']['category'];
         let confKey = options['track_config']['key'];
-        this.configData = new ConfigData(catKey, confKey);
-        //    }
-/*
-        let cb = function() {
+        let trackValues = PipelineAPI.getCachedConfigs()[catKey][confKey];
 
-        }
-        let addStatSampler = function(key, callback, unit, digits) {
-            return {key:key,   callback:callback || cb, unit:unit || '', digits:digits || 10}
-        }
-
-        let trackValues = this.configData.config;
-
-        let samplers = this.options['track_config']['samplers']
-        for (let i= 0; i <  samplers.length; i++) {
-            this.addTrackStatFunction(addStatSampler(samplers[i]));
-        }
-
-*/
-        let trackValues = this.configData.config;
         let updateTrackedStats = function() {
             for (let i = 0; i < this.samplers.length; i++) {
                 let sampler = this.samplers[i].key
-                let value = trackValues[sampler]
+                let value = trackValues[sampler];
                 this.updateStat(this.samplers[i].key, value);
             }
         }.bind(this);
