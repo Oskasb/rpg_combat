@@ -57,15 +57,8 @@ class GuiDebug {
         this.frameDraws++;
         this.reqElem(x, y);
     };
-
-
-    setupDebugText = function() {
-        if (!GuiAPI.getAnchorWidget('bottom_left')) return;
-        if (this.holdIt) {
-        //    console.log("Hold debug text setup...")
-            return;
-        }
-        this.holdIt = true;
+    
+    setupDebugText = function(container) {
         let onReady = function(textBox) {
             this.debugText = textBox;
             textBox.updateTextContent("Text ready...")
@@ -82,8 +75,8 @@ class GuiDebug {
                 onActivate: null,
                 interactive: false,
                 text: 'DEBUG TEXT',
-                anchor: 'top_left',
-                offset_y:-0.15,
+                container: container,
+                offset_y: 0.20,
                 offset_x:-0.01
             }
 
@@ -106,7 +99,6 @@ class GuiDebug {
 
     addDebugTextString = function(string) {
         if (!this.debugText) {
-            this.setupDebugText();
             return;
         }
         this.debugText.updateTextContent(string)

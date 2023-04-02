@@ -66,10 +66,18 @@ class UiTestSetup {
 
             }.bind(this);
 
+            let activateTestUi = function(event) {
+                if (event.activate) {
+                    this.initUiTestSetup(event.container);
+                } else {
+                    this.closeTestUi();
+                }
+            }.bind(this)
 
             this.testActiveElementCalls = [];
 
             this.callbacks = {
+                activateTestUi:activateTestUi,
                 toggleTestUi:toggleTestUi,
                 addProgressBar:addProgressBar,
                 addTextBox:addTextBox,
@@ -80,9 +88,12 @@ class UiTestSetup {
                 addActionPointStatus:addActionPointStatus
             }
 
+
+
+            evt.on(ENUMS.Event['DEBUG_VIEW_TOGGLE'], this.callbacks.activateTestUi)
         };
 
-        initUiTestSetup = function() {
+        initUiTestSetup = function(container) {
 
             GuiAPI.printDebugText("INIT TEST UI");
 
@@ -106,9 +117,9 @@ class UiTestSetup {
                     testActive: testActive,
                     interactive: true,
                     text: 'TESTS',
-                    offset_x: -0.018,
-                    offset_y: 0.01,
-                    anchor: 'top_right'
+                    offset_x: -0.06,
+                    offset_y: -0.02,
+                    container: container
                 };
 
             evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts)

@@ -59,7 +59,10 @@ if(typeof(ENUMS) === "undefined"){
         TAKE_STASH_ITEM:            34,
         TAKE_WORLD_ITEM:            35,
         SET_PLAYER_STATE:           36,
-        SCENARIO_UPDATE:            37
+        SCENARIO_UPDATE:            37,
+        DEBUG_VIEW_TOGGLE:          38,
+        DEBUG_VIEW_MODELS:          39,
+        DEBUG_TEXT:                 40
 
     };
 

@@ -24,17 +24,17 @@ class GuiPageSystem {
     activateGuiPage(pageId) {
      //   console.log("ACTIVATE PAGE "+pageId);
 
-
+        let page;
         if (this.activePages.length) {
             let oldPage = this.activePages.pop();
             oldPage.closeGuiPage();
         }
         if (pageId) {
-            let page = this.pages[pageId].activateGuiPage();
+            page = this.pages[pageId].activateGuiPage();
             this.activePages.push(page)
         }
 
-
+        return page;
     }
 
 }

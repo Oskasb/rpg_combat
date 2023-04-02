@@ -1,98 +1,92 @@
-define([],
-	function () {
-		'use strict';
+class LineRenderer {
+    constructor() {
+        this._numRenderingLines = 0;
+        this.MAX_NUM_LINES = 50000;
+
+        this.geometry = new THREE.BufferGeometry();
+
+        let positions = new Float32Array( this.MAX_NUM_LINES * 6 ); // 3 vertices per point
+        this.geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+
+        this.positions = this.geometry.attributes.position.array;
 
 
-        function LineRenderer() {
-
-            this._numRenderingLines = 0;
-            this.MAX_NUM_LINES = 50000;
-
-            this.geometry = new THREE.BufferGeometry();
+        var colors = new Float32Array( this.MAX_NUM_LINES * 6 ); // 3 vertices per point
+        this.geometry.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
 
 
-            var positions = new Float32Array( this.MAX_NUM_LINES * 6 ); // 3 vertices per point
-            this.geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+        this.positions = this.geometry.attributes.position.array;
+        this.colors = this.geometry.attributes.color.array;
 
-            this.positions = this.geometry.attributes.position.array;
+        this.geometry.setDrawRange( 0, 0);
+
+        this.material = new THREE.LineBasicMaterial( {
+            color: 0xffffff,
+            blending:THREE.NoBlending,
+            depthTest:false,
+            depthWrite:true,
+            vertexColors: THREE.VertexColors,
+            side:THREE.DoubleSide
+        } );
+
+        this.line = new THREE.LineSegments( this.geometry,  this.material);
+        this.line.frustumCulled = false;
+        this.line.renderOrder = 1;
+        ThreeAPI.addToScene( this.line );
+    }
 
 
-            var colors = new Float32Array( this.MAX_NUM_LINES * 6 ); // 3 vertices per point
-            this.geometry.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
+    vecByIndex = function(vec, i) {
+        if (i === 0) return vec.x;
+        if (i === 1) return vec.y;
+        if (i === 2) return vec.z;
+    };
 
+    _addLine = function (start, end, color) {
 
-            this.positions = this.geometry.attributes.position.array;
-            this.colors = this.geometry.attributes.color.array;
+        //We can not continue if there is no more space in the buffers.
+        if (this._numRenderingLines >= this.MAX_NUM_LINES) {
+            console.warn('MAX_NUM_LINES has been exceeded in the LineRenderer.');
+            return;
+        }
 
-            this.geometry.setDrawRange( 0, 0);
+        let vertexIndex = this._numRenderingLines * 6;
 
-            this.material = new THREE.LineBasicMaterial( {
-                color: 0xffffff,
-                blending:THREE.NoBlending,
-                depthTest:false,
-                depthWrite:true,
-                vertexColors: THREE.VertexColors,
-                side:THREE.DoubleSide
-            } );
+        for (let i = 0; i < 3; i++) {
 
-            this.line = new THREE.LineSegments( this.geometry,  this.material);
-            this.line.frustumCulled = false;
-            this.line.renderOrder = 1;
-            ThreeAPI.addToScene( this.line );
+            let firstVertexDataIndex = vertexIndex + i;
+            let secondVertexDataIndex = vertexIndex + 3 + i;
+
+            this.positions[firstVertexDataIndex] = this.vecByIndex(start, i);
+            this.positions[secondVertexDataIndex] = this.vecByIndex(end, i);
+
+            this.colors[firstVertexDataIndex] = this.vecByIndex(color, i);
+            this.colors[secondVertexDataIndex] = this.vecByIndex(color, i);
 
         }
 
-        
-        var vecByIndex = function(vec, i) {
-            if (i === 0) return vec.x;
-            if (i === 1) return vec.y;
-            if (i === 2) return vec.z;
-        };
+        this.geometry.attributes.position.needsUpdate = true;
+        this.geometry.attributes.color.needsUpdate = true;
+        this._numRenderingLines++;
 
-        LineRenderer.prototype._addLine = function (start, end, color) {
-            
-            //We can not continue if there is no more space in the buffers.
-            if (this._numRenderingLines >= this.MAX_NUM_LINES) {
-                console.warn('MAX_NUM_LINES has been exceeded in the LineRenderer.');
-                return;
-            }
+        this.geometry.setDrawRange( 0, this._numRenderingLines * 2 );
 
-            var vertexIndex = this._numRenderingLines * 6;
+    };
 
-            for (var i = 0; i < 3; i++) {
+    _clear = function () {
+        this._numRenderingLines = 0;
+        this.geometry.setDrawRange( 0, 0);
+    };
 
-                var firstVertexDataIndex = vertexIndex + i;
-                var secondVertexDataIndex = vertexIndex + 3 + i;
+    _pause = function () {
+        this._numRenderingLines = 0;
+        this.geometry.setDrawRange( 0, this._numRenderingLines * 2 );
+    };
 
-                this.positions[firstVertexDataIndex] = vecByIndex(start, i);
-                this.positions[secondVertexDataIndex] = vecByIndex(end, i);
-                
-                this.colors[firstVertexDataIndex] = vecByIndex(color, i);
-                this.colors[secondVertexDataIndex] = vecByIndex(color, i);
+    _remove = function () {
+        console.log("Should remove linerenderer here")
+    };
 
-            }
-            
-            this.geometry.attributes.position.needsUpdate = true;
-            this.geometry.attributes.color.needsUpdate = true;
-            this._numRenderingLines++;
-            
-            this.geometry.setDrawRange( 0, this._numRenderingLines * 2 );
-            
-        };
+}
 
-        LineRenderer.prototype._clear = function () {
-            this._numRenderingLines = 0;
-            this.geometry.setDrawRange( 0, 0);
-        };
-
-        LineRenderer.prototype._pause = function () {
-            this._numRenderingLines = 0;
-            this.geometry.setDrawRange( 0, this._numRenderingLines * 2 );
-        };
-        
-        LineRenderer.prototype._remove = function () {
-            console.log("Should remove linerenderer here")
-        };
-
-		return LineRenderer;
-	});
+export { LineRenderer }

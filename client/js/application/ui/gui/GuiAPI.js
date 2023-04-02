@@ -3,7 +3,7 @@ import { GuiSettings } from "./GuiSettings.js";
 import { Instantiator } from "../../../3d/three/instancer/Instantiator.js";
 import { GuiDebug } from "./systems/GuiDebug.js";
 import { GuiPageSystem } from "./systems/GuiPageSystem.js";
-
+import { DebugView } from "../../debug/DebugView.js";
 
 class GuiAPI {
     constructor() {
@@ -46,13 +46,11 @@ class GuiAPI {
             callAspectUpdateCallbacks:callAspectUpdateCallbacks,
             updateInput:updateInput
         }
-
-
     };
-
 
     initGuiApi = function(onReadyCB) {
 
+        this.debugView = new DebugView();
         this.guiDebug = new GuiDebug();
         this.guiSettings = new GuiSettings();
         this.widgetBuilder = new WidgetBuilder();
@@ -87,11 +85,11 @@ class GuiAPI {
         loadUiConfig("SURFACE_NINESLICE", "GUI_16x16");
 
         this.guiPageSystem.initGuiPageSystem();
-    //    onReadyCB('initGuiApi done loads: '+loads);
+        onReadyCB('initGuiApi done loads: '+loads);
     };
 
     activatePage(pageId) {
-        this.guiPageSystem.activateGuiPage(pageId)
+        return this.guiPageSystem.activateGuiPage(pageId)
     }
 
 
@@ -183,7 +181,8 @@ class GuiAPI {
     };
 
     printDebugText = function(string) {
-        this.guiDebug.addDebugTextString(string)
+        evt.dispatch(ENUMS.Event.DEBUG_TEXT, {value: string})
+    //    this.guiDebug.addDebugTextString(string)
     };
 
     attachGuiToActor = function(actor) {
@@ -277,9 +276,6 @@ class GuiAPI {
 
 
     updateGui = function(tpf, time) {
-
-
-
 
     //    let dymmy1 = function(textWidget) {
     //        textWidget.updateTextContent("MOO "+tpf)

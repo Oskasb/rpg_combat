@@ -39,6 +39,7 @@
 
 
       "/ui/gui_systems.json"                                 ,
+      "/ui/pages/debug/gui_page_debug_view.json"                        ,
       "/ui/pages/gui_page_dungeon.json"                        ,
       "/ui/pages/gui_page_hero.json"                        ,
       "/ui/pages/gui_page_home.json"                        ,

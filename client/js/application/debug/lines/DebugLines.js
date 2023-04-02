@@ -1,21 +1,13 @@
-"use strict";
+import { LineRenderSystem } from "./LineRenderSystem.js";
 
+class DebugLines {
+        constructor() {
 
-define([
-    'application/debug/lines/LineRenderSystem',
-    'evt'
-], function(
-    LineRenderSystem,
-    evt
-) {
-
-    var lineDenderSystem;
-    var tempVec1 = new THREE.Vector3();
-    var tempVec2 = new THREE.Vector3();
-    var color;
-
-    var SetupDebug = function() {
         lineDenderSystem = new LineRenderSystem();
+        var lineDenderSystem;
+        var tempVec1 = new THREE.Vector3();
+        var tempVec2 = new THREE.Vector3();
+        var color;
 
         var drawLine = function(args) {
             tempVec1.set(args[0], args[1], args[2]);
@@ -43,13 +35,10 @@ define([
 
     };
 
-    SetupDebug.prototype.updateSetupDebug = function() {
+    updateDebugLines = function() {
         lineDenderSystem.render();
     };
 
+}
 
-
-
-    return SetupDebug;
-
-});
+export { DebugLines }

@@ -30,7 +30,7 @@ class Client {
         client.createScene();
         this.pointerCursor = new PointerAndTouchCursors(this.pipelineAPI, this.gameScreen);
         this.INPUT_STATE =  this.pointerCursor.getInputState();
-        GameAPI.initGameMain();
+
 
     }
 
@@ -62,6 +62,7 @@ class Client {
             setTimeout(function() {
 
                 client.setup.initDefaultUi();
+                GameAPI.initGameMain();
                 }, 10)
 
 

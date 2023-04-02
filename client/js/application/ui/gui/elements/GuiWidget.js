@@ -49,7 +49,7 @@ class GuiWidget {
                 return this.testElementIsActive();
             }.bind(this);
 
-
+        this.eventListeners = [];
 
             this.callbacks = {
                 onAspectChange:onAspectChange,
@@ -140,7 +140,15 @@ class GuiWidget {
                 options.onActivate = function() {
                     evt.dispatch(ENUMS.Event[options.dispatch.event], options.dispatch.value)
                 }
+            }
 
+            if (typeof(options.on_event) === 'object') {
+
+                let onEvent = function(event) {
+                    this[options.on_event.call](event.value);
+                }.bind(this)
+                this.eventListeners.push({event:ENUMS.Event[options.on_event.event_id], callback:onEvent});
+                evt.on(ENUMS.Event[options.on_event.event_id], onEvent)
             }
 
             if (typeof(options.testActive) === 'function') {
@@ -546,6 +554,11 @@ class GuiWidget {
 
             if (this.icon) {
                 this.icon.releaseGuiIcon();
+            }
+
+            while (this.eventListeners.length) {
+                let event = this.eventListeners.pop()
+                evt.removeListener(event.event, event.callback, evt);
             }
 
             while (this.callbacks.onActivate.length) {

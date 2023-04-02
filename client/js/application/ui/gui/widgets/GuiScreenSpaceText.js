@@ -8,8 +8,8 @@ class GuiScreenSpaceText {
             }
 
             this.surface = {
-                minXY:{x:-0.5, y:-0.5, z:0},
-                maxXY:{x:0.5, y:0.5, z:0}
+                minXY:{x:-0.25, y:-0.5, z:0},
+                maxXY:{x: 0.25, y:0.5, z:0}
             };
 
             var stringReady = function(tpf, time) {
@@ -47,7 +47,7 @@ class GuiScreenSpaceText {
 
 
             var conf = {
-                "sprite_font": "sprite_font_main_text",
+                "sprite_font": "sprite_font_debug",
                 "feedback": "feedback_text_blue"
             };
 
