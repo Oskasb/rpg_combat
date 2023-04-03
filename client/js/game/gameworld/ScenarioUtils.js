@@ -1,4 +1,20 @@
-
+let iconKeysAll = [
+    "grass",
+    "mud",
+    "gravel",
+    "sand_pink",
+    "rock",
+    "marsh",
+    "rock_layers",
+    "rock_purple",
+    "rock_stripes",
+    "rock_hard",
+    "rock_rusty",
+    "sand",
+    "rock_grey",
+    "rock_blue",
+    "sand_cracked"
+];
 function positionPlayer(config) {
     let targetPos = ThreeAPI.tempVec3;
     let pos = config['pos'];
@@ -181,7 +197,7 @@ function spawnLocation(instances, location) {
         client.dynamicMain.requestAssetInstance(asset.id, instanceReturns)
     };
 
-    client.dynamicMain.requestAsset(assetId, houseLoaded);
+        client.dynamicMain.requestAsset(assetId, houseLoaded);
 
 }
 

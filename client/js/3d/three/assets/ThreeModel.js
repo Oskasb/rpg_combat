@@ -3,6 +3,7 @@ import {InstanceSpatial} from './InstanceSpatial.js';
 
 class ThreeModel {
     constructor(id, config, callback) {
+    //    console.log("New Model", id);
         InstanceAPI.addToModelCount();
         this.modelNr = InstanceAPI.getModelCount();
 

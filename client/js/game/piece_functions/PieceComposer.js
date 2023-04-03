@@ -55,7 +55,7 @@ class PieceComposer {
                 scaleVec.set(1, 1, 1);
                 gamePiece.pieceAnimator.setupAnimations(assetInstance.originalModel, scaleVec);
                 gamePiece.animStateMap = gamePiece.pieceAnimator.initPieceAnimator(gamePiece, skeletonData.data);
-                gamePiece.pieceAnimator.activatePieceAnimation('IDLE', 1, 1, 1)
+            //    gamePiece.pieceAnimator.activatePieceAnimation('IDLE', 1, 1, 1)
                 gamePiece.pieceAttachments = gamePiece.pieceAttacher.initPieceAttacher(gamePiece, skeletonData.data);
             }
 

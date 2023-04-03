@@ -3,31 +3,40 @@ import { InstancingBuffers} from "./InstancingBuffers.js";
 import { InstancingBufferElement } from "./InstancingBufferElement.js";
 
 class  Instantiator {
-    constructor(name) {
-
+    constructor(name, elementPools) {
 
         this.name = name;
     //    console.log("Instantiator ", name)
-        this.elementPools = {};
+        this.elementPools = elementPools;
         this.elementBuffers = {};
 
         let elementBuffers = this.elementBuffers;
-        let elementPools = this.elementPools;
-
         let getElementBuffers = function() {
             return elementBuffers;
         };
 
 
+        let setupPool = function(sysKey) {
+            console.log("Setup Pool ", sysKey)
+            let addElement = function(poolKey, callback) {
+                let element = new InstancingBufferElement();
+                callback(element)
+            };
+            elementPools[sysKey] = new ExpandingPool(sysKey, addElement);
+        }
+
+
         let buildElement = function(sysKey, cb) {
-        //    console.log("Build Instantiator elem:", sysKey)
+        //
             let getElement = function(elem) {
+
                 elem.initGuiBufferElement(getElementBuffers()[sysKey]);
                 elem.setDefaultBuffers();
                 cb(elem, sysKey);
             };
             if (!elementPools[sysKey]) {
-                console.log("Bad pool", name, sysKey, [elementPools])
+                setupPool(sysKey)
+            //    console.log("Bad pool", name, sysKey, [elementPools])
             }
 
             elementPools[sysKey].getFromExpandingPool(getElement)
@@ -50,14 +59,7 @@ class  Instantiator {
     };
 
     addInstanceSystem = function(elementKey, bufferSysKey, assetId, poolSize, renderOrder) {
-
         this.elementBuffers[elementKey] = new InstancingBuffers(bufferSysKey, assetId, poolSize, renderOrder);
-
-        let addElement = function(poolKey, callback) {
-            let element = new InstancingBufferElement();
-            callback(element)
-        };
-        this.elementPools[elementKey] = new ExpandingPool(elementKey, addElement);
     };
 
     buildBufferElement = function(sysKey, cb) {

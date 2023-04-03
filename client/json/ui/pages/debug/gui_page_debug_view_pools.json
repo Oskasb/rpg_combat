@@ -37,6 +37,10 @@
                         {
                           "key": "pushes",
                           "digits": 1
+                        },
+                        {
+                          "key": "pools",
+                          "digits": 1
                         }
                       ]
                     }

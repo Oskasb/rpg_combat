@@ -10,6 +10,13 @@ class InstancingBufferElement {
         this.guiBuffers = guiBuffers;
         this.index = this.guiBuffers.getAvailableIndex();
         this.guiBuffers.registerElement(this);
+        this.setBufferDefaults();
+    };
+
+    setBufferDefaults = function() {
+        this.scale.set(1, 1, 1);
+        this.quaternion.set(0, 0, 0, 1);
+        this.position.set(0, 0, 0);
         this.endTime = 0;
         // negative r inverts lut gradient direction
         this.rgba =     {r:1, g:1, b:1, a:1};
@@ -22,8 +29,7 @@ class InstancingBufferElement {
 
         // x:lutColor, y:lutAlpha
         this.texelRowSelect = {x:105, y:42, z:42, w:42}; // 42 = fullWhite;
-
-    };
+    }
 
     setAttackTime = function(time) {
         this.lifecycle.y = time;

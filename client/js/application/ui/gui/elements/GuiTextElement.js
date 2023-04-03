@@ -1,9 +1,6 @@
-import { ExpandingPool } from "../../../utils/ExpandingPool.js";
-import { GuiString } from "./GuiString.js";
-
 
 class GuiTextElement {
-    constructor() {
+    constructor(guiStringPool) {
         this.tempVec1 = new THREE.Vector3();
         this.parentPos = new THREE.Vector3();
         this.parentSize= new THREE.Vector3();
@@ -14,12 +11,10 @@ class GuiTextElement {
 
         this.textLayout = {"x": 0.5, "y": 0.5, "fontsize": 15};
         this.maxRows = 1;
-        let addElement = function(sysKey, callback) {
-            let element = new GuiString();
-            callback(element)
-        };
 
-        this.guiStringPool = new ExpandingPool('strings', addElement);
+        this.guiStringPool = guiStringPool;
+
+
     };
 
     removeGuiString = function(guiString) {

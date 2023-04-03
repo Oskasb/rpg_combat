@@ -13,7 +13,7 @@ class PieceAnimator {
         this.attachmentUpdates = [];
 
         this.timeAtKey = 0;
-        this.poseKey = ENUMS.getKey('Animations', ENUMS.Animations.IDLE);
+        this.poseKey = ENUMS.getKey('Animations', ENUMS.Animations.GD_MID_R);
 
         let setAttachmentUpdated = function(joint) {
             this.addAttachmentUpdate(joint)

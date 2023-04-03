@@ -3,8 +3,9 @@ import { Instantiator } from "../three/instancer/Instantiator.js";
 class EffectSpawner {
     constructor() {
 
+        let elementPools = {};
             this.config = {};
-            this.instantiator = new Instantiator('fxInstantiator');
+            this.instantiator = new Instantiator('fxInstantiator', elementPools);
 
             let populateSector = function(sector, area, plantCount, parentPlant) {
                 this.populateVegetationSector(sector, area, plantCount, parentPlant)

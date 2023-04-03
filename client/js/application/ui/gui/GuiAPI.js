@@ -13,7 +13,7 @@ class GuiAPI {
         this.inputSystem;
         this.textSystem;
         this.buttonSystem;
-        this.instantiator = new Instantiator('guiInstantiator');
+        this.instantiator = new Instantiator('guiInstantiator', this.elementPools);
         this.worldSpacePointers = [];
 
         this.basicText;
@@ -102,11 +102,14 @@ class GuiAPI {
         return this.instantiator.getElementBufferByKey(uiSysKey);
     }
 
-
-
     buildBufferElement = function(uiSysKey, cb) {
-    //    console.log("buildBufferElement", uiSysKey)
+        //    console.log("buildBufferElement", uiSysKey)
         this.instantiator.buildBufferElement(uiSysKey, cb)
+    };
+
+    recoverBufferElement = function(uiSysKey, bufferElement) {
+    //    console.log("buildBufferElement", uiSysKey)
+        this.instantiator.recoverBufferElement(uiSysKey, bufferElement)
     };
 
     registerTextSurfaceElement = function(elemKey, txtElem) {

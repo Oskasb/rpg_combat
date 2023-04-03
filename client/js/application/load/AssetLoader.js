@@ -13,6 +13,7 @@ import {LoadSequencer} from "./LoadSequencer.js";
 class AssetLoader {
     constructor() {
 
+        this.loadSequencer = new LoadSequencer();
         this.assetMap = {
             MODELS_:            ThreeModel,
             RIGS_:              ThreeRig,
@@ -64,6 +65,7 @@ class AssetLoader {
 
         loadAsset = function(assetType, assetId, callback) {
 
+            let loadSequencer = this.loadSequencer;
             let assetMap = this.assetMap;
             let assets = this.assets;
 
@@ -73,14 +75,13 @@ class AssetLoader {
                 if (cachedAsset === assetKey) {
                 //    PipelineAPI.cacheCategoryKey('ASSET', assetKey, lcallback);
                 //    console.log("Request LoadSequencer", assetKey);
-                    new LoadSequencer(assets, assetMap, assetType, assetId, lcallback);
+                    loadSequencer.sequenceAssetLoad(assets, assetMap, assetType, assetId, lcallback);
                 } else {
                     //    PipelineAPI.removeCategoryKeySubscriber('ASSET', assetKey, lcallback)
                 //    console.log('asset cached', assetKey);
                     lcallback(cachedAsset);
                 }
             };
-
 
             initLoadAsset(assetType, assetId, callback)
         };

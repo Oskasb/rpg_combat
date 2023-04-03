@@ -1,15 +1,24 @@
 import { GuiTextElement } from "../elements/GuiTextElement.js";
+import {GuiString} from "../elements/GuiString.js";
+import {ExpandingPool} from "../../../utils/ExpandingPool.js";
 
 class TextSystem {
     constructor(spriteKey) {
 
             this.elements = [];
             this.spriteKey = spriteKey;
+            let letterPools = {};
 
             let addElement = function(sysKey, callback) {
-                callback(new GuiTextElement())
-            }.bind(this);
+                callback(new GuiTextElement(guiStringPool))
+            };
 
+        let addStringElement = function(sysKey, callback) {
+            let element = new GuiString(letterPools);
+            callback(element)
+        };
+
+        let guiStringPool = new ExpandingPool('strings', addStringElement);
             this.expandingPool = PipelineAPI.addExpandingPool('text_elements', addElement);
         };
 

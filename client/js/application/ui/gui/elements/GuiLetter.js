@@ -6,7 +6,7 @@ class GuiLetter {
         };
 
         initLetterBuffers = function(bufferElement) {
-
+            bufferElement.setBufferDefaults()
             this.bufferElement = bufferElement;
             this.scale.x = 0;
             this.scale.y = 0;

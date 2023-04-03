@@ -4,6 +4,7 @@ class DynamicMain {
     this.assets = {};
     this.assetIndex = {};
     this.instances = [];
+    this.loadlist = []
 
         let requestInstance = function(event) {
             this.requestAssetInstance(event)
@@ -21,39 +22,57 @@ class DynamicMain {
     };
 
     requestAsset = function(modelAssetId, assetReadyCB) {
-        let assets = this.assets;
-        var onAssetReady = function(asset) {
-        //    console.log("AssetReady:", asset);
-            this.assetIndex[asset.id] = assets.length;
-            assets[modelAssetId] = asset;
 
-            var idx = this.assetIndex[asset.id];
+        let onAssetReady = function(asset) {
+        //    console.log("AssetReady:", asset.id);
+            this.assetIndex[asset.id] = this.assets.length;
+            this.assets[modelAssetId] = asset;
 
-            var anims = asset.model.animKeys;
-            var joints = asset.model.jointKeys;
-            var message = {};
+            let idx = this.assetIndex[asset.id];
+
+            let anims = asset.model.animKeys;
+            let joints = asset.model.jointKeys;
+            let message = {};
 
 
             message.index = idx;
             message.animKeys = anims;
             message.jointKeys = joints;
 
-            var modelSettings = asset.model.settings;
+            let modelSettings = asset.model.settings;
             if (modelSettings.skin) {
                 asset.model.skin = modelSettings.skin;
                 message.skin = modelSettings.skin
 
-            //    asset.model.parent.traverse( function( object ) {
-            //        object.frustumCulled = false;
-            //    } );
-
             }
 
-            assetReadyCB(asset)
-        //    WorkerAPI.callWorker(ENUMS.Worker.MAIN_WORKER,  [ENUMS.Message.REGISTER_ASSET, [asset.id, message]])
         }.bind(this);
 
-        ThreeAPI.buildAsset(modelAssetId,   onAssetReady);
+
+
+        if (this.assets[modelAssetId]) {
+            assetReadyCB(this.assets[modelAssetId])
+
+
+        } else {
+
+            let assetLoaded = function(asset) {
+                if (!this.assets[asset.id]) {
+                    onAssetReady(asset)
+                }
+                while(this.loadlist[modelAssetId].length) {
+                    this.loadlist[modelAssetId].pop()(this.assets[asset.id]);
+                }
+            }.bind(this)
+
+            if (this.loadlist[modelAssetId]) {
+                this.loadlist[modelAssetId].push(assetReadyCB)
+            } else {
+                this.loadlist[modelAssetId] = [assetReadyCB]
+                ThreeAPI.buildAsset(modelAssetId, assetLoaded);
+            }
+
+        }
 
     };
 

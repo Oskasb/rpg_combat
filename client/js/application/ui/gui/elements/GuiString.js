@@ -3,11 +3,11 @@ import { GuiLetter} from "../elements/GuiLetter.js";
 
 
 class GuiString {
-    constructor() {
+    constructor(letterPools) {
 
         this.sprite = {x:7, y:0, z:0.0, w:0.0};
         this.lifecycle = {x:0, y:0, z:0, w:0.25};
-        this.letterPools = {};
+        this.letterPools = letterPools;
         this.string = '';
         this.letters = [];
         this.minXY = new THREE.Vector3();
@@ -53,20 +53,23 @@ class GuiString {
             return;
         }
 
-        _this.recoverGuiString();
+        if (this.string !== string) {
+            _this.recoverGuiString();
+            this.string = string;
+
 
         if (!this.letterPools[guiSysId]) {
-
+            console.log("Add pool for sys: ", guiSysId)
             let fetch = function(sysKey, cb) {
                     let guiLetter = new GuiLetter();
                     cb(guiLetter)
                 };
 
-            this.letterPools[guiSysId] = PipelineAPI.addExpandingPool(guiSysId, fetch)
+            this.letterPools[guiSysId] = new ExpandingPool(guiSysId, fetch)
         }
 
         _this.setupLetters(string, guiSysId);
-
+    }
     };
 
     setupLetters = function(string, guiSysId) {
@@ -74,12 +77,16 @@ class GuiString {
         let createLetter = function(guiSysId, letter, index, cb) {
 
             let getLetter = function(guiLetter) {
-
                 let addLetterCb = function(bufferElem) {
                     guiLetter.initLetterBuffers(bufferElem);
                     cb(guiLetter, letter, index, guiSysId);
                 };
-                GuiAPI.buildBufferElement(guiSysId, addLetterCb)
+
+                if (guiLetter.bufferElement) {
+                    addLetterCb(guiLetter.bufferElement)
+                } else {
+                    GuiAPI.buildBufferElement(guiSysId, addLetterCb)
+                }
             };
 
             letterPools[guiSysId].getFromExpandingPool(getLetter);
@@ -98,7 +105,9 @@ class GuiString {
 
         while (this.letters.length) {
             let letter = this.letters.pop()
-            letter.releaseGuiLetter();
+        //    letter.releaseGuiLetter();
+            GuiAPI.recoverBufferElement(letter.getGuiSysId(), letter.bufferElement);
+            letter.bufferElement = null;
             this.letterPools[letter.getGuiSysId()].returnToExpandingPool(letter);
         }
     };

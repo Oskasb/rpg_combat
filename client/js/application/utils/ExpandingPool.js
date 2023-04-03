@@ -10,14 +10,27 @@ class ExpandingPool {
             cache.DEBUG.POOLS = {
                 added:0,
                 shifts:0,
-                pushes:0
+                pushes:0,
+                pools: 0,
+                poolKeys:[]
             };
         }
 
-        this.track = cache.DEBUG.POOLS
+        if (dataKey === 'UI_TEXT_MAIN') {
+            console.log("More pools", dataKey, createFunc);
+        }
 
+        this.dataKey = dataKey;
+        this.track = cache.DEBUG.POOLS
+        this.track.pools++
+        this.track.poolKeys.push(dataKey)
         this.pool = [];
         this.generatePoolEntry = function(callback) {
+
+            if (dataKey === 'UI_TEXT_MAIN') {
+           //     console.log("More adds", dataKey, this);
+            }
+
             this.track.added++
             // effect and particles not returning to pool! -- fix also UI_TEXT_MAIN-- letters?
             createFunc(dataKey, callback)
@@ -46,17 +59,22 @@ class ExpandingPool {
         if (this.poolEntryCount() > 1) {
             callback(this.shiftEP());
         } else {
-            this.track.active++;
             this.generatePoolEntry(callback)
         }
     };
 
     returnToExpandingPool = function(entry) {
+
         if (this.pool.indexOf(entry) === -1) {
             this.pushEP(entry)
         } else {
             console.log("Entry already in pool, no good!", entry)
         }
+
+        if (this.dataKey === 'UI_TEXT_MAIN') {
+        //    console.log("Returns", this.pool.length);
+        }
+
     };
 
 }

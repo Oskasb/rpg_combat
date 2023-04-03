@@ -13,7 +13,7 @@ class GameEffect {
         this.attachParticles = [];
         this.activeParticles = [];
 
-        let addEffectParticle = function(key, particle) {
+        let addEffectParticle = function(particle, key) {
             EffectAPI.addParticleToEffectOfClass(this.attachParticles.pop(), particle, this)
         }.bind(this);
 

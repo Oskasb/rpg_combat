@@ -27,7 +27,8 @@ class EffectAPI {
         }.bind(this);
 
         let createEffect = function (key, cb) {
-            cb(key, new ParticleEffect());
+            console.log("Create effect", key, cb)
+            cb(new ParticleEffect(), key);
         };
 
         this.effectPool = new ExpandingPool('effect', createEffect);
@@ -146,14 +147,11 @@ class EffectAPI {
         return this.particleConfigs[particleId]
     };
 
-    getParticleEffect = function(callback) {
-        this.effectPool.getFromExpandingPool(callback)
-    };
-
     recoverParticleEffect = function(effect) {
         let spawner = effect.getSpawnerId();
         MATH.quickSplice(this.activeEffects[spawner], effect);
-        this.effectSpawners[spawner].deactivateEffect(effect)
+        this.effectSpawners[spawner].deactivateEffect(effect);
+        this.effectPool.returnToExpandingPool(effect);
     };
 
     buildEffect = function(callback) {
