@@ -31,7 +31,9 @@ class GuiSurface {
                 callback(this)
             }.bind(this);
 
-            GuiAPI.buildBufferElement(this.config.image.layer, addSurfaceCb);
+            this.sysKey = this.config.image.layer
+
+            GuiAPI.buildBufferElement(this.sysKey, addSurfaceCb);
         };
 
 
@@ -104,8 +106,11 @@ class GuiSurface {
         recoverGuiSurface = function() {
 
             this.config = null;
-       //     this.bufferElement.releaseElement();
-            this.bufferElement.endLifecycleNow()
+            //   this.bufferElement.releaseElement();
+                 this.bufferElement.endLifecycleNow()
+
+        //    GuiAPI.recoverBufferElement(this.sysKey, this.bufferElement);
+
             while (this.onUpdateCallbacks.length) {
                 this.onUpdateCallbacks.pop();
             }

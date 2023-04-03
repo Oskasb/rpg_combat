@@ -1,5 +1,6 @@
 class InstancingBuffers {
     constructor(bufferSysKey, assetId, elementCount, renderOrder) {
+
         this.adds = 0;
         this.relCount = 0;
         this.actCount = 0;
@@ -250,8 +251,6 @@ class InstancingBuffers {
             this.activeCount++;
             this.activeElements[guiElement.index] = guiElement;
         };
-
-
 
         monitorBufferStats = function() {
             DebugAPI.trackStat('gui_releases', this.relCount);

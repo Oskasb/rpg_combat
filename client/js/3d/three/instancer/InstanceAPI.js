@@ -133,20 +133,48 @@ class InstanceAPI {
     };
 
 
+    monitorInstances = function(key, value) {
+        let cache = PipelineAPI.getCachedConfigs();
+        if (!cache['DEBUG']) {
+            cache.DEBUG = {};
+        }
+        if (!cache['DEBUG']['BUFFERS']) {
+            cache.DEBUG.BUFFERS = {
+                systems:0,
+                active:0,
+                total:0,
+                sysAssets: [],
+                sysKeys:[]
+            };
+            this.track = cache.DEBUG.BUFFERS;
+        }
+        this.track[key] = value;
+
+    }
 
     updateInstances = function(tpf, systemTime) {
 
+
+        let iCount = 0;
         let updateUiSystemBuffers = function(instanceBuffers) {
-            instanceBuffers.setInstancedCount(instanceBuffers.updateBufferStates( systemTime));
+            let count = instanceBuffers.updateBufferStates( systemTime)
+        //    console.log(count);
+            instanceBuffers.setInstancedCount(count);
+            iCount+=count;
         };
 
         this.systemTime = systemTime;
 
+        let sysKeys = 0;
+        let sysBuffs = 0;
         for (let key in this.uiSystems) {
+            sysKeys++
             for (let i = 0; i < this.uiSystems[key].length; i++) {
+                sysBuffs++
                 updateUiSystemBuffers(this.uiSystems[key][i])
             }
         }
+
 
         ThreeAPI.setGlobalUniform( 'fogDensity', ThreeAPI.readEnvironmentUniform('fog', 'density'));
         ThreeAPI.setGlobalUniform( 'fogColor' ,ThreeAPI.readEnvironmentUniform('fog', 'color'));
@@ -158,9 +186,12 @@ class InstanceAPI {
         this.tempVec.applyQuaternion(quat);
         ThreeAPI.setGlobalUniform( 'sunLightDirection' ,this.tempVec);
 
+        let mats = 0;
+
         for (let i = 0; i < this.materials.length; i++) {
             let mat = this.materials[i];
             if (mat) {
+                mats++
                 if (mat.uniforms) {
                     if (mat.uniforms.systemTime) {
                         mat.uniforms.systemTime.value = this.systemTime;
@@ -173,7 +204,10 @@ class InstanceAPI {
             }
 
         }
-
+        this.monitorInstances('mats', mats);
+        this.monitorInstances('sysKeys', sysKeys);
+        this.monitorInstances('sysBuffs', sysBuffs);
+        this.monitorInstances('iCount', iCount);
     };
 
 }

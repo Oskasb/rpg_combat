@@ -19,7 +19,7 @@ class TextSystem {
         };
 
         let guiStringPool = new ExpandingPool('strings', addStringElement);
-            this.expandingPool = PipelineAPI.addExpandingPool('text_elements', addElement);
+            this.expandingPool = new ExpandingPool('text_elements', addElement);
         };
 
         initTextSystem = function(callback) {
