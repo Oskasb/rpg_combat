@@ -104,8 +104,8 @@ class GuiSurface {
         recoverGuiSurface = function() {
 
             this.config = null;
-            this.bufferElement.releaseElement();
-
+       //     this.bufferElement.releaseElement();
+            this.bufferElement.endLifecycleNow()
             while (this.onUpdateCallbacks.length) {
                 this.onUpdateCallbacks.pop();
             }

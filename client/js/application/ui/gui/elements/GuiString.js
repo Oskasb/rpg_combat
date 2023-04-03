@@ -83,6 +83,7 @@ class GuiString {
                 };
 
                 if (guiLetter.bufferElement) {
+                    guiLetter.bufferElement.startLifecycleNow()
                     addLetterCb(guiLetter.bufferElement)
                 } else {
                     GuiAPI.buildBufferElement(guiSysId, addLetterCb)
@@ -102,10 +103,11 @@ class GuiString {
     };
 
     recoverGuiString = function() {
-
+        this.string = '';
         while (this.letters.length) {
             let letter = this.letters.pop()
         //    letter.releaseGuiLetter();
+            letter.bufferElement.endLifecycleNow()
             GuiAPI.recoverBufferElement(letter.getGuiSysId(), letter.bufferElement);
             letter.bufferElement = null;
             this.letterPools[letter.getGuiSysId()].returnToExpandingPool(letter);
