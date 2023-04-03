@@ -1,3 +1,7 @@
+function getAllSceneNodes() {
+    let scene = ThreeAPI.getScene();
+   return scene.children;
+}
 
 function createDebugButton(text, onActivate, testActive, parent, x, y) {
  //   console.log("Debug Button: ", text, onActivate, testActive, parent, x, y);
@@ -29,4 +33,7 @@ function createDebugButton(text, onActivate, testActive, parent, x, y) {
 }
 
 
-export { createDebugButton }
+export {
+    createDebugButton,
+    getAllSceneNodes
+}

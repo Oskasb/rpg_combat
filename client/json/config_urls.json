@@ -9,6 +9,7 @@
       "/world/scenarios/cave_scenario_static.json"           ,
 
       "/world/scenarios/home_dynamic/home_hero_dynamic.json" ,
+      "/world/scenarios/home_dynamic/hero_practice_dynamic.json" ,
       "/world/scenarios/home_dynamic/home_hovel_dynamic.json" ,
       "/world/scenarios/home_dynamic/home_stash_dynamic.json" ,
       "/world/scenarios/home_dynamic/home_world_dynamic.json" ,
@@ -37,6 +38,8 @@
       "/ui/pages/gui_page_dungeon.json"                      ,
       "/ui/pages/gui_page_garden.json"                       ,
       "/ui/pages/gui_page_hero.json"                        ,
+      "/ui/pages/gui_page_hero_practice.json"                ,
+      "/ui/pages/gui_activity_page_practice.json"           ,
       "/ui/pages/gui_page_home.json"                        ,
       "/ui/pages/gui_page_inn.json"                         ,
       "/ui/pages/gui_page_manor.json"                        ,

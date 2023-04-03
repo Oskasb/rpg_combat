@@ -60,6 +60,24 @@
                   }
                 },
                 {
+                  "widget_id":"button_go_train",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"TRAIN",
+                    "container_id":"page_home_center",
+                    "offset_x": 0.10,
+                    "offset_y":-0.18,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"hero_practice_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
                   "widget_id":"button_hero_equip",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",

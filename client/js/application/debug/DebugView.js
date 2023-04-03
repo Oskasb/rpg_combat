@@ -1,20 +1,55 @@
 import * as DebugUtils from "./DebugUtils.js";
+import {DebugLines} from "./lines/DebugLines.js";
 
 class DebugView {
     constructor() {
+        this.debugLines = new DebugLines()
         this.inspecting = {};
         this.isActive = false;
         let onActivate = function() {
             this.activateDebugView();
         }.bind(this);
 
+        let inspectFrameUpdate = function() {
+            this.debugLines.updateDebugLines();
+            this.renderInspectionFrame();
+        }.bind(this);
+
         this.callbacks = {
-            onActivate:onActivate
+            onActivate:onActivate,
+            inspectFrameUpdate:inspectFrameUpdate
+        }
+    }
+
+    renderInspectionFrame() {
+        if (this.inspecting['nodes']) {
+            let nodes = DebugUtils.getAllSceneNodes();
+            for (let i = 0; i < nodes.length;i++) {
+                evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:nodes[i].position, color:'GREEN', size:1})
+            }
         }
     }
 
     debugModelInspection = function(event) {
-        console.log("Debug View Models ", event);
+
+        let insKey = event['inspect']
+        let inspecting = false;
+        if (!this.inspecting[insKey]) this.inspecting[insKey] = false;
+        this.inspecting[insKey] = !this.inspecting[insKey];
+
+        for (let key in this.inspecting) {
+            if (this.inspecting[key]) inspecting = true;
+            console.log(key, inspecting);
+        }
+        console.log("Debug View Models ", event, this.inspecting[insKey], inspecting);
+
+            if (inspecting) {
+                ThreeAPI.addPrerenderCallback(this.callbacks.inspectFrameUpdate);
+            } else {
+                this.debugLines.updateDebugLines();
+                ThreeAPI.unregisterPrerenderCallback(this.callbacks.inspectFrameUpdate);
+            }
+            
     }
 
     initDebugView = function() {

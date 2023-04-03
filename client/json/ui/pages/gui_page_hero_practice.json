@@ -1,0 +1,88 @@
+[
+  {
+    "UI": {
+      "PAGES":[
+        {
+          "id": "page_scene_hero_practice",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"page_home_center",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"center"
+                  }
+                },
+                {
+                  "widget_id":"top_bar_header",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"scene_page_header_text_box",
+                  "options":{
+                    "text":"TRAINING",
+                    "anchor":"top_center",
+                    "offset_x": 0.0,
+                    "offset_y":-0.025
+                  }
+                },
+
+                {
+                  "widget_id":"text_box_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"main_text_box",
+                  "options":{
+                    "anchor":"bottom_left",
+                    "offset_x":0.15,
+                    "offset_y":0.04,
+                    "text":"Take some swings."
+                  }
+
+                }
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_go_home",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"BACK",
+                    "container_id":"page_home_center",
+                    "offset_x":-0.07,
+                    "offset_y":-0.31,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"home_hero_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_hero_equip",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"TRAIN",
+                    "container_id":"page_home_center",
+                    "offset_x":0.07,
+                    "offset_y":-0.31,
+                    "dispatch":{
+                      "event":"HERO_TRAINING",
+                      "value":{
+                        "character": "player",
+                        "train":"combat",
+                        "time":10
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

@@ -4,6 +4,7 @@ class DebugLines {
         constructor() {
 
         lineDenderSystem = new LineRenderSystem();
+        this.lineDenderSystem = lineDenderSystem;
         var lineDenderSystem;
         var tempVec1 = new THREE.Vector3();
         var tempVec2 = new THREE.Vector3();
@@ -16,10 +17,9 @@ class DebugLines {
             lineDenderSystem.drawLine(tempVec1, tempVec2, color)
         };
 
-        var drawCross = function(args) {
-            tempVec1.set(args[0], args[1], args[2]);
-            color = lineDenderSystem.color(ENUMS.getKey('Color', args[3]));
-            lineDenderSystem.drawCross(tempVec1, color, args[4])
+        var drawCross = function(event) {
+            color = lineDenderSystem.color(event.color);
+            lineDenderSystem.drawCross(event.pos, color, event.size)
         };
 
         var drawBox = function(args) {
@@ -36,7 +36,7 @@ class DebugLines {
     };
 
     updateDebugLines = function() {
-        lineDenderSystem.render();
+        this.lineDenderSystem.render();
     };
 
 }

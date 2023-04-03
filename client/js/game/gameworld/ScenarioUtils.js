@@ -78,6 +78,7 @@ function setupBoxGrid(instances, boxGrid) {
                 );
                 instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)
                 instance.setSprite(iconSprite);
+                ThreeAPI.getScene().remove(instance.spatial.obj3d)
             };
 
             client.dynamicMain.requestAssetInstance('asset_box', addSceneBox)
@@ -156,6 +157,7 @@ function spawnPatch(instances, patch) {
 
         instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
         instances.push(instance);
+        ThreeAPI.getScene().remove(instance.spatial.obj3d)
     }
 
     for (let i = 0; i < count; i++) {
@@ -184,6 +186,7 @@ function spawnLocation(instances, location) {
         instance.spatial.setRotXYZ( rot[0], rot[1], rot[2]);
         instance.spatial.setPosXYZ( position.x, position.y, position.z);
         instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
+        ThreeAPI.getScene().remove(instance.spatial.obj3d)
         instances.push(instance);
     }
     let houseLoaded = function(asset) {

@@ -64,7 +64,8 @@ if(typeof(ENUMS) === "undefined"){
         DEBUG_VIEW_MODELS:          39,
         DEBUG_TEXT:                 40,
         TOGGLE_GUI_PAGE:            41,
-        DEBUG_STATS_POOLS:          42
+        DEBUG_STATS_POOLS:          42,
+        HERO_TRAINING:              43
 
     };
 

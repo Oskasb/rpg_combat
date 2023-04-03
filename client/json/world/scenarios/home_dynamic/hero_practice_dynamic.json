@@ -1,0 +1,25 @@
+[{
+  "DYNAMIC_SCENARIOS":{
+    "GAME_SCENARIOS":[
+      {
+        "id": "hero_practice_dynamic",
+        "data": [
+          {
+            "data_key":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_hero_practice",
+              "environment": "dawn",
+              "player": {
+                "pos": [-1.8, 0, 0.8],
+                "rot": [0, 1.311, 0]
+              },
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}]

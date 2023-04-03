@@ -1,22 +1,22 @@
 [{
   "DYNAMIC_SCENARIOS":{
+    "GAME_SCENARIOS":[
+      {
+        "id": "home_hero_dynamic",
+        "data": [
+          {
+            "data_key":"dynamic_view_init",
+            "config": {
+              "gui_page":"page_scene_hero",
+              "environment": "sunny_day",
 
-    "GAME_SCENARIOS":[      {
-      "id": "home_hero_dynamic",
-      "data": [
-        {
-          "data_key":"dynamic_view_init",
-          "config": {
-            "gui_page":"page_scene_hero",
-            "environment": "sunny_day",
+              "spawn":[
 
-            "spawn":[
-
-            ]
+              ]
+            }
           }
-        }
-      ]
-    }
+        ]
+      }
     ]
   }
 }]

@@ -10,6 +10,7 @@
             "home_world_dynamic",
             "home_stash_dynamic",
             "home_hero_dynamic",
+            "hero_practice_dynamic",
             "world_manor_dynamic",
             "world_town_dynamic",
             "town_merchant_dynamic",
@@ -52,7 +53,12 @@
         "home_hero_dynamic":{
           "time":0.6,
           "pos": [0.6, 1.7, -2.1],
-          "lookAt": [-0.4, 1.4, -0.5]
+          "lookAt": [-0.4, 1.6, -0.5]
+        },
+        "hero_practice_dynamic":{
+          "time":0.6,
+          "pos": [-4.6, 3.4, -3.1],
+          "lookAt": [-3.0, 2.1, -0.5]
         },
          "world_manor_dynamic":{
           "time":1.3,

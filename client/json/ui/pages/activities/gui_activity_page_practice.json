@@ -1,0 +1,121 @@
+[
+  {
+    "UI": {
+      "PAGES":[
+        {
+          "id": "page_activity_practice",
+          "data": [
+            {
+              "containers":[
+                {
+                  "widget_id":"page_practice_center",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"center"
+                  }
+                },
+                {
+                  "widget_id":"page_practice_bottom_right",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"bottom_right"
+                  }
+                },
+                {
+                  "widget_id":"page_practice_top_right",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"top_right"
+                  }
+                },
+                {
+                  "widget_id":"page_practice_top_left",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"top_left"
+                  }
+                },
+                {
+                  "widget_id":"page_practice_mid_left",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"mid_left"
+                  }
+                },
+                {
+                  "widget_id":"page_practice_bottom_left",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"bottom_left"
+                  }
+                },
+                {
+                  "widget_id": "feedback_container_swing_timer",
+                  "widget_class": "GuiExpandingContainer",
+                  "widget_config_id": "widget_gui_anchor",
+                  "options": {
+                    "container_id": "page_practice_center"
+                  }
+                },
+                {
+                  "widget_id": "feedback_container_time_tracker",
+                  "widget_class": "GuiExpandingContainer",
+                  "widget_config_id": "page_practice_top_right",
+                  "options": {
+                    "container_id": "page_debug_top_left"
+                  }
+                }
+              ],
+              "buttons":[
+                {
+                  "widget_id":"button_view_models",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"MODELS",
+                    "container_id":"feedback_container_time_tracker",
+                    "offset_x": 0.10,
+                    "offset_y": -0.08,
+                    "dispatch":{
+                      "event":"TOGGLE_GUI_PAGE",
+                      "value":{
+                        "page_id":"page_debug_view_models",
+                        "parent_page_id":"page_debug_view",
+                        "parent_container_id": "button_container_models"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_view_pools",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"POOLS",
+                    "container_id":"feedback_container_swing_timer",
+                    "offset_x": 0.25,
+                    "offset_y": -0.08,
+                    "dispatch":{
+                      "event":"TOGGLE_GUI_PAGE",
+                      "value":{
+                        "page_id":"page_debug_view_pools",
+                        "parent_page_id":"page_debug_view",
+                        "parent_container_id": "button_container_pools"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
