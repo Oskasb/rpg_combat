@@ -8,18 +8,32 @@ class PieceStateProcessor {
         status.turnProgress++;
         status.charState = status.targState;
         status.atkType = status.trgAtkTyp;
-        status.attack = 0;
+        if (status.charState === ENUMS.CharacterState.COMBAT) {
+            status.attack = 1;
+        } else {
+            status.attack = 0;
+        }
+
     }
 
-    deductAttack(status, config) {
+
+    countAttack(status, config) {
         status.attack++
     }
 
+    processSwingProgress(status, config) {
+
+        status.prep = MATH.clamp (status.atkProg / config.prepFraction, 0, 1);
+        status.swing = MATH.clamp ((status.atkProg-config.prepFraction) / (config.swingFraction), 0, 1);
+        status.recover = MATH.clamp ((status.atkProg-(config.swingFraction+config.prepFraction)) / (config.recoverFraction ), 0, 1);
+
+    }
     processAttack(status, config) {
-        status.atkProg = (status.attacks - status.turnProgress * status.attacks) - status.attack;
-        if (status.atkProg > status.attack / status.attacks) {
-            this.deductAttack(status, config);
+        status.atkProg = (status.attacks - status.turnProgress * status.attacks) - (status.attack-1);
+        if (status.atkProg > 1) {
+            this.countAttack(status, config);
         }
+        this.processSwingProgress(status, config)
 
     }
 

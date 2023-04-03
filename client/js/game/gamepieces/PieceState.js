@@ -11,6 +11,9 @@ class PieceState {
                 FAST:3,
                 HEAVY:1
             },
+            prepFraction:0.3,
+            swingFraction:0.2,
+            recoverFraction:0.5,
             hasteFactor:1
         }
 
