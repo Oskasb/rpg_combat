@@ -25,7 +25,7 @@ class CharacterEquipment {
             this.slotToJointMap[slotId] = dynamicJoint
 
         }
-        console.log(this.slotToJointMap);
+
         this.pieces = [];
     }
 

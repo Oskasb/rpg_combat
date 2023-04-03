@@ -15,7 +15,7 @@ class EncounterDynamicScenario {
         this.isActive = true;
         let onConfig = function(config, updateCount) {
             if (!this.isActive) return;
-            console.log("Update Count: ", updateCount, config)
+        //    console.log("Update Count: ", updateCount, config)
             if (updateCount) {
                 GuiAPI.printDebugText("REFLOW DYNAMIC SCENARIO")
                 this.exitScenario();

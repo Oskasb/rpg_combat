@@ -26,8 +26,7 @@
                     "dispatch":{
                       "event":"DEBUG_VIEW_MODELS",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"home_world_dynamic"
+                        "inspect":"nodes"
                       }
                     }
                   }
@@ -44,8 +43,7 @@
                     "dispatch":{
                       "event":"DEBUG_VIEW_MODELS",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"home_world_dynamic"
+                        "inspect":"points"
                       }
                     }
                   }
@@ -62,8 +60,7 @@
                     "dispatch":{
                       "event":"DEBUG_VIEW_MODELS",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"home_world_dynamic"
+                        "inspect":"bounds"
                       }
                     }
                   }

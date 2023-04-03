@@ -27,7 +27,7 @@ class EffectAPI {
         }.bind(this);
 
         let createEffect = function (key, cb) {
-            console.log("Create effect", key, cb)
+        //    console.log("Create effect", key, cb)
             cb(new ParticleEffect(), key);
         };
 

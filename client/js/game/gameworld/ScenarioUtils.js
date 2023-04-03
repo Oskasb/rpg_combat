@@ -45,15 +45,10 @@ function positionPlayer(config) {
     }
 
     playerMovement.moveToTargetAtTime('walk', sourcePos, targetPos, travelTimeMax, arriveCallback)
-    // .copy(ThreeAPI.tempVec3);
 
-    console.log("Position player", pos, rot)
-
-
-  //  player.callbacks.tickGamePiece();
 }
 function setupBoxGrid(instances, boxGrid) {
-    console.log("SETUP GRID")
+
     let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
     let iconKeys = boxGrid['grid_tiles'];
     let boxSize = boxGrid['box_size']
@@ -173,7 +168,6 @@ function spawnPatch(instances, patch) {
 
 function spawnLocation(instances, location) {
 
-    console.log("LOC")
     let assetId = location['asset_id'];
     let position = new THREE.Vector3();
     MATH.vec3FromArray(position, location['pos']);

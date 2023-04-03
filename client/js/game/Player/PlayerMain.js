@@ -19,7 +19,7 @@ class PlayerMain {
         let stashInvItem = function(event) {
             let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item);
             if (!item) {
-                console.log("No item gotten from inventory..")
+        //        console.log("No item gotten from inventory..")
                 return;
             }
             this.stashItemPiece(item, event.time)
@@ -28,7 +28,7 @@ class PlayerMain {
         let equipItem = function (event) {
             let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item);
             if (!item) {
-                console.log("No item gotten from stash..")
+       //         console.log("No item gotten from stash..")
                 return;
             }
             this.playerCharacter.getEquipment().characterEquipItem(item)
@@ -37,7 +37,7 @@ class PlayerMain {
         let unequipItem = function(event) {
             let item = this.playerCharacter.getEquipment().takeEquippedItem(event.item);
             if (!item) {
-                console.log("No item gotten from equipment..")
+        //        console.log("No item gotten from equipment..")
                 return;
             }
             GameAPI.addItemToPlayerInventory(item, 0.5);

@@ -15,7 +15,7 @@ class EncounterStaticScenario {
         let _this = this;
 
         let onConfig = function(config, updateCount) {
-            console.log("Update Count: ", updateCount)
+        //    console.log("Update Count: ", updateCount)
             if (updateCount) {
                 GuiAPI.printDebugText("REFLOW SCENARIO")
                 this.exitScenario();

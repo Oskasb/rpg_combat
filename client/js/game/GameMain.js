@@ -88,7 +88,7 @@ class GameMain {
         this.applyNavPoint();
 
         let dynamicReady = function(dynScen) {
-            console.log("Dynamic Ready")
+
         }
 
         let staticReadyCB = function() {

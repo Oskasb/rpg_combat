@@ -90,8 +90,6 @@ class ThreeMaterial {
 
         if (props.defines) {
 
-            console.log("Add defines: ", mat.defines);
-
             mat.defines = mat.defines || {};
 
             for (let key in props.defines) {

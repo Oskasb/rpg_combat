@@ -2,6 +2,7 @@ import * as DebugUtils from "./DebugUtils.js";
 
 class DebugView {
     constructor() {
+        this.inspecting = {};
         this.isActive = false;
         let onActivate = function() {
             this.activateDebugView();
@@ -12,7 +13,17 @@ class DebugView {
         }
     }
 
+    debugModelInspection = function(event) {
+        console.log("Debug View Models ", event);
+    }
+
     initDebugView = function() {
+        let onDebugModels = function(event) {
+            this.debugModelInspection(event);
+        }.bind(this);
+
+        evt.on(ENUMS.Event.DEBUG_VIEW_MODELS, onDebugModels)
+
         let testActive = function() {
             return this.isActive;
         }.bind(this)

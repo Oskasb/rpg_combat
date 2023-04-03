@@ -1,8 +1,8 @@
 
 function createDebugButton(text, onActivate, testActive, parent, x, y) {
-    console.log("Debug Button: ", text, onActivate, testActive, parent, x, y);
+ //   console.log("Debug Button: ", text, onActivate, testActive, parent, x, y);
     let buttonReady = function(button) {
-        console.log("DEbug Button Ready: ", button);
+  //      console.log("DEbug Button Ready: ", button);
     }
 
     let opts = {

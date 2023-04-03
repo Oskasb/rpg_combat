@@ -6,8 +6,6 @@ class  Instantiator {
     constructor(name, elementPools) {
 
         this.name = name;
-    //    console.log("Instantiator ", name)
-        this.elementPools = elementPools;
         this.elementBuffers = {};
 
         let elementBuffers = this.elementBuffers;
@@ -17,7 +15,6 @@ class  Instantiator {
 
 
         let setupPool = function(sysKey) {
-            console.log("Setup Pool ", sysKey)
             let addElement = function(poolKey, callback) {
                 let element = new InstancingBufferElement();
                 callback(element)
@@ -76,10 +73,6 @@ class  Instantiator {
             this.elementBuffers[key].updateGuiBuffer(systemTime)
         }
 
-    };
-
-    monitorBufferStats = function() {
-        InstancingBuffers.monitorBufferStats();
     };
 
 }

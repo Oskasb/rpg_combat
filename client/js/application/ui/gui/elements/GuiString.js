@@ -33,15 +33,12 @@ class GuiString {
         }
     }
 
-
-
     setString = function(string, guiSysId) {
         let _this = this;
         if (!string) {
             _this.recoverGuiString();
             return;
         }
-
 
         if (typeof(string) === 'number') {
             string = ''+string;
@@ -57,14 +54,11 @@ class GuiString {
             _this.recoverGuiString();
             this.string = string;
 
-
         if (!this.letterPools[guiSysId]) {
-            console.log("Add pool for sys: ", guiSysId)
             let fetch = function(sysKey, cb) {
                     let guiLetter = new GuiLetter();
                     cb(guiLetter)
                 };
-
             this.letterPools[guiSysId] = new ExpandingPool(guiSysId, fetch)
         }
 
