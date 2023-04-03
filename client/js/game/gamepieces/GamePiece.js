@@ -3,6 +3,7 @@ import { PieceAnimator } from "./PieceAnimator.js";
 import { PieceComposer } from "../piece_functions/PieceComposer.js";
 import { PieceAttacher } from "./PieceAttacher.js";
 import { PieceMovement } from "../piece_functions/PieceMovement.js";
+import { PieceState } from "./PieceState.js";
 
 class GamePiece {
     constructor(config, callback) {
@@ -10,11 +11,13 @@ class GamePiece {
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
+        this.pieceState = new PieceState(this);
 
         let tickGamePiece = function(tpf, gameTime) {
             MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime);
             this.pieceAnimator.updatePieceAnimations(tpf, gameTime);
-            this.pieceAttacher.tickAttacher()
+            this.pieceAttacher.tickAttacher();
+            this.pieceState.tickPieceState(tpf, gameTime);
         }.bind(this);
 
         let tickPieceEquippedItem = function(tpf, gameTime) {
@@ -34,6 +37,10 @@ class GamePiece {
 
         new PieceComposer(this, config, compositCb)
 
+    }
+
+    applyStateEvent(event) {
+        this.pieceState.handleStateEvent(event)
     }
 
     setEquipSlotId(slot) {

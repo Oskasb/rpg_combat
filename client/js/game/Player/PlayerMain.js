@@ -49,6 +49,10 @@ class PlayerMain {
             piece.getSpatial().applySpatialUpdateToBuffers()
         }.bind(this);
 
+        let handleStateEvent = function(event) {
+            this.getPlayerCharacter().gamePiece.applyStateEvent(event)
+        }.bind(this);
+
         let callbacks = {
             handleEquip : equipItem,
             handleUnequip : unequipItem,
@@ -56,7 +60,8 @@ class PlayerMain {
             handleStashItem : stashInvItem,
             handleTakeStashItem : takeStashItem,
             handleTakeWorldItem : function (event) {        },
-            addToStash:addToStash
+            addToStash:addToStash,
+            handleStateEvent:handleStateEvent
 
         }
 
@@ -67,12 +72,17 @@ class PlayerMain {
         evt.on(ENUMS.Event.DROP_ITEM, callbacks.handleDropItem);
         evt.on(ENUMS.Event.STASH_ITEM, callbacks.handleStashItem);
         evt.on(ENUMS.Event.TAKE_STASH_ITEM, callbacks.handleTakeStashItem);
-        evt.on(ENUMS.Event.TAKE_WORLD_ITEM, callbacks.handleTakeWorldItem)
+        evt.on(ENUMS.Event.TAKE_WORLD_ITEM, callbacks.handleTakeWorldItem);
+        evt.on(ENUMS.Event.MAIN_CHAR_STATE_EVENT, callbacks.handleStateEvent);
     }
 
 
     setPlayerCharacter(character) {
         this.playerCharacter = character;
+        let data = {
+            MAIN_CHAR_STATUS:character.characterStatus
+        }
+        PipelineAPI.setCategoryData('CHARACTERS', data)
     }
 
     getPlayerCharacter() {

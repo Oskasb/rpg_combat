@@ -65,7 +65,7 @@ if(typeof(ENUMS) === "undefined"){
         DEBUG_TEXT:                 40,
         TOGGLE_GUI_PAGE:            41,
         DEBUG_STATS_POOLS:          42,
-        HERO_TRAINING:              43
+        MAIN_CHAR_STATE_EVENT:      43
 
     };
 
@@ -339,6 +339,12 @@ if(typeof(ENUMS) === "undefined"){
         ENABLED:          5,
         DISABLED:         6
     };
+
+    ENUMS.AttackType = {
+        NONE:              0,
+        FAST:              1,
+        HEAVY:             2
+    }
 
     ENUMS.CharacterState = {
         ALERT:             0,

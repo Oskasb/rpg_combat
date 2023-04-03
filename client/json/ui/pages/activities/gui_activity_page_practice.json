@@ -8,7 +8,7 @@
             {
               "containers":[
                 {
-                  "widget_id":"page_practice_center",
+                  "widget_id":"page_activity_practice_center",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"widget_hidden_container",
                   "options": {
@@ -16,7 +16,7 @@
                   }
                 },
                 {
-                  "widget_id":"page_practice_bottom_right",
+                  "widget_id":"page_activity_practice_bottom_right",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"widget_hidden_container",
                   "options": {
@@ -24,7 +24,7 @@
                   }
                 },
                 {
-                  "widget_id":"page_practice_top_right",
+                  "widget_id":"page_activity_practice_top_right",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"widget_hidden_container",
                   "options": {
@@ -32,7 +32,7 @@
                   }
                 },
                 {
-                  "widget_id":"page_practice_top_left",
+                  "widget_id":"page_activity_practice_top_left",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"widget_hidden_container",
                   "options": {
@@ -40,7 +40,7 @@
                   }
                 },
                 {
-                  "widget_id":"page_practice_mid_left",
+                  "widget_id":"page_activity_practice_mid_left",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"widget_hidden_container",
                   "options": {
@@ -48,7 +48,7 @@
                   }
                 },
                 {
-                  "widget_id":"page_practice_bottom_left",
+                  "widget_id":"page_activity_practice_bottom_left",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"widget_hidden_container",
                   "options": {
@@ -56,57 +56,130 @@
                   }
                 },
                 {
-                  "widget_id": "feedback_container_swing_timer",
+                  "widget_id": "feedback_container_buttons",
                   "widget_class": "GuiExpandingContainer",
                   "widget_config_id": "widget_gui_anchor",
                   "options": {
-                    "container_id": "page_practice_center"
+                    "container_id": "page_activity_practice_center"
                   }
                 },
                 {
-                  "widget_id": "feedback_container_time_tracker",
+                  "widget_id": "feedback_container_timers",
                   "widget_class": "GuiExpandingContainer",
-                  "widget_config_id": "page_practice_top_right",
+                  "widget_config_id": "widget_hidden_container",
                   "options": {
-                    "container_id": "page_debug_top_left"
+                    "container_id": "page_activity_practice_top_right",
+                    "offset_x": -0.10,
+                    "offset_y": -0.10
+                  }
+                },
+                {
+                  "widget_id": "container_player_status",
+                  "widget_class": "GuiStatsPanel",
+                  "widget_config_id":"widget_stats_container",
+                  "options": {
+                    "container_id": "feedback_container_timers",
+                    "offset_x": -0.2,
+                    "offset_y": -0.2,
+                    "track_config": {"category": "CHARACTERS","key": "MAIN_CHAR_STATUS",
+                      "samplers": [
+                        {
+                          "key": "lifetime",
+                          "digits": "0"
+                        },
+
+                        {
+                          "key": "turn",
+                          "digits": 1
+                        },
+                        {
+                          "key": "turnProgress",
+                          "digits": 1
+                        },
+                        {
+                          "key": "charState",
+                          "digits": 1
+                        },
+                        {
+                          "key": "atkType",
+                          "digits": 1
+                        },
+                        {
+                          "key": "targState",
+                          "digits": 1
+                        },
+                        {
+                          "key": "trgAtkTyp",
+                          "digits": 1
+                        },
+                        {
+                          "key": "turnProgress",
+                          "digits": 1
+                        },
+                        {
+                          "key": "attacks",
+                          "digits": 1
+                        },
+                        {
+                          "key": "attack",
+                          "digits": 1
+                        },
+                        {
+                          "key": "atkProg",
+                          "digits": 2
+                        },
+                        {
+                          "key": "prep",
+                          "digits": 2
+                        },
+                        {
+                          "key": "swing",
+                          "digits": 2
+                        },
+                        {
+                          "key": "recover",
+                          "digits": 2
+                        }
+                      ]
+                    }
                   }
                 }
               ],
               "buttons":[
                 {
-                  "widget_id":"button_view_models",
+                  "widget_id":"button_train_fast",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"MODELS",
-                    "container_id":"feedback_container_time_tracker",
+                    "text":"FAST",
+                    "container_id":"feedback_container_buttons",
                     "offset_x": 0.10,
-                    "offset_y": -0.08,
+                    "offset_y": -0.22,
                     "dispatch":{
-                      "event":"TOGGLE_GUI_PAGE",
+                      "event":"MAIN_CHAR_STATE_EVENT",
                       "value":{
-                        "page_id":"page_debug_view_models",
-                        "parent_page_id":"page_debug_view",
-                        "parent_container_id": "button_container_models"
+                        "state": "COMBAT",
+                        "type":"FAST",
+                        "target": "practice"
                       }
                     }
                   }
                 },
                 {
-                  "widget_id":"button_view_pools",
+                  "widget_id":"button_train_heavy",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"POOLS",
-                    "container_id":"feedback_container_swing_timer",
-                    "offset_x": 0.25,
-                    "offset_y": -0.08,
+                    "text":"HEAVY",
+                    "container_id":"feedback_container_buttons",
+                    "offset_x": -0.10,
+                    "offset_y": -0.22,
                     "dispatch":{
-                      "event":"TOGGLE_GUI_PAGE",
+                      "event":"MAIN_CHAR_STATE_EVENT",
                       "value":{
-                        "page_id":"page_debug_view_pools",
-                        "parent_page_id":"page_debug_view",
-                        "parent_container_id": "button_container_pools"
+                        "state": "COMBAT",
+                        "type":   "HEAVY",
+                        "target": "practice"
                       }
                     }
                   }

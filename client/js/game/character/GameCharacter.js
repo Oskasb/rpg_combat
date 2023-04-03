@@ -1,11 +1,13 @@
 import { CharacterInventory } from "./CharacterInventory.js";
 import { CharacterEquipment } from "./CharacterEquipment.js";
+import { CharacterStatus } from "./CharacterStatus.js";
 
 class GameCharacter {
     constructor(name) {
         this.characterName = name;
         this.gamePiece = null;
         this.characterInventory = new CharacterInventory();
+        this.characterStatus = new CharacterStatus();
 
         let pickupComplete = function(itemPiece) {
             this.getInventory().addItemToInventory(itemPiece);
@@ -20,6 +22,7 @@ class GameCharacter {
 
     setCharacterPiece(gamePiece, equipSlotConfigId) {
         this.gamePiece = gamePiece;
+        this.characterStatus.activateCharacterStatus(gamePiece);
         this.characterEquipment = new CharacterEquipment(gamePiece, equipSlotConfigId);
     }
 
