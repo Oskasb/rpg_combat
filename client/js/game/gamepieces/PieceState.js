@@ -9,11 +9,12 @@ class PieceState {
             attacks:{
                 NONE:0,
                 FAST:3,
-                HEAVY:1
+                HEAVY:2
             },
-            prepFraction:0.3,
-            swingFraction:0.2,
-            recoverFraction:0.5,
+            sourceFraction:0.25,
+            prepFraction:0.25,
+            swingFraction:0.25,
+            recoverFraction:0.25,
             hasteFactor:1
         }
 
@@ -29,6 +30,7 @@ class PieceState {
             attacks:0,
             attack:0,
             atkProg:0,
+            source:0,
             prep:0,
             swing:0,
             recover:0,

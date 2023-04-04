@@ -62,7 +62,7 @@ class PieceAnimator {
 
     setupPieceAnimations = function(rigData) {
 
-        let animations = rigData['animations'];
+        let animations = rigData.data['animations'];
 
     //    console.log("Anim states: ", rigData);
         for (let key in animations) {
@@ -70,7 +70,7 @@ class PieceAnimator {
             let animState = MATH.getFromArrayByKeyValue(this.animationStates, 'key', key)
         //    console.log("Anim state: ", animState);
 
-            this.animations[key] = new PieceAnim(key, animations[key], animState);
+            this.animations[key] = new PieceAnim(key, rigData, animState);
         //    console.log("Add anim: ", key);
         }
 
@@ -98,6 +98,7 @@ class PieceAnimator {
         return this.gamePiece.getRigData().readDataKey('action_maps')[actionType];
     };
 
+
     activatePieceAnimation = function(animationKey, weight, timeScale, fadeTime) {
 
         let anim = this.getPieceAnim(animationKey);
@@ -124,8 +125,12 @@ class PieceAnimator {
             }
 
             anim.refreshDuration();
-            anim.setTimeScale(timeScale);
-            anim.setWeight(weight);
+            if (timeScale) {
+                anim.setTimeScale(timeScale);
+            }
+            if (weight) {
+                anim.setWeight(weight);
+            }
         }
 
     };

@@ -69,8 +69,8 @@ class GamePiece {
         this.modelInstance = modelInstance;
     };
 
-    applyPieceAnimationState(stateId, duration) {
-        this.modelInstance.animator.applyAnimationState(stateId, this.animStateMap, duration)
+    applyPieceAnimationState(stateId, duration, channel, weight) {
+        this.modelInstance.animator.applyAnimationState(stateId, this.animStateMap, duration, channel, weight)
     }
 
     activatePieceAnimation = function(key, weight, timeScale, fadeTime) {

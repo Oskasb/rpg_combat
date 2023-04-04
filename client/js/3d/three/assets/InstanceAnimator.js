@@ -16,7 +16,7 @@ class InstanceAnimator {
             this.mixer = new THREE.AnimationMixer( clone );
         };
 
-        applyAnimationState = function(stateId, animMap, duration) {
+        applyAnimationState = function(stateId, animMap, duration, channel, weight) {
             if (!animMap[stateId]) {
                 console.log("Bad Anim request, ", stateId, animMap);
                 return;
@@ -24,16 +24,23 @@ class InstanceAnimator {
 
             let params = animMap[stateId];
 
+            if (typeof(channel) !== 'number') {
+                channel = params['channel']
+            }
+
+            if (typeof(weight) !== 'number') {
+                weight = params['weight']
+            }
+
             this.updateAnimationAction(
                 stateId,
-                params['weight'],
+                weight,
                 params['time_scale'],
                 params['fade'],
-                params['channel'],
+                channel,
                 params['loop'],
                 params['clamp'],
                 params['sync'],
-                params['weight'],
                 duration
             )
 
@@ -170,7 +177,7 @@ class InstanceAnimator {
 
         updateAnimationAction = function(animKey, weight, timeScale, fade, chan, loop, clamp, sync, duration) {
             if (typeof (duration) === 'number') {
-                timeScale*=duration;
+                timeScale*=1/duration;
                 fade*=duration;
             }
 

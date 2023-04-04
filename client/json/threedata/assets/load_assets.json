@@ -12,6 +12,7 @@
       "TEXTURES"
     ],
     "POLL_INDEX":[
+      "/game/skeletons/biped_rigs.json"                      ,
       "/world/scenarios/home_dynamic/home_hero_dynamic.json" ,
       "/world/scenarios/home_dynamic/home_hovel_dynamic.json" ,
       "/world/scenarios/home_dynamic/home_stash_dynamic.json" ,

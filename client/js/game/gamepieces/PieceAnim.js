@@ -1,8 +1,9 @@
 class PieceAnim {
-    constructor(key, animData, animState) {
+    constructor(key, rigData, animState) {
+
             this.key = key;
+            this.rigData = rigData;
             this.dataKey = 'animations';
-            this.animData = animData;
             this.animationState = animState;
             this.currentTime = 0;
             this.duration = 0;
@@ -16,35 +17,39 @@ class PieceAnim {
             this.weight = 0;
         };
 
+        getAnimDataProperty = function(propKey) {
+            return this.rigData.data[this.dataKey][propKey];
+        }
+
         activateNow = function(weight, timeScale, fadeTime) {
             this.currentTime = 0;
 
         //    console.log(this.animData)
 
-            this.animationState.setAnimationLoop(this.animData['loop']);
-            this.animationState.setAnimationClamp(this.animData['clamp']);
-            this.animationState.setAnimationSync(this.animData['sync']);
+            this.animationState.setAnimationLoop(this.getAnimDataProperty('loop'));
+            this.animationState.setAnimationClamp(this.getAnimDataProperty('clamp'));
+            this.animationState.setAnimationSync(this.getAnimDataProperty('sync'));
             this.setWeight(weight || 1);
             this.setTimeScale(timeScale || 1);
             this.setFadeTime(fadeTime || timeScale || 1);
-            this.setChannel(this.animData['channel'] || 0);
-            this.duration = this.animData['duration'] / this.ts || 99999999999;
+            this.setChannel(this.getAnimDataProperty('channel') || 0);
+            this.duration = this.getAnimDataProperty('duration') / this.ts || 99999999999;
         };
 
         setWeight = function(w) {
             this.weight = w;
-            this.w = w * this.animData['weight'];
+            this.w = w * this.getAnimDataProperty('weight');
             this.animationState.setAnimationWeight(this.w)
         };
 
         setTimeScale = function(ts) {
             this.timeScale = ts;
-            this.ts = ts* this.animData['time_scale'];
+            this.ts = ts* this.getAnimDataProperty('time_scale');
             this.animationState.setAnimationTimeScale(this.ts)
         };
 
         setFadeTime = function(timeScale) {
-            this.fadeTime = this.animData['fade'];
+            this.fadeTime = this.getAnimDataProperty('fade');
             this.fade = timeScale * this.fadeTime;
             this.animationState.setAnimationFade(this.fade)
         };
@@ -62,7 +67,7 @@ class PieceAnim {
         };
 
         refreshDuration = function() {
-            this.duration = this.currentTime + this.animData['duration'] || 99999999999;
+            this.duration = this.currentTime + this.getAnimDataProperty('duration') || 99999999999;
         };
 
         updateAnimation = function(tpf, time, removes) {

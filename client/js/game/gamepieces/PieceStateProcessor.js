@@ -24,7 +24,7 @@ class PieceStateProcessor {
 
     applyActionProgress(status, config) {
         let action = this.gamePiece.pieceActionSystem.activeAction;
-        status.animKey = this.gamePiece.pieceActionSystem.applyPieceActionProgress(action, status.prep,status.swing, status.recover, status.trTime);
+        status.animKey = this.gamePiece.pieceActionSystem.applyPieceActionProgress(action, status.source, status.prep,status.swing, status.recover, status.trTime);
     }
     countAttack(status) {
         status.attack++
@@ -32,17 +32,21 @@ class PieceStateProcessor {
     }
 
     processSwingProgress(status, config) {
+        let testFrac = config.sourceFraction;
 
-        status.prep = MATH.clamp (status.atkProg / config.prepFraction, 0, 1);
-        status.swing = MATH.clamp ((status.atkProg-config.prepFraction) / (config.swingFraction), 0, 1);
-        status.recover = MATH.clamp ((status.atkProg-(config.swingFraction+config.prepFraction)) / (config.recoverFraction ), 0, 1);
+        status.source = MATH.clamp (status.atkProg / config.sourceFraction, 0, 1);
+        status.prep = MATH.clamp ((status.atkProg-config.sourceFraction) / config.prepFraction, 0, 1);
+        status.swing = MATH.clamp ((status.atkProg-(config.sourceFraction+config.prepFraction)) / config.swingFraction, 0, 1);
+        status.recover = MATH.clamp ((status.atkProg-(config.sourceFraction+config.swingFraction+config.prepFraction)) / config.recoverFraction , 0, 1);
 
-        if (status.prep < 1) {
-            status.trTime = config.prepFraction * (config.turnTime / status.attacks)
+        if (status.source < 1) {
+            status.trTime = (config.sourceFraction * config.turnTime) / status.attacks
+        } else if (status.prep < 1) {
+            status.trTime = (config.prepFraction * config.turnTime) / status.attacks
         } else if (status.swing < 1) {
-            status.trTime = config.swingFraction * (config.turnTime / status.attacks)
-        } else if (status.recover < 1) {
-            status.trTime = config.recoverFraction * (config.turnTime / status.attacks)
+            status.trTime = (config.swingFraction * config.turnTime) / status.attacks
+        } else {
+            status.trTime = (config.recoverFraction * config.turnTime) / status.attacks
         }
 
         this.applyActionProgress(status, config);

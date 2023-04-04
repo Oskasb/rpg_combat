@@ -5,6 +5,13 @@ class PieceActionSystem {
         this.actions = {}
         this.gamePiece = null;
         this.activeAction = null;
+        this.actionUpdate = {
+            animKey:null,
+            animChannel:0,
+            lastAnim:null,
+            lastAnimChannel:0,
+            switchFrame:false
+        }
     }
 
     initPieceActionSystem(gamePiece, rigData) {
@@ -39,13 +46,23 @@ class PieceActionSystem {
         }
     }
 
-    applyPieceActionProgress(pieceAction, init, active, end, duration) {
-        let animKey = pieceAction.updatePieceActionState(init, active, end);
+    applyPieceActionProgress(pieceAction, source, init, active, end, duration) {
+        let actionUpdate = this.actionUpdate;
+        pieceAction.updatePieceActionState(actionUpdate, source, init, active, end);
 
-        if (!this.gamePiece.getPlayingAnimation(animKey)) {
-            this.gamePiece.applyPieceAnimationState(animKey, duration)
+        if (!this.gamePiece.getPlayingAnimation( actionUpdate.animKey)) {
+            if (actionUpdate.lastAnim) {
+                this.gamePiece.applyPieceAnimationState(actionUpdate.lastAnim, actionUpdate.lastDuartion*0.2, actionUpdate.lastAnimChannel, 0)
+            }
+            this.gamePiece.applyPieceAnimationState(actionUpdate.animKey, duration, actionUpdate.animChannel)
+            actionUpdate.lastAnim = actionUpdate.animKey;
+            actionUpdate.lastDuartion = duration;
+            actionUpdate.lastAnimChannel = actionUpdate.animChannel;
+        } else {
+        //    let weight = Math.random();
+        //    this.gamePiece.activatePieceAnimation(actionUpdate.animKey, weight)
         }
-        return animKey;
+        return actionUpdate.animKey;
     }
 
 }

@@ -67,7 +67,7 @@ class ConfigData {
 
     fetchData = function(dataId) {
         let dataUpdate = function(src, data) {
-            for (let key in data) {
+             for (let key in data) {
                 this.data[key] = data[key];
             }
         }.bind(this);

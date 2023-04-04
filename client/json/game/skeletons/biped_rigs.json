@@ -24,21 +24,21 @@
             "GD_LFT_FF":      {"time_scale": 0.05, "weight": 1, "fade": 0.25,  "channel": 0, "loop": 0 ,"clamp": 1, "sync": 0},
             "SET_RT_FF":      {"time_scale": 1.0 , "weight": 1, "fade": 0.25,  "channel": 0, "loop": 0 ,"clamp": 1, "sync": 0},
             "GD_RT_FF":       {"time_scale": 0.4,  "weight": 1, "fade": 0.25,  "channel": 0, "loop": 1 ,"clamp": 1, "sync": 0},
-            "GD_HI_R":        {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "GD_MID_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "GD_LOW_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "GD_LNG_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "GD_SHT_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "GD_BCK_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "GD_HNG_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "GD_INS_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "GD_SID_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.95,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
-            "SW_BCK_R":       {"time_scale": 0.24, "weight": 1, "fade": 0.35,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
-            "SW_SID_R":       {"time_scale": 0.24, "weight": 1, "fade": 0.20,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
-            "CT_TR_R":        {"time_scale": 0.34, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
-            "CT_MR_R":        {"time_scale": 0.34, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
-            "CT_TC_R":        {"time_scale": 0.34, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
-            "CT_ML_R":        {"time_scale": 0.34, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "GD_HI_R":        {"time_scale": 0.05, "weight": 1, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_MID_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_LOW_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_LNG_R":       {"time_scale": 0.05, "weight": 2, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_SHT_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_BCK_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_HNG_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_INS_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "GD_SID_R":       {"time_scale": 0.05, "weight": 1, "fade": 0.75,  "channel": 1, "loop": 1 ,"clamp": 0, "sync": 0},
+            "SW_BCK_R":       {"time_scale": 0.25, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "SW_SID_R":       {"time_scale": 0.25, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "CT_TR_R":        {"time_scale": 0.25, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "CT_MR_R":        {"time_scale": 0.25, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "CT_TC_R":        {"time_scale": 0.25, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
+            "CT_ML_R":        {"time_scale": 0.25, "weight": 1, "fade": 0.25,  "channel": 1, "loop": 0 ,"clamp": 1, "sync": 0},
             "WALK":           {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
             "WALK_BODY":      {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 1},
             "WALK_COMBAT":    {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
@@ -52,24 +52,28 @@
 
           },
           "action_maps": {
-            "IDLE": [
-              {"name":"IDLING" ,"init": ["IDLE"],  "active": ["IDLE"], "end": ["IDLE"]}
+            "IDLE": [          {"name":"IDLING",   "source": ["IDLE"],      "init": ["IDLE"],     "active": ["IDLE"],       "end": ["IDLE"]}            ],
+            "ENGAGING": [      {"name":"GUARD" ,   "source": ["GD_INS_R"],  "init": ["GD_HNG_R"], "active": ["GD_HNG_R"],   "end": ["GD_HNG_R"]}            ],
+            "DISENGAGING": [   {"name":"GUARD" ,   "source": ["GD_HNG_R"],  "init": ["GD_HNG_R"], "active": ["GD_INS_R"],   "end": ["GD_BCK_R"]}            ],
+
+            "COMBAT_": [       {"name":"WHACK" ,   "source": ["GD_BCK_R"],  "init": ["GD_HNG_R", "GD_INS_R"], "active": ["CT_ML_R", "SW_BCK_R"],    "end" : ["GD_SID_R", "GD_MID_R"]}
             ],
-            "ENGAGING": [
-              {"name":"GUARD" ,"init": ["GD_INS_R"],  "active": ["GD_LNG_R"], "end": ["GD_HI_R"]}
+
+            "COMBAT": [        {"name":"SWING" ,   "source": ["GD_INS_R"],  "init": ["GD_HNG_R"], "active": ["CT_ML_R"],    "end" : ["GD_SID_R"]},
+                               {"name":"STAB"  ,   "source": ["GD_INS_R"],  "init": ["GD_LOW_R"], "active": ["GD_LNG_R"],   "end": ["GD_HNG_R"]},
+                               {"name":"SLASH" ,   "source": ["GD_SHT_R"],  "init": ["GD_HI_R"], "active": ["SW_SID_R"],   "end": ["GD_BCK_R"]},
+                               {"name":"CHOP" ,    "source": ["GD_HNG_R"],  "init": ["GD_HI_R"], "active": ["CT_TC_R"],     "end": ["GD_BCK_R"]},
+                               {"name":"SWIPE" ,   "source": ["GD_SHT_R"],  "init": ["GD_BCK_R"], "active": ["SW_BCK_R", "CT_ML_R"],  "end": ["GD_HI_R"]},
+                               {"name":"CUT"   ,   "source": ["GD_SID_R"],  "init": ["GD_HI_R"], "active": ["CT_MR_R", "CT_TR_R"],   "end": ["GD_BCK_R"]},
+                               {"name":"WHACK" ,   "source": ["GD_BCK_R"],  "init": ["GD_HNG_R", "GD_INS_R"], "active": ["CT_ML_R", "SW_BCK_R"],    "end" : ["GD_SID_R", "GD_MID_R"]},
+                               {"name":"SLICE" ,   "source": ["GD_HNG_R"],  "init": ["GD_HI_R", "GD_SID_R"], "active": ["SW_SID_R", "SW_BCK_R"],    "end" : ["GD_SHT_R", "GD_LOW_R"]}
             ],
-            "DISENGAGING": [
-              {"name":"GUARD" ,"init": ["GD_HNG_R"],  "active": ["GD_HNG_R"], "end": ["GD_INS_R"]}
-            ],
-            "COMBAT": [
-              {"name":"STAB"  ,"init": ["GD_INS_R"], "active": ["GD_LNG_R"],  "end": ["GD_HNG_R"]}
-            ],
-            "_COMBAT": [
-              {"name":"CHOP"  ,"init": ["GD_HI_R"],  "active": ["CT_TC_R"], "end": ["GD_BCK_R"]},
-              {"name":"SLASH" ,"init": ["GD_HI_R", "GD_SID_R"], "active": ["SW_SID_R"], "end": ["GD_BCK_R", "GD_INS_R", "GD_SHT_R"]},
-              {"name":"SWIPE" ,"init": ["GD_BCK_R"], "active": ["SW_BCK_R", "CT_ML_R"], "end": ["GD_SID_R"]},
-              {"name":"SWING" ,"init": ["GD_SHT_R"], "active": ["CT_ML_R"], "end" : ["GD_SHT_R"]},
-              {"name":"CUT"   ,"init": ["GD_INS_R"], "active": ["CT_MR_R", "CT_TR_R"],  "end": ["GD_BCK_R"]}
+
+            "_COMBAT": [     {"name":"CHOP"  ,   "source": ["GD_HI_R"],   "init": ["GD_HI_R"],  "active": ["CT_TC_R"],    "end": ["GD_BCK_R"]},
+                             {"name":"SLASH" ,   "source": ["GD_HI_R"],   "init": ["GD_HI_R"],  "active": ["SW_SID_R"],   "end": ["GD_BCK_R", "GD_INS_R", "GD_SHT_R"]},
+
+                             {"name":"SWING" ,   "source": ["GD_SHT_R"],  "init": ["GD_SHT_R"], "active": ["CT_ML_R"],              "end" : ["GD_SHT_R"]},
+                             {"name":"CUT"   ,   "source": ["GD_INS_R"],  "init": ["GD_INS_R"], "active": ["CT_MR_R", "CT_TR_R"],   "end": ["GD_BCK_R"]}
             ]
           }
         }

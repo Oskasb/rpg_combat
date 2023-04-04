@@ -13,25 +13,67 @@ class PieceComposer {
         pieceData.fetchData(config.piece); // .f
         let assetId = pieceData.data["model_asset"];
 
+        let assetData = new ConfigData("ASSETS", "MODELS")
+        assetData.fetchData(assetId);
+
         if (pieceData.data['slot']) {
             gamePiece.setEquipSlotId(pieceData.data['slot'])
         }
 
-        let skeletonData = new ConfigData("GAME", "SKELETON_RIGS");
+        console.log(config, gamePiece, pieceData)
 
-        let skellRig = pieceData.data['skeleton_rig']
-        if (skellRig) {
-            skeletonData.fetchData(skellRig);
-            let rigData = new ConfigData("ASSETS", "RIGS");
-            rigData.fetchData(rigData.data['rig_fighter']);
-            gamePiece.rigData = rigData.data;
-         //   console.log("Rig Piece:", assetId, pieceData.data, skeletonData.data);
-        } else {
-         //   console.log("not rigged piece:", assetId, config)
+
+
+        let setupSkelRig = function(assetInstance, callback) {
+
+
+            let skellRig = pieceData.data['skeleton_rig']
+
+            if (skellRig) {
+
+
+                let rigDataKey = assetData.data['rig'];
+                let rigData = new ConfigData("ASSETS", "RIGS", rigDataKey);
+                let onRigData = function(config) {
+
+                    let skeletonData = new ConfigData("GAME", "SKELETON_RIGS");
+
+                    let onSkelRigData = function (config) {
+                        console.log("SkelRig", config);
+                    }
+
+                    skeletonData.addUpdateCallback(onSkelRigData)
+                    skeletonData.fetchData(skellRig);
+
+                    console.log("Rig Data: ", config)
+
+                    gamePiece.rigData = MATH.getFromArrayByKeyValue(config, 'id', rigDataKey);
+
+                        let scaleVec = ThreeAPI.tempVec3;
+                        scaleVec.set(1, 1, 1);
+                        gamePiece.pieceAnimator.setupAnimations(assetInstance.originalModel, scaleVec);
+                        gamePiece.animStateMap = gamePiece.pieceAnimator.initPieceAnimator(gamePiece, skeletonData);
+                        gamePiece.pieceActionSystem.initPieceActionSystem(gamePiece, skeletonData.data);
+                        //    gamePiece.pieceAnimator.activatePieceAnimation('IDLE', 1, 1, 1)
+                        gamePiece.pieceAttachments = gamePiece.pieceAttacher.initPieceAttacher(gamePiece, skeletonData.data);
+
+                    callback(gamePiece);
+                }
+
+                rigData.addUpdateCallback(onRigData)
+
+            //    rigData.fetchData(rigData.data[rigDataKey]);
+
+                //   console.log("Rig Piece:", assetId, pieceData.data, skeletonData.data);
+            } else {
+                //   console.log("not rigged piece:", assetId, config)
+                callback(gamePiece);
+            }
+
         }
 
         let modelInstanceCB = function(assetInstance) {
-         //   console.log(assetInstance);
+            //   console.log(assetInstance);
             gamePiece.setModelInstance(assetInstance);
 
             if (config.pos) {
@@ -50,17 +92,9 @@ class PieceComposer {
                 )
             }
 
-            if (assetInstance.originalModel.animMap) {
-                let scaleVec = ThreeAPI.tempVec3;
-                scaleVec.set(1, 1, 1);
-                gamePiece.pieceAnimator.setupAnimations(assetInstance.originalModel, scaleVec);
-                gamePiece.animStateMap = gamePiece.pieceAnimator.initPieceAnimator(gamePiece, skeletonData.data);
-                gamePiece.pieceActionSystem.initPieceActionSystem(gamePiece, skeletonData.data);
-            //    gamePiece.pieceAnimator.activatePieceAnimation('IDLE', 1, 1, 1)
-                gamePiece.pieceAttachments = gamePiece.pieceAttacher.initPieceAttacher(gamePiece, skeletonData.data);
-            }
+            setupSkelRig(assetInstance, callback)
 
-            callback(gamePiece);
+
         };
 
         let assetLoaded = function(asset) {
