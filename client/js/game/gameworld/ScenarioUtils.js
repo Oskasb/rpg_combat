@@ -1,3 +1,8 @@
+import { Vector3} from "../../../libs/three/math/Vector3.js";
+
+let tempVec1 = new Vector3();
+let tempVec2 = new Vector3();
+
 let iconKeysAll = [
     "grass",
     "mud",
@@ -16,7 +21,7 @@ let iconKeysAll = [
     "sand_cracked"
 ];
 function positionPlayer(config) {
-    let targetPos = ThreeAPI.tempVec3;
+    let targetPos =tempVec1;
     let pos = config['pos'];
     let rot = config['rot'];
     let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
@@ -26,12 +31,14 @@ function positionPlayer(config) {
 
     let playerMovement = player.getPieceMovement();
     let spatial = player.getSpatial();
-    let sourcePos = ThreeAPI.tempVec3b;
-        spatial.getSpatialPosition(sourcePos)
+    let sourcePos = tempVec2;
+
+    spatial.getSpatialPosition(sourcePos)
     MATH.vec3FromArray(targetPos, pos);
 
     sourcePos.sub(targetPos);
-    let travelDistance = sourcePos.lengthSq();
+    let travelDistance = sourcePos.length();
+    console.log(travelDistance)
     if (travelDistance > maxAllowedTravelDistance) {
         sourcePos.normalize();
         sourcePos.multiplyScalar( maxAllowedTravelDistance );
@@ -39,8 +46,8 @@ function positionPlayer(config) {
         travelTimeMax = travelTimeMax/(maxAllowedTravelDistance / travelDistance)
     }
 
-
     sourcePos.add(targetPos);
+    spatial.setPosVec3(sourcePos);
     let arriveCallback = function() {
         spatial.setRotXYZ(rot[0], rot[1], rot[2])
     }
