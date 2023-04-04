@@ -74,7 +74,7 @@ class HomeScenario {
 
                 //    GuiAPI.printDebugText("ANIM KEY: "+key);
 
-                player.applyPieceAnimationState(key)
+             //   player.applyPieceAnimationState(key)
             }
 
         }

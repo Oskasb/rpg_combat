@@ -131,7 +131,7 @@ class PieceAnimator {
     };
 
     isActiveAnimationKey = function(key) {
-        console.log(this.activeAnimations)
+    //    console.log(this.activeAnimations)
         return MATH.getFromArrayByKeyValue(this.activeAnimations, 'key', key);
     };
 

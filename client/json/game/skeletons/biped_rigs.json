@@ -52,11 +52,25 @@
 
           },
           "action_maps": {
-            "ATTACK_GREATSWORD_CHOP":   {"prep": ["GD_HI_R"],  "exec": ["CT_TC_R"], "end": ["GD_BCK_R"]},
-            "ATTACK_GREATSWORD_SLASH":  {"prep": ["GD_HI_R", "GD_SID_R"], "exec": ["SW_SID_R"], "end": ["GD_BCK_R", "GD_INS_R", "GD_SHT_R"]},
-            "ATTACK_GREATSWORD_SWIPE":  {"prep": ["GD_BCK_R"], "exec": ["SW_BCK_R", "CT_ML_R"], "end": ["GD_SID_R"]},
-            "ATTACK_GREATSWORD_SWING":  {"prep": ["GD_SHT_R"], "exec": ["CT_ML_R"], "end" : ["GD_SHT_R"]},
-            "ATTACK_GREATSWORD_CUT":    {"prep": ["GD_INS_R"], "exec": ["CT_MR_R", "CT_TR_R"],  "end": ["GD_BCK_R"]}
+            "IDLE": [
+              {"name":"IDLING" ,"init": ["IDLE"],  "active": ["IDLE"], "end": ["IDLE"]}
+            ],
+            "ENGAGING": [
+              {"name":"GUARD" ,"init": ["GD_INS_R"],  "active": ["GD_LNG_R"], "end": ["GD_HI_R"]}
+            ],
+            "DISENGAGING": [
+              {"name":"GUARD" ,"init": ["GD_HNG_R"],  "active": ["GD_HNG_R"], "end": ["GD_INS_R"]}
+            ],
+            "COMBAT": [
+              {"name":"STAB"  ,"init": ["GD_INS_R"], "active": ["GD_LNG_R"],  "end": ["GD_HNG_R"]}
+            ],
+            "_COMBAT": [
+              {"name":"CHOP"  ,"init": ["GD_HI_R"],  "active": ["CT_TC_R"], "end": ["GD_BCK_R"]},
+              {"name":"SLASH" ,"init": ["GD_HI_R", "GD_SID_R"], "active": ["SW_SID_R"], "end": ["GD_BCK_R", "GD_INS_R", "GD_SHT_R"]},
+              {"name":"SWIPE" ,"init": ["GD_BCK_R"], "active": ["SW_BCK_R", "CT_ML_R"], "end": ["GD_SID_R"]},
+              {"name":"SWING" ,"init": ["GD_SHT_R"], "active": ["CT_ML_R"], "end" : ["GD_SHT_R"]},
+              {"name":"CUT"   ,"init": ["GD_INS_R"], "active": ["CT_MR_R", "CT_TR_R"],  "end": ["GD_BCK_R"]}
+            ]
           }
         }
       },

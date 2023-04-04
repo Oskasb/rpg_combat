@@ -17,8 +17,18 @@ class PieceStateProcessor {
     }
 
 
-    countAttack(status, config) {
+    activateActionType(status, actionType) {
+        let action = this.gamePiece.pieceActionSystem.activateActionOfType(actionType);
+        status.action = action.name;
+    }
+
+    applyActionProgress(status, config) {
+        let action = this.gamePiece.pieceActionSystem.activeAction;
+        status.animKey = this.gamePiece.pieceActionSystem.applyPieceActionProgress(action, status.prep,status.swing, status.recover, status.trTime);
+    }
+    countAttack(status) {
         status.attack++
+        this.activateActionType(status, 'COMBAT');
     }
 
     processSwingProgress(status, config) {
@@ -26,6 +36,16 @@ class PieceStateProcessor {
         status.prep = MATH.clamp (status.atkProg / config.prepFraction, 0, 1);
         status.swing = MATH.clamp ((status.atkProg-config.prepFraction) / (config.swingFraction), 0, 1);
         status.recover = MATH.clamp ((status.atkProg-(config.swingFraction+config.prepFraction)) / (config.recoverFraction ), 0, 1);
+
+        if (status.prep < 1) {
+            status.trTime = config.prepFraction * (config.turnTime / status.attacks)
+        } else if (status.swing < 1) {
+            status.trTime = config.swingFraction * (config.turnTime / status.attacks)
+        } else if (status.recover < 1) {
+            status.trTime = config.recoverFraction * (config.turnTime / status.attacks)
+        }
+
+        this.applyActionProgress(status, config);
 
     }
     processAttack(status, config) {
@@ -49,13 +69,21 @@ class PieceStateProcessor {
         if (status.turnProgress < 0) {
             this.processNewTurn(status, config)
         }
-        this.processPieceState(status);
+        this.processPieceState(status, config);
         if (status.charState === ENUMS.CharacterState.COMBAT) {
             this.processAttacks(status, config);
         }
-
     }
-    processPieceState(status) {
+
+    applyCombatStatusTransition(status, config) {
+        let actionKey = ENUMS.getKey('CharacterState', status.charState);
+        this.activateActionType(status, actionKey)
+        status.prep = 0.5;
+        status.trTime = status.turnProgress * config.turnTime * 0.5 + 0.1;
+        this.applyActionProgress(status, config);
+    }
+
+    processPieceState(status, config) {
         if (status.targState === status.charState) return;
         if (status.targState === ENUMS.CharacterState.COMBAT) {
             if (status.charState === ENUMS.CharacterState.IDLE) {
@@ -65,8 +93,11 @@ class PieceStateProcessor {
         if (status.targState === ENUMS.CharacterState.IDLE) {
             if (status.charState === ENUMS.CharacterState.COMBAT) {
                 status.charState = ENUMS.CharacterState.DISENGAGING;
+
             }
         }
+
+        this.applyCombatStatusTransition(status, config)
     }
     processGamePieceState(status, config, tpf, time) {
         status.lifetime += tpf;

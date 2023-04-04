@@ -31,7 +31,10 @@ class PieceState {
             atkProg:0,
             prep:0,
             swing:0,
-            recover:0
+            recover:0,
+            animKey:'none',
+            action:'none',
+            trTime:0
         }
     }
 

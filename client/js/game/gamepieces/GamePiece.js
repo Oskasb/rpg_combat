@@ -1,3 +1,4 @@
+import { PieceActionSystem } from "./PieceActionSystem.js";
 import { AnimationStateProcessor } from "../../3d/three/animations/AnimationStateProcessor.js";
 import { PieceAnimator } from "./PieceAnimator.js";
 import { PieceComposer } from "../piece_functions/PieceComposer.js";
@@ -8,6 +9,7 @@ import { PieceState } from "./PieceState.js";
 class GamePiece {
     constructor(config, callback) {
         this.gamePieceUpdateCallbacks = [];
+        this.pieceActionSystem = new PieceActionSystem();
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
@@ -67,8 +69,8 @@ class GamePiece {
         this.modelInstance = modelInstance;
     };
 
-    applyPieceAnimationState(stateId) {
-        this.modelInstance.animator.applyAnimationState(stateId, this.animStateMap)
+    applyPieceAnimationState(stateId, duration) {
+        this.modelInstance.animator.applyAnimationState(stateId, this.animStateMap, duration)
     }
 
     activatePieceAnimation = function(key, weight, timeScale, fadeTime) {
