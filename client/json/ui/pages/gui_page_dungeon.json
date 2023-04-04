@@ -31,9 +31,9 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"main_text_box",
                   "options":{
-                    "anchor":"bottom_left",
-                    "offset_x":0.15,
-                    "offset_y":0.04,
+                    "anchor":"bottom_center",
+                    "offset_x":0.0,
+                    "offset_y":0.01,
                     "text":"The scent of adventure..."
                   }
 

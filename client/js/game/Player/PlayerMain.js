@@ -53,6 +53,19 @@ class PlayerMain {
             this.getPlayerCharacter().gamePiece.applyStateEvent(event)
         }.bind(this);
 
+        let combatPage = null;
+        let setPlayerState = function(charState) {
+            if (charState === ENUMS.CharacterState.IDLE) {
+                if (combatPage) {
+                    combatPage.closeGuiPage();
+                }
+            } else {
+                if (!combatPage) {
+                    combatPage = GuiAPI.activatePage('page_activity_combat')
+                }
+            }
+        };
+
         let callbacks = {
             handleEquip : equipItem,
             handleUnequip : unequipItem,
@@ -61,7 +74,8 @@ class PlayerMain {
             handleTakeStashItem : takeStashItem,
             handleTakeWorldItem : function (event) {        },
             addToStash:addToStash,
-            handleStateEvent:handleStateEvent
+            handleStateEvent:handleStateEvent,
+            setPlayerState:setPlayerState
 
         }
 
@@ -74,6 +88,8 @@ class PlayerMain {
         evt.on(ENUMS.Event.TAKE_STASH_ITEM, callbacks.handleTakeStashItem);
         evt.on(ENUMS.Event.TAKE_WORLD_ITEM, callbacks.handleTakeWorldItem);
         evt.on(ENUMS.Event.MAIN_CHAR_STATE_EVENT, callbacks.handleStateEvent);
+        evt.on(ENUMS.Event.SET_PLAYER_STATE, callbacks.setPlayerState);
+
     }
 
 

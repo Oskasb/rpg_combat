@@ -53,7 +53,13 @@ class PieceState {
         }
     }
     updateGamePiece(tpf, time) {
+        let statePre = this.status.charState;
         this.pieceStateProcessor.processGamePieceState(this.status, this.config, tpf, time)
+        if (statePre !== this.status.charState) {
+            if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+                evt.dispatch(ENUMS.Event.SET_PLAYER_STATE, this.status.charState);
+            }
+        }
     }
     tickPieceState(tpf, time) {
         this.updateGamePiece(tpf, time);
