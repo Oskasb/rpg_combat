@@ -2,23 +2,46 @@ class InstanceSpatial{
 
         constructor(obj3d) {
             this.obj3d = obj3d;
-            this.frameMovement = new THREE.Vector3(0.0, 0.01, 0.0);
+            let frameMovement = new THREE.Vector3(0.0, 0.01, 0.0);
+
+            let getFrameVelocity = function(tpf, storeVec3) {
+                storeVec3.copy(frameMovement);
+                storeVec3.multiplyScalar(tpf);
+            }.bind(this);
+
+            let setPrePos = function(pos) {
+                frameMovement.copy(pos);
+            }
+
+            let setPostPos = function(pos) {
+                frameMovement.sub(pos);
+            }
+
+            let getMovement = function(store) {
+                return store.copy(frameMovement);
+            }
+
+            this.call = {
+                setPrePos:setPrePos,
+                setPosPos:setPostPos,
+                getMovement:getMovement,
+                getFrameVelocity:getFrameVelocity
+            }
+
         };
 
-        getFrameMovement = function() {
-            return this.frameMovement;
+        getFrameMovement = function(store) {
+            this.call.getMovement(store);
         };
 
-        getSpatialPosition = function() {
-            return this.obj3d.position;
+        getSpatialPosition = function(store) {
+            store.copy(this.obj3d.position);
         };
 
         setPosXYZ = function(x, y, z) {
-            this.frameMovement.copy(this.obj3d.position);
             this.obj3d.position.x = x;
             this.obj3d.position.y = y;
             this.obj3d.position.z = z;
-            this.frameMovement.sub(this.obj3d.position);
             if (this.geometryInstance) {
                 this.geometryInstance.applyObjPos();
             }
@@ -57,7 +80,9 @@ class InstanceSpatial{
         };
 
         setPosVec3 = function(posVec3) {
+            this.call.setPrePos(this.obj3d.position);
             this.obj3d.position.copy(posVec3);
+            this.call.setPosPos(posVec3)
             if (this.geometryInstance) {
                 this.geometryInstance.applyObjPos();
             }

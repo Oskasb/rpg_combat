@@ -257,10 +257,11 @@ class InstancedModel {
             }
 
 
-
-            let moveDist = this.getSpatial().getFrameMovement();
+            let moveDist = ThreeAPI.tempVec3;
+            this.getSpatial().getFrameMovement(moveDist);
             if (moveDist.lengthSq()) {
-                let pos =  this.getSpatial().getSpatialPosition();
+                let pos = ThreeAPI.tempVec3;
+                this.getSpatial().getSpatialPosition(pos);
                 this.unifVec.x = pos.x;
                 this.unifVec.y = pos.y;
                 this.unifVec.z = pos.z;

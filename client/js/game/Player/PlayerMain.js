@@ -92,8 +92,8 @@ class PlayerMain {
     stashItemPiece(piece, time) {
         let playerPiece = this.getPlayerCharacter().gamePiece;
         this.playerStash.findPositionInStash(this.tempVec);
-
-        piece.getPieceMovement().moveToTargetAtTime('stash', playerPiece.getSpatial().getSpatialPosition(), this.tempVec, time, this.callbacks.addToStash);
+        playerPiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
+        piece.getPieceMovement().moveToTargetAtTime('stash', ThreeAPI.tempVec3, this.tempVec, time, this.callbacks.addToStash);
     }
 
     takeStashedPiece(piece) {

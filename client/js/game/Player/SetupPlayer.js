@@ -43,7 +43,8 @@ class SetupPlayer {
 
     initPlayerStash() {
         let itemCallback = function(gamePiece) {
-            GameAPI.getPlayerMain().playerStash.findPositionInStash(gamePiece.getSpatial().getSpatialPosition());
+            GameAPI.getPlayerMain().playerStash.findPositionInStash(ThreeAPI.tempVec3);
+            gamePiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
             GameAPI.getPlayerMain().callbacks.addToStash(gamePiece);
         }.bind(this);
 

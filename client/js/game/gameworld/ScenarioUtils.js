@@ -26,7 +26,8 @@ function positionPlayer(config) {
 
     let playerMovement = player.getPieceMovement();
     let spatial = player.getSpatial();
-    let sourcePos = spatial.getSpatialPosition()
+    let sourcePos = ThreeAPI.tempVec3b;
+        spatial.getSpatialPosition(sourcePos)
     MATH.vec3FromArray(targetPos, pos);
 
     sourcePos.sub(targetPos);

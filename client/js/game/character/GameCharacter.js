@@ -1,6 +1,7 @@
 import { CharacterInventory } from "./CharacterInventory.js";
 import { CharacterEquipment } from "./CharacterEquipment.js";
 import { CharacterStatus } from "./CharacterStatus.js";
+import { CharacterMovement } from "./CharacterMovement.js";
 
 class GameCharacter {
     constructor(name) {
@@ -24,6 +25,7 @@ class GameCharacter {
         this.gamePiece = gamePiece;
         this.characterStatus.activateCharacterStatus(gamePiece);
         this.characterEquipment = new CharacterEquipment(gamePiece, equipSlotConfigId);
+        this.characterMovement = new CharacterMovement(gamePiece);
     }
 
     getCharacterPiece() {

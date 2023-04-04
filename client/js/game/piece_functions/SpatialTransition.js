@@ -29,9 +29,9 @@ class SpatialTransition {
         }
         this.startTime = now;
         this.targetTime = now+overTime;
-        this.targetPos.copy(tSpatial.getSpatialPosition());
+        tSpatial.getSpatialPosition(this.targetPos);
         this.targetSpatial = tSpatial;
-        this.startPos.copy(this.spatial.getSpatialPosition());
+        this.spatial.getSpatialPosition(this.startPos);
         if (typeof(callback) === 'function') {
             this.onArriveCallbacks.push(callback);
         }
@@ -42,7 +42,7 @@ class SpatialTransition {
         if (this.targetTime > now) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
             if (fraction > 1) fraction = 1;
-            this.targetPos.copy(this.targetSpatial.getSpatialPosition());
+            this.targetSpatial.getSpatialPosition(this.targetPos);
             this.targetPos.y+=Math.sin(fraction*Math.PI)*0.7+1.1;
             MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, ThreeAPI.tempVec3 , 'curveSigmoid');
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
