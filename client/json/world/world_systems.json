@@ -92,13 +92,13 @@
         },
         "town_merchant_dynamic":{
           "time":1.3,
-          "pos": [-32, 24, -198],
-          "lookAt": [-14, 0, -222]
+          "pos": [-19, 6, -208],
+          "lookAt": [-9, 0, -220]
         },
         "town_inn_dynamic":{
           "time":1.3,
-          "pos": [-18, 20, -199],
-          "lookAt": [-9, 0, -218]
+          "pos": [-14, 13, -205],
+          "lookAt": [-7, 0, -216]
         },
         "town_cellar_dynamic":{
           "time":1.3,

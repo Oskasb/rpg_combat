@@ -10,7 +10,7 @@
             "config": {
               "gui_page":"page_scene_merchant",
               "player": {
-                "pos": [-19, 0, -217],
+                "pos": [-13, 0, -215],
                 "rot": [0, 1.3, 0]
               },
               "environment": "sunny_day",

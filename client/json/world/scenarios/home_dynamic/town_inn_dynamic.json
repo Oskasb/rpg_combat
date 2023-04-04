@@ -11,7 +11,7 @@
             "config": {
               "gui_page":"page_scene_inn",
               "player": {
-                "pos": [-9, 0, -217],
+                "pos": [-6, 0, -213],
                 "rot": [0, 4.3, 0]
               },
               "environment": "sunny_day",

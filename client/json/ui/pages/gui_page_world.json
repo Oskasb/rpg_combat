@@ -98,7 +98,7 @@
                 {
                   "widget_id":"button_go_cave",
                   "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"button_big_blue",
+                  "widget_config_id":"button_big_red",
                   "options":{
                     "text":"CAVE",
                     "container_id":"page_home_center",

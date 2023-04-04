@@ -64,7 +64,7 @@
             },
             {
               "id":"button_big_red",
-              "layout":"layout_big_icon_button",
+              "layout":"layout_major_button",
               "text": {
                 "sprite_font": "sprite_font_button_big",
                 "feedback": "feedback_text_red"

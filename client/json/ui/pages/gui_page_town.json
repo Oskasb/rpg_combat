@@ -60,14 +60,14 @@
                   }
                 },
                 {
-                  "widget_id":"button_go_cellar",
+                  "widget_id":"button_go_alley",
                   "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"button_big_blue",
+                  "widget_config_id":"button_big_red",
                   "options":{
-                    "text":"CELLAR",
+                    "text":"ALLEY",
                     "container_id":"page_home_center",
                     "offset_x":-0.12,
-                    "offset_y":-0.11,
+                    "offset_y": 0.12,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -84,8 +84,8 @@
                   "options":{
                     "text":"TRADER",
                     "container_id":"page_home_center",
-                    "offset_x":0.10,
-                    "offset_y":0.10,
+                    "offset_x":0.11,
+                    "offset_y":0.06,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -103,7 +103,7 @@
                     "text":"INN",
                     "container_id":"page_home_center",
                     "offset_x": 0.13,
-                    "offset_y": -0.07,
+                    "offset_y": -0.12,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
