@@ -5,7 +5,7 @@ class PieceState {
         this.gamePiece = gamePiece;
         this.pieceStateProcessor = new PieceStateProcessor(gamePiece);
         this.config = {
-            level:[100, 250, 500, 1000, 2000, 4000, 8000,12000, 20000],
+            levels:[0, 100, 250, 500, 1000, 2000, 4000, 8000,12000, 20000],
             xpGain:21,
             turnTime:4,
             attacks:{

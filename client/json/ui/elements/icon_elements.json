@@ -45,6 +45,16 @@
               }
             },
             {
+              "id":"progress_horizontal_xp_bar",
+              "config": {
+                "innersize": { "x":0.986, "y":0.4, "z": 0},
+                "offset":    { "x":0.5,  "y":0.5, "z": 0},
+                "atlas_key": "GUI_16x16",
+                "stretch": true,
+                "progress": {"axis": "left", "alts": ["up", "down", "left", "right"]}
+              }
+            },
+            {
               "id":"progress_horizontal_action_point_status",
               "config": {
                 "innersize": { "x":0.95, "y":0.4, "z": 0},

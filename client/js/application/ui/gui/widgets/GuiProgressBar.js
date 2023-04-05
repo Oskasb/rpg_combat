@@ -9,37 +9,34 @@ class GuiProgressBar {
         }
 
         this.min = 0;
-        this.max = 0;
+        this.max = 100;
         this.current = 0;
-
-        this.digits = 2;
-
+        this.digits = options.digits || 2;
         this.time = 0;
 
-        let updateProgress = function(tpf, time) {
-            this.time += tpf;
-            this.updateCurrentProgress(this.time);
+        let progressEvent = options['progress_event'];
+        this.progressEvent = ENUMS.Event[progressEvent.event]
+
+
+        let updateProgress = function(event) {
+            if (event.targetKey === progressEvent['target_key']) {
+                this.setProgress(event.min,event.max, event.current)
+            }
         }.bind(this);
 
         this.callbacks = {
             updateProgress:updateProgress
         }
+
+        evt.on(this.progressEvent, updateProgress);
+
     };
 
-
-    initProgressBar = function(widgetConfig, onActivate, onReady, pos) {
-        this.guiWidget = new GuiWidget(widgetConfig);
-
-        let widgetReady = function(widget) {
-            widget.setWidgetIconKey("plate");
-            widget.setPosition(pos);
-            widget.enableWidgetInteraction();
-        };
-
-        this.guiWidget.initGuiWidget(null, widgetReady);
-        this.guiWidget.addOnActiaveCallback(onActivate);
+    setGuiWidget = function(guiWidget) {
+        this.guiWidget = guiWidget;
+        guiWidget.setWidgetIconKey("plate");
+        guiWidget.guiProgressBar = this;
     };
-
 
     setProgress = function(min, max, current) {
         this.min = min;
@@ -47,21 +44,13 @@ class GuiProgressBar {
         this.updateCurrentProgress(current);
     };
 
-
     updateCurrentProgress = function(current) {
         this.current = current;
         this.guiWidget.indicateProgress(this.min, this.max, this.current, this.digits)
     };
 
-    activateProgressBar = function() {
-        this.time = 0;
-        GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress);
-        this.setProgress(0, 2, 0);
-
-    };
-
     deactivateProgressBar = function() {
-        GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);
+        evt.removeListener(this.progressEvent, this.callbacks.updateProgress, evt)
     };
 
     removeGuiWidget = function() {

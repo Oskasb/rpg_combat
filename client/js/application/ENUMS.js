@@ -65,7 +65,8 @@ if(typeof(ENUMS) === "undefined"){
         DEBUG_TEXT:                 40,
         TOGGLE_GUI_PAGE:            41,
         DEBUG_STATS_POOLS:          42,
-        MAIN_CHAR_STATE_EVENT:      43
+        MAIN_CHAR_STATE_EVENT:      43,
+        MAIN_CHAR_STATUS_EVENT:     44,
 
     };
 

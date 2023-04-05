@@ -125,6 +125,40 @@
                 }
               }
             },
+
+            {
+              "id":"feedback_surface_xp_bar_container",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.41, "g": 0.41, "b": 0.65, "a": 1.0},
+                  "sprite": "button_action"
+                },
+                "HOVER": {
+                  "color_rgba": {"r": 0.2, "g": 0.5, "b": 0.75, "a": 1.0},
+                  "sprite": "button_action"
+                },
+                "PRESS": {
+                  "color_rgba": {"r": 0.2, "g": 0.5, "b": 0.75, "a": 1.0},
+                  "sprite": "button_action_pressed"
+                },
+                "ACTIVE": {
+                  "color_rgba": {"r": 0.21, "g": 0.71, "b": 0.91, "a": 1.0},
+                  "sprite": "button_action"
+                },
+                "ACTIVE_HOVER": {
+                  "color_rgba": {"r": 0.41, "g": 0.81, "b": 0.97, "a": 1.0},
+                  "sprite": "button_action"
+                },
+                "ACTIVE_PRESS": {
+                  "color_rgba": {"r": 0.41, "g": 0.81, "b": 0.97, "a": 1.0},
+                  "sprite": "button_action_pressed"
+                },
+                "DISABLED": {
+                  "color_rgba": {"r": 0.3, "g": 0.3, "b": 0.3, "a": 1.0},
+                  "sprite": "button_action"
+                }
+              }
+            },
             {
               "id":"feedback_button_action",
               "config": {

@@ -20,14 +20,18 @@ class GameScenario {
         this.staticScenario = new ScenarioStatic(staticId);
         this.staticScenario.initStaticScenario(onReady)
 
-        let openMainCharPage = function() {
-            this.mainChatPage = GuiAPI.activatePage("page_player_main");
-        }.bind(this);
+        if (!this.mainChatPage) {
+            let openMainCharPage = function() {
 
-        setTimeout(function() {
-            openMainCharPage();
-        }, 200)
+                this.mainChatPage = GuiAPI.activatePage("page_player_main");
 
+
+            }.bind(this);
+
+            setTimeout(function() {
+                openMainCharPage();
+            }, 100)
+        }
     }
 
     activateDynamicScenario() {
@@ -39,9 +43,9 @@ class GameScenario {
             this.dynamicScenario.exitDynamicScenario()
         }
 
-     //   let dynamicReady = function(dyn) {
-     //       console.log("Dynamic scenario loaded", dyn);
-     //   };
+        //   let dynamicReady = function(dyn) {
+        //       console.log("Dynamic scenario loaded", dyn);
+        //   };
 
         this.dynamicScenario = new ScenarioDynamic(dynamicId);
         this.dynamicScenario.initDynamicScenario(dynamicReady)
@@ -49,7 +53,7 @@ class GameScenario {
 
     exitGameScenario() {
         this.isActive = false;
-        this.mainChatPage.closeGuiPage();
+        //    this.mainChatPage.closeGuiPage();
         this.staticScenario.exitStaticScenario();
         this.dynamicScenario.exitDynamicScenario()
     }

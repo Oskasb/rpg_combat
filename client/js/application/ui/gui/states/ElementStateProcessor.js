@@ -48,7 +48,9 @@ class ElementStateProcessor {
     };
 
     applyElementStateFeedback = function(element, elementState) {
-        let imgConf = element.config['image'];
+
+        let imgConf = element.config['image'] || null;
+
         let feedbackId = element.getFeedbackConfigId();
         let state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'SURFACE', feedbackId);
 

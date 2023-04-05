@@ -4,6 +4,21 @@ class PieceStateProcessor {
     }
 
     processNewTurn(status, config) {
+
+        status.xp += config.xpGain;
+        evt.dispatch(ENUMS.Event.MAIN_CHAR_STATUS_EVENT,
+            {
+                targetKey:'xp_progress',
+                min:0,
+                max:config.levels[status.level],
+                current:status.xp
+            })
+        if (config.levels[status.level] < status.xp) {
+            status.xp -= config.levels[status.level]
+            status.level++;
+        }
+
+
         status.maxAPs = config.maxActPts;
         status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
         status.turn++;
