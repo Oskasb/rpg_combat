@@ -67,7 +67,7 @@
       "/threedata/assets/sprites/particle_sprites_6x6.json"  ,
 
       "/game/actions/fighter_actions.json"                   ,
-      "/game/actors/fighter.json"                            ,
+      "/game/actors/game_actors.json"                            ,
       "/game/actors/game_items.json"                         ,
       "/game/character/action_points.json"                   ,
       "/game/character/action_slots.json"                    ,
@@ -76,6 +76,8 @@
       "/game/pieces/animated/humans.json"                    ,
       "/game/pieces/equipable/equip_items.json"              ,
       "/game/skeletons/biped_rigs.json"                      ,
+
+      "/game/pieces/game_characters.json"                    ,
 
       "/threedata/vegetation/vegetation_grids.json"          ,
       "/threedata/vegetation/vegetation_plants.json"         ,

@@ -33,6 +33,32 @@
               }
             },
             {
+              "id":"feedback_icon_xp_bar_progress",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 1.0, "g": 0.7,  "b": -0.5, "a": 1.0}
+                },
+                "HOVER": {
+                  "color_rgba": {"r": 0.05, "g": 0.74, "b": 0.85, "a": 0.6}
+                },
+                "PRESS": {
+                  "color_rgba": {"r": 0.99, "g": 0.80, "b": 0.55, "a": 0.6}
+                },
+                "ACTIVE": {
+                  "color_rgba": {"r": 0.01, "g": 0.6,  "b": 0.9, "a": 1.0}
+                },
+                "ACTIVE_HOVER": {
+                  "color_rgba": {"r": 0.99, "g": 0.95, "b": 0.81, "a": 0.6}
+                },
+                "ACTIVE_PRESS": {
+                  "color_rgba": {"r": 0.05, "g": 0.74, "b": 0.99, "a": 0.6}
+                },
+                "DISABLED": {
+                  "color_rgba": {"r": 0.45, "g": 0.25, "b": 0.25, "a": 0.6}
+                }
+              }
+            },
+            {
               "id":"feedback_icon_action_status_progress",
               "config": {
                 "NONE": {

@@ -1,3 +1,4 @@
+import { CharacterComposer } from "./Player/CharacterComposer.js";
 import { GameCharacter } from "./character/GameCharacter.js";
 import { GamePiece } from "./gamepieces/GamePiece.js";
 import { GameMain} from "./GameMain.js";
@@ -5,7 +6,7 @@ import { GameMain} from "./GameMain.js";
 class GameAPI {
     constructor() {
         this.acticePlayerCharacter = null;
-
+        this.characterComposer = new CharacterComposer();
     }
 
     initGameMain() {
@@ -21,6 +22,9 @@ class GameAPI {
         return new GameCharacter(name);
     };
 
+    composeCharacter(gameCharConfigId, callback) {
+        this.characterComposer.composeCharacter(gameCharConfigId, callback)
+    }
     createGamePiece(pieceConfig, callback) {
         return new GamePiece(pieceConfig, callback)
     }

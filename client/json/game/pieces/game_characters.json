@@ -1,0 +1,34 @@
+[{
+  "GAME":{
+    "CHARACTERS":[
+      {
+        "id":"PLAYER_MAIN",
+        "data":{
+          "name": "Gideon",
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE", "LEGS_CHAIN"],
+          "inventory": [
+            "HELMET_VIKING", "BELT_PLATE", "LEGS_CHAIN", "BOOTS_SCALE", "GLOVES_SCALE", "SHIRT_SCALE",
+            "LEGS_SCALE", "LEGS_BRONZE", "BREASTPLATE_BRONZE", "SHIRT_CHAIN"
+          ]
+        }
+      },
+      {
+        "id":"BARB_TRAINER",
+        "data":{
+          "name": "Grong",
+          "game_piece":"PIECE_BARBARIAN",
+          "equipment":[]
+        }
+      },
+      {
+        "id":"HOME_DUDE",
+        "data":{
+          "name": "Eddie",
+          "game_piece":"PIECE_DUDE",
+          "equipment":[]
+        }
+      }
+    ]
+  }
+}]

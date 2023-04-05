@@ -3,7 +3,7 @@ import { GameCamera } from "../3d/camera/GameCamera.js";
 import { ConfigData } from "../application/utils/ConfigData.js";
 import { GameWorld } from "./gameworld/GameWorld.js";
 import { PlayerMain } from "./Player/PlayerMain.js";
-import { SetupPlayer } from "./Player/SetupPlayer.js";
+import { CharacterComposer } from "./Player/CharacterComposer.js";
 
 class GameMain {
     constructor() {
@@ -40,10 +40,41 @@ class GameMain {
 
     initGameMain() {
         this.setupCallbacks();
+        let charReady = function(char) {
+            console.log("Player Char:", char)
+            GameAPI.getPlayerMain().setPlayerCharacter(char);
+            GameAPI.setActivePlayerCharacter(char);
+            let initPlayerStash = function() {
+                let itemCallback = function(gamePiece) {
+                    GameAPI.getPlayerMain().playerStash.findPositionInStash(ThreeAPI.tempVec3);
+                    gamePiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
+                    GameAPI.getPlayerMain().callbacks.addToStash(gamePiece);
+                }.bind(this);
 
-        new SetupPlayer()
+                GameAPI.createGamePiece({piece:"BELT_BRONZE"        }, itemCallback);
+                GameAPI.createGamePiece({piece:"HELMET_VIKING"      }, itemCallback);
+                GameAPI.createGamePiece({piece:"BELT_PLATE"         }, itemCallback);
+                GameAPI.createGamePiece({piece:"LEGS_CHAIN"         }, itemCallback);
+                GameAPI.createGamePiece({piece:"BOOTS_SCALE"        }, itemCallback);
+                GameAPI.createGamePiece({piece:"GLOVES_SCALE"       }, itemCallback);
+                GameAPI.createGamePiece({piece:"SHIRT_SCALE"        }, itemCallback);
+                GameAPI.createGamePiece({piece:"LEGS_SCALE"         }, itemCallback);
+                GameAPI.createGamePiece({piece:"LEGS_BRONZE"        }, itemCallback);
+                GameAPI.createGamePiece({piece:"BREASTPLATE_BRONZE" }, itemCallback);
+                GameAPI.createGamePiece({piece:"SHIRT_CHAIN"        }, itemCallback);
+
+                evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
+                    id:"home_scenario",
+                    dynamic:"home_hovel_dynamic"
+                });
+
+            }
+            initPlayerStash()
 
 
+        }.bind(this)
+
+        GameAPI.composeCharacter("PLAYER_MAIN", charReady)
         evt.on(ENUMS.Event.REQUEST_SCENARIO, this.callbacks.requestScenario);
         evt.on(ENUMS.Event.FRAME_READY, this.callbacks.updateGameFrame)
 
