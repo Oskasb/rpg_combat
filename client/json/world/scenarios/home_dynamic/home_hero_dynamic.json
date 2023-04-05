@@ -9,7 +9,10 @@
             "config": {
               "gui_page":"page_scene_hero",
               "environment": "sunny_day",
-
+              "player": {
+                "pos": [-1.3, 0, 0.8],
+                "rot": [0, -0.931, 0]
+              },
               "spawn":[
 
               ]

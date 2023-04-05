@@ -7,8 +7,8 @@
         {"id": "animated_pilot",        "config":{"model": "file_pilot_bind",   "rig": "rig_pilot",     "material": "material_opaque", "settings": "model_settings_default" }},
         {"id": "animated_barbarian",    "config":{"model": "file_barb_bind",    "rig": "rig_barbarian", "material": "material_opaque", "settings": "model_settings_default" }},
 
-        {"id": "skinned_barb_bp",       "config":{"model": "file_barb_item_bp", "material": "material_opaque",      "settings": "model_settings_default"}},
-        {"id": "skinned_barb_greaves",  "config":{"model": "file_barb_item_greaves", "material": "material_opaque",  "settings": "model_settings_default"}},
+        {"id": "skinned_barb_bp",       "config":{"model": "file_barb_item_bp", "material": "material_standard",      "settings": "model_settings_default"}},
+        {"id": "skinned_barb_greaves",  "config":{"model": "file_barb_item_greaves", "material": "material_standard",  "settings": "model_settings_default"}},
 
 
         {"id": "asset_chain_shirt",  "config":{"model": "file_chain_shirt",  "material": "material_standard",           "settings": "model_settings_default"}},

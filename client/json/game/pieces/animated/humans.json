@@ -14,6 +14,13 @@
           "model_asset":"animated_barbarian",
           "skeleton_rig":"BARBARIAN_RIG"
         }
+      },
+      {
+        "id":"PIECE_DUDE",
+        "data":{
+          "model_asset":"animated_pilot",
+          "skeleton_rig":"PILOT_RIG"
+        }
       }
     ]
   }

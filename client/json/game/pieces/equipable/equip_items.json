@@ -101,6 +101,20 @@
           "model_asset":"asset_scale_gloves",
           "slot": "SLOT_HANDS"
         }
+      },
+      {
+        "id":"BARB_BREASTPLATE",
+        "data":{
+          "model_asset":"skinned_barb_bp",
+          "slot": "SLOT_BODY"
+        }
+      },
+      {
+        "id":"BARB_GREAVES",
+        "data":{
+          "model_asset":"skinned_barb_greaves",
+          "slot": "SLOT_LEGS"
+        }
       }
     ]
   }

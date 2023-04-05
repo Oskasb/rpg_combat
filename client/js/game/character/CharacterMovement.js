@@ -88,7 +88,7 @@ class CharacterMovement {
 
         this.spatial.call.getMovement(this.vel)
         let speed = this.vel.lengthSq();
-        if (speed) {
+        if (speed > 0.00001) {
             this.applyMovementState(true)
         } else  {
             this.applyMovementState(false)

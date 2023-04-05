@@ -95,6 +95,16 @@
             "FALL":           {"time_scale": 1,   "weight": 1, "fade": 0.45, "duration": 1.6, "channel": 0 }
           }
         }
+      },
+      {
+        "id":"PILOT_RIG",
+        "data":{
+          "joints": {
+          },
+          "animations": {
+            "IDLE":           {"time_scale": 1,   "weight": 1, "fade": 0.25, "duration": 2  , "channel": 0 }
+          }
+        }
       }
     ]
   }

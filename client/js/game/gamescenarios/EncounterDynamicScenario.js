@@ -77,7 +77,8 @@ class EncounterDynamicScenario {
         this.isActive = false;
         GuiAPI.guiPageSystem.closeGuiPage(this.page);
         while (this.pieces.length) {
-            GameAPI.takePieceFromWorld(this.pieces.pop())
+            let piece = this.pieces.pop();
+            piece.disbandGamePiece()
         }
     };
 

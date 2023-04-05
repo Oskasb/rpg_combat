@@ -48,8 +48,10 @@ class SpatialTransition {
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
         } else {
             this.spatial.setPosVec3(this.targetPos);
+
             this.targetSpatial = null;
             MATH.callAll(this.onArriveCallbacks, this.gamePiece);
+            this.spatial.setPosVec3(this.targetPos);
             MATH.emptyArray(this.onArriveCallbacks);
             GameAPI.unregisterGameUpdateCallback(this.callbacks.onGameUpdate);
         }
