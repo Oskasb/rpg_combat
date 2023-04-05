@@ -40,8 +40,7 @@
               "id":"feedback_surface_hidden",
               "config": {
                 "NONE": {
-                  "color_rgba": {"r": 0.01, "g": 0.31, "b": 0.69, "a": 1.0},
-                  "sprite": "text_box_framed"
+                  "color_rgba": {"r": 0.01, "g": 0.31, "b": 0.69, "a": 0.0}
                 }
               }
             },
@@ -78,6 +77,33 @@
                 "NONE": {
                   "color_rgba": {"r": 0.35, "g": 0.45, "b": 0.75, "a": 0.85},
                   "sprite": "container_box_framed"
+                },
+                "HOVER": {
+                  "color_rgba": {"r": 0.2, "g": 0.6, "b": 0.75, "a": 0.85}
+                },
+                "PRESS": {
+                  "color_rgba": {"r": 0.2, "g": 0.5, "b": 0.8, "a": 0.75}
+                },
+                "ACTIVE": {
+                  "color_rgba": {"r": 0.01, "g": 0.99, "b": 0.01, "a": 1.0}
+                },
+                "ACTIVE_HOVER": {
+                  "color_rgba": {"r": 0.15, "g": 0.99, "b": 0.25, "a": 1.0}
+                },
+                "ACTIVE_PRESS": {
+                  "color_rgba": {"r": 0.1, "g": 0.65, "b": 0.15, "a": 1.0}
+                },
+                "DISABLED": {
+                  "color_rgba": {"r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0}
+                }
+              }
+            },
+            {
+              "id":"feedback_surface_stat_elem",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.05, "g": 0.15, "b": 0.75, "a": 0.65},
+                  "sprite": "text_box_framed"
                 },
                 "HOVER": {
                   "color_rgba": {"r": 0.2, "g": 0.6, "b": 0.75, "a": 0.85}

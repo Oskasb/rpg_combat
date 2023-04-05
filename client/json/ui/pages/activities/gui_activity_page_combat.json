@@ -64,6 +64,16 @@
                   }
                 },
                 {
+                  "widget_id": "feedback_container_turn_values",
+                  "widget_class": "GuiExpandingContainer",
+                  "widget_config_id": "widget_hidden_container",
+                  "options": {
+                    "container_id": "page_activity_combat_top_right",
+                    "offset_x": -0.12,
+                    "offset_y": -0.04
+                  }
+                },
+                {
                   "widget_id": "feedback_container_combat_values",
                   "widget_class": "GuiExpandingContainer",
                   "widget_config_id": "widget_hidden_container",
@@ -84,6 +94,14 @@
                     "track_config": {"category": "CHARACTERS","key": "MAIN_CHAR_STATUS",
                       "samplers": [
                         {
+                          "key": "maxAPs",
+                          "digits": 1
+                        },
+                        {
+                          "key": "actPts",
+                          "digits": 1
+                        },
+                        {
                           "key": "attacks",
                           "digits": 1
                         },
@@ -93,6 +111,24 @@
                         },
                         {
                           "key": "atkProg",
+                          "digits": 2
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "widget_id": "container_turn_clock",
+                  "widget_class": "GuiStatsPanel",
+                  "widget_config_id":"widget_stats_container",
+                  "options": {
+                    "container_id": "feedback_container_turn_values",
+                    "offset_x":  0.0,
+                    "offset_y": -0.0,
+                    "track_config": {"category": "CHARACTERS","key": "MAIN_CHAR_STATUS",
+                      "samplers": [
+                        {
+                          "key": "turnProgress",
                           "digits": 2
                         }
                       ]

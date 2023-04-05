@@ -7,7 +7,7 @@ class GameScenario {
         this.scenarioId = scenarioId;
         this.scenarioTime = 0;
         this.isActive = true;
-
+        this.mainChatPage = null;
     }
 
     initGameScenario(eArgs) {
@@ -19,6 +19,15 @@ class GameScenario {
         this.scenarioTime = 0;
         this.staticScenario = new ScenarioStatic(staticId);
         this.staticScenario.initStaticScenario(onReady)
+
+        let openMainCharPage = function() {
+            this.mainChatPage = GuiAPI.activatePage("page_player_main");
+        }.bind(this);
+
+        setTimeout(function() {
+            openMainCharPage();
+        }, 200)
+
     }
 
     activateDynamicScenario() {
@@ -40,6 +49,7 @@ class GameScenario {
 
     exitGameScenario() {
         this.isActive = false;
+        this.mainChatPage.closeGuiPage();
         this.staticScenario.exitStaticScenario();
         this.dynamicScenario.exitDynamicScenario()
     }

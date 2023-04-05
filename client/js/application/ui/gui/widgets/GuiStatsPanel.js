@@ -10,6 +10,17 @@ class GuiStatsPanel {
             this.options[key] = options[key];
         }
 
+    //    console.log(this.options, this.options['key_box'], this.options['value_box'])
+
+        if (typeof(this.options['key_box']) !== 'string') {
+            this.options.key_box = "widget_stats_key_box"
+        }
+
+        if (typeof(this.options['value_box']) !== 'string') {
+            this.options.value_box = "widget_stats_value_box"
+        }
+
+
         let catKey = options['track_config']['category'];
         let confKey = options['track_config']['key'];
         let trackValues = PipelineAPI.getCachedConfigs()[catKey][confKey];
@@ -94,8 +105,9 @@ class GuiStatsPanel {
             valueWidget.initGuiWidget(null, valueReady);
         };
 
-        let valueWidget = new GuiWidget("widget_stats_value_box");
-        let keyWidget = new GuiWidget("widget_stats_key_box");
+        console.log(this.options.value_box,  this.options.key_box)
+        let valueWidget = new GuiWidget( this.options.value_box);
+        let keyWidget = new GuiWidget( this.options.key_box);
 
         keyWidget.statSampler = statSampler;
         valueWidget.statSampler = statSampler;

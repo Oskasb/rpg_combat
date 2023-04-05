@@ -5,6 +5,8 @@ class PieceState {
         this.gamePiece = gamePiece;
         this.pieceStateProcessor = new PieceStateProcessor(gamePiece);
         this.config = {
+            level:[100, 250, 500, 1000, 2000, 4000, 8000,12000, 20000],
+            xpGain:21,
             turnTime:4,
             attacks:{
                 NONE:0,
@@ -15,11 +17,18 @@ class PieceState {
             prepFraction:0.25,
             swingFraction:0.25,
             recoverFraction:0.25,
-            hasteFactor:1
+            hasteFactor:1,
+            maxActPts:5
         }
 
         this.status = {
             lifetime:0,
+            level:1,
+            xp:0,
+            gold:0,
+            gems:0,
+            inv:0,
+            stash:0,
             charState:ENUMS.CharacterState.IDLE,
             targState:ENUMS.CharacterState.IDLE,
             atkType:ENUMS.AttackType.NONE,
@@ -36,9 +45,14 @@ class PieceState {
             recover:0,
             animKey:'none',
             action:'none',
-            trTime:0
+            trTime:0,
+            maxAPs:0,
+            actPts:0
         }
+
     }
+
+
 
 
     handleStateEvent(event) {

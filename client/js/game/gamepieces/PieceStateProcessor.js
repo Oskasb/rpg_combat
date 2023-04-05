@@ -4,6 +4,8 @@ class PieceStateProcessor {
     }
 
     processNewTurn(status, config) {
+        status.maxAPs = config.maxActPts;
+        status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
         status.turn++;
         status.turnProgress++;
         status.charState = status.targState;

@@ -12,6 +12,7 @@ class SetupPlayer {
         let equipSlotConfigId = charConfig['equip_slots'];
 
 
+
         let playerReady = function() {
             _this.initPlayerEquipment(equipSlotConfigId);
             _this.initPlayerStash();
@@ -21,7 +22,6 @@ class SetupPlayer {
                 id:"home_scenario",
                 dynamic:"home_hovel_dynamic"
             });
-
         };
 
         this.initPlayerPiece({piece:pieceId, pos: [0, 0, 0] }, equipSlotConfigId, playerReady);
