@@ -128,7 +128,7 @@ class InstanceBuffer {
     };
 
     setDrawRange = function(count) {
-        if (this.mesh.userData.ninequad) {
+        if (this.mesh.userData.ninequad && count) {
             // what the hell is going on with this...
             // is this even needed for instancing now?
             // why is only the gui surface suffering?

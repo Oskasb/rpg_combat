@@ -5,6 +5,8 @@ class InstancingBuffers {
         this.relCount = 0;
         this.actCount = 0;
         this.attributes = {
+            "index"          : { "dimensions":1, "dynamic":false},
+            "position"       : { "dimensions":3, "dynamic":false},
             "offset"         : { "dimensions":3, "dynamic":false},
             "startTime"      : { "dimensions":1, "dynamic":true },
             "duration"       : { "dimensions":1, "dynamic":false},

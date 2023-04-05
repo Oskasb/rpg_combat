@@ -1,5 +1,6 @@
 class LineRenderer {
     constructor() {
+        this.isActive = false;
         this._numRenderingLines = 0;
         this.MAX_NUM_LINES = 50000;
 
@@ -25,14 +26,14 @@ class LineRenderer {
             blending:THREE.NoBlending,
             depthTest:false,
             depthWrite:true,
-            vertexColors: THREE.VertexColors,
+            vertexColors: true,
             side:THREE.DoubleSide
         } );
 
         this.line = new THREE.LineSegments( this.geometry,  this.material);
         this.line.frustumCulled = false;
         this.line.renderOrder = 1;
-        ThreeAPI.addToScene( this.line );
+
     }
 
 
@@ -71,6 +72,11 @@ class LineRenderer {
 
         this.geometry.setDrawRange( 0, this._numRenderingLines * 2 );
 
+        if (!this.isActive) {
+
+            this.isActive = true;
+        }
+
     };
 
     _clear = function () {
@@ -85,6 +91,7 @@ class LineRenderer {
 
     _remove = function () {
         console.log("Should remove linerenderer here")
+        ThreeAPI.getScene().remove( this.line );
     };
 
 }

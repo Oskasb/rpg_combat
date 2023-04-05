@@ -126,6 +126,11 @@ class LineRenderSystem {
 	render = function () {
 		for (var i = 0; i < this._lineRenderers.length; i++) {
 			var lineRenderer = this._lineRenderers[i];
+			if (!lineRenderer._numRenderingLines) {
+				ThreeAPI.getScene().remove( lineRenderer.line );
+			} else {
+				ThreeAPI.addToScene( lineRenderer.line );
+			}
 			lineRenderer._clear();
 		}
 	};

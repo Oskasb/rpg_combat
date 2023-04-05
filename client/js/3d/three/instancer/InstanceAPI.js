@@ -125,7 +125,10 @@ class InstanceAPI {
             }
 
             instanceBuffers.setRenderOrder(order)
+            instanceBuffers.setInstancedCount(0);
+            instanceBuffers.setDrawRange(0)
             this.uiSystems[uiSysId].push(instanceBuffers);
+
         }.bind(this);
 
        ThreeAPI.loadThreeAsset('MODELS_', assetId, assetLoaded);
@@ -153,7 +156,6 @@ class InstanceAPI {
     }
 
     updateInstances = function(tpf, systemTime) {
-
 
         let iCount = 0;
         let updateUiSystemBuffers = function(instanceBuffers) {

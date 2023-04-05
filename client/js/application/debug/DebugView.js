@@ -46,7 +46,7 @@ class DebugView {
             if (inspecting) {
                 ThreeAPI.addPrerenderCallback(this.callbacks.inspectFrameUpdate);
             } else {
-                this.debugLines.updateDebugLines();
+                this.debugLines.clearDebugLines();
                 ThreeAPI.unregisterPrerenderCallback(this.callbacks.inspectFrameUpdate);
             }
             

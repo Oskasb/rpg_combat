@@ -39,6 +39,11 @@ class DebugLines {
         this.lineDenderSystem.render();
     };
 
+    clearDebugLines = function() {
+        this.lineDenderSystem.render();
+        this.lineDenderSystem.render();
+    }
+    
 }
 
 export { DebugLines }
