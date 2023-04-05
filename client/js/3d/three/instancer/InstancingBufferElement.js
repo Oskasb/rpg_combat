@@ -111,6 +111,7 @@ class InstancingBufferElement {
     endLifecycleNow = function() {
         this.lifecycle.z = this.guiBuffers.getSystemTime();
         this.applyLifecycle();
+        this.guiBuffers.setAttribXYZ('offset', this.index, 0, 0, 10)
     };
 
     setDefaultBuffers = function() {
