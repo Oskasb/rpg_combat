@@ -19,7 +19,7 @@ class CharacterComposer {
         let equipSlotConfigId = actorConfig['equip_slots'];
 
         let playerReady = function(char) {
-            _this.initCharacterEquipment(equippedItems);
+            _this.initCharacterEquipment(char, equippedItems);
             _this.initCharacterInventory()
             callback(char)
 
@@ -44,9 +44,9 @@ class CharacterComposer {
 
     }
 
-    initCharacterEquipment(equippedItems) {
+    initCharacterEquipment(char, equippedItems) {
         let equip = function(piece) {
-            GameAPI.getActivePlayerCharacter().getEquipment().characterEquipItem(piece);
+            char.getEquipment().characterEquipItem(piece);
         };
         let itemCallback = function(gamePiece) {
             equip(gamePiece)

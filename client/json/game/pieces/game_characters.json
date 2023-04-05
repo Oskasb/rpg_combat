@@ -17,15 +17,15 @@
         "id":"BARB_TRAINER",
         "data":{
           "name": "Grong",
-          "game_piece":"PIECE_BARBARIAN",
-          "equipment":[]
+          "actor":"ACTOR_BARB",
+          "equipment":["HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES"]
         }
       },
       {
         "id":"HOME_DUDE",
         "data":{
           "name": "Eddie",
-          "game_piece":"PIECE_DUDE",
+          "actor":"ACTOR_DUDE",
           "equipment":[]
         }
       }

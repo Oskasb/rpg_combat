@@ -44,6 +44,10 @@ class GameCharacter {
         return this.characterEquipment;
     }
 
+    dismissCharacter() {
+        this.gamePiece.disbandGamePiece()
+    }
+
 }
 
 export { GameCharacter }

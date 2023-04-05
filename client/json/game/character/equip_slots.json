@@ -18,6 +18,25 @@
             {"slot_id": "SLOT_HAND_L"    ,"joint": "GRIP_L" }
           ]
         }
+      },
+      {
+        "id":"SLOTS_BARB",
+        "data":{
+          "slots": [
+            {"slot_id": "SLOT_BODY"      ,"joint": "SKIN"   },
+            {"slot_id": "SLOT_HEAD"      ,"joint": "HEAD"   },
+            {"slot_id": "SLOT_LEGS"      ,"joint": "SKIN"   }
+          ]
+        }
+      },
+      {
+        "id":"SLOTS_DUDE",
+        "data":{
+          "slots": [
+            {"slot_id": "SLOT_BODY"      ,"joint": "SKIN"   },
+            {"slot_id": "SLOT_HEAD"      ,"joint": "HEAD"   }
+          ]
+        }
       }
     ]
   }

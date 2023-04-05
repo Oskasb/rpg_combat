@@ -52,7 +52,10 @@
           "id": "rig_pilot",
           "config":{
             "model": "file_pilot_bind",
-            "joints": [            ],
+            "joints": [
+              {"key": "SKIN"          , "bone_name": "Root_Node"         },
+              {"key": "HEAD"          , "bone_name": "Bip01_Head"         }
+            ],
             "animations":[
               {"key":"IDLE"  , "id":"file_pilot_idle"   } ,
               {"key":"RUN"   , "id":"file_pilot_run"    }
@@ -62,7 +65,10 @@
         {
           "id": "rig_barbarian",
           "config":{
-            "joints": [            ],
+            "joints": [
+              {"key": "SKIN"          , "bone_name": "Root_Node"         },
+              {"key": "HEAD"          , "bone_name": "Bip001_Head"       }
+            ],
             "animations":[
               {"key":"DEAD"           , "id":"file_barb_dead"           } ,
               {"key":"IDLE"           , "id":"file_barb_idle"           } ,
