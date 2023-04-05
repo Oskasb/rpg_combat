@@ -126,17 +126,17 @@
             {
               "id":"layout_main_text_box",
               "config": {
-                "text":   {"x":0.04, "y":0.02, "fontsize": 8.8},
+                "text":   {"x":0.04, "y":0.5, "fontsize": 5.0},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
-                "size":   {"x":0.35, "y":0.02, "z":  0.0}
+                "size":   {"x":0.25, "y":0.010, "z":  0.0}
               }
             },
             {
               "id":"layout_debug_text_box",
               "config": {
                 "text":   {"x":0.0, "y":0.0, "fontsize": 6},
-                "anchor": {"x":0.0, "y":0.0, "z":  0.0},
+                "anchor": {"x":0.0, "y":0.5, "z":  0.0},
                 "offset": {"x":0.52, "y":0.55, "z":  0.0},
                 "size":   {"x":0.34, "y":0.08,"z":  0.0}
               }

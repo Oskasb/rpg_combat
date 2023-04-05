@@ -51,15 +51,19 @@ class EncounterDynamicScenario {
 
         if (config['player']) ScenarioUtils.positionPlayer(config['player']);
 
-        let pieceInstanceCallback = function(gamePiece) {
-            this.pieces.push(gamePiece);
-            GameAPI.addPieceToWorld(gamePiece);
-            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
-        };
-
         if(config.spawn) {
+
             for (let i = 0; i < config.spawn.length; i++) {
-                GameAPI.createGamePiece(config.spawn[i], pieceInstanceCallback)
+                let spawn = config.spawn[i];
+                let pieceInstanceCallback = function(gamePiece) {
+                    pieces.push(gamePiece);
+                    gamePiece.getSpatial().setPosXYZ(spawn.pos[0],spawn.pos[1], spawn.pos[2])
+                    gamePiece.getSpatial().setRotXYZ(spawn.rot[0],spawn.rot[1], spawn.rot[2])
+                    GameAPI.addPieceToWorld(gamePiece);
+                    GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
+                };
+
+                GameAPI.createGamePiece(spawn, pieceInstanceCallback)
             }
         }
 
