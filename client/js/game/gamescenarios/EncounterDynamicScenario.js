@@ -69,7 +69,7 @@ class EncounterDynamicScenario {
                         movedCharPiece.getSpatial().setRotXYZ(char.rot[0],char.rot[1], char.rot[2])
                     }
 
-                    charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, ThreeAPI.tempVec3, 4, moveCB)
+                    charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, ThreeAPI.tempVec3, 2, moveCB)
 
 
 

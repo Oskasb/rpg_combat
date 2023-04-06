@@ -45,6 +45,7 @@ class GameCharacter {
     }
 
     dismissCharacter() {
+        this.getEquipment().removeAllItems()
         this.gamePiece.disbandGamePiece()
     }
 

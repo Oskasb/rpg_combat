@@ -79,6 +79,24 @@ class CharacterEquipment {
 
     }
 
+    detatchEquipItem = function(itemPiece) {
+        let dynamicJoint = this.getJointForItemPiece(itemPiece);
+        let itemSlot = this.getSlotForItemPiece(itemPiece);
+        itemSlot.setSlotItemPiece(null);
+        let slotId = itemPiece.getEquipSlotId();
+        let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
+
+        if (slot.joint === 'SKIN') {
+            this.model().detatchInstancedModel(itemPiece.modelInstance);
+            ThreeAPI.unregisterPrerenderCallback(itemPiece.callbacks.tickPieceEquippedItem);
+        } else {
+            dynamicJoint.detachAttachedEntity();
+            ThreeAPI.unregisterPrerenderCallback(dynamicJoint.callbacks.updateAttachedSpatial);
+        }
+
+        return itemPiece;
+    }
+
     takeEquippedItem(itemPiece) {
         if (typeof (itemPiece) === 'string') {
             itemPiece = this.getItemByItemId(itemPiece);
@@ -86,24 +104,16 @@ class CharacterEquipment {
         itemPiece = MATH.quickSplice(this.pieces ,itemPiece );
 
         if(itemPiece) {
-
-            let dynamicJoint = this.getJointForItemPiece(itemPiece);
-            let itemSlot = this.getSlotForItemPiece(itemPiece);
-            itemSlot.setSlotItemPiece(null);
-            let slotId = itemPiece.getEquipSlotId();
-
-            let slot = MATH.getFromArrayByKeyValue(this.slots, 'slot_id', slotId);
-
-            if (slot.joint === 'SKIN') {
-                this.model().detatchInstancedModel(itemPiece.modelInstance);
-                ThreeAPI.unregisterPrerenderCallback(itemPiece.callbacks.tickPieceEquippedItem);
-            } else {
-                dynamicJoint.detachAttachedEntity();
-                ThreeAPI.unregisterPrerenderCallback(dynamicJoint.callbacks.updateAttachedSpatial);
-            }
-
+            this.detatchEquipItem(itemPiece);
         }
         return itemPiece
+    }
+
+    removeAllItems = function() {
+        while (this.pieces.length) {
+            let piece = this.detatchEquipItem(this.pieces.pop());
+            piece.disbandGamePiece();
+        }
     }
 
 }
