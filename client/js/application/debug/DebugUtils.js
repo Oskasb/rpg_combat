@@ -28,7 +28,7 @@ function createDebugButton(text, onActivate, testActive, parent, x, y) {
                 opts.container = parent;
             }
 
-    evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts)
+    evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
 
 }
 

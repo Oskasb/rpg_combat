@@ -131,7 +131,7 @@ class ThreeSetup {
 
         this.tempObj.position.copy(vec3);
 
-        if (!this.frustum.containsPoint(tempObj.position)) {
+        if (!this.frustum.containsPoint(this.tempObj.position)) {
 
             store.x = -1;
             store.y = -1;

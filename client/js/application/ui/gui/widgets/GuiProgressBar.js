@@ -15,8 +15,6 @@ class GuiProgressBar {
         this.time = 0;
 
         let progressEvent = options['progress_event'];
-        this.progressEvent = ENUMS.Event[progressEvent.event]
-
 
         let updateProgress = function(event) {
             if (event.targetKey === progressEvent['target_key']) {
@@ -28,7 +26,10 @@ class GuiProgressBar {
             updateProgress:updateProgress
         }
 
-        evt.on(this.progressEvent, updateProgress);
+        if (typeof(progressEvent) === 'object') {
+            this.progressEvent = ENUMS.Event[progressEvent.event]
+            evt.on(this.progressEvent, updateProgress);
+        }
 
     };
 

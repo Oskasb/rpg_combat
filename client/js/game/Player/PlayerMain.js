@@ -67,11 +67,20 @@ class PlayerMain {
         };
 
         let registerHostile = function(event) {
-            console.log("Main Char Hostile:", event);
+            if (event.value === true) {
+                this.handleHostileAdded(event.char)
+            } else {
+                this.handleHostileRemoved(event.char)
+            }
+
         }.bind(this);
 
         let registerTarget = function(event) {
-            console.log("Main Char TargetSelected:", event);
+            if (event.value === true) {
+                this.handleTargetSelected(event.char)
+            } else {
+                this.handleTargetUnselected(event.char)
+            }
         }.bind(this);
 
         let callbacks = {
@@ -121,6 +130,22 @@ class PlayerMain {
         this.playerStash.findPositionInStash(this.tempVec);
         playerPiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
         piece.getPieceMovement().moveToTargetAtTime('stash', ThreeAPI.tempVec3, this.tempVec, time, this.callbacks.addToStash);
+    }
+
+    handleHostileAdded(hostileChar) {
+        hostileChar.activateCharStatusGui()
+    }
+
+    handleHostileRemoved(hostileChar) {
+        hostileChar.deactivateCharStatusGui()
+    }
+
+    handleTargetSelected(hostileChar) {
+        console.log("Main Char TargetSelected:", hostileChar);
+    }
+
+    handleTargetUnselected(hostileChar) {
+        console.log("Main Char Target Removed", hostileChar);
     }
 
     takeStashedPiece(piece) {

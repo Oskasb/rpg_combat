@@ -18,7 +18,8 @@ class PieceState {
             swingFraction:0.25,
             recoverFraction:0.25,
             hasteFactor:1,
-            maxActPts:5
+            maxActPts:5,
+            maxHP: 100
         }
 
         this.status = {
@@ -47,7 +48,9 @@ class PieceState {
             action:'none',
             trTime:0,
             maxAPs:0,
-            actPts:0
+            actPts:0,
+            hp:100,
+            maxHP:100
         }
 
     }

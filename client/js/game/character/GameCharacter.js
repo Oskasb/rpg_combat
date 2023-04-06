@@ -2,14 +2,16 @@ import { CharacterInventory } from "./CharacterInventory.js";
 import { CharacterEquipment } from "./CharacterEquipment.js";
 import { CharacterStatus } from "./CharacterStatus.js";
 import { CharacterMovement } from "./CharacterMovement.js";
+import { CharacterStatusGui} from "../../application/ui/gui/CharacterStatusGui.js";
 
 class GameCharacter {
     constructor(config) {
-        this.characterName = config.name;
+        this.characterName = config.status.name;
         this.gamePiece = null;
         this.config = config;
         this.characterInventory = new CharacterInventory();
         this.characterStatus = new CharacterStatus();
+        this.characterStatusGui = new CharacterStatusGui();
 
         let pickupComplete = function(itemPiece) {
             this.getInventory().addItemToInventory(itemPiece);
@@ -25,13 +27,26 @@ class GameCharacter {
     setCharacterPiece(gamePiece, equipSlotConfigId) {
         this.gamePiece = gamePiece;
         this.characterStatus.activateCharacterStatus(gamePiece);
-        gamePiece.pieceState.status['faction'] = this.config['faction'];
+
+        for (let key in this.config.status) {
+            gamePiece.setStatusValue(key, this.config.status[key]);
+        }
+
         this.characterEquipment = new CharacterEquipment(gamePiece, equipSlotConfigId);
         this.characterMovement = new CharacterMovement(gamePiece);
+        this.characterStatusGui.initStatusGui(this);
     }
 
     getCharacterPiece() {
         return this.gamePiece;
+    }
+
+    activateCharStatusGui() {
+        this.characterStatusGui.activateCharacterStatusGui()
+    }
+
+    deactivateCharStatusGui() {
+        this.characterStatusGui.deactivateCharacterStatusGui()
     }
 
     pickupItem(gamePiece, time) {

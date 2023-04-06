@@ -47,6 +47,10 @@ class GamePiece {
         return this.pieceState.status[key];
     }
 
+    setStatusValue = function(key, value) {
+        return this.pieceState.status[key] = value;
+    }
+
     applyStateEvent(event) {
         this.pieceState.handleStateEvent(event)
     }

@@ -122,7 +122,7 @@ class UiTestSetup {
                     container: container
                 };
 
-            evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts)
+            evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
 
         };
 
@@ -146,7 +146,7 @@ class UiTestSetup {
 
                 );
 
-                evt.dispatch(ENUMS.Event.BUILD_BUTTON, opts)
+                evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
 
             }.bind(this)
 

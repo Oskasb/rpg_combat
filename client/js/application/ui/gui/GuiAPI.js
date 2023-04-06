@@ -124,6 +124,7 @@ class GuiAPI {
     buildWidgetOptions = function(options) {
 
         let opts = {};
+        opts.widgetClass    = options.widgetClass || 'GuiSimpleButton';
         opts.configId       = options.configId || 'button_big_blue';
         opts.widgetCallback = options.widgetCallback || null;
         opts.onActivate     = options.onActivate || null;

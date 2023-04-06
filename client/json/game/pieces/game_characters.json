@@ -4,8 +4,12 @@
       {
         "id":"PLAYER_MAIN",
         "data":{
-          "name": "Gideon",
-          "faction": "GOOD",
+          "status": {
+            "name": "Gideon",
+            "faction": "GOOD",
+            "height": 1.8
+          },
+
           "actor":"ACTOR_FIGHTER",
           "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE", "LEGS_CHAIN"],
           "inventory": [
@@ -17,8 +21,11 @@
       {
         "id":"BARB_TRAINER",
         "data":{
-          "name": "Grong",
-          "faction": "NEUTRAL",
+          "status": {
+            "name": "Grong",
+            "faction": "NEUTRAL",
+            "height": 2.1
+          },
           "actor":"ACTOR_BARB",
           "equipment":["NINJASWORD", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES", "BELT_PLATE"]
         }
@@ -26,8 +33,11 @@
       {
         "id":"HOME_DUDE",
         "data":{
-          "name": "Eddie",
-          "faction": "NEUTRAL",
+          "status": {
+            "name": "Eddie",
+            "faction": "NEUTRAL",
+            "height": 1.75
+          },
           "actor":"ACTOR_DUDE",
           "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE"]
         }

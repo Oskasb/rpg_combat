@@ -4,7 +4,7 @@ class GuiButtonSystem {
     }
 
     initGuiButtonSystem() {
-        evt.on(ENUMS.Event.BUILD_BUTTON, this.buildButton)
+        evt.on(ENUMS.Event.BUILD_GUI_ELEMENT, this.buildButton)
     }
 
 
