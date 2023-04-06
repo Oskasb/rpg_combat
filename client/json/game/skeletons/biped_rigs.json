@@ -52,8 +52,10 @@
 
           },
           "action_maps": {
-            "IDLE_LEGS": [     {"name":"STAND",     "active": ["IDLE"]       }],
-            "IDLE_HANDS": [    {"name":"POSE",      "active": ["GD_BCK_R"]   }],
+            "LIE_DEAD":   [    {"name":"DEAD",     "active": ["DEAD"]         }],
+            "FALL_DOWN":  [    {"name":"FALL",     "active": ["FALL"]         }],
+            "IDLE_LEGS": [     {"name":"STAND",     "active": ["IDLE"]        }],
+            "IDLE_HANDS": [    {"name":"POSE",      "active": ["GD_BCK_R"]    }],
             "MOVE": [          {"name":"WALK",      "active": ["WALK"]        }],
             "MOVE_COMBAT": [   {"name":"MOVE",      "active": ["WALK_COMBAT"] }],
             "STAND_COMBAT": [  {"name":"FIGHT",     "active": ["GD_RT_FF"]    }],
@@ -79,10 +81,10 @@
             "HEAD":     { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]}
           },
           "animations": {
-            "IDLE":            {"time_scale": 0.5, "weight": 1, "fade": 0.05,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
-            "WALK":            {"time_scale": 1,   "weight": 1, "fade": 0.05,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
-            "RUN":             {"time_scale": 1,   "weight": 1, "fade": 0.05,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
-            "IDL_LO_CB":       {"time_scale": 1,   "weight": 1, "fade": 0.05,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "IDLE":            {"time_scale": 0.5, "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "WALK":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "RUN":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "IDL_LO_CB":       {"time_scale": 0.05,"weight": 1, "fade": 0.25,     "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 1},
             "IDL_HI_CB":       {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 1},
             "ATTACK_1":        {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 1 , "loop": 0 ,"clamp": 0, "sync": 1},
             "ATTACK_2":        {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 1 , "loop": 0 ,"clamp": 0, "sync": 1},
@@ -91,7 +93,7 @@
           },
           "action_maps": {
             "IDLE_LEGS": [          {"name":"IDLING",   "active": ["IDLE"]       }],
-            "IDLE_HANDS": [         {"name":"IDLING",   "active": ["IDLE"]       }],
+            "IDLE_HANDS": [         {"name":"IDLING",   "active": ["IDL_HI_CB"]       }],
             "MOVE": [          {"name":"WALK"  ,   "active": ["RUN"]        }],
             "MOVE_COMBAT": [   {"name":"RUN"   ,   "active": ["RUN"]        }],
             "LEGS_COMBAT": [   {"name":"FIGHT" ,   "active": ["IDL_LO_CB"]  }],

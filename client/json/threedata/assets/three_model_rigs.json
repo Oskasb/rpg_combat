@@ -21,7 +21,10 @@
               {"key": "FOOT_R"        , "bone_name": "Bip001_R_Foot"     }
             ],
             "animations":[
-
+              {"key":"FALL"           , "id":"file_barb_fall"           } ,
+              {"key":"DEAD"           , "id":"file_barb_dead"           } ,
+              {"key":"IDL_HI_CB"      , "id":"barb_body_idle_cbt"       } ,
+              {"key":"RUN"            , "id":"file_barb_run"            } ,
               {"key":"IDLE"           , "id":"file_idle_legs"            },
               {"key":"WALK"           , "id":"file_walk_legs"            },
               {"key":"WALK_COMBAT"    , "id":"file_walk_legs_combat"     },
@@ -44,7 +47,9 @@
               {"key":"CT_MR_R"       , "id":"file_cut_midright_rff"      },
               {"key":"GD_BCK_R"       , "id":"file_guard_back_rff"       },
               {"key":"CT_ML_R"       , "id":"file_cut_midleft_rff"       },
-              {"key":"SW_SID_R"       , "id":"file_swing_side_rff"       }
+              {"key":"SW_SID_R"       , "id":"file_swing_side_rff"       },
+              {"key":"ATTACK_1"       , "id":"file_barb_attack_1"       } ,
+              {"key":"ATTACK_2"       , "id":"file_barb_attack_2"       }
             ]
           }
         },
@@ -70,18 +75,18 @@
               {"key": "HEAD"          , "bone_name": "Bip001_Head"       }
             ],
             "animations":[
-              {"key":"DEAD"           , "id":"file_barb_dead"           } ,
+
               {"key":"IDLE"           , "id":"file_barb_idle"           } ,
 
               {"key":"IDL_LO_CB"      , "id":"barb_legs_idle_cbt"       } ,
               {"key":"IDL_HI_CB"      , "id":"barb_body_idle_cbt"       } ,
-
+              {"key":"RUN"            , "id":"file_barb_run"            } ,
               {"key":"ATTACK_1"       , "id":"file_barb_attack_1"       } ,
               {"key":"ATTACK_2"       , "id":"file_barb_attack_2"       } ,
 
               {"key":"FALL"           , "id":"file_barb_fall"           } ,
+              {"key":"DEAD"           , "id":"file_barb_dead"           }
 
-              {"key":"RUN"            , "id":"file_barb_run"            }
             ]
           }
         }

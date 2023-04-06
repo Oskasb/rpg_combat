@@ -32,7 +32,7 @@ class CharacterMovement {
         } else {
             if (this.speed) {
                 this.gamePiece.animateActionState('MOVE') // WALK_BODY
-                this.gamePiece.animateActionState('IDLE_HANDS')
+           //     this.gamePiece.animateActionState('IDLE_HANDS')
             } else {
                 //   this.gamePiece.applyPieceAnimationState('SET_RT_FF')
                 this.gamePiece.animateActionState('IDLE_LEGS')
@@ -88,7 +88,7 @@ class CharacterMovement {
 
         this.spatial.call.getMovement(this.vel)
         let speed = this.vel.lengthSq();
-        if (speed > 0.0000001) {
+        if (speed > 0.000000001) {
             this.applyMovementState(true)
         } else  {
             this.applyMovementState(false)

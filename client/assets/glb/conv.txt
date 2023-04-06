@@ -1,7 +1,40 @@
 
 FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\pilot_bind             			D:\projects\rpg_combat\client\assets\models\characters\pilot\pilot_bind.FBX       -b
 FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\idle\basic_idle        			D:\projects\rpg_combat\client\assets\models\characters\pilot\idle\basic_idle.FBX  -b
-FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\movement\run           			D:\projects\rpg_combat\client\assets\models\characters\pilot\movement\run.FBX     -b								
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\movement\run           			D:\projects\rpg_combat\client\assets\models\characters\pilot\movement\run.FBX     -b	
+
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\idle\sit           			D:\projects\rpg_combat\client\assets\models\characters\pilot\idle\sit.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\idle\sleep           			D:\projects\rpg_combat\client\assets\models\characters\pilot\idle\sleep.FBX   -b	
+	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\dance\dance_1          			D:\projects\rpg_combat\client\assets\models\characters\pilot\dance\dance_1.FBX     -b		
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\dance\dance_2         				D:\projects\rpg_combat\client\assets\models\characters\pilot\dance\dance_2.FBX     -b		
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\dance\dance_3        				D:\projects\rpg_combat\client\assets\models\characters\pilot\dance\dance_3.FBX     -b		
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\dance\dance_4         				D:\projects\rpg_combat\client\assets\models\characters\pilot\dance\dance_4.FBX     -b		
+
+
+
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_backpivot_swing 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_backpivot_swing.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_high_swing 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_high_swing.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_jump_swing 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_jump_swing.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_crossed 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_crossed.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_guard 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_guard.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_high 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_high.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_pulled 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_pulled.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_wide 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_pose_wide.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_prep 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_prep.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_slash_high 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_slash_high.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_slash_low 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_slash_low.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_stab 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\melee_stab.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\pistol_aim 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\pistol_aim.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\pistol_recoil 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\pistol_recoil.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\pushed_back 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\pushed_back.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_aim 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_aim.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_fire 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_fire.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_melee_prep 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_melee_prep.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_ready 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_ready.FBX     -b	
+FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_strike 		D:\projects\rpg_combat\client\assets\models\characters\pilot\combat\rifle_strike.FBX     -b	
+
+						
 FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\trees\tree_1                            			D:\projects\rpg_combat\client\assets\models\trees\tree_1.FBX     -b
 FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\trees\tree_2                            			D:\projects\rpg_combat\client\assets\models\trees\tree_2.FBX     -b
 FBX2glTF-windows-x64.exe -o D:\projects\rpg_combat\client\assets\models\trees\tree_3                            			D:\projects\rpg_combat\client\assets\models\trees\tree_3.FBX     -b

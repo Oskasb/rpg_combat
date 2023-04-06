@@ -81,6 +81,10 @@ class GameMain {
     }
 
     addGameUpdateCallback(callback) {
+        if (this.onUpdateCallbacks.indexOf(callback) !== -1) {
+            console.log("updateCb already added...")
+            return;
+        }
         this.onUpdateCallbacks.push(callback);
     }
 

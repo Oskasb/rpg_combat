@@ -50,6 +50,19 @@ class EncounterDynamicScenario {
 
         let characters = this.characters;
 
+        let walkCharToStart = function(charConf, character) {
+            let charPiece = character.gamePiece;
+            MATH.vec3FromArray(ThreeAPI.tempVec3, charConf.pos);
+            MATH.randomVector(ThreeAPI.tempVec3b);
+            ThreeAPI.tempVec3b.y = 0;
+            ThreeAPI.tempVec3b.multiplyScalar(4);
+            ThreeAPI.tempVec3b.add(ThreeAPI.tempVec3);
+            let moveCB = function (movedCharPiece) {
+                movedCharPiece.getSpatial().setRotXYZ(charConf.rot[0],charConf.rot[1], charConf.rot[2])
+            }
+            charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, ThreeAPI.tempVec3, 2, moveCB)
+        }
+
         if (config['characters']) {
             for (let i = 0; i < config.characters.length; i++) {
 
@@ -57,21 +70,9 @@ class EncounterDynamicScenario {
                 let charCB = function(character) {
                     characters.push(character);
                     let charPiece = character.gamePiece;
-                    GameAPI.registerGameUpdateCallback(charPiece.getOnUpdateCallback());
-                    MATH.vec3FromArray(ThreeAPI.tempVec3, char.pos);
-                    MATH.randomVector(ThreeAPI.tempVec3b);
-                    ThreeAPI.tempVec3b.y = 0;
-                    ThreeAPI.tempVec3b.multiplyScalar(2);
-                    ThreeAPI.tempVec3b.add(ThreeAPI.tempVec3);
-                    charPiece.getSpatial().setPosVec3( ThreeAPI.tempVec3b)
-                    charPiece.getSpatial().setRotXYZ(char.rot[0],char.rot[1], char.rot[2])
-                    let moveCB = function (movedCharPiece) {
-                        movedCharPiece.getSpatial().setRotXYZ(char.rot[0],char.rot[1], char.rot[2])
-                    }
-
-                    charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, ThreeAPI.tempVec3, 2, moveCB)
-
-
+                    setTimeout(function() {
+                        walkCharToStart(char, character)
+                    }, 2100*(MATH.sillyRandom(i)+0.5))
 
                 }
 
