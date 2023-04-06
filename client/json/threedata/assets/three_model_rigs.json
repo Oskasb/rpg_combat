@@ -94,8 +94,8 @@
               {"key": "SKIN"          , "bone_name": "Root_Node"         },
               {"key": "HEAD"          , "bone_name": "Bip001_Head"       },
 
-              {"key": "GRIP_L"        , "bone_name": "Bip001_L_Hand"           },
-              {"key": "GRIP_R"        , "bone_name": "Bip001_R_Hand"            },
+              {"key": "GRIP_L"        , "bone_name": "Bip001_L_Hand"     },
+              {"key": "GRIP_R"        , "bone_name": "Bip001_R_Hand"     },
               {"key": "PELVIS"        , "bone_name": "Bip001_Pelvis"     },
               {"key": "FOOT_L"        , "bone_name": "Bip001_L_Foot"     },
               {"key": "FOOT_R"        , "bone_name": "Bip001_R_Foot"     }

@@ -18,7 +18,7 @@
         "data":{
           "name": "Grong",
           "actor":"ACTOR_BARB",
-          "equipment":["NINJASWORD", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES"]
+          "equipment":["NINJASWORD", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES", "BELT_PLATE"]
         }
       },
       {
@@ -26,7 +26,7 @@
         "data":{
           "name": "Eddie",
           "actor":"ACTOR_DUDE",
-          "equipment":[]
+          "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE"]
         }
       }
     ]

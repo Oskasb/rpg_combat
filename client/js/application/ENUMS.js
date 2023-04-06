@@ -231,7 +231,8 @@ if(typeof(ENUMS) === "undefined"){
         GRIP_L:             8,
         GRIP_R:             9,
         FOOT_L:             10,
-        FOOT_R:             11
+        FOOT_R:             11,
+        SKIN_SCALED:        12
     };
 
     ENUMS.BufferType = {
