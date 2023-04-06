@@ -144,9 +144,12 @@ class ThreeSetup {
         this.tempObj.getWorldPosition(this.vector)
         this.vector.project(this.camera);
 
-        store.x = this.vector.x * 0.5;
+
+        store.x = this.vector.x * 0.83;
         store.y = this.vector.y * 0.5;
-        store.z = this.vector.z * -1;
+        store.z = this.vector.z * 0;
+
+        GameScreen.fitView(store);
 
         return store;
     };

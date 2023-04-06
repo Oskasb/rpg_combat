@@ -48,7 +48,7 @@ class CharacterStatusGui {
         this.spatial.getSpatialPosition(ThreeAPI.tempVec3);
         ThreeAPI.tempVec3.y += this.gamePiece.getStatusByKey('height');
         ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
-        ThreeAPI.tempVec3b.z = 0;
+     //   ThreeAPI.tempVec3b.z = 0;
         this.progressElement.guiWidget.setPosition(ThreeAPI.tempVec3b)
         this.progressElement.setProgress(0, this.gamePiece.getStatusByKey('maxHP'), this.gamePiece.getStatusByKey('hp'))
 

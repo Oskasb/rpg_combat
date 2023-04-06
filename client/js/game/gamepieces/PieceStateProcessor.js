@@ -107,7 +107,6 @@ class PieceStateProcessor {
 
     processPieceState(status, config) {
 
-        status.hp = Math.floor(config.maxHP*Math.random());
         status.maxHP = config.maxHP;
 
         if (status.targState === status.charState) return;

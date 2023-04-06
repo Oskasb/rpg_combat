@@ -7,7 +7,7 @@
           "status": {
             "name": "Gideon",
             "faction": "GOOD",
-            "height": 1.8
+            "height": 1.85
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -36,7 +36,7 @@
           "status": {
             "name": "Eddie",
             "faction": "NEUTRAL",
-            "height": 1.72
+            "height": 1.82
           },
           "actor":"ACTOR_DUDE",
           "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE"]
