@@ -6,6 +6,7 @@ class PieceAnimator {
     constructor() {
         this.animations = {};
         this.activeAnimations = [];
+        this.activeActions = [];
         this.removes = [];
 
         this.animationStates = [];
@@ -35,7 +36,6 @@ class PieceAnimator {
 
         let joints = model.jointMap;
         let anims = model.animMap;
-
         let joint;
 
      //   console.log(joints);
@@ -63,7 +63,7 @@ class PieceAnimator {
     setupPieceAnimations = function(rigData) {
 
         let animations = rigData.data['animations'];
-
+        this.actionMap = rigData.data['action_map'];
     //    console.log("Anim states: ", rigData);
         for (let key in animations) {
 
@@ -93,11 +93,6 @@ class PieceAnimator {
     getTimeAtKey = function() {
         return this.timeAtKey;
     };
-
-    getActionMap = function(actionType) {
-        return this.gamePiece.getRigData().readDataKey('action_maps')[actionType];
-    };
-
 
     activatePieceAnimation = function(animationKey, weight, timeScale, fadeTime) {
 

@@ -69,16 +69,22 @@ class GamePiece {
         this.modelInstance = modelInstance;
     };
 
-    applyPieceAnimationState(stateId, duration, channel, weight) {
-        this.modelInstance.animator.applyAnimationState(stateId, this.animStateMap, duration, channel, weight)
+    animateActionState(actionName) {
+        let actionMap = this.pieceActionSystem.actions[actionName][0].active;
+        let animId = MATH.getRandomArrayEntry(actionMap)
+        this.applyPieceAnimationState(animId);
     }
 
-    activatePieceAnimation = function(key, weight, timeScale, fadeTime) {
-        this.pieceAnimator.activatePieceAnimation(key, weight, timeScale, fadeTime);
+    applyPieceAnimationState(animName, duration, channel, weight) {
+        this.modelInstance.animator.applyAnimationState(animName, this.animStateMap, duration, channel, weight)
+    }
+
+    activatePieceAnimation = function(animName, weight, timeScale, fadeTime) {
+        this.pieceAnimator.activatePieceAnimation(animName, weight, timeScale, fadeTime);
     };
 
-    getPlayingAnimation = function(key) {
-        return this.pieceAnimator.isActiveAnimationKey(key);
+    getPlayingAnimation = function(animName) {
+        return this.pieceAnimator.isActiveAnimationKey(animName);
     };
 
     attachPieceSpatialToJoint = function(spatial, jointKey) {

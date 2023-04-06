@@ -1,7 +1,6 @@
 import * as ScenarioUtils from "../gameworld/ScenarioUtils.js";
 import {ConfigData} from "../../application/utils/ConfigData.js";
 
-
 class EncounterDynamicScenario {
     constructor(dataId) {
         this.dataId = dataId;
@@ -58,10 +57,21 @@ class EncounterDynamicScenario {
                 let charCB = function(character) {
                     characters.push(character);
                     let charPiece = character.gamePiece;
-                    charPiece.getSpatial().setPosXYZ(char.pos[0],char.pos[1], char.pos[2])
-                    charPiece.getSpatial().setRotXYZ(char.rot[0],char.rot[1], char.rot[2])
-                    GameAPI.addPieceToWorld(charPiece);
                     GameAPI.registerGameUpdateCallback(charPiece.getOnUpdateCallback());
+                    MATH.vec3FromArray(ThreeAPI.tempVec3, char.pos);
+                    MATH.randomVector(ThreeAPI.tempVec3b);
+                    ThreeAPI.tempVec3b.y = 0;
+                    ThreeAPI.tempVec3b.multiplyScalar(2);
+                    ThreeAPI.tempVec3b.add(ThreeAPI.tempVec3);
+                    charPiece.getSpatial().setPosVec3( ThreeAPI.tempVec3b)
+                    charPiece.getSpatial().setRotXYZ(char.rot[0],char.rot[1], char.rot[2])
+                    let moveCB = function (movedCharPiece) {
+                        movedCharPiece.getSpatial().setRotXYZ(char.rot[0],char.rot[1], char.rot[2])
+                    }
+
+                    charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, ThreeAPI.tempVec3, 4, moveCB)
+
+
 
                 }
 
@@ -78,7 +88,6 @@ class EncounterDynamicScenario {
                     pieces.push(gamePiece);
                     gamePiece.getSpatial().setPosXYZ(spawn.pos[0],spawn.pos[1], spawn.pos[2])
                     gamePiece.getSpatial().setRotXYZ(spawn.rot[0],spawn.rot[1], spawn.rot[2])
-                    GameAPI.addPieceToWorld(gamePiece);
                     GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
                 };
 

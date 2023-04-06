@@ -279,8 +279,8 @@ class InstancedModel {
             ThreeAPI.addToScene(this.obj3d);
             if (this.animator) {
                 this.animator.activateAnimator();
-                this.updateAnimationState('IDLE', 1, 0.3, 1, 0, true, false, 0)
-                this.updateAnimationState('GD_LOW_R', 1, 0.02, 0.1, 1, true, false, 0)
+           //     this.updateAnimationState('IDLE', 1, 0.3, 1, 0, true, false, 0)
+           //     this.updateAnimationState('GD_LOW_R', 1, 0.02, 0.1, 1, true, false, 0)
             }
         };
 

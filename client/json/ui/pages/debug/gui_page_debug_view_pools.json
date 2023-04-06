@@ -12,8 +12,8 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"widget_hidden_container",
                   "options": {
-                    "offset_x": 0.23,
-                    "offset_y": -0.08
+                    "offset_x": 0.18,
+                    "offset_y": -0.13
                   }
                 },
                 {

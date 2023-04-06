@@ -101,8 +101,8 @@
                   "options":{
                     "text":"MODELS",
                     "container_id":"button_container_models",
-                    "offset_x": 0.10,
-                    "offset_y": -0.08,
+                    "offset_x": 0.08,
+                    "offset_y": -0.13,
                     "dispatch":{
                       "event":"TOGGLE_GUI_PAGE",
                       "value":{
@@ -120,8 +120,8 @@
                   "options":{
                     "text":"POOLS",
                     "container_id":"button_container_pools",
-                    "offset_x": 0.25,
-                    "offset_y": -0.08,
+                    "offset_x": 0.21,
+                    "offset_y": -0.13,
                     "dispatch":{
                       "event":"TOGGLE_GUI_PAGE",
                       "value":{
@@ -139,8 +139,8 @@
                   "options":{
                     "text":"BUFFERS",
                     "container_id":"button_container_buffers",
-                    "offset_x": 0.40,
-                    "offset_y": -0.08,
+                    "offset_x": 0.34,
+                    "offset_y": -0.13,
                     "dispatch":{
                       "event":"TOGGLE_GUI_PAGE",
                       "value":{

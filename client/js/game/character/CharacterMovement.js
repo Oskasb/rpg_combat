@@ -24,19 +24,19 @@ class CharacterMovement {
 
         if (bool) {
             if (this.speed) {
-                this.gamePiece.applyPieceAnimationState('WALK_COMBAT')
+                this.gamePiece.animateActionState('MOVE_COMBAT')
             } else {
              //   this.gamePiece.applyPieceAnimationState('SET_RT_FF')
-                this.gamePiece.applyPieceAnimationState('GD_RT_FF')
+                this.gamePiece.animateActionState('STAND_COMBAT')
             }
         } else {
             if (this.speed) {
-                this.gamePiece.applyPieceAnimationState('WALK') // WALK_BODY
-                this.gamePiece.applyPieceAnimationState('GD_BCK_R')
+                this.gamePiece.animateActionState('MOVE') // WALK_BODY
+                this.gamePiece.animateActionState('IDLE_HANDS')
             } else {
                 //   this.gamePiece.applyPieceAnimationState('SET_RT_FF')
-                this.gamePiece.applyPieceAnimationState('IDLE')
-                this.gamePiece.applyPieceAnimationState('GD_BCK_R')
+                this.gamePiece.animateActionState('IDLE_LEGS')
+                this.gamePiece.animateActionState('IDLE_HANDS')
             }
         }
 
@@ -52,18 +52,18 @@ class CharacterMovement {
             ThreeAPI.tempObj.rotateY(angY);
             this.spatial.obj3d.quaternion.copy(ThreeAPI.tempObj.quaternion)
             if (!this.combatState) {
-                this.gamePiece.applyPieceAnimationState('WALK')
-                this.gamePiece.applyPieceAnimationState('GD_BCK_R')
+                this.gamePiece.animateActionState('MOVE')
+                this.gamePiece.animateActionState('IDLE_HANDS')
             } else {
-                this.gamePiece.applyPieceAnimationState('WALK_COMBAT')
+                this.gamePiece.animateActionState('MOVE_COMBAT')
             }
 
         } else {
             if (!this.combatState) {
-                this.gamePiece.applyPieceAnimationState('IDLE')
-                this.gamePiece.applyPieceAnimationState('GD_BCK_R')
+                this.gamePiece.animateActionState('IDLE_LEGS')
+                this.gamePiece.animateActionState('IDLE_HANDS')
             } else {
-                this.gamePiece.applyPieceAnimationState('GD_RT_FF')
+                this.gamePiece.animateActionState('STAND_COMBAT')
             }
 
         }

@@ -21,8 +21,8 @@
                   "options":{
                     "text":"NODES",
                     "container_id":"page_models_container",
-                    "offset_x": 0.08,
-                    "offset_y": -0.12,
+                    "offset_x": 0.07,
+                    "offset_y": -0.18,
                     "dispatch":{
                       "event":"DEBUG_VIEW_MODELS",
                       "value":{
@@ -38,8 +38,8 @@
                   "options":{
                     "text":"POINTS",
                     "container_id":"page_models_container",
-                    "offset_x": 0.08,
-                    "offset_y": -0.16,
+                    "offset_x": 0.07,
+                    "offset_y": -0.22,
                     "dispatch":{
                       "event":"DEBUG_VIEW_MODELS",
                       "value":{
@@ -55,8 +55,8 @@
                   "options":{
                     "text":"BOUNDS",
                     "container_id":"page_models_container",
-                    "offset_x": 0.08,
-                    "offset_y": -0.20,
+                    "offset_x": 0.07,
+                    "offset_y": -0.26,
                     "dispatch":{
                       "event":"DEBUG_VIEW_MODELS",
                       "value":{
