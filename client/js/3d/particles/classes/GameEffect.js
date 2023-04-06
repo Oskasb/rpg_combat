@@ -87,6 +87,9 @@ class GameEffect {
 
     setEffectQuaternion = function(quat) {
         this.quat.copy(quat);
+        for (var i = 0; i < this.activeParticles.length; i++) {
+            this.activeParticles[i].setParticleQuat(this.quat)
+        }
     };
 
     attachToJoint = function(joint) {

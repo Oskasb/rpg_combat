@@ -18,7 +18,7 @@ class GamePiece {
         this.pieceState = new PieceState(this);
 
         let tickGamePiece = function(tpf, gameTime) {
-            MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime);
+            MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime, this);
             this.pieceAnimator.updatePieceAnimations(tpf, gameTime);
             this.pieceAttacher.tickAttacher();
             this.pieceState.tickPieceState(tpf, gameTime);

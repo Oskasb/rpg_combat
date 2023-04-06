@@ -26,6 +26,15 @@
                             "sprite": [1, 1, 1, 0]
                         },
                         {
+                            "particle_id": "indicator_particle",
+                            "spawner_id": "normal_stamps_6x6",
+                            "size_min": 120,
+                            "size_max": 120,
+                            "color_min": [1, 0.25, 0, 1],
+                            "color_max": [1, 0.4, 0, 1],
+                            "sprite": [1, 1, 1, 0]
+                        },
+                        {
                             "particle_id": "particle_wisp_additive",
                             "spawner_id": "additive_particles_6x6",
                             "size_min": 65,

@@ -82,6 +82,9 @@ class ParticleEffect {
 
     setParticleQuat = function(quat) {
         this.quat.copy(quat);
+        if (this.bufferElement) {
+            this.bufferElement.setQuat(this.quat);
+        }
     };
 
     setParticleDuration = function(duration) {

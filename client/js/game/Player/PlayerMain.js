@@ -5,6 +5,7 @@ class PlayerMain {
         this.tempVec = new THREE.Vector3();
         this.playerStash = new PlayerStash();
         this.playerCharacter = null;
+        this.targetIndicators = [];
 
         let takeStashItem = function (event) {
             let item = this.playerStash.takePieceFromStash(event.item);
@@ -83,6 +84,10 @@ class PlayerMain {
             }
         }.bind(this);
 
+        let trackTarget = function(tpf, time, gamePiece) {
+            this.trackSelectedTarget(tpf, time, gamePiece);
+        }.bind(this)
+
         let callbacks = {
             handleEquip : equipItem,
             handleUnequip : unequipItem,
@@ -94,7 +99,8 @@ class PlayerMain {
             handleStateEvent:handleStateEvent,
             setPlayerState:setPlayerState,
             registerHostile:registerHostile,
-            registerTarget:registerTarget
+            registerTarget:registerTarget,
+            trackTarget:trackTarget
         }
 
         this.callbacks = callbacks;
@@ -133,19 +139,51 @@ class PlayerMain {
     }
 
     handleHostileAdded(hostileChar) {
+
         hostileChar.activateCharStatusGui()
     }
 
     handleHostileRemoved(hostileChar) {
+
         hostileChar.deactivateCharStatusGui()
     }
 
+    trackSelectedTarget(tpf, time, gamePiece) {
+
+        for (let i = 0; i < this.targetIndicators.length; i++) {
+            let efct = this.targetIndicators[i];
+            ThreeAPI.tempObj.quaternion.set(0, 1, 0, 0);
+            ThreeAPI.tempObj.lookAt(0, 1, 0.25);
+            efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+            gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
+            ThreeAPI.tempVec3.y+=0.05;
+            efct.setEffectPosition(ThreeAPI.tempVec3)
+        }
+
+    }
     handleTargetSelected(hostileChar) {
         console.log("Main Char TargetSelected:", hostileChar);
+        this.selectedHostile = hostileChar;
+        let effectCb = function(efct) {
+            this.targetIndicators.push(efct);
+            efct.activateEffectFromConfigId()
+            ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1);
+            ThreeAPI.tempObj.lookAt(0, 1, 0);
+            efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+            hostileChar.gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
+            ThreeAPI.tempVec3.y+=0.1;
+            efct.setEffectPosition(ThreeAPI.tempVec3)
+            hostileChar.gamePiece.addPieceUpdateCallback(this.callbacks.trackTarget)
+        }.bind(this);
+
+        EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_target_selection',  effectCb)
+
     }
 
     handleTargetUnselected(hostileChar) {
         console.log("Main Char Target Removed", hostileChar);
+        this.selectedHostile = null
+        hostileChar.gamePiece.removePieceUpdateCallback(this.callbacks.trackTarget)
     }
 
     takeStashedPiece(piece) {

@@ -51,7 +51,6 @@ class CharacterStatusGui {
      //   ThreeAPI.tempVec3b.z = 0;
         this.progressElement.guiWidget.setPosition(ThreeAPI.tempVec3b)
         this.progressElement.setProgress(0, this.gamePiece.getStatusByKey('maxHP'), this.gamePiece.getStatusByKey('hp'))
-
     }
 
 }
