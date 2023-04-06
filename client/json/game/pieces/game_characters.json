@@ -18,7 +18,7 @@
         "data":{
           "name": "Grong",
           "actor":"ACTOR_BARB",
-          "equipment":["HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES"]
+          "equipment":["NINJASWORD", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES"]
         }
       },
       {

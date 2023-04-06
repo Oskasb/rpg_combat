@@ -6,13 +6,14 @@
         "data":{
           "joints": {
             "SKIN":     { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
+            "HEAD":     { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
             "PROP_1":   { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
             "PROP_2":   { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
             "PROP_3":   { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
-            "HEAD":     { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
-            "PELVIS":   { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
             "HAND_L":   { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
             "HAND_R":   { "offset": [0, 0, 0], "rot": [0, 0, 1.57], "scale": [1, 1, 1]},
+
+            "PELVIS":   { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
             "GRIP_R":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
             "GRIP_L":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
             "FOOT_R":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
@@ -78,7 +79,12 @@
         "data":{
           "joints": {
             "SKIN":     { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
-            "HEAD":     { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]}
+            "HEAD":     { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
+            "PELVIS":   { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
+            "GRIP_R":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "GRIP_L":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "FOOT_R":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "FOOT_L":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]}
           },
           "animations": {
             "IDLE":            {"time_scale": 0.5, "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
@@ -111,7 +117,12 @@
         "data":{
           "joints": {
             "SKIN":     { "offset": [0, 0, 0], "rot": [0, 0, 0], "scale": [1, 1, 1]},
-            "HEAD":     { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]}
+            "HEAD":     { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
+            "PELVIS":   { "offset": [0, 0, 0], "rot": [0, 1.57, 3.14], "scale": [1, 1, 1]},
+            "GRIP_R":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "GRIP_L":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "FOOT_R":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]},
+            "FOOT_L":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]}
           },
           "animations": {
             "IDLE":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
@@ -119,7 +130,7 @@
           },
           "action_maps": {
             "IDLE_LEGS": [          {"name":"IDLING",   "active": ["IDLE"]       }],
-            "IDLE_HANDS": [         {"name":"IDLING",   "active": ["IDLE"]       }],
+            "IDLE_HANDS": [         {"name":"IDLING",   "active": []       }],
             "MOVE": [          {"name":"WALK"  ,        "active": ["RUN"]      }     ],
             "MOVE_COMBAT": [   {"name":"RUN"   ,        "active": ["RUN"]      }     ],
             "LEGS_COMBAT": [   {"name":"FIGHT" ,        "active": ["IDLE"]       }  ],

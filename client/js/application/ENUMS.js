@@ -186,11 +186,31 @@ if(typeof(ENUMS) === "undefined"){
         CT_TR_R:           28,
         CT_MR_R:           29,
         CT_ML_R:           30,
-        __:                31,
-        __:                32,
-        __:                33,
-        __:                34,
-        __:                35
+        SLEEP:             31,
+        DANCE_1:           32,
+        DANCE_2:           33,
+        DANCE_3:           34,
+        DANCE_4:           35,
+        BK_SWING:          36,
+        HI_SWING:          37,
+        JMP_SWING:         38,
+        POSE_X:            39,
+        POSE_GD:           40,
+        POSE_HI:           41,
+        POSE_PULD:         42,
+        POSE_WODE:         43,
+        MLE_PREP:          44,
+        MLE_SLSH_HI:       45,
+        MLE_SLS_LO:        46,
+        PSTL_RECL:         47,
+        PSHD_BK:           48,
+        RIFL_AIM:          49,
+        RIFL_FIRE:         50,
+        MLE_RIF_PREP:      51,
+        MLE_RIF_RDY:       52,
+        MLE_RIF_STRK:      53,
+        SIT:               54
+
     };
 
     ENUMS.ActionTypes = {

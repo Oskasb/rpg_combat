@@ -8,8 +8,8 @@
           "config":{
             "joints": [
               {"key": "SKIN"          , "bone_name": "root_node"         },
+              {"key": "GRIP_L"        , "bone_name": "grip_l"           },
               {"key": "GRIP_R"        , "bone_name": "grip_r"            },
-              {"key": "GRIP_L"        , "bone_name": "grip_l"            },
               {"key": "PROP_1"        , "bone_name": "Bip001_Prop1"      },
               {"key": "PROP_2"        , "bone_name": "Bip001_Prop2"      },
               {"key": "PROP_3"        , "bone_name": "Bip001_Prop3"      },
@@ -59,11 +59,31 @@
             "model": "file_pilot_bind",
             "joints": [
               {"key": "SKIN"          , "bone_name": "Root_Node"         },
-              {"key": "HEAD"          , "bone_name": "Bip01_Head"         }
+              {"key": "HEAD"          , "bone_name": "Bip01_Head"       },
+
+              {"key": "GRIP_L"        , "bone_name": "Bip01_L_Hand"           },
+              {"key": "GRIP_R"        , "bone_name": "Bip01_R_Hand"            },
+
+              {"key": "PELVIS"        , "bone_name": "Bip01_Pelvis"     },
+              {"key": "FOOT_L"        , "bone_name": "Bip01_L_Foot"     },
+              {"key": "FOOT_R"        , "bone_name": "Bip01_R_Foot"     }
             ],
             "animations":[
               {"key":"IDLE"  , "id":"file_pilot_idle"   } ,
-              {"key":"RUN"   , "id":"file_pilot_run"    }
+              {"key":"RUN"   , "id":"file_pilot_run"    },
+
+              {"key":"SIT"  , "id":"file_pilot_sit"                     },
+              {"key":"SLEEP"  , "id":"file_pilot_sleep"                   },
+              {"key":"DANCE_1"  , "id":"file_pilot_dance_1"                 },
+              {"key":"DANCE_2"  , "id":"file_pilot_dance_2"                 },
+              {"key":"DANCE_3"  , "id":"file_pilot_dance_3"                 },
+              {"key":"DANCE_4"  , "id":"file_pilot_dance_4"                 },
+              {"key":"BK_SWING"  , "id":"file_pilot_melee_backpivot_swing"   },
+              {"key":"HI_SWING"  , "id":"file_pilot_melee_high_swing"        },
+              {"key":"JMP_SWING"  , "id":"file_pilot_melee_jump_swing"        },
+
+              {"key":"MLE_SLSH_HI"  , "id":"file_pilot_melee_slash_high"        },
+              {"key":"MLE_SLS_LO"  , "id":"file_pilot_melee_slash_low"         }
             ]
           }
         },
@@ -72,7 +92,13 @@
           "config":{
             "joints": [
               {"key": "SKIN"          , "bone_name": "Root_Node"         },
-              {"key": "HEAD"          , "bone_name": "Bip001_Head"       }
+              {"key": "HEAD"          , "bone_name": "Bip001_Head"       },
+
+              {"key": "GRIP_L"        , "bone_name": "Bip001_L_Hand"           },
+              {"key": "GRIP_R"        , "bone_name": "Bip001_R_Hand"            },
+              {"key": "PELVIS"        , "bone_name": "Bip001_Pelvis"     },
+              {"key": "FOOT_L"        , "bone_name": "Bip001_L_Foot"     },
+              {"key": "FOOT_R"        , "bone_name": "Bip001_R_Foot"     }
             ],
             "animations":[
 

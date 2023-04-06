@@ -70,9 +70,14 @@ class GamePiece {
     };
 
     animateActionState(actionName) {
-        let actionMap = this.pieceActionSystem.actions[actionName][0].active;
-        let animId = MATH.getRandomArrayEntry(actionMap)
-        this.applyPieceAnimationState(animId);
+        let action = this.pieceActionSystem.actions[actionName][0];
+        if (action) {
+            if (action.active.length) {
+                let actionMap = this.pieceActionSystem.actions[actionName][0].active;
+                let animId = MATH.getRandomArrayEntry(actionMap)
+                this.applyPieceAnimationState(animId);
+            }
+        }
     }
 
     applyPieceAnimationState(animName, duration, channel, weight) {
