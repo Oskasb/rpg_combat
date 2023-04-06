@@ -29,6 +29,17 @@
               }
             },
             {
+              "id":"nineslice_surface_hp_bar_container",
+              "config": {
+                "padding": { "x":0.00, "y":0.00},
+                "image": {
+                  "layer": "UI_ELEMENTS_BACK",
+                  "atlas_key": "GUI_16x16",
+                  "border_thickness": {"x": 0.03, "y": 0.03}
+                }
+              }
+            },
+            {
               "id":"nineslice_surface_xp_bar_container",
               "config": {
                 "padding": { "x":0.00, "y":0.00},

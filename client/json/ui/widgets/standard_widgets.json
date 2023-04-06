@@ -8,14 +8,14 @@
           "data": [
             {
               "id":"progress_indicator_char_hp",
-              "layout":"layout_xp_bar_container",
+              "layout":"layout_hp_bar_container",
               "icon": {
-                "icon_config": "progress_horizontal_xp_bar",
-                "feedback": "feedback_icon_xp_bar_progress"
+                "icon_config": "progress_horizontal_hp_bar",
+                "feedback": "feedback_icon_hp_bar_progress"
               },
               "surface": {
-                "nineslice": "nineslice_surface_xp_bar_container",
-                "feedback": "feedback_surface_xp_bar_container"
+                "nineslice": "nineslice_surface_hp_bar_container",
+                "feedback": "feedback_surface_hp_bar_container"
               }
             },
             {
