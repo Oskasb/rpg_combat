@@ -47,7 +47,7 @@
             {
               "id":"progress_horizontal_hp_bar",
               "config": {
-                "innersize": { "x":0.93, "y":0.4, "z": 0},
+                "innersize": { "x":0.91, "y":0.4, "z": 0},
                 "offset":    { "x":0.5,  "y":0.5, "z": 0},
                 "atlas_key": "GUI_16x16",
                 "stretch": true,

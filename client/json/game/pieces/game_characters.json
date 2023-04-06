@@ -24,7 +24,7 @@
           "status": {
             "name": "Grong",
             "faction": "NEUTRAL",
-            "height": 2.2
+            "height": 2.3
           },
           "actor":"ACTOR_BARB",
           "equipment":["NINJASWORD", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES", "BELT_PLATE"]
@@ -36,7 +36,7 @@
           "status": {
             "name": "Eddie",
             "faction": "NEUTRAL",
-            "height": 1.82
+            "height": 1.88
           },
           "actor":"ACTOR_DUDE",
           "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE"]
