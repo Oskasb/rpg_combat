@@ -1,4 +1,5 @@
 import { PieceActionSystem } from "./PieceActionSystem.js";
+import { CombatSystem } from "../combat/CombatSystem.js";
 import { AnimationStateProcessor } from "../../3d/three/animations/AnimationStateProcessor.js";
 import { PieceAnimator } from "./PieceAnimator.js";
 import { PieceComposer } from "../piece_functions/PieceComposer.js";
@@ -10,6 +11,7 @@ class GamePiece {
     constructor(config, callback) {
         this.gamePieceUpdateCallbacks = [];
         this.pieceActionSystem = new PieceActionSystem();
+        this.combatSystem = new CombatSystem(this);
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
@@ -39,6 +41,10 @@ class GamePiece {
 
         new PieceComposer(this, config, compositCb)
 
+    }
+
+    getStatusByKey = function(key) {
+        return this.pieceState.status[key];
     }
 
     applyStateEvent(event) {

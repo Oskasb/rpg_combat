@@ -55,7 +55,7 @@ class GuiStatsPanel {
 
         let samplers = this.options['track_config']['samplers']
         for (let i= 0; i <  samplers.length; i++) {
-            console.log("Add Track stats", samplers[i]);
+     //       console.log("Add Track stats", samplers[i]);
             this.addTrackStatFunction(addStatSampler(samplers[i].key, '', '', samplers[i].digits));
         }
 
@@ -64,11 +64,11 @@ class GuiStatsPanel {
     };
 
     recoverGuiWidget = function() {
-        console.log("RECOVER STATS PANEL")
+ //       console.log("RECOVER STATS PANEL")
     }
     removeGuiWidget = function() {
         this.guiWidget.guiStatsPanel = null;
-        console.log("Remove Stats Panel")
+    //    console.log("Remove Stats Panel")
         GuiAPI.removeGuiUpdateCallback(this.callbacks.updateTrackedStats);
         this.guiWidget.removeChildren();
         this.guiWidget.recoverGuiWidget();
@@ -105,7 +105,7 @@ class GuiStatsPanel {
             valueWidget.initGuiWidget(null, valueReady);
         };
 
-        console.log(this.options.value_box,  this.options.key_box)
+   //     console.log(this.options.value_box,  this.options.key_box)
         let valueWidget = new GuiWidget( this.options.value_box);
         let keyWidget = new GuiWidget( this.options.key_box);
 

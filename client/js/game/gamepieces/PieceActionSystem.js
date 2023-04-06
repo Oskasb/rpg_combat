@@ -13,7 +13,6 @@ class PieceActionSystem {
             switchFrame:false
         }
     }
-
     initPieceActionSystem(gamePiece, rigData) {
         this.gamePiece = gamePiece;
         let actions = this.actions;
@@ -27,8 +26,6 @@ class PieceActionSystem {
             actions[key] = [];
             addActionGroup(actions[key], rigData['action_maps'][key])
         }
-
-        console.log("Action System ", this);
     }
 
     activateActionOfType(actionType, actionName) {

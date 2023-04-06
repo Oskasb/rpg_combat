@@ -67,6 +67,8 @@ if(typeof(ENUMS) === "undefined"){
         DEBUG_STATS_POOLS:          42,
         MAIN_CHAR_STATE_EVENT:      43,
         MAIN_CHAR_STATUS_EVENT:     44,
+        MAIN_CHAR_REGISTER_HOSTILE: 45,
+        MAIN_CHAR_REGISTER_TARGET:  46,
 
     };
 

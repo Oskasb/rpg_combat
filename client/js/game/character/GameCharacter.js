@@ -4,9 +4,10 @@ import { CharacterStatus } from "./CharacterStatus.js";
 import { CharacterMovement } from "./CharacterMovement.js";
 
 class GameCharacter {
-    constructor(name) {
-        this.characterName = name;
+    constructor(config) {
+        this.characterName = config.name;
         this.gamePiece = null;
+        this.config = config;
         this.characterInventory = new CharacterInventory();
         this.characterStatus = new CharacterStatus();
 
@@ -24,6 +25,7 @@ class GameCharacter {
     setCharacterPiece(gamePiece, equipSlotConfigId) {
         this.gamePiece = gamePiece;
         this.characterStatus.activateCharacterStatus(gamePiece);
+        gamePiece.pieceState.status['faction'] = this.config['faction'];
         this.characterEquipment = new CharacterEquipment(gamePiece, equipSlotConfigId);
         this.characterMovement = new CharacterMovement(gamePiece);
     }

@@ -66,6 +66,14 @@ class PlayerMain {
             }
         };
 
+        let registerHostile = function(event) {
+            console.log("Main Char Hostile:", event);
+        }.bind(this);
+
+        let registerTarget = function(event) {
+            console.log("Main Char TargetSelected:", event);
+        }.bind(this);
+
         let callbacks = {
             handleEquip : equipItem,
             handleUnequip : unequipItem,
@@ -75,8 +83,9 @@ class PlayerMain {
             handleTakeWorldItem : function (event) {        },
             addToStash:addToStash,
             handleStateEvent:handleStateEvent,
-            setPlayerState:setPlayerState
-
+            setPlayerState:setPlayerState,
+            registerHostile:registerHostile,
+            registerTarget:registerTarget
         }
 
         this.callbacks = callbacks;
@@ -90,6 +99,8 @@ class PlayerMain {
         evt.on(ENUMS.Event.MAIN_CHAR_STATE_EVENT, callbacks.handleStateEvent);
         evt.on(ENUMS.Event.SET_PLAYER_STATE, callbacks.setPlayerState);
 
+        evt.on(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, callbacks.registerHostile);
+        evt.on(ENUMS.Event.MAIN_CHAR_REGISTER_TARGET, callbacks.registerTarget);
     }
 
 

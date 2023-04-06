@@ -18,8 +18,8 @@ class GameAPI {
         return this.gameMain.playerMain;
     }
 
-    createGameCharacter(name) {
-        return new GameCharacter(name);
+    createGameCharacter(config) {
+        return new GameCharacter(config);
     };
 
     composeCharacter(gameCharConfigId, callback) {
@@ -27,10 +27,6 @@ class GameAPI {
     }
     createGamePiece(pieceConfig, callback) {
         return new GamePiece(pieceConfig, callback)
-    }
-
-    removeGamePiece(piece) {
-        piece.disbandGamePiece();
     }
 
     addItemToPlayerInventory(itemPiece, transitionTime) {
@@ -56,6 +52,16 @@ class GameAPI {
     getActivePlayerCharacter() {
         return this.acticePlayerCharacter;
     }
+
+    getActiveScenarioCharacters() {
+        let activeScenario = this.gameMain.activeScenario;
+        let loadedScenarios = activeScenario.dynamicScenario
+        if (loadedScenarios) {
+            if (loadedScenarios.loadedDynamicScenarios.length) {
+                return loadedScenarios.loadedDynamicScenarios[0].characters;
+            }
+        };
+    };
 
     registerGameUpdateCallback(callback) {
         this.gameMain.addGameUpdateCallback(callback);

@@ -31,6 +31,7 @@ class PieceStateProcessor {
             status.attack = 0;
         }
 
+        this.gamePiece.combatSystem.updateCombatTurnTick()
     }
 
 
@@ -114,7 +115,6 @@ class PieceStateProcessor {
         if (status.targState === ENUMS.CharacterState.IDLE) {
             if (status.charState === ENUMS.CharacterState.COMBAT) {
                 status.charState = ENUMS.CharacterState.DISENGAGING;
-
             }
         }
 

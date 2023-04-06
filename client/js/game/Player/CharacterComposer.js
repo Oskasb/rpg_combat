@@ -16,6 +16,7 @@ class CharacterComposer {
 
         let pieceId = actorConfig['game_piece'];
         let name = charConfig['name'];
+        let faction = charConfig['faction'];
         let equipSlotConfigId = actorConfig['equip_slots'];
 
         let playerReady = function(char) {
@@ -25,13 +26,13 @@ class CharacterComposer {
 
         };
 
-        this.initCharacterPiece({piece:pieceId, name:name}, equipSlotConfigId, playerReady);
+        this.initCharacterPiece({piece:pieceId, name:name, faction:faction}, equipSlotConfigId, playerReady);
     }
 
     initCharacterPiece(pieceConf, equipSlotConfigId, charReady) {
         let charCb = function (gamePiece) {
         //    console.log("Player Piece: ", gamePiece);
-            let char = GameAPI.createGameCharacter(pieceConf.name);
+            let char = GameAPI.createGameCharacter(pieceConf);
             char.setCharacterPiece(gamePiece, equipSlotConfigId);
             GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
 

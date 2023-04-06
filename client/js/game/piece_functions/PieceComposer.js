@@ -31,13 +31,13 @@ class PieceComposer {
                     let skeletonData = new ConfigData("GAME", "SKELETON_RIGS");
 
                     let onSkelRigData = function (config) {
-                        console.log("SkelRig", config);
+              //          console.log("SkelRig", config);
                     }
 
                     skeletonData.addUpdateCallback(onSkelRigData)
                     skeletonData.fetchData(skellRig);
 
-                    console.log("Rig Data: ", config)
+            //        console.log("Rig Data: ", config)
 
                     gamePiece.rigData = MATH.getFromArrayByKeyValue(config, 'id', rigDataKey);
 
