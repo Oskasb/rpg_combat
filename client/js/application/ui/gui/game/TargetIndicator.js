@@ -56,7 +56,13 @@ class TargetIndicator {
 
     removeTargetIndicatorFromPiece(gamePiece) {
         gamePiece.removePieceUpdateCallback(this.call.updateIndicator)
-        this.removeIndicatorFx();
+    }
+
+    hideIndicatorFx = function() {
+        for (let i = 0; i < this.indicators.length; i++) {
+            let efct = this.indicators[i];
+            efct.scaleEffectSize(0);
+        }
     }
 
     removeIndicatorFx = function() {

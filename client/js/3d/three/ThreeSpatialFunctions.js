@@ -1,3 +1,4 @@
+
 class ThreeSpatialFunctions {
     constructor() {
 
@@ -21,6 +22,8 @@ class ThreeSpatialFunctions {
             -((pointerPos.y-client.gameScreen.getTop()) / client.gameScreen.getHeight()- 0.5) ,
             0
         );
+
+    //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pos, color:'GREEN', size:1})
 
         matchView(pos);
 

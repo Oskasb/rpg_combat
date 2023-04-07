@@ -3,21 +3,18 @@ import { ThreeSpatialFunctions } from "../../../3d/three/ThreeSpatialFunctions.j
 
 class GameWorldPointer {
     constructor() {
-        this.worldIndocators = [];
         this.spatialFunctions = new ThreeSpatialFunctions()
     }
 
     registerNewWorldPointer = function(pointer) {
-        let indicator = this.worldIndocators.pop();
-        if (!indicator) indicator = new TargetIndicator()
-        pointer.worldSpaceIndicator = indicator;
+
     }
 
     worldPointerReleased = function(pointer) {
-        let indicator =  pointer.worldSpaceIndicator
-        this.worldIndocators.push(pointer.worldSpaceIndicator);
-        pointer.worldSpaceIndicator = null;
-        indicator.removeIndicatorFx()
+        if (pointer.worldSpaceTarget) {
+            pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
+            pointer.worldSpaceIndicator.hideIndicatorFx()
+        }
     }
     updateWorldPointer = function(pointer) {
         let indicator =  pointer.worldSpaceIndicator
@@ -30,16 +27,16 @@ class GameWorldPointer {
         let selectedTarget = null;
 
         for (let i = 0; i < pieces.length; i++) {
-            let spatial = pieces[i].getSpatial()
-            let distance = this.spatialFunctions.getHoverDistanceToPos(spatial.obj3d.position, pos);
+            pieces[i].getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
+            let distance = this.spatialFunctions.getHoverDistanceToPos(ThreeAPI.tempVec3, pos);
             if (distance < nearestDist) {
                 selectedTarget = pieces[i];
             }
         }
 
         for (let i = 0; i < characters.length; i++) {
-            let spatial = characters[i].gamePiece.getSpatial()
-            let distance = this.spatialFunctions.getHoverDistanceToPos(spatial.obj3d.position, pos);
+            characters[i].gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
+            let distance = this.spatialFunctions.getHoverDistanceToPos(ThreeAPI.tempVec3, pos);
             if (distance < nearestDist) {
                 selectedTarget = characters[i].gamePiece;
             }
@@ -47,15 +44,26 @@ class GameWorldPointer {
 
         if (selectedTarget) {
             if (pointer.worldSpaceTarget !== selectedTarget) {
+                console.log("Change selected Target")
                 if (pointer.worldSpaceTarget) {
                     indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
                 }
-                indicator.indicateTargetSeleected(selectedTarget, 'effect_character_indicator');
+                if (!pointer.worldSpaceIndicator) {
+                    indicator = new TargetIndicator()
+                    pointer.worldSpaceIndicator = indicator;
+                    indicator.indicateTargetSeleected(selectedTarget, 'effect_character_indicator');
+                }
+
             } else {
-                if (pointer.worldSpaceTarget) {
-                    indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
-                }
+                indicator.indicateSelectedTargetPiece(0.01, GameAPI.getGameTime(), selectedTarget);
             }
+
+            pointer.worldSpaceTarget = selectedTarget;
+        } else {
+            if (pointer.worldSpaceTarget) {
+                indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
+            }
+            pointer.worldSpaceTarget = null;
         }
     }
 }
