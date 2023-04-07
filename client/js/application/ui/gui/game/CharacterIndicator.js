@@ -1,6 +1,7 @@
 class CharacterIndicator {
     constructor() {
 
+        this.indicatedCharState = ENUMS.CharacterState.IDLE;
         this.indicators = [];
 
         this.colorMap = {};
@@ -17,11 +18,11 @@ class CharacterIndicator {
         }
     }
 
-    initCharacterIndicator(gamePiece) {
+    initCharacterIndicator(gamePiece, tileX, tileY) {
 
         let effectCb = function(efct) {
             this.indicators.push(efct);
-            efct.activateEffectFromConfigId()
+            efct.activateEffectFromConfigId(true)
             ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1);
             ThreeAPI.tempObj.lookAt(0, 1, 0);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
@@ -30,6 +31,10 @@ class CharacterIndicator {
             efct.setEffectPosition(ThreeAPI.tempVec3)
             ThreeAPI.tempObj.lookAt(0, 1, 0);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+
+            if (typeof (tileX) === 'number' && typeof(tileY) === 'number') {
+                efct.setEffectSpriteXY(tileX, tileY);
+            }
 
             gamePiece.addPieceUpdateCallback(this.call.updateIndicator)
         }.bind(this);
@@ -46,6 +51,20 @@ class CharacterIndicator {
             gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
             ThreeAPI.tempVec3.y+=0.05;
             efct.setEffectPosition(ThreeAPI.tempVec3)
+
+            let charState = gamePiece.getStatusByKey('charState')
+            if (this.indicatedCharState !== charState) {
+                if (charState === ENUMS.CharacterState.COMBAT) {
+                    efct.setEffectSpriteXY(0, 6);
+                } else if (charState === ENUMS.CharacterState.ENGAGING) {
+                    efct.setEffectSpriteXY(0, 7);
+                } else if (charState === ENUMS.CharacterState.DISENGAGING) {
+                    efct.setEffectSpriteXY(0, 5);
+                } else {
+                    efct.setEffectSpriteXY(0, 4);
+                }
+                this.indicatedCharState = charState
+            }
 
         }
 

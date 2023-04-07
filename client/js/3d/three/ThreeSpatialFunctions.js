@@ -1,10 +1,12 @@
-
 class ThreeSpatialFunctions {
     constructor() {
 
         this.calcVec = new THREE.Vector3();
         this.calcVec2 = new THREE.Vector3();
         this.pointerFrustumPos = new THREE.Vector3();
+        this.frustumCoordinates = new THREE.Vector3(0, 0, 0);
+        this.hoverCoords = new THREE.Vector3(0, 0, 0);
+        this.distsq;
         this.sizeFactor = 0.51;
 
     }
@@ -23,11 +25,11 @@ class ThreeSpatialFunctions {
             0
         );
 
-    //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pos, color:'GREEN', size:1})
-
         matchView(pos);
 
-        return pos.distanceToSquared(this.pointerFrustumPos);
+        this.distsq = pos.distanceToSquared(this.pointerFrustumPos);
+
+        return this.distsq;
 
     };
 

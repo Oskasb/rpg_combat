@@ -71,26 +71,26 @@ class PlayerMain {
 
         let registerHostile = function(event) {
             if (event.value === true) {
-                this.handleHostileAdded(event.char)
+                this.handleHostileAdded(event.piece)
             } else {
-                this.handleHostileRemoved(event.char)
+                this.handleHostileRemoved(event.piece)
             }
 
         }.bind(this);
 
         let registerTargetEngaged = function(event) {
             if (event.value === true) {
-                this.handleTargetEngaged(event.char)
+                this.handleTargetEngaged(event.piece)
             } else {
-                this.handleTargetDisengaged(event.char)
+                this.handleTargetDisengaged(event.piece)
             }
         }.bind(this);
 
         let selectTarget = function(event) {
             if (event.value === true) {
-                this.handleTargetSelected(event.char)
+                this.handleTargetSelected(event.piece)
             } else {
-                this.handleTargetUnselected(event.char)
+                this.handleTargetUnselected(event.piece)
             }
         }.bind(this)
 
@@ -122,6 +122,7 @@ class PlayerMain {
         evt.on(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, callbacks.registerHostile);
         evt.on(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, callbacks.selectTarget);
         evt.on(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, callbacks.registerTargetEngaged);
+
     }
 
 
@@ -152,20 +153,31 @@ class PlayerMain {
         hostileChar.deactivateCharStatusGui()
     }
 
-    handleTargetSelected(hostileChar) {
-        this.selectionIndicator.indicateTargetSeleected(hostileChar.gamePiece, 'effect_character_indicator');
+    handleTargetSelected(gamePiece) {
+        let oldTarget = this.playerCharacter.gamePiece.getStatusByKey('selectedTarget');
+        if (oldTarget) {
+            this.handleTargetUnselected(oldTarget);
+        }
+        this.playerCharacter.gamePiece.setStatusValue('selectedTarget', gamePiece);
+        this.selectionIndicator.indicateTargetSeleected(gamePiece, 'effect_character_indicator', 0, 4);
     }
 
-    handleTargetUnselected(hostileChar) {
-        this.selectionIndicator.removeTargetIndicatorFromPiece(hostileChar.gamePiece)
+    handleTargetUnselected(gamePiece) {
+        this.selectionIndicator.removeTargetIndicatorFromPiece(gamePiece)
+        this.selectionIndicator.hideIndicatorFx()
     }
 
-    handleTargetEngaged(hostileChar) {
-        this.targetIndicator.indicateTargetSeleected(hostileChar.gamePiece, 'effect_target_indicator');
+    handleTargetEngaged(gamePiece) {
+        let oldTarget = this.playerCharacter.gamePiece.getStatusByKey('combatTarget');
+        if (oldTarget) {
+            this.handleTargetDisengaged(oldTarget);
+        }
+        this.targetIndicator.indicateTargetSeleected(gamePiece, 'effect_character_indicator', 0, 5);
     }
 
-    handleTargetDisengaged(hostileChar) {
-        this.targetIndicator.removeTargetIndicatorFromPiece(hostileChar.gamePiece)
+    handleTargetDisengaged(gamePiece) {
+        this.targetIndicator.removeTargetIndicatorFromPiece(gamePiece)
+        this.selectionIndicator.hideIndicatorFx()
     }
 
     takeStashedPiece(piece) {

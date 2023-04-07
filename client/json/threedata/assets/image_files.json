@@ -13,7 +13,7 @@
         {"id": "img_glass_surface"       , "config": { "url":"./client/assets/images/textures/glass_surface.png"     }},
         {"id": "img_ref_sphere"          , "config": { "url":"./client/assets/images/textures/ref_sphere.png"        }},
         {"id": "img_data_texture"        , "config": { "url":"./client/assets/images/effects/data_texture.png"       }},
-        {"id": "img_particle_atlas_6x6"  , "config": { "url":"./client/assets/images/effects/particle_atlas_6x6.png" }},
+        {"id": "img_particle_atlas_8x8"  , "config": { "url":"./client/assets/images/effects/particle_atlas_8x8.png" }},
         {"id": "img_gui_atlas_16x16"     , "config": { "url":"./client/assets/images/effects/gui_atlas_16x16.png"    }},
         {"id": "img_fontatlas"           , "config": { "url":"./client/assets/images/effects/fontatlas_sego.png"     }},
         {"id": "img_terrain_darkrock"    , "config": { "url":"./client/assets/images/textures/tiles/darkrock.png"    }},

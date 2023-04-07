@@ -71,6 +71,7 @@ if(typeof(ENUMS) === "undefined"){
         MAIN_CHAR_SELECT_TARGET:  46,
         MAIN_CHAR_ENGAGE_TARGET:  47,
 
+
     };
 
     ENUMS.Args = {

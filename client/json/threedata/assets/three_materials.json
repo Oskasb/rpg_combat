@@ -115,7 +115,7 @@
           "config":{
             "settings": "mat_settings_particle_stamp",
             "textures":[
-              {"key":"map"           , "id":"particle_atlas_6x6"  },
+              {"key":"map"           , "id":"particle_atlas_8x8"  },
               {"key":"data_texture"  , "id":"data_texture"        }
             ]
           }
@@ -125,7 +125,7 @@
           "config":{
             "settings": "mat_settings_particle_stamp_additive",
             "textures":[
-              {"key":"map"           , "id":"particle_atlas_6x6"  },
+              {"key":"map"           , "id":"particle_atlas_8x8"  },
               {"key":"data_texture"  , "id":"data_texture"        }
             ]
           }
@@ -135,7 +135,7 @@
           "config":{
             "settings": "mat_settings_instancing_normal",
             "textures":[
-              {"key":"map"           , "id":"particle_atlas_6x6"  },
+              {"key":"map"           , "id":"particle_atlas_8x8"  },
               {"key":"data_texture"  , "id":"data_texture"        }
             ]
           }
@@ -145,7 +145,7 @@
           "config":{
             "settings": "mat_settings_particle_additive",
             "textures":[
-              {"key":"map"           , "id":"particle_atlas_6x6"  },
+              {"key":"map"           , "id":"particle_atlas_8x8"  },
               {"key":"data_texture"  , "id":"data_texture"        }
             ]
           }

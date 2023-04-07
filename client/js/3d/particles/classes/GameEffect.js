@@ -70,8 +70,8 @@ class GameEffect {
         EffectAPI.buildEffect(this.callbacks.addEffectParticle)
     };
 
-    activateEffectFromConfigId = function() {
-        this.callbacks.activateEffect(this);
+    activateEffectFromConfigId = function(isPermanent) {
+        this.callbacks.activateEffect(this, isPermanent);
     };
 
     setEffectPosition = function(pos) {
@@ -99,8 +99,14 @@ class GameEffect {
 
     setEffectQuaternion = function(quat) {
         this.quat.copy(quat);
-        for (var i = 0; i < this.activeParticles.length; i++) {
+        for (let i = 0; i < this.activeParticles.length; i++) {
             this.activeParticles[i].setParticleQuat(this.quat)
+        }
+    };
+
+    setEffectSpriteXY = function(x, y) {
+        for (let i = 0; i < this.activeParticles.length; i++) {
+            this.activeParticles[i].setParticleTileXY(x, y)
         }
     };
 

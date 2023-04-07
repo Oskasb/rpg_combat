@@ -33,7 +33,7 @@ class GuiDebug {
 
         this.pos.x = x;
         this.pos.y = y;
-
+        this.pos.z = -1;
         elem.setPositionVec3(this.pos);
 
         elem.setAttackTime(0.0);

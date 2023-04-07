@@ -10,6 +10,10 @@ class DebugLines {
         var tempVec2 = new THREE.Vector3();
         var color;
 
+            let renderCall = function() {
+                this.updateDebugLines()
+            }.bind(this)
+
         var drawLine = function(args) {
             tempVec1.set(args[0], args[1], args[2]);
             tempVec2.set(args[3], args[4], args[5]);
@@ -21,6 +25,8 @@ class DebugLines {
             color = lineDenderSystem.color(event.color);
             lineDenderSystem.drawCross(event.pos, color, event.size)
         };
+
+
 
         var drawBox = function(args) {
             tempVec1.set(args[0], args[1], args[2]);

@@ -1,5 +1,5 @@
 import * as SpatialUtils from "../../application/utils/SpatialUtils.js";
-import {getCharactersInRange} from "../../application/utils/SpatialUtils.js";
+
 class CombatSystem {
     constructor(gamePiece) {
         this.gamePiece = gamePiece;
@@ -8,24 +8,46 @@ class CombatSystem {
         this.currentTarget = null;
         this.selectedTarget = null;
         this.targetEvent = {
-            char:null,
+            piece:null,
             value:false
         }
-
-
-
     }
 
     determineTurnCombatTarget() {
-        let target = SpatialUtils.getNearestCharacter(this.gamePiece.getSpatial(), this.knownHostiles)
-        if (target === this.currentTarget) return;
-        this.setCombatTarget(target);
+        let selectedTargetPiece = this.gamePiece.getStatusByKey('selectedTarget');
+        if (selectedTargetPiece) {
+            this.selectedTarget = selectedTargetPiece
+            if (selectedTargetPiece === this.currentTarget) return;
+            this.setCombatTarget(selectedTargetPiece);
+        }
     }
 
-    setCombatTarget(hostileChar) {
-        this.currentTarget = hostileChar;
+    applyTargetSelection(status, selectedTarget) {
+        if (!selectedTarget) {
+        //    status.charState = ENUMS.CharacterState.DISENGAGING;
+        } else if (selectedTarget !== this.selectedTarget) {
+            let faction = selectedTarget.getStatusByKey('faction')
+            if (faction === 'NEUTRAL' || "EVIL") {
+                status.charState = ENUMS.CharacterState.ENGAGING
+            }
+        }
+    }
+
+    setCombatTarget(selectedTargetPiece) {
+        this.currentTarget = selectedTargetPiece;
+        this.gamePiece.setStatusValue('charState', ENUMS.CharacterState.COMBAT);
+        this.gamePiece.setStatusValue('combatTarget', selectedTargetPiece);
+
+        let stateEvent = {
+            state:'COMBAT',
+            type:'FAST',
+            target:selectedTargetPiece
+        }
+
+        this.gamePiece.pieceState.handleStateEvent(stateEvent)
+
         if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
-            this.targetEvent.char = hostileChar;
+            this.targetEvent.piece = selectedTargetPiece;
             this.targetEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)
         }
@@ -33,7 +55,7 @@ class CombatSystem {
 
     registerNewKnownHostile = function(hostileChar) {
         if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
-            this.targetEvent.char = hostileChar;
+            this.targetEvent.piece = hostileChar;
             this.targetEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE,  this.targetEvent)
         }
@@ -42,7 +64,7 @@ class CombatSystem {
 
     unregisterKnownHostile = function(hostileChar) {
         if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
-            this.targetEvent.char = hostileChar;
+            this.targetEvent.piece = hostileChar;
             this.targetEvent.value = false;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, this.targetEvent)
         }
@@ -82,8 +104,17 @@ class CombatSystem {
 
         this.determineCombatThreat();
 
-        if (status.charState === ENUMS.CharacterState.COMBAT || ENUMS.CharacterState.ENGAGING) {
-            this.determineTurnCombatTarget();
+        let combatTarget = this.gamePiece.getStatusByKey('combatTarget');
+
+        if (combatTarget) {
+
+        } else {
+            let selectedTargetPiece = this.gamePiece.getStatusByKey('selectedTarget');
+            this.applyTargetSelection(status, selectedTargetPiece);
+
+            if (status.charState === ENUMS.CharacterState.COMBAT || ENUMS.CharacterState.ENGAGING) {
+                this.determineTurnCombatTarget();
+            }
         }
     }
 

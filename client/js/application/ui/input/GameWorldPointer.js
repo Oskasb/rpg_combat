@@ -4,6 +4,10 @@ import { ThreeSpatialFunctions } from "../../../3d/three/ThreeSpatialFunctions.j
 class GameWorldPointer {
     constructor() {
         this.spatialFunctions = new ThreeSpatialFunctions()
+        this.selectionEvent = {
+            piece:null,
+            value:false
+        }
     }
 
     registerNewWorldPointer = function(pointer) {
@@ -13,7 +17,12 @@ class GameWorldPointer {
     worldPointerReleased = function(pointer) {
         if (pointer.worldSpaceTarget) {
             pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
-            pointer.worldSpaceIndicator.hideIndicatorFx()
+            pointer.worldSpaceIndicator.hideIndicatorFx();
+            this.selectionEvent.piece = pointer.worldSpaceTarget;
+            this.selectionEvent.value = true;
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
+        } else {
+
         }
     }
     updateWorldPointer = function(pointer) {
@@ -26,20 +35,29 @@ class GameWorldPointer {
         let nearestDist = 99999;
         let selectedTarget = null;
 
+        let maxSelectRange = 0.15;
+        let screenDistance = function(piecePos, piece) {
+            ThreeAPI.toScreenPosition(piecePos, ThreeAPI.tempVec3b)
+            ThreeAPI.tempVec3b.sub(pos)
+            let distance = ThreeAPI.tempVec3b.length();
+            if (distance < maxSelectRange) {
+                if (distance < nearestDist) {
+                    selectedTarget = piece;
+                    nearestDist = distance;
+                }
+            }
+        }
+
         for (let i = 0; i < pieces.length; i++) {
             pieces[i].getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
-            let distance = this.spatialFunctions.getHoverDistanceToPos(ThreeAPI.tempVec3, pos);
-            if (distance < nearestDist) {
-                selectedTarget = pieces[i];
-            }
+            screenDistance(ThreeAPI.tempVec3,  pieces[i]);
+
         }
 
         for (let i = 0; i < characters.length; i++) {
             characters[i].gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
-            let distance = this.spatialFunctions.getHoverDistanceToPos(ThreeAPI.tempVec3, pos);
-            if (distance < nearestDist) {
-                selectedTarget = characters[i].gamePiece;
-            }
+            ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
+            screenDistance(ThreeAPI.tempVec3, characters[i].gamePiece);
         }
 
         if (selectedTarget) {
@@ -51,17 +69,22 @@ class GameWorldPointer {
                 if (!pointer.worldSpaceIndicator) {
                     indicator = new TargetIndicator()
                     pointer.worldSpaceIndicator = indicator;
-                    indicator.indicateTargetSeleected(selectedTarget, 'effect_character_indicator');
+                    indicator.indicateTargetSeleected(selectedTarget, 'effect_character_indicator', 1, 3);
                 }
 
             } else {
-                indicator.indicateSelectedTargetPiece(0.01, GameAPI.getGameTime(), selectedTarget);
+                indicator.indicateSelectedTargetPiece(0.01, GameAPI.getGameTime(), selectedTarget, 1.2, 0.8);
             }
 
             pointer.worldSpaceTarget = selectedTarget;
         } else {
             if (pointer.worldSpaceTarget) {
                 indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
+                pointer.worldSpaceIndicator.hideIndicatorFx()
+                this.selectionEvent.piece = pointer.worldSpaceTarget;
+                this.selectionEvent.value = false;
+                evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, this.selectionEvent);
+
             }
             pointer.worldSpaceTarget = null;
         }

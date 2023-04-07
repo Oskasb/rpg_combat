@@ -22,8 +22,8 @@ class EffectBuilder {
                 _this.recoverEffectOfClass(effectOfClass)
             };
 
-            let activateEffect = function(effectOfClass) {
-                _this.activateEffectOfClass(_this.configs[effectOfClass.getEffectId()], effectOfClass)
+            let activateEffect = function(effectOfClass, isPermanent) {
+                _this.activateEffectOfClass(_this.configs[effectOfClass.getEffectId()], effectOfClass, isPermanent)
             };
 
             this.callbacks = {
@@ -64,14 +64,14 @@ class EffectBuilder {
 
         //    console.log("Apply data", data);
 
-            var createEffect = function(key, cb) {
+            let createEffect = function(key, cb) {
                 let fx = new this.effectClass[this.configs[key].effect_class](this.callbacks.activateEffect, this.callbacks.recoverEffect);
                 fx.setEffectId(key);
 
                 cb(fx)
             }.bind(this);
 
-            for (var key in data.data) {
+            for (let key in data.data) {
 
 
                 if (this.activeEffects[key]) {
@@ -97,19 +97,21 @@ class EffectBuilder {
         };
 
 
-        activateEffectOfClass = function(config, effectOfClass) {
+        activateEffectOfClass = function(config, effectOfClass, isPermanent) {
 
             let cfgId = effectOfClass.getEffectId();
 
             let maxActive = this.configs[cfgId].max_active || 100;
 
 
+            if (!isPermanent) {
+                this.activeEffects[cfgId].push(effectOfClass);
+            }
 
-            this.activeEffects[cfgId].push(effectOfClass);
             effectOfClass.setConfig(config);
 
             let particles = config.particles;
-            for (var i = 0; i < particles.length; i++) {
+            for (let i = 0; i < particles.length; i++) {
                 this.callbacks.addParticleGroup(effectOfClass, particles[i])
             }
 
@@ -123,7 +125,7 @@ class EffectBuilder {
         addParticleGroup = function(effectOfClass, particleGroup) {
             let count = Math.round(MATH.randomBetween(particleGroup.count[0], particleGroup.count[1]));
 
-            for (var i = 0; i < count; i++) {
+            for (let i = 0; i < count; i++) {
                 effectOfClass.attachParticleId(particleGroup.id);
                 effectOfClass.activateEffectParticle()
             }

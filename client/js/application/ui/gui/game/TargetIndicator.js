@@ -18,7 +18,7 @@ class TargetIndicator {
         }
     }
 
-    indicateTargetSeleected(gamePiece, indicatorFx) {
+    indicateTargetSeleected(gamePiece, indicatorFx, tileX, tileY) {
 
         let effectCb = function(efct) {
             this.indicators.push(efct);
@@ -32,23 +32,35 @@ class TargetIndicator {
             ThreeAPI.tempObj.lookAt(0, 1, 0);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
 
+            if (typeof (tileX) === 'number' && typeof(tileY) === 'number') {
+                efct.setEffectSpriteXY(tileX, tileY);
+            }
+
             gamePiece.addPieceUpdateCallback(this.call.updateIndicator)
         }.bind(this);
 
         EffectAPI.buildEffectClassByConfigId('additive_stamps_6x6', indicatorFx,  effectCb)
     }
 
-    indicateSelectedTargetPiece(tpf, time, gamePiece) {
+    indicateSelectedTargetPiece(tpf, time, gamePiece, scale, spinSpeed) {
 
         for (let i = 0; i < this.indicators.length; i++) {
             let efct = this.indicators[i];
             let faction = gamePiece.getStatusByKey('faction') || 'ITEM'
             efct.setEffectColorRGBA(this.colorMap[faction]);
             let size = gamePiece.getStatusByKey('size') || 0.5;
+            if (scale) size*=scale;
             efct.scaleEffectSize(  size+ Math.sin(time*2) * 0.05 - 0.05);
             gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
             ThreeAPI.tempVec3.y+=0.05;
             efct.setEffectPosition(ThreeAPI.tempVec3)
+
+            if (spinSpeed) {
+                ThreeAPI.tempObj.lookAt(0, 1, 0);
+                ThreeAPI.tempObj.rotateZ(time*spinSpeed);
+                efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+            }
+
 
         }
 

@@ -88,6 +88,15 @@ class ParticleEffect {
         }
     };
 
+    setParticleTileXY = function(x, y) {
+        if (this.bufferElement) {
+            this.bufferElement.sprite.x = x;
+            this.bufferElement.sprite.y = y;
+            this.bufferElement.setSprite(this.bufferElement.sprite);
+        }
+    };
+
+
     setParticleNormal = function(normal) {
         this.normal.copy(normal);
     };
