@@ -7,7 +7,8 @@
           "status": {
             "name": "Gideon",
             "faction": "GOOD",
-            "height": 1.85
+            "height": 1.85,
+            "size": 1
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -24,7 +25,8 @@
           "status": {
             "name": "Grong",
             "faction": "NEUTRAL",
-            "height": 2.3
+            "height": 2.3,
+            "size": 1.3
           },
           "actor":"ACTOR_BARB",
           "equipment":["NINJASWORD", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES", "BELT_PLATE"]
@@ -36,7 +38,8 @@
           "status": {
             "name": "Eddie",
             "faction": "NEUTRAL",
-            "height": 1.88
+            "height": 1.88,
+            "size": 1
           },
           "actor":"ACTOR_DUDE",
           "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE"]

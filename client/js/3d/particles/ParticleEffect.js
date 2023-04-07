@@ -68,6 +68,8 @@ class ParticleEffect {
         return this.callbacks.getSpawnerId();
     };
 
+
+
     setParticlePos = function(pos) {
         this.pos.copy(pos);
         this.pos.add(this.offset);
@@ -76,8 +78,24 @@ class ParticleEffect {
         }
     };
 
+    setParticleColor = function(rgba) {
+        this.colorRgba.r = rgba.r;
+        this.colorRgba.g = rgba.g;
+        this.colorRgba.b = rgba.b;
+        this.colorRgba.a = rgba.a;
+        if (this.bufferElement) {
+            this.bufferElement.setColorRGBA(this.colorRgba);
+        }
+    };
+
     setParticleNormal = function(normal) {
         this.normal.copy(normal);
+    };
+
+    scaleParticleSize = function(scale) {
+        if (this.bufferElement) {
+            this.bufferElement.scaleUniform(this.size * scale);
+        }
     };
 
     setParticleQuat = function(quat) {

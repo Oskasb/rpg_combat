@@ -1207,9 +1207,7 @@
           "varying float vFragDepth;",
           "uniform float alphaTest;",
 
-
           "void main(){",
-
 
           "float startTime = lifecycle.x;",
           "float endTime = lifecycle.z;",
@@ -1232,7 +1230,6 @@
 
           "float zHideFactor = floor(decayProg);",
 
-
           "vec3 originalVpos = position;",
 
           "originalVpos.y /= sprite.z;",
@@ -1243,7 +1240,6 @@
           "vPosition = vcV * (2.0 * orientation.w) + (cross(orientation.xyz, vcV) * 2.0 + vPosition);",
 
           "vec2 tileScale = 1.0/tiles;",
-
 
           "vec2 tileOffset = vec2(sprite.x * tileScale.x, (sprite.y-sprite.w) * tileScale.y / sprite.z);",
 

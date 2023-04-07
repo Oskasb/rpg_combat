@@ -205,21 +205,26 @@
             "shader": "RawShaderMaterial",
             "properties": {
               "program": "STAMP_INSTANCING",
-                "blending": "AdditiveBlending",
-                "global_uniforms":{
-                  "fogDensity": { "value": 0.00025 },
-                  "fogColor": { "value": {"r":1, "g":1, "b":1}},
-                  "ambientLightColor": { "value": {"r":1, "g":1, "b":1}},
-                  "sunLightColor": { "value": {"r":1, "g":1, "b":1}},
-                  "sunLightDirection": { "value": {"x":1, "y":1, "z":1}}
-                },
-                "side": "DoubleSide",
-                "settings": {
-                  "depthTest": true,
-                  "alphaTest": 0.05,
-                  "transparent": false,
-                  "depthWrite": false,
-                  "premultipliedAlpha": true
+              "blending": "CustomBlending",
+              "customBlending": {
+                "blendEquation": "AddEquation",
+                "blendSrc": "SrcAlphaFactor",
+                "blendDst": "OneFactor"
+              },
+              "global_uniforms":{
+                "fogDensity": { "value": 0.00025 },
+                "fogColor": { "value": {"r":1, "g":1, "b":1}},
+                "ambientLightColor": { "value": {"r":1, "g":1, "b":1}},
+                "sunLightColor": { "value": {"r":1, "g":1, "b":1}},
+                "sunLightDirection": { "value": {"x":1, "y":1, "z":1}}
+              },
+              "side": "DoubleSide",
+              "settings": {
+                "depthTest": true,
+                "alphaTest": 0.01,
+                "transparent": false,
+                "depthWrite": false,
+                "premultipliedAlpha": true
               }
             }
           }

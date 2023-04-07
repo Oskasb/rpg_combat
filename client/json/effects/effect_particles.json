@@ -30,9 +30,9 @@
                             "spawner_id": "additive_stamps_6x6",
                             "size_min": 120,
                             "size_max": 120,
-                            "color_min": [1, 0.25, 0, 1],
-                            "color_max": [1, 0.4, 0, 1],
-                            "sprite": [1, 1, 1, 0]
+                            "color_min": [0, 1, 0, 0.5],
+                            "color_max": [0, 1, 0, 0.5],
+                            "sprite": [0, 4, 1, 0]
                         },
                         {
                             "particle_id": "particle_wisp_additive",

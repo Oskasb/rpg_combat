@@ -76,8 +76,20 @@ class GameEffect {
 
     setEffectPosition = function(pos) {
         this.pos.copy(pos);
-        for (var i = 0; i < this.activeParticles.length; i++) {
+        for (let i = 0; i < this.activeParticles.length; i++) {
             this.activeParticles[i].setParticlePos(this.pos)
+        }
+    };
+
+    scaleEffectSize = function(scale) {
+        for (let i = 0; i < this.activeParticles.length; i++) {
+            this.activeParticles[i].scaleParticleSize(scale)
+        }
+    };
+
+    setEffectColorRGBA = function(rgba) {
+        for (let i = 0; i < this.activeParticles.length; i++) {
+            this.activeParticles[i].setParticleColor(rgba)
         }
     };
 
