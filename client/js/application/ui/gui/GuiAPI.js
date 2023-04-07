@@ -262,10 +262,12 @@ class GuiAPI {
     };
 
     registerWorldSpacePointer = function(pointer) {
+        GameAPI.handleWorldSpacePointerUpdate(pointer, true, false)
         this.worldSpacePointers.push(pointer);
     };
 
     unregisterWorldSpacePointer = function(pointer) {
+        GameAPI.handleWorldSpacePointerUpdate(pointer, false, true)
         MATH.quickSplice(this.worldSpacePointers, pointer)
     };
 
@@ -281,10 +283,9 @@ class GuiAPI {
 
     updateGui = function(tpf, time) {
 
-    //    let dymmy1 = function(textWidget) {
-    //        textWidget.updateTextContent("MOO "+tpf)
-         //   printWidgetText("MOO "+tpf, 7)
-    //    };
+        for (let i = 0; i < this.worldSpacePointers.length; i++) {
+            GameAPI.handleWorldSpacePointerUpdate(this.worldSpacePointers[i])
+        };
 
         this.guiDebug.updateDebugElements();
         this.instantiator.updateInstantiatorBuffers(time);

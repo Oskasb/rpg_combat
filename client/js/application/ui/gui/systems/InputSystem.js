@@ -118,6 +118,8 @@ class InputSystem {
                             currentPressedElement.notifyInputOutside(inputIndex);
                             guiPointer.setPointerInteractiveElement(null);
                             guiPointer.setPointerHovering(true)
+                        } else {
+
                         }
                     } else {
                         interactiveElem.notifyHoverStateOn(inputIndex);

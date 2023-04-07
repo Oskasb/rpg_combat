@@ -1,11 +1,13 @@
 import { PlayerStash } from "./PlayerStash.js";
+import { TargetIndicator } from "../../application/ui/gui/game/TargetIndicator.js";
 
 class PlayerMain {
     constructor() {
         this.tempVec = new THREE.Vector3();
         this.playerStash = new PlayerStash();
         this.playerCharacter = null;
-        this.targetIndicators = [];
+        this.selectionIndicator = new TargetIndicator();
+        this.targetIndicator = new TargetIndicator();
 
         let takeStashItem = function (event) {
             let item = this.playerStash.takePieceFromStash(event.item);
@@ -76,16 +78,20 @@ class PlayerMain {
 
         }.bind(this);
 
-        let registerTarget = function(event) {
+        let registerTargetEngaged = function(event) {
+            if (event.value === true) {
+                this.handleTargetEngaged(event.char)
+            } else {
+                this.handleTargetDisengaged(event.char)
+            }
+        }.bind(this);
+
+        let selectTarget = function(event) {
             if (event.value === true) {
                 this.handleTargetSelected(event.char)
             } else {
                 this.handleTargetUnselected(event.char)
             }
-        }.bind(this);
-
-        let trackTarget = function(tpf, time, gamePiece) {
-            this.trackSelectedTarget(tpf, time, gamePiece);
         }.bind(this)
 
         let callbacks = {
@@ -99,8 +105,8 @@ class PlayerMain {
             handleStateEvent:handleStateEvent,
             setPlayerState:setPlayerState,
             registerHostile:registerHostile,
-            registerTarget:registerTarget,
-            trackTarget:trackTarget
+            registerTargetEngaged:registerTargetEngaged,
+            selectTarget:selectTarget
         }
 
         this.callbacks = callbacks;
@@ -113,9 +119,9 @@ class PlayerMain {
         evt.on(ENUMS.Event.TAKE_WORLD_ITEM, callbacks.handleTakeWorldItem);
         evt.on(ENUMS.Event.MAIN_CHAR_STATE_EVENT, callbacks.handleStateEvent);
         evt.on(ENUMS.Event.SET_PLAYER_STATE, callbacks.setPlayerState);
-
         evt.on(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, callbacks.registerHostile);
-        evt.on(ENUMS.Event.MAIN_CHAR_REGISTER_TARGET, callbacks.registerTarget);
+        evt.on(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, callbacks.selectTarget);
+        evt.on(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, callbacks.registerTargetEngaged);
     }
 
 
@@ -139,51 +145,27 @@ class PlayerMain {
     }
 
     handleHostileAdded(hostileChar) {
-
         hostileChar.activateCharStatusGui()
     }
 
     handleHostileRemoved(hostileChar) {
-
         hostileChar.deactivateCharStatusGui()
     }
 
-    trackSelectedTarget(tpf, time, gamePiece) {
-
-        for (let i = 0; i < this.targetIndicators.length; i++) {
-            let efct = this.targetIndicators[i];
-            ThreeAPI.tempObj.quaternion.set(0, 1, 0, 0);
-            ThreeAPI.tempObj.lookAt(0, 1, 0.25);
-            efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
-            gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
-            ThreeAPI.tempVec3.y+=0.05;
-            efct.setEffectPosition(ThreeAPI.tempVec3)
-        }
-
-    }
     handleTargetSelected(hostileChar) {
-        console.log("Main Char TargetSelected:", hostileChar);
-        this.selectedHostile = hostileChar;
-        let effectCb = function(efct) {
-            this.targetIndicators.push(efct);
-            efct.activateEffectFromConfigId()
-            ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1);
-            ThreeAPI.tempObj.lookAt(0, 1, 0);
-            efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
-            hostileChar.gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
-            ThreeAPI.tempVec3.y+=0.1;
-            efct.setEffectPosition(ThreeAPI.tempVec3)
-            hostileChar.gamePiece.addPieceUpdateCallback(this.callbacks.trackTarget)
-        }.bind(this);
-
-        EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_target_selection',  effectCb)
-
+        this.selectionIndicator.indicateTargetSeleected(hostileChar.gamePiece, 'effect_character_indicator');
     }
 
     handleTargetUnselected(hostileChar) {
-        console.log("Main Char Target Removed", hostileChar);
-        this.selectedHostile = null
-        hostileChar.gamePiece.removePieceUpdateCallback(this.callbacks.trackTarget)
+        this.selectionIndicator.removeTargetIndicatorFromPiece(hostileChar.gamePiece)
+    }
+
+    handleTargetEngaged(hostileChar) {
+        this.targetIndicator.indicateTargetSeleected(hostileChar.gamePiece, 'effect_target_indicator');
+    }
+
+    handleTargetDisengaged(hostileChar) {
+        this.targetIndicator.removeTargetIndicatorFromPiece(hostileChar.gamePiece)
     }
 
     takeStashedPiece(piece) {

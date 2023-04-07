@@ -1,12 +1,14 @@
 import { CharacterComposer } from "./Player/CharacterComposer.js";
 import { GameCharacter } from "./character/GameCharacter.js";
 import { GamePiece } from "./gamepieces/GamePiece.js";
-import { GameMain} from "./GameMain.js";
+import { GameMain } from "./GameMain.js";
+import { GameWorldPointer } from "../application/ui/input/GameWorldPointer.js";
 
 class GameAPI {
     constructor() {
         this.acticePlayerCharacter = null;
         this.characterComposer = new CharacterComposer();
+        this.gameWorldPointer = new GameWorldPointer();
     }
 
     initGameMain() {
@@ -21,6 +23,8 @@ class GameAPI {
     createGameCharacter(config) {
         return new GameCharacter(config);
     };
+
+
 
     composeCharacter(gameCharConfigId, callback) {
         this.characterComposer.composeCharacter(gameCharConfigId, callback)
@@ -53,15 +57,32 @@ class GameAPI {
         return this.acticePlayerCharacter;
     }
 
-    getActiveScenarioCharacters() {
+    getActiveDynamicScenario() {
         let activeScenario = this.gameMain.activeScenario;
         let loadedScenarios = activeScenario.dynamicScenario
         if (loadedScenarios) {
             if (loadedScenarios.loadedDynamicScenarios.length) {
-                return loadedScenarios.loadedDynamicScenarios[0].characters;
+                return loadedScenarios.loadedDynamicScenarios[0];
             }
-        };
+        }
+    }
+    getActiveScenarioCharacters() {
+        let activeScen = this.getActiveDynamicScenario()
+        if (activeScen)
+        return activeScen.characters;
     };
+
+    handleWorldSpacePointerUpdate(pointer, start, release) {
+
+        if (start) {
+            this.gameWorldPointer.registerNewWorldPointer(pointer);
+        } else if (release) {
+            this.gameWorldPointer.worldPointerReleased(pointer);
+        } else {
+            this.gameWorldPointer.updateWorldPointer(pointer);
+        }
+
+    }
 
     registerGameUpdateCallback(callback) {
         this.gameMain.addGameUpdateCallback(callback);

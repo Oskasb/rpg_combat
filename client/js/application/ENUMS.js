@@ -68,7 +68,8 @@ if(typeof(ENUMS) === "undefined"){
         MAIN_CHAR_STATE_EVENT:      43,
         MAIN_CHAR_STATUS_EVENT:     44,
         MAIN_CHAR_REGISTER_HOSTILE: 45,
-        MAIN_CHAR_REGISTER_TARGET:  46,
+        MAIN_CHAR_SELECT_TARGET:  46,
+        MAIN_CHAR_ENGAGE_TARGET:  47,
 
     };
 

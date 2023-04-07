@@ -6,10 +6,14 @@ class CombatSystem {
         this.knownHostiles = [];
         this.hostilesInRange = [];
         this.currentTarget = null;
+        this.selectedTarget = null;
         this.targetEvent = {
             char:null,
             value:false
         }
+
+
+
     }
 
     determineTurnCombatTarget() {
@@ -23,7 +27,7 @@ class CombatSystem {
         if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
             this.targetEvent.char = hostileChar;
             this.targetEvent.value = true;
-            evt.dispatch(ENUMS.Event.MAIN_CHAR_REGISTER_TARGET, this.targetEvent)
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)
         }
     }
 

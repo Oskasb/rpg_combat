@@ -7,6 +7,8 @@ class GuiPointer {
             this.scale = new THREE.Vector3(1, 1, 1);
             this.interactiveElement = null;
             this.inputIndex = inputIndex;
+            this.worldSpaceIndicator = null;
+            this.worldSpaceTarget = null;
             this.isSeeking = false;
             this.isHovering = false;
             this.guiPointerWidget = new GuiPointerWidget(inputIndex);
