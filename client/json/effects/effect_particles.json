@@ -27,7 +27,7 @@
                         },
                         {
                             "particle_id": "indicator_particle",
-                            "spawner_id": "normal_stamps_6x6",
+                            "spawner_id": "additive_stamps_6x6",
                             "size_min": 120,
                             "size_max": 120,
                             "color_min": [1, 0.25, 0, 1],

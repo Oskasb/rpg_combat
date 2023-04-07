@@ -121,6 +121,16 @@
           }
         },
         {
+          "id":"mat_stamp_additive_6x6",
+          "config":{
+            "settings": "mat_settings_particle_stamp_additive",
+            "textures":[
+              {"key":"map"           , "id":"particle_atlas_6x6"  },
+              {"key":"data_texture"  , "id":"data_texture"        }
+            ]
+          }
+        },
+        {
           "id":"mat_particles_normal_6x6",
           "config":{
             "settings": "mat_settings_instancing_normal",

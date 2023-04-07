@@ -8,25 +8,25 @@
                                                 {
                             "spawner": "additive_particles_6x6",
                             "asset_id":  "asset_additiveQuad",
-                            "pool_size": 800,
+                            "pool_size": 1000,
                             "render_order": 4
                         },
                         {
-                            "spawner": "normal_stamps_6x6",
-                            "asset_id":  "asset_normalStamp",
-                            "pool_size": 2000,
+                            "spawner": "additive_stamps_6x6",
+                            "asset_id":  "asset_additiveStamp",
+                            "pool_size": 500,
                             "render_order": 5
                         },
                         {
                             "spawner": "normal_stamps_6x6",
                             "asset_id":  "asset_normalStamp",
-                            "pool_size": 2000,
+                            "pool_size": 500,
                             "render_order": 5
                         },
                         {
                             "spawner": "normal_particles_6x6",
                             "asset_id":  "asset_normalQuad",
-                            "pool_size": 2000,
+                            "pool_size": 1000,
                             "render_order": 5
                         }
                     ]

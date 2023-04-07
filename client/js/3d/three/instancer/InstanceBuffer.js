@@ -128,11 +128,15 @@ class InstanceBuffer {
     };
 
     setDrawRange = function(count) {
+        this.setInstancedCount(count)
+        return;
         if (this.mesh.userData.ninequad && count) {
             // what the hell is going on with this...
             // is this even needed for instancing now?
             // why is only the gui surface suffering?
             count = 54 
+        } else {
+
         }
         this.mesh.geometry.drawRange.count = count;
         this.mesh.geometry.needsUpdate = true;

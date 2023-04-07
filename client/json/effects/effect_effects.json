@@ -24,6 +24,17 @@
                                 }
                             ]
                         },
+                        "effect_character_indicator":{
+                            "effect_class": "GameEffect",
+                            "max_active": 45,
+                            "spread_pos":[0.00001, 0.00001, 0.00001],
+                            "particles": [
+                                {
+                                    "id":"indicator_particle",
+                                    "count": [1, 1]
+                                }
+                            ]
+                        },
                         "effect_action_point_wisp":{
                             "effect_class": "GameEffect",
                             "max_active": 25,

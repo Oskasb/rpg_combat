@@ -2,7 +2,8 @@ import { CharacterInventory } from "./CharacterInventory.js";
 import { CharacterEquipment } from "./CharacterEquipment.js";
 import { CharacterStatus } from "./CharacterStatus.js";
 import { CharacterMovement } from "./CharacterMovement.js";
-import { CharacterStatusGui} from "../../application/ui/gui/CharacterStatusGui.js";
+import { CharacterStatusGui } from "../../application/ui/gui/game/CharacterStatusGui.js";
+import { CharacterIndicator } from "../../application/ui/gui/game/CharacterIndicator.js";
 
 class GameCharacter {
     constructor(config) {
@@ -12,6 +13,7 @@ class GameCharacter {
         this.characterInventory = new CharacterInventory();
         this.characterStatus = new CharacterStatus();
         this.characterStatusGui = new CharacterStatusGui();
+        this.characterIndicator = new CharacterIndicator();
 
         let pickupComplete = function(itemPiece) {
             this.getInventory().addItemToInventory(itemPiece);
@@ -35,6 +37,7 @@ class GameCharacter {
         this.characterEquipment = new CharacterEquipment(gamePiece, equipSlotConfigId);
         this.characterMovement = new CharacterMovement(gamePiece);
         this.characterStatusGui.initStatusGui(this);
+        this.characterIndicator.initCharacterIndicator(gamePiece);
     }
 
     getCharacterPiece() {
