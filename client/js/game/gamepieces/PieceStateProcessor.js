@@ -10,12 +10,16 @@ class PieceStateProcessor {
         if (engagingTarget) {
             if (combatTarget === engagingTarget) {
                 status.targState = ENUMS.CharacterState.COMBAT;
+                status.trgAtkTyp = ENUMS.AttackType.FAST;
             } else {
-                status.targState = ENUMS.CharacterState.ENGAGING;
+                status.charState = ENUMS.CharacterState.ENGAGING;
+                status.combatTarget = engagingTarget;
+                //    status.targState = ENUMS.CharacterState.COMBAT;
             }
         } else {
             if (combatTarget) {
-                status.targState = ENUMS.CharacterState.DISENGAGING;
+                status.charState = ENUMS.CharacterState.DISENGAGING;
+                status.targState = ENUMS.CharacterState.IDLE_HANDS;
             }
         }
 

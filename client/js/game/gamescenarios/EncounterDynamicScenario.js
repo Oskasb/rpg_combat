@@ -73,7 +73,7 @@ class EncounterDynamicScenario {
                     gamePiece.setStatusValue('isCharacter', 1)
                     setTimeout(function() {
                         walkCharToStart(char, character)
-                    }, 2100*(MATH.sillyRandom(i)+0.5))
+                    }, 10*(MATH.sillyRandom(i)+0.5))
 
                 }
 

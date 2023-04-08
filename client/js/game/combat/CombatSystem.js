@@ -17,18 +17,17 @@ class CombatSystem {
 
     attackCombatTarget(combatTarget) {
         this.currentTarget = combatTarget;
-        this.gamePiece.setStatusValue('charState', ENUMS.CharacterState.COMBAT);
 
         let stateEvent = {
             state:'COMBAT',
             type:'FAST',
-            target:combatTarget
+            target:"practice"
         }
 
-        this.gamePiece.pieceState.handleStateEvent(stateEvent)
+    //    this.gamePiece.pieceState.handleStateEvent(stateEvent)
 
         if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
-            this.targetEvent.piece = selectedTargetPiece;
+            this.targetEvent.piece = combatTarget;
             this.targetEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)
         }

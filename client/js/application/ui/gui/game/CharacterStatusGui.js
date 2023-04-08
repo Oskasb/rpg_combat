@@ -41,7 +41,9 @@ class CharacterStatusGui {
 
     deactivateCharacterStatusGui() {
         GameAPI.unregisterGameUpdateCallback(this.callbacks.updateCharStatGui)
-        this.progressElement.guiWidget.recoverGuiWidget();
+        if (this.progressElement) {
+            this.progressElement.guiWidget.recoverGuiWidget();
+        }
     }
 
     updateCharacterStatElement() {
