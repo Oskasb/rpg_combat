@@ -58,7 +58,7 @@ class PlayerMain {
 
         let combatPage = null;
         let setPlayerState = function(charState) {
-            if (charState === ENUMS.CharacterState.IDLE) {
+            if (charState === ENUMS.CharacterState.IDLE_HANDS) {
                 if (combatPage) {
                     combatPage.closeGuiPage();
                 }
@@ -100,7 +100,6 @@ class PlayerMain {
             handleDropItem : function (event) {        },
             handleStashItem : stashInvItem,
             handleTakeStashItem : takeStashItem,
-            handleTakeWorldItem : function (event) {        },
             addToStash:addToStash,
             handleStateEvent:handleStateEvent,
             setPlayerState:setPlayerState,
@@ -116,7 +115,6 @@ class PlayerMain {
         evt.on(ENUMS.Event.DROP_ITEM, callbacks.handleDropItem);
         evt.on(ENUMS.Event.STASH_ITEM, callbacks.handleStashItem);
         evt.on(ENUMS.Event.TAKE_STASH_ITEM, callbacks.handleTakeStashItem);
-        evt.on(ENUMS.Event.TAKE_WORLD_ITEM, callbacks.handleTakeWorldItem);
         evt.on(ENUMS.Event.MAIN_CHAR_STATE_EVENT, callbacks.handleStateEvent);
         evt.on(ENUMS.Event.SET_PLAYER_STATE, callbacks.setPlayerState);
         evt.on(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, callbacks.registerHostile);
@@ -154,6 +152,16 @@ class PlayerMain {
     }
 
     handleTargetSelected(gamePiece) {
+
+        if (gamePiece.getStatusByKey('isItem')) {
+            let distance = MATH.distanceBetween(gamePiece.getPos(), this.playerCharacter.gamePiece.getPos())
+            if (distance < 3) {
+                GameAPI.addItemToPlayerInventory(gamePiece, 1);
+            }
+
+            return;
+        }
+
         let oldTarget = this.playerCharacter.gamePiece.getStatusByKey('selectedTarget');
         if (oldTarget) {
             this.handleTargetUnselected(oldTarget);

@@ -3,7 +3,27 @@ class PieceStateProcessor {
         this.gamePiece = gamePiece;
     }
 
+    processTargetSelection(status, config) {
+        let engagingTarget = status.engagingTarget;
+        let combatTarget = status.combatTarget;
+
+        if (engagingTarget) {
+            if (combatTarget === engagingTarget) {
+                status.targState = ENUMS.CharacterState.COMBAT;
+            } else {
+                status.targState = ENUMS.CharacterState.ENGAGING;
+            }
+        } else {
+            if (combatTarget) {
+                status.targState = ENUMS.CharacterState.DISENGAGING;
+            }
+        }
+
+    }
+
     processNewTurn(status, config) {
+
+
 
         status.xp += config.xpGain;
         evt.dispatch(ENUMS.Event.MAIN_CHAR_STATUS_EVENT,
@@ -31,6 +51,7 @@ class PieceStateProcessor {
             status.attack = 0;
         }
 
+        this.gamePiece.threatDetector.updateScenarioThreat();
         this.gamePiece.combatSystem.updateCombatTurnTick()
     }
 
@@ -111,11 +132,11 @@ class PieceStateProcessor {
 
         if (status.targState === status.charState) return;
         if (status.targState === ENUMS.CharacterState.COMBAT) {
-            if (status.charState === ENUMS.CharacterState.IDLE) {
+            if (status.charState === ENUMS.CharacterState.IDLE_HANDS) {
                 status.charState = ENUMS.CharacterState.ENGAGING;
             }
         }
-        if (status.targState === ENUMS.CharacterState.IDLE) {
+        if (status.targState === ENUMS.CharacterState.IDLE_HANDS) {
             if (status.charState === ENUMS.CharacterState.COMBAT) {
                 status.charState = ENUMS.CharacterState.DISENGAGING;
             }
@@ -125,6 +146,7 @@ class PieceStateProcessor {
     }
     processGamePieceState(status, config, tpf, time) {
         status.lifetime += tpf;
+        this.processTargetSelection(status, config);
         this.updatePieceTurn(status, config, tpf)
     }
 

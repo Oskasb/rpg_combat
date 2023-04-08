@@ -56,7 +56,7 @@
             "LIE_DEAD":   [    {"name":"DEAD",     "active": ["DEAD"]         }],
             "FALL_DOWN":  [    {"name":"FALL",     "active": ["FALL"]         }],
             "IDLE_LEGS": [     {"name":"STAND",     "active": ["IDLE"]        }],
-            "IDLE_HANDS": [    {"name":"POSE",      "active": ["GD_BCK_R"]    }],
+            "IDLE_HANDS": [    {"name":"POSE",      "source": ["GD_SHT_R"],  "init": ["GD_SHT_R"], "active": ["GD_BCK_R"],   "end": ["GD_SHT_R"]}            ],
             "MOVE": [          {"name":"WALK",      "active": ["WALK"]        }],
             "MOVE_COMBAT": [   {"name":"MOVE",      "active": ["WALK_COMBAT"] }],
             "STAND_COMBAT": [  {"name":"FIGHT",     "active": ["GD_RT_FF"]    }],
@@ -99,7 +99,7 @@
           },
           "action_maps": {
             "IDLE_LEGS": [          {"name":"IDLING",   "active": ["IDLE"]       }],
-            "IDLE_HANDS": [         {"name":"IDLING",   "active": ["IDL_HI_CB"]       }],
+            "IDLE_HANDS": [         {"name":"IDLING",   "source": ["GD_INS_R"],  "init": ["IDL_HI_CB"], "active": ["IDL_HI_CB"],   "end": ["IDL_HI_CB"]}       ],
             "MOVE": [          {"name":"WALK"  ,   "active": ["RUN"]        }],
             "MOVE_COMBAT": [   {"name":"RUN"   ,   "active": ["RUN"]        }],
             "LEGS_COMBAT": [   {"name":"FIGHT" ,   "active": ["IDL_LO_CB"]  }],

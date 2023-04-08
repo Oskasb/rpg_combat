@@ -1,5 +1,6 @@
 import { PieceActionSystem } from "./PieceActionSystem.js";
 import { CombatSystem } from "../combat/CombatSystem.js";
+import { ThreatDetector } from "../combat/ThreatDetector.js";
 import { AnimationStateProcessor } from "../../3d/three/animations/AnimationStateProcessor.js";
 import { PieceAnimator } from "./PieceAnimator.js";
 import { PieceComposer } from "../piece_functions/PieceComposer.js";
@@ -12,6 +13,7 @@ class GamePiece {
         this.gamePieceUpdateCallbacks = [];
         this.pieceActionSystem = new PieceActionSystem();
         this.combatSystem = new CombatSystem(this);
+        this.threatDetector = new ThreatDetector(this);
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
@@ -74,6 +76,9 @@ class GamePiece {
         return this.modelInstance.getSpatial();
     };
 
+    getPos = function() {
+        return this.getSpatial().obj3d.position;
+    }
     setModelInstance(modelInstance) {
         this.modelInstance = modelInstance;
     };

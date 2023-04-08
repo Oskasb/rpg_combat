@@ -13,16 +13,16 @@ class AnimationSequencer {
 
         this.stationaryStateMap = {};
         this.stationaryStateMap[ENUMS.CharacterState.COMBAT] = 'GD_RT_FF';
-        this.stationaryStateMap[ENUMS.CharacterState.IDLE] = 'IDLE';
+        this.stationaryStateMap[ENUMS.CharacterState.IDLE_HANDS] = 'IDLE_HANDS';
 
 
         this.bodyIdleMap = {};
         this.bodyIdleMap[ENUMS.CharacterState.COMBAT] = 'GD_RT_FF';
-        this.bodyIdleMap[ENUMS.CharacterState.IDLE] = 'IDLE';
+        this.bodyIdleMap[ENUMS.CharacterState.IDLE_HANDS] = 'IDLE_HANDS';
 
         this.speedRefMap = {};
         this.speedRefMap[ENUMS.CharacterState.COMBAT] = 'walk_combat_speed';
-        this.speedRefMap[ENUMS.CharacterState.IDLE] = 'walk_cycle_speed';
+        this.speedRefMap[ENUMS.CharacterState.IDLE_HANDS] = 'walk_cycle_speed';
 
         this.combatMoveIdles = ['GD_SID_R', 'GD_MID_R', 'GD_HNG_R', 'GD_HI_R'];
         this.combatIdles = ['GD_SID_R', 'GD_MID_R', 'GD_BCK_R', 'GD_HNG_R', 'GD_INS_R', 'GD_HI_R'];
@@ -82,7 +82,7 @@ class AnimationSequencer {
             let speed = movement.getMovementSpeed();
             let key;
 
-            if (state === ENUMS.CharacterState.IDLE) {
+            if (state === ENUMS.CharacterState.IDLE_HANDS) {
 
                 if (speed) {
                     key = MATH.getRandomArrayEntry(this.peaceMoveIdle);

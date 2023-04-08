@@ -512,6 +512,12 @@ if(typeof(MATH) === "undefined") {
 		vec.z += spreadV.z * (Math.random()-0.5);
 	};
 
+	MATH.distanceBetween = function(vec3a, vec3b) {
+		if (!calcVec1) calcVec1 = new THREE.Vector3();
+		calcVec1.subVectors(vec3a, vec3b);
+		return calcVec1.length();
+	}
+
     MATH.expandVector = function(vec, expand) {
         vec.x += expand*Math.sign(vec.x);
         vec.y += expand*Math.sign(vec.y);

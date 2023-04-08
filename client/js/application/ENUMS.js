@@ -374,7 +374,7 @@ if(typeof(ENUMS) === "undefined"){
 
     ENUMS.CharacterState = {
         ALERT:             0,
-        IDLE:              1,
+        IDLE_HANDS:        1,
         ENGAGING:          2,
         COMBAT:            3,
         DISENGAGING:       4,

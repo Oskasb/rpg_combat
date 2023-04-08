@@ -73,7 +73,7 @@ class CharacterMovement {
     updateCharMovement(tpf) {
 
         if (this.charState !== this.status.charState) {
-            if (this.status.charState !== ENUMS.CharacterState.IDLE) {
+            if (this.status.charState !== ENUMS.CharacterState.IDLE_HANDS) {
                 if (!this.combatState) {
                     this.applyCombatState(true);
                 }

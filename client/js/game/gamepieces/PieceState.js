@@ -30,12 +30,13 @@ class PieceState {
             gems:0,
             inv:0,
             stash:0,
-            charState:ENUMS.CharacterState.IDLE,
-            targState:ENUMS.CharacterState.IDLE,
+            charState:ENUMS.CharacterState.IDLE_HANDS,
+            targState:ENUMS.CharacterState.IDLE_HANDS,
             atkType:ENUMS.AttackType.NONE,
             trgAtkTyp:ENUMS.AttackType.NONE,
-            selectedTarget:'',
-            combatTarget:'',
+            selectedTarget:null,
+            engagingTarget:null,
+            combatTarget:null,
             turnProgress:0,
             turn:0,
             attacks:0,
@@ -51,7 +52,9 @@ class PieceState {
             maxAPs:0,
             actPts:0,
             hp:100,
-            maxHP:100
+            maxHP:100,
+            isItem:0,
+            isCharacter:0
         }
 
     }
@@ -61,7 +64,7 @@ class PieceState {
 
     handleStateEvent(event) {
         if (this.status.targState === ENUMS.CharacterState[event.state] && this.status.trgAtkTyp === ENUMS.AttackType[event.type]) {
-            this.status.targState = ENUMS.CharacterState.IDLE;
+            this.status.targState = ENUMS.CharacterState.IDLE_HANDS;
             this.status.trgAtkTyp = ENUMS.AttackType.NONE;
             this.status.target = "none";
         } else {

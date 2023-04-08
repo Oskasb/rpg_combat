@@ -69,7 +69,8 @@ class EncounterDynamicScenario {
                 let char =  config.characters[i];
                 let charCB = function(character) {
                     characters.push(character);
-                    let charPiece = character.gamePiece;
+                    let gamePiece = character.gamePiece;
+                    gamePiece.setStatusValue('isCharacter', 1)
                     setTimeout(function() {
                         walkCharToStart(char, character)
                     }, 2100*(MATH.sillyRandom(i)+0.5))
@@ -86,6 +87,7 @@ class EncounterDynamicScenario {
             for (let i = 0; i < config.spawn.length; i++) {
                 let spawn = config.spawn[i];
                 let pieceInstanceCallback = function(gamePiece) {
+                    gamePiece.setStatusValue('isItem', 1)
                     pieces.push(gamePiece);
                     gamePiece.getSpatial().setPosXYZ(spawn.pos[0],spawn.pos[1], spawn.pos[2])
                     gamePiece.getSpatial().setRotXYZ(spawn.rot[0],spawn.rot[1], spawn.rot[2])

@@ -1,7 +1,7 @@
 class CharacterIndicator {
     constructor() {
 
-        this.indicatedCharState = ENUMS.CharacterState.IDLE;
+        this.indicatedCharState = ENUMS.CharacterState.IDLE_HANDS;
         this.indicators = [];
 
         this.colorMap = {};
