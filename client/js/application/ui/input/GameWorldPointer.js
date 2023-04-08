@@ -22,7 +22,9 @@ class GameWorldPointer {
             this.selectionEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
         } else {
-
+            this.selectionEvent.piece = null;
+            this.selectionEvent.value = false;
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
         }
     }
     updateWorldPointer = function(pointer) {

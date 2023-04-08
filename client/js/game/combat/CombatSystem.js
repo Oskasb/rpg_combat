@@ -16,28 +16,39 @@ class CombatSystem {
     }
 
     attackCombatTarget(combatTarget) {
-        this.currentTarget = combatTarget;
-
-        let stateEvent = {
-            state:'COMBAT',
-            type:'FAST',
-            target:"practice"
+        this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.FAST);
+        if (this.currentTarget !== combatTarget) {
+            if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+                this.targetEvent.piece = combatTarget;
+                this.targetEvent.value = true;
+                evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)
+            }
         }
 
-    //    this.gamePiece.pieceState.handleStateEvent(stateEvent)
+        this.currentTarget = combatTarget;
+    }
 
-        if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
-            this.targetEvent.piece = combatTarget;
-            this.targetEvent.value = true;
-            evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)
+    disengageTarget(disengageTarget) {
+        this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.NONE);
+        if (this.currentTarget === disengageTarget) {
+            if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+                this.targetEvent.piece = disengageTarget;
+                this.targetEvent.value = false;
+                evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)
+            }
+            this.currentTarget = null;
         }
     }
 
     updateCombatTurnTick() {
         this.combatTargetProcessor.updateCombatTarget(this.gamePiece);
         let combatTarget = this.gamePiece.getStatusByKey('combatTarget');
-        if (combatTarget) {
+        let disengageTarget = this.gamePiece.getStatusByKey('disengageTarget');
+        if (combatTarget !== null) {
             this.attackCombatTarget(combatTarget);
+        }
+        if (disengageTarget !== null) {
+            this.disengageTarget(disengageTarget);
         }
     }
 

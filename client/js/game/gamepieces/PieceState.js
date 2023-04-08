@@ -37,6 +37,7 @@ class PieceState {
             selectedTarget:null,
             engagingTarget:null,
             combatTarget:null,
+            disengagingTarget:null,
             turnProgress:0,
             turn:0,
             attacks:0,

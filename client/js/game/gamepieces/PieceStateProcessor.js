@@ -3,24 +3,69 @@ class PieceStateProcessor {
         this.gamePiece = gamePiece;
     }
 
-    processTargetSelection(status, config) {
-        let engagingTarget = status.engagingTarget;
-        let combatTarget = status.combatTarget;
 
-        if (engagingTarget) {
-            if (combatTarget === engagingTarget) {
-                status.targState = ENUMS.CharacterState.COMBAT;
-                status.trgAtkTyp = ENUMS.AttackType.FAST;
-            } else {
-                status.charState = ENUMS.CharacterState.ENGAGING;
-                status.combatTarget = engagingTarget;
-                //    status.targState = ENUMS.CharacterState.COMBAT;
+    processTargetSelected(status, selectedTarget) {
+        if (selectedTarget) {
+            if (status.charState === ENUMS.CharacterState.COMBAT) {
+                if (selectedTarget === status.combatTarget) {
+                    return;
+                }
             }
         } else {
-            if (combatTarget) {
-                status.charState = ENUMS.CharacterState.DISENGAGING;
-                status.targState = ENUMS.CharacterState.IDLE_HANDS;
+            this.processDisengagingTarget(status);
+        }
+    }
+
+    processEngagingTarget(status, engagingTarget, selectedTarget) {
+
+        if (selectedTarget === engagingTarget) {
+
+                if ((status.targState === ENUMS.CharacterState.COMBAT) || (status.targState === ENUMS.CharacterState.ENGAGING)) {
+                    return;
+                } else {
+                    console.log("targ stats ENGAGING", status.targState, status.charState)
+                    status.charState = ENUMS.CharacterState.ENGAGING;
+                    status.targState = ENUMS.CharacterState.COMBAT;
+                }
+        }
+
+    }
+
+    processDisengagingTarget(status, disengagingTarget) {
+        if ((status.charState === ENUMS.CharacterState.COMBAT) || (status.charState === ENUMS.CharacterState.ENGAGING)) {
+            status.targState = ENUMS.CharacterState.DISENGAGING;
+            console.log("targ stats DISENGAGING")
+        }
+    }
+
+    processCombatTarget(status, combatTarget, selectedTarget) {
+        if (status.charState === ENUMS.CharacterState.ENGAGING) {
+            if (status.targState !== ENUMS.CharacterState.COMBAT) {
+                console.log("targ stats COMBAT")
+                status.targState = ENUMS.CharacterState.COMBAT;
             }
+        }
+    }
+
+    processTargetSelection(status, config) {
+        let selectedTarget = status.selectedTarget;
+        let engagingTarget = status.engagingTarget;
+        let combatTarget = status.combatTarget;
+        let disengagingTarget = status.disengagingTarget;
+
+        this.processTargetSelected(status, selectedTarget);
+
+        if (engagingTarget !== null) {
+            this.processEngagingTarget(status, engagingTarget, selectedTarget);
+        }
+
+        if (disengagingTarget !== null) {
+            console.log("disengage")
+            this.processDisengagingTarget(status, disengagingTarget);
+        }
+
+        if (combatTarget !== null) {
+            this.processCombatTarget(status, combatTarget, selectedTarget);
         }
 
     }
@@ -133,18 +178,7 @@ class PieceStateProcessor {
     processPieceState(status, config) {
 
         status.maxHP = config.maxHP;
-
         if (status.targState === status.charState) return;
-        if (status.targState === ENUMS.CharacterState.COMBAT) {
-            if (status.charState === ENUMS.CharacterState.IDLE_HANDS) {
-                status.charState = ENUMS.CharacterState.ENGAGING;
-            }
-        }
-        if (status.targState === ENUMS.CharacterState.IDLE_HANDS) {
-            if (status.charState === ENUMS.CharacterState.COMBAT) {
-                status.charState = ENUMS.CharacterState.DISENGAGING;
-            }
-        }
 
         this.applyCombatStatusTransition(status, config)
     }

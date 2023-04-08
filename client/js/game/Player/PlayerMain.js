@@ -170,7 +170,9 @@ class PlayerMain {
         this.selectionIndicator.indicateTargetSeleected(gamePiece, 'effect_character_indicator', 0, 4);
     }
 
-    handleTargetUnselected(gamePiece) {
+    handleTargetUnselected() {
+        let gamePiece = this.playerCharacter.gamePiece.getStatusByKey('selectedTarget');
+        this.playerCharacter.gamePiece.setStatusValue('selectedTarget', null);
         this.selectionIndicator.removeTargetIndicatorFromPiece(gamePiece)
         this.selectionIndicator.hideIndicatorFx()
     }
