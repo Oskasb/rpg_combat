@@ -145,11 +145,11 @@ class ThreeSetup {
         this.vector.project(this.camera);
 
 
-        store.x = this.vector.x * 0.83;
-        store.y = this.vector.y * 0.5;
+        store.x = this.vector.x * 0.83 *0.5;
+        store.y = this.vector.y * 0.5 * 0.83;
         store.z = this.vector.z * 0;
 
-        GameScreen.fitView(store);
+     //   GameScreen.fitView(store);
 
         return store;
     };
