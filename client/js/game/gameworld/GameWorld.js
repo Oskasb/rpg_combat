@@ -1,14 +1,14 @@
 class  GameWorld  {
     constructor() {
-        this.pieces = [];
+        this.itemPieces = [];
     }
 
     gameWorldRegisterPiece(piece) {
-        this.pieces.push(piece);
+        this.itemPieces.push(piece);
     }
 
     gameWorldReleasePiece(piece) {
-        return MATH.quickSplice(this.pieces, piece);
+        return MATH.quickSplice(this.itemPieces, piece);
     }
 
 }

@@ -157,7 +157,7 @@ class PlayerMain {
         if (gamePiece.getStatusByKey('isItem')) {
             let distance = MATH.distanceBetween(gamePiece.getPos(), this.playerCharacter.gamePiece.getPos())
             if (distance < 3) {
-                GameAPI.addItemToPlayerInventory(gamePiece, 1);
+                GameAPI.addItemToPlayerInventory(GameAPI.takePieceFromWorld(gamePiece), 1);
             }
             return;
         }
@@ -168,7 +168,7 @@ class PlayerMain {
         }
 
         this.playerCharacter.gamePiece.setStatusValue('selectedTarget', gamePiece);
-        this.selectionIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 0, 4);
+        this.selectionIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 1, 6, -0.5, 1.1, 0);
     }
 
     handleTargetUnselected() {
@@ -180,14 +180,14 @@ class PlayerMain {
     handleTargetEngaged(gamePiece) {
         console.log("handleTargetEngaged")
         this.targetIndicator.removeTargetIndicatorFromPiece()
-        this.selectionIndicator.removeIndicatorFx()
-        this.targetIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 0, 5);
+        this.targetIndicator.removeIndicatorFx()
+        this.targetIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 0, 5, 0, 1.03, 0.06, 5);
     }
 
     handleTargetDisengaged() {
         console.log("handleTargetDisengaged")
         this.targetIndicator.removeTargetIndicatorFromPiece()
-        this.selectionIndicator.removeIndicatorFx()
+        this.targetIndicator.removeIndicatorFx()
     }
 
     takeStashedPiece(piece) {

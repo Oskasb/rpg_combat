@@ -37,6 +37,10 @@ class GameAPI {
         this.acticePlayerCharacter.pickupItem(itemPiece, transitionTime)
     }
 
+    getWorldItemPieces() {
+        return this.gameMain.gameWorld.itemPieces
+    }
+
     addPieceToWorld(piece) {
         this.gameMain.gameWorld.gameWorldRegisterPiece(piece)
     }

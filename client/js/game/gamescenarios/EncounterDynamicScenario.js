@@ -4,7 +4,7 @@ import {ConfigData} from "../../application/utils/ConfigData.js";
 class EncounterDynamicScenario {
     constructor(dataId) {
         this.dataId = dataId;
-        this.pieces = [];
+        this.pieces = GameAPI.getWorldItemPieces();
         this.characters = [];
         this.onUpdateCallbacks = []
         this.configData =  new ConfigData("DYNAMIC_SCENARIOS", "GAME_SCENARIOS",  'dynamic_view_init', 'data_key', 'config')

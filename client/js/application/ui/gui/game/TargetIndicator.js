@@ -1,6 +1,11 @@
 class TargetIndicator {
     constructor() {
 
+        this.spin = 0;
+        this.scale = 1;
+        this.pulsate = 0;
+        this.rate = 2;
+
         this.indicators = [];
 
         this.colorMap = {};
@@ -10,7 +15,7 @@ class TargetIndicator {
         this.colorMap['ITEM']       = {r:0,   g:0.4, b:1,   a:0.8};
 
         let updateIndicator = function(tpf, time, gamePeice) {
-            this.indicateSelectedTargetPiece(tpf, time, gamePeice)
+            this.indicateSelectedTargetPiece(tpf, time, gamePeice, this.spin, this.scale, this.pulsate, this.rate)
         }.bind(this)
 
         this.call = {
@@ -18,7 +23,12 @@ class TargetIndicator {
         }
     }
 
-    indicateGamePiece(gamePiece, indicatorFx, tileX, tileY) {
+    indicateGamePiece(gamePiece, indicatorFx, tileX, tileY, spin, scale, pulsate, rate) {
+
+        if (spin) this.spin = spin;
+        if (scale) this.scale = scale;
+        if (pulsate) this.pulsate = pulsate;
+        if (rate) this.rate = rate;
 
         this.gamePiece = gamePiece;
 
@@ -44,7 +54,7 @@ class TargetIndicator {
         EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', indicatorFx,  effectCb)
     }
 
-    indicateSelectedTargetPiece(tpf, time, gamePiece, scale, spinSpeed) {
+    indicateSelectedTargetPiece(tpf, time, gamePiece, spinSpeed, scale, pulsate, rate) {
 
         for (let i = 0; i < this.indicators.length; i++) {
             let efct = this.indicators[i];
@@ -52,7 +62,7 @@ class TargetIndicator {
             efct.setEffectColorRGBA(this.colorMap[faction]);
             let size = gamePiece.getStatusByKey('size') || 0.5;
             if (scale) size*=scale;
-            efct.scaleEffectSize(  size+ Math.sin(time*2) * 0.05 - 0.05);
+            efct.scaleEffectSize(  size + pulsate*(Math.sin(time*rate)));
             gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
             ThreeAPI.tempVec3.y+=0.05;
             efct.setEffectPosition(ThreeAPI.tempVec3)

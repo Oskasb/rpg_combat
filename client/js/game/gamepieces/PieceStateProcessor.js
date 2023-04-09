@@ -23,8 +23,9 @@ class PieceStateProcessor {
 
     processDisengagingTarget(status) {
         if ((status.charState === ENUMS.CharacterState.COMBAT) || (status.charState === ENUMS.CharacterState.ENGAGING)) {
-            if (status.targState !== ENUMS.CharacterState.DISENGAGING) {
-                status.targState = ENUMS.CharacterState.DISENGAGING;
+            if (status.charState !== ENUMS.CharacterState.DISENGAGING) {
+                status.charState = ENUMS.CharacterState.DISENGAGING;
+                status.targState = ENUMS.CharacterState.IDLE_HANDS;
                 console.log("targ state DISENGAGING")
             }
         }
@@ -32,7 +33,8 @@ class PieceStateProcessor {
     }
 
     processNoTarget(status) {
-            if (status.targState !== ENUMS.CharacterState.IDLE_HANDS) {
+            if (status.charState !== ENUMS.CharacterState.IDLE_HANDS) {
+                status.charState = ENUMS.CharacterState.IDLE_HANDS;
                 status.targState = ENUMS.CharacterState.IDLE_HANDS;
                 console.log("targ state IDLE_HANDS")
             }
@@ -62,7 +64,6 @@ class PieceStateProcessor {
     }
 
     processNewTurn(status, config) {
-
 
 
         status.xp += config.xpGain;
@@ -95,6 +96,7 @@ class PieceStateProcessor {
 
         this.gamePiece.threatDetector.updateScenarioThreat();
         this.gamePiece.combatSystem.updateCombatTurnTick()
+
     }
 
 
