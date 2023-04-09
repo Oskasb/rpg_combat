@@ -17,7 +17,6 @@ class CombatSystem {
     }
 
     attackCombatTarget(combatTarget) {
-        this.gamePiece.setStatusValue('charState', ENUMS.CharacterState.COMBAT);
         this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.FAST);
         if (this.currentTarget !== combatTarget) {
             if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
@@ -44,13 +43,14 @@ class CombatSystem {
         this.combatMovementProcessor.updateEngagedTarget(engageTarget);
     }
 
+    testForMeleeRange = function(engageTarget) {
+        return this.combatMovementProcessor.measureAttackRange(engageTarget)
+    }
 
     updateCombatTurnTick() {
-        this.combatTargetProcessor.updateCombatTarget(this.gamePiece);
-        this.engageTarget(this.gamePiece.getStatusByKey('engagingTarget'));
         let combatTarget = this.gamePiece.getStatusByKey('combatTarget');
         if (combatTarget !== null) {
-            if (this.combatMovementProcessor.measureAttackRange(combatTarget)) {
+            if (this.testForMeleeRange(combatTarget)) {
                 this.attackCombatTarget(combatTarget);
             } else {
 

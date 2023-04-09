@@ -4,7 +4,7 @@ class PieceStateProcessor {
     }
 
     processEngagingTarget(status) {
-        if ((status.targState === ENUMS.CharacterState.COMBAT) || (status.targState === ENUMS.CharacterState.ENGAGING)) {
+        if ((status.targState === ENUMS.CharacterState.COMBAT) || (status.targState === ENUMS.CharacterState.COMBAT)) {
             return;
         } else {
             console.log("targ state ENGAGING")
@@ -45,12 +45,14 @@ class PieceStateProcessor {
         let combatTarget = status.combatTarget;
         let disengagingTarget = status.disengagingTarget;
 
-        if (engagingTarget !== null) {
-            this.processEngagingTarget(status);
+        if (combatTarget !== null) {
+            if (this.gamePiece.combatSystem.testForMeleeRange(this.gamePiece.getStatusByKey('engagingTarget'))) {
+                this.processCombatTarget(status);
+            }
         }
 
-        if (combatTarget !== null) {
-            this.processCombatTarget(status);
+        if (engagingTarget !== null) {
+            this.processEngagingTarget(status);
         }
 
         if (disengagingTarget !== null) {
@@ -84,6 +86,12 @@ class PieceStateProcessor {
         status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
         status.turn++;
         status.turnProgress++;
+
+        status.charState = status.targState;
+
+        this.gamePiece.combatSystem.combatTargetProcessor.updateCombatTarget(this.gamePiece);
+        this.gamePiece.combatSystem.engageTarget(this.gamePiece.getStatusByKey('engagingTarget'));
+
         status.charState = status.targState;
 
 

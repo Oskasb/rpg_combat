@@ -6,7 +6,8 @@ class CombatMovementProcessor {
 
 
     moveToEngagedTarget(engageTarget) {
-        this.gamePiece.setStatusValue('charState', ENUMS.CharacterState.ENGAGING);
+        this.gamePiece.setStatusValue('targState', ENUMS.CharacterState.ENGAGING);
+        this.gamePiece.setStatusValue('combatTarget', null);
         let margin = this.determineAttackRangeMargin(engageTarget)*0.8;
         let onArrive = function(arrive) {
             console.log("Arrive at Target", arrive);
@@ -18,6 +19,7 @@ class CombatMovementProcessor {
 
     initiateCombat(engageTarget) {
         this.gamePiece.setStatusValue('targState', ENUMS.CharacterState.COMBAT);
+        this.gamePiece.setStatusValue('combatTarget', engageTarget);
     }
 
     determineAttackRangeMargin(engageTarget) {
