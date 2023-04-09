@@ -34,6 +34,7 @@ canvas {
 }
 
 body {
+    cursor:pointer;
     font-family: 'Russo One';
     font-weight: 400;
     position: fixed;
