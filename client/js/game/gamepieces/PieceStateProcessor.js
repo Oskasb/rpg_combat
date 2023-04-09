@@ -110,6 +110,7 @@ class PieceStateProcessor {
 
 
     activateActionType(status, actionType) {
+        console.log("Activate Action: ", actionType)
         let action = this.gamePiece.pieceActionSystem.activateActionOfType(actionType);
         status.action = action.name;
     }

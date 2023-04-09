@@ -17,7 +17,8 @@ class CombatSystem {
     }
 
     attackCombatTarget(combatTarget) {
-        this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.FAST);
+   //     console.log("ATTACK TARGET: ", this.gamePiece.getStatusByKey('charState'))
+
         if (this.currentTarget !== combatTarget) {
             if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
                 this.targetEvent.piece = combatTarget;
@@ -41,6 +42,7 @@ class CombatSystem {
 
     engageTarget(engageTarget) {
         this.combatMovementProcessor.updateEngagedTarget(engageTarget);
+        this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.FAST);
     }
 
     testForMeleeRange = function(engageTarget) {
