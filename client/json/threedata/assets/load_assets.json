@@ -77,7 +77,7 @@
       "/threedata/assets/sprites/font_sprites_16x16.json"    ,
       "/threedata/assets/sprites/veg_sprites_8x8.json"       ,
       "/threedata/assets/sprites/tile_sprites_8x8.json"      ,
-      "/threedata/assets/sprites/particle_sprites_6x6.json"
+      "/threedata/assets/sprites/particle_sprites_8x8.json"
     ],
     "LOAD_MODELS":[
       "asset_mansion_roof",

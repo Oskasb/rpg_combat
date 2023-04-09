@@ -53,7 +53,8 @@ class PlayerMain {
         }.bind(this);
 
         let handleStateEvent = function(event) {
-            this.getPlayerCharacter().gamePiece.applyStateEvent(event)
+            console.log("handleStateEvent leads nowhere...", event )
+
         }.bind(this);
 
         let combatPage = null;
@@ -158,7 +159,6 @@ class PlayerMain {
             if (distance < 3) {
                 GameAPI.addItemToPlayerInventory(gamePiece, 1);
             }
-
             return;
         }
 
@@ -166,28 +166,28 @@ class PlayerMain {
         if (oldTarget) {
             this.handleTargetUnselected(oldTarget);
         }
+
         this.playerCharacter.gamePiece.setStatusValue('selectedTarget', gamePiece);
-        this.selectionIndicator.indicateTargetSeleected(gamePiece, 'effect_character_indicator', 0, 4);
+        this.selectionIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 0, 4);
     }
 
     handleTargetUnselected() {
-        let gamePiece = this.playerCharacter.gamePiece.getStatusByKey('selectedTarget');
         this.playerCharacter.gamePiece.setStatusValue('selectedTarget', null);
-        this.selectionIndicator.removeTargetIndicatorFromPiece(gamePiece)
-        this.selectionIndicator.hideIndicatorFx()
+        this.selectionIndicator.removeTargetIndicatorFromPiece()
+        this.selectionIndicator.removeIndicatorFx()
     }
 
     handleTargetEngaged(gamePiece) {
-        let oldTarget = this.playerCharacter.gamePiece.getStatusByKey('combatTarget');
-        if (oldTarget) {
-            this.handleTargetDisengaged(oldTarget);
-        }
-        this.targetIndicator.indicateTargetSeleected(gamePiece, 'effect_character_indicator', 0, 5);
+        console.log("handleTargetEngaged")
+        this.targetIndicator.removeTargetIndicatorFromPiece()
+        this.selectionIndicator.removeIndicatorFx()
+        this.targetIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 0, 5);
     }
 
-    handleTargetDisengaged(gamePiece) {
-        this.targetIndicator.removeTargetIndicatorFromPiece(gamePiece)
-        this.selectionIndicator.hideIndicatorFx()
+    handleTargetDisengaged() {
+        console.log("handleTargetDisengaged")
+        this.targetIndicator.removeTargetIndicatorFromPiece()
+        this.selectionIndicator.removeIndicatorFx()
     }
 
     takeStashedPiece(piece) {

@@ -91,7 +91,7 @@ class HomeScenario {
         };
 
         if (Math.random() < 0.15) {
-            EffectAPI.buildEffectClassByConfigId('additive_particles_6x6', 'effect_action_point_wisp',  effectCb)
+            EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'effect_action_point_wisp',  effectCb)
         }
 
         //   ThreeAPI.setCameraPos(

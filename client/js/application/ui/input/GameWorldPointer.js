@@ -71,7 +71,7 @@ class GameWorldPointer {
                 if (!pointer.worldSpaceIndicator) {
                     indicator = new TargetIndicator()
                     pointer.worldSpaceIndicator = indicator;
-                    indicator.indicateTargetSeleected(selectedTarget, 'effect_character_indicator', 1, 3);
+                    indicator.indicateGamePiece(selectedTarget, 'effect_character_indicator', 1, 3);
                 }
 
             } else {

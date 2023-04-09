@@ -2,20 +2,23 @@ class CombatTargetProcessor {
     constructor() {}
 
     applyTargetSelection(gamePiece) {
-        let selectedTargetPiece = gamePiece.getStatusByKey('selectedTarget');
+        let selectedTarget = gamePiece.getStatusByKey('selectedTarget');
         let combatTarget = gamePiece.getStatusByKey('combatTarget');
-        if (selectedTargetPiece !== null) {
+        if (selectedTarget !== null) {
             gamePiece.setStatusValue('disengagingTarget', null);
-            if (selectedTargetPiece !== combatTarget) {
-                gamePiece.setStatusValue('combatTarget', selectedTargetPiece);
-                gamePiece.setStatusValue('engagingTarget', selectedTargetPiece);
+            gamePiece.setStatusValue('engagingTarget', selectedTarget);
+            if (selectedTarget !== combatTarget) {
+                gamePiece.setStatusValue('combatTarget', selectedTarget);
             } else {
                 // maintaining selection on current Combat target
             }
         } else {
             if (combatTarget !== null) {
                 gamePiece.setStatusValue('disengagingTarget', combatTarget);
+                gamePiece.setStatusValue('engagingTarget', null);
                 gamePiece.setStatusValue('combatTarget', null);
+            } else {
+                gamePiece.setStatusValue('disengagingTarget', null);
             }
             gamePiece.setStatusValue('engagingTarget', null);
         }

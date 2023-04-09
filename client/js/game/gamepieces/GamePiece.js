@@ -52,9 +52,7 @@ class GamePiece {
         return this.pieceState.status[key] = value;
     }
 
-    applyStateEvent(event) {
-        this.pieceState.handleStateEvent(event)
-    }
+
 
     setEquipSlotId(slot) {
         this.equipToSslotId = slot;

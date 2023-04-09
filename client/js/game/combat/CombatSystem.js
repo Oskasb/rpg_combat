@@ -24,13 +24,11 @@ class CombatSystem {
                 evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)
             }
         }
-
         this.currentTarget = combatTarget;
     }
 
     disengageTarget(disengageTarget) {
         this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.NONE);
-        if (this.currentTarget === disengageTarget) {
             if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
                 this.targetEvent.piece = disengageTarget;
                 this.targetEvent.value = false;
@@ -38,20 +36,19 @@ class CombatSystem {
             }
             this.currentTarget = null;
         }
-    }
+
 
     updateCombatTurnTick() {
         this.combatTargetProcessor.updateCombatTarget(this.gamePiece);
         let combatTarget = this.gamePiece.getStatusByKey('combatTarget');
-        let disengageTarget = this.gamePiece.getStatusByKey('disengageTarget');
         if (combatTarget !== null) {
             this.attackCombatTarget(combatTarget);
-        }
-        if (disengageTarget !== null) {
-            this.disengageTarget(disengageTarget);
+        } else {
+            if (this.currentTarget) {
+                this.disengageTarget(this.currentTarget);
+            }
         }
     }
-
 }
 
 export { CombatSystem }

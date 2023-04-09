@@ -39,7 +39,7 @@ class CharacterIndicator {
             gamePiece.addPieceUpdateCallback(this.call.updateIndicator)
         }.bind(this);
 
-        EffectAPI.buildEffectClassByConfigId('additive_stamps_6x6', 'effect_character_indicator',  effectCb)
+        EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'effect_character_indicator',  effectCb)
     }
 
     indicateCharacterPiece(tpf, time, gamePiece) {

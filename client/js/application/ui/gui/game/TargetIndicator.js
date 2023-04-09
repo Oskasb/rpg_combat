@@ -18,7 +18,9 @@ class TargetIndicator {
         }
     }
 
-    indicateTargetSeleected(gamePiece, indicatorFx, tileX, tileY) {
+    indicateGamePiece(gamePiece, indicatorFx, tileX, tileY) {
+
+        this.gamePiece = gamePiece;
 
         let effectCb = function(efct) {
             this.indicators.push(efct);
@@ -39,7 +41,7 @@ class TargetIndicator {
             gamePiece.addPieceUpdateCallback(this.call.updateIndicator)
         }.bind(this);
 
-        EffectAPI.buildEffectClassByConfigId('additive_stamps_6x6', indicatorFx,  effectCb)
+        EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', indicatorFx,  effectCb)
     }
 
     indicateSelectedTargetPiece(tpf, time, gamePiece, scale, spinSpeed) {
@@ -66,18 +68,22 @@ class TargetIndicator {
 
     }
 
-    removeTargetIndicatorFromPiece(gamePiece) {
-        gamePiece.removePieceUpdateCallback(this.call.updateIndicator)
+    removeTargetIndicatorFromPiece() {
+        if (this.gamePiece) {
+            this.gamePiece.removePieceUpdateCallback(this.call.updateIndicator)
+        }
+        this.gamePiece = null;
     }
 
-    hideIndicatorFx = function() {
+    hideIndicatorFx() {
         for (let i = 0; i < this.indicators.length; i++) {
             let efct = this.indicators[i];
             efct.scaleEffectSize(0);
         }
     }
 
-    removeIndicatorFx = function() {
+    removeIndicatorFx() {
+        this.hideIndicatorFx();
         while (this.indicators.length) {
             let efct = this.indicators.pop();
             efct.recoverEffectOfClass();

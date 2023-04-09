@@ -3,69 +3,60 @@ class PieceStateProcessor {
         this.gamePiece = gamePiece;
     }
 
-
-    processTargetSelected(status, selectedTarget) {
-        if (selectedTarget) {
-            if (status.charState === ENUMS.CharacterState.COMBAT) {
-                if (selectedTarget === status.combatTarget) {
-                    return;
-                }
-            }
+    processEngagingTarget(status) {
+        if ((status.targState === ENUMS.CharacterState.COMBAT) || (status.targState === ENUMS.CharacterState.ENGAGING)) {
+            return;
         } else {
-            this.processDisengagingTarget(status);
+            console.log("targ state ENGAGING")
+            status.charState = ENUMS.CharacterState.ENGAGING;
         }
     }
 
-    processEngagingTarget(status, engagingTarget, selectedTarget) {
-
-        if (selectedTarget === engagingTarget) {
-
-                if ((status.targState === ENUMS.CharacterState.COMBAT) || (status.targState === ENUMS.CharacterState.ENGAGING)) {
-                    return;
-                } else {
-                    console.log("targ stats ENGAGING", status.targState, status.charState)
-                    status.charState = ENUMS.CharacterState.ENGAGING;
-                    status.targState = ENUMS.CharacterState.COMBAT;
-                }
-        }
-
-    }
-
-    processDisengagingTarget(status, disengagingTarget) {
-        if ((status.charState === ENUMS.CharacterState.COMBAT) || (status.charState === ENUMS.CharacterState.ENGAGING)) {
-            status.targState = ENUMS.CharacterState.DISENGAGING;
-            console.log("targ stats DISENGAGING")
-        }
-    }
-
-    processCombatTarget(status, combatTarget, selectedTarget) {
-        if (status.charState === ENUMS.CharacterState.ENGAGING) {
+    processCombatTarget(status) {
+        if  (status.charState === ENUMS.CharacterState.ENGAGING) {
             if (status.targState !== ENUMS.CharacterState.COMBAT) {
-                console.log("targ stats COMBAT")
+                console.log("targ state COMBAT")
                 status.targState = ENUMS.CharacterState.COMBAT;
             }
         }
     }
 
+    processDisengagingTarget(status) {
+        if ((status.charState === ENUMS.CharacterState.COMBAT) || (status.charState === ENUMS.CharacterState.ENGAGING)) {
+            if (status.targState !== ENUMS.CharacterState.DISENGAGING) {
+                status.targState = ENUMS.CharacterState.DISENGAGING;
+                console.log("targ state DISENGAGING")
+            }
+        }
+
+    }
+
+    processNoTarget(status) {
+            if (status.targState !== ENUMS.CharacterState.IDLE_HANDS) {
+                status.targState = ENUMS.CharacterState.IDLE_HANDS;
+                console.log("targ state IDLE_HANDS")
+            }
+    }
+
     processTargetSelection(status, config) {
-        let selectedTarget = status.selectedTarget;
         let engagingTarget = status.engagingTarget;
         let combatTarget = status.combatTarget;
         let disengagingTarget = status.disengagingTarget;
 
-        this.processTargetSelected(status, selectedTarget);
-
         if (engagingTarget !== null) {
-            this.processEngagingTarget(status, engagingTarget, selectedTarget);
-        }
-
-        if (disengagingTarget !== null) {
-            console.log("disengage")
-            this.processDisengagingTarget(status, disengagingTarget);
+            this.processEngagingTarget(status);
         }
 
         if (combatTarget !== null) {
-            this.processCombatTarget(status, combatTarget, selectedTarget);
+            this.processCombatTarget(status);
+        }
+
+        if (disengagingTarget !== null) {
+            this.processDisengagingTarget(status);
+        }
+
+        if ( (engagingTarget === null) && (combatTarget === null) &&  (disengagingTarget === null)) {
+            this.processNoTarget(status);
         }
 
     }
@@ -87,17 +78,19 @@ class PieceStateProcessor {
             status.level++;
         }
 
-
         status.maxAPs = config.maxActPts;
         status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
         status.turn++;
         status.turnProgress++;
         status.charState = status.targState;
-        status.atkType = status.trgAtkTyp;
+
+
         if (status.charState === ENUMS.CharacterState.COMBAT) {
+            status.atkType = status.trgAtkTyp;
             status.attack = 1;
         } else {
             status.attack = 0;
+            status.atkType = ENUMS.AttackType.NONE;
         }
 
         this.gamePiece.threatDetector.updateScenarioThreat();

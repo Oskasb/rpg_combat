@@ -111,7 +111,7 @@
           }
         },
         {
-          "id":"mat_stamp_normal_6x6",
+          "id":"mat_stamp_normal_8x8",
           "config":{
             "settings": "mat_settings_particle_stamp",
             "textures":[
@@ -121,7 +121,7 @@
           }
         },
         {
-          "id":"mat_stamp_additive_6x6",
+          "id":"mat_stamp_additive_8x8",
           "config":{
             "settings": "mat_settings_particle_stamp_additive",
             "textures":[
@@ -131,7 +131,7 @@
           }
         },
         {
-          "id":"mat_particles_normal_6x6",
+          "id":"mat_particles_normal_8x8",
           "config":{
             "settings": "mat_settings_instancing_normal",
             "textures":[
@@ -141,7 +141,7 @@
           }
         },
         {
-          "id":"mat_particles_additive_6x6",
+          "id":"mat_particles_additive_8x8",
           "config":{
             "settings": "mat_settings_particle_additive",
             "textures":[

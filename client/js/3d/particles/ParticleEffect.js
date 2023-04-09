@@ -13,7 +13,7 @@ class ParticleEffect {
 
         this.config = {
             particle_id: "additive",
-            spawner_id: "additive_particles_6x6",
+            spawner_id: "additive_particles_8x8",
             "size_min": 7,
             "size_max": 22,
             "color_min": [0.95, 0.95, 0.95, 1],

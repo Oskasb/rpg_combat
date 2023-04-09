@@ -63,17 +63,7 @@ class PieceState {
 
 
 
-    handleStateEvent(event) {
-        if (this.status.targState === ENUMS.CharacterState[event.state] && this.status.trgAtkTyp === ENUMS.AttackType[event.type]) {
-            this.status.targState = ENUMS.CharacterState.IDLE_HANDS;
-            this.status.trgAtkTyp = ENUMS.AttackType.NONE;
-            this.status.target = "none";
-        } else {
-            this.status.targState = ENUMS.CharacterState[event.state];
-            this.status.trgAtkTyp = ENUMS.AttackType[event.type];
-            this.status.target = event.target;
-        }
-    }
+
     updateGamePiece(tpf, time) {
         let statePre = this.status.charState;
         this.pieceStateProcessor.processGamePieceState(this.status, this.config, tpf, time)

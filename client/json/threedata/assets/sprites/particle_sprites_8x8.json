@@ -3,7 +3,7 @@
   {
     "ASSETS": {
       "SPRITES": [
-        {"id": "ATLAS_6x6",
+        {"id": "ATLAS_8x8",
           "data":[
             {
               "id":"top_left",
