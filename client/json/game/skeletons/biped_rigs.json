@@ -60,7 +60,7 @@
             "MOVE": [          {"name":"WALK",      "active": ["WALK"]        }],
             "MOVE_COMBAT": [   {"name":"MOVE",      "active": ["WALK_COMBAT"] }],
             "STAND_COMBAT": [  {"name":"FIGHT",     "active": ["GD_RT_FF"]    }],
-            "ENGAGING": [      {"name":"GUARD" ,    "source": ["GD_INS_R"],  "init": ["GD_HNG_R"], "active": ["GD_HNG_R"],   "end": ["GD_HNG_R"]}            ],
+            "ENGAGING": [      {"name":"GUARD" ,    "source": ["GD_INS_R"],  "init": ["GD_HNG_R"], "active": ["GD_HNG_R"],   "end": ["GD_HI_R"]}            ],
             "DISENGAGING": [   {"name":"GUARD" ,    "source": ["GD_HNG_R"],  "init": ["GD_HNG_R"], "active": ["GD_INS_R"],   "end": ["GD_BCK_R"]}            ],
             "COMBAT": [        {"name":"SWING" ,    "source": ["GD_HNG_R", "GD_INS_R"],  "init": ["GD_HNG_R"], "active": ["CT_ML_R"],    "end" : ["GD_SID_R"]},
                                {"name":"STAB"  ,    "source": ["GD_INS_R"],  "init": ["GD_LOW_R"], "active": ["GD_LNG_R"],   "end": ["GD_HNG_R"]},

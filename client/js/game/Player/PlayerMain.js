@@ -62,6 +62,7 @@ class PlayerMain {
             if (charState === ENUMS.CharacterState.IDLE_HANDS) {
                 if (combatPage) {
                     combatPage.closeGuiPage();
+                    combatPage = null;
                 }
             } else {
                 if (!combatPage) {

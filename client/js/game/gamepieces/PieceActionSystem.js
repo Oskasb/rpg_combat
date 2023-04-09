@@ -49,9 +49,9 @@ class PieceActionSystem {
 
         if (!this.gamePiece.getPlayingAnimation( actionUpdate.animKey)) {
             if (actionUpdate.lastAnim) {
-                this.gamePiece.applyPieceAnimationState(actionUpdate.lastAnim, actionUpdate.lastDuartion*0.2, actionUpdate.lastAnimChannel, 0)
+                this.gamePiece.applyPieceAnimationState(actionUpdate.lastAnim, actionUpdate.lastDuartion*0.5, actionUpdate.lastAnimChannel, 0)
             }
-            this.gamePiece.applyPieceAnimationState(actionUpdate.animKey, duration, actionUpdate.animChannel)
+            this.gamePiece.applyPieceAnimationState(actionUpdate.animKey, duration+0.1, actionUpdate.animChannel)
             actionUpdate.lastAnim = actionUpdate.animKey;
             actionUpdate.lastDuartion = duration;
             actionUpdate.lastAnimChannel = actionUpdate.animChannel;
