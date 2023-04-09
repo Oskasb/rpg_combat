@@ -17,6 +17,7 @@ class CombatSystem {
     }
 
     attackCombatTarget(combatTarget) {
+        this.gamePiece.setStatusValue('charState', ENUMS.CharacterState.COMBAT);
         this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.FAST);
         if (this.currentTarget !== combatTarget) {
             if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
@@ -49,7 +50,11 @@ class CombatSystem {
         this.engageTarget(this.gamePiece.getStatusByKey('engagingTarget'));
         let combatTarget = this.gamePiece.getStatusByKey('combatTarget');
         if (combatTarget !== null) {
-            this.attackCombatTarget(combatTarget);
+            if (this.combatMovementProcessor.measureAttackRange(combatTarget)) {
+                this.attackCombatTarget(combatTarget);
+            } else {
+
+            }
         } else {
             if (this.currentTarget) {
                 this.disengageTarget(this.currentTarget);
