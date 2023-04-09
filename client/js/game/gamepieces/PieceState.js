@@ -55,7 +55,8 @@ class PieceState {
             hp:100,
             maxHP:100,
             isItem:0,
-            isCharacter:0
+            isCharacter:0,
+            meleeRange:0.5
         }
 
     }

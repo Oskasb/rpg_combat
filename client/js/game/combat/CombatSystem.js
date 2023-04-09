@@ -1,10 +1,11 @@
-import * as SpatialUtils from "../../application/utils/SpatialUtils.js";
 import { CombatTargetProcessor } from "./CombatTargetProcessor.js";
+import {CombatMovementProcessor} from "./CombatMovementProcessor.js";
 
 class CombatSystem {
     constructor(gamePiece) {
         this.gamePiece = gamePiece;
         this.combatTargetProcessor = new CombatTargetProcessor();
+        this.combatMovementProcessor = new CombatMovementProcessor(gamePiece)
         this.knownHostiles = [];
         this.hostilesInRange = [];
         this.currentTarget = null;
@@ -38,8 +39,14 @@ class CombatSystem {
         }
 
 
+    engageTarget(engageTarget) {
+        this.combatMovementProcessor.updateEngagedTarget(engageTarget);
+    }
+
+
     updateCombatTurnTick() {
         this.combatTargetProcessor.updateCombatTarget(this.gamePiece);
+        this.engageTarget(this.gamePiece.getStatusByKey('engagingTarget'));
         let combatTarget = this.gamePiece.getStatusByKey('combatTarget');
         if (combatTarget !== null) {
             this.attackCombatTarget(combatTarget);

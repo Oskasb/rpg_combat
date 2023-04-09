@@ -10,6 +10,7 @@ class PieceMovement {
         this.targetSpatial = null;
         this.startPos = new THREE.Vector3();
         this.targetPos = new THREE.Vector3();
+        this.margin = 0;
 
         let _this = this;
         let tickMovement = function(tpf, gameTime) {
@@ -24,7 +25,7 @@ class PieceMovement {
 
     }
 
-    moveToTargetAtTime(mode, source, target, overTime, callback, ) {
+    moveToTargetAtTime(mode, source, target, overTime, callback, margin) {
 
         if (mode === 'grab_loot') {
             return this.spatialTransition.initSpatialTransition(mode, this.gamePiece, target, overTime, callback )
@@ -37,10 +38,12 @@ class PieceMovement {
             GameAPI.registerGameUpdateCallback(this.callbacks.onGameUpdate);
         }
 
+        this.margin = margin || 0.01;
         this.startTime = now;
         this.targetTime = now+overTime;
         this.targetPos.copy(target);
         this.startPos.copy(source);
+        this.spatial.setPosVec3(source);
         if (typeof(callback) === 'function') {
             this.onArriveCallbacks.push(callback);
         }
@@ -48,7 +51,8 @@ class PieceMovement {
 
     interpolatePosition(tpf) {
         let now = GameAPI.getGameTime();
-        if (this.targetTime+tpf > now) {
+        let distanceRemaining = MATH.distanceBetween(this.spatial.obj3d.position, this.targetPos)
+        if (distanceRemaining > this.margin) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
             if (fraction > 1) {
                 fraction = 1
@@ -56,7 +60,7 @@ class PieceMovement {
             MATH.interpolateVec3FromTo(this.startPos, this.targetPos, MATH.curveQuad(Math.sin(fraction*MATH.HALF_PI)), ThreeAPI.tempVec3);
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
         } else {
-            this.spatial.setPosVec3(this.targetPos);
+            this.spatial.call.setStopped();
             MATH.callAll(this.onArriveCallbacks, this.gamePiece);
             MATH.emptyArray(this.onArriveCallbacks);
             GameAPI.unregisterGameUpdateCallback(this.callbacks.onGameUpdate);

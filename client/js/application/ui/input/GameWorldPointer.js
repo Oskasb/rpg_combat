@@ -1,9 +1,7 @@
 import { TargetIndicator } from "../gui/game/TargetIndicator.js";
-import { ThreeSpatialFunctions } from "../../../3d/three/ThreeSpatialFunctions.js";
 
 class GameWorldPointer {
     constructor() {
-        this.spatialFunctions = new ThreeSpatialFunctions()
         this.selectionEvent = {
             piece:null,
             value:false

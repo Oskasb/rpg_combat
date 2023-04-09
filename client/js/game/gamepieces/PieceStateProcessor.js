@@ -79,6 +79,7 @@ class PieceStateProcessor {
             status.level++;
         }
 
+        status.turnTime = config.turnTime;
         status.maxAPs = config.maxActPts;
         status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
         status.turn++;

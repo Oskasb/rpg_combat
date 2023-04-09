@@ -21,7 +21,12 @@ class InstanceSpatial{
                 return store.copy(frameMovement);
             }
 
+            let setStopped = function() {
+                frameMovement.set(0, 0, 0)
+            }
+
             this.call = {
+                setStopped:setStopped,
                 setPrePos:setPrePos,
                 setPosPos:setPostPos,
                 getMovement:getMovement,
@@ -128,6 +133,10 @@ class InstanceSpatial{
         updateSpatialFrame = function() {
 
         };
+
+        turnTowardsPos(posVec3) {
+            this.obj3d.lookAt(posVec3);
+        }
 
         updateSpatialMatrix = function() {
 

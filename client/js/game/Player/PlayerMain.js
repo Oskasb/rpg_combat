@@ -169,6 +169,9 @@ class PlayerMain {
 
         this.playerCharacter.gamePiece.setStatusValue('selectedTarget', gamePiece);
         this.selectionIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 1, 6, -0.5, 1.1, 0);
+
+
+
     }
 
     handleTargetUnselected() {

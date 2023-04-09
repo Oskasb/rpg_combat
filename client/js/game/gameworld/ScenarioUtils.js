@@ -53,8 +53,8 @@ function positionPlayer(config) {
     }
 
     playerMovement.moveToTargetAtTime('walk', sourcePos, targetPos, travelTimeMax, arriveCallback)
-
 }
+
 function setupBoxGrid(instances, boxGrid) {
 
     let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");

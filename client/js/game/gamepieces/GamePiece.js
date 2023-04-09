@@ -14,6 +14,7 @@ class GamePiece {
         this.pieceActionSystem = new PieceActionSystem();
         this.combatSystem = new CombatSystem(this);
         this.threatDetector = new ThreatDetector(this);
+
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;

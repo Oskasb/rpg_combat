@@ -53,6 +53,7 @@ class EncounterDynamicScenario {
         let walkCharToStart = function(charConf, character) {
             let charPiece = character.gamePiece;
             MATH.vec3FromArray(ThreeAPI.tempVec3, charConf.pos);
+            charPiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
             MATH.randomVector(ThreeAPI.tempVec3b);
             ThreeAPI.tempVec3b.y = 0;
             ThreeAPI.tempVec3b.multiplyScalar(4);
