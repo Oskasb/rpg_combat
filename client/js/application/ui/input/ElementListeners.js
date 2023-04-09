@@ -29,8 +29,8 @@ class ElementListeners {
 
         this.gameScreen.getElement().addEventListener('mousemove', function(e) {
             //	e.stopPropagation();
-            _this.x = (e.clientX);
-            _this.y = (e.clientY);
+            _this.x = (e.pageX);
+            _this.y = (e.pageY);
             _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
             _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
             callInputUpdate(_this.POINTER_STATE.touches[10]);
@@ -62,8 +62,8 @@ class ElementListeners {
 
             for (let i = 0; i < e.changedTouches.length; i++) {
                 touch = e.changedTouches[i];
-                _this.x = touch.clientX;
-                _this.y = touch.clientY;
+                _this.x = touch.pageX;
+                _this.y = touch.pageY;
                 _this.dx = 0;
                 _this.dy = 0;
                 _this.POINTER_STATE.touches[touch.identifier].lastAction[0] = 0;
@@ -79,8 +79,8 @@ class ElementListeners {
             for (let i = 0; i < e.changedTouches.length; i++) {
                 touch = e.changedTouches[i];
             //    console.log(touch.identifier)
-                _this.x = touch.clientX;
-                _this.y = touch.clientY;
+                _this.x = touch.pageX;
+                _this.y = touch.pageY;
                 _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
                 _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
 
@@ -96,8 +96,8 @@ class ElementListeners {
             for (let i = 0; i < e.changedTouches.length; i++) {
             //    console.log(e)
                 touch = e.changedTouches[i];
-                _this.x = touch.clientX;
-                _this.y = touch.clientY;
+                _this.x = touch.pageX;
+                _this.y = touch.pageY;
                 _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
                 _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
                 _this.POINTER_STATE.touches[touch.identifier].lastAction[0] = 1;
