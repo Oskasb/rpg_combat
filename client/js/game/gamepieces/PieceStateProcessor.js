@@ -117,6 +117,12 @@ class PieceStateProcessor {
 
     applyActionProgress(status, config) {
         let action = this.gamePiece.pieceActionSystem.activeAction;
+        if (!action) {
+            this.activateActionType(status, ENUMS.getKey('CharacterState', status.charState))
+            console.log("NO ACTION: ", status, this.gamePiece.pieceActionSystem)
+            action = this.gamePiece.pieceActionSystem.activeAction;
+            //return;
+        }
         status.animKey = this.gamePiece.pieceActionSystem.applyPieceActionProgress(action, status.source, status.prep,status.swing, status.recover, status.trTime);
     }
     countAttack(status) {

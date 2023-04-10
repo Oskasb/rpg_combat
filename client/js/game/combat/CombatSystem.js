@@ -1,11 +1,13 @@
 import { CombatTargetProcessor } from "./CombatTargetProcessor.js";
-import {CombatMovementProcessor} from "./CombatMovementProcessor.js";
+import { CombatMovementProcessor } from "./CombatMovementProcessor.js";
+import { CombatOpponentStatusProcessor } from "./CombatOpponentStatusProcessor.js";
 
 class CombatSystem {
     constructor(gamePiece) {
         this.gamePiece = gamePiece;
         this.combatTargetProcessor = new CombatTargetProcessor();
-        this.combatMovementProcessor = new CombatMovementProcessor(gamePiece)
+        this.combatMovementProcessor = new CombatMovementProcessor(gamePiece);
+        this.combatOpponentStatusProcessor = new CombatOpponentStatusProcessor(gamePiece);
         this.knownHostiles = [];
         this.hostilesInRange = [];
         this.currentTarget = null;
@@ -15,6 +17,10 @@ class CombatSystem {
             value:false
         }
     }
+
+    opponentStatusUpdate(opponentPiece, statusKey, statusValue) {
+        this.combatOpponentStatusProcessor.handleOpponentStatusUpdate(opponentPiece, statusKey, statusValue);
+    };
 
     attackCombatTarget(combatTarget) {
    //     console.log("ATTACK TARGET: ", this.gamePiece.getStatusByKey('charState'))

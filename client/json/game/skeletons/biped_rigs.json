@@ -87,27 +87,30 @@
             "FOOT_L":   { "offset": [0, 0, 0], "rot": [-1.57, 0, 3.14], "scale": [1, 1, 1]}
           },
           "animations": {
-            "IDLE":            {"time_scale": 0.5, "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "IDLE":            {"time_scale": 0.5, "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 0},
             "WALK":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
             "RUN":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
-            "IDL_LO_CB":       {"time_scale": 0.05,"weight": 1, "fade": 0.25,     "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 1},
-            "IDL_HI_CB":       {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 1},
-            "ATTACK_1":        {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 1 , "loop": 0 ,"clamp": 0, "sync": 1},
-            "ATTACK_2":        {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 1 , "loop": 0 ,"clamp": 0, "sync": 1},
-            "DEAD":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
-            "FALL":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1}
+            "IDL_LO_CB":       {"time_scale": 0.5, "weight": 1, "fade": 0.015,     "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "IDL_HI_CB":       {"time_scale": 1,   "weight": 1, "fade": 0.015,     "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "ATTACK_1":        {"time_scale": 1,   "weight": 2, "fade": 0.015,     "channel": 1 , "loop": 0 ,"clamp": 1, "sync": 0},
+            "ATTACK_2":        {"time_scale": 1,   "weight": 2, "fade": 0.015,     "channel": 1 , "loop": 0 ,"clamp": 1, "sync": 0},
+            "DEAD":            {"time_scale": 1,   "weight": 1, "fade": 0.025,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "FALL":            {"time_scale": 1,   "weight": 1, "fade": 0.025,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 0}
           },
           "action_maps": {
             "IDLE_LEGS": [          {"name":"IDLING",   "active": ["IDLE"]       }],
-            "IDLE_HANDS": [         {"name":"IDLING",   "source": ["GD_INS_R"],  "init": ["IDL_HI_CB"], "active": ["IDL_HI_CB"],   "end": ["IDL_HI_CB"]}       ],
+            "IDLE_HANDS": [         {"name":"IDLING",   "active": ["IDL_HI_CB"]  }],
             "MOVE": [          {"name":"WALK"  ,   "active": ["RUN"]        }],
             "MOVE_COMBAT": [   {"name":"RUN"   ,   "active": ["RUN"]        }],
-            "LEGS_COMBAT": [   {"name":"FIGHT" ,   "active": ["IDL_LO_CB"]  }],
-            "ENGAGING": [      {"name":"GUARD" ,   "source": ["GD_INS_R"],  "init": ["IDL_HI_CB"], "active": ["IDL_HI_CB"],   "end": ["IDL_HI_CB"]}            ],
-            "DISENGAGING": [   {"name":"GUARD" ,   "source": ["GD_HNG_R"],  "init": ["IDL_HI_CB"], "active": ["IDL_HI_CB"],   "end": ["IDL_HI_CB"]}            ],
+            "STAND_COMBAT": [  {"name":"FIGHT",    "active": ["IDL_LO_CB"]    }],
+            "ENGAGING": [      {"name":"GUARD" ,   "source": ["IDL_HI_CB"],  "init": ["IDL_HI_CB"], "active": ["IDL_HI_CB"],   "end": ["IDL_HI_CB"]}],
+            "DISENGAGING": [   {"name":"GUARD" ,   "source": ["IDL_HI_CB"],  "init": ["IDL_HI_CB"], "active": ["IDL_HI_CB"],   "end": ["IDL_HI_CB"]}],
             "COMBAT": [
-              {"name":"SLASH" ,   "source": ["IDL_HI_CB"],  "init": ["ATTACK_1"], "active": ["ATTACK_1"],   "end": ["IDL_HI_CB"]},
-              {"name":"CHOP" ,    "source": ["IDL_HI_CB"],  "init": ["ATTACK_2"], "active": ["ATTACK_2"],   "end": ["IDL_HI_CB"]}
+              {"name":"SLASH" ,   "source": ["IDL_LO_CB"], "init": ["ATTACK_1"], "active": ["ATTACK_1"],   "end": ["IDL_LO_CB"]}
+            ],
+            "_COMBAT": [
+              {"name":"SLASH" ,   "source": ["ATTACK_2"],  "init": ["ATTACK_2"], "active": ["ATTACK_2"],   "end": ["ATTACK_2"]},
+              {"name":"CHOP" ,    "source": ["ATTACK_1"],  "init": ["ATTACK_1"], "active": ["ATTACK_2"],   "end": ["IDL_HI_CB"]}
             ]
           }
         }
@@ -126,19 +129,31 @@
           },
           "animations": {
             "IDLE":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
-            "RUN":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1}
+            "RUN":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "SIT":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "SLEEP":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "DANCE_1":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "DANCE_2":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "DANCE_3":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "DANCE_4":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "BK_SWING":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "HI_SWING":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "JMP_SWING":            {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "MLE_SLSH_HI":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1},
+            "MLE_SLS_LO":             {"time_scale": 1,   "weight": 1, "fade": 0.25,     "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 1}
+
           },
           "action_maps": {
-            "IDLE_LEGS": [          {"name":"IDLING",   "active": ["IDLE"]       }],
-            "IDLE_HANDS": [         {"name":"IDLING",   "active": []       }],
-            "MOVE": [          {"name":"WALK"  ,        "active": ["RUN"]      }     ],
-            "MOVE_COMBAT": [   {"name":"RUN"   ,        "active": ["RUN"]      }     ],
-            "LEGS_COMBAT": [   {"name":"FIGHT" ,        "active": ["IDLE"]       }  ],
-            "ENGAGING": [      {"name":"GUARD" ,   "source": ["GD_INS_R"],  "init": ["IDL_HI_CB"], "active": ["IDL_HI_CB"],   "end": ["IDL_HI_CB"]}            ],
-            "DISENGAGING": [   {"name":"GUARD" ,   "source": ["GD_HNG_R"],  "init": ["IDL_HI_CB"], "active": ["IDL_HI_CB"],   "end": ["IDL_HI_CB"]}            ],
+            "IDLE_LEGS": [     {"name":"IDLING",   "active": ["IDLE"]       }],
+            "IDLE_HANDS": [    {"name":"IDLING",   "active": ["DANCE_1"]       }],
+            "MOVE": [          {"name":"WALK"  ,   "active": ["RUN"]      }     ],
+            "MOVE_COMBAT": [   {"name":"RUN"   ,   "active": ["RUN"]      }     ],
+            "STAND_COMBAT": [  {"name":"FIGHT",    "active": ["DANCE_4"]    }],
+            "ENGAGING": [      {"name":"GUARD" ,   "source": ["DANCE_2"],  "init": ["DANCE_2"], "active": ["DANCE_2"],   "end": ["DANCE_2"]}            ],
+            "DISENGAGING": [   {"name":"GUARD" ,   "source": ["DANCE_3"],  "init": ["DANCE_3"], "active": ["DANCE_3"],   "end": ["DANCE_3"]}            ],
             "COMBAT": [
-              {"name":"SLASH" ,   "source": ["IDL_HI_CB"],  "init": ["ATTACK_1"], "active": ["ATTACK_1"],   "end": ["IDL_HI_CB"]},
-              {"name":"CHOP" ,    "source": ["IDL_HI_CB"],  "init": ["ATTACK_2"], "active": ["ATTACK_2"],   "end": ["IDL_HI_CB"]}
+              {"name":"SLASH" , "source": ["IDLE"],  "init": ["IDLE"], "active": ["MLE_SLSH_HI"],   "end": ["IDLE"]},
+              {"name":"CHOP" ,  "source": ["IDLE"],  "init": ["IDLE"], "active": ["MLE_SLS_LO"],   "end": ["IDLE"]}
             ]
           }
         }

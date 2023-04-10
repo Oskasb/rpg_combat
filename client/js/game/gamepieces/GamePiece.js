@@ -45,6 +45,10 @@ class GamePiece {
 
     }
 
+    notifyOpponentStatusUpdate(opponentPiece, statusKey, statusValue) {
+        this.combatSystem.opponentStatusUpdate(opponentPiece, statusKey, statusValue);
+    }
+
     getStatusByKey = function(key) {
         return this.pieceState.status[key];
     }
@@ -52,8 +56,6 @@ class GamePiece {
     setStatusValue = function(key, value) {
         return this.pieceState.status[key] = value;
     }
-
-
 
     setEquipSlotId(slot) {
         this.equipToSslotId = slot;

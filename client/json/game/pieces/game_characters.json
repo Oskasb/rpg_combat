@@ -12,10 +12,27 @@
           },
 
           "actor":"ACTOR_FIGHTER",
-          "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE", "LEGS_CHAIN"],
+          "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE", "LEGS_BRONZE"],
           "inventory": [
             "HELMET_VIKING", "BELT_PLATE", "LEGS_CHAIN", "BOOTS_SCALE", "GLOVES_SCALE", "SHIRT_SCALE",
             "LEGS_SCALE", "LEGS_BRONZE", "BREASTPLATE_BRONZE", "SHIRT_CHAIN"
+          ]
+        }
+      },
+      {
+        "id":"COMBAT_TUTOR",
+        "data":{
+          "status": {
+            "name": "charles",
+            "faction": "NEUTRAL",
+            "height": 1.85,
+            "size": 1
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["NINJASWORD", "GLOVES_SCALE", "BELT_PLATE", "BOOTS_SCALE", "LEGS_CHAIN", "SHIRT_CHAIN"],
+          "inventory": [
+
           ]
         }
       },

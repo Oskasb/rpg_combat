@@ -15,6 +15,11 @@
               },
               "characters": [
                 {
+                  "character":"COMBAT_TUTOR",
+                  "pos": [-6.7, 0, -2.4],
+                  "rot": [0, -1.111, 0]
+                },
+                {
                   "character":"BARB_TRAINER",
                   "pos": [-1.7, 0, -4.4],
                   "rot": [0, -1.311, 0]
