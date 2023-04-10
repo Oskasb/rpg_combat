@@ -165,7 +165,7 @@ class PlayerMain {
 
         let oldTarget = this.playerCharacter.gamePiece.getStatusByKey('selectedTarget');
         if (oldTarget) {
-            this.handleTargetUnselected(oldTarget);
+            this.handleTargetUnselected();
         }
 
         this.playerCharacter.gamePiece.setStatusValue('selectedTarget', gamePiece);

@@ -122,6 +122,7 @@ class GameMain {
     }
 
     requestScenario(scenarioEvent) {
+        evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
         let scenarioId = scenarioEvent['id']
         let dynamicId = scenarioEvent['dynamic']
         this.dynamicId = dynamicId;

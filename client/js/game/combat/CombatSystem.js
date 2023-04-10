@@ -52,6 +52,7 @@ class CombatSystem {
     }
 
     testForMeleeRange = function(engageTarget) {
+        if (!engageTarget) return false;
         return this.combatMovementProcessor.measureAttackRange(engageTarget)
     }
 

@@ -6,9 +6,9 @@ class CombatMovementProcessor {
 
 
     moveToEngagedTarget(engageTarget) {
-        this.gamePiece.setStatusValue('targState', ENUMS.CharacterState.ENGAGING);
+    //    this.gamePiece.setStatusValue('targState', ENUMS.CharacterState.ENGAGING);
         this.gamePiece.setStatusValue('combatTarget', null);
-        let margin = this.determineAttackRangeMargin(engageTarget)*0.8;
+        let margin = this.determineAttackRangeMargin(engageTarget)*0.85;
         let onArrive = function(arrive) {
             console.log("Arrive at Target", arrive);
             this.initiateCombat(engageTarget);
@@ -25,7 +25,7 @@ class CombatMovementProcessor {
     determineAttackRangeMargin(engageTarget) {
         let targetSize = engageTarget.getStatusByKey('size')
         let meleeRange = this.gamePiece.getStatusByKey('meleeRange');
-        return meleeRange + targetSize + 0.1
+        return meleeRange + targetSize + 0.05
     }
     measureAttackRange(engageTarget) {
         let distance = MATH.distanceBetween(this.gamePiece.getPos(), engageTarget.getPos());
@@ -39,6 +39,7 @@ class CombatMovementProcessor {
             let isInRange = this.measureAttackRange(engageTarget)
             if (isInRange) {
                 this.initiateCombat(engageTarget);
+                this.moveToEngagedTarget(engageTarget);
             } else {
                 this.moveToEngagedTarget(engageTarget);
             }

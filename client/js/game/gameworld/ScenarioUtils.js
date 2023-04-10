@@ -206,9 +206,51 @@ function spawnLocation(instances, location) {
 
 }
 
+function resetScenarioCharacterPiece(charPiece) {
+
+        let targPiece = charPiece.getStatusByKey('selectedTarget');
+        if (targPiece) {
+            targPiece.setStatusValue('selectedTarget', null);
+            targPiece.setStatusValue('engagingTarget', null);
+            targPiece.setStatusValue('combatTarget', null);
+        }
+
+        charPiece.combatSystem.disengageTarget(charPiece.combatSystem.currentTarget);
+        evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
+        evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, {piece:null, value:false });
+        evt.dispatch(ENUMS.Event.SET_PLAYER_STATE, ENUMS.CharacterState.IDLE_HANDS);
+
+        charPiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);
+        charPiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
+        charPiece.setStatusValue('atkType', ENUMS.AttackType.NONE);
+        charPiece.setStatusValue('trgAtkType', ENUMS.AttackType.NONE);
+        charPiece.setStatusValue('disengageTarget', null);
+        charPiece.setStatusValue('combatTarget', null);
+        charPiece.setStatusValue('engagingTarget', null);
+        charPiece.setStatusValue('selectedTarget', null);
+        charPiece.pieceState.pieceStateProcessor.processTargetSelection(charPiece.pieceState.status);
+        charPiece.pieceState.pieceStateProcessor.updatePieceTurn(charPiece.pieceState.status, charPiece.pieceState.config);
+        charPiece.pieceState.pieceStateProcessor.processNewTurn(charPiece.pieceState.status, charPiece.pieceState.config);
+        charPiece.combatSystem.disengageTarget(charPiece.combatSystem.currentTarget);
+        evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
+        evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, {piece:null, value:false });
+        evt.dispatch(ENUMS.Event.SET_PLAYER_STATE, ENUMS.CharacterState.IDLE_HANDS);
+        charPiece.combatSystem.updateCombatTurnTick();
+        charPiece.setStatusValue('disengageTarget', null);
+        charPiece.setStatusValue('combatTarget', null);
+        charPiece.setStatusValue('engagingTarget', null);
+        charPiece.setStatusValue('selectedTarget', null);
+        charPiece.pieceState.pieceStateProcessor.processTargetSelection(charPiece.pieceState.status);
+        charPiece.pieceState.pieceStateProcessor.updatePieceTurn(charPiece.pieceState.status, charPiece.pieceState.config);
+        charPiece.pieceState.pieceStateProcessor.processNewTurn(charPiece.pieceState.status, charPiece.pieceState.config);
+        charPiece.combatSystem.updateCombatTurnTick();
+
+}
+
 export {
     positionPlayer,
     setupBoxGrid,
     spawnPatch,
-    spawnLocation
+    spawnLocation,
+    resetScenarioCharacterPiece
 }

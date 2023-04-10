@@ -46,36 +46,18 @@ class EncounterDynamicScenario {
 
         let pieces = this.pieces;
 
+
+
+
+        ScenarioUtils.resetScenarioCharacterPiece(GameAPI.getActivePlayerCharacter().gamePiece);
+
         if (config['player']) ScenarioUtils.positionPlayer(config['player']);
 
         let characters = this.characters;
 
         let walkCharToStart = function(charConf, character) {
-            console.log("RESET MAIN CHAR STATE")
             let charPiece = character.gamePiece;
-         //   charPiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);
-         //   charPiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
-            let targPiece = charPiece.getStatusByKey('selectedTarget');
-            if (targPiece) {
-                targPiece.setStatusValue('selectedTarget', null);
-                targPiece.setStatusValue('engagingTarget', null);
-                targPiece.setStatusValue('combatTarget', null);
-            }
-
-       //    charPiece.setStatusValue('engagingTarget', null);
-            charPiece.setStatusValue('disengageTarget', charPiece.combatSystem.currentTarget);
-            charPiece.combatSystem.disengageTarget(charPiece.combatSystem.currentTarget);
-        //    charPiece.setStatusValue('combatTarget', null);
-            charPiece.pieceState.pieceStateProcessor.processTargetSelection(charPiece.pieceState.status);
-            charPiece.combatSystem.updateCombatTurnTick();
-
-            evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:charPiece.getStatusByKey('selectedTarget'), value:false })
-            evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, {piece:charPiece.getStatusByKey('engagingTarget'), value:false })
-            charPiece.setStatusValue('selectedTarget', null);
-            charPiece.setStatusValue('engagingTarget', null);
-            charPiece.setStatusValue('combatTarget', null);
-
-
+            ScenarioUtils.resetScenarioCharacterPiece(charPiece);
             MATH.vec3FromArray(ThreeAPI.tempVec3, charConf.pos);
             charPiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
             MATH.randomVector(ThreeAPI.tempVec3b);
@@ -85,7 +67,9 @@ class EncounterDynamicScenario {
             let moveCB = function (movedCharPiece) {
                 movedCharPiece.getSpatial().setRotXYZ(charConf.rot[0],charConf.rot[1], charConf.rot[2])
             }
-            charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, ThreeAPI.tempVec3, 2, moveCB)
+            charPiece.getPieceMovement().setTargetPosition(ThreeAPI.tempVec3);
+            let tPos = charPiece.getPieceMovement().getTargetPosition();
+            charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, tPos, 2, moveCB)
         }
 
         if (config['characters']) {
@@ -95,6 +79,7 @@ class EncounterDynamicScenario {
                 let charCB = function(character) {
                     characters.push(character);
                     let gamePiece = character.gamePiece;
+                    ScenarioUtils.resetScenarioCharacterPiece(gamePiece);
                     gamePiece.setStatusValue('isCharacter', 1)
                     setTimeout(function() {
                         walkCharToStart(char, character)
@@ -125,6 +110,7 @@ class EncounterDynamicScenario {
     };
 
     exitScenario() {
+        evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
         this.isActive = false;
         GuiAPI.guiPageSystem.closeGuiPage(this.page);
         while (this.pieces.length) {
