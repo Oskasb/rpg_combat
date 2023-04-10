@@ -44,6 +44,7 @@ class Client {
 
     initClientSetup(dataPipelineOptions) {
         this.gameScreen.registerAppContainer(document.body);
+        document.body
         let pipeWorkersReadyCB = function() {
             client.setup.initConfigCache(window.PipelineAPI, dataPipelineOptions);
             client.initUiSystem();
