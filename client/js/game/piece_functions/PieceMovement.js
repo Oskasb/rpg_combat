@@ -35,7 +35,7 @@ class PieceMovement {
 
         let now = GameAPI.getGameTime();
         if (this.onArriveCallbacks.length === 0) {
-            GameAPI.registerGameUpdateCallback(this.callbacks.onGameUpdate);
+            this.gamePiece.addPieceUpdateCallback(this.callbacks.onGameUpdate);
         }
 
         this.margin = margin || 0.01;
@@ -63,7 +63,7 @@ class PieceMovement {
             this.spatial.call.setStopped();
             MATH.callAll(this.onArriveCallbacks, this.gamePiece);
             MATH.emptyArray(this.onArriveCallbacks);
-            GameAPI.unregisterGameUpdateCallback(this.callbacks.onGameUpdate);
+            this.gamePiece.removePieceUpdateCallback(this.callbacks.onGameUpdate);
         }
     }
 

@@ -4,7 +4,7 @@ class PieceStateProcessor {
     }
 
     processEngagingTarget(status) {
-        if ((status.targState === ENUMS.CharacterState.COMBAT) || (status.targState === ENUMS.CharacterState.COMBAT)) {
+        if ((status.targState === ENUMS.CharacterState.COMBAT) || (status.charState === ENUMS.CharacterState.ENGAGING) ) {
             return;
         } else {
             console.log("targ state ENGAGING")
@@ -36,7 +36,7 @@ class PieceStateProcessor {
             if (status.charState !== ENUMS.CharacterState.IDLE_HANDS) {
                 status.charState = ENUMS.CharacterState.IDLE_HANDS;
                 status.targState = ENUMS.CharacterState.IDLE_HANDS;
-                console.log("targ state IDLE_HANDS")
+    //            console.log("targ state IDLE_HANDS")
             }
     }
 
@@ -84,8 +84,8 @@ class PieceStateProcessor {
         status.turnTime = config.turnTime;
         status.maxAPs = config.maxActPts;
         status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
-        status.turn++;
-        status.turnProgress++;
+        status.turn = GameAPI.gameMain.turnStatus.turn;
+        status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
 
         status.charState = status.targState;
 
@@ -110,7 +110,7 @@ class PieceStateProcessor {
 
 
     activateActionType(status, actionType) {
-        console.log("Activate Action: ", actionType)
+//        console.log("Activate Action: ", actionType)
         let action = this.gamePiece.pieceActionSystem.activateActionOfType(actionType);
         status.action = action.name;
     }
@@ -167,9 +167,9 @@ class PieceStateProcessor {
         }
     }
 
-    updatePieceTurn(status, config, tpf) {
-        status.turnProgress -= tpf * config.hasteFactor / config.turnTime;
-        if (status.turnProgress < 0) {
+    updatePieceTurn(status, config) {
+        status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
+        if (status.turn !== GameAPI.gameMain.turnStatus.turn) {
             this.processNewTurn(status, config)
         }
         this.processPieceState(status, config);
@@ -196,7 +196,7 @@ class PieceStateProcessor {
     processGamePieceState(status, config, tpf, time) {
         status.lifetime += tpf;
         this.processTargetSelection(status, config);
-        this.updatePieceTurn(status, config, tpf)
+        this.updatePieceTurn(status, config)
     }
 
 }

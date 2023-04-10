@@ -17,7 +17,7 @@ class CharacterMovement {
             onGameTick:onGameTick
         }
 
-        GameAPI.registerGameUpdateCallback(this.callbacks.onGameTick);
+        gamePiece.addPieceUpdateCallback(this.callbacks.onGameTick);
     }
 
     applyCombatState(bool) {

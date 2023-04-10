@@ -51,7 +51,31 @@ class EncounterDynamicScenario {
         let characters = this.characters;
 
         let walkCharToStart = function(charConf, character) {
+            console.log("RESET MAIN CHAR STATE")
             let charPiece = character.gamePiece;
+         //   charPiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);
+         //   charPiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
+            let targPiece = charPiece.getStatusByKey('selectedTarget');
+            if (targPiece) {
+                targPiece.setStatusValue('selectedTarget', null);
+                targPiece.setStatusValue('engagingTarget', null);
+                targPiece.setStatusValue('combatTarget', null);
+            }
+
+       //    charPiece.setStatusValue('engagingTarget', null);
+            charPiece.setStatusValue('disengageTarget', charPiece.combatSystem.currentTarget);
+            charPiece.combatSystem.disengageTarget(charPiece.combatSystem.currentTarget);
+        //    charPiece.setStatusValue('combatTarget', null);
+            charPiece.pieceState.pieceStateProcessor.processTargetSelection(charPiece.pieceState.status);
+            charPiece.combatSystem.updateCombatTurnTick();
+
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:charPiece.getStatusByKey('selectedTarget'), value:false })
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, {piece:charPiece.getStatusByKey('engagingTarget'), value:false })
+            charPiece.setStatusValue('selectedTarget', null);
+            charPiece.setStatusValue('engagingTarget', null);
+            charPiece.setStatusValue('combatTarget', null);
+
+
             MATH.vec3FromArray(ThreeAPI.tempVec3, charConf.pos);
             charPiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
             MATH.randomVector(ThreeAPI.tempVec3b);

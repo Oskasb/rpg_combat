@@ -25,7 +25,7 @@ class SpatialTransition {
 
         let now = GameAPI.getGameTime();
         if (this.onArriveCallbacks.length === 0) {
-            GameAPI.registerGameUpdateCallback(this.callbacks.onGameUpdate);
+            this.gamePiece.addPieceUpdateCallback(this.callbacks.onGameUpdate);
         }
         this.startTime = now;
         this.targetTime = now+overTime;
@@ -53,7 +53,7 @@ class SpatialTransition {
             MATH.callAll(this.onArriveCallbacks, this.gamePiece);
             this.spatial.setPosVec3(this.targetPos);
             MATH.emptyArray(this.onArriveCallbacks);
-            GameAPI.unregisterGameUpdateCallback(this.callbacks.onGameUpdate);
+            this.gamePiece.removePieceUpdateCallback(this.callbacks.onGameUpdate);
         }
     }
 

@@ -11,7 +11,7 @@ class CombatTargetProcessor {
         } else {
             if (combatTarget !== null) {
                 gamePiece.setStatusValue('disengagingTarget', combatTarget);
-                selectedTarget.notifyOpponentStatusUpdate(gamePiece,'disengagingTarget', combatTarget)
+                combatTarget.notifyOpponentStatusUpdate(gamePiece,'disengagingTarget', combatTarget)
                 gamePiece.setStatusValue('engagingTarget', null);
                 gamePiece.setStatusValue('combatTarget', null);
             } else {

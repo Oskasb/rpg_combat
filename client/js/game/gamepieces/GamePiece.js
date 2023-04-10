@@ -166,6 +166,7 @@ class GamePiece {
     };
 
     disbandGamePiece() {
+        GameAPI.unregisterGameUpdateCallback(this.getOnUpdateCallback());
         this.modelInstance.decommissionInstancedModel();
         this.gamePieceUpdateCallbacks.length = 0;
     };

@@ -20,11 +20,11 @@ class CharacterStatus {
     }
     activateCharacterStatus(gamePiece) {
         this.gamePiece = gamePiece;
-        GameAPI.registerGameUpdateCallback(this.callbacks.updateStatus);
+        gamePiece.addPieceUpdateCallback(this.callbacks.updateStatus);
     }
 
     deactivateCharacterStatus() {
-        GameAPI.unregisterGameUpdateCallback(this.callbacks.updateStatus);
+        this.gamePiece.removePieceUpdateCallback(this.callbacks.updateStatus);
     }
 
 }

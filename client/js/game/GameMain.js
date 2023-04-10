@@ -7,6 +7,14 @@ import { CharacterComposer } from "./Player/CharacterComposer.js";
 
 class GameMain {
     constructor() {
+
+        this.turnStatus = {
+            totalTime:0,
+            turnTime:4,
+            turnProgress:0,
+            turn:0
+        }
+
         this.activeScenario = null;
         this.callbacks = {};
         this.gameTime = 0;
@@ -169,8 +177,22 @@ class GameMain {
 
     }
 
+    updateMainGameTurn(tpf, gameTime) {
+
+        this.turnStatus.totalTime = gameTime;
+        let turnTime = this.turnStatus.turnTime;
+        this.turnStatus.turnProgress -= tpf / turnTime;
+
+        if (this.turnStatus.turnProgress < 0) {
+            this.turnStatus.turn++;
+            this.turnStatus.turnProgress++;
+        }
+    }
+
     updateGameMain(frame) {
         this.gameTime+= frame.tpf;
+
+        this.updateMainGameTurn(frame.tpf, this.gameTime);
 
             if (this.activeScenario) {
                 this.activeScenario.tickGameScenario(frame);

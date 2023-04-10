@@ -69,6 +69,7 @@ class GameCharacter {
         this.gamePiece.disbandGamePiece()
         this.characterStatusGui.deactivateCharacterStatusGui();
         this.characterIndicator.removeIndicatorFromPiece(this.gamePiece);
+        this.characterStatus.deactivateCharacterStatus();
     }
 
 }
