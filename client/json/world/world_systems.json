@@ -112,8 +112,8 @@
         },
         "encounter_cave_basic_dynamic":{
           "time":2,
-          "pos": [0, 8, -5],
-          "lookAt": [0, 0, 4]
+          "pos": [0, 8, -7],
+          "lookAt": [0, 0, 2]
         }
       }
       }

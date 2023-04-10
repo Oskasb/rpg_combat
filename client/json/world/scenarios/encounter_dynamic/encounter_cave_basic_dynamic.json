@@ -8,11 +8,36 @@
           {
             "data_key":"dynamic_view_init",
             "config": {
+              "camera": "main_char_follow",
               "gui_page":"page_scene_dungeon",
               "environment": "cave_dusty",
-
+              "characters": [
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [-1.2, 0, 7.4],
+                  "rot": [0, -0.311, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [-1.7, 0, 5.4],
+                  "rot": [0, 2.511, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [1.7, 0, 12.4],
+                  "rot": [0, 1.111, 0]
+                },
+                {
+                  "character":"BANDIT_LEADER",
+                  "pos": [0.7, 0, 14.4],
+                  "rot": [0, -1.111, 0]
+                }
+              ],
               "spawn":[
-
+                {"piece": "BELT_PLATE",
+                  "pos": [-2.3, 0.3, -10.8],
+                  "rot": [-1.7, 0, -1.311]
+                }
               ]
             }
           }

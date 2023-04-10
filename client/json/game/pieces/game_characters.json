@@ -23,7 +23,7 @@
         "id":"COMBAT_TUTOR",
         "data":{
           "status": {
-            "name": "charles",
+            "name": "Charles",
             "faction": "NEUTRAL",
             "height": 1.85,
             "size": 1
@@ -37,11 +37,67 @@
         }
       },
       {
+        "id":"BANDIT_BASIC",
+        "data":{
+          "status": {
+            "name": "Bandit",
+            "faction": "EVIL",
+            "height": 1.85,
+            "size": 1
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["NINJASWORD"],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
+        "id":"BANDIT_TOUGH",
+        "data":{
+          "status": {
+            "name": "Bandit",
+            "faction": "EVIL",
+            "height": 1.85,
+            "size": 1
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":[
+            "NINJASWORD", "BELT_PLATE", "BOOTS_SCALE", "LEGS_CHAIN", "SHIRT_CHAIN"
+          ],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
+        "id":"BANDIT_LEADER",
+        "data":{
+          "status": {
+            "name": "Bandit",
+            "faction": "EVIL",
+            "height": 1.85,
+            "size": 1
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":[
+            "NINJASWORD", "HELMET_VIKING" ,"BELT_PLATE", "BOOTS_SCALE",
+            "LEGS_SCALE", "SHIRT_CHAIN","GLOVES_SCALE", "SHIRT_SCALE"
+          ],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
         "id":"BARB_TRAINER",
         "data":{
           "status": {
             "name": "Grong",
-            "faction": "NEUTRAL",
+            "faction": "GOOD",
             "height": 2.3,
             "size": 1.3
           },
@@ -54,7 +110,7 @@
         "data":{
           "status": {
             "name": "Eddie",
-            "faction": "NEUTRAL",
+            "faction": "GOOD",
             "height": 1.88,
             "size": 1
           },

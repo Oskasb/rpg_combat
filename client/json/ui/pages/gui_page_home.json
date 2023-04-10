@@ -48,7 +48,7 @@
                     "text":"LEAVE",
                     "container_id":"page_home_center",
                     "offset_x":-0.04,
-                    "offset_y": 0.11,
+                    "offset_y": 0.25,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -59,20 +59,19 @@
                   }
                 },
                 {
-                  "widget_id":"button_go_stash",
+                  "widget_id":"button_go_cave",
                   "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"button_big_blue",
+                  "widget_config_id":"button_big_red",
                   "options":{
-                    "text":"STASH",
+                    "text":"CELLAR",
                     "container_id":"page_home_center",
-                    "offset_x":-0.115,
-                    "offset_y":-0.21,
+                    "offset_x":-0.09,
+                    "offset_y":-0.33,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"home_stash_dynamic"
-
+                        "id":"cave_scenario",
+                        "dynamic":"encounter_cave_basic_dynamic"
                       }
                     }
                   }

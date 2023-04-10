@@ -58,7 +58,7 @@ class GameMain {
                     gamePiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
                     GameAPI.getPlayerMain().callbacks.addToStash(gamePiece);
                 }.bind(this);
-
+/*
                 GameAPI.createGamePiece({piece:"BELT_BRONZE"        }, itemCallback);
                 GameAPI.createGamePiece({piece:"HELMET_VIKING"      }, itemCallback);
                 GameAPI.createGamePiece({piece:"BELT_PLATE"         }, itemCallback);
@@ -70,7 +70,7 @@ class GameMain {
                 GameAPI.createGamePiece({piece:"LEGS_BRONZE"        }, itemCallback);
                 GameAPI.createGamePiece({piece:"BREASTPLATE_BRONZE" }, itemCallback);
                 GameAPI.createGamePiece({piece:"SHIRT_CHAIN"        }, itemCallback);
-
+*/
                 evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
                     id:"home_scenario",
                     dynamic:"home_hovel_dynamic"

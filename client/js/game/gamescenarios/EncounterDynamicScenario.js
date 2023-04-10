@@ -9,6 +9,12 @@ class EncounterDynamicScenario {
         this.onUpdateCallbacks = []
         this.configData =  new ConfigData("DYNAMIC_SCENARIOS", "GAME_SCENARIOS",  'dynamic_view_init', 'data_key', 'config')
         this.isActive = false;
+
+        this.camFollow = function() {
+            let playerPos = GameAPI.getActivePlayerCharacter().gamePiece.getPos()
+            ThreeAPI.setCameraPos(playerPos.x, playerPos.y+6, playerPos.z-10);
+            ThreeAPI.cameraLookAt(playerPos.x, playerPos.y+2, playerPos.z+2)
+        }
     }
 
     initEncounterDynamicScenario(onReady) {
@@ -34,7 +40,15 @@ class EncounterDynamicScenario {
     activateEncDynScenario() {
         this.page = GuiAPI.activatePage(this.config['gui_page']);
 
+        if (this.config['camera']) {
+            console.log("Set Camera mode: ", this.config.camera)
+            let camFollow = this.camFollow;
+            setTimeout(function() {
+                GameAPI.getActivePlayerCharacter().gamePiece.addPieceUpdateCallback(camFollow)
+            }, 200)
+        }
     }
+
 
     applyScenarioConfig = function(config, isUpdate) {
 
@@ -45,6 +59,7 @@ class EncounterDynamicScenario {
         evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:50});
 
         let pieces = this.pieces;
+
 
 
 
@@ -110,6 +125,7 @@ class EncounterDynamicScenario {
     };
 
     exitScenario() {
+        GameAPI.getActivePlayerCharacter().gamePiece.removePieceUpdateCallback(this.camFollow)
         evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
         this.isActive = false;
         GuiAPI.guiPageSystem.closeGuiPage(this.page);

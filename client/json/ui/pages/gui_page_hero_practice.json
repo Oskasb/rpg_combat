@@ -54,7 +54,7 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"BACK",
+                    "text":"HOUSE",
                     "container_id":"page_home_center",
                     "offset_x":-0.07,
                     "offset_y":-0.31,
@@ -62,7 +62,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_hero_dynamic"
+                        "dynamic":"home_hovel_dynamic"
                       }
                     }
                   }
