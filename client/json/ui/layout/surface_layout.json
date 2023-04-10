@@ -204,6 +204,15 @@
               }
             },
             {
+              "id":"layout_turn_progress_container",
+              "config": {
+                "text":   {"x":1.0, "y":0.0, "fontsize": 8},
+                "anchor": {"x":0.0, "y":0.0, "z":  0.0},
+                "offset": {"x":0.0, "y":0.0,"z":  0.0},
+                "size":   {"x":0.1, "y":0.005,"z":  0.0}
+              }
+            },
+            {
               "id":"layout_xp_bar_container",
               "config": {
                 "text":   {"x":1.0, "y":0.0, "fontsize": 8},

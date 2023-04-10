@@ -138,9 +138,11 @@ class GuiPointerWidget {
     //    posVec3.y = 0;
     //    posVec3.z = -1;
 
+    //    GameScreen.fitView(this.pos);
+
         for (let i = 0; i < this.hostWidgets.length; i++) {
             this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 0.5, true)
-            this.surfaceElements[i].setPositionVec3(posVec3);
+            this.surfaceElements[i].setPositionVec3(this.pos);
 
         //    this.hostWidgets[i].offsetWidgetPosition(posVec3)
         //    this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, 0.015+i*0.01, 0.025+i*0.01)

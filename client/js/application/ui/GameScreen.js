@@ -171,9 +171,9 @@ class GameScreen {
 
     };
 
-    fitView = function(vec3) {
-        vec3.x *= (0.83 * this.width/this.height);
-        vec3.y *= (0.83);
+    fitView(vec3) {
+        vec3.x *= (this.width/this.height);
+     //   vec3.y *= (0.83);
     }
 
 }

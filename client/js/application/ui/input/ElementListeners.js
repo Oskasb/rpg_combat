@@ -60,8 +60,9 @@ class ElementListeners {
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {
             //	e.preventDefault();
 
-            for (let i = 0; i < e.changedTouches.length; i++) {
-                touch = e.changedTouches[i];
+            let touches = e.changedTouches || e.touches;
+            for (let i = 0; i < touches.length; i++) {
+                let touch = touches[i]
                 _this.x = touch.pageX;
                 _this.y = touch.pageY;
                 _this.dx = 0;
@@ -76,8 +77,9 @@ class ElementListeners {
         this.gameScreen.getElement().addEventListener('touchmove', function(e) {
             //	e.preventDefault();
 
-            for (let i = 0; i < e.changedTouches.length; i++) {
-                touch = e.changedTouches[i];
+            let touches = e.changedTouches || e.touches;
+            for (let i = 0; i < touches.length; i++) {
+                let touch = touches[i]
             //    console.log(touch.identifier)
                 _this.x = touch.pageX;
                 _this.y = touch.pageY;
@@ -92,10 +94,9 @@ class ElementListeners {
         let touchend = function(e) {
             //	e.preventDefault();
 
-
-            for (let i = 0; i < e.changedTouches.length; i++) {
-            //    console.log(e)
-                touch = e.changedTouches[i];
+            let touches = e.changedTouches || e.touches;
+            for (let i = 0; i < touches.length; i++) {
+                let touch = touches[i]
                 _this.x = touch.pageX;
                 _this.y = touch.pageY;
                 _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
@@ -134,9 +135,9 @@ class ElementListeners {
         let height = this.gameScreen.getHeight();
         this.tempVec.x = ((this.x) - width / 2) / width;
         this.tempVec.y = -((this.y) - height / 2) / height;
-        GameScreen.fitView(this.tempVec);
-        inputState.posX = this.tempVec.x;
-        inputState.posY = this.tempVec.y;
+    //    GameScreen.fitView(this.tempVec);
+        inputState.posX = this.tempVec.x * 0.83;
+        inputState.posY = this.tempVec.y * 0.83;
         inputState.dx = this.dx;
         inputState.dy = this.dy;
         inputState.wheelDelta = this.wheelDelta;

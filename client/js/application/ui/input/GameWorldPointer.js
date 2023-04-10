@@ -2,6 +2,7 @@ import { TargetIndicator } from "../gui/game/TargetIndicator.js";
 
 class GameWorldPointer {
     constructor() {
+        this.posVec = new THREE.Vector3()
         this.selectionEvent = {
             piece:null,
             value:false
@@ -27,7 +28,11 @@ class GameWorldPointer {
     }
     updateWorldPointer = function(pointer) {
         let indicator =  pointer.worldSpaceIndicator
-        let pos = pointer.pos;
+        let pos = this.posVec.copy(pointer.pos);
+     //   GameScreen.fitView(pos);
+
+        pos.x *= 1 / GameScreen.getAspect()                  // X is Left axis
+        pos.y *= 1 // Y is UP screen axis
         let dynamicScenario = GameAPI.getActiveDynamicScenario();
         let characters = dynamicScenario.characters;
         let pieces = dynamicScenario.pieces;
@@ -35,7 +40,7 @@ class GameWorldPointer {
         let nearestDist = 99999;
         let selectedTarget = null;
 
-        let maxSelectRange = 0.15;
+        let maxSelectRange = 0.05;
         let screenDistance = function(piecePos, piece) {
             ThreeAPI.toScreenPosition(piecePos, ThreeAPI.tempVec3b)
             ThreeAPI.tempVec3b.sub(pos)

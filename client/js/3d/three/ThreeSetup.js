@@ -149,6 +149,8 @@ class ThreeSetup {
         store.y = this.vector.y * 0.5 * 0.83;
         store.z = this.vector.z * 0;
 
+
+
      //   GameScreen.fitView(store);
 
         return store;

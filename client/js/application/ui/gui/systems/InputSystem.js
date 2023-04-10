@@ -88,6 +88,8 @@ class InputSystem {
             tempVec.y = pointerState.posY ;
             tempVec.z = 0;
 
+            GameScreen.fitView(tempVec);
+
             guiPointer.setPointerPosition(tempVec)
 
             let interactiveElem = _this.getIntersectingElement(tempVec.x, tempVec.y, inputIndex);

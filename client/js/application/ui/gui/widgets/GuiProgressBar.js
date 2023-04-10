@@ -3,6 +3,9 @@ import { GuiWidget} from "../elements/GuiWidget.js";
 class GuiProgressBar {
     constructor(options) {
 
+
+        this.callbacks = {}
+
         this.options = {};
         for (let key in options) {
             this.options[key] = options[key];
@@ -14,21 +17,36 @@ class GuiProgressBar {
         this.digits = options.digits || 2;
         this.time = 0;
 
-        let progressEvent = options['progress_event'];
+        if (this.options['track_config']) {
 
-        let updateProgress = function(event) {
-            if (event.targetKey === progressEvent['target_key']) {
-                this.setProgress(event.min,event.max, event.current)
-            }
-        }.bind(this);
+            let catKey = options['track_config']['category'];
+            let confKey = options['track_config']['key'];
 
-        this.callbacks = {
-            updateProgress:updateProgress
+            let trackValues = PipelineAPI.getCachedConfigs()[catKey][confKey];
+
+            let sampler = this.options['track_config']['sampler']
+
+            this.callbacks['updateProgress'] = function(event) {
+                    this.setProgress(trackValues[sampler['min_key']] || 0, trackValues[sampler['max_key']] || 1, trackValues[sampler['value_key']])
+            }.bind(this);
+
+            GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress)
         }
 
-        if (typeof(progressEvent) === 'object') {
-            this.progressEvent = ENUMS.Event[progressEvent.event]
-            evt.on(this.progressEvent, updateProgress);
+        let progressEvent = options['progress_event'];
+        if (progressEvent) {
+
+            this.callbacks['updateProgress'] = function(event) {
+                if (event.targetKey === progressEvent['target_key']) {
+                    this.setProgress(event.min, event.max, event.current)
+                }
+            }.bind(this);
+
+            if (typeof(progressEvent) === 'object') {
+                this.progressEvent = ENUMS.Event[progressEvent.event]
+                evt.on(this.progressEvent, this.callbacks['updateProgress']);
+            }
+
         }
 
     };
@@ -51,6 +69,7 @@ class GuiProgressBar {
     };
 
     deactivateProgressBar = function() {
+        GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress)
         evt.removeListener(this.progressEvent, this.callbacks.updateProgress, evt)
     };
 
