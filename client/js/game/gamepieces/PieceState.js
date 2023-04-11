@@ -23,6 +23,7 @@ class PieceState {
         }
 
         this.status = {
+            gamePiece:gamePiece,
             lifetime:0,
             level:1,
             xp:0,
@@ -42,6 +43,7 @@ class PieceState {
             turn:0,
             attacks:0,
             attack:0,
+            appliedAttacks:0,
             atkProg:0,
             source:0,
             prep:0,
@@ -59,9 +61,28 @@ class PieceState {
             meleeRange:0.5
         }
 
+        this.lastState = ENUMS.CharacterState.IDLE_HANDS;
+
     }
 
 
+    isCombatRelatedState(state) {
+        return  (state === ENUMS.CharacterState.ENGAGING || state === ENUMS.CharacterState.COMBAT || state === ENUMS.CharacterState.DISENGAGING)
+    }
+    applyCharStateUpdates() {
+        let charState = this.status.charState;
+        if (this.isCombatRelatedState(charState)) {
+            if (!this.isCombatRelatedState(this.lastState)) {
+                this.gamePiece.gameCharacter.activateCharStatusGui()
+            }
+        } else {
+            if (this.isCombatRelatedState(this.lastState)) {
+                this.gamePiece.gameCharacter.deactivateCharStatusGui()
+            }
+        }
+        this.lastState = charState;
+
+    }
 
 
 
@@ -76,6 +97,7 @@ class PieceState {
     }
     tickPieceState(tpf, time) {
         this.updateGamePiece(tpf, time);
+        this.applyCharStateUpdates();
     }
 
 }

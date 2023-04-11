@@ -117,6 +117,19 @@
             {"id":"ambient", "color":[0.45,  0.44,  0.81]},
             {"id":"fog",     "color":[0.01,  0.02,  0.01], "density":0.125}
           ]
+        },
+        {
+          "id":"player_dead",
+          "sky":{
+            "inclination":       0.05,
+            "azimuth":           0.15,
+            "distance":          1000000
+          },
+          "configs":[
+            {"id":"sun",     "color":[0.0,  0.88,  0.16]},
+            {"id":"ambient", "color":[0.0,  0.00,  0.60]},
+            {"id":"fog",     "color":[0.0,  0.01,  0.05], "density":0.045}
+          ]
         }
       ]
     }
