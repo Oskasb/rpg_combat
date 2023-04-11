@@ -12,7 +12,8 @@
             "hp": 18,
             "maxHP": 18,
             "dmg": 2,
-            "FAST": 2
+            "FAST": 2,
+            "xp_value": 20
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -34,7 +35,8 @@
             "hp": 22,
             "maxHP": 22,
             "dmg": 3,
-            "FAST": 4
+            "FAST": 4,
+            "xp_value": 50
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -55,7 +57,8 @@
             "maxHP": 4,
             "hp": 5,
             "dmg": 1,
-            "FAST": 1
+            "FAST": 1,
+            "xp_value": 5
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -76,7 +79,8 @@
             "maxHP": 7,
             "hp": 7,
             "dmg": 1,
-            "FAST": 2
+            "FAST": 2,
+            "xp_value": 15
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -99,7 +103,8 @@
             "maxHP": 9,
             "hp": 9,
             "dmg": 2,
-            "FAST": 3
+            "FAST": 3,
+            "xp_value": 50
           },
 
           "actor":"ACTOR_FIGHTER",

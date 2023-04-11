@@ -66,21 +66,6 @@ class PieceStateProcessor {
     }
 
     processNewTurn(status, config) {
-
-
-        status.xp += config.xpGain;
-        evt.dispatch(ENUMS.Event.MAIN_CHAR_STATUS_EVENT,
-            {
-                targetKey:'xp_progress',
-                min:0,
-                max:config.levels[status.level],
-                current:status.xp
-            })
-        if (config.levels[status.level] < status.xp) {
-            status.xp -= config.levels[status.level]
-            status.level++;
-        }
-
         status.turnTime = config.turnTime;
         status.maxAPs = config.maxActPts;
         status.appliedAttacks = 0;
@@ -140,6 +125,24 @@ class PieceStateProcessor {
         status.trgAtkType = ENUMS.AttackType.NONE;
         status.charState = ENUMS.CharacterState.IDLE_HANDS;
         status.targState = ENUMS.CharacterState.IDLE_HANDS;
+        status.atkProg = 0;
+        if (status.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
+
+            status.xp += status.xp_value;
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_STATUS_EVENT,
+                {
+                    targetKey:'xp_progress',
+                    min:0,
+                    max:status.levels[status.level],
+                    current:status.xp
+                })
+            if (status.levels[status.level] < status.xp) {
+                status.xp -= status.levels[status.level]
+                status.level++;
+            }
+
+        }
     }
 
     applyAttackSwingDamage(status) {
@@ -169,11 +172,10 @@ class PieceStateProcessor {
             status.trTime = (config.prepFraction * config.turnTime) / status.attacks
         } else if (status.swing < 1) {
             status.trTime = (config.swingFraction * config.turnTime) / status.attacks
+        } else {
             if(status.appliedAttacks < status.attack) {
                 this.applyAttackSwingDamage(status);
             }
-
-        } else {
             status.trTime = (config.recoverFraction * config.turnTime) / status.attacks
         }
 

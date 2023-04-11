@@ -7,6 +7,18 @@
           "id": "STANDARD_WIDGETS",
           "data": [
             {
+              "id":"progress_indicator_char_swing",
+              "layout":"layout_hp_bar_container",
+              "icon": {
+                "icon_config": "progress_horizontal_hp_bar",
+                "feedback": "feedback_icon_swing_progress"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_hp_bar_container",
+                "feedback": "feedback_surface_swing_container"
+              }
+            },
+            {
               "id":"progress_indicator_char_hp",
               "layout":"layout_hp_bar_container",
               "icon": {

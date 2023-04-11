@@ -48,7 +48,7 @@
             "IDL_HI_CB":      {"time_scale": 1,   "weight": 1, "fade": 0.25,    "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
             "ATTACK_1":       {"time_scale": 1,   "weight": 1, "fade": 0.35,    "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
             "ATTACK_2":       {"time_scale": 1,   "weight": 1, "fade": 0.45,    "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
-            "DEAD":           {"time_scale": 0.001,"weight":1000,"fade": 0.45,    "channel": 0 , "loop": 1 ,"clamp": 1, "sync": 0},
+            "DEAD":           {"time_scale": 0.001,"weight":99,"fade": 5.45,    "channel": 0 , "loop": 1 ,"clamp": 1, "sync": 0},
             "FALL":           {"time_scale": 1,   "weight": 1, "fade": 0.25,    "channel": 0 , "loop": 0 ,"clamp": 1, "sync": 0}
 
           },

@@ -5,7 +5,7 @@ class PieceState {
         this.gamePiece = gamePiece;
         this.pieceStateProcessor = new PieceStateProcessor(gamePiece);
         this.config = {
-            levels:[0, 100, 250, 500, 1000, 2000, 4000, 8000,12000, 20000],
+
             xpGain:21,
             turnTime:4,
             sourceFraction:0.25,
@@ -19,6 +19,7 @@ class PieceState {
 
         this.status = {
             gamePiece:gamePiece,
+            levels:[0, 35, 100, 250, 500, 1000, 2000, 4000, 8000, 12000, 20000],
             NONE:0,
             FAST:3,
             lifetime:0,
@@ -55,7 +56,8 @@ class PieceState {
             maxHP:100,
             isItem:0,
             isCharacter:0,
-            meleeRange:0.5
+            meleeRange:0.5,
+            xp_value:5
         }
 
         this.lastState = ENUMS.CharacterState.IDLE_HANDS;
