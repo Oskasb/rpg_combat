@@ -53,6 +53,9 @@ class GameCharacter {
         this.characterStatusGui.deactivateCharacterStatusGui()
     }
 
+    deactivateCharIndicator() {
+        this.characterIndicator.removeIndicatorFromPiece(this.gamePiece);
+    }
     pickupItem(gamePiece, time) {
         gamePiece.getPieceMovement().moveToTargetAtTime('grab_loot', gamePiece, this.gamePiece.getSpatial(), time, this.callbacks.pickupComplete);
     }

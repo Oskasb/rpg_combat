@@ -88,8 +88,8 @@ class GuiAPI {
         onReadyCB('initGuiApi done loads: '+loads);
     };
 
-    activatePage(pageId) {
-        return this.guiPageSystem.activateGuiPage(pageId)
+    activatePage(pageId, callback) {
+        return this.guiPageSystem.activateGuiPage(pageId, callback)
     }
 
 

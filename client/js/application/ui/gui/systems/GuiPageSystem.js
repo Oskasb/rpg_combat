@@ -48,12 +48,13 @@ class GuiPageSystem {
             this.closeGuiPage(this.pages[pageId])
         }
     }
-    activateGuiPage(pageId) {
+    activateGuiPage(pageId, callback) {
         let page;
         if (pageId) {
-            page = this.pages[pageId].activateGuiPage();
+            page = this.pages[pageId].activateGuiPage(callback);
             this.activePages.push(page)
         }
+
         return page;
     }
     closeGuiPage(page) {

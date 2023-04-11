@@ -8,6 +8,10 @@
           {
             "data_key":"dynamic_view_init",
             "config": {
+              "INFO": {
+                "header": "SOME CAVE",
+                "text_box": "A fine text description."
+              },
               "camera": {
                 "mode": "follow_cam_main_char",
                 "offset_pos": [0, 8, -4],

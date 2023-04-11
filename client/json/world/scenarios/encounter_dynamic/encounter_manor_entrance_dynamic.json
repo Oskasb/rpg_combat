@@ -1,0 +1,52 @@
+[{
+  "DYNAMIC_SCENARIOS":{
+
+    "GAME_SCENARIOS":[
+            {
+        "id":"encounter_manor_entrance_dynamic",
+        "data": [
+          {
+            "data_key":"dynamic_view_init",
+            "config": {
+              "INFO": {
+                "header": "MAIN ENTRANCE",
+                "text_box": "You are not welcome."
+              },
+              "camera": {
+                "mode": "follow_cam_main_char",
+                "offset_pos": [3, 2.2, -4],
+                "offset_lookAt": [0, 1.6, 0]
+              },
+              "gui_page":"page_scene_dungeon",
+              "environment": "evening",
+              "player": {
+                "pos": [-84, 2.83, 141],
+                "rot": [0, 3.14, 0]
+              },
+              "characters": [
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [-90, 2.83, 147],
+                  "rot": [0, -1.311, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [-89, 2.83, 149.5],
+                  "rot": [0, -0.611, 0]
+                },
+                {
+                  "character":"BANDIT_LEADER",
+                  "pos": [-92, 2.83, 151],
+                  "rot": [0, -1.111, 0]
+                }
+              ],
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}]

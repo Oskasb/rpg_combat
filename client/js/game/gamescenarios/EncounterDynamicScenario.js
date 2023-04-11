@@ -60,11 +60,20 @@ class EncounterDynamicScenario {
     }
 
     activateEncDynScenario() {
-        this.page = GuiAPI.activatePage(this.config['gui_page']);
+    let config = this.config;
+        let pageReady = function(page) {
+            console.log("PAGE READY", page);
+            if (config.INFO) {
+                evt.dispatch(ENUMS.Event.SCENARIO_HEADER,  {value:config.INFO['header']});
+                evt.dispatch(ENUMS.Event.SCENARIO_TEXT,    {value:config.INFO['text_box']});
+            }
+        }
 
-        if (this.config['camera']) {
-            console.log("Set Camera mode: ", this.config.camera)
-            let cConf = this.config.camera;
+        this.page = GuiAPI.activatePage(this.config['gui_page'], pageReady);
+
+        if (config['camera']) {
+            console.log("Set Camera mode: ", config.camera)
+            let cConf = config.camera;
             this.camParams.offsetPos = cConf['offset_pos'] || this.camParams.offsetPos;
             this.camParams.offsetLookAt = cConf['offset_lookAt'] || this.camParams.offsetLookAt;
             let camFollow = this.camFollow;
@@ -79,13 +88,17 @@ class EncounterDynamicScenario {
 
         this.config = config;
 
-        if (!isUpdate) GuiAPI.activatePage(null);
+        PipelineAPI.setCategoryData('ACTIVE_SCENARIO', config)
+
+        let pageReady = function(page) {
+
+        }
+
+        if (!isUpdate) GuiAPI.activatePage(null, pageReady);
 
         evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:50});
 
         let pieces = this.pieces;
-
-
 
 
 

@@ -139,6 +139,17 @@ class PlayerMain {
 
     setPlayerCharacter(character) {
         GameAPI.registerGameUpdateCallback(character.gamePiece.getOnUpdateCallback())
+
+        if (!this.mainCharPage) {
+            let openMainCharPage = function() {
+                this.mainCharPage = GuiAPI.activatePage("page_player_main");
+            }.bind(this);
+
+            setTimeout(function() {
+                openMainCharPage();
+            }, 2000)
+        }
+
         this.playerCharacter = character;
         let data = {
             MAIN_CHAR_STATUS:character.characterStatus
@@ -202,14 +213,14 @@ class PlayerMain {
     }
 
     handleTargetEngaged(gamePiece) {
-        console.log("handleTargetEngaged")
+     //   console.log("handleTargetEngaged")
         this.targetIndicator.removeTargetIndicatorFromPiece()
         this.targetIndicator.removeIndicatorFx()
         this.targetIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 0, 5, 0, 1.03, 0.06, 5);
     }
 
     handleTargetDisengaged() {
-        console.log("handleTargetDisengaged")
+     //   console.log("handleTargetDisengaged")
         this.targetIndicator.removeTargetIndicatorFromPiece()
         this.targetIndicator.removeIndicatorFx()
     }

@@ -5,7 +5,7 @@ class GuiPage {
         this.isActive = false;
         this.pageId = pageId;
         this.containers = {};
-
+        this.builtContainers= 0;
         this.configData = new ConfigData("UI", "PAGES")
 
         this.config = this.configData.parseConfigData()[pageId].data;
@@ -27,17 +27,17 @@ class GuiPage {
 
     }
 
-    activateGuiPage() {
+    activateGuiPage(callback) {
     //    console.log("Activate gui page ", this.config);
         this.isActive = true;
 
-
+        this.builtContainers = 0;
         for (let i = 0; i < this.config.length; i++) {
             let containers = this.config[i].containers;
             let buttons = this.config[i].buttons;
 
             for (let j = 0; j < containers.length; j++) {
-                this.setupContainer(containers[j])
+                this.setupContainer(containers[j], callback, containers.length)
             }
             for (let j = 0; j < buttons.length; j++) {
                 this.setupButton(buttons[j])
@@ -67,10 +67,16 @@ class GuiPage {
         return options;
     }
 
-    setupContainer(conf) {
+    setupContainer(conf, callback, count) {
 
         let onWidgetReady = function(widget) {
             this.containers[conf.widget_id] = widget;
+            this.builtContainers++
+            if (count === this.builtContainers) {
+                if (typeof(callback) === 'function') {
+                    callback(this);
+                }
+            }
         }.bind(this);
 
         let options = this.buildOptionsFromWidgetConfig(conf);

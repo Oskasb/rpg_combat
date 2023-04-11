@@ -107,8 +107,8 @@
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
-                        "id":"cave_scenario",
-                        "dynamic":"encounter_cave_basic_dynamic"
+                        "id":"home_scenario",
+                        "dynamic":"encounter_manor_entrance_dynamic"
                       }
                     }
                   }

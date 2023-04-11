@@ -130,6 +130,11 @@ class PieceStateProcessor {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
 
             status.xp += status.xp_value;
+            if (status.levels[status.level] < status.xp) {
+                status.xp -= status.levels[status.level]
+                status.level++;
+            }
+
             evt.dispatch(ENUMS.Event.MAIN_CHAR_STATUS_EVENT,
                 {
                     targetKey:'xp_progress',
@@ -137,11 +142,6 @@ class PieceStateProcessor {
                     max:status.levels[status.level],
                     current:status.xp
                 })
-            if (status.levels[status.level] < status.xp) {
-                status.xp -= status.levels[status.level]
-                status.level++;
-            }
-
         }
     }
 
@@ -246,6 +246,8 @@ class PieceStateProcessor {
                         evt.dispatch(ENUMS.Event.MAIN_CHAR_RETURN_HOME, status.gamePiece);
                     }, 3000)
 
+                } else {
+                    status.gamePiece.gameCharacter.deactivateCharIndicator();
                 }
             }
         }

@@ -70,6 +70,11 @@
           "pos": [-215, 40,   120],
           "lookAt": [-105, 0, 155]
         },
+        "encounter_manor_entrance_dynamic":{
+          "time":1.3,
+          "pos": [-74, 5.83, 131],
+          "lookAt": [-84, 3.83, 141]
+        },
         "manor_village_dynamic":{
           "time":1.3,
           "pos": [-105, 80,   110],
