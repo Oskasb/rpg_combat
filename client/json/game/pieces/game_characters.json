@@ -9,9 +9,10 @@
             "faction": "GOOD",
             "height": 1.85,
             "size": 1,
-            "hp": 15,
-            "maxHP": 15,
-            "dmg": 2
+            "hp": 18,
+            "maxHP": 18,
+            "dmg": 2,
+            "FAST": 2
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -32,7 +33,8 @@
             "size": 1,
             "hp": 22,
             "maxHP": 22,
-            "dmg": 3
+            "dmg": 3,
+            "FAST": 4
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -51,8 +53,9 @@
             "height": 1.85,
             "size": 1,
             "maxHP": 4,
-            "hp": 4,
-            "dmg": 1
+            "hp": 5,
+            "dmg": 1,
+            "FAST": 1
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -72,7 +75,8 @@
             "size": 1,
             "maxHP": 7,
             "hp": 7,
-            "dmg": 1
+            "dmg": 1,
+            "FAST": 2
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -94,7 +98,8 @@
             "size": 1,
             "maxHP": 9,
             "hp": 9,
-            "dmg": 2
+            "dmg": 2,
+            "FAST": 3
           },
 
           "actor":"ACTOR_FIGHTER",

@@ -8,11 +8,6 @@ class PieceState {
             levels:[0, 100, 250, 500, 1000, 2000, 4000, 8000,12000, 20000],
             xpGain:21,
             turnTime:4,
-            attacks:{
-                NONE:0,
-                FAST:3,
-                HEAVY:2
-            },
             sourceFraction:0.25,
             prepFraction:0.25,
             swingFraction:0.25,
@@ -24,6 +19,8 @@ class PieceState {
 
         this.status = {
             gamePiece:gamePiece,
+            NONE:0,
+            FAST:3,
             lifetime:0,
             level:1,
             xp:0,

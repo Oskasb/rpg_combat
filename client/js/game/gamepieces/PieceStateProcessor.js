@@ -190,7 +190,7 @@ class PieceStateProcessor {
     }
 
     processAttacks(status, config) {
-        status.attacks = config.attacks[ENUMS.getKey('AttackType', status.atkType)]
+        status.attacks = status[ENUMS.getKey('AttackType', status.atkType)]
         if (status.attacks) {
             this.processAttack(status, config);
         }
