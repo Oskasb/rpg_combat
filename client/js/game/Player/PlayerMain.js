@@ -170,10 +170,7 @@ class PlayerMain {
         if (gamePiece.getStatusByKey('isItem')) {
             let distance = MATH.distanceBetween(gamePiece.getPos(), this.playerCharacter.gamePiece.getPos())
             if (distance < 2) {
-                let piece = GameAPI.takePieceFromWorld(gamePiece)
-                if (piece) {
-                    GameAPI.addItemToPlayerInventory(piece, 1);
-                }
+                GameAPI.addItemToPlayerInventory(gamePiece, 1);
             } else {
                 let playerPiece = this.playerCharacter.gamePiece;
                 let onArrive = function(arrive) {
