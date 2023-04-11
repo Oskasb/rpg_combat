@@ -96,6 +96,16 @@ class PlayerMain {
             }
         }.bind(this)
 
+        let returnHome = function(gamePiece) {
+            gamePiece.setStatusValue('hp', gamePiece.getStatusByKey('maxHP'));
+            gamePiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
+            gamePiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);
+            evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
+                id:"home_scenario",
+                dynamic:"home_hovel_dynamic"
+            });
+        }
+
         let callbacks = {
             handleEquip : equipItem,
             handleUnequip : unequipItem,
@@ -107,7 +117,8 @@ class PlayerMain {
             setPlayerState:setPlayerState,
             registerHostile:registerHostile,
             registerTargetEngaged:registerTargetEngaged,
-            selectTarget:selectTarget
+            selectTarget:selectTarget,
+            returnHome:returnHome
         }
 
         this.callbacks = callbacks;
@@ -122,11 +133,12 @@ class PlayerMain {
         evt.on(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, callbacks.registerHostile);
         evt.on(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, callbacks.selectTarget);
         evt.on(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, callbacks.registerTargetEngaged);
-
+        evt.on(ENUMS.Event.MAIN_CHAR_RETURN_HOME, callbacks.returnHome);
     }
 
 
     setPlayerCharacter(character) {
+        GameAPI.addPieceToWorld(character.gamePiece);
         this.playerCharacter = character;
         let data = {
             MAIN_CHAR_STATUS:character.characterStatus
@@ -146,11 +158,11 @@ class PlayerMain {
     }
 
     handleHostileAdded(hostileChar) {
-        hostileChar.activateCharStatusGui()
+    //    hostileChar.activateCharStatusGui()
     }
 
     handleHostileRemoved(hostileChar) {
-        hostileChar.deactivateCharStatusGui()
+    //    hostileChar.deactivateCharStatusGui()
     }
 
     handleTargetSelected(gamePiece) {
@@ -158,7 +170,10 @@ class PlayerMain {
         if (gamePiece.getStatusByKey('isItem')) {
             let distance = MATH.distanceBetween(gamePiece.getPos(), this.playerCharacter.gamePiece.getPos())
             if (distance < 2) {
-                GameAPI.addItemToPlayerInventory(GameAPI.takePieceFromWorld(gamePiece), 1);
+                let piece = GameAPI.takePieceFromWorld(gamePiece)
+                if (piece) {
+                    GameAPI.addItemToPlayerInventory(piece, 1);
+                }
             } else {
                 let playerPiece = this.playerCharacter.gamePiece;
                 let onArrive = function(arrive) {

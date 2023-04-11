@@ -68,9 +68,9 @@ if(typeof(ENUMS) === "undefined"){
         MAIN_CHAR_STATE_EVENT:      43,
         MAIN_CHAR_STATUS_EVENT:     44,
         MAIN_CHAR_REGISTER_HOSTILE: 45,
-        MAIN_CHAR_SELECT_TARGET:  46,
-        MAIN_CHAR_ENGAGE_TARGET:  47,
-
+        MAIN_CHAR_SELECT_TARGET:    46,
+        MAIN_CHAR_ENGAGE_TARGET:    47,
+        MAIN_CHAR_RETURN_HOME:       48
 
     };
 
@@ -379,7 +379,8 @@ if(typeof(ENUMS) === "undefined"){
         COMBAT:            3,
         DISENGAGING:       4,
         DISENGAGED:        5,
-        DEAD:              6
+        FALL_DOWN:         6,
+        LIE_DEAD:          7
     };
 
     ENUMS.ElementState = {
