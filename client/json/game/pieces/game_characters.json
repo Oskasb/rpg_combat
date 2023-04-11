@@ -8,10 +8,7 @@
             "name": "Gideon",
             "faction": "GOOD",
             "height": 1.85,
-            "size": 1,
-            "hp": 15,
-            "maxHP": 15,
-            "dmg": 2
+            "size": 1
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -29,10 +26,7 @@
             "name": "Charles",
             "faction": "NEUTRAL",
             "height": 1.85,
-            "size": 1,
-            "hp": 22,
-            "maxHP": 22,
-            "dmg": 3
+            "size": 1
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -49,10 +43,7 @@
             "name": "Bandit",
             "faction": "EVIL",
             "height": 1.85,
-            "size": 1,
-            "maxHP": 4,
-            "hp": 4,
-            "dmg": 1
+            "size": 1
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -69,10 +60,7 @@
             "name": "Bandit",
             "faction": "EVIL",
             "height": 1.85,
-            "size": 1,
-            "maxHP": 7,
-            "hp": 7,
-            "dmg": 1
+            "size": 1
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -91,10 +79,7 @@
             "name": "Bandit",
             "faction": "EVIL",
             "height": 1.85,
-            "size": 1,
-            "maxHP": 9,
-            "hp": 9,
-            "dmg": 2
+            "size": 1
           },
 
           "actor":"ACTOR_FIGHTER",

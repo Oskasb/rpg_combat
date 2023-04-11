@@ -45,8 +45,6 @@ class GamePiece {
 
     }
 
-
-
     notifyOpponentStatusUpdate(opponentPiece, statusKey, statusValue) {
         this.combatSystem.opponentStatusUpdate(opponentPiece, statusKey, statusValue);
     }
@@ -136,6 +134,17 @@ class GamePiece {
         MATH.quickSplice(this.activeActions, action);
     };
 
+    actionStateUpdated = function(action) {
+        if (action.getActionState() === ENUMS.ActionState.ACTIVATING) {
+            this.activeActions.push(action);
+        }
+        AnimationStateProcessor.applyActionStateToGamePiece(action, this)
+    };
+
+    animateMovementState = function(state, movement) {
+        AnimationStateProcessor.applyMovementStateToGamePiece(state, movement, this)
+    };
+
     hideGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
             ThreeAPI.tempVec3.set(0, 0, 0);
@@ -157,7 +166,7 @@ class GamePiece {
     };
 
     disbandGamePiece() {
-        GameAPI.takePieceFromWorld(this);
+        GameAPI.unregisterGameUpdateCallback(this.getOnUpdateCallback());
         this.modelInstance.decommissionInstancedModel();
         this.gamePieceUpdateCallbacks.length = 0;
     };

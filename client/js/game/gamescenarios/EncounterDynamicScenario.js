@@ -119,7 +119,6 @@ class EncounterDynamicScenario {
                 let charCB = function(character) {
                     characters.push(character);
                     let gamePiece = character.gamePiece;
-                    GameAPI.addPieceToWorld(gamePiece);
                     ScenarioUtils.resetScenarioCharacterPiece(gamePiece);
                     gamePiece.setStatusValue('isCharacter', 1)
                     setTimeout(function() {
@@ -142,7 +141,7 @@ class EncounterDynamicScenario {
                     pieces.push(gamePiece);
                     gamePiece.getSpatial().setPosXYZ(spawn.pos[0],spawn.pos[1], spawn.pos[2])
                     gamePiece.getSpatial().setRotXYZ(spawn.rot[0],spawn.rot[1], spawn.rot[2])
-                    GameAPI.addPieceToWorld(gamePiece);
+                    GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
                 };
 
                 GameAPI.createGamePiece(spawn, pieceInstanceCallback)

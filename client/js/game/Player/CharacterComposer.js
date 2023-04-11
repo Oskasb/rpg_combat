@@ -33,6 +33,8 @@ class CharacterComposer {
         //    console.log("Player Piece: ", gamePiece);
             let char = GameAPI.createGameCharacter(pieceConf);
             char.setCharacterPiece(gamePiece, equipSlotConfigId);
+            GameAPI.registerGameUpdateCallback(gamePiece.getOnUpdateCallback());
+
             charReady(char);
         }.bind(this);
         GameAPI.createGamePiece(pieceConf, charCb)

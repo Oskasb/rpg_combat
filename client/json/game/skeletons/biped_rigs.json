@@ -48,19 +48,19 @@
             "IDL_HI_CB":      {"time_scale": 1,   "weight": 1, "fade": 0.25,    "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
             "ATTACK_1":       {"time_scale": 1,   "weight": 1, "fade": 0.35,    "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
             "ATTACK_2":       {"time_scale": 1,   "weight": 1, "fade": 0.45,    "channel": 1 , "loop": 1 ,"clamp": 0, "sync": 0},
-            "DEAD":           {"time_scale": 0.001,"weight":1000,"fade": 0.45,    "channel": 0 , "loop": 1 ,"clamp": 1, "sync": 0},
-            "FALL":           {"time_scale": 1,   "weight": 1, "fade": 0.25,    "channel": 0 , "loop": 0 ,"clamp": 1, "sync": 0}
+            "DEAD":           {"time_scale": 0.1, "weight": 1, "fade": 0.25,    "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 0},
+            "FALL":           {"time_scale": 1,   "weight": 1, "fade": 0.45,    "channel": 0 , "loop": 1 ,"clamp": 0, "sync": 0}
 
           },
           "action_maps": {
-            "LIE_DEAD":   [    {"name":"DEAD",      "source": ["DEAD"],  "init": ["DEAD"], "active": ["DEAD"],   "end": ["DEAD"]}            ],
-            "FALL_DOWN":  [    {"name":"FALL",      "source": ["IDLE"],  "init": ["GD_SHT_R"], "active": ["FALL"],   "end": ["DEAD"]}            ],
+            "LIE_DEAD":   [    {"name":"DEAD",     "active": ["DEAD"]         }],
+            "FALL_DOWN":  [    {"name":"FALL",     "active": ["FALL"]         }],
             "IDLE_LEGS": [     {"name":"STAND",     "active": ["IDLE"]        }],
             "IDLE_HANDS": [    {"name":"POSE",      "source": ["GD_SHT_R"],  "init": ["GD_SHT_R"], "active": ["GD_BCK_R"],   "end": ["GD_SHT_R"]}            ],
             "MOVE": [          {"name":"WALK",      "active": ["WALK"]        }],
             "MOVE_COMBAT": [   {"name":"MOVE",      "active": ["WALK_COMBAT"] }],
             "STAND_COMBAT": [  {"name":"FIGHT",     "active": ["GD_RT_FF"]    }],
-            "ENGAGING": [      {"name":"GUARD" ,    "source": ["GD_SHT_R"],  "init": ["GD_HNG_R"], "active": ["GD_INS_R"],   "end": ["GD_HI_R","GD_SID_R","GD_LOW_R","GD_LNG_R"]}            ],
+            "ENGAGING": [      {"name":"GUARD" ,    "source": ["GD_SHT_R"],  "init": ["GD_INS_R","GD_HNG_R"], "active": ["GD_INS_R","GD_HNG_R","GD_SHT_R"],   "end": ["GD_HI_R","GD_SID_R","GD_LOW_R"]}            ],
             "DISENGAGING": [   {"name":"GUARD" ,    "source": ["GD_HNG_R"],  "init": ["GD_HNG_R"], "active": ["GD_INS_R"],   "end": ["GD_BCK_R"]}            ],
             "COMBAT": [        {"name":"SWING" ,    "source": ["GD_HNG_R", "GD_INS_R"],  "init": ["GD_HNG_R"], "active": ["CT_ML_R"],    "end" : ["GD_SID_R"]},
                                {"name":"STAB"  ,    "source": ["GD_INS_R"],  "init": ["GD_LOW_R"], "active": ["GD_LNG_R"],   "end": ["GD_HNG_R"]},

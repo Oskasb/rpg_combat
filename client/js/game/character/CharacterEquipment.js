@@ -105,7 +105,6 @@ class CharacterEquipment {
 
         if(itemPiece) {
             this.detatchEquipItem(itemPiece);
-            GameAPI.addPieceToWorld(itemPiece);
         }
         return itemPiece
     }

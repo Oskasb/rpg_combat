@@ -7,7 +7,6 @@ class CharacterInventory {
         piece.hideGamePiece();
         this.pieces.push(piece);
         GuiAPI.printDebugText("Inventory Items: "+this.pieces.length)
-        GameAPI.takePieceFromWorld(piece);
     //    console.log("Add inv item ", this.pieces);
     }
 

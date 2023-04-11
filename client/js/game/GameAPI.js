@@ -6,7 +6,7 @@ import { GameWorldPointer } from "../application/ui/input/GameWorldPointer.js";
 
 class GameAPI {
     constructor() {
-        this.activePlayerCharacter = null;
+        this.acticePlayerCharacter = null;
         this.characterComposer = new CharacterComposer();
         this.gameWorldPointer = new GameWorldPointer();
     }
@@ -34,7 +34,7 @@ class GameAPI {
     }
 
     addItemToPlayerInventory(itemPiece, transitionTime) {
-        this.activePlayerCharacter.pickupItem(itemPiece, transitionTime)
+        this.acticePlayerCharacter.pickupItem(itemPiece, transitionTime)
     }
 
     getWorldItemPieces() {
@@ -54,11 +54,11 @@ class GameAPI {
     }
 
     setActivePlayerCharacter(character) {
-        this.activePlayerCharacter = character;
+        this.acticePlayerCharacter = character;
     }
 
     getActivePlayerCharacter() {
-        return this.activePlayerCharacter;
+        return this.acticePlayerCharacter;
     }
 
     getActiveDynamicScenario() {
