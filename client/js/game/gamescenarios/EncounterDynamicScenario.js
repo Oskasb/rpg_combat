@@ -1,5 +1,6 @@
 import * as ScenarioUtils from "../gameworld/ScenarioUtils.js";
 import {ConfigData} from "../../application/utils/ConfigData.js";
+import { EncounterGrid } from "./EncounterGrid.js";
 
 class EncounterDynamicScenario {
     constructor(dataId) {
@@ -10,6 +11,7 @@ class EncounterDynamicScenario {
         this.configData =  new ConfigData("DYNAMIC_SCENARIOS", "GAME_SCENARIOS",  'dynamic_view_init', 'data_key', 'config')
         this.isActive = false;
 
+        this.encounterGrid = new EncounterGrid();
         this.camParams = {
             time:2,
             pos:[0, 0, 0],
@@ -61,6 +63,9 @@ class EncounterDynamicScenario {
 
     activateEncDynScenario() {
     let config = this.config;
+    if (config['grid']) {
+        this.encounterGrid.initEncounterGrid(config.grid);
+    }
         let pageReady = function(page) {
             console.log("PAGE READY", page);
             if (config.INFO) {

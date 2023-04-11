@@ -247,10 +247,53 @@ function resetScenarioCharacterPiece(charPiece) {
 
 }
 
+
+
+function setupEncounterGrid(instances, gridConfig) {
+    console.log(gridConfig);
+    let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
+    let iconKeys = gridConfig['grid_tiles'];
+    let elevation = gridConfig['elevation'];
+    let boxSize = gridConfig['box_size'];
+    let grid = gridConfig['grid'];
+    let gridWidth = grid[0][0].length;
+    let gridDepth = grid[0].length;
+
+    let wallHeight = 0
+
+    let offset = boxSize*gridWidth;
+
+    for (let i = 0; i < gridWidth; i++) {
+
+        for (let j = 0; j < gridDepth; j++) {
+
+            let floorOffset = elevation;
+            let iconSprite = iconSprites[iconKeys[Math.floor(MATH.sillyRandom(Math.sin(i*j))*iconKeys.length)]];
+
+            let addSceneBox = function(instance) {
+                instances.push(instance)
+                instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
+                instance.spatial.setPosXYZ(
+                    2*boxSize*i - offset ,
+                    -boxSize + floorOffset,
+                    2*boxSize*j - offset
+                );
+                instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)
+                instance.setSprite(iconSprite);
+                ThreeAPI.getScene().remove(instance.spatial.obj3d)
+            };
+
+            client.dynamicMain.requestAssetInstance('asset_box', addSceneBox)
+
+        }
+    }
+}
+
 export {
     positionPlayer,
     setupBoxGrid,
     spawnPatch,
     spawnLocation,
-    resetScenarioCharacterPiece
+    resetScenarioCharacterPiece,
+    setupEncounterGrid
 }

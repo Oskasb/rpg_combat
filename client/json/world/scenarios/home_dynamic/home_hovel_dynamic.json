@@ -24,6 +24,7 @@
                 "pos": [-0.9, 0, -0.4],
                 "rot": [0, -0.911, 0]
               },
+              "grid": "grid_home_hovel",
               "characters": [
                 {
                   "character":"HOME_DUDE",
