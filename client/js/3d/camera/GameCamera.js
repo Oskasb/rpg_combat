@@ -55,7 +55,9 @@ class GameCamera {
             MATH.vec3FromArray(targetPos, eventData.pos)
             if (typeof(eventData.callback) === 'function') {
          //       console.log("set cam callback")
-                transitionEndCallbacks.push(eventData.callback)
+                if (transitionEndCallbacks.indexOf(eventData.callback) === -1) {
+                    transitionEndCallbacks.push(eventData.callback)
+                }
             }
         };
 

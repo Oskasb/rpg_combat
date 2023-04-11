@@ -36,7 +36,6 @@ canvas {
 
 body {
     touch-action: none;
-    cursor:pointer;
     font-family: 'Russo One';
     font-weight: 400;
     position: fixed;
@@ -46,6 +45,7 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
+    user-select:none;
 }
 
 

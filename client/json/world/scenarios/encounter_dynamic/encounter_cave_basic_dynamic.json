@@ -8,9 +8,17 @@
           {
             "data_key":"dynamic_view_init",
             "config": {
-              "camera": "main_char_follow",
+              "camera": {
+                "mode": "follow_cam_main_char",
+                "offset_pos": [0, 8, -4],
+                "offset_lookAt": [0, 1, 1]
+              },
               "gui_page":"page_scene_dungeon",
               "environment": "cave_dusty",
+              "player": {
+                "pos": [0, 0, 0],
+                "rot": [0, 3.14, 0]
+              },
               "characters": [
                 {
                   "character":"BANDIT_BASIC",
@@ -35,7 +43,7 @@
               ],
               "spawn":[
                 {"piece": "BELT_PLATE",
-                  "pos": [-2.3, 0.3, -10.8],
+                  "pos": [1.3, 0.1, 3.8],
                   "rot": [-1.7, 0, -1.311]
                 }
               ]

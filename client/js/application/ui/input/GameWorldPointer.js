@@ -40,7 +40,7 @@ class GameWorldPointer {
         let nearestDist = 99999;
         let selectedTarget = null;
 
-        let maxSelectRange = 0.05;
+        let maxSelectRange = 0.15;
         let screenDistance = function(piecePos, piece) {
             ThreeAPI.toScreenPosition(piecePos, ThreeAPI.tempVec3b)
             ThreeAPI.tempVec3b.sub(pos)

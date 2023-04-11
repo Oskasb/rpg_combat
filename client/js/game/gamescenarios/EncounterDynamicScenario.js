@@ -10,10 +10,32 @@ class EncounterDynamicScenario {
         this.configData =  new ConfigData("DYNAMIC_SCENARIOS", "GAME_SCENARIOS",  'dynamic_view_init', 'data_key', 'config')
         this.isActive = false;
 
+        this.camParams = {
+            time:2,
+            pos:[0, 0, 0],
+            lookAt:[0, 0, 0],
+            offsetPos:[0, 5, -5],
+            offsetLookAt:[0, 2, 3]
+        }
+
+        let camParams = this.camParams;
+        let camCallback = function() {
+
+        }.bind(this);
+        camParams.callback = camCallback;
+
         this.camFollow = function() {
             let playerPos = GameAPI.getActivePlayerCharacter().gamePiece.getPos()
-            ThreeAPI.setCameraPos(playerPos.x, playerPos.y+6, playerPos.z-10);
-            ThreeAPI.cameraLookAt(playerPos.x, playerPos.y+2, playerPos.z+2)
+            camParams.pos[0] = playerPos.x + camParams.offsetPos[0];
+            camParams.pos[1] = playerPos.y + camParams.offsetPos[1];
+            camParams.pos[2] = playerPos.z + camParams.offsetPos[2];
+            camParams.lookAt[0] = playerPos.x + camParams.offsetLookAt[0];
+            camParams.lookAt[1] = playerPos.y + camParams.offsetLookAt[1];
+            camParams.lookAt[2] = playerPos.z + camParams.offsetLookAt[2];
+            camParams.time = 0.05;
+
+            evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, camParams);
+
         }
     }
 
@@ -42,6 +64,9 @@ class EncounterDynamicScenario {
 
         if (this.config['camera']) {
             console.log("Set Camera mode: ", this.config.camera)
+            let cConf = this.config.camera;
+            this.camParams.offsetPos = cConf['offset_pos'] || this.camParams.offsetPos;
+            this.camParams.offsetLookAt = cConf['offset_lookAt'] || this.camParams.offsetLookAt;
             let camFollow = this.camFollow;
             setTimeout(function() {
                 GameAPI.getActivePlayerCharacter().gamePiece.addPieceUpdateCallback(camFollow)

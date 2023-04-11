@@ -16,11 +16,11 @@
     document.getElementsByTagName('head')[0].appendChild(meta);
 */
 
-    /*
+
         document.addEventListener("touchstart", function(e){
             e.preventDefault();
-        },{passive: false});
-*/
+        },{passive: true});
+
         Element.prototype.remove = function() {
             this.parentElement.removeChild(this);
         };

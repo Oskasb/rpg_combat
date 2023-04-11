@@ -21,9 +21,9 @@
                 {
                   "widget_id":"page_home_center",
                   "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"page_top_bar_expanding_container",
+                  "widget_config_id":"widget_hidden_container",
                   "options": {
-                    "anchor":"top_left"
+                    "anchor":"center"
                   }
                 },
                 {
@@ -45,16 +45,15 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"LEAVE",
+                    "text":"RETREAT",
                     "container_id":"page_home_center",
+                    "offset_x": 0.15,
+                    "offset_y": 0.315,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_world_dynamic",
-                        "time":2,
-                        "pos": [0, 150, -230],
-                        "lookAt": [0, 0, -100]
+                        "dynamic":"home_world_dynamic"
                       }
                     }
                   }
