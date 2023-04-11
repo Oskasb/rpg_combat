@@ -26,22 +26,22 @@
               "characters": [
                 {
                   "character":"BANDIT_BASIC",
-                  "pos": [-1.2, 0, 7.4],
+                  "pos": [-1.2, 0, 8.4],
                   "rot": [0, -0.311, 0]
                 },
                 {
                   "character":"BANDIT_BASIC",
-                  "pos": [-1.7, 0, 5.4],
+                  "pos": [-1.7, 0, 6.4],
                   "rot": [0, 2.511, 0]
                 },
                 {
                   "character":"BANDIT_TOUGH",
-                  "pos": [1.7, 0, 12.4],
+                  "pos": [1.7, 0, 8.4],
                   "rot": [0, 1.111, 0]
                 },
                 {
                   "character":"BANDIT_LEADER",
-                  "pos": [0.7, 0, 14.4],
+                  "pos": [0.7, 0, 12.4],
                   "rot": [0, -1.111, 0]
                 }
               ],

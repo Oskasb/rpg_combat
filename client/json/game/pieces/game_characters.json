@@ -7,6 +7,7 @@
           "status": {
             "name": "Gideon",
             "faction": "GOOD",
+            "aggro_range": 39,
             "height": 1.85,
             "size": 1,
             "hp": 18,
@@ -52,7 +53,7 @@
           "status": {
             "name": "Bandit",
             "faction": "EVIL",
-            "aggro_range": 3,
+            "aggro_range": 5,
             "height": 1.85,
             "size": 1,
             "maxHP": 4,
@@ -75,7 +76,7 @@
           "status": {
             "name": "Bandit",
             "faction": "EVIL",
-            "aggro_range": 5,
+            "aggro_range": 6,
             "height": 1.85,
             "size": 1,
             "maxHP": 7,
@@ -100,7 +101,7 @@
           "status": {
             "name": "Bandit",
             "faction": "EVIL",
-            "aggro_range": 5,
+            "aggro_range": 6,
             "height": 1.85,
             "size": 1,
             "maxHP": 7,
