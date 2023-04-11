@@ -83,6 +83,7 @@ class PieceStateProcessor {
 
         status.turnTime = config.turnTime;
         status.maxAPs = config.maxActPts;
+        status.appliedAttacks = 0;
         status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
         status.turn = GameAPI.gameMain.turnStatus.turn;
         status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
@@ -130,6 +131,30 @@ class PieceStateProcessor {
         this.activateActionType(status, 'COMBAT');
     }
 
+
+    applyTargetIsDead(status, target) {
+        status.combatTarget = null;
+        status.engagingTarget = null;
+        status.selectedTarget = null;
+        status.atkType = ENUMS.AttackType.NONE;
+        status.trgAtkType = ENUMS.AttackType.NONE;
+        status.charState = ENUMS.CharacterState.IDLE_HANDS;
+        status.targState = ENUMS.CharacterState.IDLE_HANDS;
+    }
+
+    applyAttackSwingDamage(status) {
+        status.appliedAttacks++;
+        let combatTarget = status.combatTarget;
+        combatTarget.setStatusValue('hp', combatTarget.getStatusByKey('hp') - status['dmg']);
+
+        if (combatTarget.getStatusByKey('hp') > 0) {
+
+        } else {
+            this.applyTargetIsDead(status);
+        }
+
+    }
+
     processSwingProgress(status, config) {
         let testFrac = config.sourceFraction;
 
@@ -144,6 +169,10 @@ class PieceStateProcessor {
             status.trTime = (config.prepFraction * config.turnTime) / status.attacks
         } else if (status.swing < 1) {
             status.trTime = (config.swingFraction * config.turnTime) / status.attacks
+            if(status.appliedAttacks < status.attack) {
+                this.applyAttackSwingDamage(status);
+            }
+
         } else {
             status.trTime = (config.recoverFraction * config.turnTime) / status.attacks
         }
@@ -188,15 +217,41 @@ class PieceStateProcessor {
 
     processPieceState(status, config) {
 
-        status.maxHP = config.maxHP;
+        status.maxHP = status.maxHP || config.maxHP;
         if (status.targState === status.charState) return;
 
         this.applyCombatStatusTransition(status, config)
     }
+
+    updateHealthStatus(status, config) {
+        if (status.hp > 0) {
+            this.processTargetSelection(status, config);
+            this.updatePieceTurn(status, config)
+        } else {
+            status.combatTarget = null;
+            status.engagingTarget = null;
+            status.selectedTarget = null;
+            status.disengageTarget = null;
+            if (status.charState !== ENUMS.CharacterState.LIE_DEAD) {
+                status.charState = ENUMS.CharacterState.LIE_DEAD;
+                this.activateActionType(status, ENUMS.getKey('CharacterState', status.charState))
+                this.updatePieceTurn(status, config)
+                if (status.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+
+                    evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'player_dead', time:20});
+
+                    setTimeout(function() {
+                        evt.dispatch(ENUMS.Event.MAIN_CHAR_RETURN_HOME, status.gamePiece);
+                    }, 3000)
+
+                }
+            }
+        }
+    }
+
     processGamePieceState(status, config, tpf, time) {
         status.lifetime += tpf;
-        this.processTargetSelection(status, config);
-        this.updatePieceTurn(status, config)
+        this.updateHealthStatus(status, config)
     }
 
 }

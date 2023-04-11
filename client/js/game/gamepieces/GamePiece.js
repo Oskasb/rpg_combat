@@ -28,7 +28,9 @@ class GamePiece {
         }.bind(this);
 
         let tickPieceEquippedItem = function(tpf, gameTime) {
-            this.getSpatial().stickToObj3D(this.getSpatial().obj3d.parent.parent)
+            if (this.getSpatial().obj3d.parent) {
+                this.getSpatial().stickToObj3D(this.getSpatial().obj3d.parent.parent)
+            }
         }.bind(this);
 
         this.callbacks = {
@@ -44,6 +46,8 @@ class GamePiece {
         new PieceComposer(this, config, compositCb)
 
     }
+
+
 
     notifyOpponentStatusUpdate(opponentPiece, statusKey, statusValue) {
         this.combatSystem.opponentStatusUpdate(opponentPiece, statusKey, statusValue);
@@ -134,17 +138,6 @@ class GamePiece {
         MATH.quickSplice(this.activeActions, action);
     };
 
-    actionStateUpdated = function(action) {
-        if (action.getActionState() === ENUMS.ActionState.ACTIVATING) {
-            this.activeActions.push(action);
-        }
-        AnimationStateProcessor.applyActionStateToGamePiece(action, this)
-    };
-
-    animateMovementState = function(state, movement) {
-        AnimationStateProcessor.applyMovementStateToGamePiece(state, movement, this)
-    };
-
     hideGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
             ThreeAPI.tempVec3.set(0, 0, 0);
@@ -166,7 +159,7 @@ class GamePiece {
     };
 
     disbandGamePiece() {
-        GameAPI.unregisterGameUpdateCallback(this.getOnUpdateCallback());
+        GameAPI.takePieceFromWorld(this);
         this.modelInstance.decommissionInstancedModel();
         this.gamePieceUpdateCallbacks.length = 0;
     };
