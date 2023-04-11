@@ -19,6 +19,14 @@ class ThreatDetector {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE,  this.threatEvent)
         }
 
+        console.log("NEW HOSTILE", hostileChar)
+
+        if (this.gamePiece.getStatusByKey('faction') === 'GOOD') {
+            if (hostileChar.gamePiece.getStatusByKey('faction') === 'EVIL') {
+                hostileChar.gamePiece.setStatusValue('selectedTarget', this.gamePiece);
+            }
+        }
+
     }
 
     unregisterKnownHostile = function(hostileChar) {
@@ -54,7 +62,7 @@ class ThreatDetector {
         let activeChars = GameAPI.getActiveScenarioCharacters();
         if (!activeChars) return;
         MATH.emptyArray(this.hostilesInRange);
-        SpatialUtils.getCharactersInRange(this.hostilesInRange, this.gamePiece, activeChars, 15);
+        SpatialUtils.getCharactersInRange(this.hostilesInRange, this.gamePiece, activeChars, this.gamePiece.getStatusByKey('aggro_range'));
         this.updateNearbyHostiles()
     }
 

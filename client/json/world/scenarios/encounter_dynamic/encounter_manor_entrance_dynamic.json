@@ -25,12 +25,12 @@
               },
               "characters": [
                 {
-                  "character":"BANDIT_TOUGH",
+                  "character":"BANDIT_GUARD",
                   "pos": [-90, 2.83, 147],
                   "rot": [0, -1.311, 0]
                 },
                 {
-                  "character":"BANDIT_TOUGH",
+                  "character":"BANDIT_GUARD",
                   "pos": [-89, 2.83, 149.5],
                   "rot": [0, -0.611, 0]
                 },
@@ -40,7 +40,7 @@
                   "rot": [0, -1.111, 0]
                 },
                 {
-                  "character":"BANDIT_LEADER",
+                  "character":"BANDIT_TOUGH",
                   "pos": [-98, 2.83, 156],
                   "rot": [0, -2.111, 0]
                 },

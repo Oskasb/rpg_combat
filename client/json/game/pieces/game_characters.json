@@ -52,6 +52,7 @@
           "status": {
             "name": "Bandit",
             "faction": "EVIL",
+            "aggro_range": 3,
             "height": 1.85,
             "size": 1,
             "maxHP": 4,
@@ -74,6 +75,7 @@
           "status": {
             "name": "Bandit",
             "faction": "EVIL",
+            "aggro_range": 5,
             "height": 1.85,
             "size": 1,
             "maxHP": 7,
@@ -93,11 +95,37 @@
         }
       },
       {
+        "id":"BANDIT_GUARD",
+        "data":{
+          "status": {
+            "name": "Bandit",
+            "faction": "EVIL",
+            "aggro_range": 5,
+            "height": 1.85,
+            "size": 1,
+            "maxHP": 7,
+            "hp": 7,
+            "dmg": 1,
+            "FAST": 2,
+            "xp_value": 15
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":[
+            "NINJASWORD", "BELT_BRONZE", "HELMET_BRONZE" ,"BOOTS_SCALE", "BREASTPLATE_BRONZE", "LEGS_CHAIN", "SHIRT_CHAIN"
+          ],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
         "id":"BANDIT_LEADER",
         "data":{
           "status": {
             "name": "Bandit",
             "faction": "EVIL",
+            "aggro_range": 7,
             "height": 1.85,
             "size": 1,
             "maxHP": 9,
