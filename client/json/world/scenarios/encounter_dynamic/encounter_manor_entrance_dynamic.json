@@ -38,6 +38,16 @@
                   "character":"BANDIT_LEADER",
                   "pos": [-92, 2.83, 151],
                   "rot": [0, -1.111, 0]
+                },
+                {
+                  "character":"BANDIT_LEADER",
+                  "pos": [-98, 2.83, 156],
+                  "rot": [0, -2.111, 0]
+                },
+                {
+                  "character":"BANDIT_LEADER",
+                  "pos": [-96, 2.83, 159],
+                  "rot": [0, 1.111, 0]
                 }
               ],
               "spawn":[

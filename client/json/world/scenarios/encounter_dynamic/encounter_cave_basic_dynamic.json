@@ -9,8 +9,8 @@
             "data_key":"dynamic_view_init",
             "config": {
               "INFO": {
-                "header": "SOME CAVE",
-                "text_box": "A fine text description."
+                "header": "CELLAR",
+                "text_box": "Bandits are taking over."
               },
               "camera": {
                 "mode": "follow_cam_main_char",

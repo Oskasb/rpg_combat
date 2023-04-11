@@ -241,7 +241,7 @@ class PieceStateProcessor {
                 if (status.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
 
                     evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'player_dead', time:20});
-
+                    evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
                     setTimeout(function() {
                         evt.dispatch(ENUMS.Event.MAIN_CHAR_RETURN_HOME, status.gamePiece);
                     }, 3000)
