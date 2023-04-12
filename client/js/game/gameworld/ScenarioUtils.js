@@ -257,7 +257,7 @@ console.log(scenarioGridConfig);
     let iconKeys = gridConfig['grid_tiles'];
     let elevation = gridConfig['elevation'];
     let stepHeight = gridConfig['step_height'];
-    let boxSize = gridConfig['box_size'];
+    let boxSize = gridConfig['box_size'] / 2;
     let grid = gridConfig['grid'];
     let gridWidth = grid[0].length;
     let gridDepth = grid.length;
@@ -285,7 +285,6 @@ console.log(scenarioGridConfig);
         gridInstances.push([])
         for (let j = 0; j < gridDepth; j++) {
 
-            let floorOffset = elevation;
             let iconSprite = iconSprites[iconKeys[grid[j][i][0]]];
 
             let addSceneBox = function(instance) {
@@ -294,14 +293,19 @@ console.log(scenarioGridConfig);
                 instance.tileZ = gridDepth-j;
                 instances.push(instance)
                 instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
+                let boxElevation = grid[j][i][1]*stepHeight
                 let boxX = instance.tileX * 2 * boxSize ;
-                let boxY = grid[j][i][1]*stepHeight
+                let boxY = boxElevation
                 let boxZ = instance.tileZ * 2 * boxSize ;
-                tempVec1.set(boxX, boxY + floorOffset - boxSize, boxZ);
+                let boxScale = boxSize*0.02;
+                let posY = elevation + boxY
+                tempVec1.set(boxX, posY*0.5-boxSize, boxZ);
                 tempVec1.applyQuaternion(quat);
                 instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y, tempVec1.z + offsetZ);
                 instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
-                instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02);
+
+                let scaleZ = boxScale * (1 + (boxElevation*(1+boxSize*2*boxElevation)));
+                instance.spatial.setScaleXYZ(boxScale, scaleZ, boxScale);
                 instance.setSprite(iconSprite);
                 ThreeAPI.getScene().remove(instance.spatial.obj3d)
             };
