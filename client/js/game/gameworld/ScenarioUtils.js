@@ -285,7 +285,7 @@ console.log(scenarioGridConfig);
             let iconSprite = iconSprites[iconKeys[grid[j][i][0]]];
 
             let addSceneBox = function(instance) {
-                let gridTile = new GridTile(gridWidth-i, gridDepth-j, boxSize, new Object3D())
+                let gridTile = new GridTile(gridWidth-i, gridDepth-j, boxSize, stepHeight, new Object3D())
                 gridTile.setTileQuat(quat);
                 gridTile.setTileInstance(instance);
                 gridTiles[i].push(gridTile);
@@ -301,9 +301,10 @@ console.log(scenarioGridConfig);
                 tempVec1.applyQuaternion(quat);
                 instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y, tempVec1.z + offsetZ);
                 instance.spatial.getSpatialPosition(gridTile.obj3d.position);
+                gridTile.obj3d.position.y = posY;
                 instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
 
-                let scaleZ = boxScale * (1 + (boxElevation*(1+boxSize*2*boxElevation)));
+                let scaleZ = boxScale * (1 + (boxElevation*(1+boxSize*1*boxElevation+boxSize*0.5)));
                 instance.spatial.setScaleXYZ(boxScale, scaleZ, boxScale);
                 instance.setSprite(iconSprite);
                 ThreeAPI.getScene().remove(instance.spatial.obj3d)

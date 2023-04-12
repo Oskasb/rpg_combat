@@ -8,6 +8,8 @@ class TargetIndicator {
 
         this.indicators = [];
 
+
+
         this.colorMap = {};
         this.colorMap['GOOD']       = {r:0,   g:1,   b:0.4, a:0.5};
         this.colorMap['NEUTRAL']    = {r:1,   g:0.6, b:0.0, a:0.5};

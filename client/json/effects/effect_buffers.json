@@ -14,7 +14,7 @@
                         {
                             "spawner": "additive_stamps_8x8",
                             "asset_id":  "asset_additiveStamp",
-                            "pool_size": 500,
+                            "pool_size": 2500,
                             "render_order": 5
                         },
                         {
