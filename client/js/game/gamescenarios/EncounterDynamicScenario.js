@@ -64,7 +64,7 @@ class EncounterDynamicScenario {
     activateEncDynScenario() {
     let config = this.config;
     if (config['grid']) {
-        this.gridInstances = this.encounterGrid.initEncounterGrid(config.grid);
+        this.encounterGrid.initEncounterGrid(config.grid);
     }
         let pageReady = function(page) {
             console.log("PAGE READY", page);
@@ -168,6 +168,10 @@ class EncounterDynamicScenario {
         }
     };
 
+    getEncounterGrid() {
+        return this.encounterGrid;
+    }
+
     exitScenario() {
         GameAPI.getActivePlayerCharacter().gamePiece.removePieceUpdateCallback(this.camFollow)
         evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
@@ -183,7 +187,6 @@ class EncounterDynamicScenario {
             char.dismissCharacter();
         }
         this.encounterGrid.removeEncounterGrid();
-        this.gridInstances = null;
     };
 
     tickScenario(tpf, scenarioTime) {

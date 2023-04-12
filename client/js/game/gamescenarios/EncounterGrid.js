@@ -2,6 +2,7 @@ import {ConfigData} from "../../application/utils/ConfigData.js";
 import * as ScenarioUtils from "../gameworld/ScenarioUtils.js";
 class EncounterGrid {
     constructor() {
+        this.gridTiles = [];
         this.instances = [];
         this.configData = new ConfigData("GRID", "ENCOUNTER_GRIDS",  'grid_main_data', 'data_key', 'config')
     }
@@ -24,7 +25,7 @@ class EncounterGrid {
     }
 
     applyGridConfig(config, scenarioGridConfig) {
-        ScenarioUtils.setupEncounterGrid(this.instances, config, scenarioGridConfig)
+        ScenarioUtils.setupEncounterGrid(this.gridTiles, this.instances, config, scenarioGridConfig)
     }
     removeEncounterGrid() {
         let instances = this.instances;
@@ -32,6 +33,7 @@ class EncounterGrid {
             let instance = instances.pop();
             instance.decommissionInstancedModel();
         }
+        this.gridTiles = [];
     }
 
 }

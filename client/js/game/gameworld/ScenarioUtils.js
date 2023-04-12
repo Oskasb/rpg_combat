@@ -1,5 +1,6 @@
 import { Vector3} from "../../../libs/three/math/Vector3.js";
 import { Object3D } from "../../../libs/three/core/Object3D.js";
+import { GridTile } from "../gamescenarios/GridTile.js";
 
 let tempVec1 = new Vector3();
 let tempVec2 = new Vector3();
@@ -251,7 +252,7 @@ function resetScenarioCharacterPiece(charPiece) {
 
 
 
-function setupEncounterGrid(instances, gridConfig, scenarioGridConfig) {
+function setupEncounterGrid(gridTiles, instances, gridConfig, scenarioGridConfig) {
 console.log(scenarioGridConfig);
     let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
     let iconKeys = gridConfig['grid_tiles'];
@@ -272,36 +273,34 @@ console.log(scenarioGridConfig);
 
 
     console.log(gridConfig, gridWidth, gridDepth);
-    tempVec1.set(boxSize*gridWidth*1, 0, boxSize*gridWidth*1)
+    tempVec1.set(boxSize*gridWidth, 0, boxSize*gridWidth)
     tempVec1.applyQuaternion(quat);
     let offsetX = pos[0] - tempVec1.x;
     let offsetZ = pos[2] - tempVec1.z
 
-  //  let offsetX = pos[0] - boxSize*gridWidth*0.5;
-  //  let offsetZ = pos[2] + boxSize*gridDepth*0.5
-    let gridInstances = []
-
     for (let i = 0; i < gridWidth; i++) {
-        gridInstances.push([])
+        gridTiles.push([])
         for (let j = 0; j < gridDepth; j++) {
 
             let iconSprite = iconSprites[iconKeys[grid[j][i][0]]];
 
             let addSceneBox = function(instance) {
-                gridInstances[i].push(instance);
-                instance.tileX = gridWidth-i;
-                instance.tileZ = gridDepth-j;
+                let gridTile = new GridTile(gridWidth-i, gridDepth-j, boxSize, new Object3D())
+                gridTile.setTileQuat(quat);
+                gridTile.setTileInstance(instance);
+                gridTiles[i].push(gridTile);
                 instances.push(instance)
                 instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
                 let boxElevation = grid[j][i][1]*stepHeight
-                let boxX = instance.tileX * 2 * boxSize ;
+                let boxX = gridTile.tileX * 2 * boxSize ;
                 let boxY = boxElevation
-                let boxZ = instance.tileZ * 2 * boxSize ;
+                let boxZ = gridTile.tileZ * 2 * boxSize ;
                 let boxScale = boxSize*0.02;
                 let posY = elevation + boxY
                 tempVec1.set(boxX, posY*0.5-boxSize, boxZ);
                 tempVec1.applyQuaternion(quat);
                 instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y, tempVec1.z + offsetZ);
+                instance.spatial.getSpatialPosition(gridTile.obj3d.position);
                 instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
 
                 let scaleZ = boxScale * (1 + (boxElevation*(1+boxSize*2*boxElevation)));
@@ -314,7 +313,7 @@ console.log(scenarioGridConfig);
 
         }
     }
-    return gridInstances;
+    return gridTiles;
 }
 
 export {
