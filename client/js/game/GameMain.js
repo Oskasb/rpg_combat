@@ -107,7 +107,7 @@ class GameMain {
 
         let navPointData = this.navPointConfigData.parseConfigData()['world_dynamic_navpoints'];
         let navConf = navPointData.config;
-        let navPoint = navConf[this.dynamicId];
+        let navPoint = navConf[this.dynamicId]['camera'];
 
         let camCallback = function() {
             if (this.activeScenario) {

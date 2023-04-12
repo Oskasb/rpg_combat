@@ -6,7 +6,7 @@ class EncounterGrid {
         this.configData = new ConfigData("GRID", "ENCOUNTER_GRIDS",  'grid_main_data', 'data_key', 'config')
     }
 
-    initEncounterGrid(dataId) {
+    initEncounterGrid(scenarioGridConfig) {
         let onConfig = function(config, updateCount) {
             //    console.log("Update Count: ", updateCount, config)
             if (updateCount) {
@@ -17,14 +17,14 @@ class EncounterGrid {
                 //    onReady(this);
                 }, 0);
             }
-            this.applyGridConfig(config, updateCount);
+            this.applyGridConfig(config, scenarioGridConfig);
         }.bind(this)
 
-        this.configData.parseConfig(dataId, onConfig)
+        this.configData.parseConfig(scenarioGridConfig['dataId'], onConfig)
     }
 
-    applyGridConfig(config) {
-        ScenarioUtils.setupEncounterGrid(this.instances, config)
+    applyGridConfig(config, scenarioGridConfig) {
+        ScenarioUtils.setupEncounterGrid(this.instances, config, scenarioGridConfig)
     }
     removeEncounterGrid() {
         let instances = this.instances;

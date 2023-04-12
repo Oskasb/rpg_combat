@@ -64,7 +64,7 @@ class EncounterDynamicScenario {
     activateEncDynScenario() {
     let config = this.config;
     if (config['grid']) {
-        this.encounterGrid.initEncounterGrid(config.grid);
+        this.gridInstances = this.encounterGrid.initEncounterGrid(config.grid);
     }
         let pageReady = function(page) {
             console.log("PAGE READY", page);
@@ -182,6 +182,8 @@ class EncounterDynamicScenario {
             let char = this.characters.pop();
             char.dismissCharacter();
         }
+        this.encounterGrid.removeEncounterGrid();
+        this.gridInstances = null;
     };
 
     tickScenario(tpf, scenarioTime) {

@@ -1,7 +1,9 @@
 import { Vector3} from "../../../libs/three/math/Vector3.js";
+import { Object3D } from "../../../libs/three/core/Object3D.js";
 
 let tempVec1 = new Vector3();
 let tempVec2 = new Vector3();
+let tempObj = new Object3D();
 
 let iconKeysAll = [
     "grass",
@@ -249,36 +251,55 @@ function resetScenarioCharacterPiece(charPiece) {
 
 
 
-function setupEncounterGrid(instances, gridConfig) {
-    console.log(gridConfig);
+function setupEncounterGrid(instances, gridConfig, scenarioGridConfig) {
+console.log(scenarioGridConfig);
     let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
     let iconKeys = gridConfig['grid_tiles'];
     let elevation = gridConfig['elevation'];
     let boxSize = gridConfig['box_size'];
     let grid = gridConfig['grid'];
-    let gridWidth = grid[0][0].length;
-    let gridDepth = grid[0].length;
+    let gridWidth = grid[0].length;
+    let gridDepth = grid.length;
+    let pos = scenarioGridConfig['pos'];
+    let rot = scenarioGridConfig['rot'];
 
-    let wallHeight = 0
+    tempObj.quaternion.set(0, 1, 0, 1);
 
+    MATH.rotateObj(tempObj, rot);
+    let quat = tempObj.quaternion;
+
+    tempVec1.applyQuaternion(quat);
+
+    console.log(gridConfig, gridWidth, gridDepth);
     let offset = boxSize*gridWidth;
 
-    for (let i = 0; i < gridWidth; i++) {
+    let gridInstances = []
 
-        for (let j = 0; j < gridDepth; j++) {
+    for (let i = 0; i < gridWidth; i++) {
+        gridInstances.push([])
+        for (let j = gridDepth-1; j > 0; j--) {
 
             let floorOffset = elevation;
-            let iconSprite = iconSprites[iconKeys[Math.floor(MATH.sillyRandom(Math.sin(i*j))*iconKeys.length)]];
+            let iconSprite = iconSprites[iconKeys[grid[j][i][0]]];
 
             let addSceneBox = function(instance) {
+                gridInstances[i].push(instance);
+                instance.tileX = i;
+                instance.tileZ = j;
                 instances.push(instance)
                 instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
+                let boxX = 2*boxSize*i-gridWidth*0.5;
+                let boxY = -boxSize + floorOffset
+                let boxZ = 2*boxSize*j-gridDepth*0.5;
+                tempVec1.set(boxX, 0, boxZ);
+                tempVec1.applyQuaternion(quat);
                 instance.spatial.setPosXYZ(
-                    2*boxSize*i - offset ,
-                    -boxSize + floorOffset,
-                    2*boxSize*j - offset
+                    boxX - offset ,
+                    boxY,
+                    boxZ - offset
                 );
-                instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02)
+                instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
+                instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02);
                 instance.setSprite(iconSprite);
                 ThreeAPI.getScene().remove(instance.spatial.obj3d)
             };
@@ -287,6 +308,7 @@ function setupEncounterGrid(instances, gridConfig) {
 
         }
     }
+    return gridInstances;
 }
 
 export {
