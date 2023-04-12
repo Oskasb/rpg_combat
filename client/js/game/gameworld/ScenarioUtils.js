@@ -1,10 +1,12 @@
 import { Vector3} from "../../../libs/three/math/Vector3.js";
+import { Vector2} from "../../../libs/three/math/Vector2.js";
 import { Object3D } from "../../../libs/three/core/Object3D.js";
 import { GridTile } from "../gamescenarios/GridTile.js";
 
 let tempVec1 = new Vector3();
 let tempVec2 = new Vector3();
 let tempObj = new Object3D();
+let tempVec2D = new Vector2;
 
 let iconKeysAll = [
     "grass",
@@ -317,11 +319,32 @@ console.log(scenarioGridConfig);
     return gridTiles;
 }
 
+function getTileForPosition(gridTiles, posVec3) {
+    let selectedTile = null;
+    let nearestTileDist = MATH.bigSafeValue();
+
+    for (let i = 0; i < gridTiles.length; i++) {
+
+        for (let j = 0; j < gridTiles[i].length; j++) {
+            let tile = gridTiles[i][j];
+            tempVec2D.set(tile.obj3d.position.x - posVec3.x, tile.obj3d.position.z - posVec3.z);
+            let lengthSq = tempVec2D.lengthSq();
+            if (lengthSq < nearestTileDist) {
+                selectedTile = tile;
+                nearestTileDist = lengthSq;
+            }
+        }
+    }
+
+    return selectedTile
+}
+
 export {
     positionPlayer,
     setupBoxGrid,
     spawnPatch,
     spawnLocation,
     resetScenarioCharacterPiece,
-    setupEncounterGrid
+    setupEncounterGrid,
+    getTileForPosition
 }

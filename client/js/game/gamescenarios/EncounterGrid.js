@@ -27,13 +27,24 @@ class EncounterGrid {
     applyGridConfig(config, scenarioGridConfig) {
         ScenarioUtils.setupEncounterGrid(this.gridTiles, this.instances, config, scenarioGridConfig)
     }
+
+    getTileAtPosition(posVec3) {
+        return ScenarioUtils.getTileForPosition(this.gridTiles, posVec3)
+    }
+
     removeEncounterGrid() {
         let instances = this.instances;
         while (instances.length) {
             let instance = instances.pop();
             instance.decommissionInstancedModel();
         }
-        this.gridTiles = [];
+        while (this.gridTiles.length) {
+            let col = this.gridTiles.pop()
+            while (col.length) {
+                let tile = col.pop();
+                tile.indicateTileStatus(false);
+            }
+        }
     }
 
 }

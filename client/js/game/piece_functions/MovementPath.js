@@ -2,14 +2,55 @@ class MovementPath {
     constructor(gamePiece) {
         this.gamePiece = gamePiece;
         this.pieceMovement = gamePiece.pieceMovement;
+        this.currentPosTile = null;
+        this.targetPosTile = null;
     }
 
 
+    updatePositionOnGrid(encounterGrid) {
+        let pos = this.gamePiece.getPos();
+        let gridTile = encounterGrid.getTileAtPosition(pos);
+        if (this.currentPosTile !== gridTile){
+            if (this.currentPosTile) {
+                this.currentPosTile.indicateTileStatus(false);
+            }
+            gridTile.indicateTileStatus(false);
+            if (this.gamePiece.getStatusByKey('isItem') === 1) {
+                gridTile.setTileStatus('HAS_ITEM')
+            } else {
+                gridTile.setTileStatus('OCCUPIED')
+            }
+
+            gridTile.indicateTileStatus(true);
+
+            this.currentPosTile = gridTile;
+        }
+    }
+
+    updateMovementOnGrid(encounterGrid) {
+        let targetPos = this.pieceMovement.targetPosVec3;
+        let gridTile = encounterGrid.getTileAtPosition(targetPos);
+        if (this.targetPosTile !== gridTile){
+            if (this.targetPosTile) {
+                this.targetPosTile.indicateTileStatus(false);
+            }
+            gridTile.indicateTileStatus(false);
+            gridTile.setTileStatus('MOVE_TO')
+            gridTile.indicateTileStatus(true);
+            this.targetPosTile = gridTile;
+        }
+
+    }
 
     tickMovementPath(tpf, gameTime) {
-
+        let encounterGrid = GameAPI.getActiveEncounterGrid();
+        if (encounterGrid) {
+            if (encounterGrid.gridTiles.length) {
+                this.updateMovementOnGrid(encounterGrid);
+                this.updatePositionOnGrid(encounterGrid);
+            }
+        }
     }
-
 
 }
 

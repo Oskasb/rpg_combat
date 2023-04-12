@@ -82,7 +82,6 @@ class PieceMovement {
 
     applyFrameToMovement(tpf) {
         this.interpolatePosition(tpf);
-
     }
 
 

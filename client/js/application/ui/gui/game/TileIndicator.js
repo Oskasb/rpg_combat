@@ -12,8 +12,18 @@ class TileIndicator {
         this.indicators = [];
 
         this.colorMap = {};
-        this.colorMap['FREE']       = {r:-0.6,   g:-0.3,   b:0.99, a:0.9};
-        this.colorMap['BLOCKED']       = {r:1,   g:-0.3,   b:-0.3,   a:0.8};
+        this.colorMap['FREE']       = {r:-0.6,g:-0.3,   b:0.99,   a:0.2};
+        this.colorMap['MOVE_TO']    = {r:0.1, g:-0.4,   b:0.1,    a:0.2};
+        this.colorMap['OCCUPIED']   = {r:0.1, g: 0.1,   b:-0.2,   a:0.2};
+        this.colorMap['HAS_ITEM']   = {r:-0.6,g: -0.3,  b:0.9,    a:0.4};
+        this.colorMap['BLOCKED']    = {r:0.6, g:-0.3,   b:-0.3,   a:0.2};
+
+        this.spriteMap = {}
+        this.spriteMap['FREE']       = {x:5, y:0};
+        this.spriteMap['MOVE_TO']    = {x:1, y:5};
+        this.spriteMap['OCCUPIED']   = {x:1, y:1};
+        this.spriteMap['HAS_ITEM']   = {x:0, y:2};
+        this.spriteMap['BLOCKED']    = {x:1, y:2};
 
         let updateIndicator = function(tpf, time) {
             this.indicateTileStatus(tpf, time, this.spin, this.scale, this.pulsate, this.rate)
@@ -28,12 +38,12 @@ class TileIndicator {
     activateTileIndicator() {
         let indicatorFx = 'effect_character_indicator';
 
-        let spriteX = 5;
-           let spriteY = 0;
-            let spin = 0;
-            let scale = 1.7;
-            let pulsate = 0.03;
-            let rate = 3;
+        let spriteX = this.spriteMap[this.gridTile.getTileStatus()].x;
+        let spriteY = this.spriteMap[this.gridTile.getTileStatus()].y;
+        let spin = 0;
+        let scale = 1.7;
+        let pulsate = 0.03;
+        let rate = 3;
 
         if (spin) this.spin = spin;
         if (scale) this.scale = scale;
@@ -43,13 +53,13 @@ class TileIndicator {
         let effectCb = function(efct) {
             this.indicators.push(efct);
             efct.activateEffectFromConfigId()
-            ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1);
+            ThreeAPI.tempObj.quaternion.copy(this.gridTile.obj3d.quaternion);
        //     ThreeAPI.tempObj.lookAt(0, 1, 0);
        //     efct.setEffectQuaternion(this.gridTile.obj3d.quaternion);
             ThreeAPI.tempVec3.copy(this.gridTile.obj3d.position)
             ThreeAPI.tempVec3.y+=1;
             efct.setEffectPosition(ThreeAPI.tempVec3)
-            ThreeAPI.tempObj.lookAt(0, 1, 0);
+            ThreeAPI.tempObj.rotateX(-MATH.HALF_PI);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
 
             if (typeof (spriteX) === 'number' && typeof(spriteY) === 'number') {

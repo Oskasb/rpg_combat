@@ -77,7 +77,9 @@ class GameAPI {
     };
 
     getActiveEncounterGrid() {
-        return this.getActiveDynamicScenario().encounterGrid;
+        if (this.getActiveDynamicScenario()) {
+            return this.getActiveDynamicScenario().encounterGrid;
+        }
     }
     handleWorldSpacePointerUpdate(pointer, start, release) {
 
