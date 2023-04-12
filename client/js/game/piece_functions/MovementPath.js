@@ -10,25 +10,24 @@ class MovementPath {
     updatePositionOnGrid(encounterGrid) {
         let pos = this.gamePiece.getPos();
         let gridTile = encounterGrid.getTileAtPosition(pos);
-        if (this.currentPosTile !== gridTile){
+        if (this.currentPosTile !== gridTile || gridTile.getTileStatus() === 'FREE'){
             if (this.currentPosTile) {
                 this.currentPosTile.indicateTileStatus(false);
             }
             gridTile.indicateTileStatus(false);
-            if (this.gamePiece.getStatusByKey('isItem') === 1) {
+            if (this.gamePiece.getStatusByKey('isItem') === 1 && (gridTile.getTileStatus() === 'FREE')) {
                 gridTile.setTileStatus('HAS_ITEM')
             } else {
                 gridTile.setTileStatus('OCCUPIED')
             }
-
             gridTile.indicateTileStatus(true);
-
             this.currentPosTile = gridTile;
         }
     }
 
     updateMovementOnGrid(encounterGrid) {
-        let targetPos = this.pieceMovement.targetPosVec3;
+        ThreeAPI.tempVec3.copy(this.pieceMovement.targetPosVec3);
+        let targetPos = ThreeAPI.tempVec3;
         let gridTile = encounterGrid.getTileAtPosition(targetPos);
         if (this.targetPosTile !== gridTile){
             if (this.targetPosTile) {
@@ -37,6 +36,7 @@ class MovementPath {
             gridTile.indicateTileStatus(false);
             gridTile.setTileStatus('MOVE_TO')
             gridTile.indicateTileStatus(true);
+        //    this.pieceMovement.targetPosVec3.copy(gridTile.obj3d.position);
             this.targetPosTile = gridTile;
         }
 

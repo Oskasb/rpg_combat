@@ -2,6 +2,7 @@ import { TileIndicator } from "../../application/ui/gui/game/TileIndicator.js";
 
 class GridTile {
     constructor(tileX, tileZ, size, thickness, obj3d) {
+        this.isDirty = false;
         this.tileX = tileX;
         this.tileZ = tileZ;
         this.size = size;
@@ -17,6 +18,7 @@ class GridTile {
         } else {
             this.tileIndicator.removeTileIndicator();
             this.tileIndicator.removeIndicatorFx();
+            this.tileStatus = 'FREE'
         }
 
     }

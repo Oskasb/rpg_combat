@@ -18,6 +18,11 @@
           {
             "data_key":"dynamic_view_init",
             "config": {
+              "camera": {
+                "mode": "follow_cam_main_char",
+                "offset_pos": [2, 5, -7],
+                "offset_lookAt": [0, 1.5, 2]
+              },
               "gui_page":"page_scene_home",
               "environment": "sunny_day",
               "player": {
