@@ -6,6 +6,7 @@ import { PieceAnimator } from "./PieceAnimator.js";
 import { PieceComposer } from "../piece_functions/PieceComposer.js";
 import { PieceAttacher } from "./PieceAttacher.js";
 import { PieceMovement } from "../piece_functions/PieceMovement.js";
+import { MovementPath } from "../piece_functions/MovementPath.js";
 import { PieceState } from "./PieceState.js";
 
 class GamePiece {
@@ -25,6 +26,7 @@ class GamePiece {
             this.pieceAnimator.updatePieceAnimations(tpf, gameTime);
             this.pieceAttacher.tickAttacher();
             this.pieceState.tickPieceState(tpf, gameTime);
+            this.movementPath.tickMovementPath(tpf, gameTime);
         }.bind(this);
 
         let tickPieceEquippedItem = function(tpf, gameTime) {
@@ -40,6 +42,7 @@ class GamePiece {
 
         let compositCb = function(piece) {
             this.pieceMovement = new PieceMovement(piece);
+            this.movementPath = new MovementPath(piece);
             callback(piece)
         }.bind(this);
 

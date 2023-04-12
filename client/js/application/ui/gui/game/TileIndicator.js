@@ -23,8 +23,6 @@ class TileIndicator {
             updateIndicator:updateIndicator
         }
 
-        this.activateTileIndicator();
-
     }
 
     activateTileIndicator() {
@@ -33,7 +31,7 @@ class TileIndicator {
         let spriteX = 5;
            let spriteY = 0;
             let spin = 0;
-            let scale = 2.6;
+            let scale = 1.7;
             let pulsate = 0.03;
             let rate = 3;
 
