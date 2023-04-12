@@ -256,6 +256,7 @@ console.log(scenarioGridConfig);
     let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
     let iconKeys = gridConfig['grid_tiles'];
     let elevation = gridConfig['elevation'];
+    let stepHeight = gridConfig['step_height'];
     let boxSize = gridConfig['box_size'];
     let grid = gridConfig['grid'];
     let gridWidth = grid[0].length;
@@ -263,41 +264,42 @@ console.log(scenarioGridConfig);
     let pos = scenarioGridConfig['pos'];
     let rot = scenarioGridConfig['rot'];
 
-    tempObj.quaternion.set(0, 1, 0, 1);
+    tempObj.quaternion.set(0, 0, 0, 1);
 
     MATH.rotateObj(tempObj, rot);
     let quat = tempObj.quaternion;
 
-    tempVec1.applyQuaternion(quat);
+
 
     console.log(gridConfig, gridWidth, gridDepth);
-    let offset = boxSize*gridWidth;
+    tempVec1.set(boxSize*gridWidth*1, 0, boxSize*gridWidth*1)
+    tempVec1.applyQuaternion(quat);
+    let offsetX = pos[0] - tempVec1.x;
+    let offsetZ = pos[2] - tempVec1.z
 
+  //  let offsetX = pos[0] - boxSize*gridWidth*0.5;
+  //  let offsetZ = pos[2] + boxSize*gridDepth*0.5
     let gridInstances = []
 
     for (let i = 0; i < gridWidth; i++) {
         gridInstances.push([])
-        for (let j = gridDepth-1; j > 0; j--) {
+        for (let j = 0; j < gridDepth; j++) {
 
             let floorOffset = elevation;
             let iconSprite = iconSprites[iconKeys[grid[j][i][0]]];
 
             let addSceneBox = function(instance) {
                 gridInstances[i].push(instance);
-                instance.tileX = i;
-                instance.tileZ = j;
+                instance.tileX = gridWidth-i;
+                instance.tileZ = gridDepth-j;
                 instances.push(instance)
                 instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
-                let boxX = 2*boxSize*i-gridWidth*0.5;
-                let boxY = -boxSize + floorOffset
-                let boxZ = 2*boxSize*j-gridDepth*0.5;
-                tempVec1.set(boxX, 0, boxZ);
+                let boxX = instance.tileX * 2 * boxSize ;
+                let boxY = grid[j][i][1]*stepHeight
+                let boxZ = instance.tileZ * 2 * boxSize ;
+                tempVec1.set(boxX, boxY + floorOffset - boxSize, boxZ);
                 tempVec1.applyQuaternion(quat);
-                instance.spatial.setPosXYZ(
-                    boxX - offset ,
-                    boxY,
-                    boxZ - offset
-                );
+                instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y, tempVec1.z + offsetZ);
                 instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
                 instance.spatial.setScaleXYZ(boxSize*0.02, boxSize*0.02, boxSize*0.02);
                 instance.setSprite(iconSprite);
