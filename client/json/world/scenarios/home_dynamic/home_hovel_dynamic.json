@@ -20,8 +20,8 @@
             "config": {
               "camera": {
                 "mode": "follow_cam_main_char",
-                "offset_pos": [2, 5, -7],
-                "offset_lookAt": [0, 1.5, 2]
+                "offset_pos": [1, 6, -11],
+                "offset_lookAt": [0, 2.5, 0]
               },
               "gui_page":"page_scene_home",
               "environment": "sunny_day",

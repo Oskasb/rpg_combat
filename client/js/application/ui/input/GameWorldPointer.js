@@ -3,18 +3,25 @@ import { TargetIndicator } from "../gui/game/TargetIndicator.js";
 class GameWorldPointer {
     constructor() {
         this.posVec = new THREE.Vector3()
+        this.lastSelectedTile = null;
         this.selectionEvent = {
             piece:null,
             value:false
         }
     }
 
-    registerNewWorldPointer = function(pointer) {
-
-    }
-
     worldPointerReleased = function(pointer) {
-        if (pointer.worldSpaceTarget) {
+
+        if (pointer.isMovementInput) {
+            this.lastSelectedTile.setTileStatus('OCCUPIED');
+            let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
+            let targetPos = this.lastSelectedTile.obj3d.position;
+            let onArrive = function() {
+
+            }
+            playerPiece.pieceMovement.moveToTargetAtTime('walk', playerPiece.getPos(), targetPos, 3, onArrive)
+            console.log("Release Movement Pointer")
+        } else if (pointer.worldSpaceTarget) {
             pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
             pointer.worldSpaceIndicator.hideIndicatorFx();
             this.selectionEvent.piece = pointer.worldSpaceTarget;
@@ -25,8 +32,12 @@ class GameWorldPointer {
             this.selectionEvent.value = false;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
         }
+
+
+
+        pointer.isMovementInput = false;
     }
-    updateWorldPointer = function(pointer) {
+    updateWorldPointer = function(pointer, isFirstPressFrame) {
         let indicator =  pointer.worldSpaceIndicator
         let pos = this.posVec.copy(pointer.pos);
      //   GameScreen.fitView(pos);
@@ -38,16 +49,16 @@ class GameWorldPointer {
         let pieces = dynamicScenario.pieces;
 
         let nearestDist = 99999;
-        let selectedTarget = null;
+        let screenSelection = null;
 
         let maxSelectRange = 0.15;
-        let screenDistance = function(piecePos, piece) {
+        let screenDistance = function(piecePos, select) {
             ThreeAPI.toScreenPosition(piecePos, ThreeAPI.tempVec3b)
             ThreeAPI.tempVec3b.sub(pos)
             let distance = ThreeAPI.tempVec3b.length();
             if (distance < maxSelectRange) {
                 if (distance < nearestDist) {
-                    selectedTarget = piece;
+                    screenSelection = select;
                     nearestDist = distance;
                 }
             }
@@ -56,8 +67,11 @@ class GameWorldPointer {
         for (let i = 0; i < pieces.length; i++) {
             pieces[i].getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
             screenDistance(ThreeAPI.tempVec3,  pieces[i]);
-
         }
+
+        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece
+        ThreeAPI.tempVec3.copy(playerPiece.getPos());
+        screenDistance(ThreeAPI.tempVec3, playerPiece)
 
         for (let i = 0; i < characters.length; i++) {
             characters[i].gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
@@ -65,34 +79,79 @@ class GameWorldPointer {
             screenDistance(ThreeAPI.tempVec3, characters[i].gamePiece);
         }
 
-        if (selectedTarget) {
-            if (pointer.worldSpaceTarget !== selectedTarget) {
-                console.log("Change selected Target")
+        let updateWorldPointer = function() {
+            if (screenSelection) {
+
+                if (pointer.worldSpaceTarget !== screenSelection) {
+                    console.log("Change selected Target")
+                    if (pointer.worldSpaceTarget) {
+                        indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
+                    }
+                    if (!pointer.worldSpaceIndicator) {
+                        indicator = new TargetIndicator()
+                        pointer.worldSpaceIndicator = indicator;
+                        indicator.indicateGamePiece(screenSelection, 'effect_character_indicator', 1, 3, -1.5,1.2, 0, 4);
+                    }
+
+                } else {
+                    indicator.call.updateIndicator(0.01, GameAPI.getGameTime(), screenSelection, 1.2, 0.8);
+                }
+
+                pointer.worldSpaceTarget = screenSelection;
+            } else {
                 if (pointer.worldSpaceTarget) {
                     indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
+                    pointer.worldSpaceIndicator.hideIndicatorFx()
+                    this.selectionEvent.piece = pointer.worldSpaceTarget;
+                    this.selectionEvent.value = false;
+                    evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, this.selectionEvent);
+
                 }
-                if (!pointer.worldSpaceIndicator) {
-                    indicator = new TargetIndicator()
-                    pointer.worldSpaceIndicator = indicator;
-                    indicator.indicateGamePiece(selectedTarget, 'effect_character_indicator', 1, 3, -1.5,1.2, 0, 4);
-                }
-
-            } else {
-                indicator.call.updateIndicator(0.01, GameAPI.getGameTime(), selectedTarget, 1.2, 0.8);
+                pointer.worldSpaceTarget = null;
             }
-
-            pointer.worldSpaceTarget = selectedTarget;
-        } else {
-            if (pointer.worldSpaceTarget) {
-                indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
-                pointer.worldSpaceIndicator.hideIndicatorFx()
-                this.selectionEvent.piece = pointer.worldSpaceTarget;
-                this.selectionEvent.value = false;
-                evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, this.selectionEvent);
-
-            }
-            pointer.worldSpaceTarget = null;
         }
+
+        let updateMovementPointer = function() {
+            let encounterGrid = GameAPI.getActiveEncounterGrid()
+            let tiles = encounterGrid.gridTiles
+            screenSelection = null;
+            if (tiles.length) {
+                for (let i = 0; i < tiles.length; i++) {
+                    for (let j = 0; j < tiles[i].length; j++) {
+                        let tile = tiles[i][j]
+                        let pos = tile.obj3d.position;
+                        screenDistance(pos, tile);
+                    }
+                }
+            }
+            let selectedTile = screenSelection;
+            if (selectedTile) {
+                if (this.lastSelectedTile !== selectedTile) {
+                    if (this.lastSelectedTile) {
+                        this.lastSelectedTile.indicateTileStatus(false)
+                    }
+                    this.lastSelectedTile = selectedTile
+                    selectedTile.indicateTileStatus(false);
+                    selectedTile.setTileStatus('MOVE_TO');
+                    selectedTile.indicateTileStatus(true)
+                }
+
+            }
+
+        }.bind(this);
+
+        if (screenSelection === playerPiece && isFirstPressFrame) {
+            pointer.isMovementInput = true;
+            console.log(pointer)
+        }
+
+        if (pointer.isMovementInput) {
+            updateMovementPointer();
+        } else {
+            updateWorldPointer()
+        }
+
+
     }
 }
 

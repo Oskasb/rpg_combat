@@ -83,12 +83,10 @@ class GameAPI {
     }
     handleWorldSpacePointerUpdate(pointer, start, release) {
 
-        if (start) {
-            this.gameWorldPointer.registerNewWorldPointer(pointer);
-        } else if (release) {
+        if (release) {
             this.gameWorldPointer.worldPointerReleased(pointer);
         } else {
-            this.gameWorldPointer.updateWorldPointer(pointer);
+            this.gameWorldPointer.updateWorldPointer(pointer, start);
         }
 
     }

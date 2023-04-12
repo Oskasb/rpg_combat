@@ -11,6 +11,7 @@ class GuiPointer {
             this.worldSpaceTarget = null;
             this.isSeeking = false;
             this.isHovering = false;
+            this.isMovementInput = false;
             this.guiPointerWidget = new GuiPointerWidget(inputIndex);
             this.setupPointerElement( this.configId);
             this.setInputIndex(inputIndex)
