@@ -30,9 +30,11 @@
                 "rot": [0, -0.911, 0]
               },
               "grid": {
+                "entrance_tile": [7, 15],
+                "start_tile": [7, 10],
                 "dataId":"grid_home_hovel",
                 "rot": [0, 0.19, 0],
-                "pos": [-1.2, 0, 2.3]
+                "pos": [-2.4, 0, -1.1]
               },
               "characters": [
                 {

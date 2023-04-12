@@ -24,8 +24,26 @@ class EncounterGrid {
         this.configData.parseConfig(scenarioGridConfig['dataId'], onConfig)
     }
 
+    getPlayerEntranceTile() {
+        let row = this.entranceTile[0];
+        let col = this.gridTiles[0].length - this.entranceTile[1];
+        return this.gridTiles[row][col]
+    }
+
+    getPlayerStartTile() {
+        let row = this.startTile[0];
+        let col = this.gridTiles[0].length - this.startTile[1];
+        return this.gridTiles[row][col]
+    }
     applyGridConfig(config, scenarioGridConfig) {
+        this.entranceTile = scenarioGridConfig['entrance_tile'] || [3, 3];
+        this.startTile = scenarioGridConfig['start_tile'] || [3, 3];
         ScenarioUtils.setupEncounterGrid(this.gridTiles, this.instances, config, scenarioGridConfig)
+        let startPos = this.getPlayerStartTile().obj3d.position;
+
+
+        //    GameAPI.getActivePlayerCharacter().gamePiece.pieceMovement.targetPosVec3.copy(startPos);
+
     }
 
     getTileAtPosition(posVec3) {

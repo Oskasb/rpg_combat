@@ -25,7 +25,7 @@ let iconKeysAll = [
     "rock_blue",
     "sand_cracked"
 ];
-function positionPlayer(config) {
+function positionPlayer(config, tPos, sPos) {
     let targetPos =tempVec1;
     let pos = config['pos'];
     let rot = config['rot'];
@@ -38,20 +38,28 @@ function positionPlayer(config) {
     let spatial = player.getSpatial();
     let sourcePos = tempVec2;
 
-    spatial.getSpatialPosition(sourcePos)
-    MATH.vec3FromArray(targetPos, pos);
-
-    sourcePos.sub(targetPos);
-    let travelDistance = sourcePos.length();
-    console.log(travelDistance)
-    if (travelDistance > maxAllowedTravelDistance) {
-        sourcePos.normalize();
-        sourcePos.multiplyScalar( maxAllowedTravelDistance );
+    if (tPos) {
+        targetPos.copy(tPos);
     } else {
-        travelTimeMax = travelTimeMax/(maxAllowedTravelDistance / travelDistance)
+        MATH.vec3FromArray(targetPos, pos);
     }
 
-    sourcePos.add(targetPos);
+    if (sPos) {
+        sourcePos.copy(sPos);
+        let travelDistance = MATH.distanceBetween(sourcePos, targetPos);
+    //    travelTimeMax = travelTimeMax/(maxAllowedTravelDistance / travelDistance)
+    } else {
+        spatial.getSpatialPosition(sourcePos)
+        sourcePos.sub(targetPos);
+        let travelDistance = sourcePos.length();
+        if (travelDistance > maxAllowedTravelDistance) {
+            sourcePos.normalize();
+            sourcePos.multiplyScalar( maxAllowedTravelDistance );
+        } else {
+            travelTimeMax = travelTimeMax/(maxAllowedTravelDistance / travelDistance)
+        }
+        sourcePos.add(targetPos);
+    }
     spatial.setPosVec3(sourcePos);
     let arriveCallback = function() {
         spatial.setRotXYZ(rot[0], rot[1], rot[2])

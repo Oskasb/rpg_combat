@@ -63,9 +63,7 @@ class EncounterDynamicScenario {
 
     activateEncDynScenario() {
     let config = this.config;
-    if (config['grid']) {
-        this.encounterGrid.initEncounterGrid(config.grid);
-    }
+
         let pageReady = function(page) {
             console.log("PAGE READY", page);
             if (config.INFO) {
@@ -92,7 +90,9 @@ class EncounterDynamicScenario {
     applyScenarioConfig = function(config, isUpdate) {
 
         this.config = config;
-
+        if (config['grid']) {
+            this.encounterGrid.initEncounterGrid(config.grid);
+        }
         PipelineAPI.setCategoryData('ACTIVE_SCENARIO', config)
 
         let pageReady = function(page) {
@@ -109,7 +109,14 @@ class EncounterDynamicScenario {
 
         ScenarioUtils.resetScenarioCharacterPiece(GameAPI.getActivePlayerCharacter().gamePiece);
 
-        if (config['player']) ScenarioUtils.positionPlayer(config['player']);
+        if (this.encounterGrid.gridTiles.length) {
+            let tPos = this.encounterGrid.getPlayerStartTile().obj3d.position;
+            let sPos = this.encounterGrid.getPlayerEntranceTile().obj3d.position;
+            if (config['player']) ScenarioUtils.positionPlayer(config['player'], tPos, sPos);
+        } else {
+            if (config['player']) ScenarioUtils.positionPlayer(config['player']);
+        }
+
 
         let characters = this.characters;
 
