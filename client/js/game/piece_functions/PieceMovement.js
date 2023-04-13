@@ -32,14 +32,58 @@ class PieceMovement {
 
     }
 
+    moveAlongTilePath(tilePath, callback) {
 
-    moveTowards(targetPos, callback) {
+        let tileCount = tilePath.length;
+        let totalDistance = 0;
+
+        let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining();
+        let moveStartTime = GameAPI.getTurnStatus().turnTime - turnTimeRemaining;
+
+    //    console.log("Process Tile Path: ", tilePath, tileCount);
+
+        ThreeAPI.tempVec3.copy(tilePath[0].getPos())
+        for (let i = 0; i < tilePath.length; i++) {
+            ThreeAPI.tempVec3b.subVectors( ThreeAPI.tempVec3, tilePath[i].getPos())
+            totalDistance+= ThreeAPI.tempVec3b.length();
+            ThreeAPI.tempVec3.copy(tilePath[i].getPos())
+        }
+     //   console.log("Total path distance:", totalDistance);
+
+        let tile;
+        let nextTileCB = function() {
+         //   console.log("nextTileCB: ", tilePath.length);
+            if (tilePath.length) {
+                tile = tilePath.pop();
+                let travelTime = turnTimeRemaining / tileCount ;
+                processTile(tile.getPos(), travelTime)
+            } else {
+            //    console.log("PATH ENDED")
+                callback()
+            }
+        }
+
+        let processTile = function(tpos, travelTime) {
+       //     console.log("Process Tile: ", travelTime);
+
+            let spos = this.gamePiece.getPos()
+       //     evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tpos, color:'WHITE', size:0.4})
+            this.moveToTargetAtTime('walk', spos, tpos, travelTime, nextTileCB, 0.01)
+        }.bind(this)
+
+        nextTileCB();
+
+    }
+
+    moveTowards(targetPos, callback, turnFraction) {
+        let fraction = turnFraction || 1;
         let tpos = this.setTargetPosition(targetPos);
         let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining();
         let speed = this.gamePiece.getStatusByKey('move_speed');
         let spos = this.gamePiece.getPos()
         let distance = MATH.distanceBetween(spos, tpos);
-        let travelTime = distance * ( turnTimeRemaining / speed )  ;
+        evt(ENUMS.Event.DEBUG_DRAW_LINE, {from:spos, to:tpos, color:'PURPLE'})
+        let travelTime = distance * fraction * ( turnTimeRemaining / speed ) ;
         this.moveToTargetAtTime('walk', spos, tpos, travelTime, callback || this.callbacks.onArrive, 0.00005)
     }
 
@@ -68,6 +112,8 @@ class PieceMovement {
         if (typeof(callback) === 'function') {
             if (this.onArriveCallbacks.indexOf(callback) === -1) {
                 this.onArriveCallbacks.push(callback);
+            } else {
+                console.log("move callback already installed")
             }
         }
 
@@ -82,23 +128,28 @@ class PieceMovement {
     interpolatePosition(tpf) {
         let now = GameAPI.getGameTime();
         this.targetPos.copy(this.target);
+        evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.targetPos, color:'WHITE', size:0.4})
         let distanceRemaining = MATH.distanceBetween(this.spatial.obj3d.position, this.targetPos)
         if (distanceRemaining > this.margin) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
             if (fraction > 1) {
                 fraction = 1
             }
-
-
             MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, ThreeAPI.tempVec3);
-
 //            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, MATH.curveCube(Math.sin(fraction*MATH.HALF_PI)), ThreeAPI.tempVec3);
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
         } else {
-            this.spatial.call.setStopped();
-            MATH.callAll(this.onArriveCallbacks, this.gamePiece);
-            MATH.emptyArray(this.onArriveCallbacks);
+        //    this.spatial.call.setStopped();
             this.gamePiece.removePieceUpdateCallback(this.callbacks.onGameUpdate);
+            while (this.onArriveCallbacks.length) {
+                let cb = this.onArriveCallbacks.pop();
+                let gamePiece = this.gamePiece;
+                setTimeout(function() {
+                    gamePiece.getSpatial().call.setStopped()
+                    cb(gamePiece)
+                },0)
+
+            }
         }
     }
 

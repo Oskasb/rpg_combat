@@ -297,26 +297,32 @@ console.log(scenarioGridConfig);
             let addSceneBox = function(instance) {
                 let gridTile = new GridTile(gridWidth-i, gridDepth-j, boxSize, stepHeight, new Object3D())
                 gridTile.setTileQuat(quat);
-                gridTile.setTileInstance(instance);
-                gridTiles[i].push(gridTile);
-                instances.push(instance)
-                instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
-                let boxElevation = grid[j][i][1]*stepHeight
-                let boxX = gridTile.tileX * 2 * boxSize ;
-                let boxY = boxElevation
-                let boxZ = gridTile.tileZ * 2 * boxSize ;
-                let boxScale = boxSize*0.02;
-                let posY = elevation + boxY
-                tempVec1.set(boxX, posY*0.5-boxSize, boxZ);
-                tempVec1.applyQuaternion(quat);
-                instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y, tempVec1.z + offsetZ);
-                instance.spatial.getSpatialPosition(gridTile.obj3d.position);
-                gridTile.obj3d.position.y = posY;
-                instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
 
-                let scaleZ = boxScale * (1 + (boxElevation*(1+boxSize*1*boxElevation+boxSize*0.5)));
-                instance.spatial.setScaleXYZ(boxScale, scaleZ, boxScale);
-                instance.setSprite(iconSprite);
+                gridTiles[i].push(gridTile);
+                let boxElevation = grid[j][i][1]*stepHeight;
+                if (grid[j][i][1] > 0) {
+                    instance.decommissionInstancedModel()
+                } else {
+                    instances.push(instance)
+                    gridTile.setTileInstance(instance);
+                    instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
+                    let boxX = gridTile.tileX * 2 * boxSize ;
+                    let boxY = boxElevation
+                    let boxZ = gridTile.tileZ * 2 * boxSize ;
+                    let boxScale = boxSize*0.02;
+                    let posY = elevation + boxY
+                    tempVec1.set(boxX, posY*0.5-boxSize, boxZ);
+                    tempVec1.applyQuaternion(quat);
+                    instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y, tempVec1.z + offsetZ);
+                    instance.spatial.getSpatialPosition(gridTile.obj3d.position);
+                    gridTile.obj3d.position.y = posY;
+                    instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
+
+                    let scaleZ = boxScale * (1 + (boxElevation*(1+boxSize*1*boxElevation+boxSize*0.5)));
+                    instance.spatial.setScaleXYZ(boxScale, scaleZ, boxScale);
+                    instance.setSprite(iconSprite);
+                }
+
                 ThreeAPI.getScene().remove(instance.spatial.obj3d)
             };
 

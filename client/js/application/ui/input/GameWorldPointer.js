@@ -28,7 +28,7 @@ class GameWorldPointer {
             this.lastSelectedTile.setTileStatus('OCCUPIED');
             this.worldPointerMovement()
 
-            console.log("Release Movement Pointer")
+        //    console.log("Release Movement Pointer")
         } else if (pointer.worldSpaceTarget) {
             pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
             pointer.worldSpaceIndicator.hideIndicatorFx();
@@ -155,7 +155,7 @@ class GameWorldPointer {
 
         if (screenSelection === playerPiece && isFirstPressFrame) {
             pointer.isMovementInput = true;
-            console.log(pointer)
+        //    console.log(pointer)
         }
 
         if (pointer.isMovementInput) {
