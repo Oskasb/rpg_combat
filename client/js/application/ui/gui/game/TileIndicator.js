@@ -52,7 +52,7 @@ class TileIndicator {
 
         let effectCb = function(efct) {
             this.indicators.push(efct);
-            efct.activateEffectFromConfigId()
+            efct.activateEffectFromConfigId(true)
             ThreeAPI.tempObj.quaternion.copy(this.gridTile.obj3d.quaternion);
        //     ThreeAPI.tempObj.lookAt(0, 1, 0);
        //     efct.setEffectQuaternion(this.gridTile.obj3d.quaternion);
@@ -94,6 +94,7 @@ class TileIndicator {
 
     removeTileIndicator() {
         GameAPI.unregisterGameUpdateCallback(this.call.updateIndicator)
+        this.removeIndicatorFx()
     }
 
     hideIndicatorFx() {

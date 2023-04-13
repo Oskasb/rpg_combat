@@ -17,7 +17,7 @@ class GridTile {
             this.tileIndicator.activateTileIndicator();
         } else {
             this.tileIndicator.removeTileIndicator();
-            this.tileIndicator.removeIndicatorFx();
+        //    this.tileIndicator.removeIndicatorFx();
             this.tileStatus = 'FREE'
         }
 
