@@ -27,9 +27,9 @@ class GameWorldPointer {
         if (pointer.isMovementInput) {
             this.lastSelectedTile.setTileStatus('OCCUPIED');
             this.worldPointerMovement()
-
+        }
         //    console.log("Release Movement Pointer")
-        } else if (pointer.worldSpaceTarget) {
+        if (pointer.worldSpaceTarget) {
             pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
             pointer.worldSpaceIndicator.hideIndicatorFx();
             this.selectionEvent.piece = pointer.worldSpaceTarget;
@@ -87,10 +87,12 @@ class GameWorldPointer {
             screenDistance(ThreeAPI.tempVec3, characters[i].gamePiece);
         }
 
-        let updateWorldPointer = function() {
-            if (screenSelection) {
 
-                if (pointer.worldSpaceTarget !== screenSelection) {
+        let worldSelection = screenSelection;
+        let updateWorldPointer = function() {
+            if (worldSelection) {
+
+                if (pointer.worldSpaceTarget !== worldSelection) {
                     console.log("Change selected Target")
                     if (pointer.worldSpaceTarget) {
                         indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
@@ -98,14 +100,14 @@ class GameWorldPointer {
                     if (!pointer.worldSpaceIndicator) {
                         indicator = new TargetIndicator()
                         pointer.worldSpaceIndicator = indicator;
-                        indicator.indicateGamePiece(screenSelection, 'effect_character_indicator', 1, 3, -1.5,1.2, 0, 4);
+                        indicator.indicateGamePiece(worldSelection, 'effect_character_indicator', 1, 3, -1.5,1.2, 0, 4);
                     }
 
                 } else {
-                    indicator.call.updateIndicator(0.01, GameAPI.getGameTime(), screenSelection, 1.2, 0.8);
+                    indicator.call.updateIndicator(0.01, GameAPI.getGameTime(), worldSelection, 1.2, 0.8);
                 }
 
-                pointer.worldSpaceTarget = screenSelection;
+                pointer.worldSpaceTarget = worldSelection;
             } else {
                 if (pointer.worldSpaceTarget) {
                     indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
@@ -160,10 +162,8 @@ class GameWorldPointer {
 
         if (pointer.isMovementInput) {
             updateMovementPointer();
-        } else {
-            updateWorldPointer()
         }
-
+        updateWorldPointer()
 
     }
 }

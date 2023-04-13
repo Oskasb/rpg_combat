@@ -178,6 +178,11 @@ class PlayerMain {
 
     handleTargetSelected(gamePiece) {
 
+        if (gamePiece === this.playerCharacter.gamePiece) {
+            console.log("Player Select Self... nothing happens for now")
+            return;
+        }
+
         if (gamePiece.getStatusByKey('isItem')) {
             let distance = MATH.distanceBetween(gamePiece.getPos(), this.playerCharacter.gamePiece.getPos())
             if (distance < 2) {
