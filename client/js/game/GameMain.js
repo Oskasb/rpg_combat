@@ -8,11 +8,16 @@ import { CharacterComposer } from "./Player/CharacterComposer.js";
 class GameMain {
     constructor() {
 
+        let timeRemaining = function() {
+            return this.turnStatus.turnProgress * this.turnStatus.turnTime;
+        }.bind(this)
+
         this.turnStatus = {
             totalTime:0,
             turnTime:4,
             turnProgress:0,
-            turn:0
+            turn:0,
+            timeRemaining:timeRemaining
         }
 
         this.activeScenario = null;
@@ -31,6 +36,7 @@ class GameMain {
         this.gameWorld = new GameWorld();
         this.playerMain = new PlayerMain();
         this.onUpdateCallbacks = [];
+        this.onTurnCallbacks = []
     }
 
     setupCallbacks = function () {
@@ -178,16 +184,27 @@ class GameMain {
 
     }
 
+    addGameTurnCallback(callback) {
+        if (this.onTurnCallbacks.indexOf(callback) !== -1) {
+            console.log("updateCb already added...")
+            return;
+        }
+        this.onTurnCallbacks.push(callback);
+    }
+
+    removeGameTurnCallback(callback) {
+        return MATH.quickSplice(this.onTurnCallbacks, callback);
+    }
+
     updateMainGameTurn(tpf, gameTime) {
 
         this.turnStatus.totalTime = gameTime;
         let turnTime = this.turnStatus.turnTime;
         this.turnStatus.turnProgress -= tpf / turnTime;
-        this.turnStatus.timeRemaining = this.turnStatus.turnProgress * turnTime;
         if (this.turnStatus.turnProgress < 0) {
             this.turnStatus.turn++;
             this.turnStatus.turnProgress++;
-
+            MATH.callAll(this.onTurnCallbacks, this.turnStatus)
         }
     }
 

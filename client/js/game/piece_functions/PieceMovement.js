@@ -33,14 +33,14 @@ class PieceMovement {
     }
 
 
-    moveTowards(targetPos) {
+    moveTowards(targetPos, callback) {
         let tpos = this.setTargetPosition(targetPos);
-        let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining
+        let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining();
         let speed = this.gamePiece.getStatusByKey('move_speed');
         let spos = this.gamePiece.getPos()
         let distance = MATH.distanceBetween(spos, tpos);
         let travelTime = distance * ( turnTimeRemaining / speed )  ;
-        this.moveToTargetAtTime('walk', spos, tpos, travelTime, this.callbacks.onArrive)
+        this.moveToTargetAtTime('walk', spos, tpos, travelTime, callback || this.callbacks.onArrive, 0.00005)
     }
 
     setTargetPosition(vec3) {
@@ -68,13 +68,13 @@ class PieceMovement {
         if (typeof(callback) === 'function') {
             if (this.onArriveCallbacks.indexOf(callback) === -1) {
                 this.onArriveCallbacks.push(callback);
-                this.startTime = now;
-                this.spatial.setPosVec3(source);
-                this.target = target;
-                this.margin = margin || 0.01;
             }
         }
 
+        this.startTime = now;
+        this.target = target;
+        this.margin = margin || 0.01;
+        this.spatial.setPosVec3(source);
         this.startPos.copy(source);
         this.targetTime = now+overTime;
     }
@@ -89,7 +89,10 @@ class PieceMovement {
                 fraction = 1
             }
 
-            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, MATH.curveQuad(Math.sin(fraction*MATH.HALF_PI)), ThreeAPI.tempVec3);
+
+            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, ThreeAPI.tempVec3);
+
+//            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, MATH.curveCube(Math.sin(fraction*MATH.HALF_PI)), ThreeAPI.tempVec3);
             this.spatial.setPosVec3(ThreeAPI.tempVec3);
         } else {
             this.spatial.call.setStopped();

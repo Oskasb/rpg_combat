@@ -14,6 +14,7 @@ class GameWorldPointer {
     worldPointerFindPath() {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
         let targetPos = this.lastSelectedTile.obj3d.position;
+        playerPiece.movementPath.setDestination(targetPos)
         playerPiece.movementPath.determineGridPathToPos(targetPos)
     }
 

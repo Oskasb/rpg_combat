@@ -19,7 +19,8 @@ class PieceState {
 
         this.status = {
             gamePiece:gamePiece,
-            move_speed:3,
+            move_speed:5,
+            turn_moves:0,
             aggro_range:7,
             levels:[0, 35, 100, 250, 500, 1000, 2000, 4000, 8000, 12000, 20000],
             NONE:0,

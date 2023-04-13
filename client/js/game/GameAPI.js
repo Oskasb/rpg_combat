@@ -103,6 +103,13 @@ class GameAPI {
         return this.gameMain.removeGameUpdateCallback(callback);
     }
 
+    registerGameTurnCallback(callback) {
+        this.gameMain.addGameTurnCallback(callback);
+    }
+
+    unregisterGameTurnCallback(callback) {
+        return this.gameMain.removeGameTurnCallback(callback);
+    }
 }
 
 export { GameAPI }
