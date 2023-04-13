@@ -4,6 +4,8 @@ class LineRenderSystem {
 	constructor() {
 		var	Vector3 = THREE.Vector3;
 
+		this.isActive = false;
+
 		this.colors = {
 			WHITE 	: new Vector3(1, 1, 1),
 			GREY 	: new Vector3(0.5, 0.5, 0.5),
@@ -123,9 +125,18 @@ class LineRenderSystem {
 		this.drawLine(this.start, this.end, color);
 	};
 
+	activate = function() {
+		if (!this.isActive) {
+		for (let i = 0; i < this._lineRenderers.length; i++) {
+			let lineRenderer = this._lineRenderers[i];
+			ThreeAPI.addToScene( lineRenderer.line );
+		}
+		this.isActive = true;
+	}}
+
 	render = function () {
-		for (var i = 0; i < this._lineRenderers.length; i++) {
-			var lineRenderer = this._lineRenderers[i];
+		for (let i = 0; i < this._lineRenderers.length; i++) {
+			let lineRenderer = this._lineRenderers[i];
 			if (!lineRenderer._numRenderingLines) {
 				ThreeAPI.getScene().remove( lineRenderer.line );
 			} else {
@@ -136,16 +147,16 @@ class LineRenderSystem {
 	};
 
 	_pause = function () {
-		for (var i = 0; i < this._lineRenderers.length; i++) {
-			var lineRenderer = this._lineRenderers[i];
+		for (let i = 0; i < this._lineRenderers.length; i++) {
+			let lineRenderer = this._lineRenderers[i];
 			lineRenderer._pause();
 		}
 	};
 
 
 	clear = function () {
-		for (var i = 0; i < this._lineRenderers.length; i++) {
-			var lineRenderer = this._lineRenderers[i];
+		for (let i = 0; i < this._lineRenderers.length; i++) {
+			let lineRenderer = this._lineRenderers[i];
 			lineRenderer._remove();
 		}
 		delete this._lineRenderers;

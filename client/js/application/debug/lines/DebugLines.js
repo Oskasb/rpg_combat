@@ -1,34 +1,44 @@
 import { LineRenderSystem } from "./LineRenderSystem.js";
 
 class DebugLines {
-        constructor() {
+    constructor() {
 
-        lineDenderSystem = new LineRenderSystem();
+        let lineDenderSystem  = new LineRenderSystem();
         this.lineDenderSystem = lineDenderSystem;
-        var lineDenderSystem;
-        var tempVec1 = new THREE.Vector3();
-        var tempVec2 = new THREE.Vector3();
-        var color;
+        let tempVec1 = new THREE.Vector3();
+        let tempVec2 = new THREE.Vector3();
+        let color;
 
-            let renderCall = function() {
-                this.updateDebugLines()
-            }.bind(this)
 
-        var drawLine = function(args) {
-            tempVec1.set(args[0], args[1], args[2]);
-            tempVec2.set(args[3], args[4], args[5]);
-            color = lineDenderSystem.color(ENUMS.getKey('Color', args[6]));
-            lineDenderSystem.drawLine(tempVec1, tempVec2, color)
-        };
 
-        var drawCross = function(event) {
+        let updateFrame = function() {
+            this.updateDebugLines()
+            ThreeAPI.threeSetup.removePostrenderCallback(postRenderCall);
+        }.bind(this);
+
+        let postRenderCall = function() {
+            updateFrame();
+        }
+
+        let renderCall = function() {
+            this.lineDenderSystem.activate();
+            ThreeAPI.threeSetup.addPostrenderCallback(postRenderCall);
+        }.bind(this)
+
+        let drawLine = function(event) {
             color = lineDenderSystem.color(event.color);
-            lineDenderSystem.drawCross(event.pos, color, event.size)
+            lineDenderSystem.drawLine(event.from, event.to, color)
+            renderCall()
+        };
+
+        let drawCross = function(event) {
+            color = lineDenderSystem.color(event.color);
+            lineDenderSystem.drawCross(event.pos, color, event.size);
+            renderCall()
         };
 
 
-
-        var drawBox = function(args) {
+        let drawBox = function(args) {
             tempVec1.set(args[0], args[1], args[2]);
             tempVec2.set(args[3], args[4], args[5]);
             color = lineDenderSystem.color(ENUMS.getKey('Color', args[6]));
@@ -49,7 +59,7 @@ class DebugLines {
         this.lineDenderSystem.render();
         this.lineDenderSystem.render();
     }
-    
+
 }
 
 export { DebugLines }

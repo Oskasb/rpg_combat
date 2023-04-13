@@ -118,11 +118,13 @@ class ThreeSetup {
     };
 
     addPostrenderCallback = function(callback) {
-        this.postrenderCallbacks.push(callback);
+        if (this.postrenderCallbacks.indexOf(callback) === -1) {
+            this.postrenderCallbacks.push(callback);
+        }
     };
 
     removePostrenderCallback = function(callback) {
-        this.postrenderCallbacks.splice(postrenderCallbacks.lastIndexOf(callback, 1));
+        this.postrenderCallbacks.splice(this.postrenderCallbacks.lastIndexOf(callback, 1));
     };
 
 

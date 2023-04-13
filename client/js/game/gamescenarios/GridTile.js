@@ -29,7 +29,7 @@ class GridTile {
     getTileStatus() {
         return this.tileStatus;
     }
-    getTilePos() {
+    getPos() {
         return this.obj3d.position;
     }
     setTileQuat(quat) {

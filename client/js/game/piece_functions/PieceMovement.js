@@ -19,16 +19,33 @@ class PieceMovement {
             _this.applyFrameToMovement(tpf, gameTime);
         };
 
+        let onArrive = function() {
+
+        }
+
         this.callbacks = {
-            onGameUpdate:tickMovement
+            onGameUpdate:tickMovement,
+            onArrive:onArrive
         }
 
         this.onArriveCallbacks = [];
 
     }
 
+
+    moveTowards(targetPos) {
+        let tpos = this.setTargetPosition(targetPos);
+        let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining
+        let speed = this.gamePiece.getStatusByKey('move_speed');
+        let spos = this.gamePiece.getPos()
+        let distance = MATH.distanceBetween(spos, tpos);
+        let travelTime = distance * ( turnTimeRemaining / speed )  ;
+        this.moveToTargetAtTime('walk', spos, tpos, travelTime, this.callbacks.onArrive)
+    }
+
     setTargetPosition(vec3) {
         this.targetPosVec3.copy(vec3)
+        return this.targetPosVec3;
     }
 
     getTargetPosition() {
@@ -48,16 +65,18 @@ class PieceMovement {
             this.gamePiece.addPieceUpdateCallback(this.callbacks.onGameUpdate);
         }
 
-        this.target = target;
-        this.margin = margin || 0.01;
-        this.startTime = now;
-        this.targetTime = now+overTime;
-        this.targetPos.copy(target);
-        this.startPos.copy(source);
-        this.spatial.setPosVec3(source);
         if (typeof(callback) === 'function') {
-            this.onArriveCallbacks.push(callback);
+            if (this.onArriveCallbacks.indexOf(callback) === -1) {
+                this.onArriveCallbacks.push(callback);
+                this.startTime = now;
+                this.spatial.setPosVec3(source);
+                this.target = target;
+                this.margin = margin || 0.01;
+            }
         }
+
+        this.startPos.copy(source);
+        this.targetTime = now+overTime;
     }
 
     interpolatePosition(tpf) {

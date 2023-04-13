@@ -19,7 +19,7 @@
 
         document.addEventListener("touchstart", function(e){
             e.preventDefault();
-        },{passive: true});
+        },{passive: false});
 
         Element.prototype.remove = function() {
             this.parentElement.removeChild(this);

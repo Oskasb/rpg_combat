@@ -57,7 +57,6 @@ class TileIndicator {
        //     ThreeAPI.tempObj.lookAt(0, 1, 0);
        //     efct.setEffectQuaternion(this.gridTile.obj3d.quaternion);
             ThreeAPI.tempVec3.copy(this.gridTile.obj3d.position)
-            ThreeAPI.tempVec3.y+=1;
             efct.setEffectPosition(ThreeAPI.tempVec3)
             ThreeAPI.tempObj.rotateX(-MATH.HALF_PI);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
@@ -65,7 +64,7 @@ class TileIndicator {
             if (typeof (spriteX) === 'number' && typeof(spriteY) === 'number') {
                 efct.setEffectSpriteXY(spriteX, spriteY);
             }
-
+            this.call.updateIndicator(0, GameAPI.getGameTime());
             GameAPI.registerGameUpdateCallback(this.call.updateIndicator)
         }.bind(this);
 

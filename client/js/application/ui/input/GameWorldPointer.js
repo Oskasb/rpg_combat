@@ -10,16 +10,23 @@ class GameWorldPointer {
         }
     }
 
+
+    worldPointerFindPath() {
+        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
+        let targetPos = this.lastSelectedTile.obj3d.position;
+        playerPiece.movementPath.determineGridPathToPos(targetPos)
+    }
+
+    worldPointerMovement = function() {
+        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
+        playerPiece.movementPath.moveAlongActiveGridPath()
+    }
     worldPointerReleased = function(pointer) {
 
         if (pointer.isMovementInput) {
             this.lastSelectedTile.setTileStatus('OCCUPIED');
-            let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
-            let targetPos = this.lastSelectedTile.obj3d.position;
-            let onArrive = function() {
+            this.worldPointerMovement()
 
-            }
-            playerPiece.pieceMovement.moveToTargetAtTime('walk', playerPiece.getPos(), targetPos, 3, onArrive)
             console.log("Release Movement Pointer")
         } else if (pointer.worldSpaceTarget) {
             pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
@@ -102,14 +109,19 @@ class GameWorldPointer {
                 if (pointer.worldSpaceTarget) {
                     indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
                     pointer.worldSpaceIndicator.hideIndicatorFx()
-                    this.selectionEvent.piece = pointer.worldSpaceTarget;
-                    this.selectionEvent.value = false;
-                    evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, this.selectionEvent);
+                    if (!this.selectionEvent) {
+                        console.log("Some multi-touch issue here")
+                    } else {
+                        this.selectionEvent.piece = pointer.worldSpaceTarget;
+                        this.selectionEvent.value = false;
+                        evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, this.selectionEvent);
+                    }
+
 
                 }
                 pointer.worldSpaceTarget = null;
             }
-        }
+        }.bind(this);
 
         let updateMovementPointer = function() {
             let encounterGrid = GameAPI.getActiveEncounterGrid()
@@ -135,7 +147,7 @@ class GameWorldPointer {
                     selectedTile.setTileStatus('MOVE_TO');
                     selectedTile.indicateTileStatus(true)
                 }
-
+                this.worldPointerFindPath();
             }
 
         }.bind(this);

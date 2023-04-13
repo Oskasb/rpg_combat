@@ -183,10 +183,11 @@ class GameMain {
         this.turnStatus.totalTime = gameTime;
         let turnTime = this.turnStatus.turnTime;
         this.turnStatus.turnProgress -= tpf / turnTime;
-
+        this.turnStatus.timeRemaining = this.turnStatus.turnProgress * turnTime;
         if (this.turnStatus.turnProgress < 0) {
             this.turnStatus.turn++;
             this.turnStatus.turnProgress++;
+
         }
     }
 

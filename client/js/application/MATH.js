@@ -80,6 +80,10 @@ if(typeof(MATH) === "undefined") {
 		}
 	};
 
+	MATH.isEvenNumber =function(n) {
+		return Math.abs(n % 2) === 1;
+	}
+
 
 	MATH.gridXYfromCountAndIndex = function(count, index, store) {
         store.y = Math.floor(index / Math.sqrt(count)) - Math.sqrt(count)*0.5;

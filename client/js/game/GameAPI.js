@@ -53,6 +53,10 @@ class GameAPI {
         return this.gameMain.gameTime;
     }
 
+    getTurnStatus() {
+        return this.gameMain.turnStatus;
+    }
+
     setActivePlayerCharacter(character) {
         this.activePlayerCharacter = character;
     }
