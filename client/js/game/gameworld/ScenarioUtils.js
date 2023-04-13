@@ -274,6 +274,7 @@ console.log(scenarioGridConfig);
     let gridDepth = grid.length;
     let pos = scenarioGridConfig['pos'];
     let rot = scenarioGridConfig['rot'];
+    elevation+=pos[1];
 
     tempObj.quaternion.set(0, 0, 0, 1);
 
@@ -313,7 +314,7 @@ console.log(scenarioGridConfig);
                     let posY = elevation + boxY
                     tempVec1.set(boxX, posY*0.5-boxSize, boxZ);
                     tempVec1.applyQuaternion(quat);
-                    instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y, tempVec1.z + offsetZ);
+                    instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y+ elevation*0.5, tempVec1.z + offsetZ);
                     instance.spatial.getSpatialPosition(gridTile.obj3d.position);
                     gridTile.obj3d.position.y = posY;
                     instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );

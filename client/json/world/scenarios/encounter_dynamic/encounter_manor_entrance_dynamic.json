@@ -23,6 +23,13 @@
                 "pos": [-84, 2.83, 141],
                 "rot": [0, 3.14, 0]
               },
+              "grid": {
+                "dataId":"grid_cave_basic",
+                "entrance_tile": [3, 1],
+                "start_tile": [3, 3],
+                "rot": [0, -0.65, 0],
+                "pos": [-83.5, 2.89, 140.3]
+              },
               "characters": [
                 {
                   "character":"BANDIT_GUARD",
