@@ -301,29 +301,28 @@ console.log(scenarioGridConfig);
 
                 gridTiles[i].push(gridTile);
                 let boxElevation = grid[j][i][1]*stepHeight;
+                let posY = elevation + boxElevation
+                let boxX = gridTile.tileX * 2 * boxSize ;
+                let boxZ = gridTile.tileZ * 2 * boxSize ;
+                let boxScale = boxSize*0.02;
+                tempVec1.set(boxX, posY*0.5-boxSize, boxZ);
+                tempVec1.applyQuaternion(quat);
+
                 if (grid[j][i][1] > 0) {
                     instance.decommissionInstancedModel()
                 } else {
+                    instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y+ elevation*0.5, tempVec1.z + offsetZ);
+                    instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
                     instances.push(instance)
                     gridTile.setTileInstance(instance);
                     instance.setActive(ENUMS.InstanceState.ACTIVE_VISIBLE);
-                    let boxX = gridTile.tileX * 2 * boxSize ;
-                    let boxY = boxElevation
-                    let boxZ = gridTile.tileZ * 2 * boxSize ;
-                    let boxScale = boxSize*0.02;
-                    let posY = elevation + boxY
-                    tempVec1.set(boxX, posY*0.5-boxSize, boxZ);
-                    tempVec1.applyQuaternion(quat);
-                    instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y+ elevation*0.5, tempVec1.z + offsetZ);
-                    instance.spatial.getSpatialPosition(gridTile.obj3d.position);
-                    gridTile.obj3d.position.y = posY;
-                    instance.spatial.setQuatXYZW(quat.x, quat.y, quat.z, quat.w );
-
                     let scaleZ = boxScale * (1 + (boxElevation*(1+boxSize*1*boxElevation+boxSize*0.5)));
                     instance.spatial.setScaleXYZ(boxScale, scaleZ, boxScale);
                     instance.setSprite(iconSprite);
                 }
-
+                gridTile.obj3d.position.x = tempVec1.x + offsetX
+                gridTile.obj3d.position.y = posY;
+                gridTile.obj3d.position.z = tempVec1.z + offsetZ
                 ThreeAPI.getScene().remove(instance.spatial.obj3d)
             };
 
