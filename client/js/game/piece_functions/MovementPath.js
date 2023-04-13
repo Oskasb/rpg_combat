@@ -111,12 +111,11 @@ class MovementPath {
 
         for (let i = 0; i < tileCount; i++) {
 
-            if (incrementX * Math.abs(xDiff) > incrementZ * Math.abs(zDiff)) {
+            if (incrementX < Math.abs(xDiff)) {
                 incrementX++
-            } else if (incrementZ * Math.abs(zDiff) > incrementX * Math.abs(xDiff)) {
-                incrementZ++
-            } else {
-                incrementX++
+            }
+
+            if (incrementZ < Math.abs(zDiff)) {
                 incrementZ++
             }
 
@@ -126,9 +125,9 @@ class MovementPath {
             tileX = gridTiles.length - (startX - stepX);
             tileZ = gridTiles[0].length - (startZ - stepZ);
             let tile = gridTiles[tileX][tileZ];
-            //   tile.indicateTileStatus(false);
-            //   tile.setTileStatus('FREE');
-            //    tile.indicateTileStatus(true);
+               tile.indicateTileStatus(false);
+               tile.setTileStatus('FREE');
+               tile.indicateTileStatus(true);
             this.drawPathLine(this.tempVec, tile.getPos(), 'YELLOW')
             this.tempVec.copy(tile.getPos());
         }
