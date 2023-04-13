@@ -37,7 +37,6 @@ class MovementPath {
         }
     }
 
-
     updatePositionOnGrid(encounterGrid) {
         let pos = this.gamePiece.getPos();
         let gridTile = encounterGrid.getTileAtPosition(pos);
@@ -85,75 +84,119 @@ class MovementPath {
         evt.dispatch(ENUMS.Event.DEBUG_DRAW_LINE, this.lineEvent);
     }
 
-
-    pathAddTurn() {
-
-    }
-
     setDestination(posVec) {
         this.destinationTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(posVec);
     }
 
-    determineGridPathToPos(posVec) {
-        let cPos = this.gamePiece.getPos();
-        this.pathTargetPos.copy(posVec);
 
-        let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
-     //   this.pathTargetPos.sub(cPos);
-        let speed = this.gamePiece.getStatusByKey('move_speed');
-        let remainingTime = GameAPI.getTurnStatus().turnProgress;
-        let remainingDistance = MATH.distanceBetween(cPos, posVec)
-        if (remainingDistance > speed*remainingTime*0.999) {
-            this.turnPathEnd.copy(posVec)
-            this.turnPathEnd.sub(cPos);
-            this.turnPathEnd.normalize();
-            let travelDistance = speed*remainingTime / (1+turnMoves);
-            travelDistance -= this.destinationTile.size;
-            this.turnPathEnd.multiplyScalar(travelDistance);
-            this.turnPathEnd.add(cPos);
+    selectTilesBeneathPath(startTile, endTile) {
+        let startX = startTile.tileX;
+        let startZ = startTile.tileZ;
+        let endX = endTile.tileX;
+        let endZ = endTile.tileZ;
+        let gridTiles = GameAPI.getActiveEncounterGrid().gridTiles;
 
-        } else {
-            this.turnPathEnd.copy(posVec);
+        let xDiff = endX - startX;
+        let zDiff = endZ - startZ;
+
+        this.tempVec.copy(startTile.getPos());
+
+        let stepX = 0;
+        let stepZ = 0;
+        let tileX = startX;
+        let tileZ = startZ;
+        let incrementX = 0;
+        let incrementZ = 0;
+        let tileCount = Math.max(Math.abs(xDiff), Math.abs(zDiff));
+
+        for (let i = 0; i < tileCount; i++) {
+
+            if (incrementX * Math.abs(xDiff) > incrementZ * Math.abs(zDiff)) {
+                incrementX++
+            } else if (incrementZ * Math.abs(zDiff) > incrementX * Math.abs(xDiff)) {
+                incrementZ++
+            } else {
+                incrementX++
+                incrementZ++
+            }
+
+            stepX = incrementX * Math.sign(-xDiff);
+            stepZ = incrementZ * Math.sign(-zDiff);
+
+            tileX = gridTiles.length - (startX - stepX);
+            tileZ = gridTiles[0].length - (startZ - stepZ);
+            let tile = gridTiles[tileX][tileZ];
+            //   tile.indicateTileStatus(false);
+            //   tile.setTileStatus('FREE');
+            //    tile.indicateTileStatus(true);
+            this.drawPathLine(this.tempVec, tile.getPos(), 'YELLOW')
+            this.tempVec.copy(tile.getPos());
         }
+
+    }
+
+
+determineGridPathToPos(posVec) {
+    let cPos = this.gamePiece.getPos();
+    this.pathTargetPos.copy(posVec);
+
+    let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
+    //   this.pathTargetPos.sub(cPos);
+    let speed = this.gamePiece.getStatusByKey('move_speed');
+    let remainingTime = GameAPI.getTurnStatus().turnProgress;
+    let remainingDistance = MATH.distanceBetween(cPos, posVec)
+    if (remainingDistance > speed*remainingTime*0.999) {
+        this.turnPathEnd.copy(posVec)
+        this.turnPathEnd.sub(cPos);
+        this.turnPathEnd.normalize();
+        let travelDistance = speed*remainingTime / (1+turnMoves);
+        travelDistance -= this.destinationTile.size;
+        this.turnPathEnd.multiplyScalar(travelDistance);
+        this.turnPathEnd.add(cPos);
+
+    } else {
+        this.turnPathEnd.copy(posVec);
+    }
 
 
     //    this.drawPathLine(cPos, this.pathTargetPos, 'GREEN');
-        this.drawPathLine(cPos, this.turnPathEnd, 'CYAN');
-        let endTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(this.turnPathEnd);
-        this.turnPathEnd.copy(endTile.getPos());
-        this.drawPathLine(cPos, this.turnPathEnd, 'GREEN');
-     //   this.drawPathLine(this.turnPathEnd, posVec,'BLUE');
-     //   this.drawPathLine(cPos, posVec, 'RED');
+    this.drawPathLine(cPos, this.turnPathEnd, 'CYAN');
+    let endTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(this.turnPathEnd);
+    this.turnPathEnd.copy(endTile.getPos());
+    this.drawPathLine(cPos, this.turnPathEnd, 'GREEN');
+    this.selectTilesBeneathPath(GameAPI.getActiveEncounterGrid().getTileAtPosition(cPos), endTile)
+    //   this.drawPathLine(this.turnPathEnd, posVec,'BLUE');
+    //   this.drawPathLine(cPos, posVec, 'RED');
 
-    }
+}
 
-   moveAlongActiveGridPath() {
-        console.log("Move along path")
-       let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
-       turnMoves++;
-       this.gamePiece.setStatusValue('turn_moves', turnMoves);
-       GameAPI.registerGameTurnCallback(this.callbacks.onTurnEnd);
-       this.pieceMovement.moveTowards(this.turnPathEnd, this.callbacks.onPathEnd);
-    }
+moveAlongActiveGridPath() {
+    console.log("Move along path")
+    let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
+    turnMoves++;
+    this.gamePiece.setStatusValue('turn_moves', turnMoves);
+    GameAPI.registerGameTurnCallback(this.callbacks.onTurnEnd);
+    this.pieceMovement.moveTowards(this.turnPathEnd, this.callbacks.onPathEnd);
+}
 
-    updatePathTiles() {
-        if (this.destinationTile) {
+updatePathTiles() {
+    if (this.destinationTile) {
         //    this.determineGridPathToPos(this.targetPosTile.getPos())
-            this.drawPathLine(this.gamePiece.getPos(), this.turnPathEnd, 'CYAN');
-            this.drawPathLine(this.turnPathEnd, this.destinationTile.getPos(), 'BLUE');
-        }
+        this.drawPathLine(this.gamePiece.getPos(), this.turnPathEnd, 'CYAN');
+        this.drawPathLine(this.turnPathEnd, this.destinationTile.getPos(), 'BLUE');
     }
+}
 
-    tickMovementPath(tpf, gameTime) {
-        let encounterGrid = GameAPI.getActiveEncounterGrid();
-        if (encounterGrid) {
-            if (encounterGrid.gridTiles.length) {
-                this.updatePathTiles()
-                this.updateMovementOnGrid(encounterGrid);
-                this.updatePositionOnGrid(encounterGrid);
-            }
+tickMovementPath(tpf, gameTime) {
+    let encounterGrid = GameAPI.getActiveEncounterGrid();
+    if (encounterGrid) {
+        if (encounterGrid.gridTiles.length) {
+            this.updatePathTiles()
+            this.updateMovementOnGrid(encounterGrid);
+            this.updatePositionOnGrid(encounterGrid);
         }
     }
+}
 
 }
 
