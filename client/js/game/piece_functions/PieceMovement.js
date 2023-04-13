@@ -38,27 +38,26 @@ class PieceMovement {
         let totalDistance = 0;
 
         let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining();
-        let moveStartTime = GameAPI.getTurnStatus().turnTime - turnTimeRemaining;
-
-    //    console.log("Process Tile Path: ", tilePath, tileCount);
 
         ThreeAPI.tempVec3.copy(tilePath[0].getPos())
         for (let i = 0; i < tilePath.length; i++) {
-            ThreeAPI.tempVec3b.subVectors( ThreeAPI.tempVec3, tilePath[i].getPos())
+            let tile = tilePath[i];
+            tile.setTileStatus('IS_PATH');
+            tile.indicateTileStatus(true);
+            ThreeAPI.tempVec3b.subVectors( ThreeAPI.tempVec3, tile.getPos())
             totalDistance+= ThreeAPI.tempVec3b.length();
-            ThreeAPI.tempVec3.copy(tilePath[i].getPos())
+            ThreeAPI.tempVec3.copy(tile.getPos())
         }
-     //   console.log("Total path distance:", totalDistance);
 
         let tile;
         let nextTileCB = function() {
-         //   console.log("nextTileCB: ", tilePath.length);
             if (tilePath.length) {
                 tile = tilePath.pop();
+                tile.setTileStatus('FREE');
+                tile.indicateTileStatus(false);
                 let travelTime = turnTimeRemaining / tileCount ;
                 processTile(tile.getPos(), travelTime)
             } else {
-            //    console.log("PATH ENDED")
                 callback()
             }
         }
@@ -153,6 +152,10 @@ class PieceMovement {
         }
     }
 
+    cancelActiveTransition() {
+        this.gamePiece.removePieceUpdateCallback(this.callbacks.onGameUpdate);
+        MATH.emptyArray(this.onArriveCallbacks);
+    }
     applyFrameToMovement(tpf) {
         this.interpolatePosition(tpf);
     }

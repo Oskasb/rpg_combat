@@ -34,7 +34,7 @@ class MovementPath {
         }.bind(this)
 
         let turnEndNodeMove = function() {
-        //    console.log("Turn End Move")
+            console.log("Turn End Node Move")
             GameAPI.registerGameTurnCallback(this.callbacks.onTurnEnd);
             this.callbacks.onPathEnd();
         }.bind(this)
@@ -98,6 +98,16 @@ class MovementPath {
         this.destinationTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(posVec);
     }
 
+    cancelMovementPath(tilePath) {
+        if (tilePath.length) {
+            this.pieceMovement.cancelActiveTransition()
+        }
+        while(tilePath.length) {
+            let tile = tilePath.pop();
+            tile.setTileStatus('FREE');
+            tile.indicateTileStatus(false);
+        }
+    }
 
     selectTilesBeneathPath(startTile, endTile) {
         let startX = startTile.tileX;
@@ -118,8 +128,7 @@ class MovementPath {
         let incrementX = 0;
         let incrementZ = 0;
         let tileCount = Math.max(Math.abs(xDiff), Math.abs(zDiff));
-
-        MATH.emptyArray(this.pathTiles);
+        this.cancelMovementPath(this.pathTiles)
         this.pathTiles.unshift(startTile);
         for (let i = 0; i < tileCount; i++) {
 
@@ -195,12 +204,10 @@ determineGridPathToPos(posVec) {
 
 
 moveTroughTilePath() {
-    GameAPI.registerGameTurnCallback(this.callbacks.onTurnEnd);
     this.pieceMovement.moveAlongTilePath(this.pathTiles, this.callbacks.onPathEnd)
 }
 
 moveAlongActiveGridPath() {
-//    console.log("Move along path")
     let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
     turnMoves++;
     this.gamePiece.setStatusValue('turn_moves', turnMoves);
