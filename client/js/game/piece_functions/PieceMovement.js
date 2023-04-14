@@ -52,7 +52,7 @@ class PieceMovement {
         let tile;
         let nextTileCB = function() {
             if (tilePath.length) {
-                tile = tilePath.pop();
+                tile = tilePath.shift();
                 tile.setTileStatus('FREE');
                 tile.indicateTileStatus(false);
                 let travelTime = turnTimeRemaining / tileCount ;
@@ -140,15 +140,12 @@ class PieceMovement {
         } else {
         //    this.spatial.call.setStopped();
             this.gamePiece.removePieceUpdateCallback(this.callbacks.onGameUpdate);
-            while (this.onArriveCallbacks.length) {
-                let cb = this.onArriveCallbacks.pop();
-                let gamePiece = this.gamePiece;
+            MATH.callAndClearAll(this.onArriveCallbacks, this.gamePiece)
+            let gamePiece= this.gamePiece;
                 setTimeout(function() {
                     gamePiece.getSpatial().call.setStopped()
-                    cb(gamePiece)
                 },0)
 
-            }
         }
     }
 

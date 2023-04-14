@@ -123,6 +123,16 @@ if(typeof(MATH) === "undefined") {
 		}
 	};
 
+	MATH.callAndClearAll = function(array, arg1, arg2, arg3, arg4, arg5) {
+		while(array.length) {
+			let cb = array.pop()
+			setTimeout(function() {
+				cb(arg1, arg2, arg3, arg4, arg5);
+			},0)
+		}
+	};
+
+
 	function sinWave(time, speed, amplitude) {
 		return Math.sin(time * speed) * amplitude;
 	}

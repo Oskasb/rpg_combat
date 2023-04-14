@@ -6,15 +6,16 @@ class CombatMovementProcessor {
 
 
     moveToEngagedTarget(engageTarget) {
-    //    this.gamePiece.setStatusValue('targState', ENUMS.CharacterState.ENGAGING);
         this.gamePiece.setStatusValue('combatTarget', null);
         let margin = this.determineAttackRangeMargin(engageTarget)*0.85;
         let onArrive = function(arrive) {
             console.log("Arrive at Target", arrive);
             this.initiateCombat(engageTarget);
         }.bind(this);
-        let travelTime = this.gamePiece.getStatusByKey('turnTime') * this.gamePiece.getStatusByKey('turnProgress') * 0.5
-        this.gamePiece.pieceMovement.moveToTargetAtTime('walk', this.gamePiece.getPos(), engageTarget.getPos(), travelTime, onArrive, margin)
+        this.gamePiece.movementPath.determinePathToTarget(engageTarget);
+        this.gamePiece.movementPath.moveAlongActiveGridPath(onArrive);
+    //    let travelTime = this.gamePiece.getStatusByKey('turnTime') * this.gamePiece.getStatusByKey('turnProgress') * 0.5
+    //    this.gamePiece.pieceMovement.moveToTargetAtTime('walk', this.gamePiece.getPos(), engageTarget.getPos(), travelTime, onArrive, margin)
     }
 
     initiateCombat(engageTarget) {

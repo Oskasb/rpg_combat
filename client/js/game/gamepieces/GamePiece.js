@@ -87,6 +87,10 @@ class GamePiece {
     getPos = function() {
         return this.getSpatial().obj3d.position;
     }
+
+    getPathTiles = function() {
+        return this.movementPath.pathTiles;
+    }
     setModelInstance(modelInstance) {
         this.modelInstance = modelInstance;
     };

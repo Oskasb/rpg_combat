@@ -153,7 +153,12 @@
             "name": "Grong",
             "faction": "GOOD",
             "height": 2.3,
-            "size": 1.3
+            "size": 1.3,
+            "maxHP": 90,
+            "hp": 90,
+            "dmg": 1,
+            "FAST": 1,
+            "xp_value": 50
           },
           "actor":"ACTOR_BARB",
           "equipment":["NINJASWORD", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES", "BELT_PLATE"]
@@ -166,7 +171,12 @@
             "name": "Eddie",
             "faction": "GOOD",
             "height": 1.88,
-            "size": 1
+            "size": 1,
+            "maxHP": 90,
+            "hp": 90,
+            "dmg": 1,
+            "FAST": 1,
+            "xp_value": 50
           },
           "actor":"ACTOR_DUDE",
           "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE"]

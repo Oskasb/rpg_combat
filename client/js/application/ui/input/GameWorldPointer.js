@@ -11,9 +11,15 @@ class GameWorldPointer {
     }
 
 
-    worldPointerFindPath() {
+    worldPointerFindPath(pointer) {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
-        let targetPos = this.lastSelectedTile.obj3d.position;
+        let targetPos = null
+        if (pointer.worldSpaceTarget) {
+            targetPos = pointer.worldSpaceTarget.getPos();
+        } else {
+            targetPos = this.lastSelectedTile.getPos();
+        }
+
         playerPiece.movementPath.setDestination(targetPos)
         playerPiece.movementPath.determineGridPathToPos(targetPos)
     }
@@ -23,11 +29,7 @@ class GameWorldPointer {
         playerPiece.movementPath.moveAlongActiveGridPath()
     }
     worldPointerReleased = function(pointer) {
-
-        if (pointer.isMovementInput) {
-            this.lastSelectedTile.setTileStatus('OCCUPIED');
-            this.worldPointerMovement()
-        }
+        
         //    console.log("Release Movement Pointer")
         if (pointer.worldSpaceTarget) {
             pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
@@ -35,6 +37,9 @@ class GameWorldPointer {
             this.selectionEvent.piece = pointer.worldSpaceTarget;
             this.selectionEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
+        } else if (pointer.isMovementInput) {
+            this.lastSelectedTile.setTileStatus('OCCUPIED');
+            this.worldPointerMovement()
         } else {
             this.selectionEvent.piece = null;
             this.selectionEvent.value = false;
@@ -150,7 +155,7 @@ class GameWorldPointer {
                     selectedTile.setTileStatus('MOVE_TO');
                     selectedTile.indicateTileStatus(true)
                 }
-                this.worldPointerFindPath();
+                this.worldPointerFindPath(pointer);
             }
 
         }.bind(this);

@@ -25,6 +25,7 @@ class MovementPath {
             if (currentTile !== this.destinationTile) {
                 GameAPI.registerGameTurnCallback(this.callbacks.updatePathTurn);
             }
+            MATH.callAndClearAll(this.pathEndCallbacks, this.gamePiece)
         }.bind(this);
 
         let updatePathTurn = function(turnStatus) {
@@ -38,6 +39,8 @@ class MovementPath {
             GameAPI.registerGameTurnCallback(this.callbacks.onTurnEnd);
             this.callbacks.onPathEnd();
         }.bind(this)
+
+        this.pathEndCallbacks = [];
 
         this.callbacks = {
             onTurnEnd:onTurnEnd,
@@ -129,7 +132,7 @@ class MovementPath {
         let incrementZ = 0;
         let tileCount = Math.max(Math.abs(xDiff), Math.abs(zDiff));
         this.cancelMovementPath(this.pathTiles)
-        this.pathTiles.unshift(startTile);
+        this.pathTiles.push(startTile);
         for (let i = 0; i < tileCount; i++) {
 
             if (incrementX < Math.abs(xDiff)) {
@@ -151,11 +154,11 @@ class MovementPath {
 
             let color = 'YELLOW';
 
-            if ( Math.abs(elevation) > Math.abs(this.pathTiles[0].getPos().y) + 0.7)  {
+            if ( Math.abs(elevation) > Math.abs(this.pathTiles[i].getPos().y) + 0.7)  {
                 this.drawPathLine(this.tempVec, tile.getPos(), 'RED')
                 i = tileCount;
             } else {
-                this.pathTiles.unshift(tile);
+                this.pathTiles.push(tile);
 
                 this.drawPathLine(this.tempVec, tile.getPos(), color)
                 this.tempVec.copy(tile.getPos());
@@ -188,37 +191,51 @@ determineGridPathToPos(posVec) {
         this.turnPathEnd.copy(posVec);
     }
 
-
-    //    this.drawPathLine(cPos, this.pathTargetPos, 'GREEN');
     this.drawPathLine(cPos, this.turnPathEnd, 'CYAN');
     let endTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(this.turnPathEnd);
     this.turnPathEnd.copy(endTile.getPos());
-    this.drawPathLine(cPos, this.turnPathEnd, 'GREEN');
+
     this.selectTilesBeneathPath(GameAPI.getActiveEncounterGrid().getTileAtPosition(cPos), endTile)
-    //   this.drawPathLine(this.turnPathEnd, posVec,'BLUE');
-    //   this.drawPathLine(cPos, posVec, 'RED');
 
 }
 
 
-
-
-moveTroughTilePath() {
-    this.pieceMovement.moveAlongTilePath(this.pathTiles, this.callbacks.onPathEnd)
+moveTroughTilePath(cb) {
+    this.pieceMovement.moveAlongTilePath(this.pathTiles, cb)
 }
 
-moveAlongActiveGridPath() {
+    addPathEndCallback(cb) {
+        if (this.pathEndCallbacks.indexOf(cb) !== -1) {
+            this.pathEndCallbacks.push(cb)
+        } else {
+            console.log("path end cb already installed")
+        }
+
+        if (this.pathEndCallbacks.length > 1) {
+            console.log("multiple path end callbacks installed, should not be")
+        }
+    }
+
+moveAlongActiveGridPath(cb) {
+        if (typeof (cb) === 'function') {
+            this.addPathEndCallback(cb);
+        }
+
     let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
     turnMoves++;
     this.gamePiece.setStatusValue('turn_moves', turnMoves);
 
+
     let tileCount = this.pathTiles.length;
     if (tileCount ){
-        this.moveTroughTilePath()
+        this.moveTroughTilePath(this.callbacks.onPathEnd);
          } else {
-   //     console.log("NO TILE COUNT")
+        console.log("NO TILE COUNT")
         this.callbacks.turnEndNodeMove();
     }
+}
+
+    determinePathToTarget(targetPiece, onArrive) {
 
 
 }
