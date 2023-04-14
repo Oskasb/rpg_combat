@@ -1,7 +1,6 @@
 import { PieceActionSystem } from "./PieceActionSystem.js";
 import { CombatSystem } from "../combat/CombatSystem.js";
 import { ThreatDetector } from "../combat/ThreatDetector.js";
-import { AnimationStateProcessor } from "../../3d/three/animations/AnimationStateProcessor.js";
 import { PieceAnimator } from "./PieceAnimator.js";
 import { PieceComposer } from "../piece_functions/PieceComposer.js";
 import { PieceAttacher } from "./PieceAttacher.js";
@@ -183,6 +182,7 @@ class GamePiece {
 
     disbandGamePiece() {
         GameAPI.takePieceFromWorld(this);
+        this.movementPath.cancelMovementPath()
         this.modelInstance.decommissionInstancedModel();
         this.gamePieceUpdateCallbacks.length = 0;
     };

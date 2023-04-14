@@ -43,13 +43,13 @@ class CharacterMovement {
 
     }
 
-    applyRotation() {
+    applyRotation(speed) {
         ThreeAPI.tempObj.quaternion.set(0, 1, 0,0)
         let targetPiece = this.gamePiece.getTarget();
         if (targetPiece) {
             ThreeAPI.tempObj.lookAt(ThreeAPI.tempVec3);
             this.spatial.obj3d.lookAt(targetPiece.getPos())
-        } else {
+        } else if (speed > 0.000001) {
             let angY = MATH.vectorXZToAngleAxisY(this.vel);
             ThreeAPI.tempObj.rotateY(angY);
             this.spatial.obj3d.quaternion.copy(ThreeAPI.tempObj.quaternion)
@@ -102,7 +102,7 @@ class CharacterMovement {
             this.applyMovementState(false)
         }
         this.speed = speed;
-        this.applyRotation()
+        this.applyRotation(speed)
     }
 
     tickCharMovement(tpf) {

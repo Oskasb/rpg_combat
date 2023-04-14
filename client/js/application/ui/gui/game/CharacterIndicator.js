@@ -27,7 +27,7 @@ class CharacterIndicator {
             ThreeAPI.tempObj.lookAt(0, 1, 0);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
             gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
-            ThreeAPI.tempVec3.y+=0.1;
+            ThreeAPI.tempVec3.y+=0.03;
             efct.setEffectPosition(ThreeAPI.tempVec3)
             ThreeAPI.tempObj.lookAt(0, 1, 0);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
@@ -49,7 +49,7 @@ class CharacterIndicator {
             efct.setEffectColorRGBA(this.colorMap[gamePiece.getStatusByKey('faction')]);
             efct.scaleEffectSize( gamePiece.getStatusByKey('size'));
             gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
-            ThreeAPI.tempVec3.y+=0.05;
+            ThreeAPI.tempVec3.y+=0.03;
             efct.setEffectPosition(ThreeAPI.tempVec3)
 
             let charState = gamePiece.getStatusByKey('charState')

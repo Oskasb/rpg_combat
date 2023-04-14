@@ -11,10 +11,13 @@ class MovementPath {
         this.targetPosTile = null;
         this.destinationTile = null;
         this.tempVec = new THREE.Vector3();
-        this.nodeTile = {
-            tile:null,
-            turnFraction:1
-        };
+
+        this.lineEvent = {
+            from:new THREE.Vector3(),
+            to: new THREE.Vector3(),
+            color:'CYAN'
+        }
+
         this.pathTiles = [];
 
         let onTurnEnd = function() {
@@ -65,7 +68,11 @@ class MovementPath {
             if (this.gamePiece.getStatusByKey('isItem') === 1 && (gridTile.getTileStatus() === 'FREE')) {
                 gridTile.setTileStatus('HAS_ITEM')
             } else {
-                gridTile.setTileStatus('OCCUPIED')
+                if (this.gamePiece.getStatusByKey('charState') !== ENUMS.CharacterState.LIE_DEAD) {
+                    gridTile.setTileStatus('OCCUPIED')
+                    gridTile.occupant = this.gamePiece;
+                }
+
             }
             gridTile.indicateTileStatus(true);
             this.currentPosTile = gridTile;
@@ -86,11 +93,7 @@ class MovementPath {
             this.targetPosTile = gridTile;
         }
 
-        this.lineEvent = {
-            from:new THREE.Vector3(),
-            to: new THREE.Vector3(),
-            color:'CYAN'
-        }
+
     }
 
 
@@ -110,17 +113,21 @@ class MovementPath {
         while(tilePath.length) {
             let tile = tilePath.pop();
             tile.setTileStatus('FREE');
+            tile.occupant = null;
             tile.indicateTileStatus(false);
         }
     }
 
-    cancelMovementPath(tilePath) {
+    cancelMovementPath() {
+        GameAPI.unregisterGameTurnCallback(this.callbacks.onTurnEnd);
+        GameAPI.unregisterGameTurnCallback(this.callbacks.updatePathTurn);
+        this.pathEndCallbacks = [];
         this.destinationTile = null;
         this.pathTargetPiece = null;
-        if (tilePath.length) {
+        if (this.pathTiles.length) {
             this.pieceMovement.cancelActiveTransition()
         }
-        this.clearTilePathStatus(tilePath)
+        this.clearTilePathStatus(this.pathTiles)
     }
 
     selectTilesBeneathPath(startTile, endTile) {
@@ -164,6 +171,14 @@ class MovementPath {
             let elevation = tile.getPos().y;
 
             let color = 'YELLOW';
+
+            if (tile.getOccupant()) {
+                if (tile.getOccupant() !== this.gamePiece) {
+                    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
+                    i = tileCount;
+                    return;
+                }
+            }
 
             if ( Math.abs(elevation) > Math.abs(this.pathTiles[i].getPos().y) + 0.7)  {
                 this.drawPathLine(this.tempVec, tile.getPos(), 'RED')
@@ -275,6 +290,9 @@ class MovementPath {
         //    let nextDistance = MATH.distanceBetween(newTilePos, targetTile.getPos());
             let newTargetTile = this.getTileAtPos(newTilePos);
             this.drawPathLine(myCurrentTile.getPos(), newTargetTile.getPos(), 'AQUA');
+            if (newTargetTile.getTileStatus() === 'OCCUPIED') {
+                return currentTile;
+            }
             if (newTargetTile === targetTile) {
                 return myCurrentTile;
             } else {
@@ -328,7 +346,7 @@ class MovementPath {
                 }
 
                 this.updatePathTiles()
-                this.updateMovementOnGrid(encounterGrid);
+            //    this.updateMovementOnGrid(encounterGrid);
                 this.updatePositionOnGrid(encounterGrid);
             }
         }

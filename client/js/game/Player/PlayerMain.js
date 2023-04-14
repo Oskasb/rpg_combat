@@ -97,6 +97,7 @@ class PlayerMain {
         }.bind(this)
 
         let returnHome = function(gamePiece) {
+            gamePiece.movementPath.cancelMovementPath()
             gamePiece.setStatusValue('hp', gamePiece.getStatusByKey('maxHP'));
             gamePiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
             gamePiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);

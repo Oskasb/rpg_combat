@@ -39,10 +39,6 @@ class EncounterGrid {
         this.entranceTile = scenarioGridConfig['entrance_tile'] || [3, 3];
         this.startTile = scenarioGridConfig['start_tile'] || [3, 3];
         ScenarioUtils.setupEncounterGrid(this.gridTiles, this.instances, config, scenarioGridConfig)
-        let startPos = this.getPlayerStartTile().obj3d.position;
-
-
-        //    GameAPI.getActivePlayerCharacter().gamePiece.pieceMovement.targetPosVec3.copy(startPos);
 
     }
 

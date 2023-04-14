@@ -227,7 +227,7 @@ function resetScenarioCharacterPiece(charPiece) {
             targPiece.setStatusValue('engagingTarget', null);
             targPiece.setStatusValue('combatTarget', null);
         }
-
+        charPiece.movementPath.cancelMovementPath()
         charPiece.combatSystem.disengageTarget(charPiece.combatSystem.currentTarget);
         evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
         evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, {piece:null, value:false });

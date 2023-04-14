@@ -91,17 +91,6 @@ class PieceMovement {
 
     }
 
-    moveTowards(targetPos, callback, turnFraction) {
-        let fraction = turnFraction || 1;
-        let tpos = this.setTargetPosition(targetPos);
-        let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining();
-        let speed = this.gamePiece.getStatusByKey('move_speed');
-        let spos = this.gamePiece.getPos()
-        let distance = MATH.distanceBetween(spos, tpos);
-        evt(ENUMS.Event.DEBUG_DRAW_LINE, {from:spos, to:tpos, color:'PURPLE'})
-        let travelTime = distance * fraction * ( turnTimeRemaining / speed ) ;
-        this.moveToTargetAtTime('walk', spos, tpos, travelTime, callback || this.callbacks.onArrive, 0.00005)
-    }
 
     setTargetPosition(vec3) {
         this.targetPosVec3.copy(vec3)

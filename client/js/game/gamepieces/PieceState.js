@@ -20,6 +20,7 @@ class PieceState {
         this.status = {
             gamePiece:gamePiece,
             size:0.5,
+            meleeRange:0.5,
             move_speed:5,
             turn_moves:0,
             aggro_range:7,
@@ -60,7 +61,7 @@ class PieceState {
             maxHP:100,
             isItem:0,
             isCharacter:0,
-            meleeRange:1.0,
+
             xp_value:5
         }
 
