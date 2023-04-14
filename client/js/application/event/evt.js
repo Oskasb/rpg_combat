@@ -34,7 +34,7 @@ class evt {
     dispatch(event, args) {
 
         while (this.spliceListeners.length) {
-            console.log("pre splice listeners", this.spliceListeners);
+        //    console.log("pre splice listeners", this.spliceListeners);
             this.spliceListener(this.spliceListeners.shift(), this.spliceListeners.shift())
         }
 
@@ -49,7 +49,7 @@ class evt {
         }
 
         while (this.spliceListeners.length) {
-            console.log("post splice listeners", this.spliceListeners);
+        //    console.log("post splice listeners", this.spliceListeners);
             this.spliceListener(this.spliceListeners.shift(), this.spliceListeners.shift())
         }
         this.evtStatus.firedCount++;

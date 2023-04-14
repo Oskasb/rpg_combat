@@ -6,13 +6,13 @@ class CombatMovementProcessor {
 
 
     moveToEngagedTarget(engageTarget) {
-        this.gamePiece.setStatusValue('combatTarget', null);
+
         let rangeCheck = this.gamePiece.distanceToReachTarget(engageTarget);
         if (rangeCheck > 0) {
-            console.log("Move to Target", engageTarget);
-
+        //    console.log("Move to Target", engageTarget);
+            this.gamePiece.setStatusValue('combatTarget', null);
             let onArrive = function(arrive) {
-                console.log("Arrive at Target", arrive);
+        //        console.log("Arrive at Target", arrive);
                 this.initiateCombat(engageTarget);
             }.bind(this);
             this.gamePiece.movementPath.addPathEndCallback(onArrive);
@@ -41,12 +41,21 @@ class CombatMovementProcessor {
         return distance < combatRange;
     }
     updateEngagedTarget(engageTarget) {
-        if (engageTarget) {
-            this.gamePiece.getSpatial().turnTowardsPos(engageTarget.getPos());
+        if (!engageTarget) return;
+        if (engageTarget.getStatusByKey('charState') === ENUMS.CharacterState.LIE_DEAD) {
+            this.gamePiece.movementPath.cancelMovementPath();
+            this.gamePiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
+            this.gamePiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);
+            this.gamePiece.setStatusValue('engageTarget', null);
+            this.gamePiece.setStatusValue('selectedTarget', null);
+            this.gamePiece.setStatusValue('combatTarget', null);
+            this.gamePiece.setStatusValue('disengagingTarget', null);
+        } else if (engageTarget) {
+        //    this.gamePiece.getSpatial().turnTowardsPos(engageTarget.getPos());
             let isInRange = this.measureAttackRange(engageTarget)
             if (isInRange) {
                 this.initiateCombat(engageTarget);
-                this.moveToEngagedTarget(engageTarget);
+            //    this.moveToEngagedTarget(engageTarget);
             } else {
                 this.moveToEngagedTarget(engageTarget);
             }

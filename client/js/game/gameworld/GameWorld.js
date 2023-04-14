@@ -13,6 +13,10 @@ class  GameWorld  {
         return MATH.quickSplice(this.itemPieces, piece);
     }
 
+    gameWorldInactivatePiece(piece) {
+        GameAPI.unregisterGameUpdateCallback(piece.getOnUpdateCallback())
+    }
+
 }
 
 export { GameWorld }

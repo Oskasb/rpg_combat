@@ -7,7 +7,7 @@ class PieceStateProcessor {
         if ((status.targState === ENUMS.CharacterState.COMBAT) || (status.charState === ENUMS.CharacterState.ENGAGING) ) {
             return;
         } else {
-            console.log("targ state ENGAGING")
+       //     console.log("targ state ENGAGING")
             status.charState = ENUMS.CharacterState.ENGAGING;
         }
     }
@@ -15,7 +15,7 @@ class PieceStateProcessor {
     processCombatTarget(status) {
         if  (status.charState === ENUMS.CharacterState.ENGAGING) {
             if (status.targState !== ENUMS.CharacterState.COMBAT) {
-                console.log("targ state COMBAT")
+             //   console.log("targ state COMBAT")
                 status.targState = ENUMS.CharacterState.COMBAT;
             }
         }
@@ -26,7 +26,7 @@ class PieceStateProcessor {
             if (status.charState !== ENUMS.CharacterState.DISENGAGING) {
                 status.charState = ENUMS.CharacterState.DISENGAGING;
                 status.targState = ENUMS.CharacterState.IDLE_HANDS;
-                console.log("targ state DISENGAGING")
+        //        console.log("targ state DISENGAGING")
             }
         }
 
@@ -105,7 +105,7 @@ class PieceStateProcessor {
         let action = this.gamePiece.pieceActionSystem.activeAction;
         if (!action) {
             this.activateActionType(status, ENUMS.getKey('CharacterState', status.charState))
-            console.log("NO ACTION: ", status, this.gamePiece.pieceActionSystem)
+        //    console.log("NO ACTION: ", status, this.gamePiece.pieceActionSystem)
             action = this.gamePiece.pieceActionSystem.activeAction;
             //return;
         }
@@ -233,6 +233,16 @@ class PieceStateProcessor {
             this.processTargetSelection(status, config);
             this.updatePieceTurn(status, config)
         } else {
+            if (status.gamePiece.getTarget()) {
+                let opponentPiece = status.gamePiece.getTarget();
+                opponentPiece.movementPath.cancelMovementPath();
+                opponentPiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
+                opponentPiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);
+                opponentPiece.setStatusValue('engageTarget', null);
+                opponentPiece.setStatusValue('selectedTarget', null);
+                opponentPiece.setStatusValue('combatTarget', null);
+                opponentPiece.setStatusValue('disengagingTarget', null);
+            }
             status.combatTarget = null;
             status.engagingTarget = null;
             status.selectedTarget = null;
@@ -240,6 +250,7 @@ class PieceStateProcessor {
             if (status.charState !== ENUMS.CharacterState.LIE_DEAD) {
                 status.charState = ENUMS.CharacterState.LIE_DEAD;
                 status.gamePiece.movementPath.cancelMovementPath();
+
                 let tile = status.gamePiece.movementPath.getTileAtPos(status.gamePiece.getPos())
                 tile.setTileStatus('FREE');
                 this.activateActionType(status, ENUMS.getKey('CharacterState', status.charState))
@@ -256,6 +267,7 @@ class PieceStateProcessor {
 
                 } else {
                     status.gamePiece.gameCharacter.deactivateCharIndicator();
+                    GameAPI.inactivateWorldPiece(status.gamePiece);
                 }
             }
         }

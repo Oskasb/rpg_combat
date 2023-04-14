@@ -49,6 +49,10 @@ class GameAPI {
         return this.gameMain.gameWorld.gameWorldReleasePiece(piece)
     }
 
+    inactivateWorldPiece(piece) {
+        this.gameMain.gameWorld.gameWorldInactivatePiece(piece)
+    }
+
     getGameTime = function() {
         return this.gameMain.gameTime;
     }

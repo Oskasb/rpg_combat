@@ -37,14 +37,12 @@ class MovementPath {
 
         let updatePathTurn = function(turnStatus) {
             GameAPI.unregisterGameTurnCallback(this.callbacks.updatePathTurn);
+            if (!this.destinationTile) {
+                console.log("sometimes no destination tile", this)
+                return;
+            }
             this.determineGridPathToPos(this.destinationTile.getPos());
             this.moveAlongActiveGridPath();
-        }.bind(this)
-
-        let turnEndNodeMove = function() {
-            console.log("Turn End Node Move")
-            GameAPI.registerGameTurnCallback(this.callbacks.onTurnEnd);
-            this.callbacks.onPathEnd();
         }.bind(this)
 
         this.pathEndCallbacks = [];
@@ -52,8 +50,7 @@ class MovementPath {
         this.callbacks = {
             onTurnEnd:onTurnEnd,
             onPathEnd:onPathEnd,
-            updatePathTurn:updatePathTurn,
-            turnEndNodeMove:turnEndNodeMove
+            updatePathTurn:updatePathTurn
         }
     }
 
@@ -65,11 +62,12 @@ class MovementPath {
                 this.currentPosTile.setTileStatus('FREE');
                 this.currentPosTile.indicateTileStatus(false);
             }
-            gridTile.indicateTileStatus(false);
             if (!gridTile) {
                 console.log("This breaks sometimes... investigate!", this)
                 return;
             }
+            gridTile.indicateTileStatus(false);
+
             if (this.gamePiece.getStatusByKey('isItem') === 1 && (gridTile.getTileStatus() === 'FREE')) {
                 gridTile.setTileStatus('HAS_ITEM')
             } else {
@@ -261,11 +259,16 @@ class MovementPath {
         }
 
         if (this.pathEndCallbacks.length > 1) {
-            console.log("multiple path end callbacks installed, should not be")
+            console.log("multiple path end callbacks installed, should not be.. removing old")
+            this.pathEndCallbacks.shift();
         }
     }
 
     getTileAtPos = function(posVec3) {
+        if (!GameAPI.getActiveEncounterGrid()) {
+            console.log("Sometimes no active grid", this)
+            return;
+        }
         return GameAPI.getActiveEncounterGrid().getTileAtPosition(posVec3);
     }
     moveAlongActiveGridPath() {
