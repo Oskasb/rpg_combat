@@ -1,5 +1,6 @@
 class MovementPath {
     constructor(gamePiece) {
+        this.tempVec = new THREE.Vector3()
         this.isPathing = false;
         this.gamePiece = gamePiece;
         this.pathTargetPiece = null;
@@ -264,20 +265,21 @@ class MovementPath {
 
     selectTileByAttackRangeTo(currentTile, targetPiece) {
         let distanceRemaining = this.gamePiece.distanceToReachTarget(targetPiece);
-        if (distanceRemaining > currentTile.size * 0.5) {
-            let tempVec = ThreeAPI.tempVec3
-            let dist = distanceRemaining // - currentTile.size * 0.5
+        if (distanceRemaining > currentTile.size * 0.25) {
+            let newTilePos = this.tempVec;
+            let dist = distanceRemaining - currentTile.size * 0.25
             let targetTile = this.getTileAtPos(targetPiece.getPos());
-            let tile = this.getTileAtPos(this.gamePiece.getPos());
-
-            MATH.vectorAtPositionTowards(tile.getPos(), targetTile.getPos(), dist, tempVec)
-            let newTargetTile = this.getTileAtPos(tempVec);
-        //    let newDistance = MATH.distanceBetween(newTargetTile.getPos(),   targetTile.getPos())
-            this.drawPathLine(tile.getPos(), newTargetTile.getPos(), 'AQUA');
-        //    let oldDistance = MATH.distanceBetween(currentTile.getPos(), targetTile.getPos())
-        //    this.drawPathLine(tile.getPos(), currentTile.getPos(), 'MAGENTA');
-            return newTargetTile;
-
+            let myCurrentTile = this.getTileAtPos(this.gamePiece.getPos());
+       //     let currentDistance = MATH.distanceBetween(currentTile.getPos(), targetTile.getPos());
+            MATH.vectorAtPositionTowards(myCurrentTile.getPos(), targetTile.getPos(), dist, newTilePos)
+        //    let nextDistance = MATH.distanceBetween(newTilePos, targetTile.getPos());
+            let newTargetTile = this.getTileAtPos(newTilePos);
+            this.drawPathLine(myCurrentTile.getPos(), newTargetTile.getPos(), 'AQUA');
+            if (newTargetTile === targetTile) {
+                return myCurrentTile;
+            } else {
+                return newTargetTile;
+            }
         } else {
             return currentTile;
         }
@@ -289,7 +291,7 @@ class MovementPath {
         }
 
         let currentTile = this.getTileAtPos(this.gamePiece.getPos())
-        let selectedTile = this.selectTileByAttackRangeTo(currentTile, targetPiece);
+        let selectedTile = this.selectTileByAttackRangeTo(this.destinationTile, targetPiece);
         if (this.destinationTile !== selectedTile) {
             this.isPathing = false;
             this.destinationTile = selectedTile;
