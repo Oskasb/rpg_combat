@@ -171,7 +171,7 @@ class DataLoader {
             PipelineAPI.prunePollUrlsExceptFor(pollUrls)
 
             let apiReadyCB = function(msg) {
-                console.log(msg)
+        //        console.log(msg)
             }
             GuiAPI.initGuiApi(apiReadyCB)
             client.activateGui();

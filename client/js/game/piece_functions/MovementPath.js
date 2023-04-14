@@ -66,6 +66,10 @@ class MovementPath {
                 this.currentPosTile.indicateTileStatus(false);
             }
             gridTile.indicateTileStatus(false);
+            if (!gridTile) {
+                console.log("This breaks sometimes... investigate!", this)
+                return;
+            }
             if (this.gamePiece.getStatusByKey('isItem') === 1 && (gridTile.getTileStatus() === 'FREE')) {
                 gridTile.setTileStatus('HAS_ITEM')
             } else {

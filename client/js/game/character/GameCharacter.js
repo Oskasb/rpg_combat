@@ -70,7 +70,6 @@ class GameCharacter {
 
     dismissCharacter() {
         this.getEquipment().removeAllItems()
-        this.gamePiece.disbandGamePiece()
         this.characterStatusGui.deactivateCharacterStatusGui();
         this.characterIndicator.removeIndicatorFromPiece(this.gamePiece);
         this.characterStatus.deactivateCharacterStatus();

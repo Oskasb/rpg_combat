@@ -263,7 +263,7 @@ function resetScenarioCharacterPiece(charPiece) {
 
 
 function setupEncounterGrid(gridTiles, instances, gridConfig, scenarioGridConfig) {
-console.log(scenarioGridConfig);
+// console.log(scenarioGridConfig);
     let iconSprites = GuiAPI.getUiSprites("box_tiles_8x8");
     let iconKeys = gridConfig['grid_tiles'];
     let elevation = gridConfig['elevation'];
@@ -283,7 +283,7 @@ console.log(scenarioGridConfig);
 
 
 
-    console.log(gridConfig, gridWidth, gridDepth);
+ //   console.log(gridConfig, gridWidth, gridDepth);
     tempVec1.set(boxSize*gridWidth, 0, boxSize*gridWidth)
     tempVec1.applyQuaternion(quat);
     let offsetX = pos[0] - tempVec1.x;

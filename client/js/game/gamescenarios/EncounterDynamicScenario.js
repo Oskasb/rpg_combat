@@ -65,7 +65,7 @@ class EncounterDynamicScenario {
     let config = this.config;
 
         let pageReady = function(page) {
-            console.log("PAGE READY", page);
+    //        console.log("PAGE READY", page);
             if (config.INFO) {
                 evt.dispatch(ENUMS.Event.SCENARIO_HEADER,  {value:config.INFO['header']});
                 evt.dispatch(ENUMS.Event.SCENARIO_TEXT,    {value:config.INFO['text_box']});
@@ -75,7 +75,7 @@ class EncounterDynamicScenario {
         this.page = GuiAPI.activatePage(this.config['gui_page'], pageReady);
 
         if (config['camera']) {
-            console.log("Set Camera mode: ", config.camera)
+   //         console.log("Set Camera mode: ", config.camera)
             let cConf = config.camera;
             this.camParams.offsetPos = cConf['offset_pos'] || this.camParams.offsetPos;
             this.camParams.offsetLookAt = cConf['offset_lookAt'] || this.camParams.offsetLookAt;

@@ -55,7 +55,7 @@ class GameMain {
     initGameMain() {
         this.setupCallbacks();
         let charReady = function(char) {
-            console.log("Player Char:", char)
+//            console.log("Player Char:", char)
             GameAPI.getPlayerMain().setPlayerCharacter(char);
             GameAPI.setActivePlayerCharacter(char);
             let initPlayerStash = function() {

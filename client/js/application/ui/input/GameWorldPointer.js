@@ -115,7 +115,7 @@ class GameWorldPointer {
             if (worldSelection) {
 
                 if (pointer.worldSpaceTarget !== worldSelection) {
-                    console.log("Change selected Target")
+           //         console.log("Change selected Target")
                     if (pointer.worldSpaceTarget) {
                         indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
                     }
