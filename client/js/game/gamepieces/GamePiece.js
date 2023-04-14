@@ -153,6 +153,14 @@ class GamePiece {
         MATH.quickSplice(this.activeActions, action);
     };
 
+    getTarget = function() {
+        let selectedTarget = this.getStatusByKey('selectedTarget')
+        let engagingTarget = this.getStatusByKey('engagingTarget')
+        let disengagingTarget = this.getStatusByKey('disengagingTarget')
+        let combatTarget = this.getStatusByKey('combatTarget')
+        return selectedTarget || engagingTarget || combatTarget || disengagingTarget ;
+    }
+
     hideGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
             ThreeAPI.tempVec3.set(0, 0, 0);

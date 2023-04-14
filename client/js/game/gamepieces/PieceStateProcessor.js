@@ -147,6 +147,9 @@ class PieceStateProcessor {
 
     applyAttackSwingDamage(status) {
         status.appliedAttacks++;
+        if (!status.combatTarget) {
+            status.combatTarget = status.engagingTarget;
+        }
         let combatTarget = status.combatTarget;
         combatTarget.setStatusValue('hp', combatTarget.getStatusByKey('hp') - status['dmg']);
 

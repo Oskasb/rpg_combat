@@ -43,21 +43,30 @@ class CharacterMovement {
 
     }
 
-    applyMovementState(bool) {
-        if (bool) {
-
-            ThreeAPI.tempObj.quaternion.set(0, 1, 0,0)
-
+    applyRotation() {
+        ThreeAPI.tempObj.quaternion.set(0, 1, 0,0)
+        let targetPiece = this.gamePiece.getTarget();
+        if (targetPiece) {
+            ThreeAPI.tempObj.lookAt(ThreeAPI.tempVec3);
+            this.spatial.obj3d.lookAt(targetPiece.getPos())
+        } else {
             let angY = MATH.vectorXZToAngleAxisY(this.vel);
             ThreeAPI.tempObj.rotateY(angY);
             this.spatial.obj3d.quaternion.copy(ThreeAPI.tempObj.quaternion)
+        }
+
+    }
+
+    applyMovementState(bool) {
+
+
+        if (bool) {
             if (!this.combatState) {
                 this.gamePiece.animateActionState('MOVE')
                 this.gamePiece.animateActionState('IDLE_HANDS')
             } else {
                 this.gamePiece.animateActionState('MOVE_COMBAT')
             }
-
         } else {
             if (!this.combatState) {
                 this.gamePiece.animateActionState('IDLE_LEGS')
@@ -65,7 +74,6 @@ class CharacterMovement {
             } else {
                 this.gamePiece.animateActionState('STAND_COMBAT')
             }
-
         }
 
     }
@@ -94,7 +102,7 @@ class CharacterMovement {
             this.applyMovementState(false)
         }
         this.speed = speed;
-
+        this.applyRotation()
     }
 
     tickCharMovement(tpf) {
