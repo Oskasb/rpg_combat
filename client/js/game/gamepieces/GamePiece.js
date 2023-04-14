@@ -88,10 +88,12 @@ class GamePiece {
         return this.getSpatial().obj3d.position;
     }
     distanceToReachTarget = function(targetPiece) {
+        let targetTile = targetPiece.movementPath.getTileAtPos(targetPiece.getPos());
+        let tile = this.movementPath.getTileAtPos(this.getPos());
         let range = this.getStatusByKey('meleeRange')
-        range+= this.getStatusByKey('size')
-        range+= targetPiece.getStatusByKey('size')
-        let distance = ThreeAPI.tempVec3.subVectors(this.getPos(), targetPiece.getPos()).length();
+        range+= this.getStatusByKey('size')*0.5
+        range+= targetPiece.getStatusByKey('size')*0.5
+        let distance = ThreeAPI.tempVec3.subVectors(tile.getPos(), targetTile.getPos()).length();
         return distance - range;
     }
     getPathTiles = function() {

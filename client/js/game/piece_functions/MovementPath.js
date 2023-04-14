@@ -3,7 +3,6 @@ class MovementPath {
         this.isPathing = false;
         this.gamePiece = gamePiece;
         this.pathTargetPiece = null;
-        this.pathTargetTile = null;
         this.pieceMovement = gamePiece.pieceMovement;
         this.pathTargetPos = new THREE.Vector3();
         this.turnPathEnd = new THREE.Vector3()
@@ -24,7 +23,7 @@ class MovementPath {
 
         let onPathEnd = function() {
             onTurnEnd();
-            let currentTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(this.gamePiece.getPos());
+            let currentTile = this.getTileAtPos(this.gamePiece.getPos());
             if (currentTile !== this.destinationTile) {
                 GameAPI.registerGameTurnCallback(this.callbacks.updatePathTurn);
             }
@@ -100,7 +99,7 @@ class MovementPath {
     }
 
     setDestination(posVec) {
-        this.destinationTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(posVec);
+        this.destinationTile = this.getTileAtPos(posVec);
     }
 
     clearTilePathStatus(tilePath) {
@@ -113,8 +112,8 @@ class MovementPath {
     }
 
     cancelMovementPath(tilePath) {
+        this.destinationTile = null;
         this.pathTargetPiece = null;
-        this.pathTargetTile = null;
         if (tilePath.length) {
             this.pieceMovement.cancelActiveTransition()
         }
@@ -182,6 +181,8 @@ class MovementPath {
         let cPos = this.gamePiece.getPos();
         this.pathTargetPos.copy(posVec);
 
+
+
         let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
         //   this.pathTargetPos.sub(cPos);
         let speed = this.gamePiece.getStatusByKey('move_speed');
@@ -201,15 +202,16 @@ class MovementPath {
         }
 
         this.drawPathLine(cPos, this.turnPathEnd, 'CYAN');
-        let endTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(this.turnPathEnd);
+        let endTile = this.getTileAtPos(this.turnPathEnd);
         this.turnPathEnd.copy(endTile.getPos());
 
-        this.selectTilesBeneathPath(GameAPI.getActiveEncounterGrid().getTileAtPosition(cPos), endTile)
+        this.selectTilesBeneathPath(this.getTileAtPos(cPos), endTile)
 
     }
 
     determineGridPathToPos(posVec) {
         this.cancelMovementPath(this.pathTiles)
+        this.setDestination(posVec);
         this.buildGridPath(posVec)
     }
 
@@ -230,12 +232,10 @@ class MovementPath {
         }
     }
 
+    getTileAtPos = function(posVec3) {
+        return GameAPI.getActiveEncounterGrid().getTileAtPosition(posVec3);
+    }
     moveAlongActiveGridPath() {
-
-    //    let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
-      //  turnMoves++;
-      //  this.gamePiece.setStatusValue('turn_moves', turnMoves);
-
 
         let tileCount = this.pathTiles.length;
         if (tileCount ){
@@ -245,10 +245,13 @@ class MovementPath {
             this.isPathing = true;
 
         } else {
+            if (this.isPathing) {
+                MATH.callAndClearAll(this.pathEndCallbacks, this.gamePiece)
+                this.callbacks.onPathEnd();
+                console.log("NO TILE COUNT, Path Ended")
+            }
             this.isPathing = false;
-            MATH.callAndClearAll(this.pathEndCallbacks, this.gamePiece)
-        //    console.log("NO TILE COUNT")
-        //    this.callbacks.onPathEnd();
+
         }
     }
 
@@ -257,15 +260,24 @@ class MovementPath {
         this.determinePathToTargetPiece(targetPiece)
     }
 
-    selectTileByAttackRangeTo(currentDestinationTile, targetPiece) {
+    selectTileByAttackRangeTo(currentTile, targetPiece) {
         let distanceRemaining = this.gamePiece.distanceToReachTarget(targetPiece);
-        if (distanceRemaining > 0) {
+        if (distanceRemaining > currentTile.size * 0.5) {
             let tempVec = ThreeAPI.tempVec3
-            let dist = distanceRemaining + currentDestinationTile.size * 0.25
-            MATH.vectorAtPositionTowards(this.gamePiece.getPos(), targetPiece.getPos(), dist, tempVec)
-            return GameAPI.getActiveEncounterGrid().getTileAtPosition(tempVec);
+            let dist = distanceRemaining // - currentTile.size * 0.5
+            let targetTile = this.getTileAtPos(targetPiece.getPos());
+            let tile = this.getTileAtPos(this.gamePiece.getPos());
+
+            MATH.vectorAtPositionTowards(tile.getPos(), targetTile.getPos(), dist, tempVec)
+            let newTargetTile = this.getTileAtPos(tempVec);
+        //    let newDistance = MATH.distanceBetween(newTargetTile.getPos(),   targetTile.getPos())
+            this.drawPathLine(tile.getPos(), newTargetTile.getPos(), 'AQUA');
+        //    let oldDistance = MATH.distanceBetween(currentTile.getPos(), targetTile.getPos())
+        //    this.drawPathLine(tile.getPos(), currentTile.getPos(), 'MAGENTA');
+            return newTargetTile;
+
         } else {
-            return currentDestinationTile;
+            return currentTile;
         }
     }
     determinePathToTargetPiece(targetPiece) {
@@ -274,18 +286,12 @@ class MovementPath {
             this.setDestination(targetPiece.getPos());
         }
 
-        let tileAtTarget =  GameAPI.getActiveEncounterGrid().getTileAtPosition(targetPiece.getPos());
-    //    if (tileAtTarget !== this.pathTargetTile) {
-            this.pathTargetTile = tileAtTarget;
-            let selectedTile = this.selectTileByAttackRangeTo(this.destinationTile, targetPiece);
-        //    if (selectedTile !== this.destinationTile) {
-                this.clearTilePathStatus(this.pathTiles);
-                this.destinationTile = selectedTile
-                this.buildGridPath(selectedTile.getPos())
-       //     }
-    //    } else {
-    //        this.pathTiles.push()
-    //    }
+        let currentTile = this.getTileAtPos(this.gamePiece.getPos())
+        let selectedTile = this.selectTileByAttackRangeTo(currentTile, targetPiece);
+        if (this.destinationTile !== selectedTile) {
+            this.isPathing = false;
+            this.destinationTile = selectedTile;
+        }
     }
 
     updatePathTiles() {
@@ -302,7 +308,15 @@ class MovementPath {
             if (encounterGrid.gridTiles.length) {
 
                 if (this.pathTargetPiece) {
-                    this.determinePathToTargetPiece(this.pathTargetPiece);
+                    if (Math.random() < tpf * 10) {
+                        this.determinePathToTargetPiece(this.pathTargetPiece);
+                    }
+                }
+
+                if (this.destinationTile) {
+                    if (this.isPathing === false) {
+                        this.buildGridPath(this.destinationTile.getPos())
+                    }
                 }
 
                 if (this.isPathing === false) {

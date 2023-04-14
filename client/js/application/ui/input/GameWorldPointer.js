@@ -13,24 +13,26 @@ class GameWorldPointer {
 
     worldPointerFindPath(pointer) {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
+        playerPiece.movementPath.cancelMovementPath( playerPiece.movementPath.pathTiles);
         let targetPos = null
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
             targetPos = pointer.worldSpaceTarget.getPos();
+            playerPiece.movementPath.setPathTargetPiece(pointer.worldSpaceTarget)
         } else {
-            targetPos = this.lastSelectedTile.getPos();
+            if (this.lastSelectedTile) {
+                targetPos = this.lastSelectedTile.getPos();
+                playerPiece.movementPath.determineGridPathToPos(targetPos)
+            }
         }
 
-        playerPiece.movementPath.setDestination(targetPos)
-        playerPiece.movementPath.determineGridPathToPos(targetPos)
     }
 
-    worldPointerMovement = function() {
-        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
-        playerPiece.movementPath.moveAlongActiveGridPath()
-    }
+
     worldPointerReleased = function(pointer) {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
         //    console.log("Release Movement Pointer")
+        playerPiece.movementPath.clearTilePathStatus( playerPiece.movementPath.pathTiles);
+
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
             pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
             pointer.worldSpaceIndicator.hideIndicatorFx();
@@ -39,7 +41,7 @@ class GameWorldPointer {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
         } else if (pointer.isMovementInput) {
             this.lastSelectedTile.setTileStatus('OCCUPIED');
-            this.worldPointerMovement()
+
         } else {
             this.selectionEvent.piece = null;
             this.selectionEvent.value = false;
@@ -119,6 +121,7 @@ class GameWorldPointer {
                 }
 
                 pointer.worldSpaceTarget = worldSelection;
+                this.worldPointerFindPath(pointer)
             } else {
                 if (pointer.worldSpaceTarget) {
                     indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
