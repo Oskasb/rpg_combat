@@ -12,10 +12,8 @@ class CombatMovementProcessor {
             console.log("Arrive at Target", arrive);
             this.initiateCombat(engageTarget);
         }.bind(this);
-        this.gamePiece.movementPath.determinePathToTarget(engageTarget);
-        this.gamePiece.movementPath.moveAlongActiveGridPath(onArrive);
-    //    let travelTime = this.gamePiece.getStatusByKey('turnTime') * this.gamePiece.getStatusByKey('turnProgress') * 0.5
-    //    this.gamePiece.pieceMovement.moveToTargetAtTime('walk', this.gamePiece.getPos(), engageTarget.getPos(), travelTime, onArrive, margin)
+        this.gamePiece.movementPath.setPathTargetPiece(engageTarget);
+        this.gamePiece.movementPath.addPathEndCallback(onArrive);
     }
 
     initiateCombat(engageTarget) {

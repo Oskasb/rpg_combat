@@ -184,17 +184,17 @@ class PlayerMain {
         }
 
         if (gamePiece.getStatusByKey('isItem')) {
-            let distance = MATH.distanceBetween(gamePiece.getPos(), this.playerCharacter.gamePiece.getPos())
-            if (distance < 2) {
+            let playerPiece = this.playerCharacter.gamePiece;
+            if (playerPiece.distanceToReachTarget(gamePiece) < 1) {
                 GameAPI.addItemToPlayerInventory(gamePiece, 1);
             } else {
-                let playerPiece = this.playerCharacter.gamePiece;
+
                 let onArrive = function(arrive) {
-                //    console.log("Arrive at Target", arrive);
+                    console.log("Arrive at Item", arrive);
                     this.handleTargetSelected(gamePiece);
                 }.bind(this);
-                let travelTime = playerPiece.getStatusByKey('turnTime') * playerPiece.getStatusByKey('turnProgress') * 0.8
-                playerPiece.pieceMovement.moveToTargetAtTime('walk', playerPiece.getPos(), gamePiece.getPos(), travelTime, onArrive, 0.5)
+                playerPiece.movementPath.addPathEndCallback(onArrive);
+                playerPiece.movementPath.setPathTargetPiece(gamePiece);
             }
             return;
         }

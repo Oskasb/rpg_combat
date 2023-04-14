@@ -132,7 +132,12 @@ if(typeof(MATH) === "undefined") {
 		}
 	};
 
-
+	MATH.vectorAtPositionTowards = function(sourceVec3, targVec3, distance, storeVec3) {
+		storeVec3.subVectors(targVec3, sourceVec3);
+		storeVec3.normalize();
+		storeVec3.multiplyScalar(distance);
+		storeVec3.add(sourceVec3);
+	}
 	function sinWave(time, speed, amplitude) {
 		return Math.sin(time * speed) * amplitude;
 	}

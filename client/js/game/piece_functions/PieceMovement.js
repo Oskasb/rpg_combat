@@ -127,7 +127,7 @@ class PieceMovement {
     interpolatePosition(tpf) {
         let now = GameAPI.getGameTime();
         this.targetPos.copy(this.target);
-        evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.targetPos, color:'WHITE', size:0.4})
+        evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.targetPos, color:'YELLOW', size:0.1})
         let distanceRemaining = MATH.distanceBetween(this.spatial.obj3d.position, this.targetPos)
         if (distanceRemaining > this.margin) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);

@@ -1,6 +1,9 @@
 class MovementPath {
     constructor(gamePiece) {
+        this.isPathing = false;
         this.gamePiece = gamePiece;
+        this.pathTargetPiece = null;
+        this.pathTargetTile = null;
         this.pieceMovement = gamePiece.pieceMovement;
         this.pathTargetPos = new THREE.Vector3();
         this.turnPathEnd = new THREE.Vector3()
@@ -25,7 +28,6 @@ class MovementPath {
             if (currentTile !== this.destinationTile) {
                 GameAPI.registerGameTurnCallback(this.callbacks.updatePathTurn);
             }
-            MATH.callAndClearAll(this.pathEndCallbacks, this.gamePiece)
         }.bind(this);
 
         let updatePathTurn = function(turnStatus) {
@@ -101,7 +103,17 @@ class MovementPath {
         this.destinationTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(posVec);
     }
 
+    clearTilePathStatus(tilePath) {
+        for (let i = 0; i < tilePath.length; i++) {
+            let tile = tilePath[i];
+            tile.setTileStatus('FREE');
+            tile.indicateTileStatus(false);
+        }
+    }
+
     cancelMovementPath(tilePath) {
+        this.pathTargetPiece = null;
+        this.pathTargetTile = null;
         if (tilePath.length) {
             this.pieceMovement.cancelActiveTransition()
         }
@@ -131,7 +143,7 @@ class MovementPath {
         let incrementX = 0;
         let incrementZ = 0;
         let tileCount = Math.max(Math.abs(xDiff), Math.abs(zDiff));
-        this.cancelMovementPath(this.pathTiles)
+
         this.pathTiles.push(startTile);
         for (let i = 0; i < tileCount; i++) {
 
@@ -169,46 +181,51 @@ class MovementPath {
     }
 
 
-determineGridPathToPos(posVec) {
-    let cPos = this.gamePiece.getPos();
-    this.pathTargetPos.copy(posVec);
+    buildGridPath(posVec) {
+        let cPos = this.gamePiece.getPos();
+        this.pathTargetPos.copy(posVec);
 
-    let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
-    //   this.pathTargetPos.sub(cPos);
-    let speed = this.gamePiece.getStatusByKey('move_speed');
-    let remainingTime = GameAPI.getTurnStatus().turnProgress;
-    let remainingDistance = MATH.distanceBetween(cPos, posVec)
-    if (remainingDistance > speed*remainingTime*0.999) {
-        this.turnPathEnd.copy(posVec)
-        this.turnPathEnd.sub(cPos);
-        this.turnPathEnd.normalize();
-        let travelDistance = speed*remainingTime / (1+turnMoves);
-        travelDistance -= this.destinationTile.size;
-        this.turnPathEnd.multiplyScalar(travelDistance);
-        this.turnPathEnd.add(cPos);
+        let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
+        //   this.pathTargetPos.sub(cPos);
+        let speed = this.gamePiece.getStatusByKey('move_speed');
+        let remainingTime = GameAPI.getTurnStatus().turnProgress;
+        let remainingDistance = MATH.distanceBetween(cPos, posVec)
+        if (remainingDistance > speed*remainingTime*0.999) {
+            this.turnPathEnd.copy(posVec)
+            this.turnPathEnd.sub(cPos);
+            this.turnPathEnd.normalize();
+            let travelDistance = speed*remainingTime / (1+turnMoves);
+            travelDistance -= this.destinationTile.size;
+            this.turnPathEnd.multiplyScalar(travelDistance);
+            this.turnPathEnd.add(cPos);
 
-    } else {
-        this.turnPathEnd.copy(posVec);
+        } else {
+            this.turnPathEnd.copy(posVec);
+        }
+
+        this.drawPathLine(cPos, this.turnPathEnd, 'CYAN');
+        let endTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(this.turnPathEnd);
+        this.turnPathEnd.copy(endTile.getPos());
+
+        this.selectTilesBeneathPath(GameAPI.getActiveEncounterGrid().getTileAtPosition(cPos), endTile)
+
     }
 
-    this.drawPathLine(cPos, this.turnPathEnd, 'CYAN');
-    let endTile = GameAPI.getActiveEncounterGrid().getTileAtPosition(this.turnPathEnd);
-    this.turnPathEnd.copy(endTile.getPos());
-
-    this.selectTilesBeneathPath(GameAPI.getActiveEncounterGrid().getTileAtPosition(cPos), endTile)
-
-}
+    determineGridPathToPos(posVec) {
+        this.cancelMovementPath(this.pathTiles)
+        this.buildGridPath(posVec)
+    }
 
 
-moveTroughTilePath(cb) {
-    this.pieceMovement.moveAlongTilePath(this.pathTiles, cb)
-}
+    moveTroughTilePath(cb) {
+        this.pieceMovement.moveAlongTilePath(this.pathTiles, cb)
+    }
 
     addPathEndCallback(cb) {
-        if (this.pathEndCallbacks.indexOf(cb) !== -1) {
+        if (this.pathEndCallbacks.indexOf(cb) === -1) {
             this.pathEndCallbacks.push(cb)
         } else {
-            console.log("path end cb already installed")
+            console.log("path end cb already installed", cb)
         }
 
         if (this.pathEndCallbacks.length > 1) {
@@ -216,48 +233,88 @@ moveTroughTilePath(cb) {
         }
     }
 
-moveAlongActiveGridPath(cb) {
-        if (typeof (cb) === 'function') {
-            this.addPathEndCallback(cb);
-        }
+    moveAlongActiveGridPath() {
 
-    let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
-    turnMoves++;
-    this.gamePiece.setStatusValue('turn_moves', turnMoves);
+        let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
+        turnMoves++;
+        this.gamePiece.setStatusValue('turn_moves', turnMoves);
 
 
-    let tileCount = this.pathTiles.length;
-    if (tileCount ){
-        this.moveTroughTilePath(this.callbacks.onPathEnd);
-         } else {
-        console.log("NO TILE COUNT")
-        this.callbacks.turnEndNodeMove();
-    }
-}
-
-    determinePathToTarget(targetPiece, onArrive) {
-
-
-}
-
-updatePathTiles() {
-    if (this.destinationTile) {
-        //    this.determineGridPathToPos(this.targetPosTile.getPos())
-        this.drawPathLine(this.gamePiece.getPos(), this.turnPathEnd, 'CYAN');
-        this.drawPathLine(this.turnPathEnd, this.destinationTile.getPos(), 'BLUE');
-    }
-}
-
-tickMovementPath(tpf, gameTime) {
-    let encounterGrid = GameAPI.getActiveEncounterGrid();
-    if (encounterGrid) {
-        if (encounterGrid.gridTiles.length) {
-            this.updatePathTiles()
-            this.updateMovementOnGrid(encounterGrid);
-            this.updatePositionOnGrid(encounterGrid);
+        let tileCount = this.pathTiles.length;
+        if (tileCount ){
+            this.isPathing = true;
+            this.moveTroughTilePath(this.callbacks.onPathEnd);
+        } else {
+            this.isPathing = false;
+            MATH.callAndClearAll(this.pathEndCallbacks, this.gamePiece)
+        //    console.log("NO TILE COUNT")
+        //    this.callbacks.onPathEnd();
         }
     }
-}
+
+    setPathTargetPiece(targetPiece) {
+        this.pathTargetPiece = targetPiece;
+        this.determinePathToTargetPiece(targetPiece)
+    }
+
+    selectTileByAttackRangeTo(currentDestinationTile, targetPiece) {
+        let distanceRemaining = this.gamePiece.distanceToReachTarget(targetPiece);
+        if (distanceRemaining > 0) {
+            let tempVec = ThreeAPI.tempVec3
+            let dist = distanceRemaining + currentDestinationTile.size * 0.25
+            MATH.vectorAtPositionTowards(this.gamePiece.getPos(), targetPiece.getPos(), dist, tempVec)
+            return GameAPI.getActiveEncounterGrid().getTileAtPosition(tempVec);
+        } else {
+            return currentDestinationTile;
+        }
+    }
+    determinePathToTargetPiece(targetPiece) {
+
+        if (!this.destinationTile) {
+            this.setDestination(targetPiece.getPos());
+        }
+
+        let tileAtTarget =  GameAPI.getActiveEncounterGrid().getTileAtPosition(targetPiece.getPos());
+        if (tileAtTarget !== this.pathTargetTile) {
+            this.pathTargetTile = tileAtTarget;
+            let selectedTile = this.selectTileByAttackRangeTo(this.destinationTile, targetPiece);
+            if (selectedTile !== this.destinationTile) {
+                this.clearTilePathStatus(this.pathTiles);
+                this.destinationTile = selectedTile
+                this.buildGridPath(selectedTile.getPos())
+            }
+        } else {
+            this.pathTiles.push()
+        }
+    }
+
+    updatePathTiles() {
+        if (this.destinationTile) {
+
+        //    this.drawPathLine(this.gamePiece.getPos(), this.turnPathEnd, 'CYAN');
+            this.drawPathLine(this.turnPathEnd, this.destinationTile.getPos(), 'BLUE');
+        }
+    }
+
+    tickMovementPath(tpf, gameTime) {
+        let encounterGrid = GameAPI.getActiveEncounterGrid();
+        if (encounterGrid) {
+            if (encounterGrid.gridTiles.length) {
+
+                if (this.pathTargetPiece) {
+                    this.determinePathToTargetPiece(this.pathTargetPiece);
+                }
+
+                if (this.isPathing === false) {
+                    this.moveAlongActiveGridPath();
+                }
+
+                this.updatePathTiles()
+                this.updateMovementOnGrid(encounterGrid);
+                this.updatePositionOnGrid(encounterGrid);
+            }
+        }
+    }
 
 }
 
