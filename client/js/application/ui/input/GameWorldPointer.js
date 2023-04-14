@@ -41,7 +41,6 @@ class GameWorldPointer {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
         } else if (pointer.isMovementInput) {
             this.lastSelectedTile.setTileStatus('OCCUPIED');
-
         } else {
             this.selectionEvent.piece = null;
             this.selectionEvent.value = false;

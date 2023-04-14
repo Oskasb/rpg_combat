@@ -7,14 +7,20 @@ class CombatMovementProcessor {
 
     moveToEngagedTarget(engageTarget) {
         this.gamePiece.setStatusValue('combatTarget', null);
-    //    let margin = this.determineAttackRangeMargin(engageTarget)*0.85;
-        console.log("Move to Target", engageTarget);
-        let onArrive = function(arrive) {
-            console.log("Arrive at Target", arrive);
+        let rangeCheck = this.gamePiece.distanceToReachTarget(engageTarget);
+        if (rangeCheck > 0) {
+            console.log("Move to Target", engageTarget);
+
+            let onArrive = function(arrive) {
+                console.log("Arrive at Target", arrive);
+                this.initiateCombat(engageTarget);
+            }.bind(this);
+            this.gamePiece.movementPath.addPathEndCallback(onArrive);
+            this.gamePiece.movementPath.setPathTargetPiece(engageTarget);
+        } else {
             this.initiateCombat(engageTarget);
-        }.bind(this);
-        this.gamePiece.movementPath.addPathEndCallback(onArrive);
-        this.gamePiece.movementPath.setPathTargetPiece(engageTarget);
+        }
+
 
     }
 

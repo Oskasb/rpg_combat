@@ -89,6 +89,10 @@ class GamePiece {
     distanceToReachTarget = function(targetPiece) {
         let targetTile = targetPiece.movementPath.getTileAtPos(targetPiece.getPos());
         let tile = this.movementPath.getTileAtPos(this.getPos());
+        if (!tile) {
+            console.log("Something breaks here sometimes...", this)
+            return 0;
+        }
         let range = this.getStatusByKey('meleeRange')
         range+= this.getStatusByKey('size')*0.5
         range+= targetPiece.getStatusByKey('size')*0.5

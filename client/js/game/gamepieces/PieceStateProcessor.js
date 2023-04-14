@@ -242,7 +242,6 @@ class PieceStateProcessor {
                 status.gamePiece.movementPath.cancelMovementPath();
                 let tile = status.gamePiece.movementPath.getTileAtPos(status.gamePiece.getPos())
                 tile.setTileStatus('FREE');
-                tile.occupant = null;
                 this.activateActionType(status, ENUMS.getKey('CharacterState', status.charState))
                 this.updatePieceTurn(status, config)
                 status.targState = ENUMS.CharacterState.LIE_DEAD;

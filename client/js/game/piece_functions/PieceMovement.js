@@ -57,19 +57,14 @@ class PieceMovement {
             this.tempVec.copy(tile.getPos())
         }
 
-        console.log(totalDistance);
-        let requiredSpeed = totalDistance / turnTimeRemaining;
         let charSpeed = this.gamePiece.getStatusByKey('move_speed');
         let distancePerTile = totalDistance / tileCount;
-
         let timePerTile = GameAPI.getTurnStatus().turnTime * distancePerTile / charSpeed ;
-
         let tile;
         let nextTileCB = function() {
             if (tilePath.length) {
                 tile = tilePath.shift();
                 tile.setTileStatus('FREE');
-                tile.occupant = null;
                 tile.indicateTileStatus(false);
                 if (!tilePath.length) {
                     timePerTile *= 1.2;

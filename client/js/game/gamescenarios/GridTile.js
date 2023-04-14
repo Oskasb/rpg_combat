@@ -41,6 +41,10 @@ class GridTile {
     }
 
     setTileStatus(status) {
+        if (status === 'FREE') {
+            this.setPathClaimant(null);
+            this.setOccupant(null);
+        }
         this.tileStatus = status;
     }
     getTileStatus() {

@@ -64,7 +64,6 @@ class MovementPath {
             if (this.currentPosTile) {
                 this.currentPosTile.setTileStatus('FREE');
                 this.currentPosTile.indicateTileStatus(false);
-                this.currentPosTile.occupant = null;
             }
             gridTile.indicateTileStatus(false);
             if (this.gamePiece.getStatusByKey('isItem') === 1 && (gridTile.getTileStatus() === 'FREE')) {
@@ -72,7 +71,7 @@ class MovementPath {
             } else {
                 if (this.gamePiece.getStatusByKey('charState') !== ENUMS.CharacterState.LIE_DEAD) {
                     gridTile.setTileStatus('OCCUPIED')
-                    gridTile.occupant = this.gamePiece;
+                    gridTile.setOccupant(this.gamePiece);
                 }
 
             }
@@ -115,7 +114,6 @@ class MovementPath {
         while(tilePath.length) {
             let tile = tilePath.pop();
             tile.setTileStatus('FREE');
-            tile.occupant = null;
             tile.indicateTileStatus(false);
         }
     }
@@ -174,6 +172,8 @@ class MovementPath {
 
             let color = 'YELLOW';
 
+
+
             if (tile.getOccupant()) {
                 if (tile.getOccupant() !== this.gamePiece) {
                     evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
@@ -190,6 +190,15 @@ class MovementPath {
 
                 this.drawPathLine(this.tempVec, tile.getPos(), color)
                 this.tempVec.copy(tile.getPos());
+            }
+
+            if (tile.getPathClaimant()) {
+                if (tile.getPathClaimant() !== this.gamePiece) {
+                    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
+                    this.pathTiles.pop();
+                }
+            } else {
+                tile.setPathClaimant(this.gamePiece);
             }
 
         }
