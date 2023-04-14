@@ -26,6 +26,8 @@ class MovementPath {
             let currentTile = this.getTileAtPos(this.gamePiece.getPos());
             if (currentTile !== this.destinationTile) {
                 GameAPI.registerGameTurnCallback(this.callbacks.updatePathTurn);
+            } else {
+                MATH.callAndClearAll(this.pathEndCallbacks, this.gamePiece)
             }
         }.bind(this);
 

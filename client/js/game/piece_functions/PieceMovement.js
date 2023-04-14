@@ -3,6 +3,7 @@ import { SpatialTransition } from "./SpatialTransition.js";
 class PieceMovement {
     constructor(gamePiece) {
         this.target = null;
+        this.tempVec = new THREE.Vector3()
         this.targetPosVec3 = new THREE.Vector3();
         this.gamePiece = gamePiece;
         this.spatial = gamePiece.getSpatial();
@@ -43,15 +44,25 @@ class PieceMovement {
 
         let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining();
 
-        ThreeAPI.tempVec3.copy(tilePath[0].getPos())
+        this.tempVec.copy(tilePath[0].getPos())
         for (let i = 0; i < tilePath.length; i++) {
             let tile = tilePath[i];
             tile.setTileStatus('IS_PATH');
             tile.indicateTileStatus(true);
-            ThreeAPI.tempVec3b.subVectors( ThreeAPI.tempVec3, tile.getPos())
-            totalDistance+= ThreeAPI.tempVec3b.length();
-            ThreeAPI.tempVec3.copy(tile.getPos())
+            evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.tempVec, color:'WHITE', size:0.2})
+            evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'GREEN', size:0.1})
+            this.tempVec.sub(tile.getPos());
+            let distance = this.tempVec.length();
+            totalDistance+= distance;
+            this.tempVec.copy(tile.getPos())
         }
+
+        console.log(totalDistance);
+        let requiredSpeed = totalDistance / turnTimeRemaining;
+        let charSpeed = this.gamePiece.getStatusByKey('move_speed');
+        let distancePerTile = totalDistance / tileCount;
+
+        let timePerTile = GameAPI.getTurnStatus().turnTime * distancePerTile / charSpeed ;
 
         let tile;
         let nextTileCB = function() {
@@ -59,8 +70,10 @@ class PieceMovement {
                 tile = tilePath.shift();
                 tile.setTileStatus('FREE');
                 tile.indicateTileStatus(false);
-                let travelTime = turnTimeRemaining / tileCount ;
-                processTile(tile.getPos(), travelTime)
+                if (!tilePath.length) {
+                    timePerTile *= 1.2;
+                }
+                processTile(tile.getPos(), timePerTile)
             } else {
                 callback()
             }
