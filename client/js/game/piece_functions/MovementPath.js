@@ -346,7 +346,7 @@ class MovementPath {
                 }
 
                 this.updatePathTiles()
-            //    this.updateMovementOnGrid(encounterGrid);
+                this.updateMovementOnGrid(encounterGrid);
                 this.updatePositionOnGrid(encounterGrid);
             }
         }
