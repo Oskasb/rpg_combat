@@ -138,9 +138,14 @@ class GameWorldPointer {
                     if (!this.selectionEvent) {
                         console.log("Some multi-touch issue here")
                     } else {
-                        this.selectionEvent.piece = pointer.worldSpaceTarget;
-                        this.selectionEvent.value = false;
-                        evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, this.selectionEvent);
+                        if (pointer.isMovementInput) {
+
+                        } else {
+                            this.selectionEvent.piece = pointer.worldSpaceTarget;
+                            this.selectionEvent.value = false;
+                            evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, this.selectionEvent);
+                        }
+
                     }
 
 
