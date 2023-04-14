@@ -104,8 +104,9 @@ class MovementPath {
     }
 
     clearTilePathStatus(tilePath) {
-        for (let i = 0; i < tilePath.length; i++) {
-            let tile = tilePath[i];
+        this.isPathing = false;
+        while(tilePath.length) {
+            let tile = tilePath.pop();
             tile.setTileStatus('FREE');
             tile.indicateTileStatus(false);
         }
@@ -117,11 +118,7 @@ class MovementPath {
         if (tilePath.length) {
             this.pieceMovement.cancelActiveTransition()
         }
-        while(tilePath.length) {
-            let tile = tilePath.pop();
-            tile.setTileStatus('FREE');
-            tile.indicateTileStatus(false);
-        }
+        this.clearTilePathStatus(tilePath)
     }
 
     selectTilesBeneathPath(startTile, endTile) {
@@ -235,15 +232,18 @@ class MovementPath {
 
     moveAlongActiveGridPath() {
 
-        let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
-        turnMoves++;
-        this.gamePiece.setStatusValue('turn_moves', turnMoves);
+    //    let turnMoves = this.gamePiece.getStatusByKey('turn_moves');
+      //  turnMoves++;
+      //  this.gamePiece.setStatusValue('turn_moves', turnMoves);
 
 
         let tileCount = this.pathTiles.length;
         if (tileCount ){
+            if (this.isPathing === false) {
+                this.moveTroughTilePath(this.callbacks.onPathEnd);
+            }
             this.isPathing = true;
-            this.moveTroughTilePath(this.callbacks.onPathEnd);
+
         } else {
             this.isPathing = false;
             MATH.callAndClearAll(this.pathEndCallbacks, this.gamePiece)
@@ -275,17 +275,17 @@ class MovementPath {
         }
 
         let tileAtTarget =  GameAPI.getActiveEncounterGrid().getTileAtPosition(targetPiece.getPos());
-        if (tileAtTarget !== this.pathTargetTile) {
+    //    if (tileAtTarget !== this.pathTargetTile) {
             this.pathTargetTile = tileAtTarget;
             let selectedTile = this.selectTileByAttackRangeTo(this.destinationTile, targetPiece);
-            if (selectedTile !== this.destinationTile) {
+        //    if (selectedTile !== this.destinationTile) {
                 this.clearTilePathStatus(this.pathTiles);
                 this.destinationTile = selectedTile
                 this.buildGridPath(selectedTile.getPos())
-            }
-        } else {
-            this.pathTiles.push()
-        }
+       //     }
+    //    } else {
+    //        this.pathTiles.push()
+    //    }
     }
 
     updatePathTiles() {

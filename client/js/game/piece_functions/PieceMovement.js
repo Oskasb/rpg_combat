@@ -34,6 +34,10 @@ class PieceMovement {
 
     moveAlongTilePath(tilePath, callback) {
 
+        if (this.onArriveCallbacks.indexOf(callback) !== -1) {
+            return;
+        }
+
         let tileCount = tilePath.length;
         let totalDistance = 0;
 
