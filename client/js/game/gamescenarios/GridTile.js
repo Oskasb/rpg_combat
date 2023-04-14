@@ -7,6 +7,7 @@ class GridTile {
         this.size = size;
         this.thickness = thickness;
         this.occupant = null;
+        this.pathClaimant = null;
         this.obj3d = obj3d;
         this.tileStatus = 'FREE'
         this.tileIndicator = new TileIndicator(this);
@@ -21,6 +22,14 @@ class GridTile {
             this.tileStatus = 'FREE'
         }
 
+    }
+
+    setPathClaimant(gamePiece) {
+        this.pathClaimant = gamePiece;
+    }
+
+    getPathClaimant() {
+        return this.pathClaimant
     }
 
     setOccupant(gamePiece) {

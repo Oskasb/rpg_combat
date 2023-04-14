@@ -184,6 +184,11 @@ class PlayerMain {
             return;
         }
 
+        if (gamePiece.getStatusByKey('charState') === ENUMS.CharacterState.LIE_DEAD) {
+            return;
+        }
+
+
         if (gamePiece.getStatusByKey('isItem')) {
             let playerPiece = this.playerCharacter.gamePiece;
             if (playerPiece.distanceToReachTarget(gamePiece) < 1) {

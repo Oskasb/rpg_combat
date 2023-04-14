@@ -245,6 +245,8 @@ class PieceStateProcessor {
                 tile.occupant = null;
                 this.activateActionType(status, ENUMS.getKey('CharacterState', status.charState))
                 this.updatePieceTurn(status, config)
+                status.targState = ENUMS.CharacterState.LIE_DEAD;
+                status.charState = ENUMS.CharacterState.LIE_DEAD;
                 if (status.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
 
                     evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'player_dead', time:20});

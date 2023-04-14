@@ -62,7 +62,9 @@ class MovementPath {
         let gridTile = encounterGrid.getTileAtPosition(pos);
         if (this.currentPosTile !== gridTile || gridTile.getTileStatus() === 'FREE'){
             if (this.currentPosTile) {
+                this.currentPosTile.setTileStatus('FREE');
                 this.currentPosTile.indicateTileStatus(false);
+                this.currentPosTile.occupant = null;
             }
             gridTile.indicateTileStatus(false);
             if (this.gamePiece.getStatusByKey('isItem') === 1 && (gridTile.getTileStatus() === 'FREE')) {
@@ -318,8 +320,6 @@ class MovementPath {
 
     updatePathTiles() {
         if (this.destinationTile) {
-
-        //    this.drawPathLine(this.gamePiece.getPos(), this.turnPathEnd, 'CYAN');
             this.drawPathLine(this.turnPathEnd, this.destinationTile.getPos(), 'BLUE');
         }
     }

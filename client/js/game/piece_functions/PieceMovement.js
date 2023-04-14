@@ -69,6 +69,7 @@ class PieceMovement {
             if (tilePath.length) {
                 tile = tilePath.shift();
                 tile.setTileStatus('FREE');
+                tile.occupant = null;
                 tile.indicateTileStatus(false);
                 if (!tilePath.length) {
                     timePerTile *= 1.2;

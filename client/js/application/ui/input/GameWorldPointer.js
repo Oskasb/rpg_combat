@@ -61,7 +61,7 @@ class GameWorldPointer {
     updateWorldPointer = function(pointer, isFirstPressFrame) {
         let indicator =  pointer.worldSpaceIndicator
         let pos = this.posVec.copy(pointer.pos);
-     //   GameScreen.fitView(pos);
+        //   GameScreen.fitView(pos);
 
         pos.x *= 1 / GameScreen.getAspect()                  // X is Left axis
         pos.y *= 1 // Y is UP screen axis
@@ -86,8 +86,13 @@ class GameWorldPointer {
         }
 
         for (let i = 0; i < pieces.length; i++) {
-            pieces[i].getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
-            screenDistance(ThreeAPI.tempVec3,  pieces[i]);
+            let gamePiece = pieces[i];
+            if (gamePiece.getStatusByKey('charState') === ENUMS.CharacterState.LIE_DEAD) {
+
+            } else {
+                gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
+                screenDistance(ThreeAPI.tempVec3,  gamePiece);
+            }
         }
 
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece
@@ -95,9 +100,14 @@ class GameWorldPointer {
         screenDistance(ThreeAPI.tempVec3, playerPiece)
 
         for (let i = 0; i < characters.length; i++) {
-            characters[i].gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
-            ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
-            screenDistance(ThreeAPI.tempVec3, characters[i].gamePiece);
+            let gamePiece = characters[i].gamePiece
+            if (gamePiece.getStatusByKey('charState') === ENUMS.CharacterState.LIE_DEAD) {
+
+            } else {
+                gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
+                ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
+                screenDistance(ThreeAPI.tempVec3, gamePiece);
+            }
         }
 
 
@@ -171,7 +181,7 @@ class GameWorldPointer {
 
         if (screenSelection === playerPiece && isFirstPressFrame) {
             pointer.isMovementInput = true;
-        //    console.log(pointer)
+            //    console.log(pointer)
         }
 
         if (pointer.isMovementInput) {
