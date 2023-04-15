@@ -1,5 +1,5 @@
 import * as SpatialUtils from "../../application/utils/SpatialUtils.js";
-import { CombatTargetProcessor } from "./CombatTargetProcessor.js";
+
 
 class ThreatDetector {
     constructor(gamePiece) {
@@ -19,10 +19,14 @@ class ThreatDetector {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE,  this.threatEvent)
         }
 
-    //    console.log("NEW HOSTILE", hostileChar)
+        //    console.log("NEW HOSTILE", hostileChar)
 
         if (this.gamePiece.getStatusByKey('faction') === 'GOOD') {
             if (hostileChar.gamePiece.getStatusByKey('faction') === 'EVIL') {
+                if (hostileChar.gamePiece.isDead) {
+                    console.log("The dead dont care")
+                    return;
+                }
                 let aggroRange = hostileChar.gamePiece.getStatusByKey('aggro_range')
                 let distance = MATH.distanceBetween(hostileChar.gamePiece.getPos(), this.gamePiece.getPos())
                 if (distance < aggroRange) {
@@ -52,10 +56,19 @@ class ThreatDetector {
 
         for (let i = 0; i < this.hostilesInRange.length; i++) {
             let hostileChar = this.hostilesInRange[i];
-            if (this.knownHostiles.indexOf(hostileChar) === -1) {
-                this.knownHostiles.push(hostileChar);
+
+            if (hostileChar.gamePiece.isDead) {
+            //    console.log("The dead are not hostile anymore")
+            } else {
+                if (this.knownHostiles.indexOf(hostileChar) === -1) {
+                    {
+                        this.knownHostiles.push(hostileChar);
+                    }
+                }
+                _this.appropriatelyTreatKnownHostile(hostileChar);
             }
-            _this.appropriatelyTreatKnownHostile(hostileChar);
+
+
         }
 
         for (let i = 0; i < this.knownHostiles.length; i++) {

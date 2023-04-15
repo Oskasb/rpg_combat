@@ -95,6 +95,15 @@ class PieceState {
         this.pieceStateProcessor.processGamePieceState(this.status, this.config, tpf, time)
         if (statePre !== this.status.charState) {
             if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+
+                let target = this.gamePiece.getTarget();
+                if (target) {
+                    if (target.isDead) {
+                        console.log("The dead cant dance, dont worry here")
+                        return;
+                    }
+                }
+
                 evt.dispatch(ENUMS.Event.SET_PLAYER_STATE, this.status.charState);
             }
         }

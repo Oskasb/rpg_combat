@@ -86,7 +86,7 @@ class GameWorldPointer {
 
         for (let i = 0; i < pieces.length; i++) {
             let gamePiece = pieces[i];
-            if (gamePiece.getStatusByKey('charState') === ENUMS.CharacterState.LIE_DEAD) {
+            if (gamePiece.isDead) {
 
             } else {
                 gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
@@ -100,7 +100,7 @@ class GameWorldPointer {
 
         for (let i = 0; i < characters.length; i++) {
             let gamePiece = characters[i].gamePiece
-            if (gamePiece.getStatusByKey('charState') === ENUMS.CharacterState.LIE_DEAD) {
+            if (gamePiece.isDead) {
 
             } else {
                 gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)

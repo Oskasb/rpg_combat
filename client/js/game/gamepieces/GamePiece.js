@@ -10,6 +10,7 @@ import { PieceState } from "./PieceState.js";
 
 class GamePiece {
     constructor(config, callback) {
+        this.isDead = false;
         this.gamePieceUpdateCallbacks = [];
         this.pieceActionSystem = new PieceActionSystem();
         this.combatSystem = new CombatSystem(this);
@@ -21,6 +22,10 @@ class GamePiece {
         this.pieceState = new PieceState(this);
 
         let tickGamePiece = function(tpf, gameTime) {
+            if (this.isDead) {
+                console.log("The dead cant dance, dont update me")
+                return;
+            }
             MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime, this);
             this.pieceAnimator.updatePieceAnimations(tpf, gameTime);
             this.pieceAttacher.tickAttacher();
@@ -164,6 +169,14 @@ class GamePiece {
         return selectedTarget || engagingTarget || combatTarget || disengagingTarget ;
     }
 
+    applyPieceDeadStatus() {
+        this.isDead = true;
+        this.clearEngagementStatus();
+    }
+    clearEngagementStatus() {
+        this.movementPath.cancelMovementPath()
+        this.pieceState.pieceStateProcessor.clearCombatState(this.pieceState.status)
+    }
     hideGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
             ThreeAPI.tempVec3.set(0, 0, 0);

@@ -97,6 +97,7 @@ class PlayerMain {
         }.bind(this)
 
         let returnHome = function(gamePiece) {
+            gamePiece.isDead = false;
             gamePiece.movementPath.cancelMovementPath()
             gamePiece.setStatusValue('hp', gamePiece.getStatusByKey('maxHP'));
             gamePiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
@@ -184,7 +185,8 @@ class PlayerMain {
             return;
         }
 
-        if (gamePiece.getStatusByKey('charState') === ENUMS.CharacterState.LIE_DEAD) {
+        if (gamePiece.isDead) {
+            console.log('No selecting the dead')
             return;
         }
 

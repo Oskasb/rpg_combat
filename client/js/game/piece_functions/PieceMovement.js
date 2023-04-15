@@ -35,6 +35,7 @@ class PieceMovement {
 
     moveAlongTilePath(tilePath, callback) {
 
+        let gamePiece = this.gamePiece;
         if (this.onArriveCallbacks.indexOf(callback) !== -1) {
             return;
         }
@@ -57,7 +58,7 @@ class PieceMovement {
             this.tempVec.copy(tile.getPos())
         }
 
-        let charSpeed = this.gamePiece.getStatusByKey('move_speed');
+        let charSpeed = gamePiece.getStatusByKey('move_speed');
         let distancePerTile = totalDistance / tileCount;
         let timePerTile = GameAPI.getTurnStatus().turnTime * distancePerTile / charSpeed ;
         let tile;
@@ -69,18 +70,31 @@ class PieceMovement {
                 if (!tilePath.length) {
                     timePerTile *= 1.2;
                 }
-                processTile(tile.getPos(), timePerTile)
+                processTile(tile, timePerTile)
             } else {
                 callback()
             }
         }
 
-        let processTile = function(tpos, travelTime) {
+        let processTile = function(tile, travelTime) {
        //     console.log("Process Tile: ", travelTime);
 
-            let spos = this.gamePiece.getPos()
+            if (gamePiece !== GameAPI.getActivePlayerCharacter().gamePiece) {
+                let target = gamePiece.getTarget()
+                if (target) {
+                    let rangeCheck = gamePiece.distanceToReachTarget(target)
+                    if (rangeCheck < 0) {
+                        tile.setTileStatus('OCCUPIED');
+                        tile.setOccupant(gamePiece);
+                        nextTileCB();
+                        return;
+                    }
+                }
+            }
+
+            let spos = gamePiece.getPos()
        //     evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tpos, color:'WHITE', size:0.4})
-            this.moveToTargetAtTime('walk', spos, tpos, travelTime, nextTileCB, 0.01)
+            this.moveToTargetAtTime('walk', spos, tile.getPos(), travelTime, nextTileCB, 0.01)
         }.bind(this)
 
         nextTileCB();

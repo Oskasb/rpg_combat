@@ -47,6 +47,13 @@ class CombatSystem {
 
 
     engageTarget(engageTarget) {
+        let target = this.gamePiece.getTarget();
+        if (target) {
+            if (target.isDead) {
+                console.log("The dead cant engage, dont worry here")
+                return;
+            }
+        }
         this.combatMovementProcessor.updateEngagedTarget(engageTarget);
         this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.FAST);
     }
@@ -59,6 +66,14 @@ class CombatSystem {
     updateCombatTurnTick() {
         let combatTarget = this.gamePiece.getStatusByKey('combatTarget');
         if (combatTarget !== null) {
+            let target = this.gamePiece.getTarget();
+            if (target) {
+                if (target.isDead) {
+                    console.log("The dead cant fight back, dont worry here")
+                    return;
+                }
+            }
+
             if (this.testForMeleeRange(combatTarget)) {
                 this.attackCombatTarget(combatTarget);
             } else {

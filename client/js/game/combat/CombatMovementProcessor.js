@@ -42,7 +42,8 @@ class CombatMovementProcessor {
     }
     updateEngagedTarget(engageTarget) {
         if (!engageTarget) return;
-        if (engageTarget.getStatusByKey('charState') === ENUMS.CharacterState.LIE_DEAD) {
+        if (engageTarget.isDead) {
+            console.log("Already dead, dont call phone")
             this.gamePiece.movementPath.cancelMovementPath();
             this.gamePiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
             this.gamePiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);

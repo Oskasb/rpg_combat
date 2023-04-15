@@ -47,6 +47,13 @@ class CharacterMovement {
         ThreeAPI.tempObj.quaternion.set(0, 1, 0,0)
         let targetPiece = this.gamePiece.getTarget();
         if (targetPiece) {
+                if (targetPiece.isDead) {
+                    console.log("It is dead, dont look at it", targetPiece)
+                    this.gamePiece.clearEngagementStatus();
+                    return;
+                }
+
+
             ThreeAPI.tempObj.lookAt(ThreeAPI.tempVec3);
             this.spatial.obj3d.lookAt(targetPiece.getPos())
         } else if (speed > 0.000001) {

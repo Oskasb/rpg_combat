@@ -66,6 +66,8 @@ class PieceStateProcessor {
     }
 
     processNewTurn(status, config) {
+
+
         status.turnTime = config.turnTime;
         status.maxAPs = config.maxActPts;
         status.appliedAttacks = 0;
@@ -74,6 +76,15 @@ class PieceStateProcessor {
         status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
 
         status.charState = status.targState;
+
+        let target = status.gamePiece.getTarget()
+        if (target) {
+            if (target.isDead) {
+                console.log("It is dead, dont do it", status)
+                this.gamePiece.clearEngagementStatus();
+                return;
+            }
+        }
 
         this.gamePiece.combatSystem.combatTargetProcessor.updateCombatTarget(this.gamePiece);
         this.gamePiece.combatSystem.engageTarget(this.gamePiece.getStatusByKey('engagingTarget'));
@@ -117,15 +128,22 @@ class PieceStateProcessor {
     }
 
 
-    applyTargetIsDead(status, target) {
+    clearCombatState(status) {
+
         status.combatTarget = null;
         status.engagingTarget = null;
         status.selectedTarget = null;
+        status.disengagingTarget = null;
         status.atkType = ENUMS.AttackType.NONE;
         status.trgAtkType = ENUMS.AttackType.NONE;
         status.charState = ENUMS.CharacterState.IDLE_HANDS;
         status.targState = ENUMS.CharacterState.IDLE_HANDS;
         status.atkProg = 0;
+    }
+    applyTargetIsDead(status, target) {
+        status.gamePiece.combatSystem.disengageTarget(status.gamePiece.getTarget());
+        this.clearCombatState(status)
+
         if (status.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
 
@@ -162,7 +180,6 @@ class PieceStateProcessor {
     }
 
     processSwingProgress(status, config) {
-        let testFrac = config.sourceFraction;
 
         status.source = MATH.clamp (status.atkProg / config.sourceFraction, 0, 1);
         status.prep = MATH.clamp ((status.atkProg-config.sourceFraction) / config.prepFraction, 0, 1);
@@ -202,6 +219,7 @@ class PieceStateProcessor {
     }
 
     updatePieceTurn(status, config) {
+
         status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
         if (status.turn !== GameAPI.gameMain.turnStatus.turn) {
             this.processNewTurn(status, config)
@@ -233,20 +251,11 @@ class PieceStateProcessor {
             this.processTargetSelection(status, config);
             this.updatePieceTurn(status, config)
         } else {
-            if (status.gamePiece.getTarget()) {
-                let opponentPiece = status.gamePiece.getTarget();
-                opponentPiece.movementPath.cancelMovementPath();
-                opponentPiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
-                opponentPiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);
-                opponentPiece.setStatusValue('engageTarget', null);
-                opponentPiece.setStatusValue('selectedTarget', null);
-                opponentPiece.setStatusValue('combatTarget', null);
-                opponentPiece.setStatusValue('disengagingTarget', null);
+            let opponentPiece = status.gamePiece.getTarget();
+            if (opponentPiece) {
+                opponentPiece.clearEngagementStatus();
             }
-            status.combatTarget = null;
-            status.engagingTarget = null;
-            status.selectedTarget = null;
-            status.disengageTarget = null;
+            status.gamePiece.applyPieceDeadStatus();
             if (status.charState !== ENUMS.CharacterState.LIE_DEAD) {
                 status.charState = ENUMS.CharacterState.LIE_DEAD;
                 status.gamePiece.movementPath.cancelMovementPath();
@@ -274,6 +283,10 @@ class PieceStateProcessor {
     }
 
     processGamePieceState(status, config, tpf, time) {
+        if (status.charState === ENUMS.CharacterState.LIE_DEAD) {
+            console.log("Dead cant fight, no need to update")
+            return;
+        }
         status.lifetime += tpf;
         this.updateHealthStatus(status, config)
     }

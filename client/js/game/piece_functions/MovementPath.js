@@ -184,6 +184,10 @@ class MovementPath {
                 }
             }
 
+            if (!this.pathTiles[i]) {
+                console.log('Sometimes the path is culled here? it breaks!')
+                return;
+            }
             if ( Math.abs(elevation) > Math.abs(this.pathTiles[i].getPos().y) + 0.7)  {
                 this.drawPathLine(this.tempVec, tile.getPos(), 'RED')
                 i = tileCount;
