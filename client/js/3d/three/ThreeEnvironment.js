@@ -90,6 +90,11 @@ class ThreeEnvironment {
 
         grd.addColorStop(1-1, ThreeAPI.toRgb(0.0, 0.0, fogColor[2]));
         //	grd.addColorStop(0.8+evFact,toRgb([color[0]*(0.5)*(1-evFact)+fog[0]*(0.5)*evFact*evFact, color[1]*0.5*(1-evFact)+fog[1]*(0.5)*evFact*evFact, color[2]*0.5*(1-evFact)+fog[2]*0.5*evFact*evFact]));
+
+        if (evFact > 999999 || isNaN(evFact) || !isFinite(evFact)) {
+            console.log("Camera went flying off... investigate")
+            return;
+        }
         grd.addColorStop(1-(0.577+evFact), ThreeAPI.toRgb(fogColor[0]*0.6, fogColor[1]*0.6, 1));
 
         //    grd.addColorStop(0.45,toRgb(ambient));

@@ -24,7 +24,7 @@
                   }
                 },
                 {
-                  "widget_id": "container_xp_bar",
+                  "widget_id": "container_bottom_center",
                   "widget_class": "GuiExpandingContainer",
                   "widget_config_id": "widget_hidden_container",
                   "options": {
@@ -63,21 +63,7 @@
                     "offset_y": -0.05
                   }
                 },
-                {
-                  "widget_id": "bar_player_xp",
-                  "widget_class": "GuiProgressBar",
-                  "widget_config_id":"progress_indicator_player_xp",
-                  "options": {
-                    "container_id": "container_xp_bar",
-                    "offset_x":  0.0,
-                    "offset_y":  0.003,
-                    "digits": 1,
-                    "progress_event": {
-                      "event": "MAIN_CHAR_STATUS_EVENT",
-                      "target_key": "xp_progress"
-                    }
-                  }
-                },
+
                 {
                   "widget_id": "bar_player_turn_progress",
                   "widget_class": "GuiProgressBar",
@@ -108,12 +94,23 @@
                         {
                           "key": "level",
                           "digits": 1
-                        },
-                        {
-                          "key": "xp",
-                          "digits": 1
                         }
                       ]
+                    }
+                  }
+                },
+                {
+                  "widget_id": "bar_player_xp",
+                  "widget_class": "GuiProgressBar",
+                  "widget_config_id":"progress_indicator_player_xp",
+                  "options": {
+                    "container_id": "panel_player_main_status",
+                    "offset_x":  0.0,
+                    "offset_y":  0,
+                    "digits": 1,
+                    "progress_event": {
+                      "event": "MAIN_CHAR_STATUS_EVENT",
+                      "target_key": "xp_progress"
                     }
                   }
                 },

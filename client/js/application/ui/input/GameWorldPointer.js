@@ -130,7 +130,11 @@ class GameWorldPointer {
                 }
 
                 pointer.worldSpaceTarget = worldSelection;
-                this.worldPointerFindPath(pointer)
+                let rangeCheck = GameAPI.getActivePlayerCharacter().gamePiece.distanceToReachTarget(worldSelection)
+                if (rangeCheck > 0) {
+                    this.worldPointerFindPath(pointer)
+                }
+
             } else {
                 if (pointer.worldSpaceTarget) {
                     indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
