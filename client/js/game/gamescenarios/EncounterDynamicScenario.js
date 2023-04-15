@@ -20,25 +20,7 @@ class EncounterDynamicScenario {
             offsetLookAt:[0, 2, 3]
         }
 
-        let camParams = this.camParams;
-        let camCallback = function() {
 
-        }.bind(this);
-        camParams.callback = camCallback;
-
-        this.camFollow = function() {
-            let playerPos = GameAPI.getActivePlayerCharacter().gamePiece.getPos()
-            camParams.pos[0] = playerPos.x + camParams.offsetPos[0];
-            camParams.pos[1] = playerPos.y + camParams.offsetPos[1];
-            camParams.pos[2] = playerPos.z + camParams.offsetPos[2];
-            camParams.lookAt[0] = playerPos.x + camParams.offsetLookAt[0];
-            camParams.lookAt[1] = playerPos.y + camParams.offsetLookAt[1];
-            camParams.lookAt[2] = playerPos.z + camParams.offsetLookAt[2];
-            camParams.time = 0.05;
-
-            evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, camParams);
-
-        }
     }
 
     initEncounterDynamicScenario(onReady) {
@@ -61,9 +43,29 @@ class EncounterDynamicScenario {
 
     }
 
+    activateScenarioCamera(camConf) {
+        let camCallback = function() {
+
+        }.bind(this);
+        this.applyCam = camConf;
+        this.camParams.callback = camCallback;
+
+        this.camFollow = function() {
+            let playerPos = GameAPI.getActivePlayerCharacter().gamePiece.getPos()
+            this.camParams.pos[0] = playerPos.x + this.applyCam.offsetPos[0];
+            this.camParams.pos[1] = playerPos.y + this.applyCam.offsetPos[1];
+            this.camParams.pos[2] = playerPos.z + this.applyCam.offsetPos[2];
+            this.camParams.lookAt[0] = playerPos.x + this.applyCam.offsetLookAt[0];
+            this.camParams.lookAt[1] = playerPos.y + this.applyCam.offsetLookAt[1];
+            this.camParams.lookAt[2] = playerPos.z + this.applyCam.offsetLookAt[2];
+            this.camParams.time = 0.05;
+            evt.dispatch(ENUMS.Event.SET_CAMERA_TARGET, this.camParams);
+        }.bind(this);
+    }
+
     activateEncDynScenario() {
     let config = this.config;
-
+    this.activateScenarioCamera(this.camParams);
         let pageReady = function(page) {
     //        console.log("PAGE READY", page);
             if (config.INFO) {

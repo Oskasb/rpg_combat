@@ -73,6 +73,8 @@ class GuiPage {
     }
 
     setupCamera(conf) {
+        console.log("setupCamerae ",conf);
+        this.hasCamera = true;
         let mode = conf['mode'];
         if (mode === "portrait_main_char") {
             let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
@@ -80,6 +82,11 @@ class GuiPage {
         }
         let offsetPos = conf['offset_pos'];
         let offsetLookAt = conf['offset_lookAt'];
+        let camParams = {
+            offsetPos:offsetPos,
+            offsetLookAt:offsetLookAt
+        }
+        GameAPI.getActiveDynamicScenario().activateScenarioCamera(camParams)
     }
     setupContainer(conf, callback, count) {
 
@@ -113,6 +120,11 @@ class GuiPage {
     }
 
     closeGuiPage() {
+        if (this.hasCamera) {
+            // return camera to scenario setting;
+            let camParams = GameAPI.getActiveDynamicScenario().camParams;
+            GameAPI.getActiveDynamicScenario().activateScenarioCamera(camParams)
+        }
         this.isActive = false;
    //     console.log("Close gui page ", this);
         for (let key in this.containers) {

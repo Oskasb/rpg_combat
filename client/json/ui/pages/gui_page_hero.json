@@ -7,11 +7,10 @@
           "data": [
             {
               "camera": {
-                "camera": {
-                  "mode": "portrait_main_char",
-                  "offset_pos": [1, 6, -11],
-                  "offset_lookAt": [0, 2.5, 0]
-                }
+
+                "mode": "portrait_main_char",
+                "offset_pos": [0.6, 1.7, -2.1],
+                "offset_lookAt": [-0.4, 1.6, -0.5]
               },
               "containers":[
                 {
