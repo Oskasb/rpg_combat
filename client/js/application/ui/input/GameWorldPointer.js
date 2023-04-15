@@ -29,6 +29,9 @@ class GameWorldPointer {
 
 
     worldPointerReleased = function(pointer) {
+        if (GuiAPI.calls.getInMenu() === true) {
+            return;
+        }
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
         //    console.log("Release Movement Pointer")
         playerPiece.movementPath.clearTilePathStatus( playerPiece.movementPath.pathTiles);
@@ -40,7 +43,10 @@ class GameWorldPointer {
             this.selectionEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
         } else if (pointer.isMovementInput) {
-            this.lastSelectedTile.setTileStatus('OCCUPIED');
+            if (this.lastSelectedTile) {
+            //    this.lastSelectedTile.setTileStatus('OCCUPIED');
+
+            }
         } else {
             this.selectionEvent.piece = null;
             this.selectionEvent.value = false;
@@ -54,10 +60,13 @@ class GameWorldPointer {
             this.selectionEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
         }
-
+        pointer.worldSpaceTarget = null;
         pointer.isMovementInput = false;
     }
     updateWorldPointer = function(pointer, isFirstPressFrame) {
+        if (GuiAPI.calls.getInMenu() === true) {
+            return;
+        }
         let indicator =  pointer.worldSpaceIndicator
         let pos = this.posVec.copy(pointer.pos);
         //   GameScreen.fitView(pos);
@@ -112,6 +121,9 @@ class GameWorldPointer {
 
         let worldSelection = screenSelection;
         let updateWorldPointer = function() {
+            if (GuiAPI.calls.getInMenu() === true) {
+                return;
+            }
             if (worldSelection) {
 
                 if (pointer.worldSpaceTarget !== worldSelection) {
@@ -159,6 +171,9 @@ class GameWorldPointer {
         }.bind(this);
 
         let updateMovementPointer = function() {
+            if (GuiAPI.calls.getInMenu() === true) {
+                return;
+            }
             let encounterGrid = GameAPI.getActiveEncounterGrid()
             let tiles = encounterGrid.gridTiles
             screenSelection = null;

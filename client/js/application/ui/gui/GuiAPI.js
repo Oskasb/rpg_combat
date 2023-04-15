@@ -7,7 +7,7 @@ import { DebugView } from "../../debug/DebugView.js";
 
 class GuiAPI {
     constructor() {
-
+        let inMenueFlag = false;
         this.aspect = 1;
         this.elementPools = {};
         this.inputSystem;
@@ -41,10 +41,21 @@ class GuiAPI {
             callInputUpdateCallbacks(pointerState.index, pointerState)
         };
 
+        let setInMenu = function(bool) {
+            inMenueFlag = bool;
+        }
+
+        let getInMenu = function() {
+            return inMenueFlag;
+        }
+
+
         this.calls = {
             callInputUpdateCallbacks:callInputUpdateCallbacks,
             callAspectUpdateCallbacks:callAspectUpdateCallbacks,
-            updateInput:updateInput
+            updateInput:updateInput,
+            setInMenu:setInMenu,
+            getInMenu:getInMenu
         }
     };
 

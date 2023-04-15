@@ -77,11 +77,11 @@
                   }
                 },
                 {
-                  "widget_id":"button_go_hero",
+                  "widget_id":"button_go_train",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"HERO",
+                    "text":"TRAIN",
                     "container_id":"page_home_center",
                     "offset_x":0.115,
                     "offset_y":-0.30,
@@ -89,7 +89,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"home_hero_dynamic"
+                        "dynamic":"hero_practice_dynamic"
                       }
                     }
                   }

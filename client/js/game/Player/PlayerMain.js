@@ -3,6 +3,7 @@ import { TargetIndicator } from "../../application/ui/gui/game/TargetIndicator.j
 
 class PlayerMain {
     constructor() {
+        this.heroPageActive = false;
         this.tempVec = new THREE.Vector3();
         this.playerStash = new PlayerStash();
         this.playerCharacter = null;
@@ -181,7 +182,23 @@ class PlayerMain {
     handleTargetSelected(gamePiece) {
 
         if (gamePiece === this.playerCharacter.gamePiece) {
-            console.log("Player Select Self... nothing happens for now")
+            let switchCallback = function() {
+
+            }
+
+            if (!gamePiece.getTarget()) {
+
+                let currentPage = GameAPI.getActiveDynamicScenario().page;
+                if (currentPage.isActive === false) {
+                    return;
+                }
+                if (!gamePiece.movementPath.destinationTile || gamePiece.movementPath.destinationTile === gamePiece.movementPath.getTileAtPos(gamePiece.getPos())) {
+                    GuiAPI.guiPageSystem.switchFromCurrentActiveToPage(currentPage, 'page_scene_hero', switchCallback);
+                }
+
+            } else {
+                console.log("Player Select self while having a target... nothing happens for now")
+            }
             return;
         }
 

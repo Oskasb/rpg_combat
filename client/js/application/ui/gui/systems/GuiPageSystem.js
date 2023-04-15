@@ -6,6 +6,7 @@ class GuiPageSystem {
     constructor() {
         this.pages = {};
         this.activePages = [];
+        this.inactivePages = [];
         this.configData = new ConfigData("UI", "PAGES")
     }
 
@@ -26,7 +27,18 @@ class GuiPageSystem {
             this.toggleGuiPage(pageId, parentPageId, parentcontainerId);
         }.bind(this);
 
+        let onSwitchBackPage = function(event) {
+            let reopenCB = function() {
+                setTimeout(function() {
+                    GuiAPI.calls.setInMenu(false);
+                },0);
+
+            }
+            this.reactivateInactivePage(event['from_id'], reopenCB)
+        }.bind(this);
+
         evt.on(ENUMS.Event.TOGGLE_GUI_PAGE, onTogglePage)
+        evt.on(ENUMS.Event.SWITCH_BACK_GUI_PAGE, onSwitchBackPage)
     }
     attachPageToParent(page, parentPageId, parentContainerId) {
         let pageRootId = page.config[0].containers[0]['widget_id'];
@@ -54,13 +66,37 @@ class GuiPageSystem {
             page = this.pages[pageId].activateGuiPage(callback);
             this.activePages.push(page)
         }
-
         return page;
     }
+
+    reactivateInactivePage(fromPageId, callback) {
+        console.log("Reactivate page ", this.inactivePages)
+        let returnToPage = this.inactivePages.pop();
+        this.closeGuiPage(this.pages[fromPageId]) // .closeGuiPage();
+        setTimeout(function() {
+            returnToPage.activateGuiPage(callback)
+        }, 200)
+
+    }
+
+    switchFromCurrentActiveToPage(fromPage, toPageId, callback) {
+        console.log("switch page")
+        GuiAPI.calls.setInMenu(true);
+        this.inactivePages.push(fromPage);
+        fromPage.closeGuiPage();
+        let _this = this;
+        setTimeout(function() {
+            _this.activateGuiPage(toPageId, callback);
+        }, 200)
+
+    }
+
     closeGuiPage(page) {
         let oldPage = MATH.quickSplice(this.activePages, page)
         oldPage.closeGuiPage();
     }
+
+
 
 }
 

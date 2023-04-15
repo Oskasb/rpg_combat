@@ -8,7 +8,7 @@
             {
               "containers":[
                 {
-                  "widget_id":"page_home_center",
+                  "widget_id":"page_hero_center",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"widget_hidden_container",
                   "options": {
@@ -42,37 +42,18 @@
               ],
               "buttons":[
                 {
-                  "widget_id":"button_go_home",
+                  "widget_id":"button_exit_hero_page",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"BACK",
-                    "container_id":"page_home_center",
+                    "container_id":"page_hero_center",
                     "offset_x":-0.10,
                     "offset_y":-0.18,
                     "dispatch":{
-                      "event":"REQUEST_SCENARIO",
+                      "event":"SWITCH_BACK_GUI_PAGE",
                       "value":{
-                        "id":"home_scenario",
-                        "dynamic":"home_hovel_dynamic"
-                      }
-                    }
-                  }
-                },
-                {
-                  "widget_id":"button_go_train",
-                  "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"button_big_blue",
-                  "options":{
-                    "text":"TRAIN",
-                    "container_id":"page_home_center",
-                    "offset_x": 0.10,
-                    "offset_y":-0.18,
-                    "dispatch":{
-                      "event":"REQUEST_SCENARIO",
-                      "value":{
-                        "id":"home_scenario",
-                        "dynamic":"hero_practice_dynamic"
+                        "from_id": "page_scene_hero"
                       }
                     }
                   }
@@ -83,7 +64,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"EQUIP",
-                    "container_id":"page_home_center",
+                    "container_id":"page_hero_center",
                     "offset_x":0.07,
                     "offset_y":-0.31,
                     "dispatch":{
@@ -101,7 +82,7 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"UNEQUIP",
-                    "container_id":"page_home_center",
+                    "container_id":"page_hero_center",
                     "offset_x":-0.07,
                     "offset_y":-0.31,
                     "dispatch":{

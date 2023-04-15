@@ -72,7 +72,8 @@ if(typeof(ENUMS) === "undefined"){
         MAIN_CHAR_ENGAGE_TARGET:    47,
         MAIN_CHAR_RETURN_HOME:       48,
         SCENARIO_TEXT:              49,
-        SCENARIO_HEADER:            50
+        SCENARIO_HEADER:            50,
+        SWITCH_BACK_GUI_PAGE:       51,
 
     };
 

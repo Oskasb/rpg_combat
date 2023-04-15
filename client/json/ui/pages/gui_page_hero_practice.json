@@ -68,11 +68,11 @@
                   }
                 },
                 {
-                  "widget_id":"button_hero_equip",
+                  "widget_id":"button_hero_train",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"TRAIN",
+                    "text":"INSPECT",
                     "container_id":"page_home_center",
                     "offset_x":0.07,
                     "offset_y":-0.31,
