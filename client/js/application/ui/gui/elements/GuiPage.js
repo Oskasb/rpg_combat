@@ -35,6 +35,11 @@ class GuiPage {
         for (let i = 0; i < this.config.length; i++) {
             let containers = this.config[i].containers;
             let buttons = this.config[i].buttons;
+            let cameraConf = this.config[i].camera;
+
+            if (cameraConf) {
+                this.setupCamera(cameraConf);
+            }
 
             for (let j = 0; j < containers.length; j++) {
                 this.setupContainer(containers[j], callback, containers.length)
@@ -67,6 +72,15 @@ class GuiPage {
         return options;
     }
 
+    setupCamera(conf) {
+        let mode = conf['mode'];
+        if (mode === "portrait_main_char") {
+            let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
+        //    ThreeAPI.tempVec3c.copy(ThreeAPI.getCamera().obj3d.position)
+        }
+        let offsetPos = conf['offset_pos'];
+        let offsetLookAt = conf['offset_lookAt'];
+    }
     setupContainer(conf, callback, count) {
 
         let onWidgetReady = function(widget) {

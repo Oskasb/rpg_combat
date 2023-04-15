@@ -6,6 +6,13 @@
           "id": "page_scene_hero",
           "data": [
             {
+              "camera": {
+                "camera": {
+                  "mode": "portrait_main_char",
+                  "offset_pos": [1, 6, -11],
+                  "offset_lookAt": [0, 2.5, 0]
+                }
+              },
               "containers":[
                 {
                   "widget_id":"page_hero_center",
