@@ -23,16 +23,9 @@
 
     let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     if (isIOS) {
-        document.addEventListener("click", function(e){
-            e.preventDefault();
-        },{passive: false});
-        document.addEventListener("mouseup", function(e){
-            e.preventDefault();
-        },{passive: false});
-        document.addEventListener("mousedown", function(e){
-            e.preventDefault();
-        },{passive: false});
         document.body.onclick = function(e) {
+            e.stopImmediatePropagation();
+            e.stopPropagation();
             e.preventDefault();
         }
     } else {
@@ -40,13 +33,32 @@
             e.preventDefault();
         }
     }
-
-    window.isMobile = mobileAndTabletcheck();
     window.isIOS = isIOS;
+    window.isMobile = mobileAndTabletcheck();
 
+    if (window.isMobile) {
+            document.addEventListener("click", function(e){
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                e.stopPropagation();
+            },{passive: false});
+            document.addEventListener("mouseup", function(e){
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                e.stopPropagation();
+            },{passive: false});
+            document.addEventListener("mousedown", function(e){
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                e.stopPropagation();
+            },{passive: false});
+    }
+
+    /*
     document.addEventListener("touchstart", function(e){
         e.preventDefault();
     },{passive: false});
+    */
         Element.prototype.remove = function() {
             this.parentElement.removeChild(this);
         };

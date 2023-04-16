@@ -62,8 +62,9 @@ class ElementListeners {
         }
 
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {
-            //	e.preventDefault();
+            e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             let touches = e.changedTouches || e.touches;
             for (let i = 0; i < touches.length; i++) {
                 let touch = touches[i]
