@@ -250,13 +250,60 @@
                 "feedback": "feedback_surface_container"
               }
             },
-
+            {
+              "id":"widget_piece_info_name_key",
+              "layout":"layout_piece_info_name_key",
+              "text": {
+                "sprite_font": "sprite_font_debug",
+                "feedback": "feedback_info_text"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_small_text",
+                "feedback": "feedback_surface_hidden"
+              }
+            },
+            {
+              "id":"widget_piece_info_name_value",
+              "layout":"layout_piece_info_name_value",
+              "text": {
+                "sprite_font": "sprite_font_debug",
+                "feedback": "feedback_info_text"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_small_text",
+                "feedback": "feedback_surface_hidden"
+              }
+            },
+            {
+              "id":"widget_piece_info_elem_key",
+              "layout":"layout_stat_elem_key",
+              "text": {
+                "sprite_font": "sprite_font_debug",
+                "feedback": "feedback_info_text"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_small_text",
+                "feedback": "feedback_surface_hidden"
+              }
+            },
+            {
+              "id":"widget_piece_info_elem_value",
+              "layout":"layout_stat_elem_value",
+              "text": {
+                "sprite_font": "sprite_font_debug",
+                "feedback": "feedback_info_text"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_small_text",
+                "feedback": "feedback_surface_hidden"
+              }
+            },
             {
               "id":"widget_stat_elem_value",
               "layout":"layout_stat_elem_value",
               "text": {
                 "sprite_font": "sprite_font_debug",
-                "feedback": "feedback_debug_text"
+                "feedback": "feedback_info_text"
               },
               "surface": {
                 "nineslice": "nineslice_surface_small_text",
@@ -269,7 +316,7 @@
               "layout":"layout_stat_elem_key",
               "text": {
                 "sprite_font": "sprite_font_debug",
-                "feedback": "feedback_debug_text"
+                "feedback": "feedback_info_text"
               },
               "surface": {
                 "nineslice": "nineslice_surface_small_text",
@@ -282,7 +329,7 @@
               "layout":"layout_stats_key_box",
               "text": {
                 "sprite_font": "sprite_font_debug",
-                "feedback": "feedback_debug_text"
+                "feedback": "feedback_info_text"
               },
               "surface": {
                 "nineslice": "nineslice_surface_small_text",
@@ -296,7 +343,7 @@
               "layout":"layout_stats_value_box",
               "text": {
                 "sprite_font": "sprite_font_debug",
-                "feedback": "feedback_debug_text"
+                "feedback": "feedback_info_text"
               },
               "surface": {
                 "nineslice": "nineslice_surface_small_text",

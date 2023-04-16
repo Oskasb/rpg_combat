@@ -172,6 +172,41 @@
               }
             },
             {
+              "id":"feedback_info_text",
+              "config": {
+
+                "NONE": {
+                  "color_rgba": {"r": 0.49, "g": 0.49, "b": 0.99, "a": 0.95},
+                  "lut_color": "lut_dk"
+                },
+                "HOVER": {
+                  "color_rgba": {"r": 0.2, "g": 0.65, "b": 0.98, "a": 0.85},
+                  "lut_color": "lut_base"
+                },
+                "PRESS": {
+                  "color_rgba": {"r": 0.01, "g": 0.7, "b": 0.9, "a": 0.95},
+                  "lut_color": "lut_vdk"
+                },
+                "ACTIVE": {
+                  "color_rgba": {"r": 0.22, "g": 0.75, "b": 0.9, "a": 0.9},
+                  "lut_color": "lut_brt"
+                },
+                "ACTIVE_HOVER": {
+                  "color_rgba": {"r": 0.31, "g": 0.9, "b": 0.2, "a": 1.0},
+                  "lut_color": "lut_brt"
+                },
+                "ACTIVE_PRESS": {
+                  "color_rgba": {"r": 0.01, "g": 0.5, "b": 0.9, "a": 1.0},
+                  "lut_color": "lut_vdk"
+                },
+                "DISABLED": {
+                  "color_rgba": {"r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0},
+                  "lut_color": "lut_base"
+                }
+
+              }
+            },
+            {
               "id":"feedback_debug_text",
               "config": {
 

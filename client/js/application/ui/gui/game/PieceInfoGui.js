@@ -5,22 +5,30 @@ class PieceInfoGui {
         this.statusListChar = [
             {
                 status:'name',
-                label:'Name',
+                label:'',
+                conf_status:'widget_piece_info_name_key',
+                conf_label: 'widget_piece_info_name_value'
             },
             {
                 status:'level',
-                label:'Level'
+                label:'Level:',
+                conf_status:'widget_piece_info_elem_key',
+                conf_label: 'widget_piece_info_elem_value'
             },
             {
                 status:'lifetime',
-                label: 'Time'
+                label: 'Time',
+                conf_status:'widget_piece_info_elem_key',
+                conf_label: 'widget_piece_info_elem_value'
             }
         ]
 
         this.statusListItem = [
             {
                 status:'lifetime',
-                label: 'time'
+                label: 'time',
+                conf_status:'widget_piece_info_elem_key',
+                conf_label: 'widget_piece_info_elem_value'
             }
         ]
 
@@ -82,8 +90,8 @@ class PieceInfoGui {
 
         let addStatusElement = function(statusParams) {
 
-            let keyWidget = new GuiWidget('widget_stat_elem_key')
-            let valueWidget = new GuiWidget('widget_stat_elem_value')
+            let keyWidget = new GuiWidget(statusParams['conf_status'])
+            let valueWidget = new GuiWidget(statusParams['conf_label'])
 
             let valueReady = function(widget) {
                 widget.setFirstSTringText(status[statusParams.status])

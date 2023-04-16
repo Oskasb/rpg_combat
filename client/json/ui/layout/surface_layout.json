@@ -61,6 +61,24 @@
               }
             },
             {
+              "id":"layout_piece_info_name_key",
+              "config": {
+                "text":   {"x":0.0, "y":0.0, "fontsize": 8},
+                "anchor": {"x":0.0, "y":0.0, "z":  0.0},
+                "offset": {"x":0.0, "y":0.0, "z":  0.0},
+                "size":   {"x":0.001,"y":0.016,"z":  0.0}
+              }
+            },
+            {
+              "id":"layout_piece_info_name_value",
+              "config": {
+                "text":   {"x":-9.0, "y":0.5, "fontsize": 8},
+                "anchor": {"x":0.0, "y":0.0, "z":  0.0},
+                "offset": {"x":0.0, "y":0.0, "z":  0.0},
+                "size":   {"x":0.05,"y":0.016,"z":  0.0}
+              }
+            },
+            {
               "id":"layout_stat_elem_value",
               "config": {
                 "text":   {"x":1.0, "y":0.5, "fontsize": 7},
