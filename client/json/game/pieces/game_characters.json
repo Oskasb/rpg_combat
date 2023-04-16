@@ -74,7 +74,7 @@
         "id":"BANDIT_TOUGH",
         "data":{
           "status": {
-            "name": "Bandit",
+            "name": "Bandit Tough",
             "faction": "EVIL",
             "aggro_range": 6,
             "height": 1.85,
@@ -99,7 +99,7 @@
         "id":"BANDIT_GUARD",
         "data":{
           "status": {
-            "name": "Bandit",
+            "name": "Bandit Guard",
             "faction": "EVIL",
             "aggro_range": 6,
             "height": 1.85,
@@ -124,7 +124,7 @@
         "id":"BANDIT_LEADER",
         "data":{
           "status": {
-            "name": "Bandit",
+            "name": "Bandit Leader",
             "faction": "EVIL",
             "aggro_range": 7,
             "height": 1.85,

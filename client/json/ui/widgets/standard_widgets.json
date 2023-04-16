@@ -276,7 +276,7 @@
             },
             {
               "id":"widget_piece_info_elem_key",
-              "layout":"layout_stat_elem_key",
+              "layout":"layout_piece_info_elem_key",
               "text": {
                 "sprite_font": "sprite_font_debug",
                 "feedback": "feedback_info_text"
@@ -288,7 +288,7 @@
             },
             {
               "id":"widget_piece_info_elem_value",
-              "layout":"layout_stat_elem_value",
+              "layout":"layout_piece_info_elem_value",
               "text": {
                 "sprite_font": "sprite_font_debug",
                 "feedback": "feedback_info_text"

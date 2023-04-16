@@ -5,28 +5,44 @@
         "id":"NINJASWORD",
         "data":{
           "model_asset":"asset_ninjablade",
-          "slot": "SLOT_HAND_R"
+          "slot": "SLOT_HAND_R",
+          "status": {
+            "name": "Sword",
+            "item_type": "Weapon"
+          }
         }
       },
       {
         "id":"LEGS_BRONZE",
         "data":{
           "model_asset":"asset_bronze_legs",
-          "slot": "SLOT_LEGS"
+          "slot": "SLOT_LEGS",
+          "status": {
+            "name": "Bronze Greaves",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"BREASTPLATE_BRONZE",
         "data":{
           "model_asset":"asset_bronze_bp",
-          "slot": "SLOT_CHEST"
+          "slot": "SLOT_CHEST",
+          "status": {
+            "name": "Bronze Plate",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"HELMET_BRONZE",
         "data":{
           "model_asset":"asset_helmet_bronze",
-          "slot": "SLOT_HEAD"
+          "slot": "SLOT_HEAD",
+          "status": {
+            "name": "Bronze Helmet",
+            "item_type": "Armor"
+          }
 
         }
       },
@@ -34,14 +50,22 @@
         "id":"BRACER_BRONZE",
         "data":{
           "model_asset":"asset_bracer_bronze",
-          "slot": "SLOT_WRIST"
+          "slot": "SLOT_WRIST",
+          "status": {
+            "name": "Bronze Bracers",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"BELT_BRONZE",
         "data":{
           "model_asset":"asset_belt_bronze",
-          "slot": "SLOT_WAIST"
+          "slot": "SLOT_WAIST",
+          "status": {
+            "name": "Bronze Belt",
+            "item_type": "Armor"
+          }
         }
       },
 
@@ -50,70 +74,110 @@
         "id":"HELMET_VIKING",
         "data":{
           "model_asset":"asset_helmetviking",
-          "slot": "SLOT_HEAD"
+          "slot": "SLOT_HEAD",
+          "status": {
+            "name": "Viking Helmet",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"BELT_PLATE",
         "data":{
           "model_asset":"asset_beltplate",
-          "slot": "SLOT_WAIST"
+          "slot": "SLOT_WAIST",
+          "status": {
+            "name": "Plate Girdle",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"SHIRT_CHAIN",
         "data":{
           "model_asset":"asset_chain_shirt",
-          "slot": "SLOT_BODY"
+          "slot": "SLOT_BODY",
+          "status": {
+            "name": "Chain Shirt",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"SHIRT_SCALE",
         "data":{
           "model_asset":"asset_scale_shirt",
-          "slot": "SLOT_CHEST"
+          "slot": "SLOT_CHEST",
+          "status": {
+            "name": "Scale Plates",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"LEGS_CHAIN",
         "data":{
           "model_asset":"asset_chain_legs",
-          "slot": "SLOT_LEGS"
+          "slot": "SLOT_LEGS",
+          "status": {
+            "name": "Chain Skirt",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"LEGS_SCALE",
         "data":{
           "model_asset":"asset_scale_legs",
-          "slot": "SLOT_LEGS"
+          "slot": "SLOT_LEGS",
+          "status": {
+            "name": "Scale Skirt",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"BOOTS_SCALE",
         "data":{
           "model_asset":"asset_scale_boots",
-          "slot": "SLOT_FEET"
+          "slot": "SLOT_FEET",
+          "status": {
+            "name": "Scale Boots",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"GLOVES_SCALE",
         "data":{
           "model_asset":"asset_scale_gloves",
-          "slot": "SLOT_HANDS"
+          "slot": "SLOT_HANDS",
+          "status": {
+            "name": "Scale Gloves",
+            "item_type": "Armor"
+          }
         }
       },
       {
         "id":"BARB_BREASTPLATE",
         "data":{
           "model_asset":"skinned_barb_bp",
-          "slot": "SLOT_BODY"
+          "slot": "SLOT_BODY",
+          "status": {
+            "name": "Big Armor",
+            "item_type": "Junk"
+          }
         }
       },
       {
         "id":"BARB_GREAVES",
         "data":{
           "model_asset":"skinned_barb_greaves",
-          "slot": "SLOT_LEGS"
+          "slot": "SLOT_LEGS",
+          "status": {
+            "name": "Big Greaves",
+            "item_type": "Junk"
+          }
         }
       }
     ]

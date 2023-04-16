@@ -16,6 +16,10 @@ class PieceComposer {
 
         if (pieceData.data['slot']) {
             gamePiece.setEquipSlotId(pieceData.data['slot'])
+            let statusData = pieceData.data['status'];
+            for (let key in statusData) {
+                gamePiece.setStatusValue(key, statusData[key]);
+            }
         }
 
         let setupSkelRig = function(assetInstance, callback) {

@@ -2,10 +2,12 @@ import { GuiWidget} from "../elements/GuiWidget.js";
 class PieceInfoGui {
     constructor(gamePiece) {
 
+        this.statusList = [];
+
         this.statusListChar = [
             {
                 status:'name',
-                label:'',
+                label:null,
                 conf_status:'widget_piece_info_name_key',
                 conf_label: 'widget_piece_info_name_value'
             },
@@ -24,6 +26,18 @@ class PieceInfoGui {
         ]
 
         this.statusListItem = [
+            {
+                status:'name',
+                label:null,
+                conf_status:'widget_piece_info_name_key',
+                conf_label: 'widget_piece_info_name_value'
+            },
+            {
+                status:'item_type',
+                label: 'Type:',
+                conf_status:'widget_piece_info_elem_key',
+                conf_label: 'widget_piece_info_elem_value'
+            },
             {
                 status:'lifetime',
                 label: 'time',
@@ -93,22 +107,44 @@ class PieceInfoGui {
             let keyWidget = new GuiWidget(statusParams['conf_status'])
             let valueWidget = new GuiWidget(statusParams['conf_label'])
 
-            let valueReady = function(widget) {
-                widget.setFirstSTringText(status[statusParams.status])
-                containerElement.guiWidget.addChild(widget);
-            }
-            let keyReady = function(widget) {
-                keyWidget.setFirstSTringText(statusParams.label)
-                containerElement.guiWidget.addChild(widget);
-                valueWidget.initGuiWidget(null, valueReady);
+
+            if (statusParams['label'] === null) {
+
+                let valueReady = function(widget) {
+                    containerElement.guiWidget.addChild(widget);
+                }
+                let keyReady = function(widget) {
+                    widget.setFirstSTringText(status[statusParams.status])
+                    statusParams.textWidget = widget;
+                    containerElement.guiWidget.addChild(widget);
+                    keyWidget.initGuiWidget(null, valueReady);
+                }
+
+                valueWidget.initGuiWidget(null, keyReady);
+
+            } else {
+                let valueReady = function(widget) {
+                    statusParams.textWidget = widget;
+                    widget.setFirstSTringText(status[statusParams.status])
+                    containerElement.guiWidget.addChild(widget);
+                }
+                let keyReady = function(widget) {
+                    keyWidget.setFirstSTringText(statusParams.label)
+                    containerElement.guiWidget.addChild(widget);
+                    valueWidget.initGuiWidget(null, valueReady);
+                }
+
+                keyWidget.initGuiWidget(null, keyReady);
             }
 
-            keyWidget.initGuiWidget(null, keyReady);
+
+
 
         }
 
 
         let statusList;
+
         if (status.isItem) {
             statusList = this.statusListItem;
         }
@@ -116,6 +152,8 @@ class PieceInfoGui {
         if (status.isCharacter) {
             statusList = this.statusListChar;
         }
+
+        this.statusList = statusList;
 
         for (let i = 0; i < statusList.length; i++) {
             addStatusElement(statusList[i], status);
@@ -160,10 +198,18 @@ class PieceInfoGui {
     }
 
     deactivatePieceInfoGui() {
+        this.statusList = [];
         GameAPI.unregisterGameUpdateCallback(this.callbacks.updatePieceInfoGui)
         let anchor = this.callbacks.getAnchor();
         if (anchor) {
             anchor.guiWidget.recoverGuiWidget();
+        }
+    }
+
+    updateStatusValues = function() {
+        let status = this.gamePiece.pieceState.status;
+        for (let i = 0; i < this.statusList.length; i++) {
+            this.statusList[i].textWidget.setFirstSTringText(status[this.statusList[i].status])
         }
     }
 
@@ -173,6 +219,7 @@ class PieceInfoGui {
         ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
         let anchor = this.callbacks.getAnchor();
         anchor.guiWidget.setPosition(ThreeAPI.tempVec3b)
+        this.updateStatusValues();
     }
 
 }
