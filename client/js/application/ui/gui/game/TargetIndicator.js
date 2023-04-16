@@ -57,7 +57,6 @@ class TargetIndicator {
     }
 
     indicateSelectedTargetPiece(tpf, time, gamePiece, spinSpeed, scale, pulsate, rate) {
-
         for (let i = 0; i < this.indicators.length; i++) {
             let efct = this.indicators[i];
             let faction = gamePiece.getStatusByKey('faction') || 'ITEM'

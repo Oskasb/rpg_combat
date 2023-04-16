@@ -13,7 +13,6 @@ class GameWorldPointer {
 
     worldPointerFindPath(pointer) {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
-    //    playerPiece.movementPath.cancelMovementPath( playerPiece.movementPath.pathTiles);
         let targetPos = null
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
             targetPos = pointer.worldSpaceTarget.getPos();
@@ -27,6 +26,22 @@ class GameWorldPointer {
 
     }
 
+    indicateSelection = function(bool, pointer, selection) {
+        if (bool) {
+            selection.pieceInfoGui.activatePieceInfoGui()
+            let indicator = pointer.worldSpaceIndicator;
+            if (!indicator) {
+                indicator = new TargetIndicator()
+                pointer.worldSpaceIndicator = indicator;
+                indicator.indicateGamePiece(selection, 'effect_character_indicator', 1, 3, -1.5,1.2, 0, 4);
+            }
+            return indicator
+        } else {
+            pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(selection);
+            pointer.worldSpaceIndicator.hideIndicatorFx();
+            selection.pieceInfoGui.deactivatePieceInfoGui()
+        }
+    }
 
     worldPointerReleased = function(pointer) {
         if (GuiAPI.calls.getInMenu() === true) {
@@ -37,8 +52,7 @@ class GameWorldPointer {
         playerPiece.movementPath.clearTilePathStatus( playerPiece.movementPath.pathTiles);
 
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
-            pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
-            pointer.worldSpaceIndicator.hideIndicatorFx();
+            this.indicateSelection(false, pointer, pointer.worldSpaceTarget)
             this.selectionEvent.piece = pointer.worldSpaceTarget;
             this.selectionEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
@@ -54,8 +68,7 @@ class GameWorldPointer {
         }
 
         if (pointer.worldSpaceTarget === playerPiece) {
-            pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
-            pointer.worldSpaceIndicator.hideIndicatorFx();
+            this.indicateSelection(false, pointer, pointer.worldSpaceTarget)
             this.selectionEvent.piece = pointer.worldSpaceTarget;
             this.selectionEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
@@ -130,14 +143,13 @@ class GameWorldPointer {
 
                 if (pointer.worldSpaceTarget !== worldSelection) {
            //         console.log("Change selected Target")
+
                     if (pointer.worldSpaceTarget) {
-                        indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
+                        this.indicateSelection(false, pointer, pointer.worldSpaceTarget)
                     }
-                    if (!pointer.worldSpaceIndicator) {
-                        indicator = new TargetIndicator()
-                        pointer.worldSpaceIndicator = indicator;
-                        indicator.indicateGamePiece(worldSelection, 'effect_character_indicator', 1, 3, -1.5,1.2, 0, 4);
-                    }
+
+                    this.indicateSelection(true, pointer, worldSelection)
+
 
                 } else {
                     indicator.call.updateIndicator(0.01, GameAPI.getGameTime(), worldSelection, 1.2, 0.8);
@@ -152,6 +164,7 @@ class GameWorldPointer {
             } else {
                 if (pointer.worldSpaceTarget) {
                     indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
+                    pointer.worldSpaceTarget.pieceInfoGui.deactivatePieceInfoGui()
                     pointer.worldSpaceIndicator.hideIndicatorFx()
                     if (!this.selectionEvent) {
                         console.log("Some multi-touch issue here")

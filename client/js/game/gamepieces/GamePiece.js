@@ -7,6 +7,7 @@ import { PieceAttacher } from "./PieceAttacher.js";
 import { PieceMovement } from "../piece_functions/PieceMovement.js";
 import { MovementPath } from "../piece_functions/MovementPath.js";
 import { PieceState } from "./PieceState.js";
+import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
 
 class GamePiece {
     constructor(config, callback) {
@@ -20,6 +21,7 @@ class GamePiece {
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
         this.pieceState = new PieceState(this);
+        this.pieceInfoGui = new PieceInfoGui(this)
 
         let tickGamePiece = function(tpf, gameTime) {
             if (this.isDead) {

@@ -20,6 +20,7 @@ class PieceState {
         this.status = {
             gamePiece:gamePiece,
             size:0.5,
+            height: 0.5,
             meleeRange:0.5,
             move_speed:5,
             turn_moves:0,
