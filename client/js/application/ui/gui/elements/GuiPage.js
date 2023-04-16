@@ -39,12 +39,18 @@ class GuiPage {
         }
 
         let applyCamParams = function(camConf) {
-            camParams.offsetPos[0] = camConf.offsetPos[0];
-            camParams.offsetPos[1] = camConf.offsetPos[1];
-            camParams.offsetPos[2] = camConf.offsetPos[2];
-            camParams.offsetLookAt[0] = camConf.offsetLookAt[0];
-            camParams.offsetLookAt[1] = camConf.offsetLookAt[1];
-            camParams.offsetLookAt[2] = camConf.offsetLookAt[2];
+            let playerChar = GameAPI.getActivePlayerCharacter().gamePiece;
+            let height = playerChar.getStatusByKey('height');
+            let inFrontVec = ThreeAPI.tempVec3;
+            inFrontVec.set(0.2, 0, height*2);
+            inFrontVec.applyQuaternion(playerChar.getSpatial().getQuat())
+
+            camParams.offsetPos[0] = inFrontVec.x;
+            camParams.offsetPos[1] = height*0.8
+            camParams.offsetPos[2] = inFrontVec.z;
+            camParams.offsetLookAt[0] = 0;
+            camParams.offsetLookAt[1] = height*0.5;
+            camParams.offsetLookAt[2] = 0;
             camParams.callback = camCallback;
             camParams.time = 0.05;
             if (camConf['mode'] === "portrait_main_char") {

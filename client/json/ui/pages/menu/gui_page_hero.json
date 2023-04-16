@@ -9,8 +9,8 @@
               "camera": {
 
                 "mode": "portrait_main_char",
-                "offset_pos": [0.6, 1.7, -2.1],
-                "offset_lookAt": [-0.4, 1.6, -0.5]
+                "offset_pos": [0, 1.7, -4],
+                "offset_lookAt": [-0.0, 1.3, -0.0]
               },
               "containers":[
                 {

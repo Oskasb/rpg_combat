@@ -75,6 +75,9 @@ class InstanceSpatial{
             }
         };
 
+        getQuat() {
+            return this.obj3d.quaternion;
+        }
         setScaleXYZ = function(x, y, z) {
             this.obj3d.scale.x = x;
             this.obj3d.scale.y = y;

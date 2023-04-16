@@ -48,7 +48,6 @@ class InputState {
     };
 
     processDragState = function(inputState) {
-        console.log("Drag state", inputState.dragDistance)
         inputState.dragDistance[0] = inputState.dx;
         inputState.dragDistance[1] = inputState.dy;
     };
