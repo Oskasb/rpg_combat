@@ -27,39 +27,43 @@ class ElementListeners {
 
         this.actionListener.setupElementInputListener(this.gameScreen.getElement(), callInputUpdate, this.POINTER_STATE);
 
-        this.gameScreen.getElement().addEventListener('mousemove', function(e) {
-            //	e.stopPropagation();
-            _this.x = (e.pageX);
-            _this.y = (e.pageY);
-            _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
-            _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
-            callInputUpdate(_this.POINTER_STATE.touches[10]);
-        });
+        if (!window.isMobile) {
 
-        this.gameScreen.getElement().addEventListener('mouseout', function(e) {
-            //	e.stopPropagation();
-            _this.dx = 0;
-            _this.dy = 0;
-            callInputUpdate(_this.POINTER_STATE.touches[10]);
-        });
 
-        let zoomTimeout;
+            this.gameScreen.getElement().addEventListener('mousemove', function (e) {
+                //	e.stopPropagation();
+                _this.x = (e.pageX);
+                _this.y = (e.pageY);
+                _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
+                _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
+                callInputUpdate(_this.POINTER_STATE.touches[10]);
+            });
 
-        this.gameScreen.getElement().addEventListener('mousewheel', function(e) {
-            //	e.stopPropagation();
-            if (zoomTimeout) return;
-            _this.wheelDelta = e.wheelDelta / 1200;
-            setTimeout(function() {
-                zoomTimeout = false;
-            }, 100);
-            zoomTimeout = true;
-            _this.POINTER_STATE.touches[10].wheelDelta = _this.wheelDelta;
-            callInputUpdate(_this.POINTER_STATE.touches[10]);
-        });
+            this.gameScreen.getElement().addEventListener('mouseout', function (e) {
+                //	e.stopPropagation();
+                _this.dx = 0;
+                _this.dy = 0;
+                callInputUpdate(_this.POINTER_STATE.touches[10]);
+            });
+
+            let zoomTimeout;
+
+            this.gameScreen.getElement().addEventListener('mousewheel', function (e) {
+                //	e.stopPropagation();
+                if (zoomTimeout) return;
+                _this.wheelDelta = e.wheelDelta / 1200;
+                setTimeout(function () {
+                    zoomTimeout = false;
+                }, 100);
+                zoomTimeout = true;
+                _this.POINTER_STATE.touches[10].wheelDelta = _this.wheelDelta;
+                callInputUpdate(_this.POINTER_STATE.touches[10]);
+            });
+        }
 
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {
             //	e.preventDefault();
-
+            e.stopPropagation();
             let touches = e.changedTouches || e.touches;
             for (let i = 0; i < touches.length; i++) {
                 let touch = touches[i]
@@ -76,7 +80,7 @@ class ElementListeners {
 
         this.gameScreen.getElement().addEventListener('touchmove', function(e) {
             //	e.preventDefault();
-
+            e.stopPropagation();
             let touches = e.changedTouches || e.touches;
             for (let i = 0; i < touches.length; i++) {
                 let touch = touches[i]
@@ -93,7 +97,7 @@ class ElementListeners {
 
         let touchend = function(e) {
             //	e.preventDefault();
-
+            e.stopPropagation();
             let touches = e.changedTouches || e.touches;
             for (let i = 0; i < touches.length; i++) {
                 let touch = touches[i]
