@@ -21,7 +21,13 @@
         document.addEventListener("click", function(e){
             e.preventDefault();
         },{passive: false});
+        document.body.onclick = function(e) {
+            e.preventDefault();
+        }
     } else {
+        document.onclick = function(e) {
+            e.preventDefault();
+        }
         document.addEventListener("touchstart", function(e){
             e.preventDefault();
         },{passive: false});
