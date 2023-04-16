@@ -1,7 +1,8 @@
 
 class CharacterStatusGui {
     constructor() {
-
+        this.tempVec3 = new THREE.Vector3();
+        this.tempVec3b = new THREE.Vector3();
         let updateCharStatGui = function() {
               this.updateCharacterStatElement();
         }.bind(this);
@@ -57,14 +58,14 @@ class CharacterStatusGui {
     }
 
     updateCharacterStatElement() {
-        this.spatial.getSpatialPosition(ThreeAPI.tempVec3);
-        ThreeAPI.tempVec3.y += this.gamePiece.getStatusByKey('height');
-        ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
+        this.spatial.getSpatialPosition(this.tempVec3);
+        this.tempVec3.y += this.gamePiece.getStatusByKey('height');
+        ThreeAPI.toScreenPosition(this.tempVec3, this.tempVec3b)
      //   ThreeAPI.tempVec3b.z = 0;
-        this.hpProgressElement.guiWidget.setPosition(ThreeAPI.tempVec3b)
+        this.hpProgressElement.guiWidget.setPosition(this.tempVec3b)
         this.hpProgressElement.setProgress(0, this.gamePiece.getStatusByKey('maxHP'), this.gamePiece.getStatusByKey('hp'))
-        ThreeAPI.tempVec3b.y-=0.002
-        this.swingProgressElement.guiWidget.setPosition(ThreeAPI.tempVec3b)
+        this.tempVec3b.y-=0.002
+        this.swingProgressElement.guiWidget.setPosition(this.tempVec3b)
         this.swingProgressElement.setProgress(0, 1, Math.sin( this.gamePiece.getStatusByKey('atkProg') * Math.PI))
 
     }

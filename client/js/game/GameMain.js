@@ -4,6 +4,10 @@ import { ConfigData } from "../application/utils/ConfigData.js";
 import { GameWorld } from "./gameworld/GameWorld.js";
 import { PlayerMain } from "./Player/PlayerMain.js";
 import { CharacterComposer } from "./Player/CharacterComposer.js";
+import { Vector3 } from "../../libs/three/math/Vector3.js";
+
+let tempVec3 = new Vector3()
+
 
 class GameMain {
     constructor() {
@@ -60,8 +64,8 @@ class GameMain {
             GameAPI.setActivePlayerCharacter(char);
             let initPlayerStash = function() {
                 let itemCallback = function(gamePiece) {
-                    GameAPI.getPlayerMain().playerStash.findPositionInStash(ThreeAPI.tempVec3);
-                    gamePiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
+                    GameAPI.getPlayerMain().playerStash.findPositionInStash(tempVec3);
+                    gamePiece.getSpatial().setPosVec3(tempVec3);
                     GameAPI.getPlayerMain().callbacks.addToStash(gamePiece);
                 }.bind(this);
 /*

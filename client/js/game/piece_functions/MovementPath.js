@@ -178,7 +178,7 @@ class MovementPath {
 
             if (tile.getOccupant()) {
                 if (tile.getOccupant() !== this.gamePiece) {
-                    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
+                //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
                     i = tileCount;
                     return;
                 }
@@ -200,7 +200,7 @@ class MovementPath {
 
             if (tile.getPathClaimant()) {
                 if (tile.getPathClaimant() !== this.gamePiece) {
-                    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
+           //         evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
                     this.pathTiles.pop();
                 }
             } else {

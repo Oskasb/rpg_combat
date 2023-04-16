@@ -50,8 +50,8 @@ class PieceMovement {
             let tile = tilePath[i];
             tile.setTileStatus('IS_PATH');
             tile.indicateTileStatus(true);
-            evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.tempVec, color:'WHITE', size:0.2})
-            evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'GREEN', size:0.1})
+        //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.tempVec, color:'WHITE', size:0.2})
+        //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'GREEN', size:0.1})
             this.tempVec.sub(tile.getPos());
             let distance = this.tempVec.length();
             totalDistance+= distance;
@@ -143,7 +143,7 @@ class PieceMovement {
     interpolatePosition(tpf) {
         let now = GameAPI.getGameTime();
         this.targetPos.copy(this.target);
-        evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.targetPos, color:'YELLOW', size:0.1})
+    //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.targetPos, color:'YELLOW', size:0.1})
         let distanceRemaining = MATH.distanceBetween(this.spatial.obj3d.position, this.targetPos)
         if (distanceRemaining > this.margin) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);

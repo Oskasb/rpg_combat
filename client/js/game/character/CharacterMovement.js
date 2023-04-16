@@ -1,3 +1,7 @@
+import {Vector3} from "../../../libs/three/math/Vector3.js";
+
+let tempVec3 = new Vector3();
+
 class CharacterMovement {
     constructor(gamePiece) {
         this.vel = new THREE.Vector3();
@@ -53,8 +57,8 @@ class CharacterMovement {
                     return;
                 }
 
-
-            ThreeAPI.tempObj.lookAt(ThreeAPI.tempVec3);
+            tempVec3.set(0, 0, 1);
+            ThreeAPI.tempObj.lookAt(tempVec3);
             this.spatial.obj3d.lookAt(targetPiece.getPos())
         } else if (speed > 0.000001) {
             let angY = MATH.vectorXZToAngleAxisY(this.vel);

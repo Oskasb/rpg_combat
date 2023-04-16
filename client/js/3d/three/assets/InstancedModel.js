@@ -4,6 +4,8 @@ import {InstanceDynamicJoint} from './InstanceDynamicJoint.js';
 class InstancedModel {
     constructor(originalAsset) {
         this.ptr = null;
+            this.tempVec3 = new THREE.Vector3()
+            this.tempVec3b = new THREE.Vector3()
             this.originalAsset = originalAsset;
             this.originalModel = originalAsset.model;
             this.unifVec = {x:0, y:0, z:0};
@@ -257,10 +259,10 @@ class InstancedModel {
             }
 
 
-            let moveDist = ThreeAPI.tempVec3;
+            let moveDist = this.tempVec3b;
             this.getSpatial().getFrameMovement(moveDist);
             if (moveDist.lengthSq()) {
-                let pos = ThreeAPI.tempVec3;
+                let pos = this.tempVec3;
                 this.getSpatial().getSpatialPosition(pos);
                 this.unifVec.x = pos.x;
                 this.unifVec.y = pos.y;

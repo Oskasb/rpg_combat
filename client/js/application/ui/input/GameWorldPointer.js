@@ -1,4 +1,7 @@
 import { TargetIndicator } from "../gui/game/TargetIndicator.js";
+import { Vector3 } from "../../../../libs/three/math/Vector3.js";
+let tempVec3 = new Vector3()
+let tempVec3b = new Vector3()
 
 class GameWorldPointer {
     constructor() {
@@ -97,9 +100,9 @@ class GameWorldPointer {
 
         let maxSelectRange = 0.10;
         let screenDistance = function(piecePos, select) {
-            ThreeAPI.toScreenPosition(piecePos, ThreeAPI.tempVec3b)
-            ThreeAPI.tempVec3b.sub(pos)
-            let distance = ThreeAPI.tempVec3b.length();
+            ThreeAPI.toScreenPosition(piecePos, tempVec3b)
+            tempVec3b.sub(pos)
+            let distance = tempVec3b.length();
             if (distance < maxSelectRange) {
                 if (distance < nearestDist) {
                     screenSelection = select;
@@ -113,23 +116,23 @@ class GameWorldPointer {
             if (gamePiece.isDead) {
 
             } else {
-                gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
-                screenDistance(ThreeAPI.tempVec3,  gamePiece);
+                gamePiece.getSpatial().getSpatialPosition(tempVec3)
+                screenDistance(tempVec3,  gamePiece);
             }
         }
 
 
-        ThreeAPI.tempVec3.copy(playerPiece.getPos());
-        screenDistance(ThreeAPI.tempVec3, playerPiece)
+        tempVec3.copy(playerPiece.getPos());
+        screenDistance(tempVec3, playerPiece)
 
         for (let i = 0; i < characters.length; i++) {
             let gamePiece = characters[i].gamePiece
             if (gamePiece.isDead) {
 
             } else {
-                gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
-                ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
-                screenDistance(ThreeAPI.tempVec3, gamePiece);
+                gamePiece.getSpatial().getSpatialPosition(tempVec3)
+                ThreeAPI.toScreenPosition(tempVec3, tempVec3b)
+                screenDistance(tempVec3, gamePiece);
             }
         }
 

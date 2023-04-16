@@ -16,10 +16,16 @@
     document.getElementsByTagName('head')[0].appendChild(meta);
 */
 
-
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+        document.addEventListener("click", function(e){
+            e.preventDefault();
+        },{passive: false});
+    } else {
         document.addEventListener("touchstart", function(e){
             e.preventDefault();
         },{passive: false});
+    }
 
         Element.prototype.remove = function() {
             this.parentElement.removeChild(this);
@@ -76,8 +82,7 @@
     //    console.log('ENUMS:', ENUMS);
 
         const devMode = true;
-        const env = navigator;
-        window.client = new APPLICATION.Client(devMode, env);
+        window.client = new APPLICATION.Client(devMode, navigator);
         client.initClientSetup(dataPipelineOptions);
 
 

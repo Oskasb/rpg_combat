@@ -1,6 +1,6 @@
 class CharacterIndicator {
     constructor() {
-
+        this.tempVec3 = new THREE.Vector3();
         this.indicatedCharState = ENUMS.CharacterState.IDLE_HANDS;
         this.indicators = [];
 
@@ -26,9 +26,9 @@ class CharacterIndicator {
             ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1);
             ThreeAPI.tempObj.lookAt(0, 1, 0);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
-            gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
-            ThreeAPI.tempVec3.y+=0.03;
-            efct.setEffectPosition(ThreeAPI.tempVec3)
+            gamePiece.getSpatial().getSpatialPosition(this.tempVec3);
+            this.tempVec3.y+=0.03;
+            efct.setEffectPosition(this.tempVec3)
             ThreeAPI.tempObj.lookAt(0, 1, 0);
             efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
 
@@ -48,9 +48,9 @@ class CharacterIndicator {
             let efct = this.indicators[i];
             efct.setEffectColorRGBA(this.colorMap[gamePiece.getStatusByKey('faction')]);
             efct.scaleEffectSize( gamePiece.getStatusByKey('size'));
-            gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
-            ThreeAPI.tempVec3.y+=0.03;
-            efct.setEffectPosition(ThreeAPI.tempVec3)
+            gamePiece.getSpatial().getSpatialPosition(this.tempVec3);
+            this.tempVec3.y+=0.03;
+            efct.setEffectPosition(this.tempVec3)
 
             let charState = gamePiece.getStatusByKey('charState')
             if (this.indicatedCharState !== charState) {

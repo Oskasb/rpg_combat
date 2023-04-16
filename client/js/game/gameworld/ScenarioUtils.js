@@ -308,7 +308,7 @@ function setupEncounterGrid(gridTiles, instances, gridConfig, scenarioGridConfig
                 tempVec1.set(boxX, posY*0.5-boxSize, boxZ);
                 tempVec1.applyQuaternion(quat);
 
-                if (grid[j][i][1] > 0) {
+                if (grid[j][i][1] === 9) {
                     instance.decommissionInstancedModel()
                 } else {
                     instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y+ elevation*0.5, tempVec1.z + offsetZ);

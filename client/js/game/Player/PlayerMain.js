@@ -1,5 +1,7 @@
 import { PlayerStash } from "./PlayerStash.js";
 import { TargetIndicator } from "../../application/ui/gui/game/TargetIndicator.js";
+import { Vector3 } from "../../../libs/three/math/Vector3.js";
+let tempVec3 = new Vector3()
 
 class PlayerMain {
     constructor() {
@@ -167,8 +169,8 @@ class PlayerMain {
     stashItemPiece(piece, time) {
         let playerPiece = this.getPlayerCharacter().gamePiece;
         this.playerStash.findPositionInStash(this.tempVec);
-        playerPiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3)
-        piece.getPieceMovement().moveToTargetAtTime('stash', ThreeAPI.tempVec3, this.tempVec, time, this.callbacks.addToStash);
+        playerPiece.getSpatial().getSpatialPosition(tempVec3)
+        piece.getPieceMovement().moveToTargetAtTime('stash', tempVec3, this.tempVec, time, this.callbacks.addToStash);
     }
 
     handleHostileAdded(hostileChar) {

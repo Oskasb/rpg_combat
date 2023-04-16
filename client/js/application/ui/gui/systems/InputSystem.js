@@ -1,5 +1,10 @@
+import { Vector3 } from "../../../../../libs/three/math/Vector3.js";
+
+let tempVec3 = new Vector3();
+
 class InputSystem {
     constructor() {
+
         this.uiSysId;
         this.surfaceElements = [];
         this.setupListener();
@@ -83,7 +88,7 @@ class InputSystem {
                 console.log("bad")
             }
 
-            let tempVec = ThreeAPI.tempVec3;
+            let tempVec = tempVec3;
             tempVec.x = pointerState.posX ;
             tempVec.y = pointerState.posY ;
             tempVec.z = 0;
