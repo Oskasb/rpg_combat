@@ -142,7 +142,7 @@ class PlayerMain {
 
     setPlayerCharacter(character) {
         GameAPI.registerGameUpdateCallback(character.gamePiece.getOnUpdateCallback())
-
+        character.gamePiece.setStatusValue('isCharacter', 1);
         if (!this.mainCharPage) {
             let openMainCharPage = function() {
                 this.mainCharPage = GuiAPI.activatePage("page_player_main");

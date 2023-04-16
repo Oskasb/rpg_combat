@@ -1,14 +1,48 @@
-
+import { GuiWidget} from "../elements/GuiWidget.js";
 class PieceInfoGui {
     constructor(gamePiece) {
+
+        this.statusListChar = [
+            {
+                status:'name',
+                label:'Name',
+            },
+            {
+                status:'level',
+                label:'Level'
+            },
+            {
+                status:'lifetime',
+                label: 'Time'
+            }
+        ]
+
+        this.statusListItem = [
+            {
+                status:'lifetime',
+                label: 'time'
+            }
+        ]
+
 
         this.gamePiece = gamePiece;
         let updatePieceInfoGui = function() {
               this.updatePieceInfo();
         }.bind(this);
 
+        let anchor = null;
+
+        let setAnchor = function(element) {
+            anchor = element;
+        }
+         let getAnchor = function() {
+            return anchor;
+        }
+
         this.callbacks = {
-            updatePieceInfoGui:updatePieceInfoGui
+            updatePieceInfoGui:updatePieceInfoGui,
+            setAnchor:setAnchor,
+            getAnchor:getAnchor
         }
 
     }
@@ -27,42 +61,110 @@ class PieceInfoGui {
 
     }
 
+    addContainerElement(configId, onReady) {
+        let opts = GuiAPI.buildWidgetOptions(
+
+            {
+                widgetClass:'GuiExpandingContainer',
+                widgetCallback:onReady,
+                configId:configId
+            }
+        );
+
+        evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
+
+    }
+
+
+
+    addStatusElements = function(containerElement) {
+        let status = this.gamePiece.pieceState.status;
+
+        let addStatusElement = function(statusParams) {
+
+            let keyWidget = new GuiWidget('widget_stat_elem_key')
+            let valueWidget = new GuiWidget('widget_stat_elem_value')
+
+            let valueReady = function(widget) {
+                widget.setFirstSTringText(status[statusParams.status])
+                containerElement.guiWidget.addChild(widget);
+            }
+            let keyReady = function(widget) {
+                keyWidget.setFirstSTringText(statusParams.label)
+                containerElement.guiWidget.addChild(widget);
+                valueWidget.initGuiWidget(null, valueReady);
+            }
+
+            keyWidget.initGuiWidget(null, keyReady);
+
+        }
+
+
+        let statusList;
+        if (status.isItem) {
+            statusList = this.statusListItem;
+        }
+
+        if (status.isCharacter) {
+            statusList = this.statusListChar;
+        }
+
+        for (let i = 0; i < statusList.length; i++) {
+            addStatusElement(statusList[i], status);
+        }
+
+    }
+
     activatePieceInfoGui() {
-        console.log("Activate PIG")
-        let onHpReady = function(element) {
-            this.hpProgressElement = element;
+
+        let addContainerElement = function(configId, onReady) {
+            let opts = GuiAPI.buildWidgetOptions(
+                {
+                    widgetClass:'GuiExpandingContainer',
+                    widgetCallback:onReady,
+                    configId:configId
+                }
+            );
+
+            evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
+        }
+
+
+        let onReady = function(element) {
+        //    element.guiWidget.initGuiWidget()
+        //    element.guiWidget.applyWidgetPosition()
+            this.callbacks.getAnchor().guiWidget.addChild(element.guiWidget);
+            this.addStatusElements(element);
+            //
         }.bind(this);
 
-        let onSwingReady = function(element) {
-            this.swingProgressElement = element;
+        let anchorReady = function(element) {
+
+            this.callbacks.setAnchor(element);
+            this.callbacks.updatePieceInfoGui();
+            addContainerElement( 'widget_stat_elem_container', onReady)
         }.bind(this);
-        this.addProgressElement( 'progress_indicator_char_hp', onHpReady)
-        this.addProgressElement( 'progress_indicator_char_swing', onSwingReady)
+
+        addContainerElement( 'widget_hidden_container', anchorReady)
+
+
         GameAPI.registerGameUpdateCallback(this.callbacks.updatePieceInfoGui)
     }
 
     deactivatePieceInfoGui() {
-        console.log("Deactivate PIG")
         GameAPI.unregisterGameUpdateCallback(this.callbacks.updatePieceInfoGui)
-        if (this.hpProgressElement) {
-            this.hpProgressElement.guiWidget.recoverGuiWidget();
-        }
-        if (this.swingProgressElement) {
-            this.swingProgressElement.guiWidget.recoverGuiWidget();
+        let anchor = this.callbacks.getAnchor();
+        if (anchor) {
+            anchor.guiWidget.recoverGuiWidget();
         }
     }
 
     updatePieceInfo() {
         ThreeAPI.tempVec3.copy(this.gamePiece.getPos());
-        ThreeAPI.tempVec3.y += this.gamePiece.getStatusByKey('height');
+        ThreeAPI.tempVec3.y += this.gamePiece.getStatusByKey('height') + 0.08;
         ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
-     //   ThreeAPI.tempVec3b.z = 0;
-        this.hpProgressElement.guiWidget.setPosition(ThreeAPI.tempVec3b)
-        this.hpProgressElement.setProgress(0, this.gamePiece.getStatusByKey('maxHP'), this.gamePiece.getStatusByKey('hp'))
-        ThreeAPI.tempVec3b.y-=0.002
-        this.swingProgressElement.guiWidget.setPosition(ThreeAPI.tempVec3b)
-        this.swingProgressElement.setProgress(0, 1, Math.sin( this.gamePiece.getStatusByKey('atkProg') * Math.PI))
-
+        let anchor = this.callbacks.getAnchor();
+        anchor.guiWidget.setPosition(ThreeAPI.tempVec3b)
     }
 
 }

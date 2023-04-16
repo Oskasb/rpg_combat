@@ -1,5 +1,4 @@
 import { GuiWidget} from "../elements/GuiWidget.js";
-import { ConfigData} from "../../../utils/ConfigData.js";
 
 class GuiStatsPanel {
     constructor(options) {

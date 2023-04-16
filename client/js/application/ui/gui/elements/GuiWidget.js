@@ -536,7 +536,6 @@ class GuiWidget {
                 GuiAPI.unregisterInteractiveGuiElement(this.guiSurface);
                 this.interactive = false;
             }
-
         };
 
         recoverGuiWidget = function() {

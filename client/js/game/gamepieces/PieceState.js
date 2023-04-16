@@ -18,6 +18,7 @@ class PieceState {
         }
 
         this.status = {
+            name:'no_name',
             gamePiece:gamePiece,
             size:0.5,
             height: 0.5,
