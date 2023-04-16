@@ -75,7 +75,7 @@ class GuiPageSystem {
         this.closeGuiPage(this.pages[fromPageId]) // .closeGuiPage();
         setTimeout(function() {
             returnToPage.activateGuiPage(callback)
-        }, 200)
+        }, 20)
 
     }
 
@@ -87,7 +87,7 @@ class GuiPageSystem {
         let _this = this;
         setTimeout(function() {
             _this.activateGuiPage(toPageId, callback);
-        }, 200)
+        }, 20)
 
     }
 

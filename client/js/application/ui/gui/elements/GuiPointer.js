@@ -1,8 +1,9 @@
 import { GuiPointerWidget} from "../widgets/GuiPointerWidget.js";
 
 class GuiPointer {
-    constructor(inputIndex, pos) {
+    constructor(inputIndex, dragDistance) {
             this.intersects = false;
+            this.dragDistance = dragDistance;
             this.pos = new THREE.Vector3(0, 0, 0);
             this.scale = new THREE.Vector3(1, 1, 1);
             this.interactiveElement = null;
@@ -14,7 +15,7 @@ class GuiPointer {
             this.isMovementInput = false;
             this.guiPointerWidget = new GuiPointerWidget(inputIndex);
             this.setupPointerElement( this.configId);
-            this.setInputIndex(inputIndex)
+            this.setInputIndex(inputIndex);
         };
 
         setupPointerElement = function(configId) {
@@ -98,6 +99,10 @@ class GuiPointer {
         getPointerHovering() {
             return this.isHovering;
         }
+
+    getPointerHasDragState() {
+            return (Math.abs(this.dragDistance[0]) + Math.abs(this.dragDistance[1]))
+    }
 
         deactivatePointerWidget() {
             this.guiPointerWidget.showPointerWidgetReleased();

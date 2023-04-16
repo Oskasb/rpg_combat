@@ -19,7 +19,7 @@ class InputState {
             this.action = [0, 0];
             this.lastAction = [0, 0];
             this.pressFrames = 0;
-            this.guiPointer = new GuiPointer(index, ThreeAPI.tempVec3)
+            this.guiPointer = new GuiPointer(index, this.dragDistance)
         };
 
 
@@ -48,8 +48,9 @@ class InputState {
     };
 
     processDragState = function(inputState) {
-        inputState.dragDistance[0] = inputState.startDrag[0] - inputState.x;
-        inputState.dragDistance[1] = inputState.startDrag[1] - inputState.y;
+        console.log("Drag state", inputState.dragDistance)
+        inputState.dragDistance[0] = inputState.dx;
+        inputState.dragDistance[1] = inputState.dy;
     };
 
     updateInputState = function(inputState) {

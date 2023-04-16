@@ -186,8 +186,10 @@ class GameWorldPointer {
                     }
                 }
             }
+
             let selectedTile = screenSelection;
-            if (selectedTile) {
+
+            if (selectedTile && (pointer.getPointerHasDragState() > 0)) {
                 if (this.lastSelectedTile !== selectedTile) {
                     if (this.lastSelectedTile) {
                         this.lastSelectedTile.indicateTileStatus(false)

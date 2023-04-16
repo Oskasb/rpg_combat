@@ -71,11 +71,47 @@ class GameCamera {
 
         evt.on(ENUMS.Event.FRAME_READY, applyFrame);
         evt.on(ENUMS.Event.SET_CAMERA_TARGET, setCameraTargetPosInTime)
+
+        this.call = {
+            setCameraTargetPosInTime:setCameraTargetPosInTime
+        }
     }
 
+    getDefaultCamParams = function(store) {
+        store.camCallback = function() {
 
+        };
 
+            store.mode = null;
+            store.pos = [0, 0, 0];
+            store.lookAt = [0, 0, 0];
+            store.offsetPos = [0, 0, 0];
+            store.offsetLookAt = [0, 0, 0]
+    }
 
+    updatePlayerCamera = function(camParams) {
+        let playerPos = GameAPI.getActivePlayerCharacter().gamePiece.getPos()
+        camParams.pos[0] = playerPos.x + camParams.offsetPos[0];
+        camParams.pos[1] = playerPos.y + camParams.offsetPos[1];
+        camParams.pos[2] = playerPos.z + camParams.offsetPos[2];
+        camParams.lookAt[0] = playerPos.x + camParams.offsetLookAt[0];
+        camParams.lookAt[1] = playerPos.y + camParams.offsetLookAt[1];
+        camParams.lookAt[2] = playerPos.z + camParams.offsetLookAt[2];
+        this.call.setCameraTargetPosInTime(camParams);
+    }
+
+    buildCameraParams = function(camConf, camParams) {
+        camParams.offsetPos[0] = camConf.offsetPos[0];
+        camParams.offsetPos[1] = camConf.offsetPos[1];
+        camParams.offsetPos[2] = camConf.offsetPos[2];
+        camParams.offsetLookAt[0] = camConf.offsetLookAt[0];
+        camParams.offsetLookAt[1] = camConf.offsetLookAt[1];
+        camParams.offsetLookAt[2] = camConf.offsetLookAt[2];
+        camParams.time = 0.05;
+        if (camConf['mode'] === "portrait_main_char") {
+            console.log("Make cam go to char here for nice")
+        }
+    }
 
 
 }

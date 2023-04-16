@@ -24,7 +24,9 @@ class GameAPI {
         return new GameCharacter(config);
     };
 
-
+    getGameCamera() {
+        return this.gameMain.gameCamera;
+    }
 
     composeCharacter(gameCharConfigId, callback) {
         this.characterComposer.composeCharacter(gameCharConfigId, callback)

@@ -25,6 +25,42 @@ class GuiPage {
 
         this.configData.addUpdateCallback(onUpdate)
 
+
+        let camCallback = function() {
+
+        }.bind(this);
+
+        let camParams = {
+            mode:null,
+            pos:[0, 0, 0],
+            lookAt:[0, 0, 0],
+            offsetPos:[0, 0, 0],
+            offsetLookAt:[0, 0, 0]
+        }
+
+        let applyCamParams = function(camConf) {
+            camParams.offsetPos[0] = camConf.offsetPos[0];
+            camParams.offsetPos[1] = camConf.offsetPos[1];
+            camParams.offsetPos[2] = camConf.offsetPos[2];
+            camParams.offsetLookAt[0] = camConf.offsetLookAt[0];
+            camParams.offsetLookAt[1] = camConf.offsetLookAt[1];
+            camParams.offsetLookAt[2] = camConf.offsetLookAt[2];
+            camParams.callback = camCallback;
+            camParams.time = 0.05;
+            if (camConf['mode'] === "portrait_main_char") {
+                console.log("Make cam go to char here for nice")
+            }
+        }
+
+        let updateCamera = function() {
+            GameAPI.getGameCamera().updatePlayerCamera(camParams)
+        };
+
+        this.call = {
+            applyCamParams:applyCamParams,
+            updateCamera:updateCamera
+        }
+
     }
 
     activateGuiPage(callback) {
@@ -75,18 +111,22 @@ class GuiPage {
     setupCamera(conf) {
         console.log("setupCamerae ",conf);
         this.hasCamera = true;
+
         let mode = conf['mode'];
-        if (mode === "portrait_main_char") {
-            let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
-        //    ThreeAPI.tempVec3c.copy(ThreeAPI.getCamera().obj3d.position)
-        }
         let offsetPos = conf['offset_pos'];
         let offsetLookAt = conf['offset_lookAt'];
+
         let camParams = {
+            mode:mode,
             offsetPos:offsetPos,
             offsetLookAt:offsetLookAt
         }
-        GameAPI.getActiveDynamicScenario().activateScenarioCamera(camParams)
+
+        let scene = GameAPI.getActiveDynamicScenario();
+        GameAPI.getActivePlayerCharacter().gamePiece.removePieceUpdateCallback(scene.call.updateCamera)
+        GameAPI.getActivePlayerCharacter().gamePiece.addPieceUpdateCallback(this.call.updateCamera)
+        this.call.applyCamParams(camParams);
+
     }
     setupContainer(conf, callback, count) {
 
@@ -122,8 +162,9 @@ class GuiPage {
     closeGuiPage() {
         if (this.hasCamera) {
             // return camera to scenario setting;
-            let camParams = GameAPI.getActiveDynamicScenario().camParams;
-            GameAPI.getActiveDynamicScenario().activateScenarioCamera(camParams)
+            let scene = GameAPI.getActiveDynamicScenario();
+            GameAPI.getActivePlayerCharacter().gamePiece.removePieceUpdateCallback(this.call.updateCamera)
+            GameAPI.getActivePlayerCharacter().gamePiece.addPieceUpdateCallback(scene.call.updateCamera)
         }
         this.isActive = false;
    //     console.log("Close gui page ", this);
