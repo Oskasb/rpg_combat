@@ -21,6 +21,12 @@
         document.addEventListener("click", function(e){
             e.preventDefault();
         },{passive: false});
+        document.addEventListener("mouseup", function(e){
+            e.preventDefault();
+        },{passive: false});
+        document.addEventListener("mousedown", function(e){
+            e.preventDefault();
+        },{passive: false});
         document.body.onclick = function(e) {
             e.preventDefault();
         }
@@ -28,11 +34,11 @@
         document.onclick = function(e) {
             e.preventDefault();
         }
-        document.addEventListener("touchstart", function(e){
-            e.preventDefault();
-        },{passive: false});
-    }
 
+    }
+    document.addEventListener("touchstart", function(e){
+        e.preventDefault();
+    },{passive: false});
         Element.prototype.remove = function() {
             this.parentElement.removeChild(this);
         };
