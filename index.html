@@ -28,6 +28,8 @@
             e.stopPropagation();
             e.preventDefault();
         }
+        document.body.style.touchAction = 'none';
+        document.body.style.pointerEvents = 'none';
     } else {
 
     }
@@ -80,6 +82,9 @@
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
+        document.body.style.touchAction = 'none';
+        document.body.style.pointerEvents = 'none';
+        document.body.style.cursor = 'none';
     }
 
     /*
