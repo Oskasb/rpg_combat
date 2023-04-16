@@ -13,7 +13,7 @@ class GameWorldPointer {
 
     worldPointerFindPath(pointer) {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
-        playerPiece.movementPath.cancelMovementPath( playerPiece.movementPath.pathTiles);
+    //    playerPiece.movementPath.cancelMovementPath( playerPiece.movementPath.pathTiles);
         let targetPos = null
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
             targetPos = pointer.worldSpaceTarget.getPos();
@@ -64,6 +64,8 @@ class GameWorldPointer {
         pointer.isMovementInput = false;
     }
     updateWorldPointer = function(pointer, isFirstPressFrame) {
+        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece
+        playerPiece.movementPath.cancelMovementPath( playerPiece.movementPath.pathTiles);
         if (GuiAPI.calls.getInMenu() === true) {
             return;
         }
@@ -103,7 +105,7 @@ class GameWorldPointer {
             }
         }
 
-        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece
+
         ThreeAPI.tempVec3.copy(playerPiece.getPos());
         screenDistance(ThreeAPI.tempVec3, playerPiece)
 
@@ -159,6 +161,7 @@ class GameWorldPointer {
                         } else {
                             this.selectionEvent.piece = pointer.worldSpaceTarget;
                             this.selectionEvent.value = false;
+
                             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, this.selectionEvent);
                         }
 
