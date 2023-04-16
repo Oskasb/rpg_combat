@@ -187,6 +187,15 @@
               }
             },
             {
+              "id":"layout_info_elem_container",
+              "config": {
+                "text":   {"x":1.0, "y":0.0, "fontsize": 7},
+                "anchor": {"x":0.5, "y":0.0, "z":  0.0},
+                "offset": {"x":-0.0, "y":2, "z":  0.0},
+                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 2, "pad": 0.0, "gridx": 1, "gridy":-1}
+              }
+            },
+            {
               "id":"layout_stat_elem_container",
               "config": {
                 "text":   {"x":1.0, "y":0.0, "fontsize": 7},

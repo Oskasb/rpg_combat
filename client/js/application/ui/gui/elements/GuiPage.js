@@ -1,8 +1,8 @@
 import {ConfigData} from "../../../utils/ConfigData.js";
-
+import {Vector3} from "../../../../../libs/three/math/Vector3.js";
+let tempVec3 = new Vector3()
 class GuiPage {
     constructor(pageId) {
-        this.tempVec3 = new THREE.Vector3();
         this.isActive = false;
         this.pageId = pageId;
         this.containers = {};
@@ -42,7 +42,7 @@ class GuiPage {
         let applyCamParams = function(camConf) {
             let playerChar = GameAPI.getActivePlayerCharacter().gamePiece;
             let height = playerChar.getStatusByKey('height');
-            let inFrontVec = this.tempVec3;
+            let inFrontVec = tempVec3;
             inFrontVec.set(-0.2, 0, height*1.4);
             inFrontVec.applyQuaternion(playerChar.getSpatial().getQuat())
 

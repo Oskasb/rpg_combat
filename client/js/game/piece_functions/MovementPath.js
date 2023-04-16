@@ -1,3 +1,6 @@
+import { Vector3 } from "../../../libs/three/math/Vector3.js";
+let tempVec3 = new Vector3();
+
 class MovementPath {
     constructor(gamePiece) {
         this.tempVec = new THREE.Vector3()
@@ -83,8 +86,8 @@ class MovementPath {
     }
 
     updateMovementOnGrid(encounterGrid) {
-        ThreeAPI.tempVec3.copy(this.pieceMovement.targetPosVec3);
-        let targetPos = ThreeAPI.tempVec3;
+        tempVec3.copy(this.pieceMovement.targetPosVec3);
+        let targetPos = tempVec3;
         let gridTile = encounterGrid.getTileAtPosition(targetPos);
         if (this.targetPosTile !== gridTile){
             if (this.targetPosTile) {

@@ -219,6 +219,14 @@
               }
             },
             {
+              "id":"widget_info_elem_container",
+              "layout":"layout_info_elem_container",
+              "surface": {
+                "nineslice": "nineslice_surface_stat_elem",
+                "feedback": "feedback_surface_stat_elem"
+              }
+            },
+            {
               "id":"widget_stat_elem_container",
               "layout":"layout_stat_elem_container",
               "surface": {

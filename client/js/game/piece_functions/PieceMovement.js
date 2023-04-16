@@ -1,4 +1,8 @@
 import { SpatialTransition } from "./SpatialTransition.js";
+import { Vector3 } from "../../../libs/three/math/Vector3.js";
+
+let tempVec3 = new Vector3();
+
 
 class PieceMovement {
     constructor(gamePiece) {
@@ -150,9 +154,8 @@ class PieceMovement {
             if (fraction > 1) {
                 fraction = 1
             }
-            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, ThreeAPI.tempVec3);
-//            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, MATH.curveCube(Math.sin(fraction*MATH.HALF_PI)), ThreeAPI.tempVec3);
-            this.spatial.setPosVec3(ThreeAPI.tempVec3);
+            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, tempVec3);
+            this.spatial.setPosVec3(tempVec3);
         } else {
         //    this.spatial.call.setStopped();
             this.gamePiece.removePieceUpdateCallback(this.callbacks.onGameUpdate);

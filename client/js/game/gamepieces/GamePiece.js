@@ -8,6 +8,9 @@ import { PieceMovement } from "../piece_functions/PieceMovement.js";
 import { MovementPath } from "../piece_functions/MovementPath.js";
 import { PieceState } from "./PieceState.js";
 import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
+import { Vector3 } from "../../../libs/three/math/Vector3.js";
+
+let tempVec3 = new Vector3();
 
 class GamePiece {
     constructor(config, callback) {
@@ -103,7 +106,7 @@ class GamePiece {
         let range = this.getStatusByKey('meleeRange')
         range+= this.getStatusByKey('size')*0.5
         range+= targetPiece.getStatusByKey('size')*0.5
-        let distance = ThreeAPI.tempVec3.subVectors(tile.getPos(), targetTile.getPos()).length();
+        let distance = tempVec3.subVectors(tile.getPos(), targetTile.getPos()).length();
         return distance - range;
     }
     getPathTiles = function() {
@@ -181,8 +184,8 @@ class GamePiece {
     }
     hideGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
-            ThreeAPI.tempVec3.set(0, 0, 0);
-            this.getSpatial().geometryInstance.setScale(ThreeAPI.tempVec3)
+            tempVec3.set(0, 0, 0);
+            this.getSpatial().geometryInstance.setScale(tempVec3)
         }else {
             ThreeAPI.hideModel(this.modelInstance.obj3d)
         }
@@ -191,8 +194,8 @@ class GamePiece {
 
     showGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
-            ThreeAPI.tempVec3.set(1, 1, 1);
-            this.getSpatial().geometryInstance.setScale(ThreeAPI.tempVec3);
+            tempVec3.set(1, 1, 1);
+            this.getSpatial().geometryInstance.setScale(tempVec3);
 
         }else {
             ThreeAPI.showModel(this.modelInstance.obj3d)

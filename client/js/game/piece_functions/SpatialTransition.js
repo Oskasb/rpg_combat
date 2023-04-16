@@ -1,3 +1,6 @@
+import { Vector3 } from "../../../libs/three/math/Vector3.js";
+let tempVec3 = new Vector3();
+
 class SpatialTransition {
     constructor() {
 
@@ -44,8 +47,8 @@ class SpatialTransition {
             if (fraction > 1) fraction = 1;
             this.targetSpatial.getSpatialPosition(this.targetPos);
             this.targetPos.y+=Math.sin(fraction*Math.PI)*0.7+1.1;
-            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, ThreeAPI.tempVec3 , 'curveSigmoid');
-            this.spatial.setPosVec3(ThreeAPI.tempVec3);
+            MATH.interpolateVec3FromTo(this.startPos, this.targetPos, fraction, tempVec3 , 'curveSigmoid');
+            this.spatial.setPosVec3(tempVec3);
         } else {
             this.spatial.setPosVec3(this.targetPos);
 

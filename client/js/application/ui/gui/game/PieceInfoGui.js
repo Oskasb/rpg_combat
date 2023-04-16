@@ -25,7 +25,7 @@ class PieceInfoGui {
             },
             {
                 status:'lifetime',
-                label: 'Time',
+                label: 'Age',
                 conf_status:'widget_piece_info_elem_key',
                 conf_label: 'widget_piece_info_elem_value'
             }
@@ -194,7 +194,7 @@ class PieceInfoGui {
 
             this.callbacks.setAnchor(element);
             this.callbacks.updatePieceInfoGui();
-            addContainerElement( 'widget_stat_elem_container', onReady)
+            addContainerElement( 'widget_info_elem_container', onReady)
         }.bind(this);
 
         addContainerElement( 'widget_hidden_container', anchorReady)
