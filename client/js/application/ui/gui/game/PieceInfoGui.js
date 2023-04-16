@@ -18,6 +18,12 @@ class PieceInfoGui {
                 conf_label: 'widget_piece_info_elem_value'
             },
             {
+                status:'faction',
+                label: 'Align:',
+                conf_status:'widget_piece_info_elem_key',
+                conf_label: 'widget_piece_info_elem_value'
+            },
+            {
                 status:'lifetime',
                 label: 'Time',
                 conf_status:'widget_piece_info_elem_key',
