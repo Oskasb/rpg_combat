@@ -77,7 +77,7 @@ class PieceMovement {
                 }
                 processTile(tile, timePerTile)
             } else {
-                
+
             }
         }
 

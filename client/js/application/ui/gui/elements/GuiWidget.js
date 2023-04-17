@@ -155,6 +155,33 @@ class GuiWidget {
                 this.addTestActiveCallback(options.testActive);
             }
 
+            if (typeof(options['test_active']) === 'object') {
+                let testActive = options['test_active']
+                if (testActive['track_config']) {
+                    let track = testActive['track_config']
+                    let category = track['category'];
+                    let key = track['key'];
+                    let value = track['value'];
+                    let trackValues = PipelineAPI.getCachedConfigs()[category][key];
+                    let testActiveFunction = function() {
+                        return trackValues[value];
+                    }
+                    this.addTestActiveCallback(testActiveFunction);
+                }
+            }
+
+            if (typeof(options['text_dynamic']) === 'object') {
+                let dynamicText = options['text_dynamic']
+                if (dynamicText['track_config']) {
+                    let track = dynamicText['track_config']
+                    let category = track['category'];
+                    let key = track['key'];
+                    let value = track['value'];
+                    let trackValues = PipelineAPI.getCachedConfigs()[category][key];
+                    this.printWidgetText(trackValues[value]);
+                }
+            }
+
             if (typeof(options.onActivate) === 'function') {
                 this.addOnActiaveCallback(options.onActivate);
             }
