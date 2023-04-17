@@ -72,8 +72,13 @@ class GameAPI {
     }
 
     pieceIsMainChar(gamePiece) {
-        return gamePiece === this.getActivePlayerCharacter().gamePiece
+        return gamePiece === this.getMainCharPiece()
     }
+
+    getMainCharPiece = function() {
+        return this.activePlayerCharacter.gamePiece
+    }
+
     getActiveDynamicScenario() {
         let activeScenario = this.gameMain.activeScenario;
         let loadedScenarios = activeScenario.dynamicScenario

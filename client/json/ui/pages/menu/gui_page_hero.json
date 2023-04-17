@@ -71,6 +71,23 @@
                   }
                 },
                 {
+                  "widget_id":"button_exit_hero_page",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"PIMP",
+                    "container_id":"page_hero_center",
+                    "offset_x": 0.10,
+                    "offset_y":-0.18,
+                    "dispatch":{
+                      "event":"CHEAT_APPLY_PIMP",
+                      "value":{
+                        "status": "xp"
+                      }
+                    }
+                  }
+                },
+                {
                   "widget_id":"button_hero_equip",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",

@@ -10,10 +10,10 @@
             "aggro_range": 39,
             "height": 1.85,
             "size": 1,
-            "hp": 18,
-            "maxHP": 18,
-            "dmg": 2,
-            "FAST": 2,
+            "hp": 8,
+            "maxHP": 8,
+            "dmg": 1,
+            "FAST": 1,
             "xp_value": 20
           },
 
@@ -31,13 +31,14 @@
           "status": {
             "name": "Charles",
             "faction": "NEUTRAL",
+            "level": 6,
             "height": 1.85,
             "size": 1,
-            "hp": 22,
-            "maxHP": 22,
-            "dmg": 3,
+            "hp": 45,
+            "maxHP": 45,
+            "dmg": 4,
             "FAST": 4,
-            "xp_value": 50
+            "xp_value": 150
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -55,12 +56,13 @@
             "faction": "EVIL",
             "aggro_range": 5,
             "height": 1.85,
+            "level": 1,
             "size": 1,
-            "maxHP": 4,
+            "maxHP": 5,
             "hp": 5,
             "dmg": 1,
             "FAST": 1,
-            "xp_value": 5
+            "xp_value": 12
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -76,14 +78,15 @@
           "status": {
             "name": "Bandit Tough",
             "faction": "EVIL",
+            "level": 4,
             "aggro_range": 6,
             "height": 1.85,
             "size": 1,
-            "maxHP": 7,
-            "hp": 7,
-            "dmg": 1,
+            "maxHP": 24,
+            "hp": 24,
+            "dmg": 5,
             "FAST": 2,
-            "xp_value": 15
+            "xp_value": 75
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -101,14 +104,15 @@
           "status": {
             "name": "Bandit Guard",
             "faction": "EVIL",
+            "level": 3,
             "aggro_range": 6,
             "height": 1.85,
             "size": 1,
-            "maxHP": 7,
-            "hp": 7,
-            "dmg": 1,
-            "FAST": 2,
-            "xp_value": 15
+            "maxHP": 18,
+            "hp": 18,
+            "dmg": 8,
+            "FAST": 1,
+            "xp_value": 55
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -126,14 +130,15 @@
           "status": {
             "name": "Bandit Leader",
             "faction": "EVIL",
+            "level": 7,
             "aggro_range": 7,
             "height": 1.85,
             "size": 1,
-            "maxHP": 9,
-            "hp": 9,
-            "dmg": 2,
+            "maxHP": 48,
+            "hp": 48,
+            "dmg": 7,
             "FAST": 3,
-            "xp_value": 50
+            "xp_value": 250
           },
 
           "actor":"ACTOR_FIGHTER",
@@ -172,11 +177,11 @@
             "faction": "GOOD",
             "height": 1.88,
             "size": 1,
-            "maxHP": 90,
-            "hp": 90,
+            "maxHP": 190,
+            "hp": 190,
             "dmg": 1,
             "FAST": 1,
-            "xp_value": 50
+            "xp_value": 450
           },
           "actor":"ACTOR_DUDE",
           "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE"]

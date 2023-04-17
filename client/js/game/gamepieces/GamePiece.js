@@ -166,6 +166,10 @@ class GamePiece {
         MATH.quickSplice(this.activeActions, action);
     };
 
+    getStatus() {
+        return this.pieceState.status;
+    }
+
     getTarget = function() {
         let selectedTarget = this.getStatusByKey('selectedTarget')
         let engagingTarget = this.getStatusByKey('engagingTarget')

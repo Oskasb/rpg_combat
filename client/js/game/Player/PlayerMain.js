@@ -3,6 +3,12 @@ import { TargetIndicator } from "../../application/ui/gui/game/TargetIndicator.j
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
 let tempVec3 = new Vector3()
 
+let cheatInventory = [
+    "HELMET_VIKING", "BELT_PLATE",
+    "BOOTS_SCALE", "GLOVES_SCALE", "SHIRT_SCALE",
+    "LEGS_SCALE", "SHIRT_CHAIN"
+]
+
 class PlayerMain {
     constructor() {
         this.heroPageActive = false;
@@ -99,7 +105,8 @@ class PlayerMain {
             }
         }.bind(this)
 
-        let returnHome = function(gamePiece) {
+        let returnHome = function() {
+            let gamePiece = GameAPI.getMainCharPiece()
             gamePiece.isDead = false;
             gamePiece.movementPath.cancelMovementPath()
             gamePiece.setStatusValue('hp', gamePiece.getStatusByKey('maxHP'));
@@ -110,6 +117,10 @@ class PlayerMain {
                 dynamic:"home_hovel_dynamic"
             });
         }
+
+        let applyCheatPimp = function(event) {
+            this.cheatPimpMainChar(event)
+        }.bind(this)
 
         let callbacks = {
             handleEquip : equipItem,
@@ -123,10 +134,12 @@ class PlayerMain {
             registerHostile:registerHostile,
             registerTargetEngaged:registerTargetEngaged,
             selectTarget:selectTarget,
-            returnHome:returnHome
+            returnHome:returnHome,
+            applyCheatPimp:applyCheatPimp
         }
 
         this.callbacks = callbacks;
+
 
         evt.on(ENUMS.Event.EQUIP_ITEM, callbacks.handleEquip);
         evt.on(ENUMS.Event.UNEQUIP_ITEM, callbacks.handleUnequip);
@@ -139,6 +152,7 @@ class PlayerMain {
         evt.on(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, callbacks.selectTarget);
         evt.on(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, callbacks.registerTargetEngaged);
         evt.on(ENUMS.Event.MAIN_CHAR_RETURN_HOME, callbacks.returnHome);
+        evt.on(ENUMS.Event.CHEAT_APPLY_PIMP, callbacks.applyCheatPimp);
     }
 
 
@@ -258,6 +272,51 @@ class PlayerMain {
     takeStashedPiece(piece) {
         return this.playerStash.takePieceFromStash(piece);
     }
+
+
+
+    cheatPimpMainChar(event) {
+        let char = GameAPI.getActivePlayerCharacter()
+        let equip = function(piece) {
+            char.getEquipment().characterEquipItem(piece);
+        };
+        let itemCallback = function(gamePiece) {
+            equip(gamePiece)
+        };
+
+        if (cheatInventory.length) {
+            let item = MATH.getRandomArrayEntry(cheatInventory)
+            MATH.quickSplice(cheatInventory, item)
+            GameAPI.createGamePiece({piece:item}, itemCallback);
+        } else {
+            return;
+        }
+
+        console.log("Cheat pimp")
+
+
+        let status = GameAPI.getMainCharPiece().getStatus()
+        let addHp = Math.floor(Math.random()*10)
+        let addDmg = Math.floor(Math.random()*4);
+        let addAttacks = Math.floor(Math.random()*1.4);
+        let addLevel = 1;
+        status.FAST += addAttacks;
+        status.maxHP += addHp;
+        status.hp += addHp;
+        status.dmg += addDmg;
+        status.level += addLevel;
+
+
+
+
+
+
+
+
+
+
+    }
+
 }
 
 export { PlayerMain }

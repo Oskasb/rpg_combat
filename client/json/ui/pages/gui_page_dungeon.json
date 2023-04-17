@@ -16,6 +16,14 @@
                   }
                 },
                 {
+                  "widget_id":"page_dungeon_top_center",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"widget_hidden_container",
+                  "options": {
+                    "anchor":"top_center"
+                  }
+                },
+                {
                   "widget_id":"text_box_home",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"main_text_box",
@@ -35,15 +43,12 @@
                   "widget_config_id":"button_big_blue",
                   "options":{
                     "text":"RETREAT",
-                    "container_id":"page_home_center",
-                    "offset_x": 0.15,
-                    "offset_y": 0.315,
+                    "container_id":"page_dungeon_top_center",
+                    "offset_x": -0.13,
+                    "offset_y": -0.07,
                     "dispatch":{
-                      "event":"REQUEST_SCENARIO",
-                      "value":{
-                        "id":"home_scenario",
-                        "dynamic":"home_world_dynamic"
-                      }
+                      "event":"MAIN_CHAR_RETURN_HOME",
+                      "value":{}
                     }
                   }
                 }
