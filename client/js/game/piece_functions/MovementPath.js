@@ -115,11 +115,9 @@ class MovementPath {
         }
     }
 
-    updateMovementOnGrid(encounterGrid) {
-        tempVec3.copy(this.pieceMovement.targetPosVec3);
-        let targetPos = tempVec3;
-        let gridTile = encounterGrid.getTileAtPosition(targetPos);
-        if (this.targetPosTile !== gridTile){
+    updateMovementOnGrid(){
+        if (this.tilePath.getRemainingTiles()){
+            let gridTile = this.tilePath.getTurnEndTile();
             if (this.targetPosTile) {
                 this.targetPosTile.indicateTileStatus(false);
             }
@@ -128,8 +126,6 @@ class MovementPath {
             gridTile.indicateTileStatus(true);
             this.targetPosTile = gridTile;
         }
-
-
     }
 
 
@@ -162,6 +158,7 @@ class MovementPath {
     }
 
     selectTilesBeneathPath(startTile, endTile) {
+        this.clearTilePathStatus();
         let startX = startTile.tileX;
         let startZ = startTile.tileZ;
         let endX = endTile.tileX;
@@ -203,8 +200,6 @@ class MovementPath {
 
             let color = 'YELLOW';
 
-
-
             if (tile.getOccupant()) {
                 if (tile.getOccupant() !== this.gamePiece) {
                 //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
@@ -236,13 +231,12 @@ class MovementPath {
             } else {
                 tile.setPathClaimant(this.gamePiece);
             }
-
         }
-
     }
 
 
     buildGridPath(posVec) {
+
         let cPos = this.gamePiece.getPos();
         this.pathTargetPos.copy(posVec);
 
@@ -278,6 +272,7 @@ class MovementPath {
     }
 
     determineGridPathToPos(posVec) {
+        GuiAPI.printDebugText("Determine path")
         this.cancelMovementPath()
         this.setDestination(posVec);
         this.buildGridPath(posVec)

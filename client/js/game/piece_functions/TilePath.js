@@ -35,8 +35,15 @@ class TilePath {
         return this.endTile;
     }
 
+    getRemainingTiles() {
+        return this.pathTiles.length;
+    }
     getPathEndPosVec3() {
         return this.endTile.getPos();
+    }
+
+    getTurnEndTile = function() {
+        return this.pathTiles[this.pathTiles.length -1]
     }
 
     getTiles() {
