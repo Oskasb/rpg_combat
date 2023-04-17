@@ -15,7 +15,6 @@ class MovementPath {
         this.turnPathEnd = new THREE.Vector3()
         this.currentPosTile = null;
         this.targetPosTile = null;
-        this.destinationTile = null;
         this.tempVec = new THREE.Vector3();
 
         this.lineEvent = {
@@ -36,12 +35,12 @@ class MovementPath {
             let hasTarget = this.gamePiece.getTarget()
             onTurnEnd();
         //    let currentTile = this.getTileAtPos(this.gamePiece.getPos());
-            if (!this.destinationTile) {
+            if (!this.tilePath.getEndTile()) {
                 GuiAPI.printDebugText("No destination at path end: "+ name)
                 console.log("sometimes no destination tile", this)
                 this.cancelMovementPath();
             }
-            if (endTile !== this.destinationTile) {
+            if (endTile !== this.tilePath.getEndTile()) {
 
                 if (hasTarget) {
                     GuiAPI.printDebugText("No extend in combat: "+name+" turn: "+turn)
@@ -70,13 +69,13 @@ class MovementPath {
                 return;
             }
 
-            if (!this.destinationTile) {
+            if (!this.tilePath.getEndTile()) {
                 GuiAPI.printDebugText("No destination at turn end: "+name)
                 this.cancelMovementPath();
                 console.log("sometimes no destination tile", this)
                 return;
             }
-            this.determineGridPathToPos(this.destinationTile.getPos());
+            this.determineGridPathToPos(this.tilePath.getPathEndPosVec3());
             this.moveAlongActiveGridPath();
         }.bind(this)
 
@@ -143,7 +142,7 @@ class MovementPath {
     }
 
     setDestination(posVec) {
-        this.destinationTile = this.getTileAtPos(posVec);
+        this.tilePath.setEndTile(this.getTileAtPos(posVec))
     }
 
     clearTilePathStatus() {
@@ -155,7 +154,7 @@ class MovementPath {
         GameAPI.unregisterGameTurnCallback(this.callbacks.onTurnEnd);
         GameAPI.unregisterGameTurnCallback(this.callbacks.updatePathTurn);
         this.pathEndCallbacks = [];
-        this.destinationTile = null;
+        this.tilePath.setEndTile(null);
         this.pathTargetPiece = null;
         if (this.tilePath.getTiles().length) {
             this.pieceMovement.cancelActiveTransition()
@@ -259,8 +258,8 @@ class MovementPath {
             this.turnPathEnd.copy(posVec)
             this.turnPathEnd.sub(cPos);
             this.turnPathEnd.normalize();
-            let travelDistance = speed*remainingTime / (1+turnMoves);
-            travelDistance -= this.destinationTile.size;
+            let travelDistance = speed*remainingTime // (1+turnMoves);
+        //    travelDistance -= this.getTileAtPos(this.gamePiece.getPos())
             this.turnPathEnd.multiplyScalar(travelDistance);
             this.turnPathEnd.add(cPos);
 
@@ -270,8 +269,11 @@ class MovementPath {
 
         this.drawPathLine(cPos, this.turnPathEnd, 'CYAN');
         let endTile = this.getTileAtPos(this.turnPathEnd);
+        if (!endTile) {
+            console.log("No end tile...")
+            return;
+        }
         this.turnPathEnd.copy(endTile.getPos());
-
         this.selectTilesBeneathPath(this.getTileAtPos(cPos), endTile)
 
     }
@@ -358,21 +360,21 @@ class MovementPath {
     }
     determinePathToTargetPiece(targetPiece) {
 
-        if (!this.destinationTile) {
+        if (!this.tilePath.getEndTile()) {
             this.setDestination(targetPiece.getPos());
         }
 
-        let currentTile = this.getTileAtPos(this.gamePiece.getPos())
-        let selectedTile = this.selectTileByAttackRangeTo(this.destinationTile, targetPiece);
-        if (this.destinationTile !== selectedTile) {
+    //    let currentTile = this.getTileAtPos(this.gamePiece.getPos())
+        let selectedTile = this.selectTileByAttackRangeTo(this.tilePath.getEndTile(), targetPiece);
+        if (this.tilePath.getEndTile() !== selectedTile) {
             this.isPathing = false;
-            this.destinationTile = selectedTile;
+            this.tilePath.setEndTile(selectedTile);
         }
     }
 
     updatePathTiles() {
-        if (this.destinationTile) {
-            this.drawPathLine(this.turnPathEnd, this.destinationTile.getPos(), 'BLUE');
+        if (this.tilePath.getEndTile()) {
+            this.drawPathLine(this.turnPathEnd, this.tilePath.getPathEndPosVec3(), 'BLUE');
         }
     }
 
@@ -388,9 +390,9 @@ class MovementPath {
                     }
                 }
 
-                if (this.destinationTile) {
+                if (this.tilePath.getEndTile()) {
                     if (this.isPathing === false) {
-                        this.buildGridPath(this.destinationTile.getPos())
+                        this.buildGridPath(this.tilePath.getPathEndPosVec3())
                     }
                 }
 

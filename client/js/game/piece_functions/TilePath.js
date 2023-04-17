@@ -35,6 +35,10 @@ class TilePath {
         return this.endTile;
     }
 
+    getPathEndPosVec3() {
+        return this.endTile.getPos();
+    }
+
     getTiles() {
         return this.pathTiles;
     }
