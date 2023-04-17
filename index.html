@@ -1,5 +1,11 @@
 <html>
-<head>
+<head><style>
+    body {
+        touch-action: none;
+        user-select: none;
+        cursor: none;
+    }
+</style>
 
     <title>PROTOTYPE</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -27,6 +33,7 @@
             e.stopImmediatePropagation();
             e.stopPropagation();
             e.preventDefault();
+            e.returnValue = false;
         }
         document.body.style.touchAction = 'none';
         document.body.style.pointerEvents = 'none';
@@ -38,48 +45,53 @@
 
   //  if (window.isMobile) {
             document.addEventListener("mouseup", function(e){
+                e.returnValue = false;
                 e.stopImmediatePropagation();
                 e.preventDefault();
                 e.stopPropagation();
             },{passive: false});
             document.addEventListener("mousedown", function(e){
+                e.returnValue = false;
                 e.stopImmediatePropagation();
                 e.preventDefault();
                 e.stopPropagation();
             },{passive: false});
         document.addEventListener("ondblclick", function(e){
+            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onmouseenter", function(e){
+            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onmousemove", function(e){
+            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onmouseover", function(e){
+            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onclick", function(e){
+            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onmouseover", function(e){
+            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
-        document.body.style.touchAction = 'none';
-        document.body.style.pointerEvents = 'none';
-        document.body.style.cursor = 'none';
   //  }
 
     /*

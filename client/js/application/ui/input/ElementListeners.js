@@ -33,6 +33,7 @@ class ElementListeners {
 
 
             this.gameScreen.getElement().addEventListener('mousemove', function (e) {
+                e.returnValue = false;
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
@@ -44,6 +45,7 @@ class ElementListeners {
             }, passive);
 
             this.gameScreen.getElement().addEventListener('mouseout', function (e) {
+                e.returnValue = false;
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
@@ -55,6 +57,7 @@ class ElementListeners {
             let zoomTimeout;
 
             this.gameScreen.getElement().addEventListener('mousewheel', function (e) {
+                e.returnValue = false;
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
@@ -70,6 +73,7 @@ class ElementListeners {
         }
 
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {
+            e.returnValue = false;
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
@@ -88,6 +92,7 @@ class ElementListeners {
         }, passive);
 
         this.gameScreen.getElement().addEventListener('touchmove', function(e) {
+            e.returnValue = false;
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
@@ -106,6 +111,7 @@ class ElementListeners {
         }, passive);
 
         let touchend = function(e) {
+            e.returnValue = false;
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
