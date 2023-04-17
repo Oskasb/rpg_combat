@@ -39,19 +39,20 @@ class PieceMovement {
 
     moveAlongTilePath(tilePath, callback) {
 
+        let pathTiles = tilePath.getTiles();
         let gamePiece = this.gamePiece;
         if (this.onArriveCallbacks.indexOf(callback) !== -1) {
             return;
         }
 
-        let tileCount = tilePath.length;
+        let tileCount = pathTiles.length;
         let totalDistance = 0;
 
         let turnTimeRemaining = GameAPI.getTurnStatus().timeRemaining();
 
-        this.tempVec.copy(tilePath[0].getPos())
-        for (let i = 0; i < tilePath.length; i++) {
-            let tile = tilePath[i];
+        this.tempVec.copy(pathTiles[0].getPos())
+        for (let i = 0; i < pathTiles.length; i++) {
+            let tile = pathTiles[i];
             tile.setTileStatus('IS_PATH');
             tile.indicateTileStatus(true);
         //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.tempVec, color:'WHITE', size:0.2})
@@ -67,13 +68,13 @@ class PieceMovement {
         let timePerTile = GameAPI.getTurnStatus().turnTime * distancePerTile / charSpeed ;
         let tile;
         let nextTileCB = function() {
-            if (tilePath.length) {
-                tile = tilePath.shift();
+            if (pathTiles.length) {
+                tile = pathTiles.shift();
                 tile.setTileStatus('FREE');
                 tile.indicateTileStatus(false);
                 processTile(tile, timePerTile)
 
-                if (!tilePath.length) {
+                if (!pathTiles.length) {
 
                 }
 

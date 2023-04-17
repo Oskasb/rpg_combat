@@ -11,6 +11,14 @@ class TilePath {
         this.activeTurn = 0;
     }
 
+    addTileToPath(tile) {
+        this.pathTiles.push(tile);
+    }
+
+    deductNextTileFromPath() {
+        return this.pathTiles.shift();
+    }
+
     setStartTile(tile) {
         this.startTile = tile;
     }
@@ -31,7 +39,13 @@ class TilePath {
         return this.pathTiles;
     }
 
-
+    clearTilePath() {
+        while(this.pathTiles.length) {
+            let tile = this.pathTiles.pop();
+            tile.setTileStatus('FREE');
+            tile.indicateTileStatus(false);
+        }
+    }
 
 }
 

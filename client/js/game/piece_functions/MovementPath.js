@@ -24,7 +24,6 @@ class MovementPath {
             color:'CYAN'
         }
 
-        this.pathTiles = [];
 
         let onTurnEnd = function() {
             this.gamePiece.setStatusValue('turn_moves', 0);
@@ -147,13 +146,9 @@ class MovementPath {
         this.destinationTile = this.getTileAtPos(posVec);
     }
 
-    clearTilePathStatus(tilePath) {
+    clearTilePathStatus() {
         this.isPathing = false;
-        while(tilePath.length) {
-            let tile = tilePath.pop();
-            tile.setTileStatus('FREE');
-            tile.indicateTileStatus(false);
-        }
+        this.tilePath.clearTilePath()
     }
 
     cancelMovementPath() {
@@ -162,10 +157,10 @@ class MovementPath {
         this.pathEndCallbacks = [];
         this.destinationTile = null;
         this.pathTargetPiece = null;
-        if (this.pathTiles.length) {
+        if (this.tilePath.getTiles().length) {
             this.pieceMovement.cancelActiveTransition()
         }
-        this.clearTilePathStatus(this.pathTiles)
+        this.clearTilePathStatus()
     }
 
     selectTilesBeneathPath(startTile, endTile) {
@@ -188,7 +183,7 @@ class MovementPath {
         let incrementZ = 0;
         let tileCount = Math.max(Math.abs(xDiff), Math.abs(zDiff));
 
-        this.pathTiles.push(startTile);
+        this.tilePath.addTileToPath(startTile);
         for (let i = 0; i < tileCount; i++) {
 
             if (incrementX < Math.abs(xDiff)) {
@@ -220,15 +215,15 @@ class MovementPath {
                 }
             }
 
-            if (!this.pathTiles[i]) {
+            if (!this.tilePath.getTiles()[i]) {
                 console.log('Sometimes the path is culled here? it breaks!')
                 return;
             }
-            if ( Math.abs(elevation) > Math.abs(this.pathTiles[i].getPos().y) + 0.7)  {
+            if ( Math.abs(elevation) > Math.abs(this.tilePath.getTiles()[i].getPos().y) + 0.7)  {
                 this.drawPathLine(this.tempVec, tile.getPos(), 'RED')
                 i = tileCount;
             } else {
-                this.pathTiles.push(tile);
+                this.tilePath.addTileToPath(tile);
 
                 this.drawPathLine(this.tempVec, tile.getPos(), color)
                 this.tempVec.copy(tile.getPos());
@@ -237,7 +232,8 @@ class MovementPath {
             if (tile.getPathClaimant()) {
                 if (tile.getPathClaimant() !== this.gamePiece) {
            //         evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
-                    this.pathTiles.pop();
+                    this.tilePath.getTiles().pop();
+                    this.tilePath.setEndTile(this.tilePath.getTiles()[i-1])
                 }
             } else {
                 tile.setPathClaimant(this.gamePiece);
@@ -281,14 +277,14 @@ class MovementPath {
     }
 
     determineGridPathToPos(posVec) {
-        this.cancelMovementPath(this.pathTiles)
+        this.cancelMovementPath()
         this.setDestination(posVec);
         this.buildGridPath(posVec)
     }
 
 
     moveTroughTilePath(cb) {
-        this.pieceMovement.moveAlongTilePath(this.pathTiles, cb)
+        this.pieceMovement.moveAlongTilePath(this.tilePath, cb)
     }
 
     addPathEndCallback(cb) {
@@ -313,7 +309,7 @@ class MovementPath {
     }
     moveAlongActiveGridPath() {
 
-        let tileCount = this.pathTiles.length;
+        let tileCount = this.tilePath.getTiles().length;
         if (tileCount ){
             if (this.isPathing === false) {
                 this.moveTroughTilePath(this.callbacks.onPathEnd);

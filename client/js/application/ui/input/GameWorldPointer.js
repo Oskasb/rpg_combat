@@ -58,7 +58,7 @@ class GameWorldPointer {
         }
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
         //    console.log("Release Movement Pointer")
-        playerPiece.movementPath.clearTilePathStatus( playerPiece.movementPath.pathTiles);
+        playerPiece.movementPath.clearTilePathStatus();
 
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
             this.indicateSelection(false, pointer, pointer.worldSpaceTarget)
@@ -87,7 +87,7 @@ class GameWorldPointer {
     }
     updateWorldPointer = function(pointer, isFirstPressFrame) {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece
-        playerPiece.movementPath.cancelMovementPath( playerPiece.movementPath.pathTiles);
+        playerPiece.movementPath.cancelMovementPath( );
         if (GuiAPI.calls.getInMenu() === true) {
             return;
         }
