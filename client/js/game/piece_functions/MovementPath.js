@@ -23,7 +23,6 @@ class MovementPath {
             color:'CYAN'
         }
 
-
         let onTurnEnd = function() {
             this.gamePiece.setStatusValue('turn_moves', 0);
             GameAPI.unregisterGameTurnCallback(this.callbacks.onTurnEnd);

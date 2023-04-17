@@ -149,6 +149,10 @@ class InputSystem {
 
                 //    GuiAPI.printDebugText("RELEASE POINTER ON WORLD"+inputIndex);
                 if (guiPointer.getIsSeeking()) {
+                    if (interactiveElem) {
+                        GuiAPI.unregisterWorldSpacePointer(guiPointer)
+                    }
+
                     guiPointer.releasePointer();
                     guiPointer.setPointerHovering(true)
                 }
