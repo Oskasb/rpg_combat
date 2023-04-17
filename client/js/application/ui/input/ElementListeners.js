@@ -77,7 +77,7 @@ class ElementListeners {
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
-            let touches = e.changedTouches || e.touches;
+            let touches = e.changedTouches;
             for (let i = 0; i < touches.length; i++) {
                 let touch = touches[i]
                 _this.x = touch.pageX;
@@ -89,6 +89,10 @@ class ElementListeners {
                 callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
 
+            if (touches.length === 0) {
+                alert('changedTouches not supported')
+            }
+
         }, passive);
 
         this.gameScreen.getElement().addEventListener('touchmove', function(e) {
@@ -96,7 +100,7 @@ class ElementListeners {
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
-            let touches = e.changedTouches || e.touches;
+            let touches = e.changedTouches;
             for (let i = 0; i < touches.length; i++) {
                 let touch = touches[i]
             //    console.log(touch.identifier)
