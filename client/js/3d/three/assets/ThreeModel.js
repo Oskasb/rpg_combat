@@ -62,14 +62,14 @@ class ThreeModel {
 
     setupGeometryInstancing = function() {
 
-        var instancingSettings = this.geometryInstancingSettings();
+        let instancingSettings = this.geometryInstancingSettings();
     //    console.log("Register geom: ",this.id, this.model, instancingSettings, this.material)
         this.instanceBuffers = InstanceAPI.registerGeometry(this.id, this.model, instancingSettings, this.material.getAssetMaterial());
 
-        var instantiateAsset = function(id, callback) {
+        let instantiateAsset = function(id, callback) {
 
-            var instanceCb = function(geomIns) {
-                var spatial = new InstanceSpatial(geomIns.obj3d);
+            let instanceCb = function(geomIns) {
+                let spatial = new InstanceSpatial(geomIns.obj3d);
                 spatial.setGeometryInstance(geomIns);
                 callback(spatial);
             };
@@ -81,7 +81,7 @@ class ThreeModel {
     };
 
     getAnimationClip = function(animationClipKey) {
-        var animScene = this.animations[animationClipKey].scene;
+        let animScene = this.animations[animationClipKey].scene;
         return animScene.animations[0]
     };
 
@@ -155,8 +155,8 @@ class ThreeModel {
     recoverModelClone = function(spatial) {
 
         if (this.geometryInstancingSettings()) {
-            spatial.setPosXYZ(20+this.modelNr*5, 5+this.expandingPool.poolEntryCount()*0.3, 30);
-            spatial.setScaleXYZ(0.0, 0.0, 0.0);
+            spatial.setPosXYZ(20+this.modelNr*5, 5+this.expandingPool.poolEntryCount()*0.3, 3000);
+        //    spatial.setScaleXYZ(0.0, 0.0, 0.0);
 
             if (this.expandingPool.pool.indexOf(spatial) !== -1) {
                 console.log("Bad pool recovery", this.id, spatial, this);

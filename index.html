@@ -1,12 +1,5 @@
 <html>
-<head><style>
-    body {
-        touch-action: none;
-        user-select: none;
-        cursor: none;
-    }
-</style>
-
+<head>
     <title>PROTOTYPE</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./client/css/base.css" />
@@ -29,69 +22,66 @@
 
     let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     if (isIOS) {
-        document.body.onclick = function(e) {
+        document.body.click = function(e) {
             e.stopImmediatePropagation();
             e.stopPropagation();
             e.preventDefault();
-            e.returnValue = false;
         }
         document.body.style.touchAction = 'none';
         document.body.style.pointerEvents = 'none';
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'pointer';
     } else {
-
-    }
-    window.isIOS = isIOS;
-    window.isMobile = mobileAndTabletcheck();
-
-  //  if (window.isMobile) {
-            document.addEventListener("mouseup", function(e){
-                e.returnValue = false;
-                e.stopImmediatePropagation();
-                e.preventDefault();
-                e.stopPropagation();
-            },{passive: false});
-            document.addEventListener("mousedown", function(e){
-                e.returnValue = false;
-                e.stopImmediatePropagation();
-                e.preventDefault();
-                e.stopPropagation();
-            },{passive: false});
+        document.body.style.touchAction = 'none';
+        document.body.style.pointerEvents = 'none';
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'none';
+        document.addEventListener("mouseup", function(e){
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            e.stopPropagation();
+        },{passive: false});
+        document.addEventListener("mousedown", function(e){
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            e.stopPropagation();
+        },{passive: false});
         document.addEventListener("ondblclick", function(e){
-            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onmouseenter", function(e){
-            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onmousemove", function(e){
-            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onmouseover", function(e){
-            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onclick", function(e){
-            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
         document.addEventListener("onmouseover", function(e){
-            e.returnValue = false;
             e.stopImmediatePropagation();
             e.preventDefault();
             e.stopPropagation();
         },{passive: false});
+    }
+    window.isIOS = isIOS;
+    window.isMobile = mobileAndTabletcheck();
+
+  //  if (window.isMobile) {
+
   //  }
 
     /*

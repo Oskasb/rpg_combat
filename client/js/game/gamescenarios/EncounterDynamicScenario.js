@@ -170,6 +170,10 @@ class EncounterDynamicScenario {
                     pieces.push(gamePiece);
                     gamePiece.getSpatial().setPosXYZ(spawn.pos[0],spawn.pos[1], spawn.pos[2])
                     gamePiece.getSpatial().setRotXYZ(spawn.rot[0],spawn.rot[1], spawn.rot[2])
+                    gamePiece.getSpatial().stickToObj3D(gamePiece.getSpatial().obj3d);
+                    if (!gamePiece.modelInstance.originalModel.geometryInstancingSettings()) {
+                        ThreeAPI.showModel(gamePiece.getSpatial().obj3d);
+                    }
                     GameAPI.addPieceToWorld(gamePiece);
                 };
 
