@@ -7,6 +7,7 @@ class GameWorldPointer {
     constructor() {
         this.posVec = new THREE.Vector3()
         this.lastSelectedTile = null;
+        this.indicatedSelections = [];
         this.selectionEvent = {
             piece:null,
             value:false
@@ -31,6 +32,10 @@ class GameWorldPointer {
 
     indicateSelection = function(bool, pointer, selection) {
         if (bool) {
+            if (MATH.arrayContains(this.indicatedSelections, selection)) {
+                return pointer.worldSpaceIndicator;
+            }
+            this.indicatedSelections.push(selection);
             selection.pieceInfoGui.activatePieceInfoGui()
             let indicator = pointer.worldSpaceIndicator;
             if (!indicator) {
@@ -40,6 +45,7 @@ class GameWorldPointer {
             }
             return indicator
         } else {
+            MATH.quickSplice(this.indicatedSelections, selection);
             pointer.worldSpaceIndicator.removeTargetIndicatorFromPiece(selection);
             pointer.worldSpaceIndicator.hideIndicatorFx();
             selection.pieceInfoGui.deactivatePieceInfoGui()
@@ -166,9 +172,7 @@ class GameWorldPointer {
 
             } else {
                 if (pointer.worldSpaceTarget) {
-                    indicator.removeTargetIndicatorFromPiece(pointer.worldSpaceTarget);
-                    pointer.worldSpaceTarget.pieceInfoGui.deactivatePieceInfoGui()
-                    pointer.worldSpaceIndicator.hideIndicatorFx()
+                    this.indicateSelection(false, pointer, pointer.worldSpaceTarget)
                     if (!this.selectionEvent) {
                         console.log("Some multi-touch issue here")
                     } else {

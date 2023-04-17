@@ -26,7 +26,6 @@ div.point {
 }
 
 canvas {
-    cursor:none;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -35,7 +34,9 @@ canvas {
 }
 
 body {
+    cursor:none;
     touch-action: none;
+    pointer-events: none;
     font-family: 'Russo One';
     font-weight: 400;
     position: fixed;

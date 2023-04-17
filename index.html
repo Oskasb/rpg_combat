@@ -36,12 +36,7 @@
     window.isIOS = isIOS;
     window.isMobile = mobileAndTabletcheck();
 
-    if (window.isMobile) {
-            document.addEventListener("click", function(e){
-                e.stopImmediatePropagation();
-                e.preventDefault();
-                e.stopPropagation();
-            },{passive: false});
+  //  if (window.isMobile) {
             document.addEventListener("mouseup", function(e){
                 e.stopImmediatePropagation();
                 e.preventDefault();
@@ -85,7 +80,7 @@
         document.body.style.touchAction = 'none';
         document.body.style.pointerEvents = 'none';
         document.body.style.cursor = 'none';
-    }
+  //  }
 
     /*
     document.addEventListener("touchstart", function(e){

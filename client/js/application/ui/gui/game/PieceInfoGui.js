@@ -207,9 +207,8 @@ class PieceInfoGui {
         this.statusList = [];
         GameAPI.unregisterGameUpdateCallback(this.callbacks.updatePieceInfoGui)
         let anchor = this.callbacks.getAnchor();
-        if (anchor) {
-            anchor.guiWidget.recoverGuiWidget();
-        }
+        anchor.guiWidget.recoverGuiWidget();
+
     }
 
     updateStatusValues = function() {

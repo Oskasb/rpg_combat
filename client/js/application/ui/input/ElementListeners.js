@@ -27,29 +27,37 @@ class ElementListeners {
 
         this.actionListener.setupElementInputListener(this.gameScreen.getElement(), callInputUpdate, this.POINTER_STATE);
 
+        let passive = {passive: false}
+
         if (!window.isMobile) {
 
 
             this.gameScreen.getElement().addEventListener('mousemove', function (e) {
-                //	e.stopPropagation();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
                 _this.x = (e.pageX);
                 _this.y = (e.pageY);
                 _this.dx = 2 * ((_this.x) - _this.gameScreen.getWidth() / 2) / _this.gameScreen.getWidth();
                 _this.dy = 2 * ((_this.y) - _this.gameScreen.getHeight() / 2) / _this.gameScreen.getHeight();
                 callInputUpdate(_this.POINTER_STATE.touches[10]);
-            });
+            }, passive);
 
             this.gameScreen.getElement().addEventListener('mouseout', function (e) {
-                //	e.stopPropagation();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
                 _this.dx = 0;
                 _this.dy = 0;
                 callInputUpdate(_this.POINTER_STATE.touches[10]);
-            });
+            }, passive);
 
             let zoomTimeout;
 
             this.gameScreen.getElement().addEventListener('mousewheel', function (e) {
-                //	e.stopPropagation();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
                 if (zoomTimeout) return;
                 _this.wheelDelta = e.wheelDelta / 1200;
                 setTimeout(function () {
@@ -58,7 +66,7 @@ class ElementListeners {
                 zoomTimeout = true;
                 _this.POINTER_STATE.touches[10].wheelDelta = _this.wheelDelta;
                 callInputUpdate(_this.POINTER_STATE.touches[10]);
-            });
+            }, passive);
         }
 
         this.gameScreen.getElement().addEventListener('touchstart', function(e) {
@@ -77,11 +85,12 @@ class ElementListeners {
                 callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
 
-        });
+        }, passive);
 
         this.gameScreen.getElement().addEventListener('touchmove', function(e) {
-            //	e.preventDefault();
+            e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             let touches = e.changedTouches || e.touches;
             for (let i = 0; i < touches.length; i++) {
                 let touch = touches[i]
@@ -94,12 +103,13 @@ class ElementListeners {
                 _this.POINTER_STATE.touches[touch.identifier].action[0] = 1;
                 callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
-        });
+        }, passive);
 
         let touchend = function(e) {
-            //	e.preventDefault();
+            e.preventDefault();
             e.stopPropagation();
-            let touches = e.changedTouches || e.touches;
+            e.stopImmediatePropagation();
+            let touches = e.changedTouches
             for (let i = 0; i < touches.length; i++) {
                 let touch = touches[i]
                 _this.x = touch.pageX;
@@ -112,11 +122,16 @@ class ElementListeners {
                 callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
 
+            if (touches.length === 0) {
+                alert('changedTouches not supported')
+            }
+
+
         };
 
 
-        this.gameScreen.getElement().addEventListener('touchend', touchend, false);
-        this.gameScreen.getElement().addEventListener('touchcancel', touchend, false);
+        this.gameScreen.getElement().addEventListener('touchend', touchend, passive);
+        this.gameScreen.getElement().addEventListener('touchcancel', touchend, passive);
 
         window.addEventListener('resize', function() {
             callInputUpdate(_this.POINTER_STATE.touches[10]);

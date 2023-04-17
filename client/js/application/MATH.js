@@ -95,6 +95,10 @@ if(typeof(MATH) === "undefined") {
 		return array[Math.floor(Math.random()*array.length)]
 	};
 
+	MATH.arrayContains = function(array, entry) {
+		return array.indexOf(entry) !== -1;
+	};
+
 	var idx;
 
 	MATH.getFromArrayByKeyValue = function(array, key, value) {
