@@ -43,6 +43,18 @@
               }
             },
             {
+              "id":"progress_status_player_hp",
+              "layout":"layout_xp_bar_container",
+              "icon": {
+                "icon_config": "progress_horizontal_xp_bar",
+                "feedback": "feedback_icon_hp_bar_progress"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_xp_bar_container",
+                "feedback": "feedback_surface_hp_bar_container"
+              }
+            },
+            {
               "id":"progress_indicator_player_xp",
               "layout":"layout_xp_bar_container",
               "icon": {

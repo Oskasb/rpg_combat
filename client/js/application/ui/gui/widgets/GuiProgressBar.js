@@ -64,7 +64,7 @@ class GuiProgressBar {
     };
 
     updateCurrentProgress = function(current) {
-        this.current = current;
+        this.current = MATH.clamp(current, this.min, this.max);
         this.guiWidget.indicateProgress(this.min, this.max, this.current, this.digits)
     };
 
