@@ -40,10 +40,11 @@ class GuiPointer {
         };
 
         pointerPressElementStart = function(interactiveElem) {
+            GuiAPI.unregisterWorldSpacePointer(this);
             this.guiPointerWidget.showPointerWidgetSeeking();
                 this.setPointerInteractiveElement(interactiveElem);
              //   GuiAPI.printDebugText("ELEMENT POINTER - STATE: "+ENUMS.getKey('ElementState', interactiveElem.state));
-                GuiAPI.unregisterWorldSpacePointer(this);
+
 
         };
 
@@ -114,7 +115,7 @@ class GuiPointer {
             this.intersects = false;
             this.interactiveElement = null;
 
-            GuiAPI.unregisterWorldSpacePointer(this);
+            GuiAPI.releaseWorldSpacePointer(this);
             this.deactivatePointerWidget();
 
         };

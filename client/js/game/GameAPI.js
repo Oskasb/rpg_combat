@@ -104,6 +104,10 @@ class GameAPI {
 
     }
 
+    deactivateWorldSpacePointer(pointer) {
+        this.gameWorldPointer.worldPointerDeactivate(pointer);
+    }
+
     registerGameUpdateCallback(callback) {
         this.gameMain.addGameUpdateCallback(callback);
     }

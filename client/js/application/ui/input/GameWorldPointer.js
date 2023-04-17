@@ -5,6 +5,7 @@ let tempVec3b = new Vector3()
 
 class GameWorldPointer {
     constructor() {
+        this.isActive = false;
         this.posVec = new THREE.Vector3()
         this.lastSelectedTile = null;
         this.indicatedSelections = [];
@@ -84,6 +85,7 @@ class GameWorldPointer {
         }
         pointer.worldSpaceTarget = null;
         pointer.isMovementInput = false;
+        pointer.isWorldActive = false;
     }
     updateWorldPointer = function(pointer, isFirstPressFrame) {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece
@@ -91,6 +93,15 @@ class GameWorldPointer {
         if (GuiAPI.calls.getInMenu() === true) {
             return;
         }
+
+        if (isFirstPressFrame) {
+            pointer.isWorldActive = true;
+        }
+
+        if (pointer.isWorldActive === false) {
+            return;
+        }
+
         let indicator =  pointer.worldSpaceIndicator
         let pos = this.posVec.copy(pointer.pos);
         //   GameScreen.fitView(pos);
@@ -194,7 +205,8 @@ class GameWorldPointer {
         }.bind(this);
 
         let updateMovementPointer = function() {
-            if (GuiAPI.calls.getInMenu() === true) {
+
+            if (GuiAPI.calls.getInMenu() === true || pointer.isWorldActive === false) {
                 return;
             }
             let encounterGrid = GameAPI.getActiveEncounterGrid()
@@ -238,6 +250,11 @@ class GameWorldPointer {
         updateWorldPointer()
 
     }
+
+    worldPointerDeactivate(pointer) {
+        pointer.isWorldActive = false;
+    }
+
 }
 
 export { GameWorldPointer }
