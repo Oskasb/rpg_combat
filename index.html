@@ -80,9 +80,26 @@
     window.isIOS = isIOS;
     window.isMobile = mobileAndTabletcheck();
 
-  //  if (window.isMobile) {
-
-  //  }
+    if (window.isMobile) {
+        document.addEventListener("onclick", function(e){
+            alert('Mobile fires onclick')
+        },{passive: false});
+        document.addEventListener("mouseup", function(e){
+            alert('Mobile fires mouseup')
+        },{passive: false});
+        document.addEventListener("mousedown", function(e){
+            alert('Mobile fires mousedown')
+        },{passive: false});
+        document.addEventListener("ondblclick", function(e){
+            alert('Mobile fires ondblclick')
+        },{passive: false});
+        document.addEventListener("onmouseenter", function(e){
+            alert('Mobile fires onmouseenter')
+        },{passive: false});
+        document.addEventListener("onmousemove", function(e){
+            alert('Mobile fires onmousemove')
+        },{passive: false});
+    }
 
     /*
     document.addEventListener("touchstart", function(e){
