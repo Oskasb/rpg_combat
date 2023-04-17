@@ -1,8 +1,11 @@
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
+import { TilePath } from "./TilePath.js";
+
 let tempVec3 = new Vector3();
 
 class MovementPath {
     constructor(gamePiece) {
+        this.tilePath = new TilePath(gamePiece);
         this.tempVec = new THREE.Vector3()
         this.isPathing = false;
         this.gamePiece = gamePiece;
@@ -28,19 +31,49 @@ class MovementPath {
             GameAPI.unregisterGameTurnCallback(this.callbacks.onTurnEnd);
         }.bind(this)
 
-        let onPathEnd = function() {
+        let onPathEnd = function(endTile) {
+            let turn = GameAPI.getTurnStatus().turn
+            let name = this.gamePiece.getStatusByKey('name')
+            let hasTarget = this.gamePiece.getTarget()
             onTurnEnd();
-            let currentTile = this.getTileAtPos(this.gamePiece.getPos());
-            if (currentTile !== this.destinationTile) {
-                GameAPI.registerGameTurnCallback(this.callbacks.updatePathTurn);
+        //    let currentTile = this.getTileAtPos(this.gamePiece.getPos());
+            if (!this.destinationTile) {
+                GuiAPI.printDebugText("No destination at path end: "+ name)
+                console.log("sometimes no destination tile", this)
+                this.cancelMovementPath();
+            }
+            if (endTile !== this.destinationTile) {
+
+                if (hasTarget) {
+                    GuiAPI.printDebugText("No extend in combat: "+name+" turn: "+turn)
+                    this.cancelMovementPath();
+                } else {
+                    GuiAPI.printDebugText("Path extend turn: "+name+" turn: "+turn)
+                    GameAPI.registerGameTurnCallback(this.callbacks.updatePathTurn);
+                }
+
             } else {
+                console.log("Path final tile reached", name)
+                GuiAPI.printDebugText("Path end: "+name+" cbs:"+this.pathEndCallbacks.length)
                 MATH.callAndClearAll(this.pathEndCallbacks, this.gamePiece)
+                this.cancelMovementPath();
             }
         }.bind(this);
 
         let updatePathTurn = function(turnStatus) {
+            let hasTarget = this.gamePiece.getTarget()
+            let name = this.gamePiece.getStatusByKey('name')
             GameAPI.unregisterGameTurnCallback(this.callbacks.updatePathTurn);
+
+            if (hasTarget) {
+                GuiAPI.printDebugText("Path ends on combat turn: "+name+" turn: "+turn)
+                this.cancelMovementPath();
+                return;
+            }
+
             if (!this.destinationTile) {
+                GuiAPI.printDebugText("No destination at turn end: "+name)
+                this.cancelMovementPath();
                 console.log("sometimes no destination tile", this)
                 return;
             }
@@ -66,7 +99,7 @@ class MovementPath {
                 this.currentPosTile.indicateTileStatus(false);
             }
             if (!gridTile) {
-                console.log("This breaks sometimes... investigate!", this)
+                console.log("This breaks sometimes... investigate!", pos)
                 return;
             }
             gridTile.indicateTileStatus(false);

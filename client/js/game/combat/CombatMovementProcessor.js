@@ -8,6 +8,15 @@ class CombatMovementProcessor {
     moveToEngagedTarget(engageTarget) {
 
         let rangeCheck = this.gamePiece.distanceToReachTarget(engageTarget);
+
+        if (GameAPI.pieceIsMainChar(this.gamePiece)) {
+            let combatTarget = this.gamePiece.getStatusByKey('combatTarget');
+            if (combatTarget) {
+                console.log("Main char is cool in combat")
+                return;
+            }
+        }
+
         if (rangeCheck > 0) {
         //    console.log("Move to Target", engageTarget);
             this.gamePiece.setStatusValue('combatTarget', null);
@@ -20,7 +29,6 @@ class CombatMovementProcessor {
         } else {
             this.initiateCombat(engageTarget);
         }
-
 
     }
 

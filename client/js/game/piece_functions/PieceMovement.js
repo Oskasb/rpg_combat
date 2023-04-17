@@ -74,11 +74,11 @@ class PieceMovement {
                 processTile(tile, timePerTile)
 
                 if (!tilePath.length) {
-                    callback()
+
                 }
 
             } else {
-
+                callback(tile)
             }
         }
 
@@ -100,7 +100,7 @@ class PieceMovement {
 
             let spos = gamePiece.getPos()
        //     evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tpos, color:'WHITE', size:0.4})
-            this.moveToTargetAtTime('walk', spos, tile.getPos(), travelTime, nextTileCB, 0.01)
+            this.moveToTargetAtTime('walk', spos, tile.getPos(), travelTime, nextTileCB, 0.1)
         }.bind(this)
 
         nextTileCB();
