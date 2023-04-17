@@ -73,10 +73,11 @@ class PieceMovement {
                 tile.indicateTileStatus(false);
                 if (!tilePath.length) {
                     timePerTile *= 1.2;
+                    callback()
                 }
                 processTile(tile, timePerTile)
             } else {
-                callback()
+                
             }
         }
 

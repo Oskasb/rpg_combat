@@ -21,9 +21,9 @@
                   "widget_config_id":"scene_page_header_text_box",
                   "options":{
                     "text":"TREETOWN",
-                    "anchor":"top_center",
+                    "anchor":"bottom_center",
                     "offset_x": 0.0,
-                    "offset_y":-0.025
+                    "offset_y": 0.04
                   }
                 },
 

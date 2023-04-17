@@ -348,6 +348,7 @@ class MovementPath {
     }
 
     tickMovementPath(tpf, gameTime) {
+
         let encounterGrid = GameAPI.getActiveEncounterGrid();
         if (encounterGrid) {
             if (encounterGrid.gridTiles.length) {
@@ -365,7 +366,9 @@ class MovementPath {
                 }
 
                 if (this.isPathing === false) {
-                    this.moveAlongActiveGridPath();
+                    if (GameAPI.getTurnStatus().pauseProgress === 0) {
+                        this.moveAlongActiveGridPath();
+                    }
                 }
 
                 this.updatePathTiles()

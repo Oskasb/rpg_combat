@@ -63,7 +63,7 @@ class DebugView {
             return this.isActive;
         }.bind(this)
 
-        DebugUtils.createDebugButton('DEBUG', this.callbacks.onActivate, testActive, 'top_left', 0.035, -0.01)
+        DebugUtils.createDebugButton('DEBUG', this.callbacks.onActivate, testActive, 'bottom_left', 0.037, 0.03)
 
     }
 

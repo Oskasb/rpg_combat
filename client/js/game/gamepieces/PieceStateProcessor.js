@@ -287,6 +287,8 @@ class PieceStateProcessor {
             console.log("Dead cant fight, no need to update")
             return;
         }
+        status.pauseProgress = GameAPI.gameMain.turnStatus.pauseProgress;
+        status.autoPause = GameAPI.gameMain.turnStatus.autoPause;
         status.lifetime += tpf;
         this.updateHealthStatus(status, config)
     }

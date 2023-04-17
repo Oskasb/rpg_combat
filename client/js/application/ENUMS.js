@@ -74,7 +74,7 @@ if(typeof(ENUMS) === "undefined"){
         SCENARIO_TEXT:              49,
         SCENARIO_HEADER:            50,
         SWITCH_BACK_GUI_PAGE:       51,
-
+        TOGGLE_AUTO_TURN_PAUSE:     52
     };
 
     ENUMS.Args = {

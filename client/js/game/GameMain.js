@@ -21,8 +21,27 @@ class GameMain {
             turnTime:4,
             turnProgress:0,
             turn:0,
-            timeRemaining:timeRemaining
+            timeRemaining:timeRemaining,
+            autoPause:0,
+            pauseRemaining:0,
+            pauseProgress:0,
+            pauseTurn:0
         }
+
+        let togglePause = function(event) {
+
+            if (this.turnStatus.autoPause === 0) {
+                this.turnStatus.autoPause = event['pause_duration'];
+                this.turnStatus.pauseTurn = this.turnStatus.turn;
+            } else {
+                this.turnStatus.autoPause = 0
+            }
+
+
+            console.log("Toggle pause", event, this.turnStatus);
+        }.bind(this)
+
+        evt.on(ENUMS.Event.TOGGLE_AUTO_TURN_PAUSE, togglePause)
 
         this.activeScenario = null;
         this.callbacks = {};
@@ -68,19 +87,19 @@ class GameMain {
                     gamePiece.getSpatial().setPosVec3(tempVec3);
                     GameAPI.getPlayerMain().callbacks.addToStash(gamePiece);
                 }.bind(this);
-/*
-                GameAPI.createGamePiece({piece:"BELT_BRONZE"        }, itemCallback);
-                GameAPI.createGamePiece({piece:"HELMET_VIKING"      }, itemCallback);
-                GameAPI.createGamePiece({piece:"BELT_PLATE"         }, itemCallback);
-                GameAPI.createGamePiece({piece:"LEGS_CHAIN"         }, itemCallback);
-                GameAPI.createGamePiece({piece:"BOOTS_SCALE"        }, itemCallback);
-                GameAPI.createGamePiece({piece:"GLOVES_SCALE"       }, itemCallback);
-                GameAPI.createGamePiece({piece:"SHIRT_SCALE"        }, itemCallback);
-                GameAPI.createGamePiece({piece:"LEGS_SCALE"         }, itemCallback);
-                GameAPI.createGamePiece({piece:"LEGS_BRONZE"        }, itemCallback);
-                GameAPI.createGamePiece({piece:"BREASTPLATE_BRONZE" }, itemCallback);
-                GameAPI.createGamePiece({piece:"SHIRT_CHAIN"        }, itemCallback);
-*/
+                /*
+                                GameAPI.createGamePiece({piece:"BELT_BRONZE"        }, itemCallback);
+                                GameAPI.createGamePiece({piece:"HELMET_VIKING"      }, itemCallback);
+                                GameAPI.createGamePiece({piece:"BELT_PLATE"         }, itemCallback);
+                                GameAPI.createGamePiece({piece:"LEGS_CHAIN"         }, itemCallback);
+                                GameAPI.createGamePiece({piece:"BOOTS_SCALE"        }, itemCallback);
+                                GameAPI.createGamePiece({piece:"GLOVES_SCALE"       }, itemCallback);
+                                GameAPI.createGamePiece({piece:"SHIRT_SCALE"        }, itemCallback);
+                                GameAPI.createGamePiece({piece:"LEGS_SCALE"         }, itemCallback);
+                                GameAPI.createGamePiece({piece:"LEGS_BRONZE"        }, itemCallback);
+                                GameAPI.createGamePiece({piece:"BREASTPLATE_BRONZE" }, itemCallback);
+                                GameAPI.createGamePiece({piece:"SHIRT_CHAIN"        }, itemCallback);
+                */
                 evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
                     id:"home_scenario",
                     dynamic:"home_hovel_dynamic"
@@ -149,14 +168,14 @@ class GameMain {
             this.activeScenario.initGameDynamicScenario(dynamicId, dynamicReady)
         }.bind(this)
 
-            if (this.activeScenario) {
-                if (this.activeScenario.scenarioId === scenarioId) {
+        if (this.activeScenario) {
+            if (this.activeScenario.scenarioId === scenarioId) {
 
-                    staticReadyCB();
-                    return;
-                }
+                staticReadyCB();
+                return;
             }
-            this.closeGameScenario();
+        }
+        this.closeGameScenario();
         this.initGameScenario(scenarioId, staticId, staticReadyCB)
 
     }
@@ -178,7 +197,7 @@ class GameMain {
 
     closeGameScenario() {
         if (!this.activeScenario) {
-        //    console.log("No Game Scenario active... cancelling")
+            //    console.log("No Game Scenario active... cancelling")
         } else {
             let scenario = this.activeScenario;
             this.activeScenario = null;
@@ -200,26 +219,45 @@ class GameMain {
         return MATH.quickSplice(this.onTurnCallbacks, callback);
     }
 
-    updateMainGameTurn(tpf, gameTime) {
+    updateMainGameTurn(frame) {
 
-        this.turnStatus.totalTime = gameTime;
+
+        this.turnStatus.pauseRemaining -= frame.tpf;
+        let pProg = this.turnStatus.pauseRemaining / this.turnStatus.autoPause;
+        this.turnStatus.pauseProgress = MATH.clamp(pProg, 0, 1);
+        if (this.turnStatus.pauseProgress !== 0) {
+            frame.tpf = 0;
+            return;
+        }
+
+        this.turnStatus.totalTime += frame.tpf;
         let turnTime = this.turnStatus.turnTime;
-        this.turnStatus.turnProgress -= tpf / turnTime;
+        this.turnStatus.turnProgress -= frame.tpf / turnTime;
         if (this.turnStatus.turnProgress < 0) {
+
             this.turnStatus.turn++;
             this.turnStatus.turnProgress++;
+
+            if (this.turnStatus.autoPause !== 0) {
+                this.turnStatus.pauseTurn = this.turnStatus.turn
+                if (GameAPI.getActivePlayerCharacter().gamePiece.getStatusByKey('charState') !== ENUMS.CharacterState.IDLE_HANDS) {
+                    this.turnStatus.pauseRemaining = this.turnStatus.autoPause;
+                }
+            }
+
             MATH.callAll(this.onTurnCallbacks, this.turnStatus)
+
         }
     }
 
     updateGameMain(frame) {
-        this.gameTime+= frame.tpf;
 
-        this.updateMainGameTurn(frame.tpf, this.gameTime);
+        this.updateMainGameTurn(frame);
+        this.gameTime = this.turnStatus.totalTime;
 
-            if (this.activeScenario) {
-                this.activeScenario.tickGameScenario(frame);
-            }
+        if (this.activeScenario) {
+            this.activeScenario.tickGameScenario(frame);
+        }
 
         for (let i = 0; i < this.onUpdateCallbacks.length; i++) {
             this.onUpdateCallbacks[i](frame.tpf, this.gameTime)
