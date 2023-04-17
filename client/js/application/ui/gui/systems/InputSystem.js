@@ -137,6 +137,8 @@ class InputSystem {
 
                 // check world space pointer here for activating...
 
+
+
                     if (interactiveElem === currentPressedElement) {
                     //    GuiAPI.printDebugText("RELEASE POINTER ON ACTIVE ELEMENT");
 

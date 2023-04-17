@@ -278,8 +278,10 @@ class GuiAPI {
     };
 
     releaseWorldSpacePointer = function(pointer) {
-        GameAPI.handleWorldSpacePointerUpdate(pointer, false, true)
-        MATH.quickSplice(this.worldSpacePointers, pointer)
+        if (MATH.arrayContains(this.worldSpacePointers, pointer)) {
+            GameAPI.handleWorldSpacePointerUpdate(pointer, false, true)
+            MATH.quickSplice(this.worldSpacePointers, pointer)
+        }
     };
 
     unregisterWorldSpacePointer = function(pointer) {
