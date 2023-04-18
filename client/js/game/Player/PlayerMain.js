@@ -298,7 +298,7 @@ class PlayerMain {
         let status = GameAPI.getMainCharPiece().getStatus()
         let addHp = Math.floor(Math.random()*10)
         let addDmg = Math.floor(Math.random()*4);
-        let addAttacks = Math.floor(Math.random()*1.4);
+        let addAttacks = 0.2 + Math.floor(Math.random()*1.4);
         let addLevel = 1;
         status.FAST += addAttacks;
         status.maxHP += addHp;

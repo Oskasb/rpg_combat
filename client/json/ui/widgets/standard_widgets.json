@@ -67,6 +67,26 @@
               }
             },
             {
+              "id":"widget_attack_point_container",
+              "layout":"layout_attack_point_container",
+              "surface": {
+                "nineslice": "nineslice_surface_attack_points_container",
+                "feedback": "feedback_surface_anchor"
+              }
+            },
+            {
+              "id":"icon_attack_point",
+              "layout":"layout_attack_point",
+              "icon": {
+                "icon_config": "attack_point_icon",
+                "feedback": "feedback_attack_icon"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_attack_point_icon",
+                "feedback": "feedback_surface_attack_icon"
+              }
+            },
+            {
               "id":"widget_action_point_container",
               "layout":"layout_action_point_container",
               "icon": {

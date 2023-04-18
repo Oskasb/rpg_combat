@@ -77,6 +77,13 @@ class PieceStateProcessor {
 
         status.charState = status.targState;
 
+        if (MATH.isEvenNumber(GameAPI.getTurnStatus().turn)){
+            status.turnAttacks = Math.ceil(status.FAST);
+        } else {
+            status.turnAttacks = Math.floor(status.FAST);
+        }
+
+
         let target = status.gamePiece.getTarget()
         if (target) {
             if (target.isDead) {
@@ -212,7 +219,7 @@ class PieceStateProcessor {
     }
 
     processAttacks(status, config) {
-        status.attacks = status[ENUMS.getKey('AttackType', status.atkType)]
+        status.attacks = status.turnAttacks;
         if (status.attacks) {
             this.processAttack(status, config);
         }

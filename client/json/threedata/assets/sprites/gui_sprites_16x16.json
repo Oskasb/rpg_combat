@@ -269,6 +269,14 @@
           {
             "id":"armor_light",
             "tiles":[[5, 0]]
+          },
+          {
+            "id":"atk_on",
+            "tiles":[[1, 6]]
+          },
+          {
+            "id":"atk_off",
+            "tiles":[[2, 6]]
           }
         ]
       }

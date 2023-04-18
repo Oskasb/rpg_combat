@@ -180,7 +180,7 @@
             "maxHP": 190,
             "hp": 190,
             "dmg": 1,
-            "FAST": 1,
+            "FAST": 2.5,
             "xp_value": 450
           },
           "actor":"ACTOR_DUDE",

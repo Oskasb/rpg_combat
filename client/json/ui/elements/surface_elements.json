@@ -51,6 +51,28 @@
               }
             },
             {
+              "id":"nineslice_surface_attack_point_icon",
+              "config": {
+                "padding": { "x":0.0, "y":0.0},
+                "image": {
+                  "layer": "UI_ELEMENTS_BACK",
+                  "atlas_key": "GUI_16x16",
+                  "border_thickness": {"x": 0.001, "y": 0.001}
+                }
+              }
+            },
+            {
+              "id":"nineslice_surface_attack_points_container",
+              "config": {
+                "padding": { "x":0.0, "y":0.0},
+                "image": {
+                  "layer": "UI_ELEMENTS_BACK",
+                  "atlas_key": "GUI_16x16",
+                  "border_thickness": {"x": 0.002, "y": 0.002}
+                }
+              }
+            },
+            {
               "id":"nineslice_surface_action_status_container",
               "config": {
                 "padding": { "x":0.0, "y":0.0},

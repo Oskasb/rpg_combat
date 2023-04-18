@@ -19,6 +19,15 @@
               }
             },
             {
+              "id":"feedback_surface_attack_icon",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": -0.2, "g": -0.1, "b": 0.3, "a": 0.6},
+                  "sprite": "atk_on"
+                }
+              }
+            },
+            {
               "id":"feedback_surface_header_text_box",
               "config": {
                 "NONE": {
