@@ -2,7 +2,7 @@ class InstanceSpatial{
 
         constructor(obj3d) {
             this.obj3d = obj3d;
-            let frameMovement = new THREE.Vector3(0.0, 0.01, 0.0);
+            let frameMovement = new THREE.Vector3(0.0, 0.0, 0.0);
 
             let getFrameVelocity = function(tpf, storeVec3) {
                 storeVec3.copy(frameMovement);

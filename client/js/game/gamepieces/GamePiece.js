@@ -8,12 +8,15 @@ import { PieceMovement } from "../piece_functions/PieceMovement.js";
 import { MovementPath } from "../piece_functions/MovementPath.js";
 import { PieceState } from "./PieceState.js";
 import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
+import { CompanionSystem } from "../companion/CompanionSystem.js";
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
 
 let tempVec3 = new Vector3();
 
 class GamePiece {
     constructor(config, callback) {
+        this.companions = [];
+        this.character = null;
         this.isDead = false;
         this.gamePieceUpdateCallbacks = [];
         this.pieceActionSystem = new PieceActionSystem();
@@ -25,6 +28,7 @@ class GamePiece {
         this.modelInstance = null;
         this.pieceState = new PieceState(this);
         this.pieceInfoGui = new PieceInfoGui(this)
+        this.companionSystem = new CompanionSystem(this)
 
         let tickGamePiece = function(tpf, gameTime) {
             if (this.isDead) {
@@ -36,6 +40,11 @@ class GamePiece {
             this.pieceAttacher.tickAttacher();
             this.pieceState.tickPieceState(tpf, gameTime);
             this.movementPath.tickMovementPath(tpf, gameTime);
+            for (let i = 0; i < this.companions.length; i++) {
+                this.companions[i].companionSystem.tickCompanionSystem(tpf, gameTime);
+                this.companions[i].callbacks.tickGamePiece(tpf, gameTime);
+            }
+
         }.bind(this);
 
         let tickPieceEquippedItem = function(tpf, gameTime) {
@@ -92,6 +101,10 @@ class GamePiece {
     getSpatial = function() {
         return this.modelInstance.getSpatial();
     };
+
+    getCharacter(){
+        return this.character;
+    }
 
     getPos = function() {
         return this.getSpatial().obj3d.position;
@@ -196,6 +209,33 @@ class GamePiece {
 
     };
 
+    addCompanion(gamePiece) {
+        if (MATH.arrayContains(this.companions, gamePiece)) return;
+        console.log("char adds companion")
+    //    GameAPI.takePieceFromWorld(gamePiece);
+        let dynChars = GameAPI.getActiveDynamicScenario().characters;
+        let pieces = GameAPI.getActiveDynamicScenario().pieces;
+        MATH.quickSplice(dynChars, gamePiece.getCharacter());
+        MATH.quickSplice(pieces, gamePiece);
+        this.companions.push(gamePiece);
+    }
+
+    getCompanionFormationDestination(endTile, companion) {
+        let companionIndex = this.companions.indexOf(companion);
+        if (!endTile) {
+            tempVec3.copy(this.getPos())
+        } else {
+            tempVec3.copy(endTile.getPos());
+        }
+
+        if (companionIndex === 0) {
+            tempVec3.x -=1;
+            tempVec3.z -=1;
+        }
+
+        return tempVec3;
+
+    }
     showGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
             tempVec3.set(1, 1, 1);
@@ -207,10 +247,11 @@ class GamePiece {
     };
 
     disbandGamePiece() {
-        GameAPI.takePieceFromWorld(this);
         this.movementPath.cancelMovementPath()
-        this.modelInstance.decommissionInstancedModel();
-        this.gamePieceUpdateCallbacks.length = 0;
+            GameAPI.takePieceFromWorld(this);
+            this.modelInstance.decommissionInstancedModel();
+            this.gamePieceUpdateCallbacks.length = 0;
+
     };
 
 

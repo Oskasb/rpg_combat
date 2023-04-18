@@ -138,9 +138,14 @@ class GameWorldPointer {
             }
         }
 
-
         tempVec3.copy(playerPiece.getPos());
         screenDistance(tempVec3, playerPiece)
+
+        let companions = playerPiece.companions
+        for (let i = 0; i < companions.length; i++) {
+            tempVec3.copy(companions[i].getPos());
+            screenDistance(tempVec3, companions[i])
+        }
 
         for (let i = 0; i < characters.length; i++) {
             let gamePiece = characters[i].gamePiece

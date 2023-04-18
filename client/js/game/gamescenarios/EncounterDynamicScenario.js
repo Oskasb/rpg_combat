@@ -147,6 +147,7 @@ class EncounterDynamicScenario {
                 let charCB = function(character) {
                     characters.push(character);
                     let gamePiece = character.gamePiece;
+                    gamePiece.character = character;
                     GameAPI.addPieceToWorld(gamePiece);
                     ScenarioUtils.resetScenarioCharacterPiece(gamePiece);
                     gamePiece.setStatusValue('isCharacter', 1)
@@ -193,7 +194,9 @@ class EncounterDynamicScenario {
         GuiAPI.guiPageSystem.closeGuiPage(this.page);
         while (this.pieces.length) {
             let piece = this.pieces.pop();
-            piece.disbandGamePiece()
+        //    if (!piece.pieceState.status.following) {
+                piece.disbandGamePiece()
+        //    }
         }
 
         while (this.characters.length) {

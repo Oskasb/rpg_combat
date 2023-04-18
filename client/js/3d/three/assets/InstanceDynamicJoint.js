@@ -32,16 +32,7 @@ class InstanceDynamicJoint {
             this.obj3d.scale.multiply(this.offsetObj3d.scale);
             this.obj3d.quaternion.multiply(this.offsetObj3d.quaternion);
 
-
-
-            this.jointArgs[0] = ENUMS.Event.DYNAMIC_JOINT;
-            this.jointArgs[1] = this.jointEnum;
-            this.jointArgs[2] = this.obj3d.position.x;
-            this.jointArgs[3] = this.obj3d.position.y;
-            this.jointArgs[4] = this.obj3d.position.z;
-
-        //    evt.fire(this.instancedModel.getPointer()+ENUMS.Numbers.PTR_PING_OFFSET, this.jointArgs);
-
+        //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos: this.obj3d.position, color:'GREEN', size:0.1})
         };
 
         updateSpatialFrame = function() {

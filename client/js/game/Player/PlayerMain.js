@@ -223,6 +223,17 @@ class PlayerMain {
             return;
         }
 
+        if (gamePiece.getStatusByKey('following') === this.playerCharacter.gamePiece) {
+
+            console.log("select follower, switch control here..")
+            return;
+        }
+
+        if (gamePiece.getStatusByKey('companion')) {
+            gamePiece.setStatusValue('following', this.playerCharacter.gamePiece)
+            this.playerCharacter.gamePiece.addCompanion(gamePiece);
+            return;
+        }
 
         if (gamePiece.getStatusByKey('isItem')) {
             let playerPiece = this.playerCharacter.gamePiece;

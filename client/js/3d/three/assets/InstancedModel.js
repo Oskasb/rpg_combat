@@ -233,9 +233,6 @@ class InstancedModel {
 
         updateSpatialWorldMatrix = function() {
 
-        //    this.getSpatial().updateSpatialMatrix();
-
-
             for (var key in this.originalModel.jointMap) {
 
                 if (key === 'FOOT_L' || key === 'FOOT_R') {
@@ -258,17 +255,17 @@ class InstancedModel {
                 }
             }
 
+            this.getSpatial().getFrameMovement( this.tempVec3b);
 
-            let moveDist = this.tempVec3b;
-            this.getSpatial().getFrameMovement(moveDist);
-            if (moveDist.lengthSq()) {
+            if ( this.tempVec3b.lengthSq()) {
                 let pos = this.tempVec3;
                 this.getSpatial().getSpatialPosition(pos);
+
                 this.unifVec.x = pos.x;
                 this.unifVec.y = pos.y;
                 this.unifVec.z = pos.z;
+            //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos: this.unifVec, color:'CYAN', size:0.1})
                 ThreeAPI.registerDynamicGlobalUniform('character',this.unifVec)
-                moveDist.set(0, 0, 0);
             }
         };
 

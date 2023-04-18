@@ -7,6 +7,8 @@
           "status": {
             "name": "Gideon",
             "faction": "GOOD",
+            "companion": 1,
+            "following": null,
             "aggro_range": 39,
             "height": 1.85,
             "size": 1,
@@ -20,8 +22,32 @@
           "actor":"ACTOR_FIGHTER",
           "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE", "LEGS_BRONZE"],
           "inventory": [
-            "HELMET_VIKING", "BELT_PLATE", "LEGS_CHAIN", "BOOTS_SCALE", "GLOVES_SCALE", "SHIRT_SCALE",
-            "LEGS_SCALE", "LEGS_BRONZE", "BREASTPLATE_BRONZE", "SHIRT_CHAIN"
+
+          ]
+        }
+      },
+      {
+        "id":"COMPANION_ONE",
+        "data":{
+          "status": {
+            "name": "Bucket",
+            "faction": "GOOD",
+            "companion": 1,
+            "following": null,
+            "aggro_range": 39,
+            "height": 1.85,
+            "size": 1,
+            "hp": 8,
+            "maxHP": 8,
+            "dmg": 1,
+            "FAST": 1,
+            "xp_value": 20
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["NINJASWORD", "HELMET_VIKING", "BELT_BRONZE", "LEGS_CHAIN", "BREASTPLATE_BRONZE"],
+          "inventory": [
+
           ]
         }
       },
