@@ -1,6 +1,12 @@
 
 class CharacterStatusGui {
     constructor() {
+        this.colorMap = {
+            on:{"r": 0.11, "g": 0.75, "b": 0.75, "a": 0.99},
+            active:{"r": 0.45, "g": 0.95, "b": 0.99, "a": 0.99},
+            off:{"r": 0.35, "g": 0.35, "b": 0.85, "a": 0.99}
+        }
+
         this.tempVec3 = new THREE.Vector3();
         this.tempVec3b = new THREE.Vector3();
         this.attackPointElements = [];
@@ -101,7 +107,6 @@ class CharacterStatusGui {
         let container = this.attacksContainer;
         let onReady = function(element) {
             attackElements.push(element);
-            console.log("add attack", element)
             element.guiWidget.setWidgetIconKey('atk_on');
             container.guiWidget.applyWidgetPosition()
         }
@@ -117,11 +122,36 @@ class CharacterStatusGui {
     }
 
 
-    updateAttackPointElements(maxAttacks, currentAttack, remainingAttacks) {
+    updateAttackPointElements(maxAttacks, currentAttack, attackProgress) {
         if (this.attackPointElements.length !== maxAttacks) {
             this.updateMaxAttackCount(maxAttacks)
         }
 
+        for (let i = 0; i < this.attackPointElements.length; i++) {
+            let element = this.attackPointElements[i].guiWidget;
+            let bufferElem = element.icon.bufferElement;
+            if (maxAttacks - i === currentAttack) {
+                if (attackProgress < 0.5) {
+                    element.setWidgetIconKey('atk_on');
+                    bufferElem.setColorRGBA(this.colorMap['active']);
+                } else {
+                    element.setWidgetIconKey('atk_on');
+                    bufferElem.setColorRGBA(this.colorMap['off']);
+                }
+
+            } else if (maxAttacks - i < currentAttack) {
+                element.setWidgetIconKey('atk_off');
+                bufferElem.setColorRGBA(this.colorMap['off']);
+            } else {
+                element.setWidgetIconKey('atk_on');
+                bufferElem.setColorRGBA(this.colorMap['on']);
+            }
+
+
+
+
+
+        }
 
     }
 
@@ -137,7 +167,7 @@ class CharacterStatusGui {
         this.swingProgressElement.setProgress(0, 1, Math.sin( this.gamePiece.getStatusByKey('atkProg') * Math.PI))
         this.tempVec3b.y-=0.004
         this.attacksContainer.guiWidget.setPosition(this.tempVec3b)
-        this.updateAttackPointElements(this.gamePiece.getStatusByKey('turnAttacks'), this.gamePiece.getStatusByKey('attack'), this.gamePiece.getStatusByKey('attacks'))
+        this.updateAttackPointElements(this.gamePiece.getStatusByKey('turnAttacks'), this.gamePiece.getStatusByKey('attack'), this.gamePiece.getStatusByKey('atkProg'))
     }
 
 }

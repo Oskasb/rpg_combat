@@ -22,7 +22,7 @@
               "id":"feedback_surface_attack_icon",
               "config": {
                 "NONE": {
-                  "color_rgba": {"r": -0.2, "g": -0.1, "b": 0.3, "a": 0.6},
+                  "color_rgba": {"r": 0.15, "g": 0.15, "b": 0.45, "a": 0.02},
                   "sprite": "atk_on"
                 }
               }
