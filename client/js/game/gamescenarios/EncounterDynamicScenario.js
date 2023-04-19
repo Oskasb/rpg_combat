@@ -111,6 +111,11 @@ class EncounterDynamicScenario {
 
 
         ScenarioUtils.resetScenarioCharacterPiece(GameAPI.getActivePlayerCharacter().gamePiece);
+        let companions = GameAPI.getActivePlayerCharacter().gamePiece.companions
+        for (let i = 0; i < companions.length; i++) {
+            ScenarioUtils.resetScenarioCharacterPiece(companions[i]);
+        }
+
 
         if (this.encounterGrid.gridTiles.length) {
             let tPos = this.encounterGrid.getPlayerStartTile().obj3d.position;

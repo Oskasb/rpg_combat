@@ -106,6 +106,20 @@ class GuiPointerWidget {
         }
     }
 
+    showPointerWidgetLongPressOn() {
+        //   GuiAPI.printDebugText('World Seek');
+        let count =this.surfaceElements.length;
+        for (let i = 0; i < this.surfaceElements.length; i++) {
+
+            let offset = i/count * 0.06 - 0.031;
+            let fade = 1/Math.sqrt(i);
+
+            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 9999);
+            this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, offset, offset);
+            this.callbacks.applyColorToNineslice(this.surfaceElements[i], 0.2*fade, 0.5*fade, 0.7*fade, 0.8)
+        }
+    }
+
     showPointerWorldSeeking() {
      //   GuiAPI.printDebugText('World Seek');
         let count = this.surfaceElements.length

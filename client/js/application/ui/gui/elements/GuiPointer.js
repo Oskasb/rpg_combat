@@ -101,9 +101,15 @@ class GuiPointer {
     setLongPressProgress(progress) {
         this.longPressProgress = progress;
         tempObj.quaternion.set(0, 0, 0, 1);
-        tempObj.rotateZ(MATH.TWO_PI * progress);
-        console.log(progress);
+        tempObj.rotateZ(MATH.HALF_PI * progress);
+
         this.guiPointerWidget.setElementQuaternion( tempObj.quaternion);
+
+        if (progress === 1) {
+            this.guiPointerWidget.showPointerWidgetLongPressOn();
+        } else {
+            this.guiPointerWidget.showPointerWorldSeeking();
+        }
     }
 
         setPointerPosition = function(vec3) {

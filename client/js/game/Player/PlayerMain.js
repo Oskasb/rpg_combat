@@ -105,13 +105,22 @@ class PlayerMain {
             }
         }.bind(this)
 
-        let returnHome = function() {
-            let gamePiece = GameAPI.getMainCharPiece()
+        let ressAtHome = function(gamePiece) {
             gamePiece.isDead = false;
             gamePiece.movementPath.cancelMovementPath()
             gamePiece.setStatusValue('hp', gamePiece.getStatusByKey('maxHP'));
             gamePiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
             gamePiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);
+        }
+
+        let returnHome = function() {
+            let gamePiece = GameAPI.getMainCharPiece()
+            ressAtHome(gamePiece);
+
+            for (let i = 0; i < gamePiece.companions.length; i++) {
+                ressAtHome(gamePiece.companions[i])
+            }
+
             evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
                 id:"home_scenario",
                 dynamic:"home_hovel_dynamic"
@@ -317,9 +326,9 @@ class PlayerMain {
 
 
         let status = GameAPI.getMainCharPiece().getStatus()
-        let addHp = Math.floor(Math.random()*10)
-        let addDmg = Math.floor(Math.random()*4);
-        let addAttacks = 0.2 + Math.floor(Math.random()*1.4);
+        let addHp = Math.floor(Math.random()*20)
+        let addDmg = 1+Math.floor(Math.random()*1.5);
+        let addAttacks = 0.3 + Math.floor(Math.random()*1.2);
         let addLevel = 1;
         status.FAST += addAttacks;
         status.maxHP += addHp;

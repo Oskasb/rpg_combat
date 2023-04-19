@@ -91,7 +91,13 @@ class PieceStateProcessor {
                 this.gamePiece.clearEngagementStatus();
                 return;
             }
+        } else {
+            if (status.hp < status.maxHP) {
+                status.hp = MATH.clamp(Math.floor(status.hp+status.level*1.5), status.hp, status.maxHP);
+            }
         }
+
+
 
         this.gamePiece.combatSystem.combatTargetProcessor.updateCombatTarget(this.gamePiece);
         this.gamePiece.combatSystem.engageTarget(this.gamePiece.getStatusByKey('engagingTarget'));

@@ -51,8 +51,8 @@ class InputState {
     };
 
     processDragState = function(inputState) {
-        inputState.dragDistance[0] = inputState.dx;
-        inputState.dragDistance[1] = inputState.dy;
+        inputState.dragDistance[0] = inputState.x - inputState.startDrag[0];
+        inputState.dragDistance[1] = inputState.y - inputState.startDrag[1];
     };
 
     updateInputState = function(inputState) {
@@ -99,7 +99,9 @@ class InputState {
     };
 
     handleLeftButtonPress = function(inputState) {
-        if (!inputState.pressingButton) {
+
+        if (inputState.pressFrames === 0) {
+            console.log(inputState.dragDistance)
             inputState.startDrag[0] = inputState.x;
             inputState.startDrag[1] = inputState.y;
         }

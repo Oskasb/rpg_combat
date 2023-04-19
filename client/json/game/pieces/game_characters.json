@@ -32,15 +32,16 @@
           "status": {
             "name": "Bucket",
             "faction": "GOOD",
+            "level": 3,
             "companion": 1,
             "following": null,
             "aggro_range": 39,
             "height": 1.85,
             "size": 1,
-            "hp": 8,
-            "maxHP": 8,
-            "dmg": 1,
-            "FAST": 1,
+            "hp": 22,
+            "maxHP": 2,
+            "dmg": 2,
+            "FAST": 2,
             "xp_value": 20
           },
 
@@ -60,8 +61,8 @@
             "level": 6,
             "height": 1.85,
             "size": 1,
-            "hp": 45,
-            "maxHP": 45,
+            "hp": 145,
+            "maxHP": 145,
             "dmg": 4,
             "FAST": 4,
             "xp_value": 150

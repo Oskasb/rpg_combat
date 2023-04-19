@@ -14,8 +14,8 @@
               },
               "camera": {
                 "mode": "follow_cam_main_char",
-                "offset_pos": [3, 2.2, -4],
-                "offset_lookAt": [0, 1.6, 0]
+                "offset_pos": [4, 3.5, -5],
+                "offset_lookAt": [0, 1.5, 0]
               },
               "gui_page":"page_scene_dungeon",
               "environment": "evening",

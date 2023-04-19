@@ -66,6 +66,13 @@ function positionPlayer(config, tPos, sPos) {
     }
 
     playerMovement.moveToTargetAtTime('walk', sourcePos, targetPos, travelTimeMax, arriveCallback)
+
+    let companions = player.companions;
+    for (let i = 0; i < companions.length; i++) {
+        companions[i].companionSystem.enterScenarioWithMaster();
+    }
+
+
 }
 
 function setupBoxGrid(instances, boxGrid) {
