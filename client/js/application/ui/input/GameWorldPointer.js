@@ -18,7 +18,7 @@ class GameWorldPointer {
 
 
     worldPointerFindPath(pointer) {
-        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
+        let playerPiece = GameAPI.getMainCharPiece();
         let targetPos = null
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
             targetPos = pointer.worldSpaceTarget.getPos();
@@ -58,7 +58,7 @@ class GameWorldPointer {
         if (GuiAPI.calls.getInMenu() === true) {
             return;
         }
-        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece;
+        let playerPiece = GameAPI.getMainCharPiece();
         //    console.log("Release Movement Pointer")
         playerPiece.movementPath.clearTilePathStatus();
 
@@ -92,7 +92,7 @@ class GameWorldPointer {
         pointer.setLongPressProgress(0) //
     }
     updateWorldPointer = function(pointer, isFirstPressFrame) {
-        let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece
+        let playerPiece = GameAPI.getMainCharPiece()
         playerPiece.movementPath.cancelMovementPath( );
         if (GuiAPI.calls.getInMenu() === true) {
             return;
@@ -187,7 +187,7 @@ class GameWorldPointer {
                 }
 
                 pointer.worldSpaceTarget = worldSelection;
-                let rangeCheck = GameAPI.getActivePlayerCharacter().gamePiece.distanceToReachTarget(worldSelection)
+                let rangeCheck = GameAPI.getMainCharPiece().distanceToReachTarget(worldSelection)
                 if (rangeCheck > 0) {
                     this.worldPointerFindPath(pointer)
                 }

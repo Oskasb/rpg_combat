@@ -166,14 +166,16 @@ class PlayerMain {
 
 
     setPlayerCharacter(character, oldMain) {
-
+        GameAPI.setActivePlayerCharacter(character);
         if (oldMain) {
             GameAPI.unregisterGameUpdateCallback(oldMain.getOnUpdateCallback())
         }
         GameAPI.registerGameUpdateCallback(character.gamePiece.getOnUpdateCallback())
 
         character.gamePiece.setStatusValue('isCharacter', 1);
-        if (!this.mainCharPage) {
+        if (this.mainCharPage) {
+            GuiAPI.closePage(this.mainCharPage);
+        }
             let openMainCharPage = function() {
                 this.mainCharPage = GuiAPI.activatePage("page_player_main");
             }.bind(this);
@@ -181,7 +183,7 @@ class PlayerMain {
             setTimeout(function() {
                 openMainCharPage();
             }, 2000)
-        }
+
 
         this.playerCharacter = character;
         let data = {
@@ -213,7 +215,7 @@ class PlayerMain {
 
     handleTargetSelected(event) {
 
-        let playerPiece = this.playerCharacter.gamePiece
+        let playerPiece = GameAPI.getMainCharPiece();
 
         let gamePiece = event.piece;
         if (!gamePiece) {
@@ -254,7 +256,7 @@ class PlayerMain {
             if (gamePiece.getStatusByKey('following') === playerPiece) {
                 if (longPress === 1) {
                     console.log("select follower, switch control here..")
-                    GameAPI.setActivePlayerCharacter(gamePiece.character);
+                    gamePiece.setStatusValue('following', null)
                     gamePiece.addCompanion(playerPiece);
                     MATH.quickSplice(playerPiece.companions, gamePiece);
                     while (playerPiece.companions.length) {
@@ -267,7 +269,7 @@ class PlayerMain {
 
             if (gamePiece.getStatusByKey('companion')) {
                 if (longPress === 1) {
-                    gamePiece.setStatusValue('following', playerPiece)
+
                     playerPiece.addCompanion(gamePiece);
                 }
                 return;
@@ -275,7 +277,7 @@ class PlayerMain {
 
 
         if (gamePiece.getStatusByKey('isItem')) {
-            let playerPiece = this.playerCharacter.gamePiece;
+            let playerPiece = GameAPI.getMainCharPiece();
             if (playerPiece.distanceToReachTarget(gamePiece) < 1) {
                 GameAPI.addItemToPlayerInventory(gamePiece, 1);
             } else {
@@ -290,18 +292,18 @@ class PlayerMain {
             return;
         }
 
-        let oldTarget = this.playerCharacter.gamePiece.getStatusByKey('selectedTarget');
+        let oldTarget = GameAPI.getMainCharPiece().getStatusByKey('selectedTarget');
         if (oldTarget) {
             this.handleTargetUnselected();
         }
 
-        this.playerCharacter.gamePiece.setStatusValue('selectedTarget', gamePiece);
+        GameAPI.getMainCharPiece().setStatusValue('selectedTarget', gamePiece);
         this.selectionIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 1, 6, -0.5, 1.1, 0);
 
     }
 
     handleTargetUnselected() {
-        this.playerCharacter.gamePiece.setStatusValue('selectedTarget', null);
+        GameAPI.getMainCharPiece().setStatusValue('selectedTarget', null);
         this.selectionIndicator.removeTargetIndicatorFromPiece()
         this.selectionIndicator.removeIndicatorFx()
     }

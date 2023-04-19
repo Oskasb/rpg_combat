@@ -29,7 +29,7 @@ function positionPlayer(config, tPos, sPos) {
     let targetPos =tempVec1;
     let pos = config['pos'];
     let rot = config['rot'];
-    let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
+    let player = GameAPI.getMainCharPiece();
 
     let maxAllowedTravelDistance = 10;
     let travelTimeMax = 3;

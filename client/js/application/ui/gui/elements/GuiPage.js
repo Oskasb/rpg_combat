@@ -40,7 +40,7 @@ class GuiPage {
         }
 
         let applyCamParams = function(camConf) {
-            let playerChar = GameAPI.getActivePlayerCharacter().gamePiece;
+            let playerChar = GameAPI.getMainCharPiece();
             let height = playerChar.getStatusByKey('height');
             let inFrontVec = tempVec3;
             inFrontVec.set(-0.2, 0, height*1.4);
@@ -130,8 +130,8 @@ class GuiPage {
         }
 
         let scene = GameAPI.getActiveDynamicScenario();
-        GameAPI.getActivePlayerCharacter().gamePiece.removePieceUpdateCallback(scene.call.updateCamera)
-        GameAPI.getActivePlayerCharacter().gamePiece.addPieceUpdateCallback(this.call.updateCamera)
+        GameAPI.registerGameUpdateCallback(scene.call.updateCamera)
+        GameAPI.unregisterGameUpdateCallback(this.call.updateCamera)
         this.call.applyCamParams(camParams);
 
     }
@@ -170,8 +170,8 @@ class GuiPage {
         if (this.hasCamera) {
             // return camera to scenario setting;
             let scene = GameAPI.getActiveDynamicScenario();
-            GameAPI.getActivePlayerCharacter().gamePiece.removePieceUpdateCallback(this.call.updateCamera)
-            GameAPI.getActivePlayerCharacter().gamePiece.addPieceUpdateCallback(scene.call.updateCamera)
+            GameAPI.unregisterGameUpdateCallback(this.call.updateCamera)
+            GameAPI.registerGameUpdateCallback(scene.call.updateCamera)
         }
         this.isActive = false;
    //     console.log("Close gui page ", this);

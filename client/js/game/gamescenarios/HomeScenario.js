@@ -15,7 +15,7 @@ class HomeScenario {
 
     tickHomeScenario() {
         let scenarioTime = GameAPI.getGameTime();
-        let player = GameAPI.getActivePlayerCharacter().getCharacterPiece();
+        let player = GameAPI.getMainCharPiece()();
         if (player){
 
             if (Math.random() < 0.02) {

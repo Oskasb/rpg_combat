@@ -214,8 +214,8 @@ class GamePiece {
 
     addCompanion(gamePiece) {
         if (MATH.arrayContains(this.companions, gamePiece)) return;
-        console.log("char adds companion")
-    //    GameAPI.takePieceFromWorld(gamePiece);
+        gamePiece.setStatusValue('following', this)
+        console.log("piece adds companion", gamePiece)
         let dynChars = GameAPI.getActiveDynamicScenario().characters;
         let pieces = GameAPI.getActiveDynamicScenario().pieces;
         MATH.quickSplice(dynChars, gamePiece.getCharacter());

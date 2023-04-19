@@ -21,7 +21,7 @@ class GameScenario {
     }
 
     activateDynamicScenario() {
-        ScenarioUtils.resetScenarioCharacterPiece(GameAPI.getActivePlayerCharacter().gamePiece);
+        ScenarioUtils.resetScenarioCharacterPiece(GameAPI.getMainCharPiece());
         if (this.dynamicScenario) this.dynamicScenario.dynamicScenarioActivate()
     }
 

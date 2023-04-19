@@ -13,7 +13,7 @@ class ThreatDetector {
     }
 
     appropriatelyTreatKnownHostile = function(hostileChar) {
-        if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+        if (this.gamePiece === GameAPI.getMainCharPiece()) {
             this.threatEvent.piece = hostileChar;
             this.threatEvent.value = true;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE,  this.threatEvent)
@@ -42,7 +42,7 @@ class ThreatDetector {
     }
 
     unregisterKnownHostile = function(hostileChar) {
-        if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+        if (this.gamePiece === GameAPI.getMainCharPiece()) {
             this.threatEvent.piece = hostileChar;
             this.threatEvent.value = false;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, this.threatEvent)

@@ -26,7 +26,7 @@ class CombatSystem {
    //     console.log("ATTACK TARGET: ", this.gamePiece.getStatusByKey('charState'))
 
         if (this.currentTarget !== combatTarget) {
-            if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+            if (this.gamePiece === GameAPI.getMainCharPiece()) {
                 this.targetEvent.piece = combatTarget;
                 this.targetEvent.value = true;
                 evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)
@@ -37,7 +37,7 @@ class CombatSystem {
 
     disengageTarget(disengageTarget) {
         this.gamePiece.setStatusValue('trgAtkTyp', ENUMS.AttackType.NONE);
-            if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+            if (this.gamePiece === GameAPI.getMainCharPiece()) {
                 this.targetEvent.piece = disengageTarget;
                 this.targetEvent.value = false;
                 evt.dispatch(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, this.targetEvent)

@@ -36,7 +36,7 @@ class GameAPI {
     }
 
     addItemToPlayerInventory(itemPiece, transitionTime) {
-        this.activePlayerCharacter.pickupItem(itemPiece, transitionTime)
+        this.getActivePlayerCharacter().pickupItem(itemPiece, transitionTime)
     }
 
     getWorldItemPieces() {
@@ -72,7 +72,7 @@ class GameAPI {
     }
 
     getActivePlayerCharacter() {
-        return this.activePlayerCharacter;
+        return this.gameMain.getPlayerCharacter();
     }
 
     pieceIsMainChar(gamePiece) {
@@ -80,7 +80,7 @@ class GameAPI {
     }
 
     getMainCharPiece = function() {
-        return this.activePlayerCharacter.gamePiece
+        return this.gameMain.getPlayerCharacter().gamePiece
     }
 
     getActiveDynamicScenario() {

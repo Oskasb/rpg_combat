@@ -4,7 +4,7 @@ class CombatOpponentStatusProcessor {
     }
 
     engagingTarget(opponentPiece, engagedTarget) {
-        if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+        if (this.gamePiece === GameAPI.getMainCharPiece()) {
         //    console.log("Main Char ignores opponent engagements")
             return;
         }

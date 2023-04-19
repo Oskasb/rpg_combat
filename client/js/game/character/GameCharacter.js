@@ -28,7 +28,7 @@ class GameCharacter {
 
     setCharacterPiece(gamePiece, equipSlotConfigId) {
         this.gamePiece = gamePiece;
-        gamePiece.gameCharacter = this;
+        gamePiece.character = this;
         this.characterStatus.activateCharacterStatus(gamePiece);
 
         for (let key in this.config.status) {

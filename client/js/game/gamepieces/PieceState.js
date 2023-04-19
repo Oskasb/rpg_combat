@@ -79,11 +79,11 @@ class PieceState {
         let charState = this.status.charState;
         if (this.isCombatRelatedState(charState)) {
             if (!this.isCombatRelatedState(this.lastState)) {
-                this.gamePiece.gameCharacter.activateCharStatusGui()
+                this.gamePiece.character.activateCharStatusGui()
             }
         } else {
             if (this.isCombatRelatedState(this.lastState)) {
-                this.gamePiece.gameCharacter.deactivateCharStatusGui()
+                this.gamePiece.character.deactivateCharStatusGui()
             }
         }
         this.lastState = charState;
@@ -96,7 +96,7 @@ class PieceState {
         let statePre = this.status.charState;
         this.pieceStateProcessor.processGamePieceState(this.status, this.config, tpf, time)
         if (statePre !== this.status.charState) {
-            if (this.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+            if (this.gamePiece === GameAPI.getMainCharPiece()) {
 
                 let target = this.gamePiece.getTarget();
                 if (target) {

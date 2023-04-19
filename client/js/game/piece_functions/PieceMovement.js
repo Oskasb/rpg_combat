@@ -86,7 +86,7 @@ class PieceMovement {
         let processTile = function(tile, travelTime) {
        //     console.log("Process Tile: ", travelTime);
 
-            if (gamePiece !== GameAPI.getActivePlayerCharacter().gamePiece) {
+            if (gamePiece !== GameAPI.getMainCharPiece()) {
                 let target = gamePiece.getTarget()
                 if (target) {
                     let rangeCheck = gamePiece.distanceToReachTarget(target)

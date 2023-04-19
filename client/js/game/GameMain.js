@@ -80,7 +80,7 @@ class GameMain {
         let charReady = function(char) {
 //            console.log("Player Char:", char)
             GameAPI.getPlayerMain().setPlayerCharacter(char);
-            GameAPI.setActivePlayerCharacter(char);
+
             let initPlayerStash = function() {
                 let itemCallback = function(gamePiece) {
                     GameAPI.getPlayerMain().playerStash.findPositionInStash(tempVec3);
@@ -100,14 +100,13 @@ class GameMain {
                                 GameAPI.createGamePiece({piece:"BREASTPLATE_BRONZE" }, itemCallback);
                                 GameAPI.createGamePiece({piece:"SHIRT_CHAIN"        }, itemCallback);
                 */
-                evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
-                    id:"home_scenario",
-                    dynamic:"home_hovel_dynamic"
-                });
-
             }
-            initPlayerStash()
 
+            initPlayerStash()
+            evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
+                id:"home_scenario",
+                dynamic:"home_hovel_dynamic"
+            });
 
         }.bind(this)
 
@@ -125,6 +124,9 @@ class GameMain {
         this.onUpdateCallbacks.push(callback);
     }
 
+    getPlayerCharacter() {
+        return this.playerMain.playerCharacter
+    }
     removeGameUpdateCallback(callback) {
         return MATH.quickSplice(this.onUpdateCallbacks, callback);
     }
@@ -245,7 +247,7 @@ class GameMain {
 
             if (this.turnStatus.autoPause !== 0) {
                 this.turnStatus.pauseTurn = this.turnStatus.turn
-                if (GameAPI.getActivePlayerCharacter().gamePiece.getStatusByKey('charState') !== ENUMS.CharacterState.IDLE_HANDS) {
+                if (GameAPI.getMainCharPiece().getStatusByKey('charState') !== ENUMS.CharacterState.IDLE_HANDS) {
                     this.turnStatus.pauseRemaining = this.turnStatus.autoPause;
                 }
             }

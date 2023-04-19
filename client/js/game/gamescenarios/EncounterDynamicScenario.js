@@ -75,7 +75,7 @@ class EncounterDynamicScenario {
             this.call.applyCamParams(camParams);
             let camFollow = this.call.updateCamera;
             setTimeout(function() {
-                GameAPI.getActivePlayerCharacter().gamePiece.addPieceUpdateCallback(camFollow)
+                GameAPI.registerGameUpdateCallback(camFollow)
             }, 200)
         }
     }
@@ -110,8 +110,8 @@ class EncounterDynamicScenario {
 
 
 
-        ScenarioUtils.resetScenarioCharacterPiece(GameAPI.getActivePlayerCharacter().gamePiece);
-        let companions = GameAPI.getActivePlayerCharacter().gamePiece.companions
+        ScenarioUtils.resetScenarioCharacterPiece(GameAPI.getMainCharPiece());
+        let companions = GameAPI.getMainCharPiece().companions
         for (let i = 0; i < companions.length; i++) {
             ScenarioUtils.resetScenarioCharacterPiece(companions[i]);
         }
@@ -193,7 +193,7 @@ class EncounterDynamicScenario {
     }
 
     exitScenario() {
-        GameAPI.getActivePlayerCharacter().gamePiece.removePieceUpdateCallback(this.call.updateCamera)
+        GameAPI.unregisterGameUpdateCallback(this.call.updateCamera)
         evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
         this.isActive = false;
         GuiAPI.guiPageSystem.closeGuiPage(this.page);

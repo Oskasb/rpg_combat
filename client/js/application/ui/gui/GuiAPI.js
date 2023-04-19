@@ -123,6 +123,10 @@ class GuiAPI {
         this.instantiator.recoverBufferElement(uiSysKey, bufferElement)
     };
 
+    closePage(page) {
+        this.guiPageSystem.closeGuiPage(page)
+    }
+
     registerTextSurfaceElement = function(elemKey, txtElem) {
         this.registeredTextElements[elemKey] = txtElem;
         this.textSystem.addTextElement(txtElem);

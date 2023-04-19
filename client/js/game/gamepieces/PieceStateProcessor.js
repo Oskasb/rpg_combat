@@ -157,7 +157,7 @@ class PieceStateProcessor {
         status.gamePiece.combatSystem.disengageTarget(status.gamePiece.getTarget());
         this.clearCombatState(status)
 
-        if (status.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+        if (status.gamePiece === GameAPI.getMainCharPiece()) {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
 
             status.xp += status.xp_value;
@@ -279,7 +279,7 @@ class PieceStateProcessor {
                 this.updatePieceTurn(status, config)
                 status.targState = ENUMS.CharacterState.LIE_DEAD;
                 status.charState = ENUMS.CharacterState.LIE_DEAD;
-                if (status.gamePiece === GameAPI.getActivePlayerCharacter().gamePiece) {
+                if (status.gamePiece === GameAPI.getMainCharPiece()) {
 
                     evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:'player_dead', time:20});
                     evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });
@@ -288,7 +288,7 @@ class PieceStateProcessor {
                     }, 3000)
 
                 } else {
-                    status.gamePiece.gameCharacter.deactivateCharIndicator();
+                    status.gamePiece.character.deactivateCharIndicator();
                     GameAPI.inactivateWorldPiece(status.gamePiece);
                 }
             }

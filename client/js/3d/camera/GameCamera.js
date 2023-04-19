@@ -90,7 +90,7 @@ class GameCamera {
     }
 
     updatePlayerCamera = function(camParams) {
-        let playerPos = GameAPI.getActivePlayerCharacter().gamePiece.getPos()
+        let playerPos = GameAPI.getMainCharPiece().getPos()
         camParams.pos[0] = playerPos.x + camParams.offsetPos[0];
         camParams.pos[1] = playerPos.y + camParams.offsetPos[1];
         camParams.pos[2] = playerPos.z + camParams.offsetPos[2];
