@@ -1,3 +1,6 @@
+import { Object3D } from "../../../../../libs/three/core/Object3D.js";
+let tempObj = new Object3D()
+
 class TargetIndicator {
     constructor() {
 
@@ -37,14 +40,14 @@ class TargetIndicator {
         let effectCb = function(efct) {
             this.indicators.push(efct);
             efct.activateEffectFromConfigId()
-            ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1);
-            ThreeAPI.tempObj.lookAt(0, 1, 0);
-            efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+            tempObj.quaternion.set(0, 0, 0, 1);
+            tempObj.lookAt(0, 1, 0);
+            efct.setEffectQuaternion(tempObj.quaternion);
             gamePiece.getSpatial().getSpatialPosition(ThreeAPI.tempVec3);
             ThreeAPI.tempVec3.y+=0.03;
             efct.setEffectPosition(ThreeAPI.tempVec3)
-            ThreeAPI.tempObj.lookAt(0, 1, 0);
-            efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+            tempObj.lookAt(0, 1, 0);
+            efct.setEffectQuaternion(tempObj.quaternion);
 
             if (typeof (tileX) === 'number' && typeof(tileY) === 'number') {
                 efct.setEffectSpriteXY(tileX, tileY);
@@ -69,9 +72,9 @@ class TargetIndicator {
             efct.setEffectPosition(ThreeAPI.tempVec3)
 
             if (spinSpeed) {
-                ThreeAPI.tempObj.lookAt(0, 1, 0);
-                ThreeAPI.tempObj.rotateZ(time*spinSpeed);
-                efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+                tempObj.lookAt(0, 1, 0);
+                tempObj.rotateZ(time*spinSpeed);
+                efct.setEffectQuaternion(tempObj.quaternion);
             }
 
 

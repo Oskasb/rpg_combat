@@ -7,6 +7,8 @@ class CompanionSystem {
     }
 
 
+
+
     updateCompanion(tpf, gameTime) {
         let followingPiece = this.gamePiece.getStatusByKey('following');
         if (!followingPiece) {

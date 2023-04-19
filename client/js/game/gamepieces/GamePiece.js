@@ -109,6 +109,9 @@ class GamePiece {
     getPos = function() {
         return this.getSpatial().obj3d.position;
     }
+    getQuat = function() {
+        return this.getSpatial().obj3d.quaternion;
+    }
     distanceToReachTarget = function(targetPiece) {
         let targetTile = targetPiece.movementPath.getTileAtPos(targetPiece.getPos());
         let tile = this.movementPath.getTileAtPos(this.getPos());
@@ -220,22 +223,7 @@ class GamePiece {
         this.companions.push(gamePiece);
     }
 
-    getCompanionFormationDestination(endTile, companion) {
-        let companionIndex = this.companions.indexOf(companion);
-        if (!endTile) {
-            tempVec3.copy(this.getPos())
-        } else {
-            tempVec3.copy(endTile.getPos());
-        }
 
-        if (companionIndex === 0) {
-            tempVec3.x -=1;
-            tempVec3.z -=1;
-        }
-
-        return tempVec3;
-
-    }
     showGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
             tempVec3.set(1, 1, 1);

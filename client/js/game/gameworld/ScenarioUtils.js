@@ -155,7 +155,7 @@ function spawnPatch(instances, patch) {
     let instanceReturns = function(instance) {
         adds++
         let offsetScale = MATH.sillyRandomBetween(spreadScale[0], spreadScale[1], adds);
-        let obj3d = ThreeAPI.tempObj;
+        let obj3d = tempObj;
         obj3d.quaternion.set(0, 0, 0, 1);
         obj3d.rotateX(-MATH.HALF_PI);
         MATH.randomRotateObj(obj3d, spreadRot, adds);
@@ -309,6 +309,7 @@ function setupEncounterGrid(gridTiles, instances, gridConfig, scenarioGridConfig
                 tempVec1.applyQuaternion(quat);
 
                 if (grid[j][i][1] === 9) {
+                    gridTile.hidden = true;
                     instance.decommissionInstancedModel()
                 } else {
                     instance.spatial.setPosXYZ(tempVec1.x + offsetX,  tempVec1.y+ elevation*0.5, tempVec1.z + offsetZ);
@@ -341,12 +342,15 @@ function getTileForPosition(gridTiles, posVec3) {
 
         for (let j = 0; j < gridTiles[i].length; j++) {
             let tile = gridTiles[i][j];
-            tempVec2D.set(tile.obj3d.position.x - posVec3.x, tile.obj3d.position.z - posVec3.z);
-            let lengthSq = tempVec2D.lengthSq();
-            if (lengthSq < nearestTileDist) {
-                selectedTile = tile;
-                nearestTileDist = lengthSq;
+            if (tile.hidden === false) {
+                tempVec2D.set(tile.obj3d.position.x - posVec3.x, tile.obj3d.position.z - posVec3.z);
+                let lengthSq = tempVec2D.lengthSq();
+                if (lengthSq < nearestTileDist) {
+                    selectedTile = tile;
+                    nearestTileDist = lengthSq;
+                }
             }
+
         }
     }
 

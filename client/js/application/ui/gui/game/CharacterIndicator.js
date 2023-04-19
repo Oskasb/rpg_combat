@@ -1,3 +1,6 @@
+import { Object3D } from "../../../../../libs/three/core/Object3D.js";
+let tempObj = new Object3D()
+
 class CharacterIndicator {
     constructor() {
         this.tempVec3 = new THREE.Vector3();
@@ -23,14 +26,14 @@ class CharacterIndicator {
         let effectCb = function(efct) {
             this.indicators.push(efct);
             efct.activateEffectFromConfigId(true)
-            ThreeAPI.tempObj.quaternion.set(0, 0, 0, 1);
-            ThreeAPI.tempObj.lookAt(0, 1, 0);
-            efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+            tempObj.quaternion.set(0, 0, 0, 1);
+            tempObj.lookAt(0, 1, 0);
+            efct.setEffectQuaternion(tempObj.quaternion);
             gamePiece.getSpatial().getSpatialPosition(this.tempVec3);
             this.tempVec3.y+=0.03;
             efct.setEffectPosition(this.tempVec3)
-            ThreeAPI.tempObj.lookAt(0, 1, 0);
-            efct.setEffectQuaternion(ThreeAPI.tempObj.quaternion);
+            tempObj.lookAt(0, 1, 0);
+            efct.setEffectQuaternion(tempObj.quaternion);
 
             if (typeof (tileX) === 'number' && typeof(tileY) === 'number') {
                 efct.setEffectSpriteXY(tileX, tileY);

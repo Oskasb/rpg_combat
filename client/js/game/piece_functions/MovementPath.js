@@ -1,7 +1,4 @@
-import { Vector3 } from "../../../libs/three/math/Vector3.js";
 import { TilePath } from "./TilePath.js";
-
-let tempVec3 = new Vector3();
 
 class MovementPath {
     constructor(gamePiece) {

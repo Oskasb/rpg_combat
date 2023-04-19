@@ -1,5 +1,7 @@
 import {Vector3} from "../../../libs/three/math/Vector3.js";
+import { Object3D } from "../../../libs/three/core/Object3D.js";
 
+let tempObj = new Object3D()
 let tempVec3 = new Vector3();
 
 class CharacterMovement {
@@ -48,7 +50,7 @@ class CharacterMovement {
     }
 
     applyRotation(speed) {
-        ThreeAPI.tempObj.quaternion.set(0, 1, 0,0)
+        tempObj.quaternion.set(0, 1, 0,0)
         let targetPiece = this.gamePiece.getTarget();
         if (targetPiece) {
                 if (targetPiece.isDead) {
@@ -58,12 +60,12 @@ class CharacterMovement {
                 }
 
             tempVec3.set(0, 0, 1);
-            ThreeAPI.tempObj.lookAt(tempVec3);
+            tempObj.lookAt(tempVec3);
             this.spatial.obj3d.lookAt(targetPiece.getPos())
         } else if (speed > 0.000001) {
             let angY = MATH.vectorXZToAngleAxisY(this.vel);
-            ThreeAPI.tempObj.rotateY(angY);
-            this.spatial.obj3d.quaternion.copy(ThreeAPI.tempObj.quaternion)
+            tempObj.rotateY(angY);
+            this.spatial.obj3d.quaternion.copy(tempObj.quaternion)
         }
 
     }

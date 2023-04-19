@@ -1,6 +1,10 @@
+import { Object3D } from "../../../../libs/three/core/Object3D.js";
+
+let tempObj = new Object3D()
+
 class InstancingBufferElement {
     constructor() {
-        this.tempObj = ThreeAPI.tempObj;
+        this.tempObj = tempObj;
         this.position = new THREE.Vector3();
         this.quaternion = new THREE.Quaternion();
         this.scale = new THREE.Vector3();
