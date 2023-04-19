@@ -166,7 +166,6 @@ class PlayerMain {
 
 
     setPlayerCharacter(character, oldMain) {
-        GameAPI.setActivePlayerCharacter(character);
         if (oldMain) {
             GameAPI.unregisterGameUpdateCallback(oldMain.getOnUpdateCallback())
         }
@@ -199,7 +198,7 @@ class PlayerMain {
     }
 
     stashItemPiece(piece, time) {
-        let playerPiece = this.getPlayerCharacter().gamePiece;
+        let playerPiece = GameAPI.getMainCharPiece();
         this.playerStash.findPositionInStash(this.tempVec);
         playerPiece.getSpatial().getSpatialPosition(tempVec3)
         piece.getPieceMovement().moveToTargetAtTime('stash', tempVec3, this.tempVec, time, this.callbacks.addToStash);

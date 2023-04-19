@@ -130,8 +130,8 @@ class GuiPage {
         }
 
         let scene = GameAPI.getActiveDynamicScenario();
-        GameAPI.registerGameUpdateCallback(scene.call.updateCamera)
-        GameAPI.unregisterGameUpdateCallback(this.call.updateCamera)
+        GameAPI.unregisterGameUpdateCallback(scene.call.updateCamera)
+        GameAPI.registerGameUpdateCallback(this.call.updateCamera)
         this.call.applyCamParams(camParams);
 
     }
