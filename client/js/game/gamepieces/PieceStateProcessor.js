@@ -265,9 +265,6 @@ class PieceStateProcessor {
             this.updatePieceTurn(status, config)
         } else {
             let opponentPiece = status.gamePiece.getTarget();
-            if (opponentPiece) {
-                opponentPiece.clearEngagementStatus();
-            }
             status.gamePiece.applyPieceDeadStatus();
             if (status.charState !== ENUMS.CharacterState.LIE_DEAD) {
                 status.charState = ENUMS.CharacterState.LIE_DEAD;
@@ -291,6 +288,10 @@ class PieceStateProcessor {
                     status.gamePiece.character.deactivateCharIndicator();
                     GameAPI.inactivateWorldPiece(status.gamePiece);
                 }
+            }
+
+            if (opponentPiece) {
+                opponentPiece.notifyOpponentKilled();
             }
         }
     }

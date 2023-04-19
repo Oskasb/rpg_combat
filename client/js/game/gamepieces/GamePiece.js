@@ -202,6 +202,23 @@ class GamePiece {
         this.movementPath.cancelMovementPath()
         this.pieceState.pieceStateProcessor.clearCombatState(this.pieceState.status)
     }
+    notifyOpponentKilled() {
+        let newTarget = this.threatDetector.getNearestKnownHostile().gamePiece;
+
+        if (newTarget) {
+            let rangeCheck = this.distanceToReachTarget(newTarget);
+            if (rangeCheck > 0) {
+                this.setStatusValue('engageTarget', newTarget);
+            } else {
+                console.log("NEW TARGET IN MELEE RANGE",newTarget, this.getStatusByKey('charState'))
+                this.combatSystem.attackCombatTarget(newTarget);
+                this.combatSystem.selectedTarget = newTarget;
+            //    this.setStatusValue('engageTarget', newTarget);
+                this.setStatusValue('combatTarget', newTarget);
+                this.setStatusValue('charState', ENUMS.CharacterState.COMBAT);
+            }
+        }
+    }
     hideGamePiece = function() {
         if (this.getSpatial().geometryInstance) {
             tempVec3.set(0, 0, 0);

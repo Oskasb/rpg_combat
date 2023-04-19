@@ -1,5 +1,5 @@
 import * as SpatialUtils from "../../application/utils/SpatialUtils.js";
-
+let hostileList = [];
 
 class ThreatDetector {
     constructor(gamePiece) {
@@ -35,10 +35,8 @@ class ThreatDetector {
                         this.gamePiece.setStatusValue('selectedTarget', hostileChar.gamePiece);
                     }
                 }
-
             }
         }
-
     }
 
     unregisterKnownHostile = function(hostileChar) {
@@ -47,7 +45,6 @@ class ThreatDetector {
             this.threatEvent.value = false;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, this.threatEvent)
         }
-
     }
 
     updateNearbyHostiles = function() {
@@ -59,6 +56,7 @@ class ThreatDetector {
 
             if (hostileChar.gamePiece.isDead) {
             //    console.log("The dead are not hostile anymore")
+                _this.unregisterKnownHostile(hostileChar);
             } else {
                 if (this.knownHostiles.indexOf(hostileChar) === -1) {
                     {
@@ -68,7 +66,6 @@ class ThreatDetector {
                 _this.appropriatelyTreatKnownHostile(hostileChar);
             }
 
-
         }
 
         for (let i = 0; i < this.knownHostiles.length; i++) {
@@ -77,6 +74,11 @@ class ThreatDetector {
                 _this.unregisterKnownHostile(MATH.quickSplice(this.knownHostiles, hostileChar));
             }
         }
+    }
+
+    getNearestKnownHostile() {
+        this.determineCombatThreat();
+        return SpatialUtils.getNearestCharacter(this.gamePiece.getSpatial(), this.hostilesInRange);
     }
 
     determineCombatThreat() {

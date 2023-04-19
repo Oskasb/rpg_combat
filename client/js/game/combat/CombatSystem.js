@@ -23,7 +23,7 @@ class CombatSystem {
     };
 
     attackCombatTarget(combatTarget) {
-   //     console.log("ATTACK TARGET: ", this.gamePiece.getStatusByKey('charState'))
+
 
         if (this.currentTarget !== combatTarget) {
             if (this.gamePiece === GameAPI.getMainCharPiece()) {
