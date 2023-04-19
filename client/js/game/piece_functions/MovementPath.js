@@ -88,14 +88,14 @@ class MovementPath {
     updatePositionOnGrid(encounterGrid) {
         let pos = this.gamePiece.getPos();
         let gridTile = encounterGrid.getTileAtPosition(pos);
+        if (!gridTile) {
+            console.log("This breaks sometimes... investigate!", pos)
+            return;
+        }
         if (this.currentPosTile !== gridTile || gridTile.getTileStatus() === 'FREE'){
             if (this.currentPosTile) {
                 this.currentPosTile.setTileStatus('FREE');
                 this.currentPosTile.indicateTileStatus(false);
-            }
-            if (!gridTile) {
-                console.log("This breaks sometimes... investigate!", pos)
-                return;
             }
             gridTile.indicateTileStatus(false);
 

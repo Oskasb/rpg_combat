@@ -234,6 +234,10 @@ class GuiAPI {
     };
 
     addGuiUpdateCallback = function(cb) {
+        if (this.guiUpdateCallbacks.indexOf(cb) !== -1) {
+            console.log("Gui updateCB already added... fix!")
+            return;
+        }
         this.guiUpdateCallbacks.push(cb);
     };
 
@@ -307,14 +311,9 @@ class GuiAPI {
 
         this.guiDebug.updateDebugElements();
         this.instantiator.updateInstantiatorBuffers(time);
-    //    this.instantiator.monitorBufferStats();
-
-    //    if (this.registeredTextElements['main_text_box']) {
-    //        dymmy1(this.registeredTextElements['main_text_box']);
-    //    }
 
         MATH.callAll(this.guiUpdateCallbacks, tpf, time);
-     //   DebugAPI.generateTrackEvent('GUI_DT', time, 'ms', 2)
+
     };
 
 }

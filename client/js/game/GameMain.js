@@ -230,6 +230,11 @@ class GameMain {
             return;
         }
 
+        if (typeof (frame.tpf) !== 'number') {
+            console.log("Tpf not number... investigate!")
+            return;
+        }
+
         this.turnStatus.totalTime += frame.tpf;
         let turnTime = this.turnStatus.turnTime;
         this.turnStatus.turnProgress -= frame.tpf / turnTime;

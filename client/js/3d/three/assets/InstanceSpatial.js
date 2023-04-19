@@ -1,3 +1,11 @@
+
+let testVec3ForNaN = function(vec3) {
+    if (isNaN(vec3.x) || isNaN(vec3.y) || isNaN(vec3.z)) {
+        console.log("Spatial Vec3 is NaN.. investigate!")
+    }
+
+}
+
 class InstanceSpatial{
 
         constructor(obj3d) {
@@ -5,23 +13,29 @@ class InstanceSpatial{
             let frameMovement = new THREE.Vector3(0.0, 0.0, 0.0);
 
             let getFrameVelocity = function(tpf, storeVec3) {
+                testVec3ForNaN(frameMovement)
                 storeVec3.copy(frameMovement);
                 storeVec3.multiplyScalar(tpf);
+
             }.bind(this);
 
             let setPrePos = function(pos) {
+                testVec3ForNaN(pos)
                 frameMovement.copy(pos);
             }
 
             let setPostPos = function(pos) {
+                testVec3ForNaN(pos)
                 frameMovement.sub(pos);
             }
 
             let getMovement = function(store) {
+                testVec3ForNaN(frameMovement)
                 return store.copy(frameMovement);
             }
 
             let setStopped = function() {
+                testVec3ForNaN(frameMovement)
                 frameMovement.set(0, 0, 0)
             }
 
@@ -40,6 +54,7 @@ class InstanceSpatial{
         };
 
         getSpatialPosition = function(store) {
+            testVec3ForNaN(this.obj3d.position)
             store.copy(this.obj3d.position);
         };
 
@@ -47,6 +62,7 @@ class InstanceSpatial{
             this.obj3d.position.x = x;
             this.obj3d.position.y = y;
             this.obj3d.position.z = z;
+            testVec3ForNaN(this.obj3d.position)
             if (this.geometryInstance) {
                 this.geometryInstance.applyObjPos();
             }
@@ -58,6 +74,7 @@ class InstanceSpatial{
             obj3d.quaternion.y = 1;
             obj3d.quaternion.z = 0;
             obj3d.quaternion.w = 0;
+            testVec3ForNaN(this.obj3d.quaternion)
             obj3d.rotateX(x);
             obj3d.rotateY(y);
             obj3d.rotateZ(z)
@@ -70,12 +87,14 @@ class InstanceSpatial{
             this.obj3d.quaternion.y = y;
             this.obj3d.quaternion.z = z;
             this.obj3d.quaternion.w = w;
+            testVec3ForNaN(this.obj3d.quaternion)
             if (this.geometryInstance) {
                 this.geometryInstance.applyObjQuat();
             }
         };
 
         getQuat() {
+            testVec3ForNaN(this.obj3d.quaternion)
             return this.obj3d.quaternion;
         }
         setScaleXYZ = function(x, y, z) {
@@ -88,6 +107,7 @@ class InstanceSpatial{
         };
 
         setPosVec3 = function(posVec3) {
+            testVec3ForNaN(posVec3)
             this.call.setPrePos(this.obj3d.position);
             this.obj3d.position.copy(posVec3);
             this.call.setPosPos(posVec3)
@@ -122,6 +142,7 @@ class InstanceSpatial{
         };
 
         stickToObj3D(obj3d) {
+            testVec3ForNaN(obj3d.position)
             this.obj3d.position.copy(obj3d.position);
             this.obj3d.scale.copy(obj3d.scale);
             this.obj3d.quaternion.copy(obj3d.quaternion);

@@ -76,13 +76,15 @@ class Client {
 
         let frame = {
             tpf:clock.getDelta(),
-            elapsedTime:clock.elapsedTime,
-            z:0.0
+            elapsedTime:clock.elapsedTime
         };
 
         function triggerFrame() {
-            frame.z += 0.02;
             frame.tpf = clock.getDelta();
+            if (typeof (frame.tpf) !== 'number') {
+                console.log("Clock gives bad tpf...")
+                return;
+            }
             frame.elapsedTime = clock.elapsedTime;
             ThreeAPI.updateCamera();
             GuiAPI.updateGui(frame.tpf, frame.elapsedTime);

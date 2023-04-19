@@ -474,7 +474,13 @@ class ThreeAPI {
         return 'rgb('+Math.floor(r*255)+','+Math.floor(g*255)+','+Math.floor(b*255)+')';
     };
 
+
+    getSystemTime() {
+        return this.systemTime;
+    }
+
     requestFrameRender = function(frame) {
+        this.systemTime = frame.elapsedTime;
         this.threeSetup.callPrerender(frame);
     };
 

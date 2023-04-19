@@ -150,11 +150,35 @@ class ElementListeners {
 
     sampleMouseState = function(inputState) {
 
+
+        let updateLongPressProgress = function() {
+        //    console.log("update LPP")
+            if (Math.abs(inputState.dx) + Math.abs(inputState.dy) < 0.5) {
+                let lpProg = MATH.calcFraction(0, inputState.longPressTime, ThreeAPI.getSystemTime() - inputState.pressStartTime)
+                inputState.longPressProgress = MATH.clamp(lpProg, 0, 1,)
+            } else {
+                inputState.longPressProgress = 0
+            }
+        }
+
         if (inputState.action[0]) {
             inputState.pressFrames++;
+            if (inputState.pressFrames === 1) {
+                inputState.pressStartTime = ThreeAPI.getSystemTime();
+                GuiAPI.addGuiUpdateCallback(updateLongPressProgress)
+            } else if (inputState.longPressProgress === 0) {
+                GuiAPI.removeGuiUpdateCallback(updateLongPressProgress)
+                inputState.longPressProgress = 0;
+            }
+
         } else {
+            if (inputState.longPressProgress) {
+                GuiAPI.removeGuiUpdateCallback(updateLongPressProgress)
+            }
+
             inputState.pressFrames = 0;
         }
+
 
         inputState.x = this.x;
         inputState.y = this.y;

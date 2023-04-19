@@ -56,7 +56,11 @@ class GameAPI {
     }
 
     getGameTime = function() {
-        return this.gameMain.gameTime;
+        let time = this.gameMain.gameTime;
+        if (typeof (time) === 'undefined') {
+            console.log("Time is bad, investigate")
+        }
+        return time;
     }
 
     getTurnStatus() {

@@ -1,21 +1,34 @@
 import { GuiPointerWidget} from "../widgets/GuiPointerWidget.js";
-
+import { Object3D } from "../../../../../libs/three/core/Object3D.js";
+let tempObj = new Object3D();
 class GuiPointer {
-    constructor(inputIndex, dragDistance) {
+    constructor(inputState) {
             this.intersects = false;
-            this.dragDistance = dragDistance;
+            this.dragDistance = inputState.dragDistance;
             this.pos = new THREE.Vector3(0, 0, 0);
             this.scale = new THREE.Vector3(1, 1, 1);
             this.interactiveElement = null;
-            this.inputIndex = inputIndex;
+            this.inputIndex = inputState.index;
             this.worldSpaceIndicator = null;
             this.worldSpaceTarget = null;
             this.isSeeking = false;
             this.isHovering = false;
+            this.isLongPress = false;
+            this.longPressProgress = 0;
             this.isMovementInput = false;
-            this.guiPointerWidget = new GuiPointerWidget(inputIndex);
+            this.guiPointerWidget = new GuiPointerWidget(this.inputIndex);
             this.setupPointerElement( this.configId);
-            this.setInputIndex(inputIndex);
+            this.setInputIndex(this.inputIndex);
+
+
+            let getLongPressProgress = function() {
+                return inputState.longPressProgress;
+            }
+
+            this.call = {
+                getLongPressProgress:getLongPressProgress
+            }
+
         };
 
         setupPointerElement = function(configId) {
@@ -84,6 +97,14 @@ class GuiPointer {
             return this.inputIndex;
 
         };
+
+    setLongPressProgress(progress) {
+        this.longPressProgress = progress;
+        tempObj.quaternion.set(0, 0, 0, 1);
+        tempObj.rotateZ(MATH.TWO_PI * progress);
+        console.log(progress);
+        this.guiPointerWidget.setElementQuaternion( tempObj.quaternion);
+    }
 
         setPointerPosition = function(vec3) {
             this.pos.copy(vec3);

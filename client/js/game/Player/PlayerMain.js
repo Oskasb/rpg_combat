@@ -31,7 +31,7 @@ class PlayerMain {
         let stashInvItem = function(event) {
             let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item);
             if (!item) {
-        //        console.log("No item gotten from inventory..")
+                //        console.log("No item gotten from inventory..")
                 return;
             }
             this.stashItemPiece(item, event.time)
@@ -40,7 +40,7 @@ class PlayerMain {
         let equipItem = function (event) {
             let item = this.playerCharacter.getInventory().takeItemFromInventory(event.item);
             if (!item) {
-       //         console.log("No item gotten from stash..")
+                //         console.log("No item gotten from stash..")
                 return;
             }
             this.playerCharacter.getEquipment().characterEquipItem(item)
@@ -49,7 +49,7 @@ class PlayerMain {
         let unequipItem = function(event) {
             let item = this.playerCharacter.getEquipment().takeEquippedItem(event.item);
             if (!item) {
-        //        console.log("No item gotten from equipment..")
+                //        console.log("No item gotten from equipment..")
                 return;
             }
             GameAPI.addItemToPlayerInventory(item, 0.5);
@@ -99,7 +99,7 @@ class PlayerMain {
 
         let selectTarget = function(event) {
             if (event.value === true) {
-                this.handleTargetSelected(event.piece)
+                this.handleTargetSelected(event)
             } else {
                 this.handleTargetUnselected(event.piece)
             }
@@ -188,52 +188,62 @@ class PlayerMain {
     }
 
     handleHostileAdded(hostileChar) {
-    //    hostileChar.activateCharStatusGui()
+        //    hostileChar.activateCharStatusGui()
     }
 
     handleHostileRemoved(hostileChar) {
-    //    hostileChar.deactivateCharStatusGui()
+        //    hostileChar.deactivateCharStatusGui()
     }
 
-    handleTargetSelected(gamePiece) {
+    handleTargetSelected(event) {
 
-        if (gamePiece === this.playerCharacter.gamePiece) {
-            let switchCallback = function() {
-
-            }
-
-            if (!gamePiece.getTarget()) {
-
-                let currentPage = GameAPI.getActiveDynamicScenario().page;
-                if (currentPage.isActive === false) {
-                    return;
-                }
-                if (!gamePiece.movementPath.destinationTile || gamePiece.movementPath.destinationTile === gamePiece.movementPath.getTileAtPos(gamePiece.getPos())) {
-                    GuiAPI.guiPageSystem.switchFromCurrentActiveToPage(currentPage, 'page_scene_hero', switchCallback);
-                }
-
-            } else {
-                console.log("Player Select self while having a target... nothing happens for now")
-            }
-            return;
-        }
-
+        let gamePiece = event.piece;
+        let longPress = event.longPress;
         if (gamePiece.isDead) {
             console.log('No selecting the dead')
             return;
         }
 
-        if (gamePiece.getStatusByKey('following') === this.playerCharacter.gamePiece) {
 
-            console.log("select follower, switch control here..")
-            return;
-        }
 
-        if (gamePiece.getStatusByKey('companion')) {
-            gamePiece.setStatusValue('following', this.playerCharacter.gamePiece)
-            this.playerCharacter.gamePiece.addCompanion(gamePiece);
-            return;
-        }
+            if (gamePiece === this.playerCharacter.gamePiece) {
+                let switchCallback = function() {
+
+                }
+                if (longPress === 1) {
+                if (!gamePiece.getTarget()) {
+
+                    let currentPage = GameAPI.getActiveDynamicScenario().page;
+                    if (currentPage.isActive === false) {
+                        return;
+                    }
+                    if (!gamePiece.movementPath.destinationTile || gamePiece.movementPath.destinationTile === gamePiece.movementPath.getTileAtPos(gamePiece.getPos())) {
+                        GuiAPI.guiPageSystem.switchFromCurrentActiveToPage(currentPage, 'page_scene_hero', switchCallback);
+                    }
+
+                } else {
+                    console.log("Player Select self while having a target... nothing happens for now")
+                }
+                }
+                return;
+            }
+
+
+            if (gamePiece.getStatusByKey('following') === this.playerCharacter.gamePiece) {
+                if (longPress === 1) {
+                    console.log("select follower, switch control here..")
+                }
+                return;
+            }
+
+            if (gamePiece.getStatusByKey('companion')) {
+                if (longPress === 1) {
+                    gamePiece.setStatusValue('following', this.playerCharacter.gamePiece)
+                    this.playerCharacter.gamePiece.addCompanion(gamePiece);
+                }
+                return;
+            }
+
 
         if (gamePiece.getStatusByKey('isItem')) {
             let playerPiece = this.playerCharacter.gamePiece;
@@ -268,14 +278,14 @@ class PlayerMain {
     }
 
     handleTargetEngaged(gamePiece) {
-     //   console.log("handleTargetEngaged")
+        //   console.log("handleTargetEngaged")
         this.targetIndicator.removeTargetIndicatorFromPiece()
         this.targetIndicator.removeIndicatorFx()
         this.targetIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 0, 5, 0, 1.03, 0.06, 5);
     }
 
     handleTargetDisengaged() {
-     //   console.log("handleTargetDisengaged")
+        //   console.log("handleTargetDisengaged")
         this.targetIndicator.removeTargetIndicatorFromPiece()
         this.targetIndicator.removeIndicatorFx()
     }

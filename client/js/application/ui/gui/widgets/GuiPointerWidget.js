@@ -131,24 +131,17 @@ class GuiPointerWidget {
 
     setElementPosition = function(posVec3) {
         this.pos.copy(posVec3);
-    //    this.guiWidget.icon.getBufferElement().setPositionVec3(this.pos);
-    //    this.guiWidget.guiSurface.getBufferElement().setPositionVec3(this.pos);
-
-    //    posVec3.x = 0;
-    //    posVec3.y = 0;
-    //    posVec3.z = -1;
-
-    //    GameScreen.fitView(this.pos);
-
         for (let i = 0; i < this.hostWidgets.length; i++) {
             this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.4, 999999, 0.5, true)
             this.surfaceElements[i].setPositionVec3(this.pos);
-
-        //    this.hostWidgets[i].offsetWidgetPosition(posVec3)
-        //    this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, 0.015+i*0.01, 0.025+i*0.01)
         }
-
     };
+
+    setElementQuaternion = function(quat) {
+        for (let i = 0; i < this.hostWidgets.length; i++) {
+            this.surfaceElements[i].setQuat(quat);
+        }
+    }
 
     addInputUpdateCallback = function(applyInputUpdate) {
         this.applyInputCallbacks.push(applyInputUpdate)

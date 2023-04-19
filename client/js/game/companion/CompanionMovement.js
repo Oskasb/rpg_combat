@@ -27,18 +27,18 @@ class CompanionMovement {
             tempObj.position.copy(followingPiece.getPos())
         }
 
-        if (companionIndex === 0) {
+        if (MATH.isEvenNumber(companionIndex)) {
             tempVec3.x =1;
             tempVec3.z =-1;
+            tempVec3.z -= Math.floor(companionIndex*0.5);
             tempVec3.applyQuaternion(tempObj.quaternion);
             tempVec3.add(tempObj.position)
             tempVec3.y = followingPiece.getPos().y;
             evt.dispatch(ENUMS.Event.DEBUG_DRAW_LINE, {from:followingPiece.getPos(), to:tempVec3, color:'AQUA'});
-        }
-
-        if (companionIndex === 1) {
+        } else {
             tempVec3.x =-1;
             tempVec3.z =-1;
+            tempVec3.z -= Math.floor(companionIndex*0.5);
             tempVec3.applyQuaternion(tempObj.quaternion);
             tempVec3.add(tempObj.position)
             tempVec3.y = followingPiece.getPos().y;

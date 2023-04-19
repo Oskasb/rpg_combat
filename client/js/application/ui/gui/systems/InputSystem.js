@@ -102,7 +102,6 @@ class InputSystem {
 
             // check if button is down
             if (pointerState.action[0]) {
-
                 // check is first frame
                 if (pointerState.pressFrames === 1) {
                     guiPointer.setIsSeeking(true);
@@ -119,6 +118,7 @@ class InputSystem {
                     }
                 } else {
                     // handle mouse and touches that move around while pressed
+
                     if (!interactiveElem) {
                         if (currentPressedElement) {
                             // enter hovering pointer state if pointer departs element while pressed

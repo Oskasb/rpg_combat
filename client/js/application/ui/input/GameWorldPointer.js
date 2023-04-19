@@ -11,7 +11,8 @@ class GameWorldPointer {
         this.indicatedSelections = [];
         this.selectionEvent = {
             piece:null,
-            value:false
+            value:false,
+            longPress:0
         }
     }
 
@@ -61,6 +62,8 @@ class GameWorldPointer {
         //    console.log("Release Movement Pointer")
         playerPiece.movementPath.clearTilePathStatus();
 
+        this.selectionEvent.longPress = pointer.call.getLongPressProgress();
+
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
             this.indicateSelection(false, pointer, pointer.worldSpaceTarget)
             this.selectionEvent.piece = pointer.worldSpaceTarget;
@@ -86,6 +89,7 @@ class GameWorldPointer {
         pointer.worldSpaceTarget = null;
         pointer.isMovementInput = false;
         pointer.isWorldActive = false;
+        pointer.setLongPressProgress(0) //
     }
     updateWorldPointer = function(pointer, isFirstPressFrame) {
         let playerPiece = GameAPI.getActivePlayerCharacter().gamePiece
@@ -96,6 +100,8 @@ class GameWorldPointer {
 
         if (isFirstPressFrame) {
             pointer.isWorldActive = true;
+        } else {
+            pointer.setLongPressProgress(pointer.call.getLongPressProgress());
         }
 
         if (pointer.isWorldActive === false) {
