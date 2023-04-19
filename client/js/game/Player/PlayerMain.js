@@ -165,8 +165,13 @@ class PlayerMain {
     }
 
 
-    setPlayerCharacter(character) {
+    setPlayerCharacter(character, oldMain) {
+
+        if (oldMain) {
+            GameAPI.unregisterGameUpdateCallback(oldMain.getOnUpdateCallback())
+        }
         GameAPI.registerGameUpdateCallback(character.gamePiece.getOnUpdateCallback())
+
         character.gamePiece.setStatusValue('isCharacter', 1);
         if (!this.mainCharPage) {
             let openMainCharPage = function() {
@@ -184,6 +189,8 @@ class PlayerMain {
         }
         PipelineAPI.setCategoryData('CHARACTERS', data)
     }
+
+
 
     getPlayerCharacter() {
         return this.playerCharacter;
@@ -206,7 +213,7 @@ class PlayerMain {
 
     handleTargetSelected(event) {
 
-
+        let playerPiece = this.playerCharacter.gamePiece
 
         let gamePiece = event.piece;
         if (!gamePiece) {
@@ -221,7 +228,7 @@ class PlayerMain {
 
 
 
-            if (gamePiece === this.playerCharacter.gamePiece) {
+            if (gamePiece === playerPiece) {
                 let switchCallback = function() {
 
                 }
@@ -244,17 +251,24 @@ class PlayerMain {
             }
 
 
-            if (gamePiece.getStatusByKey('following') === this.playerCharacter.gamePiece) {
+            if (gamePiece.getStatusByKey('following') === playerPiece) {
                 if (longPress === 1) {
                     console.log("select follower, switch control here..")
+                    GameAPI.setActivePlayerCharacter(gamePiece.character);
+                    gamePiece.addCompanion(playerPiece);
+                    MATH.quickSplice(playerPiece.companions, gamePiece);
+                    while (playerPiece.companions.length) {
+                        gamePiece.addCompanion(playerPiece.companions.pop())
+                    }
+                    this.setPlayerCharacter(gamePiece.character, playerPiece)
                 }
                 return;
             }
 
             if (gamePiece.getStatusByKey('companion')) {
                 if (longPress === 1) {
-                    gamePiece.setStatusValue('following', this.playerCharacter.gamePiece)
-                    this.playerCharacter.gamePiece.addCompanion(gamePiece);
+                    gamePiece.setStatusValue('following', playerPiece)
+                    playerPiece.addCompanion(gamePiece);
                 }
                 return;
             }
