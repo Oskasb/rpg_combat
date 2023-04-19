@@ -198,9 +198,12 @@ class MovementPath {
 
             let color = 'YELLOW';
 
-            if (tile.getOccupant()) {
-                if (tile.getOccupant() !== this.gamePiece) {
-                //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:tile.getPos(), color:'RED', size:0.3})
+            let occupant = tile.getOccupant()
+            if (occupant) {
+                if (occupant.getStatusByKey('faction') !== this.gamePiece.getStatusByKey('faction')) {
+                    i = tileCount;
+                return;
+                } else if (occupant.movementPath.tilePath.getEndTile() === tile) {
                     i = tileCount;
                     return;
                 }

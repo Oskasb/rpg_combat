@@ -31,6 +31,66 @@
                 "pos": [20, 0, -10]
               },
               "characters": [
+                {
+                  "character":"BANDIT_LEADER",
+                  "pos": [24, 0, 25],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_LEADER",
+                  "pos": [20, 0, 25],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [20, 0, 22],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [14, 0, 22],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [20, 0, 12],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [14, 0, 8],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [14, 0, 8],
+                  "rot": [0, 3.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [20, 0, 7],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [22, 0, 5],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [19, 0, 3],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [23, 0, 1],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [26, 0, -4],
+                  "rot": [0, 0.111, 0]
+                }
               ],
               "spawn":[
 
