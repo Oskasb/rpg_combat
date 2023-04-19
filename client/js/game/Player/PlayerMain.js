@@ -206,7 +206,13 @@ class PlayerMain {
 
     handleTargetSelected(event) {
 
+
+
         let gamePiece = event.piece;
+        if (!gamePiece) {
+            console.log("Should be a piece in this")
+            return;
+        }
         let longPress = event.longPress;
         if (gamePiece.isDead) {
             console.log('No selecting the dead')

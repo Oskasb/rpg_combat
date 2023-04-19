@@ -111,7 +111,7 @@
             "size": 1,
             "maxHP": 24,
             "hp": 24,
-            "dmg": 5,
+            "dmg": 3,
             "FAST": 2,
             "xp_value": 75
           },
@@ -137,8 +137,8 @@
             "size": 1,
             "maxHP": 18,
             "hp": 18,
-            "dmg": 8,
-            "FAST": 1,
+            "dmg": 2,
+            "FAST": 1.5,
             "xp_value": 55
           },
 
@@ -161,10 +161,10 @@
             "aggro_range": 7,
             "height": 1.85,
             "size": 1,
-            "maxHP": 48,
-            "hp": 48,
-            "dmg": 7,
-            "FAST": 3,
+            "maxHP": 55,
+            "hp": 55,
+            "dmg": 6,
+            "FAST": 3.5,
             "xp_value": 250
           },
 

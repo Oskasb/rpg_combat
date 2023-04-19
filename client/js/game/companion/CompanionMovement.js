@@ -49,14 +49,27 @@ class CompanionMovement {
 
     }
 
-    getCompanionDestination(followingPiece) {
-        return this.getCompanionFormationDestination(followingPiece)
+    determineCompanionDestination(followingPiece) {
+        if (this.gamePiece.getTarget()) {
+            return;
+        }
+
+        let leaderTarget = followingPiece.getTarget()
+        if (leaderTarget) {
+            if (leaderTarget.getTarget() && leaderTarget.getStatusByKey('faction') === 'EVIL') {
+                this.gamePiece.setStatusValue('selectedTarget', leaderTarget);
+            //    this.gamePiece.setStatusValue('engagingTarget', leaderTarget);
+                this.gamePiece.movementPath.setPathTargetPiece(leaderTarget);
+                return
+            }
+        }
+
+        let destinationVec3 =  this.getCompanionFormationDestination(followingPiece)
+        this.gamePiece.movementPath.setDestination(destinationVec3);
     }
 
     updateCompanionMovement(followingPiece) {
-
-        let destinationVec3 = this.getCompanionDestination(followingPiece);
-        this.gamePiece.movementPath.setDestination(destinationVec3);
+         this.determineCompanionDestination(followingPiece);
     }
 
 }

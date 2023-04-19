@@ -82,10 +82,13 @@ class CharacterStatusGui {
         if (this.swingProgressElement) {
             this.swingProgressElement.guiWidget.recoverGuiWidget();
         }
+        while (this.attackPointElements.length) {
+            this.attackPointElements.pop().guiWidget.recoverGuiWidget();
+        }
         if (this.attacksContainer) {
             this.attacksContainer.guiWidget.recoverGuiWidget();
         }
-        MATH.emptyArray(this.attackPointElements);
+
     }
 
     addAttackElement(container, onReady) {
@@ -146,10 +149,6 @@ class CharacterStatusGui {
                 element.setWidgetIconKey('atk_on');
                 bufferElem.setColorRGBA(this.colorMap['on']);
             }
-
-
-
-
 
         }
 

@@ -14,10 +14,10 @@ class TargetIndicator {
 
 
         this.colorMap = {};
-        this.colorMap['GOOD']       = {r:0,   g:1,   b:0.4, a:0.5};
-        this.colorMap['NEUTRAL']    = {r:1,   g:0.6, b:0.0, a:0.5};
-        this.colorMap['EVIL']       = {r:1,   g:0,   b:0,   a:0.8};
-        this.colorMap['ITEM']       = {r:0,   g:0.4, b:1,   a:0.8};
+        this.colorMap['GOOD']       = {r:-0.5,   g:1,   b:0.4, a:0.5};
+        this.colorMap['NEUTRAL']    = {r:1,   g:0.6, b:-0.4, a:0.5};
+        this.colorMap['EVIL']       = {r:1,   g:-0.6,   b:-0.6,   a:0.8};
+        this.colorMap['ITEM']       = {r:-0.3,   g:0.4, b:1,   a:0.8};
 
         let updateIndicator = function(tpf, time, gamePeice) {
             this.indicateSelectedTargetPiece(tpf, time, gamePeice, this.spin, this.scale, this.pulsate, this.rate)

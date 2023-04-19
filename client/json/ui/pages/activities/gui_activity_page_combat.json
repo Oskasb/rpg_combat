@@ -94,41 +94,19 @@
                     "track_config": {"category": "CHARACTERS","key": "MAIN_CHAR_STATUS",
                       "samplers": [
                         {
-                          "key": "maxAPs",
-                          "digits": 1
+                          "key": "hp",
+                          "digits": 0
                         },
                         {
-                          "key": "actPts",
-                          "digits": 1
+                          "key": "targState",
+                          "digits": 0
                         },
                         {
-                          "key": "attacks",
-                          "digits": 1
-                        },
-                        {
-                          "key": "attack",
-                          "digits": 1
+                          "key": "charState",
+                          "digits": 0
                         },
                         {
                           "key": "atkProg",
-                          "digits": 2
-                        }
-                      ]
-                    }
-                  }
-                },
-                {
-                  "widget_id": "container_turn_clock",
-                  "widget_class": "GuiStatsPanel",
-                  "widget_config_id":"widget_stats_container",
-                  "options": {
-                    "container_id": "feedback_container_turn_values",
-                    "offset_x":  0.0,
-                    "offset_y": -0.0,
-                    "track_config": {"category": "CHARACTERS","key": "MAIN_CHAR_STATUS",
-                      "samplers": [
-                        {
-                          "key": "turnProgress",
                           "digits": 2
                         }
                       ]

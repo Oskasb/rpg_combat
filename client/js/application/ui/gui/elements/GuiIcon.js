@@ -202,7 +202,7 @@ class GuiIcon {
         };
 
         releaseGuiIcon = function() {
-            this.bufferElement.releaseElement()
+            this.bufferElement.endLifecycleNow()
         };
 
     }

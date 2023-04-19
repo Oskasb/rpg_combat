@@ -101,6 +101,7 @@ class MovementPath {
 
             if (this.gamePiece.getStatusByKey('isItem') === 1 && (gridTile.getTileStatus() === 'FREE')) {
                 gridTile.setTileStatus('HAS_ITEM')
+                gridTile.indicateTileStatus(true);
             } else {
                 if (this.gamePiece.getStatusByKey('charState') !== ENUMS.CharacterState.LIE_DEAD) {
                     gridTile.setTileStatus('OCCUPIED')
@@ -108,7 +109,7 @@ class MovementPath {
                 }
 
             }
-            gridTile.indicateTileStatus(true);
+        //    gridTile.indicateTileStatus(true);
             this.currentPosTile = gridTile;
         }
     }
@@ -204,8 +205,10 @@ class MovementPath {
                     i = tileCount;
                 return;
                 } else if (occupant.movementPath.tilePath.getEndTile() === tile) {
-                    i = tileCount;
-                    return;
+                    if (tileCount - i === 1) {
+                        i = tileCount;
+                        return;
+                    }
                 }
             }
 

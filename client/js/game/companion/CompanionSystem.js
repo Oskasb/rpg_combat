@@ -9,7 +9,7 @@ class CompanionSystem {
 
     enterScenarioWithMaster() {
         let followingPiece = this.gamePiece.getStatusByKey('following');
-        let pos = this.companionMovement.getCompanionDestination(followingPiece);
+        let pos = this.companionMovement.getCompanionFormationDestination(followingPiece);
         let tile = this.gamePiece.movementPath.getTileAtPos(pos);
         this.gamePiece.getSpatial().setPosVec3(tile.getPos());
     }
