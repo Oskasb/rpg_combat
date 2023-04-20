@@ -154,8 +154,11 @@ class PieceStateProcessor {
         status.atkProg = 0;
     }
     applyTargetIsDead(status, target) {
-        status.gamePiece.combatSystem.disengageTarget(status.gamePiece.getTarget());
-        this.clearCombatState(status)
+        let newTarget = status.gamePiece.notifyOpponentKilled()
+        if (!newTarget) {
+            status.gamePiece.combatSystem.disengageTarget(status.gamePiece.getTarget());
+            this.clearCombatState(status)
+        }
 
         if (status.gamePiece === GameAPI.getMainCharPiece()) {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:null, value:false });

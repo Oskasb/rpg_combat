@@ -1,0 +1,149 @@
+[{
+  "DYNAMIC_SCENARIOS":{
+
+    "GAME_SCENARIOS":[
+            {
+        "id":"encounter_field_bandits_dynamic",
+        "data": [
+          {
+            "data_key":"dynamic_view_init",
+            "config": {
+              "INFO": {
+                "header": "FIELD",
+                "text_box": "Bandits are taking over."
+              },
+              "camera": {
+                "mode": "follow_cam_main_char",
+                "offset_pos": [0, 10, -7],
+                "offset_lookAt": [0, 1, 1]
+              },
+              "gui_page":"page_scene_dungeon",
+              "environment": "sunny_day",
+              "player": {
+                "pos": [0, 0, 0],
+                "rot": [0, 3.14, 0]
+              },
+              "grid": {
+                "dataId":"grid_field_home",
+                "entrance_tile": [7, 3],
+                "start_tile": [6, 4],
+                "rot": [0,  0, 0],
+                "pos": [20, 0, -10]
+              },
+              "characters": [
+                {
+                  "character":"BANDIT_LEADER",
+                  "pos": [22, 0, 3],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_LEADER",
+                  "pos": [20, 0, 3],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [20, 0, 1],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [24, 0, 1],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [20, 0, -2],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [18, 0, -1],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [19, 0, -1],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [20, 0, -1],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [23, 0, -2],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [18, 0, 1],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [24, 0, -3],
+                  "rot": [0, 3.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [20, 0, -4],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [22, 0, -5],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_TOUGH",
+                  "pos": [19, 0, -7],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [23, 0, -6],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [25, 0, -8],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [23, 0, -8],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [21, 0, -8],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [24, 0, -8],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [22, 0, -8],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [20, 0, -8],
+                  "rot": [0, 0.111, 0]
+                }
+              ],
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}]

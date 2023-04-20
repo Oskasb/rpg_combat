@@ -26,6 +26,7 @@
       "/world/scenarios/encounter_dynamic/encounter_cave_basic_dynamic.json" ,
       "/world/scenarios/encounter_dynamic/encounter_manor_entrance_dynamic.json" ,
       "/world/scenarios/encounter_dynamic/encounter_field_home_dynamic.json" ,
+      "/world/scenarios/encounter_dynamic/encounter_field_bandits_dynamic.json" ,
       "/world/scenarios/home_dynamic/hero_practice_dynamic.json" ,
       "/world/grid/main_encounter_grids.json"                     ,
       "/ui/elements/surface_elements.json"                   ,

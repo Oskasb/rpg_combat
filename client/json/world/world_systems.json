@@ -66,6 +66,13 @@
           }
 
         },
+        "encounter_field_bandits_dynamic":{
+          "camera": {
+            "time":0.6,
+            "pos": [ 5.6, 24.4, -5.1],
+            "lookAt": [12.0, 2.1, -0.5]
+          }
+        },
         "encounter_field_home_dynamic":{
           "camera": {
             "time":0.6,

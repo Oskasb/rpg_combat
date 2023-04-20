@@ -50,6 +50,7 @@ class GamePiece {
         let tickPieceEquippedItem = function(tpf, gameTime) {
             if (this.getSpatial().obj3d.parent) {
                 this.getSpatial().stickToObj3D(this.getSpatial().obj3d.parent.parent)
+                this.getSpatial().obj3d.updateMatrixWorld();
             }
         }.bind(this);
 
@@ -223,6 +224,7 @@ class GamePiece {
                 this.setStatusValue('targState', ENUMS.CharacterState.COMBAT);
                 this.setStatusValue('charState', ENUMS.CharacterState.COMBAT);
             }
+            return newTarget;
         }
     }
     hideGamePiece = function() {
@@ -232,7 +234,6 @@ class GamePiece {
         }else {
             ThreeAPI.hideModel(this.modelInstance.obj3d)
         }
-
     };
 
     addCompanion(gamePiece) {

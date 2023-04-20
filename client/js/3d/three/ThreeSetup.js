@@ -84,7 +84,7 @@ class ThreeSetup {
             let reflectionScene = new THREE.Scene();
         //    let camera = new THREE.PerspectiveCamera( 75, containerElement.innerWidth / containerElement.innerHeight, 0.1, 1000 );
         //    camera.matrixWorldAutoUpdate = false;
-        //    scene.matrixWorldAutoUpdate = false;
+            scene.matrixWorldAutoUpdate = false;
             //     console.log("Three Camera:", camera);
            let renderer = new THREE.WebGLRenderer( { antialias:antialias, devicePixelRatio: pxRatio, logarithmicDepthBuffer: false, sortObjects: false });
         //    let renderer = new THREE.WebGLRenderer();

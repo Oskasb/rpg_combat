@@ -84,12 +84,30 @@
                     "text":"FIELD",
                     "container_id":"page_home_center",
                     "offset_x":-0.115,
-                    "offset_y":-0.27,
+                    "offset_y":-0.29,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
                         "dynamic":"encounter_field_home_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_go_bandits",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"BANDITS",
+                    "container_id":"page_home_center",
+                    "offset_x":-0.115,
+                    "offset_y":-0.25,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"encounter_field_bandits_dynamic"
                       }
                     }
                   }
