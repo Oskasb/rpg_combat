@@ -203,18 +203,24 @@ class GamePiece {
         this.pieceState.pieceStateProcessor.clearCombatState(this.pieceState.status)
     }
     notifyOpponentKilled() {
-        let newTarget = this.threatDetector.getNearestKnownHostile().gamePiece;
-
-        if (newTarget) {
+        let newHostile = this.threatDetector.getNearestKnownHostile();
+        if (newHostile) {
+        let newTarget = newHostile.gamePiece;
             let rangeCheck = this.distanceToReachTarget(newTarget);
-            if (rangeCheck > 0) {
+            if (rangeCheck > 1.5) {
                 this.setStatusValue('engageTarget', newTarget);
             } else {
-                console.log("NEW TARGET IN MELEE RANGE",newTarget, this.getStatusByKey('charState'))
+                console.log("NEW TARGET IN MELEE RANGE", newTarget.isDead, newTarget, this.getStatusByKey('charState'))
+                if (this === GameAPI.getMainCharPiece()) {
+                    evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:newTarget, longPress:0, value:true })
+                }
                 this.combatSystem.attackCombatTarget(newTarget);
                 this.combatSystem.selectedTarget = newTarget;
-            //    this.setStatusValue('engageTarget', newTarget);
+                this.setStatusValue('disengagingTarget', null);
+                this.setStatusValue('selectTarget', null);
+                this.setStatusValue('engageTarget', null);
                 this.setStatusValue('combatTarget', newTarget);
+                this.setStatusValue('targState', ENUMS.CharacterState.COMBAT);
                 this.setStatusValue('charState', ENUMS.CharacterState.COMBAT);
             }
         }
