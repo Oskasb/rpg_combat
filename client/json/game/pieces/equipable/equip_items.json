@@ -13,6 +13,50 @@
         }
       },
       {
+        "id":"AXE_SLICER",
+        "data":{
+          "model_asset":"asset_slicer_axe_2h",
+          "slot": "SLOT_HAND_R",
+          "status": {
+            "name": "Slicer Axe",
+            "item_type": "Weapon"
+          }
+        }
+      },
+      {
+        "id":"SWORD_FANCY",
+        "data":{
+          "model_asset":"asset_sword_fancy",
+          "slot": "SLOT_HAND_R",
+          "status": {
+            "name": "Fancy Sword",
+            "item_type": "Weapon"
+          }
+        }
+      },
+      {
+        "id":"EMERALD_BLADE",
+        "data":{
+          "model_asset":"asset_emerald_blade",
+          "slot": "SLOT_HAND_R",
+          "status": {
+            "name": "Emerald Blade",
+            "item_type": "Weapon"
+          }
+        }
+      },
+      {
+        "id":"HATCHET_NICE",
+        "data":{
+          "model_asset":"asset_hatchet_nice",
+          "slot": "SLOT_HAND_R",
+          "status": {
+            "name": "Nice Hatchet",
+            "item_type": "Weapon"
+          }
+        }
+      },
+      {
         "id":"LEGS_BRONZE",
         "data":{
           "model_asset":"asset_bronze_legs",
@@ -44,6 +88,75 @@
             "item_type": "Armor"
           }
 
+        }
+      },
+      {
+        "id":"HAT_CLOTH_WHITE",
+        "data":{
+          "model_asset":"asset_hat_cloth_white",
+          "slot": "SLOT_HEAD",
+          "status": {
+            "name": "White Cloth Hat",
+            "item_type": "Clothes"
+          }
+
+        }
+      },
+      {
+        "id":"HAT_CLOTH_YELLOW",
+        "data":{
+          "model_asset":"asset_hat_cloth_yellow",
+          "slot": "SLOT_HEAD",
+          "status": {
+            "name": "White Cloth Hat",
+            "item_type": "Clothes"
+          }
+        }
+      },
+      {
+        "id":"HAT_POINTY_WHITE",
+        "data":{
+          "model_asset":"file_hat_pointy_white",
+          "slot": "SLOT_HEAD",
+          "status": {
+            "name": "White Cloth Hat",
+            "item_type": "Clothes"
+          }
+
+        }
+      },
+      {
+        "id":"HAT_CLOTH_BLUE",
+        "data":{
+          "model_asset":"file_hat_cloth_blue",
+          "slot": "SLOT_HEAD",
+          "status": {
+            "name": "White Cloth Hat",
+            "item_type": "Clothes"
+          }
+        }
+      },
+      {
+        "id":"HAT_CLOTH_RED",
+        "data":{
+          "model_asset":"file_hat_cloth_red",
+          "slot": "SLOT_HEAD",
+          "status": {
+            "name": "White Cloth Hat",
+            "item_type": "Clothes"
+          }
+
+        }
+      },
+      {
+        "id":"HAT_LEATHER_BROWN",
+        "data":{
+          "model_asset":"file_hat_leather_brown",
+          "slot": "SLOT_HEAD",
+          "status": {
+            "name": "White Cloth Hat",
+            "item_type": "Clothes"
+          }
         }
       },
       {

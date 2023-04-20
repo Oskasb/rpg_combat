@@ -68,17 +68,6 @@
         {"id": "file_barb_item_greaves",  "config": { "url": "./client/assets/models/characters/barb/items/item_greaves"          }},
 
 
-        {"id": "file_ninjablade",    "config": { "url": "./client/assets/models/items_rigid/weapons/ninjablade"                   }},
-
-
-        {"id": "file_beltplate",     "config": { "url": "./client/assets/models/items_rigid/armor/belt/belt_plate"                }},
-        {"id": "file_belt_bronze",   "config": { "url": "./client/assets/models/items_rigid/armor/belt/belt_bronze"               }},
-
-
-        {"id": "file_helmet_bronze", "config": { "url": "./client/assets/models/items_rigid/armor/head/helmet_bronze"             }},
-        {"id": "file_helmetviking",  "config": { "url": "./client/assets/models/items_rigid/armor/head/helmet_viking"             }},
-
-        {"id": "file_bracer_bronze", "config": { "url": "./client/assets/models/items_rigid/armor/wrist/bracer_bronze"            }},
 
         {"id": "file_bronze_bp",     "config": { "url": "./client/assets/models/items_skinned/fighter_rig/armor/bronze_bp"        }},
         {"id": "file_bronze_legs",   "config": { "url": "./client/assets/models/items_skinned/fighter_rig/armor/bronze_legs"      }},
@@ -90,6 +79,26 @@
 
         {"id": "file_scale_boots",   "config": { "url": "./client/assets/models/items_skinned/fighter_rig/armor/scale_boots"      }},
         {"id": "file_scale_gloves",  "config": { "url": "./client/assets/models/items_skinned/fighter_rig/armor/scale_gloves"     }},
+
+        {"id": "file_ninjablade",    "config": { "url": "./client/assets/models/items_rigid/weapons/ninjablade"                   }},
+        {"id": "file_slicer_axe_2h",    "config": { "url": "./client/assets/models/items_rigid/weapons/slicer_axe_2h"             }},
+        {"id": "file_sword_fancy",    "config": { "url": "./client/assets/models/items_rigid/weapons/sword_fancy"                 }},
+        {"id": "file_emerald_blade",    "config": { "url": "./client/assets/models/items_rigid/weapons/emerald_blade"             }},
+        {"id": "file_hatchet_nice",    "config": { "url": "./client/assets/models/items_rigid/weapons/hatchet_nice"                }},
+
+        {"id": "file_beltplate",     "config": { "url": "./client/assets/models/items_rigid/armor/belt/belt_plate"                }},
+        {"id": "file_belt_bronze",   "config": { "url": "./client/assets/models/items_rigid/armor/belt/belt_bronze"               }},
+        {"id": "file_helmet_bronze", "config": { "url": "./client/assets/models/items_rigid/armor/head/helmet_bronze"             }},
+        {"id": "file_helmetviking",  "config": { "url": "./client/assets/models/items_rigid/armor/head/helmet_viking"             }},
+        {"id": "file_bracer_bronze", "config": { "url": "./client/assets/models/items_rigid/armor/wrist/bracer_bronze"            }},
+
+        {"id": "file_hat_cloth_white","config": { "url": "./client/assets/models/items_rigid/clothes/head/hat_cloth_white"         }},
+        {"id": "file_hat_cloth_yellow","config": { "url": "./client/assets/models/items_rigid/clothes/head/hat_cloth_yellow"       }},
+
+        {"id": "file_hat_cloth_blue","config": { "url": "./client/assets/models/items_rigid/clothes/head/hat_cloth_blue"         }},
+        {"id": "file_hat_cloth_red","config": { "url": "./client/assets/models/items_rigid/clothes/head/hat_cloth_red"         }},
+        {"id": "file_hat_leather_brown","config": { "url": "./client/assets/models/items_rigid/clothes/head/hat_leather_brown"         }},
+        {"id": "file_hat_pointy_white","config": { "url": "./client/assets/models/items_rigid/clothes/head/hat_pointy_white"         }},
 
         {"id": "file_box",           "config": { "url": "./client/assets/models/shapes/box"                                          }},
         {"id": "file_quad",          "config": { "url": "./client/assets/models/shapes/quad"                                         }},

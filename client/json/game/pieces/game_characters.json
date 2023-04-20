@@ -20,7 +20,7 @@
           },
 
           "actor":"ACTOR_FIGHTER",
-          "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE", "LEGS_BRONZE"],
+          "equipment":["NINJASWORD", "HAT_CLOTH_WHITE", "BELT_BRONZE", "LEGS_BRONZE"],
           "inventory": [
 
           ]
@@ -46,7 +46,7 @@
           },
 
           "actor":"ACTOR_FIGHTER",
-          "equipment":["NINJASWORD", "HELMET_VIKING", "BELT_BRONZE", "LEGS_CHAIN", "BREASTPLATE_BRONZE"],
+          "equipment":["AXE_SLICER", "HAT_CLOTH_YELLOW", "BELT_BRONZE", "LEGS_CHAIN", "BREASTPLATE_BRONZE"],
           "inventory": [
 
           ]
@@ -69,7 +69,7 @@
           },
 
           "actor":"ACTOR_FIGHTER",
-          "equipment":["NINJASWORD", "GLOVES_SCALE", "BELT_PLATE", "BOOTS_SCALE", "LEGS_CHAIN", "SHIRT_CHAIN"],
+          "equipment":["SWORD_FANCY", "GLOVES_SCALE", "BELT_PLATE", "BOOTS_SCALE", "LEGS_CHAIN", "SHIRT_CHAIN"],
           "inventory": [
 
           ]
@@ -93,7 +93,7 @@
           },
 
           "actor":"ACTOR_FIGHTER",
-          "equipment":["NINJASWORD"],
+          "equipment":["HATCHET_NICE"],
           "inventory": [
 
           ]
@@ -144,7 +144,7 @@
 
           "actor":"ACTOR_FIGHTER",
           "equipment":[
-            "NINJASWORD", "BELT_BRONZE", "HELMET_BRONZE" ,"BOOTS_SCALE", "BREASTPLATE_BRONZE", "LEGS_CHAIN", "SHIRT_CHAIN"
+            "SWORD_FANCY", "BELT_BRONZE", "HELMET_BRONZE" ,"BOOTS_SCALE", "BREASTPLATE_BRONZE", "LEGS_CHAIN", "SHIRT_CHAIN"
           ],
           "inventory": [
 
@@ -170,7 +170,7 @@
 
           "actor":"ACTOR_FIGHTER",
           "equipment":[
-            "NINJASWORD", "HELMET_VIKING" ,"BELT_PLATE", "BOOTS_SCALE",
+            "EMERALD_BLADE", "HELMET_VIKING" ,"BELT_PLATE", "BOOTS_SCALE",
             "LEGS_SCALE", "SHIRT_CHAIN","GLOVES_SCALE", "SHIRT_SCALE"
           ],
           "inventory": [
@@ -193,7 +193,7 @@
             "xp_value": 50
           },
           "actor":"ACTOR_BARB",
-          "equipment":["NINJASWORD", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES", "BELT_PLATE"]
+          "equipment":["AXE_SLICER", "HELMET_VIKING", "BARB_BREASTPLATE", "BARB_GREAVES", "BELT_PLATE"]
         }
       },
       {
@@ -211,7 +211,7 @@
             "xp_value": 450
           },
           "actor":"ACTOR_DUDE",
-          "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE"]
+          "equipment":["EMERALD_BLADE", "HAT_CLOTH_WHITE", "BELT_BRONZE"]
         }
       }
     ]
