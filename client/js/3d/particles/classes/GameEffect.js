@@ -130,6 +130,12 @@ class GameEffect {
         this.joint = joint;
     };
 
+    endEffectOfClass = function() {
+        for (let i = 0; i < this.activeParticles.length; i++) {
+            this.activeParticles[i].endEffectLifecycle()
+        }
+    };
+
     recoverEffectOfClass = function() {
 
         if (this.joint) {

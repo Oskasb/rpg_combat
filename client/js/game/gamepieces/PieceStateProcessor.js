@@ -94,7 +94,10 @@ class PieceStateProcessor {
             }
         } else {
             if (status.hp < status.maxHP) {
+                let heal = status.hp;
                 status.hp = MATH.clamp(Math.floor(status.hp+status.level*1.5), status.hp, status.maxHP);
+                heal = status.hp-heal;
+                status.gamePiece.notifyHealthRecover(heal, status.gamePiece);
             }
         }
 

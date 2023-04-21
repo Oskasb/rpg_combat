@@ -297,7 +297,7 @@ class PlayerMain {
         }
 
         GameAPI.getMainCharPiece().setStatusValue('selectedTarget', gamePiece);
-        this.selectionIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 1, 6, -0.5, 1.1, 0);
+        this.selectionIndicator.indicateGamePiece(gamePiece, 'effect_character_indicator', 1, 3, -0.5, 0.6, 0);
 
     }
 

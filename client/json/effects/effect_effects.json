@@ -26,11 +26,22 @@
                         },
                         "effect_damage_taken":{
                             "effect_class": "GameEffect",
-                            "max_active": 500,
+                            "max_active": 250,
                             "spread_pos":[0.00001, 0.00001, 0.00001],
                             "particles": [
                                 {
                                     "id":"stamp_footprint",
+                                    "count": [1, 1]
+                                }
+                            ]
+                        },
+                        "effect_health_recovered":{
+                            "effect_class": "GameEffect",
+                            "max_active": 400,
+                            "spread_pos":[0.00001, 0.00001, 0.00001],
+                            "particles": [
+                                {
+                                    "id":"health_recovered_particle",
                                     "count": [1, 1]
                                 }
                             ]

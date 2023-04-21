@@ -107,6 +107,13 @@ class ParticleEffect {
         }
     };
 
+    endEffectLifecycle = function() {
+        if (this.bufferElement) {
+            this.bufferElement.endLifecycleNow();
+            this.bufferElement.scaleUniform(0);
+        }
+    };
+
     setParticleQuat = function(quat) {
         this.quat.copy(quat);
         if (this.bufferElement) {
