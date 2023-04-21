@@ -1,0 +1,54 @@
+[{
+  "DYNAMIC_SCENARIOS":{
+
+    "GAME_SCENARIOS":[
+            {
+        "id":"encounter_front_yard_home_dynamic",
+        "data": [
+          {
+            "data_key":"dynamic_view_init",
+            "config": {
+              "INFO": {
+                "header": "FRONT YARD",
+                "text_box": "Bandits... Here. Save the house. NOW"
+              },
+              "camera": {
+                "mode": "follow_cam_main_char",
+                "offset_pos": [0, 9, -7],
+                "offset_lookAt": [0, 1, 1]
+              },
+              "gui_page":"page_scene_dungeon",
+              "environment": "sunny_day",
+              "player": {
+                "pos": [0, 0, 0],
+                "rot": [0, 3.14, 0]
+              },
+              "grid": {
+                "dataId":"grid_home_front_yard",
+                "entrance_tile": [3, 3],
+                "start_tile": [4, 4],
+                "rot": [0,  0, 0],
+                "pos": [0, 0, -9]
+              },
+              "characters": [
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [1, 0, -3],
+                  "rot": [0, 0.111, 0]
+                },
+                {
+                  "character":"BANDIT_BASIC",
+                  "pos": [-2, 0, 0],
+                  "rot": [0, 2.111, 0]
+                }
+              ],
+              "spawn":[
+
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}]

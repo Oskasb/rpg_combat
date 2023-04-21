@@ -105,7 +105,7 @@ class GameMain {
             initPlayerStash()
             evt.dispatch(ENUMS.Event.REQUEST_SCENARIO, {
                 id:"home_scenario",
-                dynamic:"home_hovel_dynamic"
+                dynamic:"encounter_front_yard_home_dynamic"
             });
 
         }.bind(this)

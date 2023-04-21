@@ -19,6 +19,7 @@
             "manor_village_dynamic",
             "village_house_dynamic",
             "village_cottage_dynamic",
+            "encounter_front_yard_home_dynamic",
             "encounter_field_home_dynamic"
           ]
         }
@@ -41,6 +42,13 @@
             "time":0.8,
             "pos": [2, 5, -8],
             "lookAt": [0, 3, 0]
+          }
+        },
+        "encounter_front_yard_home_dynamic":{
+          "camera": {
+            "time":0.8,
+            "pos": [0, 5, -14],
+            "lookAt": [0, 1, 0]
           }
         },
         "home_world_dynamic":{

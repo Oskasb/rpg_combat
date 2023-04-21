@@ -122,8 +122,12 @@ class GameWorldPointer {
         let screenSelection = null;
 
         let maxSelectRange = 0.10;
-        let screenDistance = function(piecePos, select) {
-            ThreeAPI.toScreenPosition(piecePos, tempVec3b)
+
+        let tempVecY = ThreeAPI.tempVec3;
+        let screenDistance = function(piecePos, select, offsetY) {
+            tempVecY.copy(piecePos);
+            tempVecY.y += offsetY;
+            ThreeAPI.toScreenPosition(tempVecY, tempVec3b)
             tempVec3b.sub(pos)
             let distance = tempVec3b.length();
             if (distance < maxSelectRange) {
@@ -140,17 +144,17 @@ class GameWorldPointer {
 
             } else {
                 gamePiece.getSpatial().getSpatialPosition(tempVec3)
-                screenDistance(tempVec3,  gamePiece);
+                screenDistance(tempVec3,  gamePiece, gamePiece.getStatusByKey('height')*0.5);
             }
         }
 
         tempVec3.copy(playerPiece.getPos());
-        screenDistance(tempVec3, playerPiece)
+        screenDistance(tempVec3, playerPiece, playerPiece.getStatusByKey('height')*0.5)
 
         let companions = playerPiece.companions
         for (let i = 0; i < companions.length; i++) {
             tempVec3.copy(companions[i].getPos());
-            screenDistance(tempVec3, companions[i])
+            screenDistance(tempVec3, companions[i], companions[i].getStatusByKey('height')*0.7)
         }
 
         for (let i = 0; i < characters.length; i++) {
@@ -160,7 +164,7 @@ class GameWorldPointer {
             } else {
                 gamePiece.getSpatial().getSpatialPosition(tempVec3)
                 ThreeAPI.toScreenPosition(tempVec3, tempVec3b)
-                screenDistance(tempVec3, gamePiece);
+                screenDistance(tempVec3, gamePiece, gamePiece.getStatusByKey('height')*0.7);
             }
         }
 
@@ -217,6 +221,11 @@ class GameWorldPointer {
 
         let updateMovementPointer = function() {
 
+            if (worldSelection) {
+                if (worldSelection.getStatusByKey('faction') === 'EVIL')
+                return;
+            }
+
             if (GuiAPI.calls.getInMenu() === true || pointer.isWorldActive === false) {
                 return;
             }
@@ -228,7 +237,7 @@ class GameWorldPointer {
                     for (let j = 0; j < tiles[i].length; j++) {
                         let tile = tiles[i][j]
                         let pos = tile.obj3d.position;
-                        screenDistance(pos, tile);
+                        screenDistance(pos, tile, 0);
                     }
                 }
             }
