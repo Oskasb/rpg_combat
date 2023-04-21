@@ -99,8 +99,18 @@ class GameAPI {
     };
 
     getActiveEncounterGrid() {
-        if (this.getActiveDynamicScenario()) {
-            return this.getActiveDynamicScenario().encounterGrid;
+        let dynScen = this.getActiveDynamicScenario()
+        if (typeof (dynScen) !== 'object') {
+            console.log("bad scenario logic, fix!")
+            return;
+        }
+        if (dynScen) {
+            let grid = dynScen.encounterGrid;
+            if (typeof (grid) === 'undefined') {
+                console.log("Bad encounter grid logic... fix!")
+                return null;
+            }
+            return grid;
         }
     }
     handleWorldSpacePointerUpdate(pointer, start, release) {

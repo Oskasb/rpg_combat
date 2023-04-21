@@ -21,7 +21,7 @@ class GameWorldPointer {
         let playerPiece = GameAPI.getMainCharPiece();
         let targetPos = null
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
-            targetPos = pointer.worldSpaceTarget.getPos();
+        //    targetPos = pointer.worldSpaceTarget.getPos();
             playerPiece.movementPath.setPathTargetPiece(pointer.worldSpaceTarget)
         } else {
             if (this.lastSelectedTile) {

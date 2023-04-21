@@ -54,14 +54,14 @@ class CharacterMovement {
         let targetPiece = this.gamePiece.getTarget();
         if (targetPiece) {
                 if (targetPiece.isDead) {
-                    console.log("It is dead, dont look at it", targetPiece)
-                    this.gamePiece.clearEngagementStatus();
+                 //   console.log("It is dead, dont look at it", targetPiece)
+                //    this.gamePiece.clearEngagementStatus();
                     return;
                 }
 
-            tempVec3.set(0, 0, 1);
-            tempObj.lookAt(tempVec3);
-            this.spatial.obj3d.lookAt(targetPiece.getPos())
+            tempVec3.copy(targetPiece.getPos());
+            tempVec3.y = this.gamePiece.getPos().y
+            this.spatial.obj3d.lookAt(tempVec3)
         } else if (speed > 0.000001) {
             let angY = MATH.vectorXZToAngleAxisY(this.vel);
             tempObj.rotateY(angY);

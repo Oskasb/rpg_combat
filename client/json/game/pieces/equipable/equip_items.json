@@ -116,7 +116,7 @@
       {
         "id":"HAT_POINTY_WHITE",
         "data":{
-          "model_asset":"file_hat_pointy_white",
+          "model_asset":"asset_hat_pointy_white",
           "slot": "SLOT_HEAD",
           "status": {
             "name": "White Cloth Hat",
@@ -128,7 +128,7 @@
       {
         "id":"HAT_CLOTH_BLUE",
         "data":{
-          "model_asset":"file_hat_cloth_blue",
+          "model_asset":"asset_hat_cloth_blue",
           "slot": "SLOT_HEAD",
           "status": {
             "name": "White Cloth Hat",
@@ -139,7 +139,7 @@
       {
         "id":"HAT_CLOTH_RED",
         "data":{
-          "model_asset":"file_hat_cloth_red",
+          "model_asset":"asset_hat_cloth_red",
           "slot": "SLOT_HEAD",
           "status": {
             "name": "White Cloth Hat",
@@ -151,7 +151,7 @@
       {
         "id":"HAT_LEATHER_BROWN",
         "data":{
-          "model_asset":"file_hat_leather_brown",
+          "model_asset":"asset_hat_leather_brown",
           "slot": "SLOT_HEAD",
           "status": {
             "name": "White Cloth Hat",

@@ -87,8 +87,9 @@ class PieceStateProcessor {
         let target = status.gamePiece.getTarget()
         if (target) {
             if (target.isDead) {
+                status.gamePiece.clearEngagementStatus()
+                this.gamePiece.threatDetector.updateScenarioThreat();
                 console.log("It is dead, dont do it", status)
-                this.gamePiece.clearEngagementStatus();
                 return;
             }
         } else {
@@ -151,10 +152,12 @@ class PieceStateProcessor {
         status.trgAtkType = ENUMS.AttackType.NONE;
         status.charState = ENUMS.CharacterState.IDLE_HANDS;
         status.targState = ENUMS.CharacterState.IDLE_HANDS;
-        status.atkProg = 0;
+        // status.atkProg = 0;
+        status.attacks = 0;
+        status.attack = 0;
     }
     applyTargetIsDead(status, target) {
-        let newTarget = status.gamePiece.notifyOpponentKilled()
+        let newTarget = status.gamePiece.notifyOpponentKilled(target)
         if (!newTarget) {
             status.gamePiece.combatSystem.disengageTarget(status.gamePiece.getTarget());
             this.clearCombatState(status)
@@ -190,7 +193,7 @@ class PieceStateProcessor {
         if (combatTarget.getStatusByKey('hp') > 0) {
 
         } else {
-            this.applyTargetIsDead(status);
+            this.applyTargetIsDead(status, combatTarget);
         }
 
     }
@@ -294,7 +297,7 @@ class PieceStateProcessor {
             }
 
             if (opponentPiece) {
-                opponentPiece.notifyOpponentKilled();
+                opponentPiece.notifyOpponentKilled(status.gamePiece);
             }
         }
     }

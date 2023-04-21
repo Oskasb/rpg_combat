@@ -2,8 +2,10 @@
 let testVec3ForNaN = function(vec3) {
     if (isNaN(vec3.x) || isNaN(vec3.y) || isNaN(vec3.z)) {
         console.log("Spatial Vec3 is NaN.. investigate!")
+        vec3.x = 0;
+        vec3.y = 0;
+        vec3.z = 0
     }
-
 }
 
 class InstanceSpatial{
@@ -97,6 +99,11 @@ class InstanceSpatial{
             testVec3ForNaN(this.obj3d.quaternion)
             return this.obj3d.quaternion;
         }
+
+        getPos() {
+            testVec3ForNaN(this.obj3d.position)
+            return this.obj3d.position;
+        }
         setScaleXYZ = function(x, y, z) {
             this.obj3d.scale.x = x;
             this.obj3d.scale.y = y;
@@ -142,6 +149,10 @@ class InstanceSpatial{
         };
 
         stickToObj3D(obj3d) {
+            if (isNaN(obj3d.position.x)) {
+                console.log("stickToObj is bad, fix!")
+                return;
+            }
             testVec3ForNaN(obj3d.position)
             this.obj3d.position.copy(obj3d.position);
             this.obj3d.scale.copy(obj3d.scale);

@@ -18,6 +18,7 @@ class GamePiece {
         this.companions = [];
         this.character = null;
         this.isDead = false;
+        this.ownerPiece = null;
         this.gamePieceUpdateCallbacks = [];
         this.pieceActionSystem = new PieceActionSystem();
         this.combatSystem = new CombatSystem(this);
@@ -32,7 +33,7 @@ class GamePiece {
 
         let tickGamePiece = function(tpf, gameTime) {
             if (this.isDead) {
-                console.log("The dead cant dance, dont update me")
+            //    console.log("The dead cant dance, dont update me")
                 return;
             }
             MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime, this);
@@ -48,10 +49,16 @@ class GamePiece {
         }.bind(this);
 
         let tickPieceEquippedItem = function(tpf, gameTime) {
-            if (this.getSpatial().obj3d.parent) {
-                this.getSpatial().stickToObj3D(this.getSpatial().obj3d.parent.parent)
-                this.getSpatial().obj3d.updateMatrixWorld();
-            }
+
+
+                if (this.getSpatial().obj3d.parent) {
+                if (typeof(this.getSpatial().obj3d.parent.parent) === 'object') {
+                    this.getSpatial().stickToObj3D(this.getSpatial().obj3d.parent.parent)
+                    this.getSpatial().obj3d.updateMatrixWorld();
+                } else {
+                    console.log("Hierarchy problem here, investigate")
+                }
+                }
         }.bind(this);
 
         this.callbacks = {
@@ -69,7 +76,13 @@ class GamePiece {
 
     }
 
+    setEquippedToPiece(ownerPiece) {
+        this.ownerPiece = ownerPiece
+    }
 
+    getOwnerPiece() {
+        return this.ownerPiece;
+    }
 
     notifyOpponentStatusUpdate(opponentPiece, statusKey, statusValue) {
         this.combatSystem.opponentStatusUpdate(opponentPiece, statusKey, statusValue);
@@ -108,10 +121,10 @@ class GamePiece {
     }
 
     getPos = function() {
-        return this.getSpatial().obj3d.position;
+        return this.getSpatial().getPos();
     }
     getQuat = function() {
-        return this.getSpatial().obj3d.quaternion;
+        return this.getSpatial().getQuat();
     }
     distanceToReachTarget = function(targetPiece) {
         let targetTile = targetPiece.movementPath.getTileAtPos(targetPiece.getPos());
@@ -203,18 +216,34 @@ class GamePiece {
         this.movementPath.cancelMovementPath()
         this.pieceState.pieceStateProcessor.clearCombatState(this.pieceState.status)
     }
-    notifyOpponentKilled() {
+    notifyOpponentKilled(deadOpponent) {
+
+
+        let oldTarget = this.getTarget();
+
         let newHostile = this.threatDetector.getNearestKnownHostile();
         if (newHostile) {
         let newTarget = newHostile.gamePiece;
             let rangeCheck = this.distanceToReachTarget(newTarget);
+            if (rangeCheck > 10) {
+                this.clearEngagementStatus();
+                return;
+            }
+
+            this.movementPath.setPathTargetPiece(newTarget)
+            this.setStatusValue('engageTarget', newTarget);
             if (rangeCheck > 1.5) {
-                this.setStatusValue('engageTarget', newTarget);
-            } else {
-                console.log("NEW TARGET IN MELEE RANGE", newTarget.isDead, newTarget, this.getStatusByKey('charState'))
+            //    this.setStatusValue('selectTarget', newTarget);
+                this.clearEngagementStatus();
+
                 if (this === GameAPI.getMainCharPiece()) {
                     evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, {piece:newTarget, longPress:0, value:true })
+                } else {
+                    this.setStatusValue('selectedTarget', newTarget);
                 }
+            } else {
+                console.log("NEW TARGET IN MELEE RANGE", newTarget.isDead, newTarget, this.getStatusByKey('charState'))
+
                 this.combatSystem.attackCombatTarget(newTarget);
                 this.combatSystem.selectedTarget = newTarget;
                 this.setStatusValue('disengagingTarget', null);
@@ -224,8 +253,22 @@ class GamePiece {
                 this.setStatusValue('targState', ENUMS.CharacterState.COMBAT);
                 this.setStatusValue('charState', ENUMS.CharacterState.COMBAT);
             }
+
+            let master = this.getStatusByKey('following')
+            if (master) {
+                master.notifyOpponentKilled(deadOpponent);
+            }
+
+            if (deadOpponent === oldTarget) {
+                for (let i = 0; i < this.companions.length; i++) {
+                //    this.companions[i].notifyOpponentKilled(deadOpponent)
+                }
+            }
+
             return newTarget;
         }
+
+        this.clearEngagementStatus();
     }
     hideGamePiece = function() {
         if (this.getSpatial().geometryInstance) {

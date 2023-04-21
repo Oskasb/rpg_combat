@@ -5,6 +5,8 @@ class AttachmentJoint {
         this.parentScale = parentScale;
         this.obj3d = new THREE.Object3D();
 
+        this.gamePiece = null;
+
         this.dynamicPosition = new THREE.Vector3();
 
         this.attachedSpatial = null;
@@ -15,7 +17,8 @@ class AttachmentJoint {
             effect.attachToJoint(this)
         }.bind(this);
 
-        let inheritJoint = function() {
+        let updateAttachedSpatial = function() {
+
             this.inheritJointDynamicPosition()
         }.bind(this);
 
@@ -24,7 +27,7 @@ class AttachmentJoint {
         }.bind(this);
 
         this.callbacks = {
-            updateAttachedSpatial:inheritJoint,
+            updateAttachedSpatial:updateAttachedSpatial,
             applyBoneMap:applyBones,
             attachEffect:attachEffect
         }
@@ -39,9 +42,23 @@ class AttachmentJoint {
         this.dynamicBone.stickToBoneWorldMatrix();
 
         let spatObj = this.dynamicBone.obj3d;
+        if (typeof(spatObj) === 'undefined') {
+            console.log("bad joint obj,")
+            return;
+        }
+        if (isNaN(spatObj.position.x)) {
+            console.log("bad bone")
+            return;
+        }
+
         spatObj.position.add(this.obj3d.position);
         spatObj.scale.multiply(this.obj3d.scale);
         spatObj.quaternion.multiply(this.obj3d.quaternion);
+
+        if (isNaN(this.dynamicBone.obj3d.position.x)) {
+            console.log("bad bone")
+            return;
+        }
 
         this.attachedSpatial.stickToDynamicJoint(this.dynamicBone);
 

@@ -43,6 +43,7 @@ class CharacterEquipment {
 
     characterEquipItem(itemPiece) {
         this.pieces.push(itemPiece)
+        itemPiece.setEquippedToPiece(this.gamePiece)
 
         let dynamicJoint = this.getJointForItemPiece(itemPiece);
 
@@ -53,13 +54,8 @@ class CharacterEquipment {
         evt.dispatch(ENUMS.Event.UNEQUIP_ITEM, {item:oldItem, time:0.6});
         itemSlot.setSlotItemPiece(itemPiece);
         if (dynamicJoint.key === 'SKIN') {
-    //        itemPiece.getSpatial().setScaleXYZ(1, 1, 1);
             itemPiece.modelInstance.obj3d.frusumCulled = false;
-
-
-
             this.model().attachInstancedModel(itemPiece.modelInstance)
-            this.model()
             ThreeAPI.registerPrerenderCallback(itemPiece.callbacks.tickPieceEquippedItem);
 
         } else {
@@ -80,6 +76,7 @@ class CharacterEquipment {
     }
 
     detatchEquipItem = function(itemPiece) {
+        itemPiece.setEquippedToPiece(null)
         let dynamicJoint = this.getJointForItemPiece(itemPiece);
         let itemSlot = this.getSlotForItemPiece(itemPiece);
         itemSlot.setSlotItemPiece(null);

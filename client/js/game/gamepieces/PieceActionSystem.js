@@ -43,15 +43,15 @@ class PieceActionSystem {
         }
     }
 
-    applyPieceActionProgress(pieceAction, source, init, active, end, duration) {
+    applyPieceActionProgress(pieceAction, source, init, active, end, duration, clamp) {
         let actionUpdate = this.actionUpdate;
         pieceAction.updatePieceActionState(actionUpdate, source, init, active, end);
 
         if (!this.gamePiece.getPlayingAnimation( actionUpdate.animKey)) {
             if (actionUpdate.lastAnim) {
-                this.gamePiece.applyPieceAnimationState(actionUpdate.lastAnim, actionUpdate.lastDuartion*0.5, actionUpdate.lastAnimChannel, 0)
+                this.gamePiece.applyPieceAnimationState(actionUpdate.lastAnim, actionUpdate.lastDuartion*0.5, actionUpdate.lastAnimChannel, 0, clamp)
             }
-            this.gamePiece.applyPieceAnimationState(actionUpdate.animKey, duration+0.1, actionUpdate.animChannel)
+            this.gamePiece.applyPieceAnimationState(actionUpdate.animKey, duration+0.1, actionUpdate.animChannel, null, clamp)
             actionUpdate.lastAnim = actionUpdate.animKey;
             actionUpdate.lastDuartion = duration;
             actionUpdate.lastAnimChannel = actionUpdate.animChannel;
