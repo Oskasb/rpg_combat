@@ -40,7 +40,7 @@ class SpatialTransition {
         }
     }
 
-    interpolatePosition(tpf) {
+    interpolatePosition() {
         let now = GameAPI.getGameTime();
         if (this.targetTime > now) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
@@ -62,7 +62,7 @@ class SpatialTransition {
 
     applyFrameToMovement(tpf, gameTime) {
         if (this.targetTime+tpf > gameTime) {
-            this.interpolatePosition(tpf);
+            this.interpolatePosition();
         }
     }
 }

@@ -1,6 +1,8 @@
+import { EffectSpatialTransition } from "../EffectSpatialTransition.js";
+
 class GameEffect {
     constructor(activateEffect, recoverEffect) {
-
+        this.effectSpatialTransition = new EffectSpatialTransition(this)
         this.effectId = null;
         this.pos = new THREE.Vector3();
         this.normal = new THREE.Vector3();
@@ -47,7 +49,6 @@ class GameEffect {
             setEffectId:setEffectId,
             getEffectId:getEffectId
         }
-
     };
 
     setConfig = function(config) {
@@ -69,6 +70,17 @@ class GameEffect {
     activateEffectParticle = function() {
         EffectAPI.buildEffect(this.callbacks.addEffectParticle)
     };
+
+    activateSpatialTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, time, callback) {
+
+        let onArrive = function(gameEffect) {
+            GameAPI.unregisterGameUpdateCallback(this.effectSpatialTransition.callbacks.onGameUpdate)
+            callback(gameEffect);
+        }.bind(this)
+
+        this.effectSpatialTransition.initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, time, onArrive)
+        GameAPI.registerGameUpdateCallback(this.effectSpatialTransition.callbacks.onGameUpdate)
+    }
 
     activateEffectFromConfigId = function(isPermanent) {
         this.callbacks.activateEffect(this, isPermanent);
