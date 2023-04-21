@@ -51,19 +51,19 @@ class EffectSpatialTransition {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
             if (fraction > 1) fraction = 1;
 
-            this.targetSpatial.getSpatialPosition(this.targetPos);
+        //    this.targetSpatial.getSpatialPosition(this.targetPos);
 
-            this.targetObj3D.position.y+=Math.sin(fraction*Math.PI)*0.7+1.1;
+        //    this.targetObj3D.position.y+=Math.sin(fraction*Math.PI)*0.7+1.1;
+            let size = MATH.interpolateFromTo(this.startSize, this.endSize, fraction);
 
             MATH.interpolateVec3FromTo(this.startObj3D.position, this.targetObj3D.position, fraction, tempVec3 , 'curveSigmoid');
-
+            tempVec3.y += Math.sin(fraction*Math.PI)*0.7;
             let tempQuat = ThreeAPI.tempObj.quaternion;
             tempQuat.slerpQuaternions(this.startObj3D.quaternion, this.targetObj3D.quaternion, fraction)
 
             this.gameEffect.setEffectPosition(tempVec3);
             this.gameEffect.setEffectQuaternion(tempQuat);
 
-            let size = MATH.interpolateFromTo(this.startSize, this.endSize, fraction);
             this.gameEffect.scaleEffectSize(size);
 
         } else {

@@ -24,6 +24,17 @@
                                 }
                             ]
                         },
+                        "effect_damage_taken":{
+                            "effect_class": "GameEffect",
+                            "max_active": 500,
+                            "spread_pos":[0.00001, 0.00001, 0.00001],
+                            "particles": [
+                                {
+                                    "id":"stamp_footprint",
+                                    "count": [1, 1]
+                                }
+                            ]
+                        },
                         "effect_character_indicator":{
                             "effect_class": "GameEffect",
                             "max_active": 1000,

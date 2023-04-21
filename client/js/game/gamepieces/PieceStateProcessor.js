@@ -188,7 +188,12 @@ class PieceStateProcessor {
             status.combatTarget = status.engagingTarget;
         }
         let combatTarget = status.combatTarget;
-        combatTarget.setStatusValue('hp', combatTarget.getStatusByKey('hp') - status['dmg']);
+
+        let damage = status['dmg']
+
+        combatTarget.setStatusValue('hp', combatTarget.getStatusByKey('hp') - damage);
+
+        combatTarget.notifyDamageTaken(damage, status.gamePiece);
 
         if (combatTarget.getStatusByKey('hp') > 0) {
 
