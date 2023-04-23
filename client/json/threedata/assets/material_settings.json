@@ -278,7 +278,7 @@
                 "alphaTest": 0.005,
                 "transparent": false,
                 "depthWrite": false,
-                "premultipliedAlpha": true
+                "premultipliedAlpha": false
               }
             }
           }

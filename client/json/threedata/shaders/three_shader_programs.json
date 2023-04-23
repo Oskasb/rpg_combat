@@ -1424,8 +1424,7 @@
           "vColor.g = vertexColor.g * sunDir.g + vertexColor.g * ambientLightColor.g * ambInt;",
           "vColor.b = vertexColor.b * sunDir.b + vertexColor.b * ambientLightColor.b * ambInt;",
 
-          "vColor.a = vertexColor.a * alphaFactor;",
-
+          "vColor.a =  vertexColor.a * alphaFactor * progressState;",
 
           "vec4 particlePosition = modelViewMatrix * vec4(offset, 1.0);",
           "vec4 modelPosition = particlePosition + vec4(vPosition.xy, 0, 0);",
@@ -1457,6 +1456,8 @@
           "vec4 txColor = texture2D( map, vUv);",
           "if (txColor.a * vColor.a <= alphaTest) discard;",
           "vec4 lightColor = vec4(sunDir, 1.0);",
+
+          "txColor *= vColor;",
 
           "gl_FragColor = vColor * txColor * 1.0 + txColor * lightColor*1.0;",
           "}",

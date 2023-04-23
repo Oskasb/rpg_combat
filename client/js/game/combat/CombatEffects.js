@@ -21,6 +21,15 @@ let endOnLanded = function(fx) {
     fx.endEffectOfClass()
 }
 
+let setupLifecycle = function(efct, fxDuration, onPaceFactor, decayFactor) {
+    let start = GameAPI.getGameTime();
+    let atk = onPaceFactor*fxDuration;
+    let decay = decayFactor*fxDuration;
+    let end = start+fxDuration;
+    efct.setEffectLifecycle(start, atk, end, decay);
+    return fxDuration;
+}
+
 function fireBallEffect(gamePiece, dmg, attacker) {
 
     let effectCb = function(efct) {
@@ -45,15 +54,11 @@ function fireBallEffect(gamePiece, dmg, attacker) {
         tempVec3.set(size, size, size);
         MATH.spreadVector(tempObj.position, tempVec3)
 
-        setRgba(0.1, 0.1, -0.1, 0.1)
+        setRgba(0.6, 0.6, 0.4, 0.5)
         efct.setEffectColorRGBA(rgba)
 
-        let time = 0.4+Math.random();
-        let start = GameAPI.getGameTime();
-        let atk = time*0.25;
-        let end = start+atk*3;
-        let decay = atk;
-        efct.setEffectLifecycle(start, atk, end, decay);
+        let time = setupLifecycle(efct, 0.4+Math.random()*0.4, 0.6, 0.4);
+
         efct.activateSpatialTransition(tempObj.position, efct.quat, ThreeAPI.tempVec3, tempObj.quaternion, 1 + 3*Math.random(), 2*Math.random(), time, endOnLanded, 0.1)
     }
 

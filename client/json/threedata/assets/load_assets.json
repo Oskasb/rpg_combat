@@ -12,6 +12,12 @@
       "TEXTURES"
     ],
     "POLL_INDEX":[
+      "/threedata/shaders/three_shader_chunks.json"          ,
+      "/threedata/shaders/three_particle_shaders.json"       ,
+      "/threedata/shaders/three_shader_programs.json"
+    ],
+    "NOT_POLL_INDEX":[
+
       "/game/skeletons/biped_rigs.json"                      ,
       "/world/scenarios/home_dynamic/home_hero_dynamic.json" ,
       "/world/scenarios/home_dynamic/home_hovel_dynamic.json" ,
@@ -61,20 +67,14 @@
       "/ui/pages/gui_page_village.json"                        ,
       "/ui/pages/gui_page_world.json"                        ,
 
-      "/world/scenarios/home_scenario_static.json"
-    ],
-    "NOT_POLL_INDEX":[
-
-
+      "/world/scenarios/home_scenario_static.json"          ,
 
 
       "/effects/effect_buffers.json"                         ,
       "/effects/effect_effects.json"                         ,
       "/effects/effect_particles.json"                       ,
 
-      "/threedata/shaders/three_shader_chunks.json"          ,
-      "/threedata/shaders/three_particle_shaders.json"       ,
-      "/threedata/shaders/three_shader_programs.json"        ,
+
 
       "/threedata/assets/sprites/gui_sprites_16x16.json"     ,
       "/threedata/assets/sprites/font_sprites_16x16.json"    ,
