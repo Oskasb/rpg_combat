@@ -259,7 +259,12 @@
             "shader": "RawShaderMaterial",
             "properties": {
               "program": "PARTICLE_INSTANCING",
-              "blending": "AdditiveBlending",
+              "blending": "CustomBlending",
+              "customBlending": {
+                "blendEquation": "AddEquation",
+                "blendSrc": "SrcAlphaFactor",
+                "blendDst": "OneFactor"
+              },
               "global_uniforms":{
                 "fogDensity": { "value": 0.00025 },
                 "fogColor": { "value": {"r":1, "g":1, "b":1}},
