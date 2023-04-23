@@ -22,8 +22,8 @@ class InstancingBufferElement {
         this.quaternion.set(0, 0, 0, 1);
         this.position.set(0, 0, 0);
         this.endTime = 0;
-        // negative r inverts lut gradient direction
-        this.rgba =     {r:1, g:1, b:1, a:1};
+
+        this.rgba =     {r:1, g:1, b:1, a:1}; // negative r inverts lut gradient direction
         this.pos =      {x:1, y:1, z:-1};
         this.initScale =    {x:1, y:1, z:1};
         this.quat =     {x:0, y:0, z:0, w:1};

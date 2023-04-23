@@ -13,6 +13,8 @@ class EffectSpatialTransition {
         this.startSize = 0;
         this.endSize = 0;
 
+        this.bounce = 1;
+
         let tickMovement = function(tpf, gameTime) {
             this.applyFrameToMovement(tpf, gameTime);
         }.bind(this);
@@ -25,7 +27,7 @@ class EffectSpatialTransition {
 
     }
 
-    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback) {
+    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback, bounce) {
         let now = GameAPI.getGameTime();
         this.startTime = now;
         this.targetTime = now+overTime;
@@ -39,6 +41,7 @@ class EffectSpatialTransition {
 
         this.startSize = fromSize;
         this.endSize = toSize;
+        this.bounce = bounce || 1;
 
         if (typeof(callback) === 'function') {
             this.onArriveCallbacks.push(callback);
@@ -57,7 +60,7 @@ class EffectSpatialTransition {
             let size = MATH.interpolateFromTo(this.startSize, this.endSize, fraction);
 
             MATH.interpolateVec3FromTo(this.startObj3D.position, this.targetObj3D.position, fraction, tempVec3 , 'curveSigmoid');
-            tempVec3.y += Math.sin(fraction*Math.PI)*0.7;
+            tempVec3.y += Math.sin(fraction*Math.PI)*this.bounce;
             let tempQuat = ThreeAPI.tempObj.quaternion;
             tempQuat.slerpQuaternions(this.startObj3D.quaternion, this.targetObj3D.quaternion, fraction)
 
@@ -67,9 +70,7 @@ class EffectSpatialTransition {
             this.gameEffect.scaleEffectSize(size);
 
         } else {
-            this.gameEffect.setEffectPosition(this.targetObj3D.position);
-            MATH.callAll(this.onArriveCallbacks, this.gameEffect);
-            MATH.emptyArray(this.onArriveCallbacks);
+            MATH.callAndClearAll(this.onArriveCallbacks, this.gameEffect);
         }
     }
 

@@ -9,6 +9,8 @@ import { MovementPath } from "../piece_functions/MovementPath.js";
 import { PieceState } from "./PieceState.js";
 import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
 import { CompanionSystem } from "../companion/CompanionSystem.js";
+import * as PieceEffects from "./PieceEffects.js";
+
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
 
 let tempVec3 = new Vector3();
@@ -34,7 +36,7 @@ class GamePiece {
         let tickGamePiece = function(tpf, gameTime) {
         //    this.notifyDamageTaken(5);
             if (Math.random() < 0.15) {
-        //        this.notifyHealthRecover(Math.floor(Math.random()*5)+1)
+            //    PieceEffects.deathEffect(this)
             }
 
             if (this.isDead) {
@@ -202,88 +204,11 @@ class GamePiece {
     };
 
     notifyDamageTaken(dmg, attacker) {
-
-        let effectCb = function(efct) {
-            efct.activateEffectFromConfigId()
-            let fxLanded = function(fx) {
-            //    console.log("Fx arrives", fx)
-            }
-
-            let tempObj = ThreeAPI.tempObj;
-            tempObj.position.copy(this.getPos());
-            let size = this.getStatusByKey('size');
-            tempObj.position.y += size*0.8
-            ThreeAPI.tempVec3.set(size*0.2, size*0.75, size*0.2)
-            tempObj.lookAt(ThreeAPI.getCamera().position);
-            MATH.spreadVector(tempObj.position, ThreeAPI.tempVec3)
-            efct.quat.copy(tempObj.quaternion);
-            tempVec3.copy(this.getPos());
-
-            tempVec3.y += 10000;
-            tempObj.lookAt(tempVec3);
-            tempObj.rotateZ(Math.random()*MATH.TWO_PI)
-            tempVec3.y = 0.1;
-
-            ThreeAPI.tempVec3.set(size*2, 0, size*2)
-
-            efct.setEffectSpriteXY(1+Math.floor(Math.random()*2), 6);
-
-            MATH.spreadVector(tempVec3, ThreeAPI.tempVec3)
-
-            efct.activateSpatialTransition(tempObj.position, efct.quat, tempVec3, tempObj.quaternion, size*0.1+Math.random()*0.3, size*0.2+Math.random()*size*0.5, 0.3+Math.random()*0.3, fxLanded)
-        }.bind(this);
-
-        for (let i = 0; i < dmg; i++) {
-            EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'effect_damage_taken',  effectCb)
-        }
-
-
-
+        PieceEffects.damageEffect(this, dmg, attacker)
     }
 
     notifyHealthRecover(hp, healer) {
-
-
-        let applies = 0;
-        let effectCb = function(efct) {
-
-            efct.activateEffectFromConfigId()
-
-            let tempObj = ThreeAPI.tempObj;
-            tempObj.position.copy(this.getPos());
-            let size = this.getStatusByKey('size');
-            tempObj.position.y += size*1.2
-            tempObj.lookAt(ThreeAPI.getCamera().position);
-
-            efct.quat.copy(tempObj.quaternion);
-            tempVec3.copy(this.getPos());
-
-            tempVec3.y += size + 0.3+Math.sqrt(applies*0.2);
-        //    tempObj.lookAt(tempVec3);
-        //    tempObj.rotateZ(Math.random()*MATH.TWO_PI)
-        //    tempVec3.y = 0.1;
-
-            ThreeAPI.tempVec3.set(Math.sqrt(applies*0.2), Math.sqrt(applies*0.2), Math.sqrt(applies*0.2))
-            MATH.spreadVector(tempVec3, ThreeAPI.tempVec3)
-
-        //    efct.setEffectSpriteXY(0, 2);
-            let fxLanded = function(fx) {
-           //     console.log("arrive: ", fx)
-                efct.endEffectOfClass()
-                ThreeAPI.tempVec3.set(0, -1000, 0)
-                efct.setEffectPosition(ThreeAPI.tempVec3)
-            }
-
-            efct.activateSpatialTransition(tempObj.position, efct.quat, tempVec3, tempObj.quaternion, size*0.1, size*0.5, 1.5, fxLanded)
-            applies ++;
-        }.bind(this);
-
-        for (let i = 0; i < hp; i++) {
-            EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'effect_health_recovered',  effectCb)
-        }
-
-
-
+        PieceEffects.healEffect(this, hp, healer)
     }
 
     getStatus() {
@@ -301,6 +226,7 @@ class GamePiece {
     applyPieceDeadStatus() {
         this.isDead = true;
         this.clearEngagementStatus();
+        PieceEffects.deathEffect(this)
     }
     clearEngagementStatus() {
         this.movementPath.cancelMovementPath()

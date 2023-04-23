@@ -219,10 +219,10 @@ class PieceStateProcessor {
             status.trTime = (config.prepFraction * config.turnTime) / status.attacks
         } else if (status.swing < 1) {
             status.trTime = (config.swingFraction * config.turnTime) / status.attacks
-        } else {
             if(status.appliedAttacks < status.attack) {
                 this.applyAttackSwingDamage(status);
             }
+        } else {
             status.trTime = (config.recoverFraction * config.turnTime) / status.attacks
         }
 
