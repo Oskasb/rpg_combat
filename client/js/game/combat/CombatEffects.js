@@ -27,7 +27,7 @@ let setupLifecycle = function(efct, fxDuration, onPaceFactor, decayFactor) {
     let decay = decayFactor*fxDuration;
     let end = start+fxDuration;
     efct.setEffectLifecycle(start, atk, end, decay);
-    return fxDuration;
+    return fxDuration+decay;
 }
 
 function fireBallEffect(gamePiece, dmg, attacker) {
@@ -52,14 +52,16 @@ function fireBallEffect(gamePiece, dmg, attacker) {
         ThreeAPI.tempVec3.add(tempObj.position)
 
         tempVec3.set(size, size, size);
-        MATH.spreadVector(tempObj.position, tempVec3)
+        MATH.randomVector(tempVec3);
+        tempVec3.multiplyScalar(size)
+   //     MATH.spreadVector(tempObj.position, tempVec3)
 
-        setRgba(0.6, 0.6, 0.4, 0.5)
+        setRgba(0.6, 0.5, 0.4, 0.3)
         efct.setEffectColorRGBA(rgba)
 
-        let time = setupLifecycle(efct, 0.4+Math.random()*0.4, 0.6, 0.4);
+        let time = setupLifecycle(efct, 0.7+Math.random()*0.2, 0.7, 0.4);
 
-        efct.activateSpatialTransition(tempObj.position, efct.quat, ThreeAPI.tempVec3, tempObj.quaternion, 1 + 3*Math.random(), 2*Math.random(), time, endOnLanded, 0.1)
+        efct.activateSpatialTransition(tempObj.position, efct.quat, ThreeAPI.tempVec3, tempObj.quaternion, 1 + 3*Math.random(), 2+ 2*Math.random(), time, endOnLanded, 0.1)
     }
 
     for (let i = 0; i < 25; i++) {
@@ -77,9 +79,10 @@ function fireBallEffect(gamePiece, dmg, attacker) {
         tempVec3.copy(gamePiece.getPos());
         tempVec3.y = tempObj.position.y;
         efct.setEffectSpriteXY(0, 0);
-        setRgba(0.12, 0.07, 0.01, 0.04)
+        setRgba(0.82, 0.67, 0.31, 0.4)
         efct.setEffectColorRGBA(rgba)
-        efct.activateSpatialTransition(tempObj.position, tempObj.quaternion, tempVec3, tempObj.quaternion, 0, 14, 0.3, endOnLanded, 0.1)
+        let time = setupLifecycle(efct, 0.45, 0.1, 0.9);
+        efct.activateSpatialTransition(tempObj.position, tempObj.quaternion, tempVec3, tempObj.quaternion, 0, 14, time, endOnLanded, 0.1)
 
     }
 
@@ -97,7 +100,7 @@ function fireBallEffect(gamePiece, dmg, attacker) {
         tempVec3.copy(gamePiece.getPos());
         tempVec3.y = tempObj.position.y;
         efct.setEffectSpriteXY(1, 1);
-        setRgba(0.12, -0.07, 0.51, 0.14)
+        setRgba(0.12, -0.07, 0.51, 0.4)
         efct.setEffectColorRGBA(rgba)
         efct.activateSpatialTransition(tempObj.position, tempObj.quaternion, tempVec3, tempObj.quaternion, 12, 0, 0.23, endOnLanded, 0.1)
 

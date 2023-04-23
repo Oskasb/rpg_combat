@@ -1222,11 +1222,11 @@
 
           "float decayProg  = max(decayTime, 0.0) / lifecycle.w;",
 
-          "float progressState = attackProg - decayProg;",
+          "float progressState = (attackProg - decayProg)*min(effectAge / lifecycle.y, 1.0);",
 
           "float alphaFactor = progressState*alphaTest + (1.0-alphaTest);",
 
-          "float alphaState =  alphaFactor;",
+          "float alphaState =  alphaFactor*(1.0-decayProg);",
 
           "float zHideFactor = floor(decayProg);",
 
@@ -1275,7 +1275,7 @@
           "vColor.g = vertexColor.g * sunDir.g + vertexColor.g * ambientLightColor.g * ambInt;",
           "vColor.b = vertexColor.b * sunDir.b + vertexColor.b * ambientLightColor.b * ambInt;",
 
-          "vColor.a = vertexColor.a * alphaFactor;",
+          "vColor.a = vertexColor.a * alphaState;",
 
           "vec3 vertexPos = vec3( offset + vPosition);",
 
@@ -1308,7 +1308,7 @@
           "vec4 lightColor = vec4(sunDir, 1.0);",
 
 
-          "gl_FragColor = vColor * txColor * 1.0 + txColor * lightColor*1.0;",
+          "gl_FragColor = vColor * txColor * 1.0 + txColor * vColor * lightColor*1.0;",
           "float fogFactor = min(fogDensity * fogDepth, 1.0);",
           "gl_FragColor.rgb = mix(gl_FragColor.rgb, fogColor,  fogFactor );",
           "}",
@@ -1364,15 +1364,15 @@
 
           "float decayTime = min(systemTime - endTime, isPreEnd * lifecycle.w);",
 
-          "float attackProg = 1.0 - max(lifecycle.y - (effectAge / lifecycle.y), 0.0);",
+          "float attackProg = (1.0 - max(lifecycle.y - (effectAge / lifecycle.y), 0.0))* min(effectAge*1.0 / lifecycle.y, 1.0);",
 
           "float decayProg  = max(decayTime, 0.0) / lifecycle.w;",
 
-          "float progressState = attackProg - decayProg;",
+          "float progressState = (attackProg - decayProg) * min(effectAge*1.0 / lifecycle.y, 1.0);",
 
           "float alphaFactor = progressState*alphaTest + (1.0-alphaTest);",
 
-          "float alphaState =  alphaFactor;",
+          "float alphaState =  alphaFactor*max(effectAge / lifecycle.y, 1.0);",
 
           "float zHideFactor = floor(decayProg);",
 
@@ -1402,9 +1402,12 @@
 
           "float lowness = sprite.z - (uv.y*sprite.z);",
 
-          "vPosition.x = vPosition.x * (1.0 * scale3d.x) * progressState ;",
-          "vPosition.y = vPosition.y * (1.0 * scale3d.y) * progressState ;",
-          "vPosition.z = vPosition.z * (1.0 * scale3d.z) * progressState ;",
+
+
+
+          "vPosition.x = vPosition.x * (1.0 * scale3d.x) * progressState;",
+          "vPosition.y = vPosition.y * (1.0 * scale3d.y) * progressState;",
+          "vPosition.z = vPosition.z * (1.0 * scale3d.z) * progressState;",
 
 
 
@@ -1457,9 +1460,7 @@
           "if (txColor.a * vColor.a <= alphaTest) discard;",
           "vec4 lightColor = vec4(sunDir, 1.0);",
 
-          "txColor *= vColor;",
-
-          "gl_FragColor = vColor * txColor * 1.0 + txColor * lightColor*1.0;",
+          "gl_FragColor = vColor * txColor + txColor * lightColor*vColor;",
           "}",
           ""
 
