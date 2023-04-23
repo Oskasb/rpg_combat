@@ -91,6 +91,13 @@ class InstancingBufferElement {
         )
     };
 
+    setLifecycle = function(startTime, attackTime, endTime, decayTime) {
+            this.lifecycle.x = startTime;
+            this.lifecycle.y = attackTime;
+            this.lifecycle.z = endTime;
+            this.lifecycle.w = decayTime;
+    };
+
     applyLifecycle = function() {
         this.guiBuffers.setAttribXYZW('lifecycle',
             this.index,

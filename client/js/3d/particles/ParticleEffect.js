@@ -125,6 +125,13 @@ class ParticleEffect {
         this.duration = duration;
     };
 
+    setParticleLifecycle = function(startTime, attackTime, endTime, decayTime) {
+        if (this.bufferElement) {
+            this.bufferElement.setLifecycle(startTime, attackTime, endTime, decayTime);
+            this.bufferElement.applyLifecycle();
+        }
+    };
+
     applyConfig = function() {
 
         this.size = MATH.randomBetween(this.config.size_min, this.config.size_max) || 5;

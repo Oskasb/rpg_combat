@@ -48,11 +48,17 @@ function fireBallEffect(gamePiece, dmg, attacker) {
         setRgba(0.1, 0.1, -0.1, 0.1)
         efct.setEffectColorRGBA(rgba)
 
-        efct.activateSpatialTransition(tempObj.position, efct.quat, ThreeAPI.tempVec3, tempObj.quaternion, 1 + 3*Math.random(), 2*Math.random(), 0.2+Math.random()*0.3, endOnLanded, 0.1)
+        let time = 0.4+Math.random();
+        let start = GameAPI.getGameTime();
+        let atk = time*0.25;
+        let end = start+atk*3;
+        let decay = atk;
+        efct.setEffectLifecycle(start, atk, end, decay);
+        efct.activateSpatialTransition(tempObj.position, efct.quat, ThreeAPI.tempVec3, tempObj.quaternion, 1 + 3*Math.random(), 2*Math.random(), time, endOnLanded, 0.1)
     }
 
     for (let i = 0; i < 25; i++) {
-        EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'effect_additive_pool',  effectCb)
+        EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
     }
 
     let shockwaveCb = function(efct) {
@@ -72,7 +78,7 @@ function fireBallEffect(gamePiece, dmg, attacker) {
 
     }
 
-    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'effect_additive_pool',  shockwaveCb)
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  shockwaveCb)
 
 
     let implosionCb = function(efct) {
@@ -92,7 +98,7 @@ function fireBallEffect(gamePiece, dmg, attacker) {
 
     }
 
-    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'effect_additive_pool',  implosionCb)
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  implosionCb)
 }
 
 function magicMissileEffect(gamePiece, hp, healer) {

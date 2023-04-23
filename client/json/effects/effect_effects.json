@@ -35,13 +35,24 @@
                                 }
                             ]
                         },
-                        "effect_additive_pool":{
+                        "particle_additive_pool":{
                             "effect_class": "GameEffect",
                             "max_active": 200,
                             "spread_pos":[0.00001, 0.00001, 0.00001],
                             "particles": [
                                 {
                                     "id":"particle_additive_pool",
+                                    "count": [1, 1]
+                                }
+                            ]
+                        },
+                        "stamp_additive_pool":{
+                            "effect_class": "GameEffect",
+                            "max_active": 200,
+                            "spread_pos":[0.00001, 0.00001, 0.00001],
+                            "particles": [
+                                {
+                                    "id":"stamp_additive_pool",
                                     "count": [1, 1]
                                 }
                             ]

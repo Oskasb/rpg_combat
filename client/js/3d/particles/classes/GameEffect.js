@@ -116,6 +116,13 @@ class GameEffect {
         }
     };
 
+    setEffectLifecycle = function(startTime, attackTime, endTime, decayTime) {
+        for (let i = 0; i < this.activeParticles.length; i++) {
+            let particle = this.activeParticles[i];
+            particle.setParticleLifecycle(startTime, attackTime, endTime, decayTime);
+        }
+    };
+
     setEffectSpriteXY = function(x, y) {
         for (let i = 0; i < this.activeParticles.length; i++) {
             this.activeParticles[i].setParticleTileXY(x, y)

@@ -1255,13 +1255,11 @@
           "vUv.y -= tileScale.y*(2.0 - sprite.z);",
           "vUv.y *= sprite.z;",
 
-
           "float lowness = sprite.z - (uv.y*sprite.z);",
 
           "vPosition.x = vPosition.x * (1.0 * scale3d.x)  ;",
           "vPosition.y = vPosition.y * (1.0 * scale3d.y)  ;",
           "vPosition.z = vPosition.z * (1.0 * scale3d.z)  ;",
-
 
           "vec3 vNormal = normal.xyz;",
           "vec3 faceNormal = vNormal + 2.0 * cross( orientation.xyz, cross( orientation.xyz, vNormal ) + orientation.w * vNormal );",
@@ -1279,9 +1277,7 @@
 
           "vColor.a = vertexColor.a * alphaFactor;",
 
-
           "vec3 vertexPos = vec3( offset + vPosition);",
-
 
           "gl_Position = projectionMatrix * modelViewMatrix * vec4(vertexPos, 1.0);",
           "fogDepth = gl_Position.z;",
@@ -1332,16 +1328,18 @@
           "attribute vec2 uv;",
           "attribute vec4 sprite;",
           "attribute vec4 lifecycle;",
+          "attribute vec4 vertexColor;",
+          "attribute vec4 orientation;",
 
           "uniform float systemTime;",
           "uniform vec2 tiles;",
           "varying vec2 tileOffset;",
 
-          "attribute vec4 vertexColor;",
+
           "varying vec4 vColor;",
 
           "varying vec2 vUv;",
-          "attribute vec4 orientation;",
+
 
           "uniform vec3 ambientLightColor;",
           "uniform vec3 sunLightColor;",
@@ -1427,6 +1425,7 @@
           "vColor.b = vertexColor.b * sunDir.b + vertexColor.b * ambientLightColor.b * ambInt;",
 
           "vColor.a = vertexColor.a * alphaFactor;",
+
 
           "vec4 particlePosition = modelViewMatrix * vec4(offset, 1.0);",
           "vec4 modelPosition = particlePosition + vec4(vPosition.xy, 0, 0);",
