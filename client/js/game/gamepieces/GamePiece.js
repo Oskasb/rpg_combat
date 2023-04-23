@@ -10,6 +10,7 @@ import { PieceState } from "./PieceState.js";
 import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
 import { CompanionSystem } from "../companion/CompanionSystem.js";
 import * as PieceEffects from "./PieceEffects.js";
+import * as CombatEffects from "./../combat/CombatEffects.js";
 
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
 
@@ -35,8 +36,8 @@ class GamePiece {
 
         let tickGamePiece = function(tpf, gameTime) {
         //    this.notifyDamageTaken(5);
-            if (Math.random() < 0.15) {
-            //    PieceEffects.deathEffect(this)
+            if (Math.random() < 0.02) {
+                CombatEffects.fireBallEffect(this, 25)
             }
 
             if (this.isDead) {
