@@ -2,6 +2,7 @@ import { CharacterInventory } from "./CharacterInventory.js";
 import { CharacterEquipment } from "./CharacterEquipment.js";
 import { CharacterStatus } from "./CharacterStatus.js";
 import { CharacterMovement } from "./CharacterMovement.js";
+import { CharacterAbilities } from "./CharacterAbilities.js";
 import { CharacterStatusGui } from "../../application/ui/gui/game/CharacterStatusGui.js";
 import { CharacterIndicator } from "../../application/ui/gui/game/CharacterIndicator.js";
 
@@ -14,6 +15,7 @@ class GameCharacter {
         this.characterStatus = new CharacterStatus();
         this.characterStatusGui = new CharacterStatusGui();
         this.characterIndicator = new CharacterIndicator();
+        this.characterAbilities = new CharacterAbilities();
 
         let pickupComplete = function(itemPiece) {
             this.getInventory().addItemToInventory(itemPiece);
@@ -39,6 +41,13 @@ class GameCharacter {
         this.characterMovement = new CharacterMovement(gamePiece);
         this.characterStatusGui.initStatusGui(this);
         this.characterIndicator.initCharacterIndicator(gamePiece);
+        if (this.config['abilities']) {
+            this.characterAbilities.initCharacterAbilities(gamePiece);
+            let abilities = this.config['abilities']
+            for (let key in abilities) {
+                this.characterAbilities.addCharacterAbility(key, abilities[key]);
+            }
+        }
     }
 
     getCharacterPiece() {

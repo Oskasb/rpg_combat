@@ -7,6 +7,7 @@ import { PieceAttacher } from "./PieceAttacher.js";
 import { PieceMovement } from "../piece_functions/PieceMovement.js";
 import { MovementPath } from "../piece_functions/MovementPath.js";
 import { PieceState } from "./PieceState.js";
+import { PieceAbilitySystem } from "./PieceAbilitySystem.js";
 import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
 import { CompanionSystem } from "../companion/CompanionSystem.js";
 import * as PieceEffects from "./PieceEffects.js";
@@ -24,6 +25,7 @@ class GamePiece {
         this.ownerPiece = null;
         this.gamePieceUpdateCallbacks = [];
         this.pieceActionSystem = new PieceActionSystem();
+
         this.combatSystem = new CombatSystem(this);
         this.threatDetector = new ThreatDetector(this);
 
@@ -33,6 +35,7 @@ class GamePiece {
         this.pieceState = new PieceState(this);
         this.pieceInfoGui = new PieceInfoGui(this)
         this.companionSystem = new CompanionSystem(this)
+        this.pieceAbilitySystem = new PieceAbilitySystem(this);
 
         let tickGamePiece = function(tpf, gameTime) {
         //    this.notifyDamageTaken(5);

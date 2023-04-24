@@ -53,7 +53,7 @@ function healEffect(gamePiece, hp, healer) {
 
     let applies = 0;
     let effectCb = function(efct) {
-
+        efct.activateEffectFromConfigId()
         let tempObj = ThreeAPI.tempObj;
         tempObj.position.copy(gamePiece.getPos());
         let size = gamePiece.getStatusByKey('size');
@@ -71,7 +71,7 @@ function healEffect(gamePiece, hp, healer) {
         efct.setEffectSpriteXY(1+Math.floor(Math.random()*3), 7);
 
         efct.activateSpatialTransition(tempObj.position, efct.quat, tempVec3, tempObj.quaternion, size*0.1, size*0.5, 1.5, endOnLanded, 0.2)
-        efct.activateEffectFromConfigId()
+
         applies ++;
     };
 

@@ -20,7 +20,7 @@ class InputState {
             this.lastAction = [0, 0];
             this.pressFrames = 0;
             this.pressStartTime = 0;
-            this.longPressTime = 0.5;
+            this.longPressTime = 0.25;
             this.longPressProgress = 0;
             this.guiPointer = new GuiPointer(this)
         };
