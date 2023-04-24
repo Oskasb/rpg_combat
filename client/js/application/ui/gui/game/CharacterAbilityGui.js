@@ -39,7 +39,7 @@ class CharacterAbilityGui {
         evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
     }
 
-    addButtonContainer() {
+    addButtonContainer(maxSlots) {
         let abilityButtons = this.abilityButtons
         let containers = this.buttonContainers;
 
@@ -64,20 +64,18 @@ class CharacterAbilityGui {
 
         //    element.guiWidget.applyWidgetPosition()
             containers.push(element);
-            addButtonElement('widget_action_button', element, onButtonReady)
+            for (let i = 0; i < maxSlots; i++) {
+                addButtonElement('widget_action_button', element, onButtonReady)
+            }
         }
 
-        this.addAbilityContainer('widget_attack_point_container', onContainerReady)
+        this.addAbilityContainer('widget_action_button_container', onContainerReady)
     }
 
     activateCharacterAbilityGui() {
 
         let maxSlots = this.gamePiece.getStatusByKey('ability_slots_max');
-
-        for (let i = 0; i < maxSlots; i++) {
-            this.addButtonContainer()
-        }
-
+        this.addButtonContainer(maxSlots)
         GameAPI.registerGameUpdateCallback(this.callbacks.updateCharAbilityGui)
     }
 
@@ -111,7 +109,7 @@ class CharacterAbilityGui {
         let frac = MATH.calcFraction(0, containerIndex, buttonCount);
         let tempVec3c = ThreeAPI.tempVec3;
         tempVec3c.set(0, 0, 0);
-        tempVec3c.x +=  (0.5+containerIndex-buttonCount*0.5) * 0.10 // - buttonCount * 0.1 ;
+    //    tempVec3c.x +=  (0.5+containerIndex-buttonCount*0.5) * 0.10 // - buttonCount * 0.1 ;
         tempVec3c.add(pieceScreenPos);
         container.guiWidget.setPosition(tempVec3c)
     }

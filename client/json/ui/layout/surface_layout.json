@@ -29,7 +29,7 @@
                 "text":   {"x":0.5, "y": 0.15, "fontsize": 8},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
-                "size":   {"x":0.095, "y":0.095,"z":  0.0}
+                "size":   {"x":0.09, "y":0.09,"z":  0.0}
               }
             },
             {
@@ -271,8 +271,8 @@
               "id":"layout_action_button_container",
               "config": {
                 "text":   {"x":1.0, "y":0.0, "fontsize": 8},
-                "anchor": {"x":-0.0, "y":0.0, "z": 0.0},
-                "offset": {"x":-0.0, "y":0.0,"z":  0.0},
+                "anchor": {"x":0.0, "y":0.0, "z": 0.0},
+                "offset": {"x":-0.5, "y":0.0,"z":  0.0},
                 "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 10, "pad": 0.0002, "gridx": 1, "gridy":-1}
               }
             },
