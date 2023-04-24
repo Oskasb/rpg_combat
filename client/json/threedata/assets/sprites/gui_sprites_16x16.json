@@ -255,11 +255,11 @@
             "tiles":[[2, 1]]
           },
           {
-            "id":"hp_plate",
+            "id":"ap_plate",
             "tiles":[[2, 0]]
           },
           {
-            "id":"hp_light",
+            "id":"ap_light",
             "tiles":[[3, 0]]
           },
           {

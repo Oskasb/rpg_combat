@@ -3,13 +3,17 @@ class CharacterStatusGui {
     constructor() {
         this.colorMap = {
             on:{"r": 0.11, "g": 0.75, "b": 0.75, "a": 0.99},
-            active:{"r": 0.45, "g": 0.95, "b": 0.99, "a": 0.99},
-            off:{"r": 0.35, "g": 0.35, "b": 0.85, "a": 0.99}
+            active:{"r": 0.99, "g": 0.93, "b": 0.39, "a": 0.99},
+            off:{"r": 0.35, "g": 0.35, "b": 0.85, "a": 0.99},
+            available:{"r": 0.01, "g": 0.79, "b": 0.01, "a": 0.99},
+            activated:{"r": 0.99, "g": 0.73, "b": -0.4, "a": 0.99},
+            unavailable:{"r": 0.7, "g": -0.1, "b": -0.15, "a": 0.39}
         }
 
         this.tempVec3 = new THREE.Vector3();
         this.tempVec3b = new THREE.Vector3();
         this.attackPointElements = [];
+        this.actionPointElements = [];
         let updateCharStatGui = function() {
               this.updateCharacterStatElement();
         }.bind(this);
@@ -41,17 +45,18 @@ class CharacterStatusGui {
     }
 
 
-    addAttacksContainer(onReady) {
+    addPointContainer(configId, onReady ) {
         let opts = GuiAPI.buildWidgetOptions(
             {
                 widgetClass:'GuiExpandingContainer',
                 widgetCallback:onReady,
-                configId:'widget_attack_point_container'
+                configId:configId // 'widget_attack_point_container'
             }
         );
 
         evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
     }
+
 
     activateCharacterStatusGui() {
 
@@ -68,9 +73,17 @@ class CharacterStatusGui {
             element.guiWidget.applyWidgetPosition()
         }.bind(this)
 
+        let onAPContainerReady = function(element) {
+            this.actionPointContainer = element;
+            element.guiWidget.applyWidgetPosition()
+        }.bind(this)
+
+
+
         this.addProgressElement( 'progress_indicator_char_hp', onHpReady)
         this.addProgressElement( 'progress_indicator_char_swing', onSwingReady)
-        this.addAttacksContainer(onAttacksContainerReady)
+        this.addPointContainer('widget_attack_point_container', onAttacksContainerReady )
+        this.addPointContainer('widget_attack_point_container', onAPContainerReady )
         GameAPI.registerGameUpdateCallback(this.callbacks.updateCharStatGui)
     }
 
@@ -89,16 +102,23 @@ class CharacterStatusGui {
             this.attacksContainer.guiWidget.recoverGuiWidget();
         }
 
+        while (this.actionPointElements.length) {
+            this.actionPointElements.pop().guiWidget.recoverGuiWidget();
+        }
+        if (this.actionPointContainer) {
+            this.actionPointContainer.guiWidget.recoverGuiWidget();
+        }
+
     }
 
-    addAttackElement(container, onReady) {
+    addAttackElement(configId, container, onReady) {
 
         let opts = GuiAPI.buildWidgetOptions(
             {
                 widgetClass:'GuiExpandingContainer',
                 widgetCallback:onReady,
                 container:container,
-                configId:'icon_attack_point'
+                configId:configId // 'icon_attack_point'
             }
         );
 
@@ -110,20 +130,17 @@ class CharacterStatusGui {
         let container = this.attacksContainer;
         let onReady = function(element) {
             attackElements.push(element);
-            element.guiWidget.setWidgetIconKey('atk_on');
             container.guiWidget.applyWidgetPosition()
         }
 
         if (attackElements.length < maxAttacks) {
-            this.addAttackElement(container, onReady)
+            this.addAttackElement('icon_attack_point', container, onReady)
         } else {
             while (attackElements.length > maxAttacks) {
                 attackElements.pop().guiWidget.recoverGuiWidget();
             }
         }
-
     }
-
 
     updateAttackPointElements(maxAttacks, currentAttack, attackProgress) {
         if (this.attackPointElements.length !== maxAttacks) {
@@ -134,11 +151,10 @@ class CharacterStatusGui {
             let element = this.attackPointElements[i].guiWidget;
             let bufferElem = element.icon.bufferElement;
             if (maxAttacks - i === currentAttack) {
+                element.setWidgetIconKey('atk_on');
                 if (attackProgress < 0.5) {
-                    element.setWidgetIconKey('atk_on');
                     bufferElem.setColorRGBA(this.colorMap['active']);
                 } else {
-                    element.setWidgetIconKey('atk_on');
                     bufferElem.setColorRGBA(this.colorMap['off']);
                 }
 
@@ -148,6 +164,48 @@ class CharacterStatusGui {
             } else {
                 element.setWidgetIconKey('atk_on');
                 bufferElem.setColorRGBA(this.colorMap['on']);
+            }
+
+        }
+
+    }
+
+    updateMaxAPCount(maxAttacks) {
+        let attackElements = this.actionPointElements
+        let container = this.actionPointContainer;
+        let onReady = function(element) {
+            attackElements.push(element);
+            container.guiWidget.applyWidgetPosition()
+        }
+
+        if (attackElements.length < maxAttacks) {
+            this.addAttackElement('icon_action_point', container, onReady)
+        } else {
+            while (attackElements.length > maxAttacks) {
+                attackElements.pop().guiWidget.recoverGuiWidget();
+            }
+        }
+    }
+
+    updateActionPointElements(maxAPs, availableAPs, activeAPs) {
+        if (this.actionPointElements.length !== maxAPs) {
+            this.updateMaxAPCount(maxAPs)
+        }
+
+        for (let i = 0; i < this.actionPointElements.length; i++) {
+            let element = this.actionPointElements[i].guiWidget;
+            let bufferElem = element.icon.bufferElement;
+            if (i < activeAPs) {
+
+                element.setWidgetIconKey('ap_light');
+                bufferElem.setColorRGBA(this.colorMap['activated']);
+
+            } else if (i < availableAPs) {
+                element.setWidgetIconKey('ap_light');
+                bufferElem.setColorRGBA(this.colorMap['available']);
+            } else {
+                element.setWidgetIconKey('ap_light');
+                bufferElem.setColorRGBA(this.colorMap['unavailable']);
             }
 
         }
@@ -167,6 +225,10 @@ class CharacterStatusGui {
         this.tempVec3b.y-=0.004
         this.attacksContainer.guiWidget.setPosition(this.tempVec3b)
         this.updateAttackPointElements(this.gamePiece.getStatusByKey('turnAttacks'), this.gamePiece.getStatusByKey('attack'), this.gamePiece.getStatusByKey('atkProg'))
+
+        this.tempVec3b.y += 0.014
+        this.actionPointContainer.guiWidget.setPosition(this.tempVec3b)
+        this.updateActionPointElements(this.gamePiece.getStatusByKey('maxAPs'), this.gamePiece.getStatusByKey('actPts'), this.gamePiece.getStatusByKey('activeAPs'))
     }
 
 }

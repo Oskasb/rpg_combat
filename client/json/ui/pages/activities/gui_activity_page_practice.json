@@ -113,9 +113,18 @@
                           "digits": 1
                         },
                         {
-                          "key": "turnProgress",
+                          "key": "maxAPs",
                           "digits": 1
                         },
+                        {
+                          "key": "actPts",
+                          "digits": 1
+                        },
+                        {
+                          "key": "activeAPs",
+                          "digits": 1
+                        },
+
                         {
                           "key": "attacks",
                           "digits": 1

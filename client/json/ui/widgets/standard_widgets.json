@@ -75,6 +75,18 @@
               }
             },
             {
+              "id":"icon_action_point",
+              "layout":"layout_attack_point",
+              "icon": {
+                "icon_config": "attack_point_icon",
+                "feedback": "feedback_attack_icon"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_attack_point_icon",
+                "feedback": "feedback_surface_action_point_icon"
+              }
+            },
+            {
               "id":"icon_attack_point",
               "layout":"layout_attack_point",
               "icon": {

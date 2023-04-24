@@ -8,10 +8,10 @@ class PieceState {
 
             xpGain:21,
             turnTime:4,
-            sourceFraction:0.25,
+            sourceFraction:0.15,
             prepFraction:0.25,
-            swingFraction:0.25,
-            recoverFraction:0.25,
+            swingFraction:0.30,
+            recoverFraction:0.30,
             hasteFactor:1,
             maxActPts:5,
             maxHP: 100
@@ -59,6 +59,7 @@ class PieceState {
             trTime:0,
             maxAPs:0,
             actPts:0,
+            activeAPs:0,
             hp:100,
             maxHP:100,
             isItem:0,

@@ -37,7 +37,7 @@ class GamePiece {
         let tickGamePiece = function(tpf, gameTime) {
         //    this.notifyDamageTaken(5);
             if (Math.random() < 0.02) {
-                CombatEffects.fireBallEffect(this, 25)
+            //    CombatEffects.fireBallEffect(this, 25)
             }
 
             if (this.isDead) {

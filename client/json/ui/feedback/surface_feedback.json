@@ -19,6 +19,15 @@
               }
             },
             {
+              "id":"feedback_surface_action_point_icon",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.15, "g": -0.15, "b": -0.25, "a": 0.5},
+                  "sprite": "ap_light"
+                }
+              }
+            },
+            {
               "id":"feedback_surface_attack_icon",
               "config": {
                 "NONE": {

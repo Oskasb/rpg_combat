@@ -65,25 +65,8 @@ class PieceStateProcessor {
 
     }
 
-    processNewTurn(status, config) {
 
-
-        status.turnTime = config.turnTime;
-        status.maxAPs = config.maxActPts;
-        status.appliedAttacks = 0;
-        status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
-        status.turn = GameAPI.gameMain.turnStatus.turn;
-        status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
-
-        status.charState = status.targState;
-
-        if (MATH.isEvenNumber(GameAPI.getTurnStatus().turn)){
-            status.turnAttacks = Math.ceil(status.FAST);
-        } else {
-            status.turnAttacks = Math.floor(status.FAST);
-        }
-
-
+    updateTurnHP(status) {
         let target = status.gamePiece.getTarget()
         if (target) {
             if (target.isDead) {
@@ -100,12 +83,46 @@ class PieceStateProcessor {
                 status.gamePiece.notifyHealthRecover(heal, status.gamePiece);
             }
         }
+    }
+
+    updateTurnActionPoints(status) {
+
+
+        if (status.actPts === status.maxAPs) {
+            status.actPts = 0;
+        } else {
+            status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
+        }
+
+        status.activeAPs = Math.floor(Math.random()*Math.random()*status.actPts);
 
 
 
+    }
+
+    processNewTurn(status, config) {
+
+        status.maxAPs = config.maxActPts;
+        status.turnTime = config.turnTime;
+
+        status.turn = GameAPI.gameMain.turnStatus.turn;
+        status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
+
+
+        status.appliedAttacks = 0;
+        if (MATH.isEvenNumber(GameAPI.getTurnStatus().turn)){
+            status.turnAttacks = Math.ceil(status.FAST);
+        } else {
+            status.turnAttacks = Math.floor(status.FAST);
+        }
+
+
+        this.updateTurnHP(status)
+        this.updateTurnActionPoints(status)
+
+        status.charState = status.targState;
         this.gamePiece.combatSystem.combatTargetProcessor.updateCombatTarget(this.gamePiece);
         this.gamePiece.combatSystem.engageTarget(this.gamePiece.getStatusByKey('engagingTarget'));
-
         status.charState = status.targState;
 
 
