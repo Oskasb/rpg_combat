@@ -524,9 +524,9 @@ if(typeof(MATH) === "undefined") {
 
 
 
-	MATH.radialToVector = function(angle, distance, store) {
-		store.data[0] = Math.cos(angle)*distance;
-		store.data[2] = Math.sin(angle)*distance;
+	MATH.radialToVectorXY = function(angle, distance, store) {
+		store.x = Math.cos(angle)*distance;
+		store.y = Math.sin(angle)*distance;
 	};
 
 	MATH.spreadVector = function(vec, spreadV) {

@@ -123,6 +123,14 @@
               }
             },
             {
+              "id":"widget_action_button_container",
+              "layout":"layout_action_button_container",
+              "surface": {
+                "nineslice": "nineslice_surface_attack_points_container",
+                "feedback": "feedback_surface_anchor"
+              }
+            },
+            {
               "id":"widget_action_button",
               "layout":"layout_action_button",
               "text": {

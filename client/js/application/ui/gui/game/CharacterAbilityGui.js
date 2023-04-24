@@ -12,8 +12,8 @@ class CharacterAbilityGui {
 
         this.tempVec3 = new THREE.Vector3();
         this.tempVec3b = new THREE.Vector3();
-        this.attackPointElements = [];
-        this.actionPointElements = [];
+        this.buttonContainers = [];
+        this.abilityButtons = [];
         let updateCharAbilityGui = function() {
               this.updateCharacterAbilityElements();
         }.bind(this);
@@ -28,89 +28,76 @@ class CharacterAbilityGui {
         this.gamePiece = gameCharacter.gamePiece;
         this.spatial = this.gamePiece.getSpatial();
     }
-
-
-    addAbilityContainer(configId, onReady ) {
+    addAbilityContainer = function(configId, onReady ) {
         let opts = GuiAPI.buildWidgetOptions(
             {
                 widgetClass:'GuiExpandingContainer',
                 widgetCallback:onReady,
-                configId:configId // 'widget_attack_point_container'
+                configId:configId
             }
         );
-
         evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
+    }
+
+    addButtonContainer() {
+        let abilityButtons = this.abilityButtons
+        let containers = this.buttonContainers;
+
+        let onContainerReady = function(element) {
+
+            let addButtonElement = function(configId, container, onReady) {
+                let opts = GuiAPI.buildWidgetOptions(
+                    {
+                        widgetClass:'GuiActionButton',
+                        widgetCallback:onReady,
+                        container:container,
+                        configId:configId
+                    }
+                );
+                evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
+            }
+
+            let onButtonReady = function(element) {
+            //    element.guiWidget.applyWidgetPosition()
+                abilityButtons.push(element);
+            }
+
+        //    element.guiWidget.applyWidgetPosition()
+            containers.push(element);
+            addButtonElement('widget_action_button', element, onButtonReady)
+        }
+
+        this.addAbilityContainer('widget_attack_point_container', onContainerReady)
     }
 
     activateCharacterAbilityGui() {
 
-        let onAPContainerReady = function(element) {
-            this.abilityContainer = element;
-            element.guiWidget.applyWidgetPosition()
-        }.bind(this)
+        let maxSlots = this.gamePiece.getStatusByKey('ability_slots_max');
 
+        for (let i = 0; i < maxSlots; i++) {
+            this.addButtonContainer()
+        }
 
-        this.addAbilityContainer('widget_attack_point_container', onAPContainerReady )
         GameAPI.registerGameUpdateCallback(this.callbacks.updateCharAbilityGui)
     }
 
     deactivateCharacterAbilityGui() {
         GameAPI.unregisterGameUpdateCallback(this.callbacks.updateCharAbilityGui)
 
-        while (this.actionPointElements.length) {
-            this.actionPointElements.pop().guiWidget.recoverGuiWidget();
+        while (this.abilityButtons.length) {
+            this.abilityButtons.pop().guiWidget.recoverGuiWidget();
         }
-        if (this.abilityContainer) {
-            this.abilityContainer.guiWidget.recoverGuiWidget();
-        }
-    }
-
-    addAbilityElement(configId, container, onReady) {
-
-        let opts = GuiAPI.buildWidgetOptions(
-            {
-                widgetClass:'GuiExpandingContainer',
-                widgetCallback:onReady,
-                container:container,
-                configId:configId // 'icon_attack_point'
-            }
-        );
-
-        evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
-    }
-
-
-    updateMaxAPCount(maxAttacks) {
-        let attackElements = this.actionPointElements
-        let container = this.abilityContainer;
-        let onReady = function(element) {
-            attackElements.push(element);
-            container.guiWidget.applyWidgetPosition()
-        }
-
-        if (attackElements.length < maxAttacks) {
-            this.addAbilityElement('icon_action_point', container, onReady)
-        } else {
-            while (attackElements.length > maxAttacks) {
-                attackElements.pop().guiWidget.recoverGuiWidget();
-            }
+        while (this.buttonContainers.length) {
+            this.buttonContainers.pop().guiWidget.recoverGuiWidget();
         }
     }
 
-    updateActionPointElements(maxAPs, availableAPs, activeAPs) {
-        if (this.actionPointElements.length !== maxAPs) {
-            this.updateMaxAPCount(maxAPs)
-        }
+    updateAbilityElements(availableSlots) {
 
-        for (let i = 0; i < this.actionPointElements.length; i++) {
-            let element = this.actionPointElements[i].guiWidget;
+        for (let i = 0; i < this.abilityButtons.length; i++) {
+            let element = this.abilityButtons[i].guiWidget;
             let bufferElem = element.icon.bufferElement;
-            if (i < activeAPs) {
-
-                element.setWidgetIconKey('ap_light');
-                bufferElem.setColorRGBA(this.colorMap['activated']);
-
-            } else if (i < availableAPs) {
+             if (i < availableSlots) {
                 element.setWidgetIconKey('ap_light');
                 bufferElem.setColorRGBA(this.colorMap['available']);
             } else {
@@ -120,14 +107,27 @@ class CharacterAbilityGui {
         }
     }
 
+    setContainerPosition(pieceScreenPos, container, containerIndex, buttonCount) {
+        let frac = MATH.calcFraction(0, containerIndex, buttonCount);
+        let tempVec3c = ThreeAPI.tempVec3;
+        tempVec3c.set(0, 0, 0);
+        tempVec3c.x +=  (0.5+containerIndex-buttonCount*0.5) * 0.10 // - buttonCount * 0.1 ;
+        tempVec3c.add(pieceScreenPos);
+        container.guiWidget.setPosition(tempVec3c)
+    }
+
     updateCharacterAbilityElements() {
         this.spatial.getSpatialPosition(this.tempVec3);
-        this.tempVec3.y += 0// this.gamePiece.getStatusByKey('height');
+        this.tempVec3.y +=  this.gamePiece.getStatusByKey('height');
         ThreeAPI.toScreenPosition(this.tempVec3, this.tempVec3b)
 
-        this.tempVec3b.y -= 0.024
-        this.abilityContainer.guiWidget.setPosition(this.tempVec3b)
-        this.updateActionPointElements(this.gamePiece.getStatusByKey('maxAPs'), this.gamePiece.getStatusByKey('actPts'), this.gamePiece.getStatusByKey('activeAPs'))
+        this.updateAbilityElements(this.gamePiece.getStatusByKey('ability_slots'))
+
+        for (let i = 0; i < this.buttonContainers.length; i++) {
+            this.setContainerPosition(this.tempVec3b, this.buttonContainers[i], i, this.buttonContainers.length)
+        }
+
+
     }
 
 }
