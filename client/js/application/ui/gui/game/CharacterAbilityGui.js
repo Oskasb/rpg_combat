@@ -213,19 +213,19 @@ class CharacterAbilityGui {
 
     updateCharacterAbilityElements() {
         this.spatial.getSpatialPosition(this.tempVec3);
-        this.tempVec3.y += this.gamePiece.getStatusByKey('height');
+        this.tempVec3.y += 0// this.gamePiece.getStatusByKey('height');
         ThreeAPI.toScreenPosition(this.tempVec3, this.tempVec3b)
      //   ThreeAPI.tempVec3b.z = 0;
         this.hpProgressElement.guiWidget.setPosition(this.tempVec3b)
         this.hpProgressElement.setProgress(0, this.gamePiece.getStatusByKey('maxHP'), this.gamePiece.getStatusByKey('hp'))
-        this.tempVec3b.y+=0.012
+        this.tempVec3b.y -=0.012
         this.swingProgressElement.guiWidget.setPosition(this.tempVec3b)
         this.swingProgressElement.setProgress(0, 1, Math.sin( this.gamePiece.getStatusByKey('atkProg') * Math.PI))
-        this.tempVec3b.y +=0.010
+        this.tempVec3b.y -=0.010
         this.attacksContainer.guiWidget.setPosition(this.tempVec3b)
         this.updateAttackPointElements(this.gamePiece.getStatusByKey('turnAttacks'), this.gamePiece.getStatusByKey('attack'), this.gamePiece.getStatusByKey('atkProg'))
 
-        this.tempVec3b.y += 0.024
+        this.tempVec3b.y -= 0.024
         this.actionPointContainer.guiWidget.setPosition(this.tempVec3b)
         this.updateActionPointElements(this.gamePiece.getStatusByKey('maxAPs'), this.gamePiece.getStatusByKey('actPts'), this.gamePiece.getStatusByKey('activeAPs'))
     }

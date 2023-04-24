@@ -10,9 +10,16 @@ class GameWorldPointer {
         this.lastSelectedTile = null;
         this.indicatedSelections = [];
         this.selectionEvent = {
+            isOpen:null,
             piece:null,
             value:false,
             longPress:0
+        }
+
+        this.call = {
+            pointerExitLongPress:this.pointerExitLongPress,
+            pointerEnterLongPress:this.pointerEnterLongPress,
+            indicateSelection:this.indicateSelection
         }
     }
 
@@ -54,10 +61,39 @@ class GameWorldPointer {
         }
     }
 
+    pointerEnterLongPress(pointer, selectionEvent) {
+        console.log("Long Press: ", pointer, pointer.worldSpaceTarget)
+        selectionEvent.longPress = pointer.call.getLongPressProgress();
+        selectionEvent.piece = pointer.worldSpaceTarget;
+        if (typeof (pointer.worldSpaceTarget) === 'object') {
+            selectionEvent.value = true;
+            selectionEvent.isOpen = pointer.worldSpaceTarget;
+        } else {
+            selectionEvent.value = false;
+        }
+
+        evt.dispatch(ENUMS.Event.MAIN_CHAR_OPEN_TARGET,  selectionEvent);
+    }
+
+    pointerExitLongPress(pointer, selectionEvent) {
+        if (typeof (selectionEvent.isOpen) === 'object') {
+            selectionEvent.piece = selectionEvent.isOpen;
+            selectionEvent.value = false;
+            selectionEvent.isOpen = null;
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_OPEN_TARGET,  selectionEvent);
+        }
+    }
     worldPointerReleased = function(pointer) {
+        let call = this.call;
+    //    if (typeof(this.selectionEvent.isOpen) === 'object') {
+
+    //    }
+
         if (GuiAPI.calls.getInMenu() === true) {
             return;
         }
+        call.pointerExitLongPress(pointer, this.selectionEvent);
+
         let playerPiece = GameAPI.getMainCharPiece();
         //    console.log("Release Movement Pointer")
         playerPiece.movementPath.clearTilePathStatus();
@@ -100,8 +136,13 @@ class GameWorldPointer {
 
         if (isFirstPressFrame) {
             pointer.isWorldActive = true;
+
         } else {
-            pointer.setLongPressProgress(pointer.call.getLongPressProgress());
+            let longPress = pointer.call.getLongPressProgress()
+            if (longPress >= 1 && pointer.longPressProgress < 1) {
+                this.call.pointerEnterLongPress(pointer, this.selectionEvent);
+            }
+            pointer.setLongPressProgress(longPress);
         }
 
         if (pointer.isWorldActive === false) {
@@ -223,6 +264,10 @@ class GameWorldPointer {
 
             if (worldSelection) {
                 if (worldSelection.getStatusByKey('faction') === 'EVIL')
+                return;
+            }
+
+            if (this.selectionEvent.isOpen !== null) {
                 return;
             }
 

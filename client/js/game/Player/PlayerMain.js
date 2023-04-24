@@ -97,6 +97,14 @@ class PlayerMain {
             }
         }.bind(this);
 
+        let openTarget = function(event) {
+            if (event.value === true) {
+                this.handleTargetOpen(event)
+            } else {
+                this.handleTargetClose(event)
+            }
+        }.bind(this)
+
         let selectTarget = function(event) {
             if (event.value === true) {
                 this.handleTargetSelected(event)
@@ -142,6 +150,7 @@ class PlayerMain {
             setPlayerState:setPlayerState,
             registerHostile:registerHostile,
             registerTargetEngaged:registerTargetEngaged,
+            openTarget:openTarget,
             selectTarget:selectTarget,
             returnHome:returnHome,
             applyCheatPimp:applyCheatPimp
@@ -158,6 +167,7 @@ class PlayerMain {
         evt.on(ENUMS.Event.MAIN_CHAR_STATE_EVENT, callbacks.handleStateEvent);
         evt.on(ENUMS.Event.SET_PLAYER_STATE, callbacks.setPlayerState);
         evt.on(ENUMS.Event.MAIN_CHAR_REGISTER_HOSTILE, callbacks.registerHostile);
+        evt.on(ENUMS.Event.MAIN_CHAR_OPEN_TARGET, callbacks.openTarget);
         evt.on(ENUMS.Event.MAIN_CHAR_SELECT_TARGET, callbacks.selectTarget);
         evt.on(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, callbacks.registerTargetEngaged);
         evt.on(ENUMS.Event.MAIN_CHAR_RETURN_HOME, callbacks.returnHome);
@@ -175,13 +185,13 @@ class PlayerMain {
         if (this.mainCharPage) {
             GuiAPI.closePage(this.mainCharPage);
         }
-            let openMainCharPage = function() {
-                this.mainCharPage = GuiAPI.activatePage("page_player_main");
-            }.bind(this);
+        let openMainCharPage = function() {
+            this.mainCharPage = GuiAPI.activatePage("page_player_main");
+        }.bind(this);
 
-            setTimeout(function() {
-                openMainCharPage();
-            }, 2000)
+        setTimeout(function() {
+            openMainCharPage();
+        }, 2000)
 
 
         this.playerCharacter = character;
@@ -212,6 +222,43 @@ class PlayerMain {
         //    hostileChar.deactivateCharStatusGui()
     }
 
+    handleTargetClose(event) {
+        let playerPiece = GameAPI.getMainCharPiece();
+        let gamePiece = event.piece;
+        if (!gamePiece) {
+            console.log("Should be a piece in this")
+            return;
+        }
+        if (gamePiece.isDead) {
+            console.log('No open the dead')
+            return;
+        }
+
+        if ((gamePiece === playerPiece) || (gamePiece.getStatusByKey('following') === playerPiece)) {
+            console.log("Close friendly", gamePiece);
+            gamePiece.getCharacter().deactivateCharAbilityGui();
+        }
+    }
+
+    handleTargetOpen(event) {
+        console.log('Main open', event)
+        let playerPiece = GameAPI.getMainCharPiece();
+        let gamePiece = event.piece;
+        if (!gamePiece) {
+            console.log("Should be a piece in this")
+            return;
+        }
+        if (gamePiece.isDead) {
+            console.log('No open the dead')
+            return;
+        }
+
+        if ((gamePiece === playerPiece) || (gamePiece.getStatusByKey('following') === playerPiece)) {
+            console.log("Open friendly", gamePiece);
+            gamePiece.getCharacter().activateCharAbilityGui();
+        }
+
+    }
     handleTargetSelected(event) {
 
         let playerPiece = GameAPI.getMainCharPiece();
@@ -227,13 +274,11 @@ class PlayerMain {
             return;
         }
 
+        if (gamePiece === playerPiece) {
+            let switchCallback = function() {
 
-
-            if (gamePiece === playerPiece) {
-                let switchCallback = function() {
-
-                }
-                if (longPress === 1) {
+            }
+            if (longPress === 1) {
                 if (!gamePiece.getTarget()) {
 
                     let currentPage = GameAPI.getActiveDynamicScenario().page;
@@ -247,32 +292,32 @@ class PlayerMain {
                 } else {
                     console.log("Player Select self while having a target... nothing happens for now")
                 }
-                }
-                return;
             }
+            return;
+        }
 
 
-            if (gamePiece.getStatusByKey('following') === playerPiece) {
-                if (longPress === 1) {
-                    console.log("select follower, switch control here..")
-                    gamePiece.setStatusValue('following', null)
-                    gamePiece.addCompanion(playerPiece);
-                    MATH.quickSplice(playerPiece.companions, gamePiece);
-                    while (playerPiece.companions.length) {
-                        gamePiece.addCompanion(playerPiece.companions.pop())
-                    }
-                    this.setPlayerCharacter(gamePiece.character, playerPiece)
+        if (gamePiece.getStatusByKey('following') === playerPiece) {
+            if (longPress === 1) {
+                console.log("select follower, switch control here..")
+                gamePiece.setStatusValue('following', null)
+                gamePiece.addCompanion(playerPiece);
+                MATH.quickSplice(playerPiece.companions, gamePiece);
+                while (playerPiece.companions.length) {
+                    gamePiece.addCompanion(playerPiece.companions.pop())
                 }
-                return;
+                this.setPlayerCharacter(gamePiece.character, playerPiece)
             }
+            return;
+        }
 
-            if (gamePiece.getStatusByKey('companion')) {
-                if (longPress === 1) {
+        if (gamePiece.getStatusByKey('companion')) {
+            if (longPress === 1) {
 
-                    playerPiece.addCompanion(gamePiece);
-                }
-                return;
+                playerPiece.addCompanion(gamePiece);
             }
+            return;
+        }
 
 
         if (gamePiece.getStatusByKey('isItem')) {
