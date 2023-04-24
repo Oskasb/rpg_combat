@@ -28,12 +28,12 @@ class GuiActionButton {
             }
         }.bind(this);
 
-        let activateAction = function(inputIndex, widget) {
-            this.actionButtonActivated(inputIndex, widget);
+        let activateActionButton = function(inputIndex, widget) {
+            this.activateActionButton(inputIndex, widget);
         }.bind(this);
 
-        let updateProgress = function(tpf, time) {
-            this.updateCurrentProgress(this.getAction());
+        let updateProgress = function(progress) {
+            this.updateCurrentProgress(progress);
         }.bind(this);
 
         let actionButtonTriggerUiUpdate = function() {
@@ -52,9 +52,13 @@ class GuiActionButton {
             this.removeGuiWidget();
         }.bind(this);
 
+        this.activateCallback = function() {
+            console.log("Dummy activation cb")
+        };
+
         this.callbacks = {
             testActive:testActive,
-            activateAction:activateAction,
+            activateActionButton:activateActionButton,
             updateProgress:updateProgress,
             actionButtonTriggerUiUpdate:actionButtonTriggerUiUpdate,
             updateSufficientActionPoints:updateSufficientActionPoints,
@@ -63,10 +67,20 @@ class GuiActionButton {
         }
     };
 
+    setActivateCallback(callback) {
+        this.activateCallback = callback
+    }
 
+    activateActionButton(inputIndex, widget) {
+        this.activateCallback(inputIndex, widget);
+    }
+
+    getInteractiveElement = function() {
+        return this.guiWidget.guiSurface.interactiveElement;
+    }
     setGuiWidget = function(widget) {
         this.guiWidget = widget;
-
+        console.log("Init Action Button", this)
         let progressReady = function(pwidget) {
             widget.addChild(pwidget);
         };
@@ -84,6 +98,7 @@ class GuiActionButton {
 
 
     initActionButton = function(widgetConfig, onReady) {
+
         this.guiWidget = new GuiWidget(widgetConfig);
 
         let progressReady = function(widget) {
@@ -93,6 +108,7 @@ class GuiActionButton {
         }.bind(this);
 
         let buttonReady = function(widget) {
+            console.log("Button Ready", this)
             widget.enableWidgetInteraction();
 
             this.progressWidget = new GuiWidget(this.progWidgetId);
@@ -142,25 +158,25 @@ class GuiActionButton {
         this.actionSlot = actionSlot;
     };
 
-    updateCurrentProgress = function(action) {
+    updateCurrentProgress = function(progress) {
 
-        if (!action.getActionText()) {
-            console.log("TextMissing", action)
-        } else {
-            this.guiWidget.setFirstSTringText(action.getActionText());
-        }
+    //    if (!action.getActionText()) {
+    //        console.log("TextMissing", action)
+    //    } else {
+    //        this.guiWidget.setFirstSTringText(action.getActionText());
+    //    }
 
-        this.progressWidget.indicateProgress(0, action.getActionTargetTime(), action.getActionProgressTime(), 1);
+        this.progressWidget.indicateProgress(0, 1, progress, 1);
 
-        this.guiWidget.setWidgetInteractiveState(this.stateFeedbackMap[action.getActionState()]);
-        this.progressWidget.setWidgetInteractiveState(this.stateFeedbackMap[action.getActionState()]);
-
+    //    this.guiWidget.setWidgetInteractiveState(this.stateFeedbackMap[action.getActionState()]);
+    //    this.progressWidget.setWidgetInteractiveState(this.stateFeedbackMap[action.getActionState()]);
+/*
         if (!action.getActionIsActive()) {
             this.progressWidget.setFirstSTringText(null);
             this.guiWidget.enableWidgetInteraction();
             GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);
         }
-
+*/
     };
 
     actionButtonInitiateAction = function() {

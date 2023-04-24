@@ -66,6 +66,7 @@ class PieceState {
             isCharacter:0,
             ability_slots_max: 2,
             ability_slots: 1,
+            activeAbility: null,
             xp_value:5
         }
 

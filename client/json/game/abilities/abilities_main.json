@@ -8,6 +8,7 @@
             "data_key": "ability_config",
             "config": {
               "name": "Fire Ball",
+              "icon_key": "fire",
               "target": "tile",
               "cast_time": 0.2,
               "apply_time": 0.4,
@@ -26,6 +27,7 @@
             "data_key": "ability_config",
             "config": {
               "name": "Minor Heal",
+              "icon_key": "droplet",
               "target": "friendly",
               "ap_cost": 2,
               "range": 2,
@@ -41,6 +43,7 @@
             "data_key": "ability_config",
             "config": {
               "name": "Minor Harm",
+              "icon_key": "energy",
               "target": "hostile",
               "ap_cost": 4,
               "range": 8,

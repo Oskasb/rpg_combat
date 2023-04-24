@@ -19,7 +19,8 @@ class CharacterAbilityGui {
         }.bind(this);
 
         this.callbacks = {
-            updateCharAbilityGui:updateCharAbilityGui
+            updateCharAbilityGui:updateCharAbilityGui,
+            deactivateCharAbilityGui:this.deactivateCharacterAbilityGui
         }
 
     }
@@ -42,6 +43,8 @@ class CharacterAbilityGui {
     addButtonContainer(maxSlots) {
         let abilityButtons = this.abilityButtons
         let containers = this.buttonContainers;
+        let slottedAbilities = this.gamePiece.getAbilities()
+        let _this = this;
 
         let onContainerReady = function(element) {
 
@@ -60,7 +63,35 @@ class CharacterAbilityGui {
             let onButtonReady = function(element) {
             //    element.guiWidget.applyWidgetPosition()
                 console.log("Action Button; ", element)
+
+                let slot = slottedAbilities[abilityButtons.length]
+
+                if (slot) {
+                    let ability = slot.pieceAbility;
+                    let config = ability.config;
+                    element.guiWidget.setWidgetIconKey(config['icon_key']);
+                    element.setActivateCallback(ability.call.activatePieceAbility)
+                    let interactiveElem = element.getInteractiveElement();
+
+                    let onActivate = function(input) {
+                   //     console.log("Activate", input)
+                        _this.deactivateCharacterAbilityGui();
+                        ability.call.activatePieceAbility();
+                    }
+
+                    let onHover = function(input) {
+                    //    console.log("hovering", input)
+                        interactiveElem.setInteractiveState(ENUMS.ElementState.PRESS);
+                        interactiveElem.applyPressState();
+                        interactiveElem.addOnActivateCallback(onActivate);
+
+                    }
+                    interactiveElem.addOnHoverCallback(onHover);
+
+                }
+
                 abilityButtons.push(element);
+
             }
 
         //    element.guiWidget.applyWidgetPosition()
@@ -93,20 +124,30 @@ class CharacterAbilityGui {
     updateAbilityElements(availableSlots) {
 
         let slottedAbilities = this.gamePiece.getAbilities()
-        console.log(slottedAbilities)
-        for (let i = 0; i < this.abilityButtons.length; i++) {
-            let ability = slottedAbilities[i].pieceAbility;
-            let actionButton = this.abilityButtons[i];
 
+    //    console.log(slottedAbilities)
+        for (let i = 0; i < this.abilityButtons.length; i++) {
             let element = this.abilityButtons[i].guiWidget;
             let bufferElem = element.icon.bufferElement;
-             if (i < availableSlots) {
-                element.setWidgetIconKey('ap_light');
-                bufferElem.setColorRGBA(this.colorMap['available']);
+            let slot = slottedAbilities[i]
+
+            if (slot) {
+                let ability = slot.pieceAbility;
+
+                let actionButton = this.abilityButtons[i];
+                let config = ability.config;
+
+            //    element.setWidgetIconKey(config['icon_key']);
+                if (i < availableSlots) {
+                    bufferElem.setColorRGBA(this.colorMap['available']);
+                //    actionButton.callbacks.updateProgress(Math.random())
+                } else {
+                    bufferElem.setColorRGBA(this.colorMap['unavailable']);
+                }
             } else {
-                element.setWidgetIconKey('ap_light');
                 bufferElem.setColorRGBA(this.colorMap['unavailable']);
             }
+
         }
     }
 

@@ -158,6 +158,9 @@ class PieceStateProcessor {
     }
     countAttack(status) {
         status.attack++
+
+
+
         this.activateActionType(status, 'COMBAT');
     }
 
@@ -208,6 +211,11 @@ class PieceStateProcessor {
             status.combatTarget = status.engagingTarget;
         }
         let combatTarget = status.combatTarget;
+
+
+        if (status.activeAbility !== null) {
+            status.activeAbility.applyAbilityToTarget(combatTarget);
+        }
 
         let damage = status['dmg']
 

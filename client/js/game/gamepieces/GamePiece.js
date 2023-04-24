@@ -195,6 +195,8 @@ class GamePiece {
         return this.pieceAttacher.isActiveJointKey(key);
     };
 
+
+
     releaseJointActiveAttachment = function(key, spatial) {
         return this.pieceAttacher.releaseJointKey(key, spatial);
     };

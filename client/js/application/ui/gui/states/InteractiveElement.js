@@ -5,8 +5,18 @@ class InteractiveElement {
             this.state = ENUMS.ElementState.NONE;
             this.hoverIndices = [];
             this.pressIndices = [];
+            this.onHoverCallbacks = [];
+            this.onActivateCallbacks = [];
             this.pressActive = false;
         };
+
+        addOnHoverCallback(callback) {
+            this.onHoverCallbacks.push(callback);
+        };
+
+    addOnActivateCallback(callback) {
+        this.onActivateCallbacks.push(callback);
+    };
 
         getSurfaceElement = function() {
             return this.surfaceElement;
@@ -78,11 +88,13 @@ class InteractiveElement {
 
         onHover = function() {
             this.applyHoverState()
+            MATH.callAll(this.onHoverCallbacks, this)
         //    GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
         };
 
         onHoverEnd = function() {
             this.applyActiveState();
+            MATH.emptyArray(this.onActivateCallbacks)
         //    GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
         };
 
@@ -93,6 +105,7 @@ class InteractiveElement {
         };
 
         onPressActivate = function(inputIndex) {
+            MATH.callAndClearAll(this.onActivateCallbacks, inputIndex)
             this.getSurfaceElement().triggerActiveate(inputIndex);
             this.applyActiveState();
         //    GuiAPI.printDebugText("INTERACTIVE ELEMENT STATE: " + ENUMS.getKey('ElementState', this.state));
@@ -111,7 +124,7 @@ class InteractiveElement {
         };
 
         applyActiveState = function() {
-
+            MATH.callAndClearAll(this.onActivateCallbacks)
             if ( this.getSurfaceElement().getActive()) {
                 this.setInteractiveState(ENUMS.ElementState.ACTIVE);
             } else {
@@ -120,7 +133,7 @@ class InteractiveElement {
         };
 
         applyPressState = function() {
-
+            MATH.callAndClearAll(this.onActivateCallbacks)
             if ( this.getSurfaceElement().getActive()) {
                 this.setInteractiveState(ENUMS.ElementState.ACTIVE_PRESS);
             } else {
