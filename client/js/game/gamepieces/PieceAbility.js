@@ -12,7 +12,6 @@ class PieceAbility {
         }
     }
 
-
 }
 
 export { PieceAbility }

@@ -64,7 +64,7 @@ class PieceState {
             maxHP:100,
             isItem:0,
             isCharacter:0,
-
+            ability_slots: 1,
             xp_value:5
         }
 

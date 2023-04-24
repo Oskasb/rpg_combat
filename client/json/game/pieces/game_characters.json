@@ -16,7 +16,8 @@
             "maxHP": 10,
             "dmg": 1,
             "FAST": 1,
-            "xp_value": 20
+            "xp_value": 20,
+            "ability_slots": 2
           },
           "abilities": {
             "fire_ball": {
@@ -50,7 +51,8 @@
             "maxHP": 2,
             "dmg": 2,
             "FAST": 2,
-            "xp_value": 20
+            "xp_value": 20,
+            "ability_slots": 2
           },
           "abilities": {
             "fire_ball": {

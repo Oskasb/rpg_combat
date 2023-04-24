@@ -48,6 +48,7 @@ class GameCharacter {
                 this.characterAbilities.addCharacterAbility(key, abilities[key]);
             }
         }
+        gamePiece.getAbilitySystem().initAbilitySlots(gamePiece.getStatusByKey('ability_slots'))
     }
 
     getCharacterPiece() {
