@@ -1,7 +1,8 @@
+import {ConfigData} from "../../application/utils/ConfigData.js";
+
 class CharacterAbilities{
     constructor() {
         this.gamePiece = null;
-        this.addedAbilities = [];
     }
 
     initCharacterAbilities(gamePiece) {
@@ -9,8 +10,18 @@ class CharacterAbilities{
     }
 
 
-    addCharacterAbility(abilityId) {
-        this.addedAbilities.push(abilityId)
+    addCharacterAbility(abilityId, abilityStatus) {
+
+        let gamePiece = this.gamePiece;
+
+        let onData = function(config) {
+            gamePiece.getAbilitySystem().registerPieceAbility(abilityId, config);
+            gamePiece.getAbilitySystem().setAbilityStatus(abilityId, abilityStatus);
+        }
+
+        let configData =  new ConfigData("GAME", "GAME_ABILITIES",  'ability_config', 'data_key', 'config')
+        configData.addUpdateCallback(onData);
+        configData.parseConfig(abilityId, onData)
     }
 
 }

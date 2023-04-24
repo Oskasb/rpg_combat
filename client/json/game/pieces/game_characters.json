@@ -18,29 +18,20 @@
             "FAST": 1,
             "xp_value": 20
           },
+          "abilities": {
+            "fire_ball": {
+              "level": 2
+            },
+            "heal_minor":{
+              "level": 6
+            }
+          },
 
           "actor":"ACTOR_FIGHTER",
           "equipment":["NINJASWORD", "HAT_CLOTH_BLUE", "BELT_BRONZE", "LEGS_BRONZE"],
           "inventory": [
 
-          ],
-          "abilities": {
-            "fire_ball": {
-              "name": "Fire Ball",
-              "target": "tile",
-              "ap_cost": 3,
-              "range": 15,
-              "radius": 4,
-              "damage": 12
-            },
-            "minor_heal":{
-              "name": "Minor Heal",
-              "target": "friendly",
-              "ap_cost": 2,
-              "range": 2,
-              "heal": 8
-            }
-          }
+          ]
         }
       },
       {
@@ -61,29 +52,20 @@
             "FAST": 2,
             "xp_value": 20
           },
+          "abilities": {
+            "fire_ball": {
+              "level": 5
+            },
+            "heal_minor":{
+              "level": 1
+            }
+          },
 
           "actor":"ACTOR_FIGHTER",
           "equipment":["AXE_SLICER", "HAT_CLOTH_YELLOW", "BELT_BRONZE", "LEGS_CHAIN", "BREASTPLATE_BRONZE"],
           "inventory": [
 
-          ],
-          "abilities": {
-            "fire_ball": {
-              "name": "Fire Ball",
-              "target": "tile",
-              "ap_cost": 3,
-              "range": 15,
-              "radius": 4,
-              "damage": 12
-            },
-            "minor_heal":{
-              "name": "Minor Heal",
-              "target": "friendly",
-              "ap_cost": 2,
-              "range": 2,
-              "heal": 8
-            }
-          }
+          ]
         }
       },
       {

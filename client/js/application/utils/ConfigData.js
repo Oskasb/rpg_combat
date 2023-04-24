@@ -19,7 +19,7 @@ class ConfigData {
         }
         let postInit = function(data) {
             if (typeof(onReady) === 'function') {
-                onReady()
+                onReady(this.config)
             }
             MATH.callAll(this.onUpdateCallbacks, this.config);
         }.bind(this);

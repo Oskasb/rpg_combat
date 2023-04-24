@@ -16,6 +16,7 @@ class CharacterComposer {
 
         let pieceId = actorConfig['game_piece'];
         let status = charConfig['status'];
+        let abilities = charConfig['abilities'];
         let equipSlotConfigId = actorConfig['equip_slots'];
 
         let playerReady = function(char) {
@@ -25,7 +26,7 @@ class CharacterComposer {
 
         };
 
-        this.initCharacterPiece({piece:pieceId, status:status}, equipSlotConfigId, playerReady);
+        this.initCharacterPiece({piece:pieceId, status:status, abilities:abilities}, equipSlotConfigId, playerReady);
     }
 
     initCharacterPiece(pieceConf, equipSlotConfigId, charReady) {

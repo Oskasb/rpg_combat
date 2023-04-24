@@ -91,6 +91,10 @@ class GamePiece {
         this.ownerPiece = ownerPiece
     }
 
+    getAbilitySystem() {
+        return this.pieceAbilitySystem;
+    }
+
     getOwnerPiece() {
         return this.ownerPiece;
     }

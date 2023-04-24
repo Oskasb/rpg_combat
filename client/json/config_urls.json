@@ -70,8 +70,9 @@
       "/threedata/assets/sprites/tile_sprites_8x8.json"      ,
       "/threedata/assets/sprites/particle_sprites_8x8.json"  ,
 
+      "/game/abilities/abilities_main.json"                  ,
       "/game/actions/fighter_actions.json"                   ,
-      "/game/actors/game_actors.json"                            ,
+      "/game/actors/game_actors.json"                        ,
       "/game/actors/game_items.json"                         ,
       "/game/character/action_points.json"                   ,
       "/game/character/action_slots.json"                    ,
