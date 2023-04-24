@@ -29,22 +29,8 @@ class CharacterAbilityGui {
         this.spatial = this.gamePiece.getSpatial();
     }
 
-    addProgressElement(configId, onReady) {
-        let opts = GuiAPI.buildWidgetOptions(
 
-            {
-                widgetClass:'GuiProgressBar',
-                widgetCallback:onReady,
-                configId:configId
-            }
-        );
-
-        evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
-
-    }
-
-
-    addPointContainer(configId, onReady ) {
+    addAbilityContainer(configId, onReady ) {
         let opts = GuiAPI.buildWidgetOptions(
             {
                 widgetClass:'GuiExpandingContainer',
@@ -56,61 +42,30 @@ class CharacterAbilityGui {
         evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
     }
 
-
     activateCharacterAbilityGui() {
 
-        let onHpReady = function(element) {
-            this.hpProgressElement = element;
-        }.bind(this);
-
-        let onSwingReady = function(element) {
-            this.swingProgressElement = element;
-        }.bind(this);
-
-        let onAttacksContainerReady = function(element) {
-            this.attacksContainer = element;
-            element.guiWidget.applyWidgetPosition()
-        }.bind(this)
-
         let onAPContainerReady = function(element) {
-            this.actionPointContainer = element;
+            this.abilityContainer = element;
             element.guiWidget.applyWidgetPosition()
         }.bind(this)
 
 
-
-        this.addProgressElement( 'progress_indicator_char_hp', onHpReady)
-        this.addProgressElement( 'progress_indicator_char_swing', onSwingReady)
-        this.addPointContainer('widget_attack_point_container', onAttacksContainerReady )
-        this.addPointContainer('widget_attack_point_container', onAPContainerReady )
+        this.addAbilityContainer('widget_attack_point_container', onAPContainerReady )
         GameAPI.registerGameUpdateCallback(this.callbacks.updateCharAbilityGui)
     }
 
     deactivateCharacterAbilityGui() {
         GameAPI.unregisterGameUpdateCallback(this.callbacks.updateCharAbilityGui)
-        if (this.hpProgressElement) {
-            this.hpProgressElement.guiWidget.recoverGuiWidget();
-        }
-        if (this.swingProgressElement) {
-            this.swingProgressElement.guiWidget.recoverGuiWidget();
-        }
-        while (this.attackPointElements.length) {
-            this.attackPointElements.pop().guiWidget.recoverGuiWidget();
-        }
-        if (this.attacksContainer) {
-            this.attacksContainer.guiWidget.recoverGuiWidget();
-        }
 
         while (this.actionPointElements.length) {
             this.actionPointElements.pop().guiWidget.recoverGuiWidget();
         }
-        if (this.actionPointContainer) {
-            this.actionPointContainer.guiWidget.recoverGuiWidget();
+        if (this.abilityContainer) {
+            this.abilityContainer.guiWidget.recoverGuiWidget();
         }
-
     }
 
-    addAttackElement(configId, container, onReady) {
+    addAbilityElement(configId, container, onReady) {
 
         let opts = GuiAPI.buildWidgetOptions(
             {
@@ -124,61 +79,17 @@ class CharacterAbilityGui {
         evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
     }
 
-    updateMaxAttackCount(maxAttacks) {
-        let attackElements = this.attackPointElements
-        let container = this.attacksContainer;
-        let onReady = function(element) {
-            attackElements.push(element);
-            container.guiWidget.applyWidgetPosition()
-        }
-
-        if (attackElements.length < maxAttacks) {
-            this.addAttackElement('icon_attack_point', container, onReady)
-        } else {
-            while (attackElements.length > maxAttacks) {
-                attackElements.pop().guiWidget.recoverGuiWidget();
-            }
-        }
-    }
-
-    updateAttackPointElements(maxAttacks, currentAttack, attackProgress) {
-        if (this.attackPointElements.length !== maxAttacks) {
-            this.updateMaxAttackCount(maxAttacks)
-        }
-
-        for (let i = 0; i < this.attackPointElements.length; i++) {
-            let element = this.attackPointElements[i].guiWidget;
-            let bufferElem = element.icon.bufferElement;
-            if (maxAttacks - i === currentAttack) {
-                element.setWidgetIconKey('atk_on');
-                if (attackProgress < 0.5) {
-                    bufferElem.setColorRGBA(this.colorMap['active']);
-                } else {
-                    bufferElem.setColorRGBA(this.colorMap['off']);
-                }
-
-            } else if (maxAttacks - i < currentAttack) {
-                element.setWidgetIconKey('atk_off');
-                bufferElem.setColorRGBA(this.colorMap['off']);
-            } else {
-                element.setWidgetIconKey('atk_on');
-                bufferElem.setColorRGBA(this.colorMap['on']);
-            }
-
-        }
-
-    }
 
     updateMaxAPCount(maxAttacks) {
         let attackElements = this.actionPointElements
-        let container = this.actionPointContainer;
+        let container = this.abilityContainer;
         let onReady = function(element) {
             attackElements.push(element);
             container.guiWidget.applyWidgetPosition()
         }
 
         if (attackElements.length < maxAttacks) {
-            this.addAttackElement('icon_action_point', container, onReady)
+            this.addAbilityElement('icon_action_point', container, onReady)
         } else {
             while (attackElements.length > maxAttacks) {
                 attackElements.pop().guiWidget.recoverGuiWidget();
@@ -206,27 +117,16 @@ class CharacterAbilityGui {
                 element.setWidgetIconKey('ap_light');
                 bufferElem.setColorRGBA(this.colorMap['unavailable']);
             }
-
         }
-
     }
 
     updateCharacterAbilityElements() {
         this.spatial.getSpatialPosition(this.tempVec3);
         this.tempVec3.y += 0// this.gamePiece.getStatusByKey('height');
         ThreeAPI.toScreenPosition(this.tempVec3, this.tempVec3b)
-     //   ThreeAPI.tempVec3b.z = 0;
-        this.hpProgressElement.guiWidget.setPosition(this.tempVec3b)
-        this.hpProgressElement.setProgress(0, this.gamePiece.getStatusByKey('maxHP'), this.gamePiece.getStatusByKey('hp'))
-        this.tempVec3b.y -=0.012
-        this.swingProgressElement.guiWidget.setPosition(this.tempVec3b)
-        this.swingProgressElement.setProgress(0, 1, Math.sin( this.gamePiece.getStatusByKey('atkProg') * Math.PI))
-        this.tempVec3b.y -=0.010
-        this.attacksContainer.guiWidget.setPosition(this.tempVec3b)
-        this.updateAttackPointElements(this.gamePiece.getStatusByKey('turnAttacks'), this.gamePiece.getStatusByKey('attack'), this.gamePiece.getStatusByKey('atkProg'))
 
         this.tempVec3b.y -= 0.024
-        this.actionPointContainer.guiWidget.setPosition(this.tempVec3b)
+        this.abilityContainer.guiWidget.setPosition(this.tempVec3b)
         this.updateActionPointElements(this.gamePiece.getStatusByKey('maxAPs'), this.gamePiece.getStatusByKey('actPts'), this.gamePiece.getStatusByKey('activeAPs'))
     }
 
