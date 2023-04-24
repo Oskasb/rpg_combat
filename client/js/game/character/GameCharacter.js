@@ -44,18 +44,24 @@ class GameCharacter {
         this.characterStatusGui.initStatusGui(this);
         this.characterAbilityGui.initAbilityGui(this);
         this.characterIndicator.initCharacterIndicator(gamePiece);
-        if (this.config['abilities']) {
-            this.characterAbilities.initCharacterAbilities(gamePiece);
-            let abilities = this.config['abilities']
-            for (let key in abilities) {
-                this.characterAbilities.addCharacterAbility(key, abilities[key]);
-            }
-        }
+
         gamePiece.getAbilitySystem().initAbilitySlots(gamePiece.getStatusByKey('ability_slots_max'))
         let unlockedSlotCount = gamePiece.getStatusByKey('ability_slots');
         for (let i = 0; i < unlockedSlotCount; i++) {
             gamePiece.getAbilitySystem().unlockAbilitySlot(i)
         }
+
+        if (this.config['abilities']) {
+            let activeSlot = 0;
+            this.characterAbilities.initCharacterAbilities(gamePiece);
+            let abilities = this.config['abilities']
+            for (let key in abilities) {
+                this.characterAbilities.addCharacterAbility(key, abilities[key]);
+                gamePiece.getAbilitySystem().slotActiveAbility(activeSlot, key);
+                activeSlot++;
+            }
+        }
+
 
     }
 

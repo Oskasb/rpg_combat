@@ -91,6 +91,9 @@ class GamePiece {
         this.ownerPiece = ownerPiece
     }
 
+    getAbilities() {
+        return this.pieceAbilitySystem.getSlottedAbilities()
+    }
     getAbilitySystem() {
         return this.pieceAbilitySystem;
     }

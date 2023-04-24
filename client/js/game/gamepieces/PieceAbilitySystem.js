@@ -14,6 +14,18 @@ class PieceAbilitySystem {
         }
     }
 
+    slotActiveAbility(slotIndex, abilityId) {
+        if (slotIndex > this.abilitySlots.length) {
+            console.log("Not enough available slots", slotIndex, abilityId, this.gamePiece)
+        } else {
+            this.abilitySlots[slotIndex].setAbility(this.getAbility(abilityId));
+        }
+    }
+
+    getSlottedAbilities() {
+        return this.abilitySlots;
+    }
+
     addAbilitySlot(index) {
         this.abilitySlots[index] = new AbilitySlot(this.gamePiece, index)
     }

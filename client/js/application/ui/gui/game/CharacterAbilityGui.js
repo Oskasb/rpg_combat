@@ -59,6 +59,7 @@ class CharacterAbilityGui {
 
             let onButtonReady = function(element) {
             //    element.guiWidget.applyWidgetPosition()
+                console.log("Action Button; ", element)
                 abilityButtons.push(element);
             }
 
@@ -73,7 +74,6 @@ class CharacterAbilityGui {
     }
 
     activateCharacterAbilityGui() {
-
         let maxSlots = this.gamePiece.getStatusByKey('ability_slots_max');
         this.addButtonContainer(maxSlots)
         GameAPI.registerGameUpdateCallback(this.callbacks.updateCharAbilityGui)
@@ -92,7 +92,12 @@ class CharacterAbilityGui {
 
     updateAbilityElements(availableSlots) {
 
+        let slottedAbilities = this.gamePiece.getAbilities()
+        console.log(slottedAbilities)
         for (let i = 0; i < this.abilityButtons.length; i++) {
+            let ability = slottedAbilities[i].pieceAbility;
+            let actionButton = this.abilityButtons[i];
+
             let element = this.abilityButtons[i].guiWidget;
             let bufferElem = element.icon.bufferElement;
              if (i < availableSlots) {
@@ -106,12 +111,7 @@ class CharacterAbilityGui {
     }
 
     setContainerPosition(pieceScreenPos, container, containerIndex, buttonCount) {
-        let frac = MATH.calcFraction(0, containerIndex, buttonCount);
-        let tempVec3c = ThreeAPI.tempVec3;
-        tempVec3c.set(0, 0, 0);
-    //    tempVec3c.x +=  (0.5+containerIndex-buttonCount*0.5) * 0.10 // - buttonCount * 0.1 ;
-        tempVec3c.add(pieceScreenPos);
-        container.guiWidget.setPosition(tempVec3c)
+        container.guiWidget.setPosition(pieceScreenPos)
     }
 
     updateCharacterAbilityElements() {
