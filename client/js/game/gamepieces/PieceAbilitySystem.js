@@ -18,6 +18,10 @@ class PieceAbilitySystem {
         this.abilitySlots[index] = new AbilitySlot(this.gamePiece, index)
     }
 
+    unlockAbilitySlot(slotIndex) {
+        this.abilitySlots[slotIndex].setLocked(false);
+    }
+
     registerPieceAbility(abilityId,  configData) {
         this.pieceAbilities[abilityId] = new PieceAbility(this.gamePiece, abilityId, configData)
     }

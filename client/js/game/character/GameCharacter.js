@@ -5,6 +5,7 @@ import { CharacterMovement } from "./CharacterMovement.js";
 import { CharacterAbilities } from "./CharacterAbilities.js";
 import { CharacterStatusGui } from "../../application/ui/gui/game/CharacterStatusGui.js";
 import { CharacterIndicator } from "../../application/ui/gui/game/CharacterIndicator.js";
+import { CharacterAbilityGui } from "../../application/ui/gui/game/CharacterAbilityGui.js";
 
 class GameCharacter {
     constructor(config) {
@@ -16,6 +17,7 @@ class GameCharacter {
         this.characterStatusGui = new CharacterStatusGui();
         this.characterIndicator = new CharacterIndicator();
         this.characterAbilities = new CharacterAbilities();
+        this.characterAbilityGui = new CharacterAbilityGui();
 
         let pickupComplete = function(itemPiece) {
             this.getInventory().addItemToInventory(itemPiece);
@@ -40,6 +42,7 @@ class GameCharacter {
         this.characterEquipment = new CharacterEquipment(gamePiece, equipSlotConfigId);
         this.characterMovement = new CharacterMovement(gamePiece);
         this.characterStatusGui.initStatusGui(this);
+        this.characterAbilityGui.initAbilityGui(this);
         this.characterIndicator.initCharacterIndicator(gamePiece);
         if (this.config['abilities']) {
             this.characterAbilities.initCharacterAbilities(gamePiece);
@@ -48,11 +51,24 @@ class GameCharacter {
                 this.characterAbilities.addCharacterAbility(key, abilities[key]);
             }
         }
-        gamePiece.getAbilitySystem().initAbilitySlots(gamePiece.getStatusByKey('ability_slots'))
+        gamePiece.getAbilitySystem().initAbilitySlots(gamePiece.getStatusByKey('ability_slots_max'))
+        let unlockedSlotCount = gamePiece.getStatusByKey('ability_slots');
+        for (let i = 0; i < unlockedSlotCount; i++) {
+            gamePiece.getAbilitySystem().unlockAbilitySlot(i)
+        }
+
     }
 
     getCharacterPiece() {
         return this.gamePiece;
+    }
+
+    activateCharAbilityGui() {
+        this.characterAbilityGui.activateCharacterAbilityGui()
+    }
+
+    deactivateCharAbilityGui() {
+        this.characterAbilityGui.deactivateCharacterAbilityGui()
     }
 
     activateCharStatusGui() {
