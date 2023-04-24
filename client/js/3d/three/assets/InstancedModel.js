@@ -230,6 +230,26 @@ class InstancedModel {
         };
 
 
+        getJointKeyWorldTransform(jointKey, storeObj3d) {
+
+                    let boneName = this.originalModel.jointMap[jointKey];
+                    if (!boneName) {
+                        console.log("No bone for key ", jointKey, this);
+                        return
+                    }
+
+
+                    let dynJoint = this.boneMap[boneName];
+
+                    if (!dynJoint) {
+                        console.log("No dynJoint", jointKey)
+                    } else {
+                        //        console.log(key)
+                        dynJoint.stickToBoneWorldMatrix()
+                        storeObj3d.copy(dynJoint.obj3d);
+                    }
+
+        }
 
         updateSpatialWorldMatrix = function() {
 

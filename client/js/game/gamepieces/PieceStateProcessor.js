@@ -49,7 +49,10 @@ class PieceStateProcessor {
             if (this.gamePiece.combatSystem.testForMeleeRange(this.gamePiece.getStatusByKey('engagingTarget'))) {
                 this.processCombatTarget(status);
             }
+
         }
+
+
 
         if (engagingTarget !== null) {
             this.processEngagingTarget(status);
@@ -213,10 +216,6 @@ class PieceStateProcessor {
         let combatTarget = status.combatTarget;
 
 
-        if (status.activeAbility !== null) {
-            status.activeAbility.applyAbilityToTarget(combatTarget);
-        }
-
         let damage = status['dmg']
 
         combatTarget.setStatusValue('hp', combatTarget.getStatusByKey('hp') - damage);
@@ -239,6 +238,7 @@ class PieceStateProcessor {
         status.recover = MATH.clamp ((status.atkProg-(config.sourceFraction+config.swingFraction+config.prepFraction)) / config.recoverFraction , 0, 1);
 
         if (status.source < 1) {
+
             status.trTime = (config.sourceFraction * config.turnTime) / status.attacks
         } else if (status.prep < 1) {
             status.trTime = (config.prepFraction * config.turnTime) / status.attacks

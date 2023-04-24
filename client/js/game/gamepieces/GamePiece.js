@@ -164,6 +164,9 @@ class GamePiece {
         this.modelInstance = modelInstance;
     };
 
+    getModel() {
+        return this.modelInstance;
+    }
     animateActionState(actionName) {
         let action = this.pieceActionSystem.actions[actionName][0];
         if (action) {

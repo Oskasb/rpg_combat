@@ -1,6 +1,8 @@
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
+import { Object3D } from "../../../libs/three/core/Object3D.js";
 
 let tempVec3 = new Vector3();
+let tempObj3D = new Object3D();
 
 let rgba = {
     r:1, g:1, b:1, a:1
@@ -21,6 +23,8 @@ let endOnLanded = function(fx) {
     fx.endEffectOfClass()
 }
 
+
+
 let setupLifecycle = function(efct, fxDuration, onPaceFactor, decayFactor) {
     let start = GameAPI.getGameTime();
     let atk = onPaceFactor*fxDuration;
@@ -28,6 +32,67 @@ let setupLifecycle = function(efct, fxDuration, onPaceFactor, decayFactor) {
     let end = start+fxDuration;
     efct.setEffectLifecycle(start, atk, end, decay);
     return fxDuration+decay;
+}
+
+function handsOnFire(gamePiece, obj3d, attacker) {
+
+    let effectCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(obj3d.position);
+        let size = gamePiece.getStatusByKey('size');
+    //    tempObj.position.y += size*0.3
+        ThreeAPI.tempVec3.copy(obj3d.scale)
+        ThreeAPI.tempVec3.multiplyScalar(size*0.1);
+        tempObj.lookAt(ThreeAPI.getCamera().position);
+        MATH.spreadVector(tempObj.position, ThreeAPI.tempVec3)
+        efct.quat.copy(tempObj.quaternion);
+
+        tempObj.rotateZ(Math.random()*MATH.TWO_PI)
+
+        MATH.randomVector(ThreeAPI.tempVec3);
+        ThreeAPI.tempVec3.multiplyScalar(0.3)
+        ThreeAPI.tempVec3.y = Math.abs(ThreeAPI.tempVec3.y);
+        efct.setEffectSpriteXY(3, 4);
+        ThreeAPI.tempVec3.add(tempObj.position)
+
+        tempVec3.set(size, size, size);
+        MATH.randomVector(tempVec3);
+        tempVec3.multiplyScalar(size)
+        //     MATH.spreadVector(tempObj.position, tempVec3)
+
+        setRgba(0.6, 0.5, 0.4, 0.3)
+        efct.setEffectColorRGBA(rgba)
+
+        let startSize = size*0.2;
+        let endSize = size*0.8 + Math.random()*size*0.5
+        let time = setupLifecycle(efct, 0.2+Math.random()*0.3, 0.7, 0.4);
+
+        efct.activateSpatialTransition(tempObj.position, efct.quat, ThreeAPI.tempVec3, tempObj.quaternion, startSize, endSize, time, endOnLanded, 0.1)
+    }
+
+    for (let i = 0; i < 1; i++) {
+        EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
+    }
+
+    let shockwaveCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(obj3d.position);
+        let size = gamePiece.getStatusByKey('size');
+        tempObj.lookAt(ThreeAPI.getCamera().position);
+        tempVec3.copy(gamePiece.getPos());
+        efct.setEffectSpriteXY(0, 0);
+        setRgba(0.82, 0.67, 0.31, 0.4)
+        efct.setEffectColorRGBA(rgba)
+        let startSize = size*0.6;
+        let endSize = size*0.8 + Math.random()*size*0.2
+        let time = setupLifecycle(efct, 0.25, 0.1, 0.1);
+        efct.activateSpatialTransition(obj3d.position, tempObj.quaternion, obj3d.position, tempObj.quaternion, startSize, endSize, time, endOnLanded, 0.1)
+    }
+
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  shockwaveCb)
+
 }
 
 function fireBallEffect(gamePiece, dmg, attacker) {
@@ -172,7 +237,16 @@ function webEffect(gamePiece) {
     // }
 }
 
+function effectCalls() {
+    return {
+        combat_effect_fireball:fireBallEffect,
+        combat_effect_hands_fire:handsOnFire
+    }
+}
+
 export {
+    effectCalls,
+    handsOnFire,
     fireBallEffect,
     magicMissileEffect,
     webEffect

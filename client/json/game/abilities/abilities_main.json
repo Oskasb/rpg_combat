@@ -10,6 +10,8 @@
               "name": "Fire Ball",
               "icon_key": "fire",
               "target": "tile",
+              "apply_effect": "combat_effect_fireball",
+              "activated_effect": "combat_effect_hands_fire",
               "cast_time": 0.2,
               "apply_time": 0.4,
               "ap_cost": 3,
@@ -29,6 +31,8 @@
               "name": "Minor Heal",
               "icon_key": "droplet",
               "target": "friendly",
+              "apply_effect": "combat_effect_fireball",
+              "activated_effect": "combat_effect_hands_fire",
               "ap_cost": 2,
               "range": 2,
               "heal": [3, 5, 8, 10, 14, 20, 28, 40 , 60 , 90]
@@ -45,6 +49,8 @@
               "name": "Minor Harm",
               "icon_key": "energy",
               "target": "hostile",
+              "apply_effect": "combat_effect_fireball",
+              "activated_effect": "combat_effect_hands_fire",
               "ap_cost": 4,
               "range": 8,
               "damage": [3, 5, 8, 10, 14, 20, 28, 40 , 60 , 90]

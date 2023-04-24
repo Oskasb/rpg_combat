@@ -46,7 +46,7 @@ class InstanceDynamicJoint {
                 return;
             }
 
-        //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos: this.obj3d.position, color:'GREEN', size:0.1})
+       //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos: this.obj3d.position, color:'GREEN', size:0.1})
         };
 
         updateSpatialFrame = function() {
