@@ -19,7 +19,7 @@ function getNearestCharacter(sourceSpatial, charList) {
     return nearestSelected;
 }
 
-function getCharactersInRange(storeList, gamePiece, charList, maxDistance) {
+function getCharactersInRange(storeList, gamePiece, charList, maxDistance, friendlyFire) {
     let fromPos = tempVec3;
     let enemyPos = tempVec3b;
     gamePiece.getSpatial().getSpatialPosition(fromPos);
@@ -28,7 +28,7 @@ function getCharactersInRange(storeList, gamePiece, charList, maxDistance) {
         enemyPos.sub(fromPos);
         let distance = enemyPos.length();
         if (distance < maxDistance) {
-            if (gamePiece.getStatusByKey('faction') !== charList[i].gamePiece.getStatusByKey('faction')) {
+            if ((gamePiece.getStatusByKey('faction') !== charList[i].gamePiece.getStatusByKey('faction')) || friendlyFire) {
                 if (gamePiece.isDead === false) {
                     storeList.push(charList[i]);
                 }

@@ -89,6 +89,13 @@ class ThreatDetector {
         this.updateNearbyHostiles()
     }
 
+    getHostilesNearInRangeFromPiece(gamePiece, range) {
+        let activeChars = GameAPI.getActiveScenarioCharacters();
+        MATH.emptyArray(this.hostilesInRange);
+        SpatialUtils.getCharactersInRange(this.hostilesInRange, gamePiece, activeChars, range, true);
+        return this.hostilesInRange;
+    }
+
     updateScenarioThreat() {
         this.determineCombatThreat();
     }

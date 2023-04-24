@@ -91,8 +91,21 @@ class PieceAbility {
         CombatEffects.effectCalls()[this.config['apply_effect']](target, 25)
         this.gamePiece.setStatusValue('activeAbility', null)
         GameAPI.unregisterGameUpdateCallback(this.call.updateReleasedAbility)
+        if (this.config['damage']) {
+            let damage = this.config['damage'][this.abilityStatus.level];
+            if (this.config['radius']) {
+                let radius =  this.config['radius'];
+                let hostiles = this.gamePiece.threatDetector.getHostilesNearInRangeFromPiece(target, radius)
+                console.log(hostiles)
+                for (let i = 0; i < hostiles.length; i++) {
+                    let hp = hostiles[i].gamePiece.getStatusByKey('hp');
+                    hp -= damage;
+                    hostiles[i].gamePiece.setStatusValue('hp', hp);
+                    hostiles[i].gamePiece.notifyDamageTaken(damage, this.gamePiece);
+                }
+            }
+        }
     }
-
 }
 
 export { PieceAbility }
