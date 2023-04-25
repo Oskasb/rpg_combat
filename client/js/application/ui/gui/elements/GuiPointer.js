@@ -62,8 +62,8 @@ class GuiPointer {
         };
 
         pointerPressWorldStart = function() {
-            GuiAPI.registerWorldSpacePointer(this);
             this.guiPointerWidget.showPointerWorldSeeking();
+            GuiAPI.registerWorldSpacePointer(this);
         };
 
         setIsSeeking = function(bool) {

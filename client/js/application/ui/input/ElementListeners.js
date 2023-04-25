@@ -1,5 +1,6 @@
 import {InputActionListener} from './InputActionListener.js';
 
+let progInputState;
 class ElementListeners {
 
     constructor(P_STATE, gameScreen) {
@@ -14,6 +15,23 @@ class ElementListeners {
         this.wheelDelta = 0;
         this.inputUpdateCallbacks = [];
         this.setupInputListener(this);
+
+        let updateLongPressProgress = function() {
+            if (Math.abs(progInputState.dragDistance[0]) + Math.abs(progInputState.dragDistance[1]) < 50) {
+                let lpProg = MATH.calcFraction(0, progInputState.longPressTime, ThreeAPI.getSystemTime() - progInputState.pressStartTime)
+                progInputState.longPressProgress = MATH.clamp(lpProg, 0, 1)
+                console.log(progInputState.longPressProgress)
+            } else {
+                console.log("Cancel Long Press due to drag distance")
+                progInputState.longPressProgress = 0
+                GuiAPI.removeGuiUpdateCallback(updateLongPressProgress)
+            }
+        }
+
+        this.call = {
+            updateLongPressProgress:updateLongPressProgress
+        }
+
     }
 
 
@@ -150,36 +168,42 @@ class ElementListeners {
 
     sampleMouseState = function(inputState) {
 
-        let updateLongPressProgress = function() {
-            if (Math.abs(inputState.dragDistance[0]) + Math.abs(inputState.dragDistance[1]) < 50) {
-                let lpProg = MATH.calcFraction(0, inputState.longPressTime, ThreeAPI.getSystemTime() - inputState.pressStartTime)
-                inputState.longPressProgress = MATH.clamp(lpProg, 0, 1,)
-            } else {
-                inputState.longPressProgress = 0
-                GuiAPI.removeGuiUpdateCallback(updateLongPressProgress)
-            }
-        }
+        progInputState = inputState;
 
         if (inputState.action[0]) {
             inputState.pressFrames++;
+            console.log(inputState.x)
+
+
+
             if (inputState.pressFrames === 1) {
 
                 //if (inputState.pressFrames === 0) {
-                 //   console.log(inputState.dragDistance)
+
+
                     inputState.startDrag[0] = inputState.x;
                     inputState.startDrag[1] = inputState.y;
-                //}
+                    inputState.dragDistance[0] = 0;
+                    inputState.dragDistance[1] = 0;
+
+                inputState.dragDistance[0] = 0;
+                inputState.dragDistance[1] = 0;
                 inputState.longPressProgress = 0;
                 inputState.pressStartTime = ThreeAPI.getSystemTime();
-                GuiAPI.addGuiUpdateCallback(updateLongPressProgress)
+                GuiAPI.addGuiUpdateCallback(this.call.updateLongPressProgress)
             } else if (inputState.longPressProgress === 0) {
-                GuiAPI.removeGuiUpdateCallback(updateLongPressProgress)
+                GuiAPI.removeGuiUpdateCallback(this.call.updateLongPressProgress)
                 inputState.longPressProgress = 0;
             }
 
+            if (inputState.pressFrames > 1) {
+                inputState.dragDistance[0] = inputState.x - inputState.startDrag[0]
+                inputState.dragDistance[1] = inputState.y - inputState.startDrag[1]
+            }
+            
         } else {
             if (inputState.longPressProgress) {
-                GuiAPI.removeGuiUpdateCallback(updateLongPressProgress)
+                GuiAPI.removeGuiUpdateCallback(this.call.updateLongPressProgress)
             }
 
             inputState.pressFrames = 0;

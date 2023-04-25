@@ -16,9 +16,14 @@ class GameWorldPointer {
             longPress:0
         }
 
+        let exitLongPress = function(pointer, selectionEvent) {
+            this.exitLongPress(pointer, selectionEvent)
+        }.bind(this)
+
+
         this.call = {
-            pointerExitLongPress:this.pointerExitLongPress,
-            pointerEnterLongPress:this.pointerEnterLongPress,
+            pointerExitLongPress:exitLongPress,
+            pointerEnterLongPress:this.enterLongPress,
             indicateSelection:this.indicateSelection
         }
     }
@@ -61,7 +66,7 @@ class GameWorldPointer {
         }
     }
 
-    pointerEnterLongPress(pointer, selectionEvent) {
+    enterLongPress(pointer, selectionEvent) {
         console.log("Long Press: ", pointer, pointer.worldSpaceTarget)
         selectionEvent.longPress = pointer.call.getLongPressProgress();
         selectionEvent.piece = pointer.worldSpaceTarget;
@@ -75,10 +80,10 @@ class GameWorldPointer {
         evt.dispatch(ENUMS.Event.MAIN_CHAR_OPEN_TARGET,  selectionEvent);
     }
 
-    pointerExitLongPress(pointer, selectionEvent) {
+    exitLongPress(pointer, selectionEvent) {
         if (typeof (selectionEvent.isOpen) === 'object') {
+            console.log("Release Long Press: ", pointer.inputIndex, pointer.isLongPress, pointer.longPressProgress, pointer.worldSpaceTarget)
             selectionEvent.piece = selectionEvent.isOpen;
-            selectionEvent.longPress = 0;
             selectionEvent.value = false;
             selectionEvent.isOpen = null;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_OPEN_TARGET,  selectionEvent);
@@ -94,7 +99,7 @@ class GameWorldPointer {
             return;
         }
         call.pointerExitLongPress(pointer, this.selectionEvent);
-
+        this.selectionEvent.isOpen = null;
         let playerPiece = GameAPI.getMainCharPiece();
         //    console.log("Release Movement Pointer")
         playerPiece.movementPath.clearTilePathStatus();
@@ -137,9 +142,10 @@ class GameWorldPointer {
 
         if (isFirstPressFrame) {
             pointer.isWorldActive = true;
-
+            console.log("Press first frame: ", pointer.inputIndex, pointer.isLongPress, pointer.longPressProgress, pointer.worldSpaceTarget)
         } else {
             let longPress = pointer.call.getLongPressProgress()
+            console.log(longPress);
             if (longPress >= 1 && pointer.longPressProgress < 1) {
                 this.call.pointerEnterLongPress(pointer, this.selectionEvent);
             }

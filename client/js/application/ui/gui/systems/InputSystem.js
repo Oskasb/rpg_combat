@@ -107,6 +107,7 @@ class InputSystem {
                     guiPointer.setIsSeeking(true);
                     if (!interactiveElem) {
                         // handle world pointer here
+                    //    guiPointer.setPointerHovering(true)
                         guiPointer.pointerPressWorldStart();
                     } else {
                         // pressing and interactive element;
