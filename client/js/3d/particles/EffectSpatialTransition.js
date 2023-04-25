@@ -12,7 +12,7 @@ class EffectSpatialTransition {
         this.targetObj3D = new THREE.Object3D();
         this.startSize = 0;
         this.endSize = 0;
-
+        this.spread = 0;
         this.bounce = 1;
 
         let tickMovement = function(tpf, gameTime) {
@@ -27,7 +27,7 @@ class EffectSpatialTransition {
 
     }
 
-    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback, bounce) {
+    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback, bounce, spread) {
         let now = GameAPI.getGameTime();
         this.startTime = now;
         this.targetTime = now+overTime;
@@ -41,7 +41,8 @@ class EffectSpatialTransition {
 
         this.startSize = fromSize;
         this.endSize = toSize;
-        this.bounce = bounce || 1;
+        this.bounce = bounce || 0;
+        this.spread = spread || 0;
 
         if (typeof(callback) === 'function') {
             this.onArriveCallbacks.push(callback);
@@ -61,6 +62,10 @@ class EffectSpatialTransition {
 
             MATH.interpolateVec3FromTo(this.startObj3D.position, this.targetObj3D.position, fraction, tempVec3 , 'curveSigmoid');
             tempVec3.y += Math.sin(fraction*Math.PI)*this.bounce;
+
+
+            tempVec3.x += Math.sin(fraction*MATH.HALF_PI)*this.spread*Math.cos(fraction*MATH.HALF_PI);
+            tempVec3.z += Math.sin(fraction*MATH.HALF_PI)*this.spread*Math.cos(fraction*MATH.HALF_PI);
             let tempQuat = ThreeAPI.tempObj.quaternion;
             tempQuat.slerpQuaternions(this.startObj3D.quaternion, this.targetObj3D.quaternion, fraction)
 

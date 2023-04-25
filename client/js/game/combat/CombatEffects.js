@@ -69,8 +69,8 @@ function catchOnFire(gamePiece) {
     for (let i = 0; i < 5; i++) {
         EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
     }
-
 }
+
 function handsOnFire(gamePiece, obj3d, attacker) {
 
     let effectCb = function(efct) {
@@ -78,7 +78,7 @@ function handsOnFire(gamePiece, obj3d, attacker) {
         let tempObj = ThreeAPI.tempObj;
         tempObj.position.copy(obj3d.position);
         let size = gamePiece.getStatusByKey('size');
-    //    tempObj.position.y += size*0.3
+        //    tempObj.position.y += size*0.3
         ThreeAPI.tempVec3.copy(obj3d.scale)
         ThreeAPI.tempVec3.multiplyScalar(size*0.1);
         tempObj.lookAt(ThreeAPI.getCamera().position);
@@ -129,6 +129,58 @@ function handsOnFire(gamePiece, obj3d, attacker) {
     }
 
     EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  shockwaveCb)
+
+}
+
+function fireMissile(fromPos, gamePiece, index, onArrriveCB) {
+
+    let distance = MATH.distanceBetween(fromPos, gamePiece.getPos());
+    let effectCb = function(efct) {
+
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(fromPos);
+        let size = gamePiece.getStatusByKey('size');
+    //    tempObj.lookAt(ThreeAPI.getCamera().position);
+        tempVec3.copy(gamePiece.getPos());
+        efct.setEffectSpriteXY(3, 4);
+        setRgba(0.99, 0.88, 0.61, 0.99)
+        efct.setEffectColorRGBA(rgba)
+        let startSize = size*0.9;
+        let endSize = size*0.9 + Math.random()*size*0.2
+        let time = setupLifecycle(efct, 0.2*(index+1) + 0.2*distance + 0.2, 0.2, 0.01);
+        let spread = 0.6*(index+1)*0.1*distance
+        if (MATH.isOddNumber(index)) {
+            spread*=-1;
+        }
+        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArrriveCB, (2 - Math.abs(spread))*0.1*distance, spread)
+    }
+
+ //   for (let i = 0; i < 2; i++) {
+        EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
+ //   }
+
+    let shockwaveCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(fromPos);
+        let size = gamePiece.getStatusByKey('size');
+        tempObj.lookAt(ThreeAPI.getCamera().position);
+        tempVec3.copy(gamePiece.getPos());
+        efct.setEffectSpriteXY(0, 0);
+        setRgba(0.82, 0.67, 0.31, 0.8)
+        efct.setEffectColorRGBA(rgba)
+        let startSize = size*0.6;
+        let endSize = size*0.5 + Math.random()*size*0.2
+        let time = setupLifecycle(efct, 0.2*(index+1) + 0.2*distance + 0.2, 0.2, 0.01);
+        let spread = 0.6*(index+1)*0.1*distance
+        if (MATH.isOddNumber(index)) {
+            spread*=-1;
+        }
+        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArrriveCB, (2 - Math.abs(spread))*0.1*distance, spread)
+    }
+
+   // EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  shockwaveCb)
 
 }
 
@@ -277,6 +329,7 @@ function webEffect(gamePiece) {
 function effectCalls() {
     return {
         combat_effect_fireball:fireBallEffect,
+        combat_effect_fire_missile:fireMissile,
         combat_effect_hands_fire:handsOnFire,
         damage_effect_catch_on_fire:catchOnFire
     }

@@ -23,7 +23,7 @@
             "fire_ball": {
               "level": 2
             },
-            "heal_minor":{
+            "magic_missiles":{
               "level": 6
             }
           },

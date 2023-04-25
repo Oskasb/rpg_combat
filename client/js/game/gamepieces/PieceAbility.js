@@ -78,19 +78,38 @@ class PieceAbility {
 
     }
 
+    activateAbilityMissile(target, index) {
+
+        let onArriveCb = function(fx) {
+            fx.endEffectOfClass()
+            this.applyAbilityToTarget(this.target)
+        }.bind(this);
+        this.gamePiece.getModel().getJointKeyWorldTransform('HAND_R', tempObj3D)
+        CombatEffects.effectCalls()[this.config['missile_effect']](tempObj3D.position, target, index, onArriveCb)
+    }
+
     sendAbilityToTarget(target) {
+        GameAPI.unregisterGameUpdateCallback(this.call.updateActivatedAbility)
         this.sendTime = GameAPI.getGameTime();
         this.arriveTime = this.sendTime+0.75;
         this.target = target;
-        GameAPI.unregisterGameUpdateCallback(this.call.updateActivatedAbility)
-        GameAPI.registerGameUpdateCallback(this.call.updateReleasedAbility)
+        let missileCount = 1;
+        if (this.config['missiles']) {
+            if (typeof(this.config['missiles'] === 'array')) {
+                missileCount = this.config['missiles'][this.abilityStatus.level];
+            }
+        }
+        for (let i = 0; i < missileCount; i++) {
+            this.activateAbilityMissile(target, i);
+        }
+    //    GameAPI.registerGameUpdateCallback(this.call.updateReleasedAbility)
 
     }
 
     applyAbilityToTarget(target) {
         CombatEffects.effectCalls()[this.config['apply_effect']](target, 25)
         this.gamePiece.setStatusValue('activeAbility', null)
-        GameAPI.unregisterGameUpdateCallback(this.call.updateReleasedAbility)
+    //    GameAPI.unregisterGameUpdateCallback(this.call.updateReleasedAbility)
         if (this.config['damage']) {
             let damage = this.config['damage'][this.abilityStatus.level];
             if (this.config['radius']) {

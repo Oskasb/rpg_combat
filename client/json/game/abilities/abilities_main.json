@@ -12,12 +12,14 @@
               "target": "tile",
               "apply_effect": "combat_effect_fireball",
               "activated_effect": "combat_effect_hands_fire",
+              "missile_effect": "combat_effect_fire_missile",
               "damage_effect": "damage_effect_catch_on_fire",
               "cast_time": 0.2,
               "apply_time": 0.4,
               "ap_cost": 3,
               "range": 15,
               "radius": 4,
+              "missiles": [2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
               "damage": [3, 5, 8, 10, 14, 20, 28, 40 , 60 , 90]
             }
           }
@@ -34,6 +36,7 @@
               "target": "friendly",
               "apply_effect": "combat_effect_fireball",
               "activated_effect": "combat_effect_hands_fire",
+              "missile_effect": "combat_effect_fire_missile",
               "damage_effect": "damage_effect_catch_on_fire",
               "ap_cost": 2,
               "range": 2,
@@ -53,10 +56,32 @@
               "target": "hostile",
               "apply_effect": "combat_effect_fireball",
               "activated_effect": "combat_effect_hands_fire",
+              "missile_effect": "combat_effect_fire_missile",
               "damage_effect": "damage_effect_catch_on_fire",
               "ap_cost": 4,
               "range": 8,
               "damage": [3, 5, 8, 10, 14, 20, 28, 40 , 60 , 90]
+            }
+          }
+        ]
+      },
+      {
+        "id":"magic_missiles",
+        "data":[
+          {
+            "data_key": "ability_config",
+            "config": {
+              "name": "Magic Missiles",
+              "icon_key": "energy",
+              "target": "hostile",
+              "apply_effect": "combat_effect_fireball",
+              "activated_effect": "combat_effect_hands_fire",
+              "missile_effect": "combat_effect_fire_missile",
+              "damage_effect": "damage_effect_catch_on_fire",
+              "ap_cost": 4,
+              "range": 15,
+              "missiles": [2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
+              "damage": [2, 3, 4, 5, 6, 7, 8, 9 , 10 , 12]
             }
           }
         ]
