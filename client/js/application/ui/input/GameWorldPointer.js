@@ -142,10 +142,10 @@ class GameWorldPointer {
 
         if (isFirstPressFrame) {
             pointer.isWorldActive = true;
-            console.log("Press first frame: ", pointer.inputIndex, pointer.isLongPress, pointer.longPressProgress, pointer.worldSpaceTarget)
+        //    console.log("Press first frame: ", pointer.inputIndex, pointer.isLongPress, pointer.longPressProgress, pointer.worldSpaceTarget)
         } else {
             let longPress = pointer.call.getLongPressProgress()
-            console.log(longPress);
+        //    console.log(longPress);
             if (longPress >= 1 && pointer.longPressProgress < 1) {
                 this.call.pointerEnterLongPress(pointer, this.selectionEvent);
             }

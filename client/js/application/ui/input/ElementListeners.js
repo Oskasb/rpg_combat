@@ -20,9 +20,9 @@ class ElementListeners {
             if (Math.abs(progInputState.dragDistance[0]) + Math.abs(progInputState.dragDistance[1]) < 50) {
                 let lpProg = MATH.calcFraction(0, progInputState.longPressTime, ThreeAPI.getSystemTime() - progInputState.pressStartTime)
                 progInputState.longPressProgress = MATH.clamp(lpProg, 0, 1)
-                console.log(progInputState.longPressProgress)
+            //    console.log(progInputState.longPressProgress)
             } else {
-                console.log("Cancel Long Press due to drag distance")
+           //     console.log("Cancel Long Press due to drag distance")
                 progInputState.longPressProgress = 0
                 GuiAPI.removeGuiUpdateCallback(updateLongPressProgress)
             }
@@ -172,14 +172,8 @@ class ElementListeners {
 
         if (inputState.action[0]) {
             inputState.pressFrames++;
-            console.log(inputState.x)
-
-
 
             if (inputState.pressFrames === 1) {
-
-                //if (inputState.pressFrames === 0) {
-
 
                     inputState.startDrag[0] = inputState.x;
                     inputState.startDrag[1] = inputState.y;
@@ -200,7 +194,7 @@ class ElementListeners {
                 inputState.dragDistance[0] = inputState.x - inputState.startDrag[0]
                 inputState.dragDistance[1] = inputState.y - inputState.startDrag[1]
             }
-            
+
         } else {
             if (inputState.longPressProgress) {
                 GuiAPI.removeGuiUpdateCallback(this.call.updateLongPressProgress)
