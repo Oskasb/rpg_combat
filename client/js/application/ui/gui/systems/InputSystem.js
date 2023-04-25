@@ -104,10 +104,16 @@ class InputSystem {
             if (pointerState.action[0]) {
                 // check is first frame
                 if (pointerState.pressFrames === 1) {
+
+                    pointerState.startDrag[0] = pointerState.x;
+                    pointerState.startDrag[1] = pointerState.y;
+                    pointerState.dragDistance[0] = 0;
+                    pointerState.dragDistance[1] = 0;
+                    
                     guiPointer.setIsSeeking(true);
                     if (!interactiveElem) {
                         // handle world pointer here
-                    //    guiPointer.setPointerHovering(true)
+                        // guiPointer.setPointerHovering(true)
                         guiPointer.pointerPressWorldStart();
                     } else {
                         // pressing and interactive element;

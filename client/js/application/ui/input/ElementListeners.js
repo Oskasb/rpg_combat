@@ -22,7 +22,7 @@ class ElementListeners {
                 progInputState.longPressProgress = MATH.clamp(lpProg, 0, 1)
             //    console.log(progInputState.longPressProgress)
             } else {
-           //     console.log("Cancel Long Press due to drag distance")
+                console.log("Cancel Long Press due to drag distance")
                 progInputState.longPressProgress = 0
                 GuiAPI.removeGuiUpdateCallback(updateLongPressProgress)
             }
@@ -104,6 +104,7 @@ class ElementListeners {
                 _this.dy = 0;
                 _this.POINTER_STATE.touches[touch.identifier].lastAction[0] = 0;
                 _this.POINTER_STATE.touches[touch.identifier].action[0] = 1;
+
                 callInputUpdate(_this.POINTER_STATE.touches[touch.identifier]);
             }
 
@@ -174,20 +175,19 @@ class ElementListeners {
             inputState.pressFrames++;
 
             if (inputState.pressFrames === 1) {
-
+/*
                     inputState.startDrag[0] = inputState.x;
                     inputState.startDrag[1] = inputState.y;
                     inputState.dragDistance[0] = 0;
                     inputState.dragDistance[1] = 0;
-
-                inputState.dragDistance[0] = 0;
-                inputState.dragDistance[1] = 0;
+*/
                 inputState.longPressProgress = 0;
-                inputState.pressStartTime = ThreeAPI.getSystemTime();
+                inputState.pressStartTime = ThreeAPI.getSystemTime()-0.0001;
                 GuiAPI.addGuiUpdateCallback(this.call.updateLongPressProgress)
             } else if (inputState.longPressProgress === 0) {
-                GuiAPI.removeGuiUpdateCallback(this.call.updateLongPressProgress)
-                inputState.longPressProgress = 0;
+            //    console.log("Why release here?")
+            //    GuiAPI.removeGuiUpdateCallback(this.call.updateLongPressProgress)
+            //    inputState.longPressProgress = 0;
             }
 
             if (inputState.pressFrames > 1) {

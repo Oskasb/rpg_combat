@@ -81,7 +81,7 @@ class GameWorldPointer {
     }
 
     exitLongPress(pointer, selectionEvent) {
-        if (typeof (selectionEvent.isOpen) === 'object') {
+        if (selectionEvent.isOpen !== null) {
             console.log("Release Long Press: ", pointer.inputIndex, pointer.isLongPress, pointer.longPressProgress, pointer.worldSpaceTarget)
             selectionEvent.piece = selectionEvent.isOpen;
             selectionEvent.value = false;
