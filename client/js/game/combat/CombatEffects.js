@@ -34,6 +34,41 @@ let setupLifecycle = function(efct, fxDuration, onPaceFactor, decayFactor) {
     return fxDuration+decay;
 }
 
+function catchOnFire(gamePiece) {
+    let effectCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(gamePiece.getPos());
+        let size = gamePiece.getStatusByKey('size');
+        tempObj.position.y += size*0.8
+        ThreeAPI.tempVec3.set(size*0.2, size*0.75, size*0.2)
+        tempObj.lookAt(ThreeAPI.getCamera().position);
+        MATH.spreadVector(tempObj.position, ThreeAPI.tempVec3)
+        efct.quat.copy(tempObj.quaternion);
+
+        tempObj.rotateZ(Math.random()*MATH.TWO_PI)
+
+        MATH.randomVector(ThreeAPI.tempVec3);
+        ThreeAPI.tempVec3.y += Math.abs(ThreeAPI.tempVec3.y);
+        ThreeAPI.tempVec3.multiplyScalar(0.5)
+
+        efct.setEffectSpriteXY(3, 4);
+        ThreeAPI.tempVec3.add(tempObj.position)
+
+        setRgba(0.8, 0.7, 0.4, 0.8)
+        efct.setEffectColorRGBA(rgba)
+        let startSize = size*0.8;
+        let endSize = size*0.8 + Math.random()*size*2.5
+        let time = setupLifecycle(efct, 1.5+Math.random()*1.2, 0.3, 0.8);
+
+        efct.activateSpatialTransition(tempObj.position, efct.quat, ThreeAPI.tempVec3, tempObj.quaternion, startSize, endSize, time, endOnLanded, 0.1)
+    }
+
+    for (let i = 0; i < 5; i++) {
+        EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
+    }
+
+}
 function handsOnFire(gamePiece, obj3d, attacker) {
 
     let effectCb = function(efct) {
@@ -65,13 +100,13 @@ function handsOnFire(gamePiece, obj3d, attacker) {
         efct.setEffectColorRGBA(rgba)
 
         let startSize = size*0.2;
-        let endSize = size*0.8 + Math.random()*size*0.5
-        let time = setupLifecycle(efct, 0.2+Math.random()*0.3, 0.7, 0.4);
+        let endSize = size*0.8 + Math.random()*size*1.5
+        let time = setupLifecycle(efct, 0.3+Math.random()*0.3, 0.7, 0.4);
 
         efct.activateSpatialTransition(tempObj.position, efct.quat, ThreeAPI.tempVec3, tempObj.quaternion, startSize, endSize, time, endOnLanded, 0.1)
     }
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 2; i++) {
         EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
     }
 
@@ -83,11 +118,11 @@ function handsOnFire(gamePiece, obj3d, attacker) {
         tempObj.lookAt(ThreeAPI.getCamera().position);
         tempVec3.copy(gamePiece.getPos());
         efct.setEffectSpriteXY(0, 0);
-        setRgba(0.82, 0.67, 0.31, 0.4)
+        setRgba(0.82, 0.67, 0.31, 0.8)
         efct.setEffectColorRGBA(rgba)
         let startSize = size*0.6;
         let endSize = size*0.8 + Math.random()*size*0.2
-        let time = setupLifecycle(efct, 0.25, 0.1, 0.1);
+        let time = setupLifecycle(efct, 0.2, 0.1, 0.2);
         efct.activateSpatialTransition(obj3d.position, tempObj.quaternion, obj3d.position, tempObj.quaternion, startSize, endSize, time, endOnLanded, 0.1)
     }
 
@@ -240,7 +275,8 @@ function webEffect(gamePiece) {
 function effectCalls() {
     return {
         combat_effect_fireball:fireBallEffect,
-        combat_effect_hands_fire:handsOnFire
+        combat_effect_hands_fire:handsOnFire,
+        damage_effect_catch_on_fire:catchOnFire
     }
 }
 

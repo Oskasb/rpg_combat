@@ -78,6 +78,7 @@ class GameWorldPointer {
     pointerExitLongPress(pointer, selectionEvent) {
         if (typeof (selectionEvent.isOpen) === 'object') {
             selectionEvent.piece = selectionEvent.isOpen;
+            selectionEvent.longPress = 0;
             selectionEvent.value = false;
             selectionEvent.isOpen = null;
             evt.dispatch(ENUMS.Event.MAIN_CHAR_OPEN_TARGET,  selectionEvent);

@@ -169,7 +169,7 @@ class ElementListeners {
                     inputState.startDrag[0] = inputState.x;
                     inputState.startDrag[1] = inputState.y;
                 //}
-
+                inputState.longPressProgress = 0;
                 inputState.pressStartTime = ThreeAPI.getSystemTime();
                 GuiAPI.addGuiUpdateCallback(updateLongPressProgress)
             } else if (inputState.longPressProgress === 0) {

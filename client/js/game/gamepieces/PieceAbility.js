@@ -98,10 +98,22 @@ class PieceAbility {
                 let hostiles = this.gamePiece.threatDetector.getHostilesNearInRangeFromPiece(target, radius)
                 console.log(hostiles)
                 for (let i = 0; i < hostiles.length; i++) {
-                    let hp = hostiles[i].gamePiece.getStatusByKey('hp');
-                    hp -= damage;
-                    hostiles[i].gamePiece.setStatusValue('hp', hp);
-                    hostiles[i].gamePiece.notifyDamageTaken(damage, this.gamePiece);
+                    let hostile = hostiles[i].gamePiece
+
+                    if (!hostile.isDead) {
+
+                        CombatEffects.effectCalls()[this.config['damage_effect']](hostile)
+                        let hp = hostile.getStatusByKey('hp');
+                        hp -= damage;
+                        hostile.setStatusValue('hp', hp);
+                        hostile.notifyDamageTaken(damage, this.gamePiece);
+                        if (hostile !== target) {
+                            tempObj3D.position.copy(hostile.getPos());
+                            tempObj3D.position.y = target.getPos().y;
+                            tempObj3D.lookAt(target.getPos());
+                            hostile.getSpatial().stickToObj3D(tempObj3D);
+                        }
+                    }
                 }
             }
         }
