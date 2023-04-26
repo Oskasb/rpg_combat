@@ -56,6 +56,9 @@ class GameAPI {
     }
 
     getGameTime = function() {
+        if (!this.gameMain) {
+            return 0
+        }
         let time = this.gameMain.gameTime;
         if (typeof (time) === 'undefined') {
             console.log("Time is bad, investigate")

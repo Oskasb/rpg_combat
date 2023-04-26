@@ -151,6 +151,9 @@ class InstancingBufferElement {
         this.guiBuffers.setElementReleased(this);
     };
 
+    getLifecycleProgress(systemTime) {
+        return (this.lifecycle.x - systemTime) / (this.lifecycle.z + this.lifecycle.x);
+    }
     testLifetimeIsOver = function(systemTime) {
         if ((this.lifecycle.z + this.lifecycle.w) < systemTime) {
         //    console.log("Lifetime over: ", this.lifecycle.z , this.lifecycle.w, this);

@@ -35,9 +35,20 @@
                                 }
                             ]
                         },
+                        "five_particle_additive_pool":{
+                            "effect_class": "GameEffect",
+                            "max_active": 50,
+                            "spread_pos":[0.00001, 0.00001, 0.00001],
+                            "particles": [
+                                {
+                                    "id":"multi_particle_additive_pool",
+                                    "count": [5, 5]
+                                }
+                            ]
+                        },
                         "particle_additive_pool":{
                             "effect_class": "GameEffect",
-                            "max_active": 200,
+                            "max_active": 100,
                             "spread_pos":[0.00001, 0.00001, 0.00001],
                             "particles": [
                                 {

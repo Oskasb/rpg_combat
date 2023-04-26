@@ -263,35 +263,34 @@ function fireBallEffect(gamePiece) {
     EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  implosionCb)
 }
 
-function magicMissileEffect(gamePiece, hp, healer) {
+function magicMissile(fromPos, gamePiece, index, onArrriveCB, getPosFunc) {
 
-    let applies = 0;
+
+    let distance = MATH.distanceBetween(fromPos, getPosFunc());
     let effectCb = function(efct) {
 
-        let tempObj = ThreeAPI.tempObj;
-        tempObj.position.copy(gamePiece.getPos());
-        let size = gamePiece.getStatusByKey('size');
-        tempObj.position.y += size*1.7
-        tempObj.lookAt(ThreeAPI.getCamera().position);
-
-        efct.quat.copy(tempObj.quaternion);
-        tempVec3.copy(gamePiece.getPos());
-
-        tempVec3.y = tempObj.position.y + 0.2+Math.sqrt(applies*0.2);
-
-        ThreeAPI.tempVec3.set(Math.sqrt(applies*0.2), Math.sqrt(applies*0.2), Math.sqrt(applies*0.2))
-        MATH.spreadVector(tempVec3, ThreeAPI.tempVec3)
-
-        efct.setEffectSpriteXY(1+Math.floor(Math.random()*3), 7);
-
-        efct.activateSpatialTransition(tempObj.position, efct.quat, tempVec3, tempObj.quaternion, size*0.1, size*0.5, 1.5, endOnLanded, 0.2)
         efct.activateEffectFromConfigId()
-        applies ++;
-    };
-
-    for (let i = 0; i < hp; i++) {
-        EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'effect_health_recovered',  effectCb)
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(fromPos);
+        let size = gamePiece.getStatusByKey('size');
+        tempObj.lookAt(ThreeAPI.getCamera().position);
+        tempVec3.copy(gamePiece.getPos());
+        efct.setEffectSpriteXY(4, 0);
+        setRgba(0.39, 0.88, 0.91, 0.99)
+    //    efct.setEffectColorRGBA(rgba)
+        let startSize = 1.5;
+        let endSize = 1.3 + Math.random()*0.4;
+        let time = setupLifecycle(efct, 0.2*(index+1) + 0.2*distance + 0.2, MATH.randomBetween(0.1, 0.4), MATH.randomBetween(0.1, 0.4));
+        let spread = 0.6*(index+1)*0.1*distance
+        if (MATH.isOddNumber(index)) {
+            spread*=-1;
+        }
+        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArrriveCB, (2 - Math.abs(spread))*0.1*distance, spread, getPosFunc)
     }
+
+    //   for (let i = 0; i < 2; i++) {
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'five_particle_additive_pool',  effectCb)
+    //   }
 
 
 }
@@ -330,15 +329,12 @@ function effectCalls() {
     return {
         combat_effect_fireball:fireBallEffect,
         combat_effect_fire_missile:fireMissile,
+        combat_effect_magic_missile:magicMissile,
         combat_effect_hands_fire:handsOnFire,
         damage_effect_catch_on_fire:catchOnFire
     }
 }
 
 export {
-    effectCalls,
-    handsOnFire,
-    fireBallEffect,
-    magicMissileEffect,
-    webEffect
+    effectCalls
 }

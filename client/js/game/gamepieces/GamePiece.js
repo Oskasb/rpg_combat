@@ -91,6 +91,12 @@ class GamePiece {
             return this.modelInstance.getSpatial().getPos();
         }.bind(this);
 
+        this.getCenterMass = function() {
+            tempVec3.copy(this.getPos());
+            tempVec3.y += this.getStatusByKey('size')* 0.7;
+            return tempVec3;
+        }.bind(this)
+
         new PieceComposer(this, config, compositCb)
 
     }

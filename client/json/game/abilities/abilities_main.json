@@ -76,7 +76,7 @@
               "target": "hostile",
               "apply_effect": "combat_effect_fireball",
               "activated_effect": "combat_effect_hands_fire",
-              "missile_effect": "combat_effect_fire_missile",
+              "missile_effect": "combat_effect_magic_missile",
               "damage_effect": "damage_effect_catch_on_fire",
               "ap_cost": 4,
               "range": 15,
