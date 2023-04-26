@@ -110,7 +110,8 @@ class ParticleEffect {
             if (this.spreadPos !== 0) {
                 let progress = this.callbacks.getParticleProgress(this.bufferElement);
                 this.offset.copy(this.offsetMax);
-                this.offset.multiplyScalar(Math.sin(progress*MATH.HALF_PI));
+            //    console.log(progress)
+                this.offset.multiplyScalar(Math.sin(progress*3.14));
                 this.pos.add(this.offset);
             }
 

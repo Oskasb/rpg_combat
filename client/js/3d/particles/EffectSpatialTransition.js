@@ -70,12 +70,15 @@ class EffectSpatialTransition {
                 this.targetObj3D.position.copy(this.getPosFunction())
             }
 
-            MATH.interpolateVec3FromTo(this.startObj3D.position, this.targetObj3D.position, fraction, tempVec3 , 'curveSigmoid');
+            MATH.interpolateVec3FromTo(this.startObj3D.position, this.targetObj3D.position, MATH.curveSqrt(fraction), tempVec3 , 'curveSigmoid');
             tempVec3.y += Math.sin(fraction*Math.PI)*this.bounce;
 
 
-            tempVec3.x += Math.sin(fraction*MATH.HALF_PI)*this.spread*Math.cos(fraction*MATH.HALF_PI);
-            tempVec3.z += Math.sin(fraction*MATH.HALF_PI)*this.spread*Math.cos(fraction*MATH.HALF_PI);
+
+            let sinPos = Math.sin(fraction*MATH.HALF_PI)*Math.cos(fraction*MATH.HALF_PI);
+            let fracMod = MATH.curveSigmoid(sinPos)*this.spread;
+            tempVec3.x += fracMod
+            tempVec3.z += fracMod
             let tempQuat = ThreeAPI.tempObj.quaternion;
             tempQuat.slerpQuaternions(this.startObj3D.quaternion, this.targetObj3D.quaternion, fraction)
 

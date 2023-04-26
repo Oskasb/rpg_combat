@@ -152,7 +152,7 @@ class InstancingBufferElement {
     };
 
     getLifecycleProgress(systemTime) {
-        return (this.lifecycle.x - systemTime) / (this.lifecycle.z + this.lifecycle.x);
+        return MATH.calcFraction(this.lifecycle.x ,this.lifecycle.z + this.lifecycle.w, systemTime);
     }
     testLifetimeIsOver = function(systemTime) {
         if ((this.lifecycle.z + this.lifecycle.w) < systemTime) {

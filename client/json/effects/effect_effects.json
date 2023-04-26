@@ -35,6 +35,17 @@
                                 }
                             ]
                         },
+                        "fire_missile_particle_additive_pool":{
+                            "effect_class": "GameEffect",
+                            "max_active": 50,
+                            "spread_pos":[0.00001, 0.00001, 0.00001],
+                            "particles": [
+                                {
+                                    "id":"multi_particle_fire_missile",
+                                    "count": [5, 5]
+                                }
+                            ]
+                        },
                         "five_particle_additive_pool":{
                             "effect_class": "GameEffect",
                             "max_active": 50,

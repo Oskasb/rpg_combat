@@ -93,7 +93,7 @@ class GamePiece {
 
         this.getCenterMass = function() {
             tempVec3.copy(this.getPos());
-            tempVec3.y += this.getStatusByKey('size')* 0.7;
+            tempVec3.y += this.getStatusByKey('size') * 1.2;
             return tempVec3;
         }.bind(this)
 
