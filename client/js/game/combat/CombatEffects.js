@@ -71,7 +71,7 @@ function catchOnFire(gamePiece) {
     }
 }
 
-function handsOnFire(gamePiece, obj3d, attacker) {
+function handsOnFire(gamePiece, obj3d) {
 
     let effectCb = function(efct) {
         efct.activateEffectFromConfigId()
@@ -184,7 +184,7 @@ function fireMissile(fromPos, gamePiece, index, onArrriveCB, getPosFunc) {
 
 }
 
-function fireBallEffect(gamePiece, dmg, attacker) {
+function fireBallEffect(gamePiece) {
 
     let effectCb = function(efct) {
         efct.activateEffectFromConfigId()

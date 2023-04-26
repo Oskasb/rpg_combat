@@ -102,38 +102,43 @@ class PieceAbility {
         for (let i = 0; i < missileCount; i++) {
             this.activateAbilityMissile(target, i);
         }
-    //    GameAPI.registerGameUpdateCallback(this.call.updateReleasedAbility)
 
     }
 
-    applyAbilityToTarget(target) {
-        CombatEffects.effectCalls()[this.config['apply_effect']](target, 25)
-        this.gamePiece.setStatusValue('activeAbility', null)
-    //    GameAPI.unregisterGameUpdateCallback(this.call.updateReleasedAbility)
-        if (this.config['damage']) {
-            let damage = this.config['damage'][this.abilityStatus.level];
-            if (this.config['radius']) {
-                let radius =  this.config['radius'];
-                let hostiles = this.gamePiece.threatDetector.getHostilesNearInRangeFromPiece(target, radius)
-                console.log(hostiles)
-                for (let i = 0; i < hostiles.length; i++) {
-                    let hostile = hostiles[i].gamePiece
+    applyAbilityDamageToTarget(targetPiece) {
+        let damage = this.config['damage'][this.abilityStatus.level];
+        CombatEffects.effectCalls()[this.config['damage_effect']](targetPiece)
+        let hp = targetPiece.getStatusByKey('hp');
+        hp -= damage;
+        targetPiece.setStatusValue('hp', hp);
+        targetPiece.notifyDamageTaken(damage, this.gamePiece);
 
-                    if (!hostile.isDead) {
+    }
 
-                        CombatEffects.effectCalls()[this.config['damage_effect']](hostile)
-                        let hp = hostile.getStatusByKey('hp');
-                        hp -= damage;
-                        hostile.setStatusValue('hp', hp);
-                        hostile.notifyDamageTaken(damage, this.gamePiece);
-                        if (hostile !== target) {
-                            tempObj3D.position.copy(hostile.getPos());
-                            tempObj3D.position.y = target.getPos().y;
-                            tempObj3D.lookAt(target.getPos());
-                            hostile.getSpatial().stickToObj3D(tempObj3D);
-                        }
-                    }
+    applyDamageAtRadiusFromTarget(radius, target) {
+        let hostiles = this.gamePiece.threatDetector.getHostilesNearInRangeFromPiece(target, radius)
+        for (let i = 0; i < hostiles.length; i++) {
+            let hostile = hostiles[i].gamePiece;
+            if (!hostile.isDead) {
+                if (hostile !== target) {
+                    this.applyAbilityDamageToTarget(hostile);
+                    tempObj3D.position.copy(hostile.getPos());
+                    tempObj3D.position.y = target.getPos().y;
+                    tempObj3D.lookAt(target.getPos());
+                    hostile.getSpatial().stickToObj3D(tempObj3D);
                 }
+            }
+        }
+    }
+
+    applyAbilityToTarget(target) {
+        CombatEffects.effectCalls()[this.config['apply_effect']](target)
+        this.gamePiece.setStatusValue('activeAbility', null)
+        if (this.config['damage']) {
+            this.applyAbilityDamageToTarget(target);
+            let radius =  this.config['radius'];
+            if (radius) {
+                this.applyDamageAtRadiusFromTarget(radius, target)
             }
         }
     }
