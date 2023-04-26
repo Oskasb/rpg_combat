@@ -132,9 +132,9 @@ function handsOnFire(gamePiece, obj3d, attacker) {
 
 }
 
-function fireMissile(fromPos, gamePiece, index, onArrriveCB) {
+function fireMissile(fromPos, gamePiece, index, onArrriveCB, getPosFunc) {
 
-    let distance = MATH.distanceBetween(fromPos, gamePiece.getPos());
+    let distance = MATH.distanceBetween(fromPos, getPosFunc());
     let effectCb = function(efct) {
 
         efct.activateEffectFromConfigId()
@@ -153,7 +153,7 @@ function fireMissile(fromPos, gamePiece, index, onArrriveCB) {
         if (MATH.isOddNumber(index)) {
             spread*=-1;
         }
-        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArrriveCB, (2 - Math.abs(spread))*0.1*distance, spread)
+        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArrriveCB, (2 - Math.abs(spread))*0.1*distance, spread, getPosFunc)
     }
 
  //   for (let i = 0; i < 2; i++) {
@@ -177,7 +177,7 @@ function fireMissile(fromPos, gamePiece, index, onArrriveCB) {
         if (MATH.isOddNumber(index)) {
             spread*=-1;
         }
-        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArrriveCB, (2 - Math.abs(spread))*0.1*distance, spread)
+        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArrriveCB, (2 - Math.abs(spread))*0.1*distance, spread, getPosFunc)
     }
 
    // EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  shockwaveCb)

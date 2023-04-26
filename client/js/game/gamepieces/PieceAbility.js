@@ -85,7 +85,7 @@ class PieceAbility {
             this.applyAbilityToTarget(this.target)
         }.bind(this);
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_R', tempObj3D)
-        CombatEffects.effectCalls()[this.config['missile_effect']](tempObj3D.position, target, index, onArriveCb)
+        CombatEffects.effectCalls()[this.config['missile_effect']](tempObj3D.position, target, index, onArriveCb, target.getPos)
     }
 
     sendAbilityToTarget(target) {

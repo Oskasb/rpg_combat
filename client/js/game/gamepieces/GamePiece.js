@@ -83,6 +83,14 @@ class GamePiece {
             callback(piece)
         }.bind(this);
 
+        this.getSpatial = function() {
+            return this.modelInstance.getSpatial();
+        }.bind(this);
+
+        this.getPos = function() {
+            return this.modelInstance.getSpatial().getPos();
+        }.bind(this);
+
         new PieceComposer(this, config, compositCb)
 
     }
@@ -130,17 +138,12 @@ class GamePiece {
         return this.pieceMovement;
     }
 
-    getSpatial = function() {
-        return this.modelInstance.getSpatial();
-    };
+
 
     getCharacter(){
         return this.character;
     }
 
-    getPos = function() {
-        return this.getSpatial().getPos();
-    }
     getQuat = function() {
         return this.getSpatial().getQuat();
     }

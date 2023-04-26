@@ -14,6 +14,7 @@ class EffectSpatialTransition {
         this.endSize = 0;
         this.spread = 0;
         this.bounce = 1;
+        this.getPosFunction = null;
 
         let tickMovement = function(tpf, gameTime) {
             this.applyFrameToMovement(tpf, gameTime);
@@ -27,7 +28,7 @@ class EffectSpatialTransition {
 
     }
 
-    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback, bounce, spread) {
+    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback, bounce, spread, getPosFunc) {
         let now = GameAPI.getGameTime();
         this.startTime = now;
         this.targetTime = now+overTime;
@@ -47,6 +48,11 @@ class EffectSpatialTransition {
         if (typeof(callback) === 'function') {
             this.onArriveCallbacks.push(callback);
         }
+
+        if (typeof(getPosFunc) === 'function') {
+            this.getPosFunction = getPosFunc;
+        }
+
     }
 
     interpolatePosition() {
@@ -59,6 +65,10 @@ class EffectSpatialTransition {
 
         //    this.targetObj3D.position.y+=Math.sin(fraction*Math.PI)*0.7+1.1;
             let size = MATH.interpolateFromTo(this.startSize, this.endSize, fraction);
+
+            if (this.getPosFunction) {
+                this.targetObj3D.position.copy(this.getPosFunction())
+            }
 
             MATH.interpolateVec3FromTo(this.startObj3D.position, this.targetObj3D.position, fraction, tempVec3 , 'curveSigmoid');
             tempVec3.y += Math.sin(fraction*Math.PI)*this.bounce;
