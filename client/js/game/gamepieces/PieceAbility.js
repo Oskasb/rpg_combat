@@ -49,14 +49,42 @@ class PieceAbility {
 
     }
 
+    selectMostHurtFriend(friends) {
+        let status = 10;
+        let friend = null;
+        for (let i = 0; i < friends.length; i++) {
+            let piece = friends[i].gamePiece;
+
+            let hp = piece.getStatusByKey('hp');
+            let maxHP = piece.getStatusByKey('maxHP');
+            let fraction = MATH.calcFraction(0, maxHP, hp);
+            if (fraction < status) {
+                friend = piece;
+                status = fraction;
+            }
+
+        }
+        return friend;
+    }
+
     updateActivatedAbility() {
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_R', tempObj3D)
         CombatEffects.effectCalls()[this.config['activated_effect']](this.gamePiece, tempObj3D)
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_L', tempObj3D)
         CombatEffects.effectCalls()[this.config['activated_effect']](this.gamePiece, tempObj3D)
 
+        if (this.config.target === 'friendly' && GameAPI.getGameTime() - this.warmup > 0.5) {
+            let friends = this.gamePiece.threatDetector.getFriendliesInRangeOf(this.gamePiece, this.config.range)
+            if (this.config.heal) {
+                let friendlyTarget = this.selectMostHurtFriend(friends)
+                this.sendAbilityToTarget(friendlyTarget)
+            } else {
+                console.log("No targeting function for ability: ", this);
+                GameAPI.unregisterGameUpdateCallback(this.call.updateActivatedAbility)
+                return;
+            }
 
-        if (this.gamePiece.getTarget() && GameAPI.getGameTime() - this.warmup > 0.5) {
+        } else if (this.gamePiece.getTarget() && GameAPI.getGameTime() - this.warmup > 0.5) {
             this.sendAbilityToTarget(this.gamePiece.getTarget())
         }
 
@@ -106,12 +134,25 @@ class PieceAbility {
     }
 
     applyAbilityDamageToTarget(targetPiece) {
-        let damage = this.config['damage'][this.abilityStatus.level];
+        let damage = 0;
+        if (this.config['damage']) {
+            damage = this.config['damage'][this.abilityStatus.level];
+        }
+
+        if (this.config['heal']) {
+            damage = -this.config['heal'][this.abilityStatus.level];
+        }
+
         CombatEffects.effectCalls()[this.config['damage_effect']](targetPiece)
         let hp = targetPiece.getStatusByKey('hp');
         hp -= damage;
         targetPiece.setStatusValue('hp', hp);
-        targetPiece.notifyDamageTaken(damage, this.gamePiece);
+        if (damage > 0) {
+            targetPiece.notifyDamageTaken(damage, this.gamePiece);
+        }
+        if (damage < 0) {
+            targetPiece.notifyHealthRecover(damage, this.gamePiece);
+        }
 
     }
 
@@ -134,13 +175,15 @@ class PieceAbility {
     applyAbilityToTarget(target) {
         CombatEffects.effectCalls()[this.config['apply_effect']](target)
         this.gamePiece.setStatusValue('activeAbility', null)
-        if (this.config['damage']) {
+        //if (this.config['damage']) {
             this.applyAbilityDamageToTarget(target);
             let radius =  this.config['radius'];
             if (radius) {
                 this.applyDamageAtRadiusFromTarget(radius, target)
             }
-        }
+        //}
+
+
     }
 }
 

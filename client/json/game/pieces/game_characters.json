@@ -17,7 +17,8 @@
             "dmg": 1,
             "FAST": 1,
             "xp_value": 20,
-            "ability_slots": 2
+            "ability_slots": 3,
+            "ability_slots_max": 3
           },
           "abilities": {
             "fire_ball": {
@@ -25,6 +26,9 @@
             },
             "magic_missiles":{
               "level": 6
+            },
+            "heal_minor":{
+              "level": 3
             }
           },
 

@@ -34,12 +34,13 @@
               "name": "Minor Heal",
               "icon_key": "droplet",
               "target": "friendly",
-              "apply_effect": "combat_effect_fireball",
-              "activated_effect": "combat_effect_hands_fire",
-              "missile_effect": "combat_effect_fire_missile",
-              "damage_effect": "damage_effect_catch_on_fire",
+              "activated_effect": "combat_effect_hands_heal_power",
+              "missile_effect": "combat_effect_heal_missile",
+              "apply_effect": "combat_effect_heal_apply",
+              "damage_effect": "damage_effect_heal_residual",
               "ap_cost": 2,
               "range": 2,
+              "missiles": [2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
               "heal": [3, 5, 8, 10, 14, 20, 28, 40 , 60 , 90]
             }
           }

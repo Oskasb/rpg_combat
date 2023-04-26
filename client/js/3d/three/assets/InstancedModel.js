@@ -229,8 +229,16 @@ class InstancedModel {
             return this.originalModel.animMap;
         };
 
+    getBoneMap() {
+        return this.boneMap;
+    }
         getJointMap() {
             return this.originalModel.jointMap;
+        }
+
+        updateBoneWorldTransform(bone, storeObj3d) {
+            bone.stickToBoneWorldMatrix()
+            storeObj3d.copy(bone.obj3d);
         }
 
         getBoneWorldTransform(boneName, storeObj3d) {
@@ -239,9 +247,8 @@ class InstancedModel {
             if (!dynJoint) {
                 console.log("No dynJoint", boneName)
             } else {
-                //        console.log(key)
-                dynJoint.stickToBoneWorldMatrix()
-                storeObj3d.copy(dynJoint.obj3d);
+                this.updateBoneWorldTransform(dynJoint, storeObj3d)
+
             }
         }
 

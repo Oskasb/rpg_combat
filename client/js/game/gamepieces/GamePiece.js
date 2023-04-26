@@ -103,6 +103,16 @@ class GamePiece {
             return MATH.getRandomObjectEntry(jointMap)
         }
 
+        this.getRandomBone = function() {
+            let map = this.getModel().getBoneMap();
+            return MATH.getRandomObjectEntry(map)
+        }.bind(this);
+
+        this.getBoneWorldPosition = function(bone) {
+            this.getModel().updateBoneWorldTransform(bone, tempObj3d)
+            return tempObj3d.position;
+        }.bind(this);
+
         this.getJointWorldPosition = function(boneName) {
             if (boneName === 'root_node') {
                 return this.getCenterMass();

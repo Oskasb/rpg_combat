@@ -61,7 +61,45 @@ function fireMissile(fromPos, gamePiece, index, onArriveCB, getPosFunc) {
 
 }
 
+function healingMissile(fromPos, gamePiece, index, onArriveCB, getPosFunc) {
+
+    let distance = MATH.distanceBetween(fromPos, getPosFunc());
+    let effectCb = function(efct) {
+
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+
+        let bone = gamePiece.getRandomBone();
+
+        let bonePos = function() {
+            //    let jointId = gamePiece.getRandomJointId();
+            return gamePiece.getBoneWorldPosition(bone);
+        }
+
+        tempObj.position.copy(gamePiece.getBoneWorldPosition(bone));
+
+        let size = gamePiece.getStatusByKey('size');
+        tempObj.lookAt(ThreeAPI.getCamera().position);
+        tempVec3.copy(gamePiece.getPos());
+        efct.setEffectSpriteXY(0, 2);
+
+            efct.setEffectColorRGBA(CombatFxUtils.setRgba(-0.39, 0.99, -0.21, 0.99))
+        let startSize = 0.6;
+        let endSize = 0.3 + Math.random()*0.8;
+        let time = CombatFxUtils.setupLifecycle(efct, 0.22*(index) + 0.3*distance + 0.2, 0.3, 0.2);
+        let spread = 0.32*(index) + 0.1*distance
+        if (MATH.isOddNumber(index)) {
+            spread*=-1;
+        }
+        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArriveCB, (2 - Math.abs(spread))*0.5, spread, bonePos)
+    }
+
+    EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
+
+}
+
 export {
     magicMissile,
-    fireMissile
+    fireMissile,
+    healingMissile
 }

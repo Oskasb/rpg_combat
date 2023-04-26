@@ -6,6 +6,7 @@ class ThreatDetector {
         this.gamePiece = gamePiece;
         this.knownHostiles = [];
         this.hostilesInRange = [];
+        this.friendsInRange = [];
         this.threatEvent = {
             piece:null,
             value:false
@@ -87,6 +88,13 @@ class ThreatDetector {
         MATH.emptyArray(this.hostilesInRange);
         SpatialUtils.getCharactersInRange(this.hostilesInRange, this.gamePiece, activeChars, 49);
         this.updateNearbyHostiles()
+    }
+
+    getFriendliesInRangeOf(gamePiece, range) {
+        let activeChars = GameAPI.getActiveScenarioCharacters();
+        MATH.emptyArray(this.friendsInRange);
+        SpatialUtils.getFriendlyCharactersInRange(this.friendsInRange, gamePiece, activeChars, range)
+        return this.friendsInRange;
     }
 
     getHostilesNearInRangeFromPiece(gamePiece, range) {

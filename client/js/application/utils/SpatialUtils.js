@@ -19,6 +19,25 @@ function getNearestCharacter(sourceSpatial, charList) {
     return nearestSelected;
 }
 
+function getFriendlyCharactersInRange(storeList, gamePiece, charList, maxDistance) {
+    let fromPos = tempVec3;
+    let enemyPos = tempVec3b;
+    gamePiece.getSpatial().getSpatialPosition(fromPos);
+    storeList.push(gamePiece.getCharacter());
+    for (let i = 0; i < charList.length; i++) {
+        charList[i].gamePiece.getSpatial().getSpatialPosition(enemyPos);
+        enemyPos.sub(fromPos);
+        let distance = enemyPos.length();
+        if (distance < maxDistance) {
+            if (gamePiece.getStatusByKey('faction') === charList[i].gamePiece.getStatusByKey('faction')) {
+                if (gamePiece.isDead === false) {
+                    storeList.push(charList[i]);
+                }
+            }
+        }
+    }
+}
+
 function getCharactersInRange(storeList, gamePiece, charList, maxDistance, friendlyFire) {
     let fromPos = tempVec3;
     let enemyPos = tempVec3b;
@@ -40,5 +59,6 @@ function getCharactersInRange(storeList, gamePiece, charList, maxDistance, frien
 
 export {
     getNearestCharacter,
-    getCharactersInRange
+    getCharactersInRange,
+    getFriendlyCharactersInRange
 }

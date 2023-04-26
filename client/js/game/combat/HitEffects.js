@@ -163,7 +163,87 @@ function magicHit(gamePiece) {
     EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  implosionCb)
 }
 
+function healHit(gamePiece) {
+
+    let effectCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(gamePiece.getCenterMass());
+        tempObj.lookAt(ThreeAPI.getCamera().position);
+        efct.quat.copy(tempObj.quaternion);
+
+        tempObj.rotateZ(Math.random()*MATH.TWO_PI)
+
+        MATH.randomVector(ThreeAPI.tempVec3);
+        ThreeAPI.tempVec3.multiplyScalar(2)
+        ThreeAPI.tempVec3.y = Math.abs(ThreeAPI.tempVec3.y);
+        efct.setEffectSpriteXY(4, 3);
+        ThreeAPI.tempVec3.add(tempObj.position)
+
+        //     MATH.spreadVector(tempObj.position, tempVec3)
+        let fromSize = 0;
+        let toSize = MATH.randomBetween(0.8, 2);
+
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(-0.3, 0.9, -0.3, 0.5))
+
+        let time = CombatFxUtils.setupLifecycle(efct, 0.2+Math.random()*0.2, 0.13, 0.4);
+
+        efct.activateSpatialTransition(ThreeAPI.tempVec3, efct.quat, gamePiece.getCenterMass(), efct.quat, fromSize, toSize, time, CombatFxUtils.endOnLanded, 0.1)
+    }
+
+    for (let i = 0; i < 3; i++) {
+        EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
+    }
+
+    let shockwaveCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(gamePiece.getPos());
+        let size = gamePiece.getStatusByKey('size');
+        tempObj.position.y += size*0.7;
+        tempObj.lookAt(ThreeAPI.getCamera().position);
+        tempVec3.copy(gamePiece.getPos());
+        tempVec3.y = tempObj.position.y;
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(-0.3, 0.7, -0.3, 0.5))
+        efct.setEffectSpriteXY(3, 0);
+        let fromSize = 3.3;
+        let toSize = 0
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(0.42, 0.67, 0.99, 0.99))
+        let time = CombatFxUtils.setupLifecycle(efct, 0.25, 0.5, 0.6);
+        efct.activateSpatialTransition(tempObj.position, tempObj.quaternion, tempVec3, tempObj.quaternion, fromSize, toSize, time, CombatFxUtils.endOnLanded, 0.1)
+
+    }
+
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  shockwaveCb)
+
+
+    let implosionCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let tempObj = ThreeAPI.tempObj;
+        tempObj.position.copy(gamePiece.getPos());
+        let size = gamePiece.getStatusByKey('size');
+        tempObj.position.y += size*0.7;
+        tempVec3.y += 10000;
+        tempObj.lookAt(tempVec3);
+        tempVec3.copy(gamePiece.getPos());
+        tempVec3.y = tempObj.position.y;
+        efct.setEffectSpriteXY(1, 0);
+
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(-0.2, 0.77, -0.2, 0.5))
+        let fromSize = 4 // MATH.randomBetween(4, 6)
+        let toSize = 1;
+
+        let time = CombatFxUtils.setupLifecycle(efct, 0.4, 0.02, 0.14);
+
+        efct.activateSpatialTransition(tempObj.position, tempObj.quaternion, tempVec3, tempObj.quaternion, fromSize, toSize, time, CombatFxUtils.endOnLanded, 0.1)
+
+    }
+
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  implosionCb)
+}
+
 export {
     fireBall,
-    magicHit
+    magicHit,
+    healHit
 }
