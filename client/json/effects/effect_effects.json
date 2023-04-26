@@ -46,9 +46,39 @@
                                 }
                             ]
                         },
+                        "residual_magic_damage_effect":{
+                            "effect_class": "GameEffect",
+                            "max_active": 150,
+                            "spread_pos":[0.01, 0.01, 0.01],
+                            "particles": [
+                                {
+                                    "id":"particle_blue_bullet",
+                                    "count": [1, 1]
+                                },
+                                {
+                                    "id":"particle_blue_sparkle",
+                                    "count": [2, 3]
+                                }
+                            ]
+                        },
+                        "magic_missile_projectile_effect":{
+                            "effect_class": "GameEffect",
+                            "max_active": 150,
+                            "spread_pos":[0.01, 0.01, 0.01],
+                            "particles": [
+                                {
+                                    "id":"particle_blue_bullet",
+                                    "count": [2, 3]
+                                },
+                                {
+                                    "id":"particle_blue_sparkle",
+                                    "count": [3, 4]
+                                }
+                            ]
+                        },
                         "five_particle_additive_pool":{
                             "effect_class": "GameEffect",
-                            "max_active": 50,
+                            "max_active": 250,
                             "spread_pos":[0.00001, 0.00001, 0.00001],
                             "particles": [
                                 {
@@ -59,7 +89,7 @@
                         },
                         "particle_additive_pool":{
                             "effect_class": "GameEffect",
-                            "max_active": 100,
+                            "max_active": 200,
                             "spread_pos":[0.00001, 0.00001, 0.00001],
                             "particles": [
                                 {

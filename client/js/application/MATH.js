@@ -90,6 +90,10 @@ if(typeof(MATH) === "undefined") {
         store.x = index % Math.round(Math.sqrt(count)) - Math.sqrt(count)*0.5;
 	};
 
+	MATH.getRandomObjectEntry = function(obj) {
+		let keys = Object.keys(obj);
+		return obj[keys[ keys.length * Math.random() << 0]];
+	};
 
 	MATH.getRandomArrayEntry = function(array) {
 		return array[Math.floor(Math.random()*array.length)]

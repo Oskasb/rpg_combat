@@ -229,31 +229,39 @@ class InstancedModel {
             return this.originalModel.animMap;
         };
 
+        getJointMap() {
+            return this.originalModel.jointMap;
+        }
+
+        getBoneWorldTransform(boneName, storeObj3d) {
+            let dynJoint = this.boneMap[boneName];
+
+            if (!dynJoint) {
+                console.log("No dynJoint", boneName)
+            } else {
+                //        console.log(key)
+                dynJoint.stickToBoneWorldMatrix()
+                storeObj3d.copy(dynJoint.obj3d);
+            }
+        }
 
         getJointKeyWorldTransform(jointKey, storeObj3d) {
 
-                    let boneName = this.originalModel.jointMap[jointKey];
+                    let boneName = this.getJointMap()[jointKey];
                     if (!boneName) {
                         console.log("No bone for key ", jointKey, this);
                         return
                     }
 
+                    this.getBoneWorldTransform(boneName, storeObj3d)
 
-                    let dynJoint = this.boneMap[boneName];
 
-                    if (!dynJoint) {
-                        console.log("No dynJoint", jointKey)
-                    } else {
-                        //        console.log(key)
-                        dynJoint.stickToBoneWorldMatrix()
-                        storeObj3d.copy(dynJoint.obj3d);
-                    }
 
         }
 
         updateSpatialWorldMatrix = function() {
 
-            for (var key in this.originalModel.jointMap) {
+            for (let key in this.originalModel.jointMap) {
 
                 if (key === 'FOOT_L' || key === 'FOOT_R') {
 

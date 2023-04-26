@@ -51,6 +51,8 @@ class EffectSpatialTransition {
 
         if (typeof(getPosFunc) === 'function') {
             this.getPosFunction = getPosFunc;
+        } else {
+            this.getPosFunction = null;
         }
 
     }

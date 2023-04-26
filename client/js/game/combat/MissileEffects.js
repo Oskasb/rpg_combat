@@ -18,20 +18,20 @@ function magicMissile(fromPos, gamePiece, index, onArriveCB, getPosFunc) {
         let size = gamePiece.getStatusByKey('size');
         tempObj.lookAt(ThreeAPI.getCamera().position);
         tempVec3.copy(gamePiece.getPos());
-        efct.setEffectSpriteXY(1, 2);
+   //     efct.setEffectSpriteXY(1, 2);
         //    setRgba(0.39, 0.88, 0.91, 0.99)
         //    efct.setEffectColorRGBA(rgba)
-        let startSize = 1.5;
-        let endSize = 1.3 + Math.random()*0.4;
+        let startSize = 0.6;
+        let endSize = 0.3 + Math.random()*0.8;
         let time = CombatFxUtils.setupLifecycle(efct, 0.12*(index+1) + 0.3*distance + 0.1, 0.3, 0.2);
-        let spread = 0.2*(index+1) + 0.16*distance
+        let spread = 0.06*(index)*distance + 0.02*distance
         if (MATH.isOddNumber(index)) {
             spread*=-1;
         }
-        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArriveCB, (2 - Math.abs(spread))*0.1*distance, spread, getPosFunc)
+        efct.activateSpatialTransition(fromPos, tempObj.quaternion, gamePiece.getPos(), tempObj.quaternion, startSize, endSize, time, onArriveCB, (1 - Math.abs(spread))*0.04*distance, spread, getPosFunc)
     }
 
-    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'five_particle_additive_pool',  effectCb)
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'magic_missile_projectile_effect',  effectCb)
 
 }
 
@@ -48,7 +48,7 @@ function fireMissile(fromPos, gamePiece, index, onArriveCB, getPosFunc) {
         let startSize = 1.2;
         let endSize = 1.3 + Math.random()*0.5
         let time = CombatFxUtils.setupLifecycle(efct, 0.22*(index+1) + 0.2*distance + 0.1, 0.3, 0.3);
-        let spread = 0.2*(index+1) + 0.12*distance
+        let spread = 0.12*(index) + 0.12*distance
         if (MATH.isOddNumber(index)) {
             spread*=-1;
         }

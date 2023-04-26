@@ -14,8 +14,9 @@ import * as PieceEffects from "./PieceEffects.js";
 import * as CombatEffects from "./../combat/CombatEffects.js";
 
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
-
+import { Object3D } from "../../../libs/three/core/Object3D.js";
 let tempVec3 = new Vector3();
+let tempObj3d = new Object3D()
 
 class GamePiece {
     constructor(config, callback) {
@@ -96,6 +97,19 @@ class GamePiece {
             tempVec3.y += this.getStatusByKey('size') * 1.2;
             return tempVec3;
         }.bind(this)
+
+        this.getRandomJointId = function() {
+            let jointMap = this.getModel().getJointMap();
+            return MATH.getRandomObjectEntry(jointMap)
+        }
+
+        this.getJointWorldPosition = function(boneName) {
+            if (boneName === 'root_node') {
+                return this.getCenterMass();
+            }
+            this.getModel().getBoneWorldTransform(boneName, tempObj3d)
+            return tempObj3d.position;
+        }.bind(this);
 
         new PieceComposer(this, config, compositCb)
 
