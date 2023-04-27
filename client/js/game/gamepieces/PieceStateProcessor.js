@@ -112,6 +112,10 @@ class PieceStateProcessor {
 
         if (status['status_frozen']) {
             status['status_frozen']--
+            if (status['status_frozen'] === 0) {
+                status.gamePiece.enablePieceAnimations();
+                status.animating = 1;
+            }
         }
 
         status.appliedAttacks = 0;
@@ -280,7 +284,10 @@ class PieceStateProcessor {
         this.processPieceState(status, config);
 
         if (status['status_frozen'] > 0) {
-
+            if (status.animating) {
+                status.gamePiece.disablePieceAnimations();
+                status.animating = 0;
+            }
         } else {
             if (status.charState === ENUMS.CharacterState.COMBAT) {
                 this.processAttacks(status, config);

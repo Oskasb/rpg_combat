@@ -20,6 +20,7 @@ class PieceState {
         this.status = {
             name:'no_name',
             gamePiece:gamePiece,
+            animating:1,
             size:0.5,
             height: 0.5,
             meleeRange:0.5,

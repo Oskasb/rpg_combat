@@ -220,7 +220,6 @@ class InstanceAnimator {
         };
 
         activateAnimator = function() {
-        //    this.initAnimatior()
             ThreeAPI.activateMixer(this.mixer);
         };
 

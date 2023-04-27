@@ -101,6 +101,12 @@ class InstancedModel {
             _this.originalModel.getModelClone(cloned)
         };
 
+        getAnimationMixer() {
+            if (this.animator) {
+                return this.animator.mixer;
+            }
+        }
+
         applyModelMaterial = function(clone, material) {
 
             var _this = this;

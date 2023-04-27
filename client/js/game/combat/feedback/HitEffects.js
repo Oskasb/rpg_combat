@@ -76,6 +76,17 @@ function freezeHit(gamePiece) {
         EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
     }
 
+    let shockwaveCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let options = CombatFxOptions.setupOptsShockwave(efct, gamePiece.getCenterMass(), 0.1, 12, 0.3)
+        efct.setEffectSpriteXY(0, 0);
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(0.22, 0.22, 0.99, 0.9))
+        efct.activateSpatialTransition(options)
+    }
+
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'stamp_additive_pool',  shockwaveCb)
+
+
 }
 function healHit(gamePiece) {
 

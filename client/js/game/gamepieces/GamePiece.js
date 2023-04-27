@@ -270,6 +270,12 @@ class GamePiece {
             PieceEffects.damageEffect(this, harm, attacker)
             if (newHP === 0) {
 
+                if (this.getStatusByKey('status_frozen')) {
+                    this.enablePieceAnimations();
+                    this.setStatusValue('status_frozen', 0)
+                    this.setStatusValue('animating', 1)
+                }
+
                 let overkillFx = function() {
                     PieceEffects.damageEffect(this, overkillHP, attacker)
                 }.bind(this)
@@ -295,6 +301,20 @@ class GamePiece {
 
     applyStatusModifier(statusId, duration) {
         this.setStatusValue(statusId, duration);
+    }
+
+    disablePieceAnimations() {
+        let mixer = this.getModel().getAnimationMixer()
+        if (mixer) {
+            ThreeAPI.deActivateMixer(mixer);
+        }
+    }
+
+    enablePieceAnimations() {
+        let mixer = this.getModel().getAnimationMixer()
+        if (mixer) {
+            ThreeAPI.activateMixer(mixer);
+        }
     }
 
     getStatus() {
@@ -400,6 +420,7 @@ class GamePiece {
 
         }else {
             ThreeAPI.showModel(this.modelInstance.obj3d)
+            this.enablePieceAnimations()
         }
     };
 
@@ -408,7 +429,7 @@ class GamePiece {
             GameAPI.takePieceFromWorld(this);
             this.modelInstance.decommissionInstancedModel();
             this.gamePieceUpdateCallbacks.length = 0;
-
+            this.disablePieceAnimations()
     };
 
 
