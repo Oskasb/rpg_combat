@@ -2,8 +2,6 @@ import * as PostHitEffects from "./../combat/PostHitEffects.js";
 import * as HitEffects from "./../combat/HitEffects.js";
 import * as MissileEffects from "./../combat/MissileEffects.js";
 import * as PrecastEffects from "./../combat/PrecastEffects.js";
-import {magicPowerHands} from "./../combat/PrecastEffects.js";
-import {residualHeal, residualMagic} from "./../combat/PostHitEffects.js";
 
 
 function effectCalls() {

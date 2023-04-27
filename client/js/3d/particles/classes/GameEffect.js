@@ -71,14 +71,14 @@ class GameEffect {
         EffectAPI.buildEffect(this.callbacks.addEffectParticle)
     };
 
-    activateSpatialTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, time, callback, bounce, spread, getPosFunc) {
+    activateSpatialTransition(options) {
 
         let onArrive = function(gameEffect) {
             GameAPI.unregisterGameUpdateCallback(this.effectSpatialTransition.callbacks.onGameUpdate)
             callback(gameEffect);
         }.bind(this)
 
-        this.effectSpatialTransition.initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, time, onArrive, bounce, spread, getPosFunc)
+        this.effectSpatialTransition.initEffectTransition(options)
         GameAPI.registerGameUpdateCallback(this.effectSpatialTransition.callbacks.onGameUpdate)
     }
 

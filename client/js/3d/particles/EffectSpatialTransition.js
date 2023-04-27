@@ -15,6 +15,7 @@ class EffectSpatialTransition {
         this.spread = 0;
         this.bounce = 1;
         this.getPosFunction = null;
+        this.getOriginFunction = null;
 
         let tickMovement = function(tpf, gameTime) {
             this.applyFrameToMovement(tpf, gameTime);
@@ -31,7 +32,14 @@ class EffectSpatialTransition {
     applyTransitionOptions(opts) {
         this.targetTime = this.startTime+opts.time;
 
-        this.startObj3D.position.copy(opts.fromPos);
+        if (typeof(opts.fromPos) === 'function') {
+            this.getOriginFunction = opts.fromPos;
+            this.startObj3D.position.copy(opts.fromPos())
+        } else {
+            this.startObj3D.position.copy(opts.fromPos);
+            this.getOriginFunction = null;
+        }
+
         this.startObj3D.quaternion.copy(opts.fromQuat);
         this.startObj3D.scale.set(opts.fromSize, opts.fromSize, opts.fromSize)
         this.targetObj3D.position.copy(opts.toPos);
@@ -54,38 +62,10 @@ class EffectSpatialTransition {
         }
     }
 
-    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback, bounce, spread, getPosFunc) {
+    initEffectTransition(opts) {
         let now = GameAPI.getGameTime();
         this.startTime = now;
-
-        if (typeof(fromPos['fromPos']) === 'object') {
-            this.applyTransitionOptions(fromPos);
-        } else {
-
-            this.targetTime = now+overTime;
-
-            this.startObj3D.position.copy(fromPos);
-            this.startObj3D.quaternion.copy(fromQuat);
-            this.startObj3D.scale.set(fromSize, fromSize, fromSize)
-            this.targetObj3D.position.copy(toPos);
-            this.targetObj3D.quaternion.copy(toQuat);
-            this.targetObj3D.scale.set(toSize, toSize, toSize)
-
-            this.startSize = fromSize;
-            this.endSize = toSize;
-            this.bounce = bounce || 0;
-            this.spread = spread || 0;
-
-            if (typeof(callback) === 'function') {
-                this.onArriveCallbacks.push(callback);
-            }
-
-            if (typeof(getPosFunc) === 'function') {
-                this.getPosFunction = getPosFunc;
-            } else {
-                this.getPosFunction = null;
-            }
-        }
+        this.applyTransitionOptions(opts);
     }
 
     interpolatePosition() {
@@ -101,6 +81,10 @@ class EffectSpatialTransition {
 
             if (this.getPosFunction) {
                 this.targetObj3D.position.copy(this.getPosFunction())
+            }
+
+            if (this.getOriginFunction) {
+                this.startObj3D.position.copy(this.getOriginFunction())
             }
 
             MATH.interpolateVec3FromTo(this.startObj3D.position, this.targetObj3D.position, MATH.curveSqrt(fraction), tempVec3 , 'curveSigmoid');
