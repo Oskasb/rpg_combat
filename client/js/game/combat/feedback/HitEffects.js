@@ -1,8 +1,8 @@
-import * as CombatFxUtils from "./../combat/CombatFxUtils.js";
-import * as CombatFxOptions from "./../combat/CombatFxOptions.js";
-import { Vector3 } from "../../../libs/three/math/Vector3.js";
-import { Object3D } from "../../../libs/three/core/Object3D.js";
-import {setupOptsShockwave} from "./../combat/CombatFxOptions.js";
+import * as CombatFxUtils from "./CombatFxUtils.js";
+import * as CombatFxOptions from "./CombatFxOptions.js";
+import { Vector3 } from "../../../../libs/three/math/Vector3.js";
+import { Object3D } from "../../../../libs/three/core/Object3D.js";
+import {setupOptsShockwave} from "./CombatFxOptions.js";
 
 let tempVec3 = new Vector3();
 let tempObj3D = new Object3D();

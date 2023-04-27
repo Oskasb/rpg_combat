@@ -1,11 +1,16 @@
-import * as PostHitEffects from "./../combat/PostHitEffects.js";
-import * as HitEffects from "./../combat/HitEffects.js";
-import * as MissileEffects from "./../combat/MissileEffects.js";
-import * as PrecastEffects from "./../combat/PrecastEffects.js";
+import * as PostHitEffects from "./PostHitEffects.js";
+import * as HitEffects from "./HitEffects.js";
+import * as MissileEffects from "./MissileEffects.js";
+import * as PrecastEffects from "./PrecastEffects.js";
 
 
 function effectCalls() {
     return {
+
+        combat_effect_hands_frost:PrecastEffects.handsOnFire,
+        combat_effect_frost_missile:MissileEffects.fireMissile,
+        combat_effect_target_freeze:HitEffects.fireBall,
+        damage_effect_stay_frozen:PostHitEffects.catchOnFire,
 
         combat_effect_hands_fire:PrecastEffects.handsOnFire,
         combat_effect_fire_missile:MissileEffects.fireMissile,

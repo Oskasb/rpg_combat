@@ -10,10 +10,10 @@
               "name": "Fire Ball",
               "icon_key": "fire",
               "target": "tile",
-              "apply_effect": "combat_effect_fireball",
-              "activated_effect": "combat_effect_hands_fire",
+              "precast_effect": "combat_effect_hands_fire",
               "missile_effect": "combat_effect_fire_missile",
-              "damage_effect": "damage_effect_catch_on_fire",
+              "on_hit_effect": "combat_effect_fireball",
+              "post_hit_effect": "damage_effect_catch_on_fire",
               "cast_time": 0.2,
               "apply_time": 0.4,
               "ap_cost": 3,
@@ -34,10 +34,10 @@
               "name": "Minor Heal",
               "icon_key": "droplet",
               "target": "friendly",
-              "activated_effect": "combat_effect_hands_heal_power",
+              "precast_effect": "combat_effect_hands_heal_power",
               "missile_effect": "combat_effect_heal_missile",
-              "apply_effect": "combat_effect_heal_apply",
-              "damage_effect": "damage_effect_heal_residual",
+              "on_hit_effect": "combat_effect_heal_apply",
+              "post_hit_effect": "damage_effect_heal_residual",
               "ap_cost": 2,
               "range": 2,
               "missiles": [2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
@@ -47,21 +47,27 @@
         ]
       },
       {
-        "id":"harm_minor",
+        "id":"freeze_minor",
         "data":[
           {
             "data_key": "ability_config",
             "config": {
-              "name": "Minor Harm",
-              "icon_key": "energy",
+              "name": "Minor Freeze",
+              "icon_key": "sleep",
               "target": "hostile",
-              "apply_effect": "combat_effect_fireball",
-              "activated_effect": "combat_effect_hands_fire",
-              "missile_effect": "combat_effect_fire_missile",
-              "damage_effect": "damage_effect_catch_on_fire",
+              "precast_effect": "combat_effect_hands_frost",
+              "missile_effect": "combat_effect_frost_missile",
+              "on_hit_effect": "combat_effect_target_freeze",
+              "post_hit_effect": "damage_effect_stay_frozen",
               "ap_cost": 4,
-              "range": 8,
-              "damage": [3, 5, 8, 10, 14, 20, 28, 40 , 60 , 90]
+              "range": 12,
+              "modify_status": {
+                "target": {
+                  "status": "stun",
+                  "duration": 3
+                }
+              },
+              "damage": [1, 2, 3, 4, 5, 6, 7, 8 , 9 , 10]
             }
           }
         ]
@@ -75,10 +81,10 @@
               "name": "Magic Missiles",
               "icon_key": "energy",
               "target": "hostile",
-              "apply_effect": "combat_effect_magic_hit",
-              "activated_effect": "combat_effect_hands_magic_power",
+              "precast_effect": "combat_effect_hands_magic_power",
               "missile_effect": "combat_effect_magic_missile",
-              "damage_effect": "damage_effect_magic_residual",
+              "on_hit_effect": "combat_effect_magic_hit",
+              "post_hit_effect": "damage_effect_magic_residual",
               "ap_cost": 4,
               "range": 15,
               "missiles": [2, 3, 4, 5, 6, 7, 8, 9, 10, 12],

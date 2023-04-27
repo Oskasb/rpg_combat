@@ -1,5 +1,5 @@
-import * as CombatFxUtils from "./../combat/CombatFxUtils.js";
-import * as CombatFxOptions from "./../combat/CombatFxOptions.js";
+import * as CombatFxUtils from "./CombatFxUtils.js";
+import * as CombatFxOptions from "./CombatFxOptions.js";
 
 function catchOnFire(gamePiece) {
 

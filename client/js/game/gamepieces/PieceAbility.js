@@ -1,6 +1,6 @@
-import * as CombatEffects from "./../combat/CombatEffects.js";
-import { Vector3 } from "../../../libs/three/math/Vector3.js";
-import { Object3D } from "../../../libs/three/core/Object3D.js";
+import * as CombatEffects from "./../combat/feedback/CombatEffects.js";
+import { Vector3 } from "./../../../libs/three/math/Vector3.js";
+import { Object3D } from "./../../../libs/three/core/Object3D.js";
 
 let tempVec3 = new Vector3();
 let tempObj3D = new Object3D();
@@ -76,9 +76,9 @@ class PieceAbility {
 
     updateActivatedAbility() {
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_R', tempObj3D)
-        CombatEffects.effectCalls()[this.config['activated_effect']](this.gamePiece, tempObj3D)
+        CombatEffects.effectCalls()[this.config['precast_effect']](this.gamePiece, tempObj3D)
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_L', tempObj3D)
-        CombatEffects.effectCalls()[this.config['activated_effect']](this.gamePiece, tempObj3D)
+        CombatEffects.effectCalls()[this.config['precast_effect']](this.gamePiece, tempObj3D)
 
         if (this.config.target === 'friendly' && GameAPI.getGameTime() - this.warmup > 0.5) {
             let friends = this.gamePiece.threatDetector.getFriendliesInRangeOf(this.gamePiece, this.config.range)
@@ -108,7 +108,7 @@ class PieceAbility {
             tempVec3.copy(this.target.getPos())
             tempVec3.y += this.target.getStatusByKey('size')* 0.7;
             MATH.interpolateVec3FromTo(tempObj3D.position, tempVec3, fraction, tempObj3D.position)
-            CombatEffects.effectCalls()[this.config['activated_effect']](this.gamePiece, tempObj3D)
+            CombatEffects.effectCalls()[this.config['precast_effect']](this.gamePiece, tempObj3D)
         } else {
             this.applyAbilityToTarget(this.target)
         }
@@ -154,7 +154,7 @@ class PieceAbility {
     applyAbilityDamageToTarget(targetPiece) {
         let hpModifier = this.processAbilityDamage();
 
-        CombatEffects.effectCalls()[this.config['damage_effect']](targetPiece)
+        CombatEffects.effectCalls()[this.config['post_hit_effect']](targetPiece)
 
         if (this.config['damage']) {
             targetPiece.applyDamage(hpModifier, this.gamePiece);
@@ -183,7 +183,7 @@ class PieceAbility {
 
     applyAbilityToTarget() {
         let target = this.getAbilityTarget();
-        CombatEffects.effectCalls()[this.config['apply_effect']](target)
+        CombatEffects.effectCalls()[this.config['on_hit_effect']](target)
         this.gamePiece.setStatusValue('activeAbility', null)
         //if (this.config['damage']) {
             this.applyAbilityDamageToTarget(target);

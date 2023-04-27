@@ -1,6 +1,6 @@
-import * as CombatFxOptions from "./../combat/CombatFxOptions.js";
-import { Vector3 } from "../../../libs/three/math/Vector3.js";
-import { Object3D } from "../../../libs/three/core/Object3D.js";
+import * as CombatFxOptions from "./CombatFxOptions.js";
+import { Vector3 } from "../../../../libs/three/math/Vector3.js";
+import { Object3D } from "../../../../libs/three/core/Object3D.js";
 
 let tempVec3 = new Vector3();
 let tempObj3D = new Object3D();

@@ -1,5 +1,5 @@
-import { Vector3 } from "../../../libs/three/math/Vector3.js";
-import { Object3D } from "../../../libs/three/core/Object3D.js";
+import { Vector3 } from "../../../../libs/three/math/Vector3.js";
+import { Object3D } from "../../../../libs/three/core/Object3D.js";
 import * as CombatFxUtils from "./CombatFxUtils.js";
 
 let tempVec3 = new Vector3();
@@ -496,7 +496,7 @@ function setupOptsSprayUpwards(efct, gamePiece, applies) {
     options.fromSize =fromSize;
     options.toSize = toSize;
     options.time = time;
-    options.callback = endOnLanded();
+    options.callback = endOnLanded;
     options.bounce = size*0.1;
     options.spread = 0;
 

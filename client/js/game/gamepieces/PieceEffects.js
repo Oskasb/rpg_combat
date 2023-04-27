@@ -1,27 +1,5 @@
-import * as CombatFxUtils from "./../combat/CombatFxUtils.js";
-import * as CombatFxOptions from "./../combat/CombatFxOptions.js";
-import { Vector3 } from "../../../libs/three/math/Vector3.js";
-
-let tempVec3 = new Vector3();
-
-let rgba = {
-    r:1, g:1, b:1, a:1
-}
-
-let setRgba = function(r, g, b, a) {
-    rgba.r = r;
-    rgba.g = g;
-    rgba.b = b;
-    rgba.a = a;
-}
-
-let fxLanded = function(fx) {
-    //    console.log("Fx arrives", fx)
-}
-
-let endOnLanded = function(fx) {
-    fx.endEffectOfClass()
-}
+import * as CombatFxUtils from "../combat/feedback/CombatFxUtils.js";
+import * as CombatFxOptions from "../combat/feedback/CombatFxOptions.js";
 
 function damageEffect(gamePiece, dmg) {
 
