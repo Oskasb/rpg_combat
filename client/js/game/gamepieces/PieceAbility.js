@@ -40,6 +40,13 @@ class PieceAbility {
         }
     }
 
+    setAbilityTarget(target) {
+        this.target=target;
+    }
+    getAbilityTarget() {
+        return this.target;
+    }
+
     activatePieceAbility() {
         console.log("Call Activate Ability", this);
         GameAPI.registerGameUpdateCallback(this.call.updateActivatedAbility)
@@ -77,7 +84,8 @@ class PieceAbility {
             let friends = this.gamePiece.threatDetector.getFriendliesInRangeOf(this.gamePiece, this.config.range)
             if (this.config.heal) {
                 let friendlyTarget = this.selectMostHurtFriend(friends)
-                this.sendAbilityToTarget(friendlyTarget)
+                this.setAbilityTarget(friendlyTarget)
+                this.sendAbilityToTarget()
             } else {
                 console.log("No targeting function for ability: ", this);
                 GameAPI.unregisterGameUpdateCallback(this.call.updateActivatedAbility)
@@ -85,7 +93,8 @@ class PieceAbility {
             }
 
         } else if (this.gamePiece.getTarget() && GameAPI.getGameTime() - this.warmup > 0.5) {
-            this.sendAbilityToTarget(this.gamePiece.getTarget())
+            this.setAbilityTarget(this.gamePiece.getTarget())
+            this.sendAbilityToTarget()
         }
 
     }
@@ -106,21 +115,20 @@ class PieceAbility {
 
     }
 
-    activateAbilityMissile(target, index) {
-
+    activateAbilityMissile(index) {
+        let target = this.getAbilityTarget();
         let onArriveCb = function(fx) {
             fx.endEffectOfClass()
-            this.applyAbilityToTarget(this.target)
+            this.applyAbilityToTarget()
         }.bind(this);
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_R', tempObj3D)
         CombatEffects.effectCalls()[this.config['missile_effect']](tempObj3D.position, target, index, onArriveCb, target.getCenterMass)
     }
 
-    sendAbilityToTarget(target) {
+    sendAbilityToTarget() {
         GameAPI.unregisterGameUpdateCallback(this.call.updateActivatedAbility)
         this.sendTime = GameAPI.getGameTime();
         this.arriveTime = this.sendTime+0.75;
-        this.target = target;
         let missileCount = 1;
         if (this.config['missiles']) {
             if (typeof(this.config['missiles'] === 'array')) {
@@ -128,30 +136,31 @@ class PieceAbility {
             }
         }
         for (let i = 0; i < missileCount; i++) {
-            this.activateAbilityMissile(target, i);
+            this.activateAbilityMissile(i);
         }
 
     }
 
-    applyAbilityDamageToTarget(targetPiece) {
-        let damage = 0;
+    processAbilityDamage() {
         if (this.config['damage']) {
-            damage = this.config['damage'][this.abilityStatus.level];
+           return this.config['damage'][this.abilityStatus.level];
         }
 
         if (this.config['heal']) {
-            damage = -this.config['heal'][this.abilityStatus.level];
+            return this.config['heal'][this.abilityStatus.level];
         }
+    }
+
+    applyAbilityDamageToTarget(targetPiece) {
+        let hpModifier = this.processAbilityDamage();
 
         CombatEffects.effectCalls()[this.config['damage_effect']](targetPiece)
-        let hp = targetPiece.getStatusByKey('hp');
-        hp -= damage;
-        targetPiece.setStatusValue('hp', hp);
-        if (damage > 0) {
-            targetPiece.notifyDamageTaken(damage, this.gamePiece);
+
+        if (this.config['damage']) {
+            targetPiece.applyDamage(hpModifier, this.gamePiece);
         }
-        if (damage < 0) {
-            targetPiece.notifyHealthRecover(damage, this.gamePiece);
+        if (this.config['heal']) {
+            targetPiece.applyHeal(hpModifier, this.gamePiece);
         }
 
     }
@@ -172,7 +181,8 @@ class PieceAbility {
         }
     }
 
-    applyAbilityToTarget(target) {
+    applyAbilityToTarget() {
+        let target = this.getAbilityTarget();
         CombatEffects.effectCalls()[this.config['apply_effect']](target)
         this.gamePiece.setStatusValue('activeAbility', null)
         //if (this.config['damage']) {

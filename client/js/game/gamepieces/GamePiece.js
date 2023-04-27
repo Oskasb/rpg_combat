@@ -252,12 +252,38 @@ class GamePiece {
         MATH.quickSplice(this.activeActions, action);
     };
 
-    notifyDamageTaken(dmg, attacker) {
-        PieceEffects.damageEffect(this, dmg, attacker)
+
+    applyDamage(amount, attacker) {
+        let hp = this.getStatusByKey('hp');
+    //    let maxHP = this.getStatusByKey('maxHP');
+        let newHP = MATH.clamp(hp - Math.floor(amount), 0, hp);
+        this.setStatusValue('hp', newHP);
+        let harm = hp-newHP;
+        if (harm !== 0) {
+            PieceEffects.damageEffect(this, harm, attacker)
+            if (newHP === 0) {
+
+                let overkillFx = function() {
+                    PieceEffects.damageEffect(this, overkillHP, attacker)
+                }.bind(this)
+
+                let overkillHP = amount - harm;
+                setTimeout(function() {
+                    overkillFx()
+                }, 250)
+            }
+        }
     }
 
-    notifyHealthRecover(hp, healer) {
-        PieceEffects.healEffect(this, hp, healer)
+    applyHeal(amount, healer) {
+        let hp = this.getStatusByKey('hp');
+        let maxHP = this.getStatusByKey('maxHP');
+        let newHP = MATH.clamp(Math.floor(amount) + hp, hp, maxHP);
+        this.setStatusValue('hp', newHP);
+        let heal = newHP-hp;
+        if (heal !== 0) {
+            PieceEffects.healEffect(this, heal, healer)
+        }
     }
 
     getStatus() {

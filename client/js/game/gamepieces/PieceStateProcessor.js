@@ -80,10 +80,7 @@ class PieceStateProcessor {
             }
         } else {
             if (status.hp < status.maxHP) {
-                let heal = status.hp;
-                status.hp = MATH.clamp(Math.floor(status.hp+status.level*1.5), status.hp, status.maxHP);
-                heal = status.hp-heal;
-                status.gamePiece.notifyHealthRecover(heal, status.gamePiece);
+                status.gamePiece.applyHeal(Math.floor(status.hp+status.level*1.5), status.gamePiece)
             }
         }
     }
@@ -215,12 +212,8 @@ class PieceStateProcessor {
         }
         let combatTarget = status.combatTarget;
 
-
         let damage = status['dmg']
-
-        combatTarget.setStatusValue('hp', combatTarget.getStatusByKey('hp') - damage);
-
-        combatTarget.notifyDamageTaken(damage, status.gamePiece);
+        combatTarget.applyDamage(damage, status.gamePiece)
 
         if (combatTarget.getStatusByKey('hp') > 0) {
 

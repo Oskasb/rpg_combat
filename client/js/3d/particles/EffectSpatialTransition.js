@@ -28,33 +28,64 @@ class EffectSpatialTransition {
 
     }
 
-    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback, bounce, spread, getPosFunc) {
-        let now = GameAPI.getGameTime();
-        this.startTime = now;
-        this.targetTime = now+overTime;
+    applyTransitionOptions(opts) {
+        this.targetTime = this.startTime+opts.time;
 
-        this.startObj3D.position.copy(fromPos);
-        this.startObj3D.quaternion.copy(fromQuat);
-        this.startObj3D.scale.set(fromSize, fromSize, fromSize)
-        this.targetObj3D.position.copy(toPos);
-        this.targetObj3D.quaternion.copy(toQuat);
-        this.targetObj3D.scale.set(toSize, toSize, toSize)
+        this.startObj3D.position.copy(opts.fromPos);
+        this.startObj3D.quaternion.copy(opts.fromQuat);
+        this.startObj3D.scale.set(opts.fromSize, opts.fromSize, opts.fromSize)
+        this.targetObj3D.position.copy(opts.toPos);
+        this.targetObj3D.quaternion.copy(opts.toQuat);
+        this.targetObj3D.scale.set(opts.toSize, opts.toSize, opts.toSize)
 
-        this.startSize = fromSize;
-        this.endSize = toSize;
-        this.bounce = bounce || 0;
-        this.spread = spread || 0;
+        this.startSize = opts.fromSize;
+        this.endSize = opts.toSize;
+        this.bounce = opts.bounce || 0;
+        this.spread = opts.spread || 0;
 
-        if (typeof(callback) === 'function') {
-            this.onArriveCallbacks.push(callback);
+        if (typeof(opts.callback) === 'function') {
+            this.onArriveCallbacks.push(opts.callback);
         }
 
-        if (typeof(getPosFunc) === 'function') {
-            this.getPosFunction = getPosFunc;
+        if (typeof(opts.getPosFunc) === 'function') {
+            this.getPosFunction = opts.getPosFunc;
         } else {
             this.getPosFunction = null;
         }
+    }
 
+    initEffectTransition(fromPos, fromQuat, toPos, toQuat, fromSize, toSize, overTime, callback, bounce, spread, getPosFunc) {
+        let now = GameAPI.getGameTime();
+        this.startTime = now;
+
+        if (typeof(fromPos['fromPos']) === 'object') {
+            this.applyTransitionOptions(fromPos);
+        } else {
+
+            this.targetTime = now+overTime;
+
+            this.startObj3D.position.copy(fromPos);
+            this.startObj3D.quaternion.copy(fromQuat);
+            this.startObj3D.scale.set(fromSize, fromSize, fromSize)
+            this.targetObj3D.position.copy(toPos);
+            this.targetObj3D.quaternion.copy(toQuat);
+            this.targetObj3D.scale.set(toSize, toSize, toSize)
+
+            this.startSize = fromSize;
+            this.endSize = toSize;
+            this.bounce = bounce || 0;
+            this.spread = spread || 0;
+
+            if (typeof(callback) === 'function') {
+                this.onArriveCallbacks.push(callback);
+            }
+
+            if (typeof(getPosFunc) === 'function') {
+                this.getPosFunction = getPosFunc;
+            } else {
+                this.getPosFunction = null;
+            }
+        }
     }
 
     interpolatePosition() {

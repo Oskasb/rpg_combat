@@ -1,3 +1,38 @@
+import * as CombatFxOptions from "./../combat/CombatFxOptions.js";
+import { Vector3 } from "../../../libs/three/math/Vector3.js";
+import { Object3D } from "../../../libs/three/core/Object3D.js";
+
+let tempVec3 = new Vector3();
+let tempObj3D = new Object3D();
+
+let opts = {};
+
+let defaults = {
+    fromPos:      new Vector3(),
+    fromQuat:     new Object3D().quaternion,
+    toPos:      new Vector3(),
+    toQuat:      new Object3D().quaternion,
+    fromSize:     1,
+    toSize:     2,
+    time:     1,
+    callback:     endOnLanded,
+    bounce:     0,
+    spread:     0,
+    getPosFunc: null
+}
+function optsDefault() {
+    return defaults
+}
+
+function defaultOptions() {
+    let defs = optsDefault()
+
+    for (let key in defs) {
+        opts[key] = defs[key];
+    }
+
+    return opts
+}
 
 
 let rgba = {
@@ -12,15 +47,9 @@ function setRgba(r, g, b, a) {
     return rgba;
 }
 
-function fxLanded(fx) {
-    //    console.log("Fx arrives", fx)
-}
-
 function endOnLanded(fx) {
     fx.endEffectOfClass()
 }
-
-
 
 function setupLifecycle(efct, fxDuration, onPaceFactor, decayFactor) {
     let start = GameAPI.getGameTime();
@@ -34,6 +63,5 @@ function setupLifecycle(efct, fxDuration, onPaceFactor, decayFactor) {
 export {
     setupLifecycle,
     endOnLanded,
-    fxLanded,
-    setRgba
+    setRgba,
 }
