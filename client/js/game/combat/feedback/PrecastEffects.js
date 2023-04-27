@@ -25,6 +25,29 @@ function handsOnFire(gamePiece, obj3d) {
 
 }
 
+function handsOfFrost(gamePiece, obj3d) {
+    let size = gamePiece.getStatusByKey('size');
+    let particleFxCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let options = CombatFxOptions.setupOptsPowerHands(efct, obj3d, size);
+        efct.setEffectSpriteXY(5, 2);
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(0.2, 0.2, 0.99, 0.99))
+        efct.activateSpatialTransition(options)
+    }
+
+    EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  particleFxCb)
+
+    let powerCoreCB = function(efct) {
+        efct.activateEffectFromConfigId()
+        let options = CombatFxOptions.setupOptsPowerCore(efct, obj3d, size);
+        efct.setEffectSpriteXY(2, 0);
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(0.2, 0.2, 0.99, 0.99))
+        efct.activateSpatialTransition(options)
+    }
+
+    EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  powerCoreCB)
+
+}
 
 function magicPowerHands(gamePiece, obj3d) {
     let size = gamePiece.getStatusByKey('size');
@@ -76,6 +99,7 @@ function healPowerHands(gamePiece, obj3d) {
 }
 
 export {
+    handsOfFrost,
     handsOnFire,
     magicPowerHands,
     healPowerHands

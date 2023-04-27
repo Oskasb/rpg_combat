@@ -527,7 +527,6 @@ if(typeof(MATH) === "undefined") {
 	};
 
 
-
 	MATH.radialToVectorXY = function(angle, distance, store) {
 		store.x = Math.cos(angle)*distance;
 		store.y = Math.sin(angle)*distance;

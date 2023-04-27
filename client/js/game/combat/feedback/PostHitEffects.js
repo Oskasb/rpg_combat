@@ -44,10 +44,25 @@ function residualHeal(gamePiece) {
         EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
     }
 }
+function residualFrost(gamePiece) {
 
+    let effectCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let options = CombatFxOptions.setupOptsBoneLingering(efct, gamePiece);
+        efct.setEffectSpriteXY(5, 2);
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(0.5, 0.5, 0.99, 0.99))
+        efct.activateSpatialTransition(options)
+    }
+
+    for (let i = 0; i < 12; i++) {
+        EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
+    }
+
+}
 
 export {
     catchOnFire,
     residualMagic,
-    residualHeal
+    residualHeal,
+    residualFrost
 }

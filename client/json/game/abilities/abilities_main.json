@@ -19,8 +19,12 @@
               "ap_cost": 3,
               "range": 15,
               "radius": 4,
+              "modify_target_status": {
+                "status": "status_burning",
+                "duration": [2, 2, 3, 3, 4, 4, 5, 6 , 8 , 10]
+              },
               "missiles": [2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
-              "damage": [3, 5, 8, 10, 14, 20, 28, 40 , 60 , 90]
+              "damage": [1, 2, 3, 5, 8, 12, 18, 26 , 38 , 50]
             }
           }
         ]
@@ -61,13 +65,11 @@
               "post_hit_effect": "damage_effect_stay_frozen",
               "ap_cost": 4,
               "range": 12,
-              "modify_status": {
-                "target": {
-                  "status": "stun",
-                  "duration": 3
-                }
+              "modify_target_status": {
+                "status": "status_frozen",
+                "duration": [1, 1, 2, 2, 3, 3, 4, 4 , 5 , 5]
               },
-              "damage": [1, 2, 3, 4, 5, 6, 7, 8 , 9 , 10]
+              "damage": [1, 1, 1, 2, 2, 3, 3, 4 , 4 , 5]
             }
           }
         ]

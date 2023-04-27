@@ -1,3 +1,5 @@
+import { processPieceStatusFx } from "./feedback/StatusEffects.js";
+
 class PieceStateProcessor {
     constructor(gamePiece) {
         this.gamePiece = gamePiece;
@@ -108,6 +110,9 @@ class PieceStateProcessor {
         status.turn = GameAPI.gameMain.turnStatus.turn;
         status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
 
+        if (status['status_frozen']) {
+            status['status_frozen']--
+        }
 
         status.appliedAttacks = 0;
         if (MATH.isEvenNumber(GameAPI.getTurnStatus().turn)){
@@ -115,6 +120,8 @@ class PieceStateProcessor {
         } else {
             status.turnAttacks = Math.floor(status.FAST);
         }
+
+
 
 
         this.updateTurnHP(status)
@@ -269,10 +276,17 @@ class PieceStateProcessor {
         if (status.turn !== GameAPI.gameMain.turnStatus.turn) {
             this.processNewTurn(status, config)
         }
+
         this.processPieceState(status, config);
-        if (status.charState === ENUMS.CharacterState.COMBAT) {
-            this.processAttacks(status, config);
+
+        if (status['status_frozen'] > 0) {
+
+        } else {
+            if (status.charState === ENUMS.CharacterState.COMBAT) {
+                this.processAttacks(status, config);
+            }
         }
+
     }
 
     applyCombatStatusTransition(status, config) {
@@ -293,7 +307,13 @@ class PieceStateProcessor {
 
     updateHealthStatus(status, config) {
         if (status.hp > 0) {
-            this.processTargetSelection(status, config);
+            processPieceStatusFx(status);
+            if (status['status_frozen']) {
+
+            } else {
+                this.processTargetSelection(status, config);
+            }
+
             this.updatePieceTurn(status, config)
         } else {
             let opponentPiece = status.gamePiece.getTarget();

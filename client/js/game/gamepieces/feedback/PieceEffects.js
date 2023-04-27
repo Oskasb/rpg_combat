@@ -1,11 +1,12 @@
-import * as CombatFxUtils from "../combat/feedback/CombatFxUtils.js";
-import * as CombatFxOptions from "../combat/feedback/CombatFxOptions.js";
+import * as CombatFxUtils from "../../combat/feedback/CombatFxUtils.js";
+import * as CombatFxOptions from "../../combat/feedback/CombatFxOptions.js";
 
 function damageEffect(gamePiece, dmg) {
 
     let effectCb = function(efct) {
         efct.activateEffectFromConfigId()
         let options = CombatFxOptions.setupOptsBoneToGround(efct, gamePiece)
+        efct.setEffectSpriteXY(1+Math.floor(Math.random()*3), 6);
         efct.activateSpatialTransition(options)
     }
 

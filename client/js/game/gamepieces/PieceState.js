@@ -67,7 +67,16 @@ class PieceState {
             ability_slots_max: 2,
             ability_slots: 1,
             activeAbility: null,
-            xp_value:5
+            xp_value:5,
+            status_frozen: 0,
+            status_burning: 0,
+            status_stunned: 0,
+            status_hasted: 0,
+            status_empowered: 0,
+            status_hardened: 0,
+            status_vampiric: 0,
+            status_hidden: 0,
+            status_poisoned: 0
         }
 
         this.lastState = ENUMS.CharacterState.IDLE_HANDS;

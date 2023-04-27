@@ -151,6 +151,13 @@ class PieceAbility {
         }
     }
 
+    processAbilityStatusModifier(targetPiece) {
+        let statusModifier = this.config['modify_target_status'];
+        let statusId = statusModifier['status'];
+        let duration = statusModifier['duration'][this.abilityStatus.level];
+        targetPiece.applyStatusModifier(statusId, duration)
+    }
+
     applyAbilityDamageToTarget(targetPiece) {
         let hpModifier = this.processAbilityDamage();
 
@@ -161,6 +168,10 @@ class PieceAbility {
         }
         if (this.config['heal']) {
             targetPiece.applyHeal(hpModifier, this.gamePiece);
+        }
+
+        if (this.config['modify_target_status']) {
+            this.processAbilityStatusModifier(targetPiece);
         }
 
     }

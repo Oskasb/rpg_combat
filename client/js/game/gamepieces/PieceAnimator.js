@@ -135,12 +135,12 @@ class PieceAnimator {
         return MATH.getFromArrayByKeyValue(this.activeAnimations, 'key', key);
     };
 
-    updatePieceAnimations = function(tpf, time) {
+    updatePieceAnimations = function(tpf, time, frozen) {
 
         this.timeAtKey += tpf;
 
         for (let i = 0; i < this.activeAnimations.length; i++) {
-            this.activeAnimations[i].updateAnimation(tpf, time, this.removes);
+            this.activeAnimations[i].updateAnimation(tpf, time, this.removes, frozen);
         }
 
         while (this.removes.length) {

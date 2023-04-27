@@ -38,8 +38,23 @@ function healingMissile(fromPos, gamePiece, index, onArriveCB, getPosFunc) {
     EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
 }
 
+function frostMissile(fromPos, gamePiece, index, onArriveCB, getPosFunc) {
+
+    let effectCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let options = CombatFxOptions.setupOptsDirectMissile(efct, fromPos, gamePiece, index, onArriveCB, getPosFunc)
+        efct.setEffectSpriteXY(5, 2);
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(0.2, 0.2, 0.99, 0.99))
+        efct.activateSpatialTransition(options)
+    }
+
+    EffectAPI.buildEffectClassByConfigId('additive_stamps_8x8', 'magic_missile_projectile_effect',  effectCb)
+
+}
+
 export {
     magicMissile,
     fireMissile,
-    healingMissile
+    healingMissile,
+    frostMissile
 }

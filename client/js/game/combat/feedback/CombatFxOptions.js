@@ -180,7 +180,37 @@ function setupOptsFriendlyCore(efct, obj3d, size) {
     return options;
 }
 
+function setupOptsDirectMissile(efct, fromPos, gamePiece, index, onArriveCB, getPosFunc) {
 
+    let distance = MATH.distanceBetween(fromPos, getPosFunc());
+    let tempObj = ThreeAPI.tempObj;
+    tempObj.position.copy(fromPos);
+    let size = gamePiece.getStatusByKey('size');
+    tempObj.lookAt(ThreeAPI.getCamera().position);
+    tempVec3.copy(gamePiece.getPos());
+    let startSize = 0.4;
+    let endSize = 0.3 + Math.random()*0.2;
+    let time = CombatFxUtils.setupLifecycle(efct, 0.02*(index+1) + 0.12*distance + 0.05, 0.1, 0.1);
+    let spread = 0.01*(index)*distance + 0.01*distance + 0.1*index
+    if (MATH.isOddNumber(index)) {
+        spread*=-1;
+    }
+
+    let options = defaultOptions();
+    options.fromPos = fromPos;
+    options.fromQuat = tempObj.quaternion;
+    options.toPos = gamePiece.getPos();
+    options.toQuat = tempObj.quaternion;
+    options.fromSize = startSize;
+    options.toSize = endSize;
+    options.time = time;
+    options.callback = onArriveCB;
+    options.bounce = 0.1*distance
+    options.spread = spread*size;
+    options.getPosFunc = getPosFunc
+
+    return options;
+}
 
 function setupOptsMagicMissile(efct, fromPos, gamePiece, index, onArriveCB, getPosFunc) {
 
@@ -401,8 +431,8 @@ function setupOptsBoneLingering(efct, gamePiece) {
     let size = gamePiece.getStatusByKey('size');
 
 
-    let fromSize = size*0.8;
-    let toSize = size*0.8 + Math.random()*size*2.5
+    let fromSize = MATH.randomBetween(0.2, 0.5)*size;
+    let toSize = MATH.randomBetween(0.8, 1.5)*size;
     let time = CombatFxUtils.setupLifecycle(efct, 1.5+Math.random()*2.2, 0.3, 0.4);
 
     let options = defaultOptions();
@@ -444,10 +474,13 @@ function setupOptsBoneToGround(efct, gamePiece) {
     tempObj.lookAt(tempVec3);
     tempObj.rotateZ(Math.random()*MATH.TWO_PI)
     tempVec3.y = 0.1;
-    ThreeAPI.tempVec3.set(size*2, 0, size*2)
-    efct.setEffectSpriteXY(1+Math.floor(Math.random()*3), 6);
-    MATH.spreadVector(tempVec3, ThreeAPI.tempVec3)
+    MATH.randomVector(ThreeAPI.tempVec3);
 
+    ThreeAPI.tempVec3.multiplyScalar(MATH.randomBetween(0, size*1.1 ))
+
+
+    tempVec3.add(ThreeAPI.tempVec3)
+    tempVec3.y = 0.1;
     let fromSize = size*0.2+Math.random()*0.2;
     let toSize = size*0.6+Math.random()*size*0.5
     let time = 0.4+Math.random()*0.3
@@ -492,8 +525,45 @@ function setupOptsSprayUpwards(efct, gamePiece, applies) {
     options.fromPos = tempObj.position;
     options.fromQuat =  efct.quat;
     options.toPos = tempVec3;
-    options.toQuat =  tempObj.quaternion;
-    options.fromSize =fromSize;
+    options.toQuat = tempObj.quaternion;
+    options.fromSize = fromSize;
+    options.toSize = toSize;
+    options.time = time;
+    options.callback = endOnLanded;
+    options.bounce = size*0.1;
+    options.spread = 0;
+
+    return options
+}
+function setupOptsFlames(efct, gamePiece, applies) {
+    let tempObj = ThreeAPI.tempObj;
+
+    let bone = gamePiece.getRandomBone();
+
+    let bonePos = function() {
+        return gamePiece.getBoneWorldPosition(bone);
+    }
+
+    tempObj.position.copy(bonePos());
+    let size = gamePiece.getStatusByKey('size');
+    tempObj.position.y += size*0.5
+    tempObj.lookAt(ThreeAPI.getCamera().position);
+    efct.quat.copy(tempObj.quaternion);
+    MATH.randomVector(tempVec3);
+    tempVec3.multiplyScalar(MATH.randomBetween(0.2, 0.6)*size);
+    tempVec3.y += MATH.randomBetween(0.2, 0.6)*size;
+    tempVec3.add(tempObj.position);
+
+    let fromSize = MATH.randomBetween(0.4, 2.3)*size
+    let toSize = MATH.randomBetween(0, 0.5)*size
+    let time = CombatFxUtils.setupLifecycle(efct, MATH.randomBetween(0.3, 1.1), 0.7, 0.5);
+
+    let options = defaultOptions();
+    options.fromPos = tempObj.position;
+    options.fromQuat =  efct.quat;
+    options.toPos = tempVec3;
+    options.toQuat = tempObj.quaternion;
+    options.fromSize = fromSize;
     options.toSize = toSize;
     options.time = time;
     options.callback = endOnLanded;
@@ -545,6 +615,7 @@ export {
     setupOptsPowerCore,
     setupOptsFriendlyHands,
     setupOptsFriendlyCore,
+    setupOptsDirectMissile,
     setupOptsMagicMissile,
     setupOptsFireMissile,
     setupOptsFriendlyMissile,
@@ -555,4 +626,5 @@ export {
     setupOptsBoneToGround,
     setupOptsSprayUpwards,
     setupOptsSproutFromGround,
+    setupOptsFlames
 }

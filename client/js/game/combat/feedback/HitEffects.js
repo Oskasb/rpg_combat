@@ -57,8 +57,26 @@ function magicHit(gamePiece) {
         EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
     }
 
+
+
+
 }
 
+function freezeHit(gamePiece) {
+
+    let effectCb = function(efct) {
+        efct.activateEffectFromConfigId()
+        let options = CombatFxOptions.setupOptsMagicHit(efct, gamePiece)
+        efct.setEffectSpriteXY(5, 2);
+        efct.setEffectColorRGBA(CombatFxUtils.setRgba(0.2, 0.2, 0.99, 0.99))
+        efct.activateSpatialTransition(options)
+    }
+
+    for (let i = 0; i < 12; i++) {
+        EffectAPI.buildEffectClassByConfigId('additive_particles_8x8', 'particle_additive_pool',  effectCb)
+    }
+
+}
 function healHit(gamePiece) {
 
     let effectCb = function(efct) {
@@ -87,5 +105,6 @@ function healHit(gamePiece) {
 export {
     fireBall,
     magicHit,
-    healHit
+    healHit,
+    freezeHit
 }

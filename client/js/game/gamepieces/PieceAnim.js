@@ -70,8 +70,15 @@ class PieceAnim {
             this.duration = this.currentTime + this.getAnimDataProperty('duration') || 99999999999;
         };
 
-        updateAnimation = function(tpf, time, removes) {
+        updateAnimation = function(tpf, time, removes, frozen) {
             this.currentTime += tpf;
+
+            if (frozen) {
+                console.log("Set Frozen Anim")
+                this.setTimeScale(0.001);
+            } else {
+                this.setTimeScale(1);
+            }
 
             if (this.duration < this.currentTime) {
 

@@ -10,7 +10,7 @@ import { PieceState } from "./PieceState.js";
 import { PieceAbilitySystem } from "./PieceAbilitySystem.js";
 import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
 import { CompanionSystem } from "../companion/CompanionSystem.js";
-import * as PieceEffects from "./PieceEffects.js";
+import * as PieceEffects from "./feedback/PieceEffects.js";
 import * as CombatEffects from "../combat/feedback/CombatEffects.js";
 
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
@@ -48,11 +48,18 @@ class GamePiece {
             //    console.log("The dead cant dance, dont update me")
                 return;
             }
-            MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime, this);
-            this.pieceAnimator.updatePieceAnimations(tpf, gameTime);
-            this.pieceAttacher.tickAttacher();
+            if (this.getStatusByKey('status_frozen') === 0) {
+                MATH.callAll(this.gamePieceUpdateCallbacks, tpf, gameTime, this);
+                this.pieceAnimator.updatePieceAnimations(tpf, gameTime);
+                this.pieceAttacher.tickAttacher();
+                this.movementPath.tickMovementPath(tpf, gameTime);
+
+            } else {
+            //    this.pieceActionSystem
+            //    this.pieceAnimator.updatePieceAnimations(tpf, gameTime, true);
+            }
+
             this.pieceState.tickPieceState(tpf, gameTime);
-            this.movementPath.tickMovementPath(tpf, gameTime);
             for (let i = 0; i < this.companions.length; i++) {
                 this.companions[i].companionSystem.tickCompanionSystem(tpf, gameTime);
                 this.companions[i].callbacks.tickGamePiece(tpf, gameTime);
@@ -284,6 +291,10 @@ class GamePiece {
         if (heal !== 0) {
             PieceEffects.healEffect(this, heal, healer)
         }
+    }
+
+    applyStatusModifier(statusId, duration) {
+        this.setStatusValue(statusId, duration);
     }
 
     getStatus() {
