@@ -80,7 +80,7 @@ function setupOptsPowerHands(efct, obj3d, size) {
     options.bounce = 0.1;
     options.spread = 0;
     options.getPosFunc = null
-    
+
     return options;
 }
 
@@ -176,9 +176,119 @@ function setupOptsFriendlyCore(efct, obj3d, size) {
     return options;
 }
 
+
+
+function setupOptsMagicMissile(efct, fromPos, gamePiece, index, onArriveCB, getPosFunc) {
+
+    let distance = MATH.distanceBetween(fromPos, getPosFunc());
+    let tempObj = ThreeAPI.tempObj;
+    tempObj.position.copy(fromPos);
+    let size = gamePiece.getStatusByKey('size');
+    tempObj.lookAt(ThreeAPI.getCamera().position);
+    tempVec3.copy(gamePiece.getPos());
+    let startSize = 0.6;
+    let endSize = 0.3 + Math.random()*0.8;
+    let time = CombatFxUtils.setupLifecycle(efct, 0.12*(index+1) + 0.3*distance + 0.1, 0.3, 0.2);
+    let spread = 0.02*(index)*distance + 0.02*distance + 0.2*index
+    if (MATH.isOddNumber(index)) {
+        spread*=-1;
+    }
+
+    let options = defaultOptions();
+    options.fromPos = fromPos;
+    options.fromQuat = tempObj.quaternion;
+    options.toPos = gamePiece.getPos();
+    options.toQuat = tempObj.quaternion;
+    options.fromSize = startSize;
+    options.toSize = endSize;
+    options.time = time;
+    options.callback = onArriveCB;
+    options.bounce = (2 - Math.abs(spread))*0.1*distance
+    options.spread = spread*size;
+    options.getPosFunc = getPosFunc
+
+    return options;
+}
+
+function setupOptsFireMissile(efct, fromPos, gamePiece, index, onArriveCB, getPosFunc) {
+    let distance = MATH.distanceBetween(fromPos, getPosFunc());
+    let tempObj = ThreeAPI.tempObj;
+    tempObj.position.copy(fromPos);
+    let size = gamePiece.getStatusByKey('size');
+    tempVec3.copy(gamePiece.getPos());
+    let startSize = 1.2;
+    let endSize = 1.3 + Math.random()*0.5
+    let time = CombatFxUtils.setupLifecycle(efct, 0.22*(index+1) + 0.2*distance + 0.1, 0.3, 0.3);
+    let spread = 0.12*(index) + 0.12*distance
+    if (MATH.isOddNumber(index)) {
+        spread*=-1;
+    }
+
+    let options = defaultOptions();
+    options.fromPos = fromPos;
+    options.fromQuat = tempObj.quaternion;
+    options.toPos = gamePiece.getPos();
+    options.toQuat = tempObj.quaternion;
+    options.fromSize = startSize;
+    options.toSize = endSize;
+    options.time = time;
+    options.callback = onArriveCB;
+    options.bounce = (2 - Math.abs(spread))*0.1*distance
+    options.spread = spread*size;
+    options.getPosFunc = getPosFunc
+
+    return options;
+}
+
+function setupOptsFriendlyMissile(efct, fromPos, gamePiece, index, onArriveCB, getPosFunc) {
+    let distance = MATH.distanceBetween(fromPos, getPosFunc());
+    let tempObj = ThreeAPI.tempObj;
+
+    let bone = gamePiece.getRandomBone();
+
+    let bonePos = function() {
+        //    let jointId = gamePiece.getRandomJointId();
+        return gamePiece.getBoneWorldPosition(bone);
+    }
+
+    tempObj.position.copy(gamePiece.getBoneWorldPosition(bone));
+
+    let size = gamePiece.getStatusByKey('size');
+    tempObj.lookAt(ThreeAPI.getCamera().position);
+    tempVec3.copy(gamePiece.getPos());
+
+    let startSize = 0.6;
+    let endSize = 0.3 + Math.random()*0.8;
+    let time = CombatFxUtils.setupLifecycle(efct, 0.22*(index) + 0.3*distance + 0.2, 0.3, 0.2);
+    let spread = 0.32*(index) + 0.1*distance
+    if (MATH.isOddNumber(index)) {
+        spread*=-1;
+    }
+
+    let options = defaultOptions();
+    options.fromPos = fromPos;
+    options.fromQuat = tempObj.quaternion;
+    options.toPos = gamePiece.getPos();
+    options.toQuat = tempObj.quaternion;
+    options.fromSize = startSize;
+    options.toSize = endSize;
+    options.time = time;
+    options.callback = onArriveCB;
+    options.bounce = (2 - Math.abs(spread))*0.5*size;
+    options.spread = spread*size;
+    options.getPosFunc = bonePos
+
+    return options;
+
+}
+
 export {
     setupOptsPowerHands,
     setupOptsPowerCore,
     setupOptsFriendlyHands,
-    setupOptsFriendlyCore
+    setupOptsFriendlyCore,
+    setupOptsMagicMissile,
+    setupOptsFireMissile,
+    setupOptsFriendlyMissile
+
 }
