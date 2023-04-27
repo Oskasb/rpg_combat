@@ -115,7 +115,8 @@ class PlayerMain {
 
         let ressAtHome = function(gamePiece) {
             gamePiece.isDead = false;
-            gamePiece.movementPath.cancelMovementPath()
+            gamePiece.enablePieceAnimations();
+            gamePiece.movementPath.cancelMovementPath();
             gamePiece.setStatusValue('hp', gamePiece.getStatusByKey('maxHP'));
             gamePiece.setStatusValue('charState', ENUMS.CharacterState.IDLE_HANDS);
             gamePiece.setStatusValue('targState', ENUMS.CharacterState.IDLE_HANDS);

@@ -110,6 +110,10 @@ class PieceStateProcessor {
         status.turn = GameAPI.gameMain.turnStatus.turn;
         status.turnProgress = GameAPI.gameMain.turnStatus.turnProgress;
 
+        if (status.charState === ENUMS.CharacterState.LIE_DEAD) {
+            status.gamePiece.disablePieceAnimations();
+        }
+
         if (status['status_frozen']) {
             status['status_frozen']--
             if (status['status_frozen'] === 0) {

@@ -163,15 +163,16 @@ class PieceAbility {
 
         CombatEffects.effectCalls()[this.config['post_hit_effect']](targetPiece)
 
-        if (this.config['damage']) {
-            targetPiece.applyDamage(hpModifier, this.gamePiece);
+        if (this.config['modify_target_status']) {
+            this.processAbilityStatusModifier(targetPiece);
         }
+
         if (this.config['heal']) {
             targetPiece.applyHeal(hpModifier, this.gamePiece);
         }
 
-        if (this.config['modify_target_status']) {
-            this.processAbilityStatusModifier(targetPiece);
+        if (this.config['damage']) {
+            targetPiece.applyDamage(hpModifier, this.gamePiece);
         }
 
     }

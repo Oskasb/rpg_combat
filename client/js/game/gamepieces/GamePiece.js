@@ -202,6 +202,7 @@ class GamePiece {
     }
     setModelInstance(modelInstance) {
         this.modelInstance = modelInstance;
+        this.enablePieceAnimations()
     };
 
     getModel() {
@@ -333,6 +334,13 @@ class GamePiece {
         this.isDead = true;
         this.clearEngagementStatus();
         PieceEffects.deathEffect(this)
+
+        let endAnimMixer = function() {
+            this.disablePieceAnimations()
+        }.bind(this);
+        setTimeout(function() {
+            endAnimMixer();
+        }, 2000)
     }
     clearEngagementStatus() {
         this.movementPath.cancelMovementPath()
