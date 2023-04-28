@@ -1,4 +1,5 @@
 import { TilePath } from "./TilePath.js";
+import { PathWalker } from "./PathWalker.js";
 
 class MovementPath {
     constructor(gamePiece) {
@@ -13,6 +14,8 @@ class MovementPath {
         this.currentPosTile = null;
         this.targetPosTile = null;
         this.tempVec = new THREE.Vector3();
+
+        this.pathWalker = new PathWalker(gamePiece, this.tilePath);
 
         this.lineEvent = {
             from:new THREE.Vector3(),
@@ -305,8 +308,9 @@ class MovementPath {
     }
 
 
-    moveTroughTilePath(cb) {
-        this.pieceMovement.moveAlongTilePath(this.tilePath, cb)
+    moveTroughTilePath(cb, tpf, gameTime) {
+        this.pathWalker.updatePathWalker(cb, tpf, gameTime)
+    //    this.pieceMovement.moveAlongTilePath(this.tilePath, cb)
     }
 
     addPathEndCallback(cb) {
@@ -329,12 +333,12 @@ class MovementPath {
         }
         return GameAPI.getActiveEncounterGrid().getTileAtPosition(posVec3);
     }
-    moveAlongActiveGridPath() {
+    moveAlongActiveGridPath(tpf, gameTime) {
 
         let tileCount = this.tilePath.getTiles().length;
         if (tileCount ){
             if (this.isPathing === false) {
-                this.moveTroughTilePath(this.callbacks.onPathEnd);
+                this.moveTroughTilePath(this.callbacks.onPathEnd, tpf, gameTime);
             }
             this.isPathing = true;
 
@@ -435,7 +439,7 @@ class MovementPath {
 
                 if (this.isPathing === false) {
                     if (GameAPI.getTurnStatus().pauseProgress === 0) {
-                        this.moveAlongActiveGridPath();
+                        this.moveAlongActiveGridPath(tpf, gameTime);
                     }
                 }
 
