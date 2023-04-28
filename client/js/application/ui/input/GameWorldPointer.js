@@ -20,11 +20,16 @@ class GameWorldPointer {
             this.exitLongPress(pointer, selectionEvent)
         }.bind(this)
 
+        let updateGameWorldPointer = function(pointer, isFirstPressFrame) {
+            this.updateWorldPointer(pointer, isFirstPressFrame)
+        }.bind(this)
+
 
         this.call = {
             pointerExitLongPress:exitLongPress,
             pointerEnterLongPress:this.enterLongPress,
-            indicateSelection:this.indicateSelection
+            indicateSelection:this.indicateSelection,
+            updateGameWorldPointer:updateGameWorldPointer
         }
     }
 
@@ -33,7 +38,7 @@ class GameWorldPointer {
         let playerPiece = GameAPI.getMainCharPiece();
         let targetPos = null
         if (pointer.worldSpaceTarget && (pointer.worldSpaceTarget !== playerPiece)) {
-        //    targetPos = pointer.worldSpaceTarget.getPos();
+            //    targetPos = pointer.worldSpaceTarget.getPos();
             playerPiece.movementPath.setPathTargetPiece(pointer.worldSpaceTarget)
         } else {
             if (this.lastSelectedTile) {
@@ -66,18 +71,21 @@ class GameWorldPointer {
         }
     }
 
-    enterLongPress(pointer, selectionEvent) {
-        console.log("Long Press: ", pointer, pointer.worldSpaceTarget)
+    enterLongPress(pointer, selectionEvent, calls) {
+    //    console.log("Long Press: ", pointer, pointer.worldSpaceTarget)
         selectionEvent.longPress = pointer.call.getLongPressProgress();
         selectionEvent.piece = pointer.worldSpaceTarget;
-        if (typeof (pointer.worldSpaceTarget) === 'object') {
+        if (pointer.worldSpaceTarget === null) {
+        //    console.log("Long press nothing")
+            pointer.isMovementInput = true;
+            calls.updateGameWorldPointer(pointer)
+        } else {
+        //    console.log("Long press", pointer.worldSpaceTarget)
             selectionEvent.value = true;
             selectionEvent.isOpen = pointer.worldSpaceTarget;
-        } else {
-            selectionEvent.value = false;
+            evt.dispatch(ENUMS.Event.MAIN_CHAR_OPEN_TARGET,  selectionEvent);
         }
 
-        evt.dispatch(ENUMS.Event.MAIN_CHAR_OPEN_TARGET,  selectionEvent);
     }
 
     exitLongPress(pointer, selectionEvent) {
@@ -91,9 +99,9 @@ class GameWorldPointer {
     }
     worldPointerReleased = function(pointer) {
         let call = this.call;
-    //    if (typeof(this.selectionEvent.isOpen) === 'object') {
+        //    if (typeof(this.selectionEvent.isOpen) === 'object') {
 
-    //    }
+        //    }
 
         if (GuiAPI.calls.getInMenu() === true) {
             return;
@@ -113,7 +121,7 @@ class GameWorldPointer {
             evt.dispatch(ENUMS.Event.MAIN_CHAR_SELECT_TARGET,  this.selectionEvent);
         } else if (pointer.isMovementInput) {
             if (this.lastSelectedTile) {
-            //    this.lastSelectedTile.setTileStatus('OCCUPIED');
+                //    this.lastSelectedTile.setTileStatus('OCCUPIED');
 
             }
         } else {
@@ -142,12 +150,13 @@ class GameWorldPointer {
 
         if (isFirstPressFrame) {
             pointer.isWorldActive = true;
-        //    console.log("Press first frame: ", pointer.inputIndex, pointer.isLongPress, pointer.longPressProgress, pointer.worldSpaceTarget)
+            //    console.log("Press first frame: ", pointer.inputIndex, pointer.isLongPress, pointer.longPressProgress, pointer.worldSpaceTarget)
         } else {
             let longPress = pointer.call.getLongPressProgress()
-        //    console.log(longPress);
+            //    console.log(longPress);
             if (longPress >= 1 && pointer.longPressProgress < 1) {
-                this.call.pointerEnterLongPress(pointer, this.selectionEvent);
+                pointer.setLongPressProgress(longPress);
+                this.call.pointerEnterLongPress(pointer, this.selectionEvent, this.call);
             }
             pointer.setLongPressProgress(longPress);
         }
@@ -225,7 +234,7 @@ class GameWorldPointer {
             if (worldSelection) {
 
                 if (pointer.worldSpaceTarget !== worldSelection) {
-           //         console.log("Change selected Target")
+                    //         console.log("Change selected Target")
 
                     if (pointer.worldSpaceTarget) {
                         this.indicateSelection(false, pointer, pointer.worldSpaceTarget)
@@ -268,10 +277,11 @@ class GameWorldPointer {
         }.bind(this);
 
         let updateMovementPointer = function() {
+            
 
             if (worldSelection) {
                 if (worldSelection.getStatusByKey('faction') === 'EVIL')
-                return;
+                    return;
             }
 
             if (this.selectionEvent.isOpen !== null) {
