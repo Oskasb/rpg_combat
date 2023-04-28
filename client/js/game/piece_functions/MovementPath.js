@@ -350,18 +350,21 @@ class MovementPath {
     }
 
 
+    addPathPieceCameraModifiers(posVec) {
+        this.tempVec.copy(posVec);
+        this.tempVec.sub(this.gamePiece.getPos())
+        this.tempVec.multiplyScalar(0.65);
+        GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
+        this.tempVec.multiplyScalar(0.55);
+        GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
+    }
 
     setPathTargetPiece(targetPiece) {
         this.pathTargetPiece = targetPiece;
         this.determinePathToTargetPiece(targetPiece)
 
         if (this.gamePiece === GameAPI.getMainCharPiece()) {
-            this.tempVec.copy(targetPiece.getPos());
-            this.tempVec.sub(this.gamePiece.getPos())
-            this.tempVec.multiplyScalar(0.85);
-            GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
-            this.tempVec.multiplyScalar(0.85);
-            GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
+            this.addPathPieceCameraModifiers(targetPiece.getPos())
         }
     }
 
