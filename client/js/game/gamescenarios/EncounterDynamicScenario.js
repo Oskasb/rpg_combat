@@ -1,7 +1,7 @@
 import * as ScenarioUtils from "../gameworld/ScenarioUtils.js";
 import {ConfigData} from "../../application/utils/ConfigData.js";
 import { EncounterGrid } from "./EncounterGrid.js";
-
+let camParams = {}
 class EncounterDynamicScenario {
     constructor(dataId) {
         this.dataId = dataId;
@@ -14,9 +14,6 @@ class EncounterDynamicScenario {
         this.encounterGrid = new EncounterGrid();
 
 
-
-
-        let camParams = {}
         GameAPI.getGameCamera().getDefaultCamParams(camParams)
 
         let applyCamParams = function(camConf) {

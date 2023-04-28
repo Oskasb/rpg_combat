@@ -2,15 +2,29 @@ class GameCamera {
     constructor() {
         let tpf;
         let fraction = 1;
+        let tempVec = new THREE.Vector3();
         let cameraPos = new THREE.Vector3();
         let cameraLookAt = new THREE.Vector3();
         let targetLookAt = new THREE.Vector3();
+        let lookAtModifier = new THREE.Vector3();
+        let positionModifier = new THREE.Vector3();
         let targetPos = new THREE.Vector3();
         let transitionStartTime = 0;
         let transitionEndTime = 1;
         let currentTime = 0;
         let transitionEndCallbacks = [];
 
+        this.addLookAtModifierVec3 = function(vec3) {
+        //    tempVec.copy(vec3);
+            MATH.interpolateVec3FromTo(lookAtModifier, vec3, 0.25, lookAtModifier)
+        //    lookAtModifier.copy(vec3);
+        }
+
+        this.addPositionModifierVec3 = function(vec3) {
+            //    tempVec.copy(vec3);
+            MATH.interpolateVec3FromTo(positionModifier, vec3, 0.25, positionModifier)
+            //    lookAtModifier.copy(vec3);
+        }
 
         let applyFrameToCameraMotion = function() {
             if (fraction > 1) return;
@@ -42,7 +56,8 @@ class GameCamera {
 
             ThreeAPI.setCameraPos(pos.x, pos.y, pos.z);
             ThreeAPI.cameraLookAt(cLook.x, cLook.y, cLook.z);
-
+            lookAtModifier.multiplyScalar(0.8)
+            positionModifier.multiplyScalar(0.8)
         };
 
         let setCameraTargetPosInTime = function(eventData) {
@@ -69,11 +84,21 @@ class GameCamera {
             };
 
 
+        let getLookAtModifier = function() {
+            return lookAtModifier;
+        }
+
+        let getPositionModifier = function() {
+            return positionModifier;
+        }
+
         evt.on(ENUMS.Event.FRAME_READY, applyFrame);
         evt.on(ENUMS.Event.SET_CAMERA_TARGET, setCameraTargetPosInTime)
 
         this.call = {
-            setCameraTargetPosInTime:setCameraTargetPosInTime
+            setCameraTargetPosInTime:setCameraTargetPosInTime,
+            getPositionModifier:getPositionModifier,
+            getLookAtModifier:getLookAtModifier
         }
     }
 
@@ -89,14 +114,18 @@ class GameCamera {
             store.offsetLookAt = [0, 0, 0]
     }
 
+
+
     updatePlayerCamera = function(camParams) {
+        let lookAtMod = this.call.getLookAtModifier()
+        let posMod = this.call.getPositionModifier()
         let playerPos = GameAPI.getMainCharPiece().getPos()
-        camParams.pos[0] = playerPos.x + camParams.offsetPos[0];
-        camParams.pos[1] = playerPos.y + camParams.offsetPos[1];
-        camParams.pos[2] = playerPos.z + camParams.offsetPos[2];
-        camParams.lookAt[0] = playerPos.x + camParams.offsetLookAt[0];
-        camParams.lookAt[1] = playerPos.y + camParams.offsetLookAt[1];
-        camParams.lookAt[2] = playerPos.z + camParams.offsetLookAt[2];
+        camParams.pos[0] = playerPos.x + camParams.offsetPos[0] + posMod.x;
+        camParams.pos[1] = playerPos.y + camParams.offsetPos[1] + posMod.y;
+        camParams.pos[2] = playerPos.z + camParams.offsetPos[2] + posMod.z;
+        camParams.lookAt[0] = playerPos.x + camParams.offsetLookAt[0] + lookAtMod.x;
+        camParams.lookAt[1] = playerPos.y + camParams.offsetLookAt[1] + lookAtMod.y;
+        camParams.lookAt[2] = playerPos.z + camParams.offsetLookAt[2] + lookAtMod.z;
         this.call.setCameraTargetPosInTime(camParams);
     }
 
@@ -109,7 +138,7 @@ class GameCamera {
         camParams.offsetLookAt[2] = camConf.offsetLookAt[2];
         camParams.time = 0.05;
         if (camConf['mode'] === "portrait_main_char") {
-            console.log("Make cam go to char here for nice")
+        //    console.log("Make cam go to char here for nice")
         }
     }
 
