@@ -20,6 +20,7 @@ let drawPathTileVector = function(pathTiles, gamePiece) {
 
 class PathWalker {
     constructor(gamePiece, tilePath) {
+        this.hasArrived = true;
         this.gamePiece = gamePiece;
         this.tilePath = tilePath;
         this.headingVector = new THREE.Vector3();
@@ -38,11 +39,20 @@ class PathWalker {
         tempVec.copy(this.headingVector);
         tempVec.multiplyScalar(frameTravelDistance);
         tempVec.add(gamePiece.getPos());
+        if (!gamePiece.getTarget()) {
+            gamePiece.getSpatial().obj3d.lookAt(tempVec);
+        }
         gamePiece.getSpatial().setPosVec3(tempVec);
     }
 
     processTilePathMovement(onArriveCB, tpf, gameTime) {
         let pathTiles = this.tilePath.getTiles();
+        if (pathTiles.length > 1) {
+            this.hasArrived = false;
+        }
+        if (this.hasArrived===true) {
+            return;
+        }
         let gamePiece = this.gamePiece;
         drawPathTiles(pathTiles);
         let targetTile = gamePiece.getCurrentPathTile();
@@ -50,9 +60,8 @@ class PathWalker {
         let charSpeed = gamePiece.getStatusByKey('move_speed');
         let frameTravelDistance = charSpeed * tpf / GameAPI.getTurnStatus().turnTime
 
+        if (pathTiles.length > 1) {
 
-
-            if (pathTiles.length > 1) {
             // Move towards next tile, assuming index 0 is close enough
             evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pathTiles[0].getPos(), color:'GREEN', size:0.3})
             evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pathTiles[1].getPos(), color:'YELLOW', size:0.3})
@@ -72,6 +81,7 @@ class PathWalker {
 
             let turnDistance = MATH.distanceBetween(gamePiece.getPos(), this.tilePath.getTurnEndTile().getPos())
             if (turnDistance > frameTravelDistance) {
+
                 this.applyHeadingToGamePiece(gamePiece, frameTravelDistance);
                 evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'CYAN', size:0.4})
             } else {
@@ -80,6 +90,7 @@ class PathWalker {
                 evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'RED', size:0.5})
                 if (gamePiece.getCurrentPathTile() === this.tilePath.getEndTile()) {
                     gamePiece.getSpatial().call.setStopped();
+                    this.hasArrived = true;
                     onArriveCB()
                 } else {
                     if (this.tilePath.getEndTile()) {

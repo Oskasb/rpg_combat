@@ -143,7 +143,6 @@ class GameWorldPointer {
     }
     updateWorldPointer = function(pointer, isFirstPressFrame) {
         let playerPiece = GameAPI.getMainCharPiece()
-        playerPiece.movementPath.cancelMovementPath( );
         if (GuiAPI.calls.getInMenu() === true) {
             return;
         }
