@@ -22,12 +22,24 @@ class PathWalker {
     constructor(gamePiece, tilePath) {
         this.gamePiece = gamePiece;
         this.tilePath = tilePath;
+        this.headingVector = new THREE.Vector3();
     }
 
 
     setMovementHeadingVector(fromVec3, toVec3) {
         evt.dispatch(ENUMS.Event.DEBUG_DRAW_LINE, {from:fromVec3, to:toVec3, color:'YELLOW'})
+        this.headingVector.copy(toVec3);
+        this.headingVector.sub(fromVec3);
 
+
+    }
+
+    applyHeadingToGamePiece(gamePiece, tpf) {
+        let charSpeed = gamePiece.getStatusByKey('move_speed');
+        tempVec.copy(this.headingVector);
+        tempVec.multiplyScalar(charSpeed * tpf / GameAPI.getTurnStatus().turnTime);
+        tempVec.add(gamePiece.getPos());
+        gamePiece.getSpatial().setPosVec3(tempVec);
     }
 
     processTilePathMovement(onArriveCB, tpf, gameTime) {
@@ -46,9 +58,20 @@ class PathWalker {
                 this.setMovementHeadingVector(gamePiece.getPos(), pathTiles[0].getPos())
                 evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'ORANGE', size:0.5})
             } else {
-                evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'RED', size:0.5})
+
             }
         }
+
+    //    if (gamePiece.getCurrentPathTile() === this.tilePath.getTurnEndTile()) {
+            let turnDistance = MATH.distanceBetween(gamePiece.getPos(), this.tilePath.getTurnEndTile().getPos())
+            if (turnDistance > 0.1) {
+                this.applyHeadingToGamePiece(gamePiece, tpf);
+                evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'CYAN', size:0.4})
+            } else {
+                evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'RED', size:0.5})
+            }
+    //    }
+
     }
 
     updatePathWalker(onArriveCB, tpf, gameTime) {

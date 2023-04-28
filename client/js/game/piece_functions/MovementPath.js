@@ -337,9 +337,9 @@ class MovementPath {
 
         let tileCount = this.tilePath.getTiles().length;
         if (tileCount ){
-            if (this.isPathing === false) {
+        //    if (this.isPathing === false) {
                 this.moveTroughTilePath(this.callbacks.onPathEnd, tpf, gameTime);
-            }
+        //    }
             this.isPathing = true;
 
         } else {
@@ -437,11 +437,11 @@ class MovementPath {
                     }
                 }
 
-                if (this.isPathing === false) {
-                    if (GameAPI.getTurnStatus().pauseProgress === 0) {
+            //    if (this.isPathing === false) {
+            //        if (GameAPI.getTurnStatus().pauseProgress === 0) {
                         this.moveAlongActiveGridPath(tpf, gameTime);
-                    }
-                }
+             //       }
+            //    }
 
                 this.updatePathTiles()
                 this.updateMovementOnGrid(encounterGrid);

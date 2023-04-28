@@ -185,6 +185,11 @@ class GamePiece {
     getQuat = function() {
         return this.getSpatial().getQuat();
     }
+
+    getCurrentPathTile() {
+        return this.movementPath.getTileAtPos(this.getPos());
+    }
+
     distanceToReachTarget = function(targetPiece) {
         let targetTile = targetPiece.movementPath.getTileAtPos(targetPiece.getPos());
         let tile = this.movementPath.getTileAtPos(this.getPos());
