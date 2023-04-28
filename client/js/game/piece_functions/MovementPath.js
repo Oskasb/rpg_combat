@@ -282,17 +282,22 @@ class MovementPath {
         this.setDestination(posVec);
         this.buildGridPath(posVec)
 
-    //    if (this.gamePiece.getTarget() === null) {
+        if (this.gamePiece === GameAPI.getMainCharPiece()) {
 
             this.tempVec.copy(posVec);
             this.tempVec.y = this.gamePiece.getPos().y;
             this.gamePiece.getSpatial().obj3d.lookAt(this.tempVec);
             this.tempVec.sub(this.gamePiece.getPos());
-            this.tempVec.multiplyScalar(0.25);
+            this.tempVec.multiplyScalar(0.5);
             GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
-            this.tempVec.multiplyScalar(-1);
-            GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
+            let distanceLookat = MATH.distanceBetween(ThreeAPI.getCamera().position, posVec)
+            let distancePlayer = MATH.distanceBetween(ThreeAPI.getCamera().position, this.gamePiece.getPos())
+            if (distanceLookat > distancePlayer) {
+                this.tempVec.multiplyScalar(-1);
+            }
 
+            GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
+        }
     //    } else {
     //        this.tempVec.set(0, 0, 0);
     //        GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
