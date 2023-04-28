@@ -138,12 +138,14 @@ class GameEffect {
     };
 
     endEffectOfClass = function() {
+        this.pos.set(0, -1000, 0)
         for (let i = 0; i < this.activeParticles.length; i++) {
             this.activeParticles[i].endEffectLifecycle()
         }
     };
 
     recoverEffectOfClass = function() {
+        this.pos.set(0, -1000, 0)
 
         if (this.joint) {
             this.joint.removePositionUpdateCallback(this.callbacks.positionUpdated);

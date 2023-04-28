@@ -64,16 +64,6 @@ class GamePiece {
                 let companion = this.companions[i]
                 companion.companionSystem.tickCompanionSystem(tpf, gameTime);
                 companion.callbacks.tickGamePiece(tpf, gameTime);
-
-                if (!companion.isDead) {
-                    tempVec3.copy(companion.getPos());
-                    tempVec3.sub(this.getPos());
-                    tempVec3.multiplyScalar(0.4);
-                    GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
-                    tempVec3.multiplyScalar(0.8);
-                    GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
-
-                }
             }
 
         }.bind(this);

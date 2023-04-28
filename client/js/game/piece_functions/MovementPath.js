@@ -351,8 +351,9 @@ class MovementPath {
 
         this.tempVec.copy(targetPiece.getPos());
         this.tempVec.sub(this.gamePiece.getPos())
-        this.tempVec.multiplyScalar(0.75);
+        this.tempVec.multiplyScalar(0.85);
         GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
+        this.tempVec.multiplyScalar(0.85);
         GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
     }
 

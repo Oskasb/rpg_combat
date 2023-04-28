@@ -120,8 +120,9 @@ class GameCamera {
     updatePlayerCamera = function(camParams) {
         let lookAtMod = this.call.getLookAtModifier()
         let posMod = this.call.getPositionModifier()
-        MATH.interpolateVec3FromTo(this.lookAtModApplied, lookAtMod, MATH.curveSigmoid(this.call.getFraction()), this.lookAtModApplied)
-        MATH.interpolateVec3FromTo(this.posModApplied, posMod, MATH.curveSigmoid(this.call.getFraction()), this.posModApplied)
+        let fraction = this.call.getFraction()
+        MATH.interpolateVec3FromTo(this.lookAtModApplied, lookAtMod, MATH.curveSigmoid(fraction)*0.5, this.lookAtModApplied)
+        MATH.interpolateVec3FromTo(this.posModApplied, posMod, MATH.curveSigmoid(fraction)*0.5, this.posModApplied)
 
         let playerPos = GameAPI.getMainCharPiece().getPos()
         camParams.pos[0] = playerPos.x + camParams.offsetPos[0] + posMod.x;
@@ -133,8 +134,8 @@ class GameCamera {
         lookAtMod.set(0, 0, 0);
         posMod.set(0, 0, 0);
         this.call.setCameraTargetPosInTime(camParams);
-        this.lookAtModApplied.multiplyScalar(0.8);
-        this.posModApplied.multiplyScalar(0.8);
+        this.lookAtModApplied.multiplyScalar(1-MATH.curveSigmoid(fraction));
+        this.posModApplied.multiplyScalar(1-MATH.curveSigmoid(fraction));
     }
 
     buildCameraParams = function(camConf, camParams) {
@@ -144,7 +145,7 @@ class GameCamera {
         camParams.offsetLookAt[0] = camConf.offsetLookAt[0];
         camParams.offsetLookAt[1] = camConf.offsetLookAt[1];
         camParams.offsetLookAt[2] = camConf.offsetLookAt[2];
-        camParams.time = 0.05;
+        camParams.time = 0.07;
         if (camConf['mode'] === "portrait_main_char") {
         //    console.log("Make cam go to char here for nice")
         }

@@ -77,8 +77,8 @@ class GameWorldPointer {
         selectionEvent.piece = pointer.worldSpaceTarget;
         if (pointer.worldSpaceTarget === null) {
         //    console.log("Long press nothing")
-            pointer.isMovementInput = true;
-            calls.updateGameWorldPointer(pointer)
+        //    pointer.isMovementInput = true;
+        //    calls.updateGameWorldPointer(pointer)
         } else {
         //    console.log("Long press", pointer.worldSpaceTarget)
             selectionEvent.value = true;
@@ -250,7 +250,10 @@ class GameWorldPointer {
                 pointer.worldSpaceTarget = worldSelection;
                 let rangeCheck = GameAPI.getMainCharPiece().distanceToReachTarget(worldSelection)
                 if (rangeCheck > 0) {
+                if (pointer.isMovementInput) {
                     this.worldPointerFindPath(pointer)
+                }
+
                 }
 
             } else {
@@ -294,6 +297,7 @@ class GameWorldPointer {
             let encounterGrid = GameAPI.getActiveEncounterGrid()
             let tiles = encounterGrid.gridTiles
             screenSelection = null;
+            maxSelectRange = 0.5
             if (tiles.length) {
                 for (let i = 0; i < tiles.length; i++) {
                     for (let j = 0; j < tiles[i].length; j++) {
