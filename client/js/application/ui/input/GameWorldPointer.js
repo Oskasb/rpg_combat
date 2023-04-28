@@ -34,6 +34,7 @@ class GameWorldPointer {
     }
 
 
+
     worldPointerFindPath(pointer) {
         let playerPiece = GameAPI.getMainCharPiece();
         let targetPos = null
@@ -51,6 +52,7 @@ class GameWorldPointer {
 
     indicateSelection = function(bool, pointer, selection) {
         if (bool) {
+
             if (MATH.arrayContains(this.indicatedSelections, selection)) {
                 return pointer.worldSpaceIndicator;
             }
@@ -320,13 +322,18 @@ class GameWorldPointer {
                     selectedTile.indicateTileStatus(true)
 
                 }
-                this.worldPointerFindPath(pointer);
+                if (pointer.isMovementInput) {
+                    this.worldPointerFindPath(pointer);
+                } else {
+                    playerPiece.movementPath.applyPathPointCameraModifiers(selectedTile.getPos())
+                }
+
             }
 
         }.bind(this);
 
         if (screenSelection === playerPiece && isFirstPressFrame) {
-            pointer.isMovementInput = true;
+        //    pointer.isMovementInput = true;
             //    console.log(pointer)
         }
 
@@ -335,9 +342,9 @@ class GameWorldPointer {
             //    console.log("nothing move", pointer)
         }
 
-        if (pointer.isMovementInput) {
+    //    if (pointer.isMovementInput) {
             updateMovementPointer();
-        }
+    //    }
         updateWorldPointer()
 
     }

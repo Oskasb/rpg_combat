@@ -3,7 +3,7 @@ let tempVec = new Vector3()
 
 let drawPathTiles = function(pathTiles) {
     for (let i = 0; i < pathTiles.length; i++) {
-        evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pathTiles[i].getPos(), color:'WHITE', size:0.2})
+        evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pathTiles[i].getPos(), color:'GREEN', size:0.1})
     }
 }
 
@@ -28,7 +28,7 @@ class PathWalker {
 
 
     setMovementHeadingVector(fromVec3, toVec3) {
-        evt.dispatch(ENUMS.Event.DEBUG_DRAW_LINE, {from:fromVec3, to:toVec3, color:'YELLOW'})
+        evt.dispatch(ENUMS.Event.DEBUG_DRAW_LINE, {from:fromVec3, to:toVec3, color:'GREEN'})
         this.headingVector.copy(toVec3);
         this.headingVector.sub(fromVec3);
         this.headingVector.normalize();
@@ -49,6 +49,7 @@ class PathWalker {
         let pathTiles = this.tilePath.getTiles();
         if (pathTiles.length > 1) {
             this.hasArrived = false;
+            evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:this.tilePath.getEndTile().getPos(), color:'GREEN', size:0.15})
         }
         if (this.hasArrived===true) {
             return;
@@ -63,8 +64,8 @@ class PathWalker {
         if (pathTiles.length > 1) {
 
             // Move towards next tile, assuming index 0 is close enough
-            evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pathTiles[0].getPos(), color:'GREEN', size:0.3})
-            evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pathTiles[1].getPos(), color:'YELLOW', size:0.3})
+       //     evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pathTiles[0].getPos(), color:'GREEN', size:0.3})
+        //    evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:pathTiles[1].getPos(), color:'YELLOW', size:0.3})
                 targetTile = pathTiles[1]
         //    this.setMovementHeadingVector(gamePiece.getPos(), )
         } else {
@@ -72,7 +73,7 @@ class PathWalker {
             if (pathTiles.length !== 0) {
                 targetTile = pathTiles[0]
             //    this.setMovementHeadingVector(gamePiece.getPos(), pathTiles[0].getPos())
-                evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'ORANGE', size:0.5})
+       //         evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'ORANGE', size:0.5})
             } else {
 
             }
@@ -83,11 +84,11 @@ class PathWalker {
             if (turnDistance > frameTravelDistance) {
 
                 this.applyHeadingToGamePiece(gamePiece, frameTravelDistance);
-                evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'CYAN', size:0.4})
+       //         evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'CYAN', size:0.4})
             } else {
                 console.log("Turn path ended")
                 this.applyHeadingToGamePiece(gamePiece, turnDistance);
-                evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'RED', size:0.5})
+         //       evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'RED', size:0.5})
                 if (gamePiece.getCurrentPathTile() === this.tilePath.getEndTile()) {
                     gamePiece.getSpatial().call.setStopped();
                     this.hasArrived = true;

@@ -65,7 +65,7 @@ class CompanionMovement {
         }
 
         let destinationVec3 =  this.getCompanionFormationDestination(followingPiece)
-        this.gamePiece.movementPath.setDestination(destinationVec3);
+        this.gamePiece.movementPath.determineGridPathToPos(destinationVec3);
     }
 
     updateCompanionMovement(followingPiece) {

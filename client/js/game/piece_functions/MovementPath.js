@@ -135,7 +135,7 @@ class MovementPath {
         this.lineEvent.from.copy(from)
         this.lineEvent.to.copy(to);
         this.lineEvent.color = color || 'CYAN';
-        evt.dispatch(ENUMS.Event.DEBUG_DRAW_LINE, this.lineEvent);
+  //      evt.dispatch(ENUMS.Event.DEBUG_DRAW_LINE, this.lineEvent);
     }
 
     setDestination(posVec) {

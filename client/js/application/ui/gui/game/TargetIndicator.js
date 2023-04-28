@@ -1,4 +1,6 @@
 import { Object3D } from "../../../../../libs/three/core/Object3D.js";
+import { Vector3 } from "../../../../../libs/three/math/Vector3.js";
+let tempVec3 = new Vector3();
 let tempObj = new Object3D()
 
 class TargetIndicator {
@@ -26,6 +28,15 @@ class TargetIndicator {
         this.call = {
             updateIndicator:updateIndicator
         }
+    }
+
+    addPointerPieceCameraModifiers(posVec) {
+        tempVec3.copy(posVec);
+        tempVec3.sub(GameAPI.getMainCharPiece().getPos())
+        tempVec3.multiplyScalar(0.35);
+        GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
+        tempVec3.multiplyScalar(0.55);
+        GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
     }
 
     indicateGamePiece(gamePiece, indicatorFx, tileX, tileY, spin, scale, pulsate, rate) {
@@ -60,6 +71,7 @@ class TargetIndicator {
     }
 
     indicateSelectedTargetPiece(tpf, time, gamePiece, spinSpeed, scale, pulsate, rate) {
+        this.addPointerPieceCameraModifiers(gamePiece.getCenterMass())
         for (let i = 0; i < this.indicators.length; i++) {
             let efct = this.indicators[i];
             let faction = gamePiece.getStatusByKey('faction') || 'ITEM'
@@ -76,10 +88,7 @@ class TargetIndicator {
                 tempObj.rotateZ(time*spinSpeed);
                 efct.setEffectQuaternion(tempObj.quaternion);
             }
-
-
         }
-
     }
 
     removeTargetIndicatorFromPiece() {
