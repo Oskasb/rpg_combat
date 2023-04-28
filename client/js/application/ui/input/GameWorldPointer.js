@@ -277,7 +277,7 @@ class GameWorldPointer {
         }.bind(this);
 
         let updateMovementPointer = function() {
-            
+        //    console.log("move...")
 
             if (worldSelection) {
                 if (worldSelection.getStatusByKey('faction') === 'EVIL')
@@ -306,7 +306,7 @@ class GameWorldPointer {
 
             let selectedTile = screenSelection;
 
-            if (selectedTile && (pointer.getPointerHasDragState() > 0)) {
+            if (selectedTile) {
                 if (this.lastSelectedTile !== selectedTile) {
                     if (this.lastSelectedTile) {
                         this.lastSelectedTile.indicateTileStatus(false)
@@ -315,6 +315,7 @@ class GameWorldPointer {
                     selectedTile.indicateTileStatus(false);
                     selectedTile.setTileStatus('MOVE_TO');
                     selectedTile.indicateTileStatus(true)
+
                 }
                 this.worldPointerFindPath(pointer);
             }
@@ -324,6 +325,11 @@ class GameWorldPointer {
         if (screenSelection === playerPiece && isFirstPressFrame) {
             pointer.isMovementInput = true;
             //    console.log(pointer)
+        }
+
+        if ((screenSelection === null) && isFirstPressFrame) {
+            pointer.isMovementInput = true;
+            //    console.log("nothing move", pointer)
         }
 
         if (pointer.isMovementInput) {
