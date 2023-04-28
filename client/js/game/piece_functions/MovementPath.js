@@ -275,25 +275,28 @@ class MovementPath {
 
     }
 
+
+
     determineGridPathToPos(posVec) {
         this.cancelMovementPath()
         this.setDestination(posVec);
         this.buildGridPath(posVec)
 
-        if (this.gamePiece.getTarget() === null) {
+    //    if (this.gamePiece.getTarget() === null) {
+
             this.tempVec.copy(posVec);
             this.tempVec.y = this.gamePiece.getPos().y;
             this.gamePiece.getSpatial().obj3d.lookAt(this.tempVec);
             this.tempVec.sub(this.gamePiece.getPos());
-            this.tempVec.multiplyScalar(0.5);
+            this.tempVec.multiplyScalar(0.25);
             GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
             this.tempVec.multiplyScalar(-1);
             GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
 
-        } else {
-            this.tempVec.set(0, 0, 0);
-            GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
-        }
+    //    } else {
+    //        this.tempVec.set(0, 0, 0);
+    //        GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
+    //    }
 
     }
 
@@ -348,6 +351,7 @@ class MovementPath {
 
         this.tempVec.copy(targetPiece.getPos());
         this.tempVec.sub(this.gamePiece.getPos())
+        this.tempVec.multiplyScalar(0.75);
         GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
         GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
     }
