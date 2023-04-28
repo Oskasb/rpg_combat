@@ -5,7 +5,8 @@
       "/threedata/assets/load_assets.json"                   ,
       "/geometry/terrain_configs.json"                       ,
 
-      "/world/grid/main_encounter_grids.json"                     ,
+      "/world/spawn/spawn_patterns.json"                     ,
+      "/world/grid/main_encounter_grids.json"                ,
       "/world/scenarios/home_scenario_static.json"           ,
       "/world/scenarios/cave_scenario_static.json"           ,
 

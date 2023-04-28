@@ -39,10 +39,14 @@ class PathWalker {
         tempVec.copy(this.headingVector);
         tempVec.multiplyScalar(frameTravelDistance);
         tempVec.add(gamePiece.getPos());
+        gamePiece.getSpatial().setPosVec3(tempVec);
         if (!gamePiece.getTarget()) {
+            tempVec.copy(this.headingVector);
+            tempVec.add(gamePiece.getPos());
+            tempVec.y = gamePiece.getPos().y;
             gamePiece.getSpatial().obj3d.lookAt(tempVec);
         }
-        gamePiece.getSpatial().setPosVec3(tempVec);
+
     }
 
     processTilePathMovement(onArriveCB, tpf, gameTime) {

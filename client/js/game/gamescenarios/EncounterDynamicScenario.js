@@ -1,12 +1,14 @@
 import * as ScenarioUtils from "../gameworld/ScenarioUtils.js";
-import {ConfigData} from "../../application/utils/ConfigData.js";
+import { ConfigData } from "../../application/utils/ConfigData.js";
 import { EncounterGrid } from "./EncounterGrid.js";
+import { SpawnPattern } from "./SpawnPattern.js";
 let camParams = {}
 class EncounterDynamicScenario {
     constructor(dataId) {
         this.dataId = dataId;
         this.pieces = GameAPI.getWorldItemPieces();
         this.characters = [];
+        this.spawnPatterns = [];
         this.onUpdateCallbacks = []
         this.configData =  new ConfigData("DYNAMIC_SCENARIOS", "GAME_SCENARIOS",  'dynamic_view_init', 'data_key', 'config')
         this.isActive = false;
@@ -104,7 +106,7 @@ class EncounterDynamicScenario {
         evt.dispatch(ENUMS.Event.ADVANCE_ENVIRONMENT,  {envId:config['environment'], time:50});
 
         let pieces = this.pieces;
-
+        let characters = this.characters;
 
 
         ScenarioUtils.resetScenarioCharacterPiece(GameAPI.getMainCharPiece());
@@ -123,45 +125,20 @@ class EncounterDynamicScenario {
         }
 
 
-        let characters = this.characters;
 
-        let walkCharToStart = function(charConf, character) {
-            let charPiece = character.gamePiece;
-            ScenarioUtils.resetScenarioCharacterPiece(charPiece);
-            MATH.vec3FromArray(ThreeAPI.tempVec3, charConf.pos);
-            charPiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
-            MATH.randomVector(ThreeAPI.tempVec3b);
-            ThreeAPI.tempVec3b.y = 0;
-            ThreeAPI.tempVec3b.multiplyScalar(4);
-            ThreeAPI.tempVec3b.add(ThreeAPI.tempVec3);
-            let moveCB = function (movedCharPiece) {
-                movedCharPiece.getSpatial().setRotXYZ(charConf.rot[0],charConf.rot[1], charConf.rot[2])
+        if (config['spawn_patterns']) {
+            for (let i = 0; i < config['spawn_patterns'].length; i++) {
+                let pattern = new SpawnPattern(config['spawn_patterns'][i])
+                pattern.applySpawnPattern(this.encounterGrid, characters, pieces);
+                this.spawnPatterns.push(pattern)
             }
-            charPiece.getPieceMovement().setTargetPosition(ThreeAPI.tempVec3);
-            let tPos = charPiece.getPieceMovement().getTargetPosition();
-            charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, tPos, 2, moveCB)
         }
 
         if (config['characters']) {
             for (let i = 0; i < config.characters.length; i++) {
-
                 let char =  config.characters[i];
-                let charCB = function(character) {
-                    characters.push(character);
-                    let gamePiece = character.gamePiece;
-                    gamePiece.character = character;
-                    GameAPI.addPieceToWorld(gamePiece);
-                    ScenarioUtils.resetScenarioCharacterPiece(gamePiece);
-                    gamePiece.setStatusValue('isCharacter', 1)
-                    setTimeout(function() {
-                        walkCharToStart(char, character)
-                    }, 10*(MATH.sillyRandom(i)+0.5))
-
-                }
-
-                GameAPI.composeCharacter(char['character'], charCB)
+                ScenarioUtils.buildScenarioCharacter(char['character'], characters, char)
             }
-
         }
 
         if(config.spawn) {

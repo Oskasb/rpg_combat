@@ -364,6 +364,41 @@ function getTileForPosition(gridTiles, posVec3) {
     return selectedTile
 }
 
+let walkCharToStart = function(charConf, character) {
+    let charPiece = character.gamePiece;
+    resetScenarioCharacterPiece(charPiece);
+    MATH.vec3FromArray(ThreeAPI.tempVec3, charConf.pos);
+    charPiece.getSpatial().setPosVec3(ThreeAPI.tempVec3);
+    MATH.randomVector(ThreeAPI.tempVec3b);
+    ThreeAPI.tempVec3b.y = 0;
+    ThreeAPI.tempVec3b.multiplyScalar(2);
+    ThreeAPI.tempVec3b.add(ThreeAPI.tempVec3);
+    let moveCB = function (movedCharPiece) {
+        movedCharPiece.getSpatial().setRotXYZ(charConf.rot[0],charConf.rot[1], charConf.rot[2])
+    }
+    charPiece.getPieceMovement().setTargetPosition(ThreeAPI.tempVec3);
+    let tPos = charPiece.getPieceMovement().getTargetPosition();
+    charPiece.getPieceMovement().moveToTargetAtTime('walk',ThreeAPI.tempVec3b, tPos, 2, moveCB)
+}
+
+function buildScenarioCharacter(charId, characters, charConf) {
+    let charCB = function(character) {
+        characters.push(character);
+        let gamePiece = character.gamePiece;
+        gamePiece.character = character;
+        GameAPI.addPieceToWorld(gamePiece);
+        resetScenarioCharacterPiece(gamePiece);
+        gamePiece.setStatusValue('isCharacter', 1)
+        if (typeof(charConf) === 'object') {
+            setTimeout(function() {
+                walkCharToStart(charConf, character)
+            }, 10*(MATH.sillyRandom(characters.length)+0.5))
+        }
+    }
+
+    GameAPI.composeCharacter(charId, charCB)
+}
+
 export {
     positionPlayer,
     setupBoxGrid,
@@ -371,5 +406,6 @@ export {
     spawnLocation,
     resetScenarioCharacterPiece,
     setupEncounterGrid,
-    getTileForPosition
+    getTileForPosition,
+    buildScenarioCharacter
 }

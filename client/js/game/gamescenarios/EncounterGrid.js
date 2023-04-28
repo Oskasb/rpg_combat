@@ -30,6 +30,12 @@ class EncounterGrid {
         return this.gridTiles[row][col]
     }
 
+    getTileByRowCol(x, y) {
+        let row = x;
+        let col = this.gridTiles[0].length - y -1;
+        return this.gridTiles[row][col]
+    }
+
     getPlayerStartTile() {
         let row = this.startTile[0];
         let col = this.gridTiles[0].length - this.startTile[1];

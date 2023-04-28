@@ -30,6 +30,15 @@
                 "rot": [0,  0, 0],
                 "pos": [20, 0, -10]
               },
+              "spawn_patterns": [
+                {"dataId": "spawn_home_front_yard",
+                  "tile_x": 2,
+                  "tile_y": 2,
+                  "characters":[
+                    "BANDIT_BASIC"
+                  ]
+                }
+              ],
               "characters": [
 
               ],

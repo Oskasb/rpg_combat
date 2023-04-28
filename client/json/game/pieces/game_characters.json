@@ -72,7 +72,7 @@
           },
 
           "actor":"ACTOR_FIGHTER",
-          "equipment":["AXE_SLICER", "HAT_CLOTH_YELLOW", "BELT_BRONZE", "LEGS_CHAIN", "BREASTPLATE_BRONZE"],
+          "equipment":["SWORD_FANCY", "HAT_CLOTH_YELLOW", "BELT_BRONZE", "LEGS_CHAIN", "BREASTPLATE_BRONZE"],
           "inventory": [
 
           ]
@@ -144,7 +144,7 @@
 
           "actor":"ACTOR_FIGHTER",
           "equipment":[
-            "NINJASWORD", "BELT_PLATE", "BOOTS_SCALE", "LEGS_CHAIN", "SHIRT_CHAIN"
+            "SWORD_FANCY", "BELT_PLATE", "BOOTS_SCALE", "LEGS_CHAIN", "SHIRT_CHAIN"
           ],
           "inventory": [
 
@@ -196,7 +196,7 @@
 
           "actor":"ACTOR_FIGHTER",
           "equipment":[
-            "EMERALD_BLADE", "HELMET_VIKING" ,"BELT_PLATE", "BOOTS_SCALE",
+            "AXE_SLICER", "HELMET_VIKING" ,"BELT_PLATE", "BOOTS_SCALE",
             "LEGS_SCALE", "SHIRT_CHAIN","GLOVES_SCALE", "SHIRT_SCALE"
           ],
           "inventory": [

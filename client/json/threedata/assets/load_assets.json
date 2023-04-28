@@ -12,6 +12,7 @@
       "TEXTURES"
     ],
     "POLL_INDEX":[
+      "/world/spawn/spawn_patterns.json"                     ,
       "/threedata/shaders/three_shader_chunks.json"          ,
       "/threedata/shaders/three_particle_shaders.json"       ,
       "/threedata/shaders/three_shader_programs.json"
