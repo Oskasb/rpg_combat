@@ -14,9 +14,11 @@
     "POLL_INDEX":[
       "/world/spawn/spawn_patterns.json"                     ,
       "/world/grid/adventure_grids.json"                     ,
-      "/threedata/shaders/three_shader_programs.json"
+      "/world/scenarios/home_scenario_static.json"
+
     ],
     "NOT_POLL_INDEX":[
+      "/threedata/shaders/three_shader_programs.json"        ,
       "/threedata/shaders/three_shader_chunks.json"          ,
       "/threedata/shaders/three_particle_shaders.json"       ,
       "/game/skeletons/biped_rigs.json"                      ,
@@ -68,7 +70,7 @@
       "/ui/pages/gui_page_village.json"                        ,
       "/ui/pages/gui_page_world.json"                        ,
 
-      "/world/scenarios/home_scenario_static.json"          ,
+
 
 
       "/effects/effect_buffers.json"                         ,
