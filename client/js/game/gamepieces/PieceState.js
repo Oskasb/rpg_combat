@@ -22,6 +22,7 @@ class PieceState {
             gamePiece:gamePiece,
             animating:1,
             size:0.5,
+            scale:1,
             height: 0.5,
             meleeRange:0.5,
             move_speed:5,

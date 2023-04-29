@@ -4,9 +4,7 @@ class SpawnPattern {
     constructor(config) {
         console.log("Spawn Pattern", config)
         this.dataId = config['dataId'];
-        this.tileX = config['tile_x'];
-        this.tileY = config['tile_y'];
-        this.characters = config['characters'];
+        this.params = config['params'];
         this.configData =  new ConfigData("SPAWN", "SPAWN_PATTERNS",  'spawn_main_data', 'data_key', 'config')
 
     }
@@ -38,15 +36,18 @@ class SpawnPattern {
         let spawnTiles = config['spawn_tiles'];
 
         for (let i = 0; i < spawnTiles.length;i++) {
-            let tileX = spawnTiles[i][0]+this.tileX;
-            let tileY = spawnTiles[i][1]+this.tileY;
+            let tileX = spawnTiles[i][0]+this.params['tile_x'];
+            let tileY = spawnTiles[i][1]+this.params['tile_y'];
             let tile = encounterGrid.getTileByRowCol(tileX, tileY);
             let pos = tile.getPos();
+            let rotY = MATH.getRandomArrayEntry(this.params['rotations']);
+            let stateName = MATH.getRandomArrayEntry(this.params['states']);
             let spawnConf = {
                 pos: [pos.x, pos.y, pos.z],
-                rot: [0, 0.111, 0]
+                rot: [0, rotY, 0],
+                state: ENUMS.CharacterState[stateName]
             }
-            let charId = MATH.getRandomArrayEntry(this.characters);
+            let charId = MATH.getRandomArrayEntry(this.params['characters']);
             ScenarioUtils.buildScenarioCharacter(charId, scenarioCharacters, spawnConf)
         }
 

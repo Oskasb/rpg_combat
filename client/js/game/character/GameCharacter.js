@@ -39,6 +39,10 @@ class GameCharacter {
             gamePiece.setStatusValue(key, this.config.status[key]);
         }
 
+        let size = gamePiece.getStatusByKey('size');
+        gamePiece.getSpatial().setBaseSize(size)
+        gamePiece.pieceAnimator.setSizeForJoints(size);
+
         this.characterEquipment = new CharacterEquipment(gamePiece, equipSlotConfigId);
         this.characterMovement = new CharacterMovement(gamePiece);
         this.characterStatusGui.initStatusGui(this);

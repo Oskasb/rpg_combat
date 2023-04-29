@@ -375,6 +375,11 @@ let walkCharToStart = function(charConf, character) {
     ThreeAPI.tempVec3b.add(ThreeAPI.tempVec3);
     let moveCB = function (movedCharPiece) {
         movedCharPiece.getSpatial().setRotXYZ(charConf.rot[0],charConf.rot[1], charConf.rot[2])
+        if (charConf.state) {
+            movedCharPiece.setStatusValue('targState', charConf.state);
+            movedCharPiece.setStatusValue('charState', charConf.state);
+        }
+
     }
     charPiece.getPieceMovement().setTargetPosition(ThreeAPI.tempVec3);
     let tPos = charPiece.getPieceMovement().getTargetPosition();

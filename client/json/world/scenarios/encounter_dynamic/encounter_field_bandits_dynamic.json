@@ -30,116 +30,73 @@
                 "rot": [0,  0, 0],
                 "pos": [20, 0, -10]
               },
-              "characters": [
-                {
-                  "character":"BANDIT_LEADER",
-                  "pos": [22, 0, 3],
-                  "rot": [0, 0.111, 0]
+              "spawn_patterns": [
+                { "dataId": "spawn_pattern_nine_wedge",
+                  "params": {
+                    "tile_x": 6,
+                    "tile_y": 9,
+                    "rotations": [0.1, -0.1, 0.04, -0.04, 0.07, -0.07],
+                    "states": ["IDLE_HANDS"],
+                    "characters":[
+                      "BANDIT_BASIC"
+                    ]
+                  }
                 },
-                {
-                  "character":"BANDIT_LEADER",
-                  "pos": [20, 0, 3],
-                  "rot": [0, 0.111, 0]
+                { "dataId": "spawn_pattern_hex_row",
+                  "params": {
+                    "tile_x": 3,
+                    "tile_y": 17,
+                    "rotations": [0.1, -0.1, 0.04, -0.04, 0.07, -0.07],
+                    "states": ["IDLE_HANDS"],
+                    "characters":[
+                      "BANDIT_TOUGH",
+                      "BANDIT_BASIC",
+                      "BANDIT_BASIC"
+                    ]
+                  }
                 },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [20, 0, 1],
-                  "rot": [0, 0.111, 0]
+                { "dataId": "spawn_pattern_hex_row",
+                  "params": {
+                    "tile_x": 3,
+                    "tile_y": 18,
+                    "rotations": [0.1, -0.1, 0.04, -0.04, 0.07, -0.07],
+                    "states": ["IDLE_HANDS"],
+                    "characters":[
+                      "BANDIT_TOUGH",
+                      "BANDIT_GUARD",
+                      "BANDIT_BASIC"
+                    ]
+                  }
                 },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [24, 0, 1],
-                  "rot": [0, 0.111, 0]
+                { "dataId": "spawn_pattern_hex_row",
+                  "params": {
+                    "tile_x": 3,
+                    "tile_y": 19,
+                    "rotations": [0.1, -0.1, 0.04, -0.04, 0.07, -0.07],
+                    "states": ["IDLE_HANDS"],
+                    "characters":[
+                      "BANDIT_LEADER",
+                      "BANDIT_GUARD"
+                    ]
+                  }
                 },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [20, 0, -2],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [18, 0, -1],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [19, 0, -1],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [20, 0, -1],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [23, 0, -2],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [18, 0, 1],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [24, 0, -3],
-                  "rot": [0, 3.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [20, 0, -4],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [22, 0, -5],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_TOUGH",
-                  "pos": [19, 0, -7],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [23, 0, -6],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [25, 0, -8],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [23, 0, -8],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [21, 0, -8],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [24, 0, -8],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [22, 0, -8],
-                  "rot": [0, 0.111, 0]
-                },
-                {
-                  "character":"BANDIT_BASIC",
-                  "pos": [20, 0, -8],
-                  "rot": [0, 0.111, 0]
+                { "dataId": "spawn_pattern_nine_wedge",
+                  "params": {
+                    "tile_x": 7,
+                    "tile_y": 25,
+                    "rotations": [0.1, -0.1, 0.04, -0.04, 0.07, -0.07],
+                    "states": ["IDLE_HANDS"],
+                    "characters":[
+                      "BANDIT_LEADER",
+                      "BANDIT_TOUGH",
+                      "BANDIT_GUARD",
+                      "BANDIT_BASIC"
+                    ]
+                  }
                 }
               ],
-              "spawn":[
-
-              ]
+              "characters": [],
+              "spawn":[]
             }
           }
         ]

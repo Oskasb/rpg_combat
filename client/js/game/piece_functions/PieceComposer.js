@@ -46,7 +46,8 @@ class PieceComposer {
                     gamePiece.rigData = MATH.getFromArrayByKeyValue(config, 'id', rigDataKey);
 
                         let scaleVec = ThreeAPI.tempVec3;
-                        scaleVec.set(1, 1, 1);
+                        let size = gamePiece.getStatusByKey('size')
+                        scaleVec.set(size, size, size);
                         gamePiece.pieceAnimator.setupAnimations(assetInstance.originalModel, scaleVec);
                         gamePiece.animStateMap = gamePiece.pieceAnimator.initPieceAnimator(gamePiece, skeletonData);
                         gamePiece.pieceActionSystem.initPieceActionSystem(gamePiece, skeletonData.data);

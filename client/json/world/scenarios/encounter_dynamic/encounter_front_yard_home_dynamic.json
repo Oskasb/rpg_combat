@@ -31,12 +31,16 @@
                 "pos": [-1.5, 0, -7.5]
               },
               "spawn_patterns": [
-                {"dataId": "spawn_home_front_yard",
-                  "tile_x": 1,
-                  "tile_y": 7,
-                  "characters":[
-                    "BANDIT_BASIC"
-                  ]
+                { "dataId": "spawn_pattern_home_front_yard",
+                  "params": {
+                    "tile_x": 1,
+                    "tile_y": 7,
+                    "rotations": [2.3, 2.8],
+                    "states": ["IDLE_HANDS"],
+                    "characters":[
+                      "BANDIT_BASIC"
+                    ]
+                  }
                 }
               ],
               "characters": [

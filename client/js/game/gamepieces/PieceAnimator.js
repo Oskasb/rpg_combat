@@ -55,6 +55,13 @@ class PieceAnimator {
 
     };
 
+    setSizeForJoints(size) {
+        for (let key in this.attachmentJoints) {
+            let joint = this.attachmentJoints[key];
+            joint.parentScale.set(size, size, size);
+        }
+    }
+
     addAttachmentUpdate = function(attachmentUpdate) {
         this.attachmentUpdates.push(attachmentUpdate);
     };

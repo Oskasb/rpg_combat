@@ -12,6 +12,7 @@ class InstanceSpatial{
 
         constructor(obj3d) {
             this.obj3d = obj3d;
+            this.baseSize = 1;
             let frameMovement = new THREE.Vector3(0.0, 0.0, 0.0);
 
             let getFrameVelocity = function(tpf, storeVec3) {
@@ -104,10 +105,15 @@ class InstanceSpatial{
             testVec3ForNaN(this.obj3d.position)
             return this.obj3d.position;
         }
+
+        setBaseSize(size) {
+            this.baseSize = size;
+            this.setScaleXYZ(1, 1, 1)
+        }
         setScaleXYZ = function(x, y, z) {
-            this.obj3d.scale.x = x;
-            this.obj3d.scale.y = y;
-            this.obj3d.scale.z = z;
+            this.obj3d.scale.x = x*this.baseSize;
+            this.obj3d.scale.y = y*this.baseSize;
+            this.obj3d.scale.z = z*this.baseSize;
             if (this.geometryInstance) {
                 this.geometryInstance.applyObjScale();
             }
