@@ -126,6 +126,54 @@
         }
       },
       {
+        "id":"BANDIT_HAT_LEATHER",
+        "data":{
+          "status": {
+            "name": "Bandit",
+            "faction": "EVIL",
+            "aggro_range": 5,
+            "height": 1.65,
+            "level": 1,
+            "size": 0.89,
+            "maxHP": 6,
+            "hp": 6,
+            "dmg": 1,
+            "FAST": 1,
+            "xp_value": 18
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["HAT_LEATHER_BROWN","HATCHET_NICE"],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
+        "id":"BANDIT_HAT_RED",
+        "data":{
+          "status": {
+            "name": "Bandit",
+            "faction": "EVIL",
+            "aggro_range": 5,
+            "height": 1.62,
+            "level": 2,
+            "size": 0.85,
+            "maxHP": 8,
+            "hp": 8,
+            "dmg": 1,
+            "FAST": 2,
+            "xp_value": 22
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["HAT_CLOTH_RED","HATCHET_NICE"],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
         "id":"BANDIT_TOUGH",
         "data":{
           "status": {
@@ -198,6 +246,60 @@
           "equipment":[
             "AXE_SLICER", "HELMET_VIKING" ,"BELT_PLATE", "BOOTS_SCALE",
             "LEGS_SCALE", "SHIRT_CHAIN","GLOVES_SCALE", "SHIRT_SCALE"
+          ],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
+        "id":"BANDIT_CHAMPION",
+        "data":{
+          "status": {
+            "name": "Bandit Leader",
+            "faction": "EVIL",
+            "level": 8,
+            "aggro_range": 4,
+            "height": 1.98,
+            "size": 1.22,
+            "maxHP": 75,
+            "hp": 75,
+            "dmg": 6,
+            "FAST": 4.5,
+            "xp_value": 350
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":[
+            "SWORD_FANCY", "HAT_LEATHER_BROWN" ,"BELT_PLATE", "BOOTS_SCALE",
+            "LEGS_CHAIN", "SHIRT_CHAIN","GLOVES_SCALE", "BREASTPLATE_BRONZE"
+          ],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
+        "id":"BANDIT_BOSS",
+        "data":{
+          "status": {
+            "name": "Bandit Leader",
+            "faction": "EVIL",
+            "level": 9,
+            "aggro_range": 3,
+            "height": 2.18,
+            "size": 1.42,
+            "maxHP": 155,
+            "hp": 155,
+            "dmg": 4,
+            "FAST": 5,
+            "xp_value": 550
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":[
+            "EMERALD_BLADE", "HAT_POINTY_WHITE" ,"BELT_PLATE", "BOOTS_SCALE",
+            "LEGS_SCALE", "SHIRT_CHAIN", "GLOVES_SCALE", "SHIRT_SCALE"
           ],
           "inventory": [
 

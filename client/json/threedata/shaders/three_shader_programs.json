@@ -1305,11 +1305,13 @@
 
           "vec4 txColor = texture2D( map, vUv);",
           "if (txColor.a * vColor.a <= alphaTest) discard;",
-          "vec4 lightColor = vec4(sunDir, 1.0);",
 
+          "vec4 lightColor = vec4(sunDir, 1.0) * 0.5;",
+          "lightColor += 0.5;",
+          "gl_FragColor = vColor * txColor + txColor * lightColor*vColor;",
 
-          "gl_FragColor = vColor * txColor * 1.0 + txColor * vColor * lightColor*1.0;",
           "float fogFactor = min(fogDensity * fogDepth, 1.0);",
+
           "gl_FragColor.rgb = mix(gl_FragColor.rgb, fogColor,  fogFactor );",
           "}",
           ""
@@ -1458,8 +1460,8 @@
 
           "vec4 txColor = texture2D( map, vUv);",
           "if (txColor.a * vColor.a <= alphaTest) discard;",
-          "vec4 lightColor = vec4(sunDir, 1.0);",
-
+          "vec4 lightColor = vec4(sunDir, 1.0) * 0.5;",
+          "lightColor += 0.5;",
           "gl_FragColor = vColor * txColor + txColor * lightColor*vColor;",
           "}",
           ""
