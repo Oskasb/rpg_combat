@@ -9,8 +9,20 @@
             "config": {
               "gui_page":"page_scene_town",
               "player": {
-                "pos": [-6, 0, -208],
+                "pos": [-22, 0, -215],
                 "rot": [0, 1.4, 0]
+              },
+              "camera": {
+                "mode": "follow_cam_main_char",
+                "offset_pos": [12, 25, 0],
+                "offset_lookAt": [0, 1, 1]
+              },
+              "grid": {
+                "dataId":"grid_world_treetown",
+                "entrance_tile": [6, 4],
+                "start_tile": [5, 5],
+                "rot": [0,  -1.57079, 0],
+                "pos": [-16, 0, -206]
               },
               "environment": "sunny_day",
 

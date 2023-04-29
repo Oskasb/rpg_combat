@@ -13,12 +13,12 @@
     ],
     "POLL_INDEX":[
       "/world/spawn/spawn_patterns.json"                     ,
-      "/threedata/shaders/three_shader_chunks.json"          ,
-      "/threedata/shaders/three_particle_shaders.json"       ,
+      "/world/grid/adventure_grids.json"                     ,
       "/threedata/shaders/three_shader_programs.json"
     ],
     "NOT_POLL_INDEX":[
-
+      "/threedata/shaders/three_shader_chunks.json"          ,
+      "/threedata/shaders/three_particle_shaders.json"       ,
       "/game/skeletons/biped_rigs.json"                      ,
       "/world/scenarios/home_dynamic/home_hero_dynamic.json" ,
       "/world/scenarios/home_dynamic/home_hovel_dynamic.json" ,
