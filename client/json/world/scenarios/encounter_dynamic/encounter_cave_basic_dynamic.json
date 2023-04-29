@@ -18,6 +18,7 @@
                 "offset_lookAt": [0, 0, 0]
               },
               "gui_page":"page_scene_dungeon",
+              "victory_page": "page_scenario_victory",
               "environment": "cave_dusty",
               "player": {
                 "pos": [0, 0, 0],

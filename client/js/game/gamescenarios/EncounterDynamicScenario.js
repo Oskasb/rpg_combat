@@ -5,6 +5,7 @@ import { SpawnPattern } from "./SpawnPattern.js";
 let camParams = {}
 class EncounterDynamicScenario {
     constructor(dataId) {
+        this.victoryConditionMet = false;
         this.dataId = dataId;
         this.pieces = GameAPI.getWorldItemPieces();
         this.characters = [];
@@ -26,9 +27,19 @@ class EncounterDynamicScenario {
             GameAPI.getGameCamera().updatePlayerCamera(camParams)
         };
 
+        let setConfig = function(config) {
+            this.config = config;
+        }.bind(this)
+
+        let getConfig = function() {
+            return this.config;
+        }.bind(this)
+
         this.call = {
             applyCamParams:applyCamParams,
-            updateCamera:updateCamera
+            updateCamera:updateCamera,
+            setConfig:setConfig,
+            getConfig:getConfig
         }
 
     }
@@ -90,7 +101,7 @@ class EncounterDynamicScenario {
     }
 
     applyScenarioConfig = function(config, isUpdate) {
-
+        this.call.setConfig(config);
         this.config = config;
         if (config['grid']) {
             this.encounterGrid.initEncounterGrid(config.grid);
@@ -186,6 +197,33 @@ class EncounterDynamicScenario {
     };
 
     tickScenario(tpf, scenarioTime) {
+        if (this.victoryConditionMet === false) {
+            let evilChars = 0;
+            let deadEvilChars = 0;
+            for (let i = 0; i < this.characters.length; i++) {
+                let charPiece = this.characters[i].gamePiece;
+                if (charPiece.getStatusByKey('faction') === 'EVIL') {
+                    evilChars++;
+                    if (charPiece.isDead === true) {
+                        deadEvilChars++
+                    }
+                }
+            }
+
+            if (evilChars) {
+                if (evilChars === deadEvilChars) {
+                    GuiAPI.guiPageSystem.closeGuiPage(this.page);
+                    let pageReady = function() {
+
+                    }
+
+                    let config = this.call.getConfig();
+                    this.page = GuiAPI.activatePage(config['victory_page'], pageReady);
+                    this.victoryConditionMet = true;
+                }
+            }
+        }
+
 
     }
 

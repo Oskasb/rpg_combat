@@ -111,8 +111,8 @@ class EffectSpatialTransition {
             this.gameEffect.scaleEffectSize(size);
 
         } else {
-            MATH.callAll(this.onArriveCallbacks, this.gameEffect);
-            MATH.emptyArray(this.onArriveCallbacks);
+            MATH.callAndClearAll(this.onArriveCallbacks, this.gameEffect);
+        //    MATH.emptyArray(this.onArriveCallbacks);
         }
     }
 
