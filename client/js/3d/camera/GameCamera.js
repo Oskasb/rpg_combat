@@ -28,11 +28,14 @@ class GameCamera {
             if (fraction > 1) return;
             fraction = MATH.calcFraction(transitionStartTime, transitionEndTime, currentTime);
             let factor = 1;
+            let posFactor = 1;
             if (fraction < 0.95) {
-                factor =  MATH.curveSigmoid(fraction*0.5);
+                factor =  MATH.curveSigmoid(fraction*0.95);
+                posFactor = MATH.curveSigmoid(fraction*0.5);
             } else {
                 fraction = 1;
                 factor = 1;
+                posFactor = factor;
                 MATH.callAll(transitionEndCallbacks);
                 transitionEndCallbacks = [];
             }
@@ -42,9 +45,9 @@ class GameCamera {
 
             let pos = cameraPos;
             let tPos = targetPos;
-            pos.x = MATH.interpolateFromTo(pos.x, tPos.x, factor);
-            pos.y = MATH.interpolateFromTo(pos.y, tPos.y, factor);
-            pos.z = MATH.interpolateFromTo(pos.z, tPos.z, factor);
+            pos.x = MATH.interpolateFromTo(pos.x, tPos.x, posFactor);
+            pos.y = MATH.interpolateFromTo(pos.y, tPos.y, posFactor);
+            pos.z = MATH.interpolateFromTo(pos.z, tPos.z, posFactor);
 
             let cLook = cameraLookAt;
             let tLook = targetLookAt;
@@ -145,7 +148,7 @@ class GameCamera {
         camParams.offsetLookAt[0] = camConf.offsetLookAt[0];
         camParams.offsetLookAt[1] = camConf.offsetLookAt[1];
         camParams.offsetLookAt[2] = camConf.offsetLookAt[2];
-        camParams.time = 0.07;
+        camParams.time = 0.1;
         if (camConf['mode'] === "portrait_main_char") {
         //    console.log("Make cam go to char here for nice")
         }
