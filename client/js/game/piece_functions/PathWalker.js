@@ -90,7 +90,7 @@ class PathWalker {
                 this.applyHeadingToGamePiece(gamePiece, frameTravelDistance);
        //         evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'CYAN', size:0.4})
             } else {
-                console.log("Turn path ended")
+        //        console.log("Turn path ended")
                 this.applyHeadingToGamePiece(gamePiece, turnDistance);
          //       evt.dispatch(ENUMS.Event.DEBUG_DRAW_CROSS, {pos:gamePiece.getPos(), color:'RED', size:0.5})
                 if (gamePiece.getCurrentPathTile() === this.tilePath.getEndTile()) {

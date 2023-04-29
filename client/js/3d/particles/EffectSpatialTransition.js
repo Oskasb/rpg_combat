@@ -29,6 +29,12 @@ class EffectSpatialTransition {
 
     }
 
+    addArriveCallback(cb) {
+        if (this.onArriveCallbacks.indexOf(cb) === -1) {
+            this.onArriveCallbacks.push(cb)
+        }
+    }
+
     applyTransitionOptions(opts) {
         this.targetTime = this.startTime+opts.time;
 
@@ -52,7 +58,7 @@ class EffectSpatialTransition {
         this.spread = opts.spread || 0;
 
         if (typeof(opts.callback) === 'function') {
-            this.onArriveCallbacks.push(opts.callback);
+            this.addArriveCallback(opts.callback)
         }
 
         if (typeof(opts.getPosFunc) === 'function') {
@@ -105,8 +111,14 @@ class EffectSpatialTransition {
             this.gameEffect.scaleEffectSize(size);
 
         } else {
-            MATH.callAndClearAll(this.onArriveCallbacks, this.gameEffect);
+            MATH.callAll(this.onArriveCallbacks, this.gameEffect);
+            MATH.emptyArray(this.onArriveCallbacks);
         }
+    }
+
+    cancelSpatialTransition() {
+        MATH.callAll(this.onArriveCallbacks, this.gameEffect);
+        MATH.emptyArray(this.onArriveCallbacks);
     }
 
     applyFrameToMovement(tpf, gameTime) {

@@ -14,13 +14,13 @@
               },
               "camera": {
                 "mode": "follow_cam_main_char",
-                "offset_pos": [12, 25, 0],
+                "offset_pos": [6, 11, 3],
                 "offset_lookAt": [0, 1, 1]
               },
               "grid": {
                 "dataId":"grid_world_treetown",
-                "entrance_tile": [6, 4],
-                "start_tile": [5, 5],
+                "entrance_tile": [2, 5],
+                "start_tile": [15, 5],
                 "rot": [0,  -1.57079, 0],
                 "pos": [-16, 0, -206]
               },

@@ -39,6 +39,15 @@ class GameEffect {
             return this.effectId
         }.bind(this);
 
+        let updateEffect = function(tpf, gameTime) {
+            this.effectSpatialTransition.callbacks.onGameUpdate(tpf, gameTime)
+        }.bind(this)
+
+        let onArrive = function(gameEffect) {
+            GameAPI.unregisterGameUpdateCallback(this.callbacks.updateEffect)
+            //    callback(gameEffect);
+        }.bind(this)
+
         this.callbacks = {
             activateEffect : activateEffect,
             recoverEffect : recoverEffect,
@@ -47,7 +56,9 @@ class GameEffect {
             setConfig:setConfig,
             getConfig:getConfig,
             setEffectId:setEffectId,
-            getEffectId:getEffectId
+            getEffectId:getEffectId,
+            updateEffect:updateEffect,
+            onArrive:onArrive
         }
     };
 
@@ -72,14 +83,9 @@ class GameEffect {
     };
 
     activateSpatialTransition(options) {
-
-        let onArrive = function(gameEffect) {
-            GameAPI.unregisterGameUpdateCallback(this.effectSpatialTransition.callbacks.onGameUpdate)
-            callback(gameEffect);
-        }.bind(this)
-
         this.effectSpatialTransition.initEffectTransition(options)
-        GameAPI.registerGameUpdateCallback(this.effectSpatialTransition.callbacks.onGameUpdate)
+        this.effectSpatialTransition.addArriveCallback(this.callbacks.onArrive)
+        GameAPI.registerGameUpdateCallback(this.callbacks.updateEffect)
     }
 
     activateEffectFromConfigId = function(isPermanent) {
@@ -146,6 +152,8 @@ class GameEffect {
 
     recoverEffectOfClass = function() {
         this.pos.set(0, -1000, 0)
+
+        this.effectSpatialTransition.cancelSpatialTransition()
 
         if (this.joint) {
             this.joint.removePositionUpdateCallback(this.callbacks.positionUpdated);

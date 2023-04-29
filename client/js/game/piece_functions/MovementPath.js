@@ -216,7 +216,7 @@ class MovementPath {
             }
 
             if (!this.tilePath.getTiles()[i]) {
-                console.log('Sometimes the path is culled here? it breaks!')
+            //    console.log('Sometimes the path is culled here? it breaks!')
                 return;
             }
             if ( Math.abs(elevation) > Math.abs(this.tilePath.getTiles()[i].getPos().y) + 0.7)  {
