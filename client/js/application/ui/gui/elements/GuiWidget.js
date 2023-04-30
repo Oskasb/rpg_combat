@@ -178,7 +178,14 @@ class GuiWidget {
                     let key = track['key'];
                     let value = track['value'];
                     let trackValues = PipelineAPI.getCachedConfigs()[category][key];
-                    this.printWidgetText(trackValues[value]);
+
+                    let print;
+                    if (trackValues.gamePiece) {
+                        print = trackValues.gamePiece.getStatusByKey(value);
+                    } else {
+                        print = trackValues[value]
+                    }
+                    this.printWidgetText(print);
                 }
             }
 

@@ -27,7 +27,8 @@ class GuiStatsPanel {
         let updateTrackedStats = function() {
             for (let i = 0; i < this.samplers.length; i++) {
                 let sampler = this.samplers[i].key
-                let value = trackValues[sampler];
+            //    console.log("trackValues", trackValues);
+                let value = trackValues.gamePiece.getStatusByKey(sampler);
                 this.updateStat(this.samplers[i].key, value);
             }
         }.bind(this);

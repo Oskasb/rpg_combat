@@ -5,65 +5,85 @@
         "id":"NINJASWORD",
         "data":{
           "model_asset":"asset_ninjablade",
+
           "slot": "SLOT_HAND_R",
           "status": {
             "name": "Sword",
-            "item_type": "Weapon"
+            "item_type": "Weapon",
+            "level_table": "level_table_sword_default",
+            "level": 1
           }
         }
       },
       {
         "id":"AXE_SLICER",
         "data":{
+
           "model_asset":"asset_slicer_axe_2h",
           "slot": "SLOT_HAND_R",
           "status": {
             "name": "Slicer Axe",
-            "item_type": "Weapon"
+            "item_type": "Weapon",
+            "level_table": "level_table_axe_default",
+            "level": 15
           }
         }
       },
       {
         "id":"SWORD_FANCY",
         "data":{
+
           "model_asset":"asset_sword_fancy",
           "slot": "SLOT_HAND_R",
           "status": {
             "name": "Fancy Sword",
-            "item_type": "Weapon"
+            "item_type": "Weapon",
+            "level_table": "level_table_sword_default",
+            "level": 12
           }
         }
       },
       {
         "id":"EMERALD_BLADE",
         "data":{
+
           "model_asset":"asset_emerald_blade",
           "slot": "SLOT_HAND_R",
+
           "status": {
             "name": "Emerald Blade",
-            "item_type": "Weapon"
+            "item_type": "Weapon",
+            "level_table": "level_table_sword_default",
+            "level": 20
           }
         }
       },
       {
         "id":"HATCHET_NICE",
         "data":{
+
           "model_asset":"asset_hatchet_nice",
           "slot": "SLOT_HAND_R",
+
           "status": {
             "name": "Nice Hatchet",
-            "item_type": "Weapon"
+            "item_type": "Weapon",
+            "level_table": "level_table_axe_default",
+            "level": 1
           }
         }
       },
       {
         "id":"LEGS_BRONZE",
         "data":{
+
           "model_asset":"asset_bronze_legs",
           "slot": "SLOT_LEGS",
           "status": {
             "name": "Bronze Greaves",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 3
           }
         }
       },
@@ -74,7 +94,9 @@
           "slot": "SLOT_CHEST",
           "status": {
             "name": "Bronze Plate",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 4
           }
         }
       },
@@ -83,9 +105,12 @@
         "data":{
           "model_asset":"asset_helmet_bronze",
           "slot": "SLOT_HEAD",
+
           "status": {
             "name": "Bronze Helmet",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 2
           }
 
         }
@@ -97,7 +122,9 @@
           "slot": "SLOT_HEAD",
           "status": {
             "name": "White Cloth Hat",
-            "item_type": "Clothes"
+            "item_type": "Clothes",
+            "level_table": "level_table_armor_default",
+            "level": 8
           }
 
         }
@@ -108,8 +135,10 @@
           "model_asset":"asset_hat_cloth_yellow",
           "slot": "SLOT_HEAD",
           "status": {
-            "name": "White Cloth Hat",
-            "item_type": "Clothes"
+            "name": "Yellow Cloth Hat",
+            "item_type": "Clothes",
+            "level_table": "level_table_armor_default",
+            "level": 6
           }
         }
       },
@@ -119,8 +148,10 @@
           "model_asset":"asset_hat_pointy_white",
           "slot": "SLOT_HEAD",
           "status": {
-            "name": "White Cloth Hat",
-            "item_type": "Clothes"
+            "name": "White Pointy Hat",
+            "item_type": "Clothes",
+            "level_table": "level_table_armor_default",
+            "level": 15
           }
 
         }
@@ -131,8 +162,10 @@
           "model_asset":"asset_hat_cloth_blue",
           "slot": "SLOT_HEAD",
           "status": {
-            "name": "White Cloth Hat",
-            "item_type": "Clothes"
+            "name": "Blue Cloth Hat",
+            "item_type": "Clothes",
+            "level_table": "level_table_armor_default",
+            "level": 4
           }
         }
       },
@@ -142,8 +175,10 @@
           "model_asset":"asset_hat_cloth_red",
           "slot": "SLOT_HEAD",
           "status": {
-            "name": "White Cloth Hat",
-            "item_type": "Clothes"
+            "name": "Red Cloth Hat",
+            "item_type": "Clothes",
+            "level_table": "level_table_armor_default",
+            "level": 7
           }
 
         }
@@ -154,8 +189,10 @@
           "model_asset":"asset_hat_leather_brown",
           "slot": "SLOT_HEAD",
           "status": {
-            "name": "White Cloth Hat",
-            "item_type": "Clothes"
+            "name": "Brown Leather Hat",
+            "item_type": "Clothes",
+            "level_table": "level_table_armor_default",
+            "level": 4
           }
         }
       },
@@ -166,7 +203,9 @@
           "slot": "SLOT_WRIST",
           "status": {
             "name": "Bronze Bracers",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 3
           }
         }
       },
@@ -177,7 +216,9 @@
           "slot": "SLOT_WAIST",
           "status": {
             "name": "Bronze Belt",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 3
           }
         }
       },
@@ -190,7 +231,9 @@
           "slot": "SLOT_HEAD",
           "status": {
             "name": "Viking Helmet",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 9
           }
         }
       },
@@ -201,7 +244,9 @@
           "slot": "SLOT_WAIST",
           "status": {
             "name": "Plate Girdle",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 9
           }
         }
       },
@@ -212,7 +257,9 @@
           "slot": "SLOT_BODY",
           "status": {
             "name": "Chain Shirt",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 5
           }
         }
       },
@@ -223,7 +270,9 @@
           "slot": "SLOT_CHEST",
           "status": {
             "name": "Scale Plates",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 15
           }
         }
       },
@@ -234,7 +283,9 @@
           "slot": "SLOT_LEGS",
           "status": {
             "name": "Chain Skirt",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 5
           }
         }
       },
@@ -245,7 +296,9 @@
           "slot": "SLOT_LEGS",
           "status": {
             "name": "Scale Skirt",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 15
           }
         }
       },
@@ -256,7 +309,9 @@
           "slot": "SLOT_FEET",
           "status": {
             "name": "Scale Boots",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 7
           }
         }
       },
@@ -267,7 +322,9 @@
           "slot": "SLOT_HANDS",
           "status": {
             "name": "Scale Gloves",
-            "item_type": "Armor"
+            "item_type": "Armor",
+            "level_table": "level_table_armor_default",
+            "level": 7
           }
         }
       },
@@ -278,7 +335,9 @@
           "slot": "SLOT_BODY",
           "status": {
             "name": "Big Armor",
-            "item_type": "Junk"
+            "item_type": "Junk",
+            "level_table": "level_table_armor_default",
+            "level": 5
           }
         }
       },
@@ -289,7 +348,9 @@
           "slot": "SLOT_LEGS",
           "status": {
             "name": "Big Greaves",
-            "item_type": "Junk"
+            "item_type": "Junk",
+            "level_table": "level_table_armor_default",
+            "level": 5
           }
         }
       }

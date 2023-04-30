@@ -218,9 +218,9 @@ class PieceInfoGui {
     }
 
     updateStatusValues = function() {
-        let status = this.gamePiece.pieceState.status;
         for (let i = 0; i < this.statusList.length; i++) {
-            this.statusList[i].textWidget.setFirstSTringText(status[this.statusList[i].status])
+            let amount = this.gamePiece.getStatusByKey(this.statusList[i].status)
+            this.statusList[i].textWidget.setFirstSTringText(amount)
         }
     }
 

@@ -1,9 +1,12 @@
 import { PieceStateProcessor } from "./PieceStateProcessor.js";
+import { ConfigData } from "../../application/utils/ConfigData.js";
 
 class PieceState {
     constructor(gamePiece) {
         this.gamePiece = gamePiece;
-        this.pieceStateProcessor = new PieceStateProcessor(gamePiece);
+
+        this.configData =  new ConfigData("GAME", "GAME_STATS",  'level_table', 'data_key', 'config')
+
         this.config = {
 
             xpGain:21,
@@ -14,12 +17,17 @@ class PieceState {
             recoverFraction:0.30,
             hasteFactor:1,
             maxActPts:5,
-            maxHP: 100
+            maxHP: 0
+        }
+
+        let getBy = function(key) {
+            return gamePiece.getStatusByKey(key)
         }
 
         this.status = {
             name:'no_name',
             gamePiece:gamePiece,
+            getBy:getBy,
             animating:1,
             size:0.5,
             scale:1,
@@ -28,11 +36,13 @@ class PieceState {
             move_speed:5,
             turn_moves:0,
             aggro_range:7,
-            levels:[0, 35, 100, 250, 500, 1000, 2000, 4000, 8000, 12000, 20000],
+            levels:[0, 35, 100, 250, 400, 600, 900, 1200, 1600, 2500, 3200,
+                4500, 5350, 6100, 7250, 8400, 9600, 10900, 11200, 13600, 22500, 33200],
             NONE:0,
             FAST:3,
+            dmg:0,
             lifetime:0,
-            level:1,
+            level:0,
             xp:0,
             gold:0,
             gems:0,
@@ -62,8 +72,8 @@ class PieceState {
             maxAPs:0,
             actPts:0,
             activeAPs:0,
-            hp:100,
-            maxHP:100,
+            hp:0,
+            maxHP:0,
             isItem:0,
             isCharacter:0,
             ability_slots_max: 2,
@@ -76,15 +86,81 @@ class PieceState {
             status_hasted: 0,
             status_empowered: 0,
             status_hardened: 0,
-            status_vampiric: 0,
+            status_lifesteal: 0,
             status_hidden: 0,
             status_poisoned: 0
+        }
+
+        this.levelModifiers = {
+
+        }
+
+        this.equipmentModifiers = {
+
+        }
+
+        this.abilityModifiers = {
+
+        }
+
+        for (let key in gamePiece.config.status) {
+            if (key !== 'level') {
+                this.status[key] = gamePiece.config.status[key];
+            }
         }
 
         this.lastState = ENUMS.CharacterState.IDLE_HANDS;
 
     }
 
+    initPieceState() {
+        let gamePiece = this.gamePiece;
+
+
+
+        let applyLevelTable = function(levelTables) {
+            //    console.log("Level table", levelTables.level_up_status_modifiers);
+            this.status.levelTables = levelTables['level_up_status_modifiers'];
+            this.processLevelUpTo(pieceLevel, gamePiece)
+        }.bind(this);
+
+        let onConfig = function(config) {
+            applyLevelTable(config);
+        }.bind(this)
+        let dataId;
+        let pieceLevel;
+        if (gamePiece.config.status) {
+            dataId = gamePiece.config.status['level_table'];
+            pieceLevel = gamePiece.config.status['level'];
+        } else {
+            let pieceConf = new ConfigData("GAME", "PIECES").parseConfigData()[gamePiece.config.piece].data;
+            dataId = pieceConf.status['level_table'];
+            pieceLevel = pieceConf.status['level'];
+        }
+        this.configData.parseConfig(dataId, onConfig)
+        this.pieceStateProcessor = new PieceStateProcessor(gamePiece);
+    }
+
+    processLevelUpTo(targetLevel, gamePiece) {
+
+        let fromLevel = this.status.level;
+        console.log("Process Level Up", fromLevel, targetLevel, this.status.levelTables);
+
+        let levelTables = gamePiece.getStatusByKey('levelTables');
+        for (let key in levelTables) {
+            this.levelModifiers[key] = 0;
+            let amount = 0
+            for (let i = 0; i < targetLevel; i++) {
+                amount += levelTables[key][i];
+            }
+
+            this.levelModifiers[key] = amount;
+            console.log("increase by", key, amount, gamePiece.getStatusByKey(key));
+        }
+        this.status.hp = gamePiece.getStatusByKey('maxHP');
+        console.log(gamePiece.getStatusByKey('maxHP'), gamePiece.getStatusByKey('hp'), gamePiece.getStatusByKey('dmg'), gamePiece.getStatusByKey('FAST'))
+        this.status.level = targetLevel;
+    }
 
     isCombatRelatedState(state) {
         return  (state === ENUMS.CharacterState.ENGAGING || state === ENUMS.CharacterState.COMBAT || state === ENUMS.CharacterState.DISENGAGING)

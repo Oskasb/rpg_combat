@@ -35,9 +35,7 @@ class GameCharacter {
         gamePiece.character = this;
         this.characterStatus.activateCharacterStatus(gamePiece);
 
-        for (let key in this.config.status) {
-            gamePiece.setStatusValue(key, this.config.status[key]);
-        }
+
 
         let size = gamePiece.getStatusByKey('size');
         gamePiece.getSpatial().setBaseSize(size)

@@ -422,26 +422,9 @@ class PlayerMain {
 
         console.log("Cheat pimp")
 
-
-        let status = GameAPI.getMainCharPiece().getStatus()
-        let addHp = Math.floor(Math.random()*20)
-        let addDmg = 1+Math.floor(Math.random()*1.5);
-        let addAttacks = 0.3 + Math.floor(Math.random()*1.2);
-        let addLevel = 1;
-        status.FAST += addAttacks;
-        status.maxHP += addHp;
-        status.hp += addHp;
-        status.dmg += addDmg;
-        status.level += addLevel;
-
-
-
-
-
-
-
-
-
+        let gamePiece = GameAPI.getMainCharPiece()
+        let level = gamePiece.getStatusByKey('level');
+        gamePiece.applyPieceLevel(level+1);
 
     }
 

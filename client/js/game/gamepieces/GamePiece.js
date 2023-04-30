@@ -20,6 +20,7 @@ let tempObj3d = new Object3D()
 
 class GamePiece {
     constructor(config, callback) {
+        this.config = config;
         this.companions = [];
         this.character = null;
         this.isDead = false;
@@ -81,14 +82,20 @@ class GamePiece {
                 }
         }.bind(this);
 
+        let getPieceState = function() {
+            return this.pieceState;
+        }.bind(this)
+
         this.callbacks = {
             tickGamePiece:tickGamePiece,
-            tickPieceEquippedItem:tickPieceEquippedItem
+            tickPieceEquippedItem:tickPieceEquippedItem,
+            getPieceState:getPieceState
         };
 
         let compositCb = function(piece) {
             this.pieceMovement = new PieceMovement(piece);
             this.movementPath = new MovementPath(piece);
+            this.pieceState.initPieceState();
             callback(piece)
         }.bind(this);
 
@@ -153,11 +160,41 @@ class GamePiece {
     }
 
     getStatusByKey = function(key) {
-        return this.pieceState.status[key];
+        let pieceState = this.callbacks.getPieceState();
+        if (!pieceState) {
+            console.log("no pieceStatus", key, this);
+            return;
+        }
+        if (typeof(pieceState.status[key]) === 'undefined') {
+            console.log("No status", key, this)
+            return;
+        }
+        let amount = pieceState.status[key];
+        if (typeof (amount) === 'number') {
+            if (pieceState.equipmentModifiers[key]) {
+                amount += pieceState.equipmentModifiers[key];
+            }
+            if (pieceState.abilityModifiers[key]) {
+                amount += pieceState.abilityModifiers[key];
+            }
+            if (pieceState.levelModifiers[key]) {
+                amount += pieceState.levelModifiers[key];
+            }
+        }
+
+        return amount;
     }
 
     setStatusValue = function(key, value) {
         return this.pieceState.status[key] = value;
+    }
+
+    applyEquipmentStatusModifier = function(key, value) {
+        this.pieceState.equipmentModifiers[key] += value;
+    }
+
+    applyAbilityStatusModifier = function(key, value) {
+        this.pieceState.abilityModifiers[key] += value;
     }
 
     setEquipSlotId(slot) {
@@ -310,6 +347,11 @@ class GamePiece {
         this.setStatusValue(statusId, duration);
     }
 
+    applyPieceLevel(targetLevel) {
+        PieceEffects.healEffect(this, targetLevel, this)
+        this.pieceState.processLevelUpTo(targetLevel, this);
+    }
+
     disablePieceAnimations() {
         let mixer = this.getModel().getAnimationMixer()
         if (mixer) {
@@ -322,10 +364,6 @@ class GamePiece {
         if (mixer) {
             ThreeAPI.activateMixer(mixer);
         }
-    }
-
-    getStatus() {
-        return this.pieceState.status;
     }
 
     getTarget = function() {

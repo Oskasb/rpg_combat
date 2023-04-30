@@ -81,22 +81,21 @@ class PieceStateProcessor {
                 return;
             }
         } else {
-            if (status.hp < status.maxHP) {
-                status.gamePiece.applyHeal(Math.floor(status.hp+status.level*1.5), status.gamePiece)
+            if (status.getBy('hp') < status.getBy('maxHP')) {
+                status.gamePiece.applyHeal(Math.floor(status.getBy('hp')+status.level*1.5), status.gamePiece)
             }
         }
     }
 
     updateTurnActionPoints(status) {
 
-
-        if (status.actPts === status.maxAPs) {
+        if (status.getBy('actPts') === status.getBy('maxAPs')) {
             status.actPts = 0;
         } else {
-            status.actPts = MATH.clamp(status.actPts+1, 0, status.maxAPs);
+            status.actPts = MATH.clamp(status.getBy('actPts')+1, 0, status.getBy('maxAPs'));
         }
 
-        status.activeAPs = Math.floor(Math.random()*Math.random()*status.actPts);
+        status.activeAPs = Math.floor(Math.random()*Math.random()*status.getBy('actPts'));
 
 
 
@@ -124,9 +123,9 @@ class PieceStateProcessor {
 
         status.appliedAttacks = 0;
         if (MATH.isEvenNumber(GameAPI.getTurnStatus().turn)){
-            status.turnAttacks = Math.ceil(status.FAST);
+            status.turnAttacks = Math.ceil(status.getBy('FAST'));
         } else {
-            status.turnAttacks = Math.floor(status.FAST);
+            status.turnAttacks = Math.floor(status.getBy('FAST'));
         }
 
 
@@ -227,7 +226,7 @@ class PieceStateProcessor {
         }
         let combatTarget = status.combatTarget;
 
-        let damage = status['dmg']
+        let damage = status.getBy('dmg')
         combatTarget.applyDamage(damage, status.gamePiece)
 
         if (combatTarget.getStatusByKey('hp') > 0) {
@@ -317,7 +316,8 @@ class PieceStateProcessor {
     }
 
     updateHealthStatus(status, config) {
-        if (status.hp > 0) {
+        let hp = status.getBy('hp')
+        if (hp > 0) {
             processPieceStatusFx(status);
             if (status['status_frozen']) {
 
@@ -367,7 +367,9 @@ class PieceStateProcessor {
         status.pauseProgress = GameAPI.gameMain.turnStatus.pauseProgress;
         status.autoPause = GameAPI.gameMain.turnStatus.autoPause;
         status.lifetime += tpf;
-        this.updateHealthStatus(status, config)
+        if (status.isCharacter) {
+            this.updateHealthStatus(status, config)
+        }
     }
 
 }

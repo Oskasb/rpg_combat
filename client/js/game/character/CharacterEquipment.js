@@ -41,8 +41,20 @@ class CharacterEquipment {
         return this.slotToJointMap[gamePiece.getEquipSlotId()]
     }
 
+    applyItemStatusModifiers(itemPiece, multiplier) {
+
+        let levelTables = itemPiece.getStatusByKey('levelTables');
+        for (let key in levelTables) {
+            let value = itemPiece.getStatusByKey(key) * multiplier;
+            console.log("Add equip mod ", key, value)
+            this.gamePiece.applyEquipmentStatusModifier(key, value)
+        }
+    }
+
+
     characterEquipItem(itemPiece) {
         this.pieces.push(itemPiece)
+        this.applyItemStatusModifiers(itemPiece, 1);
         itemPiece.setEquippedToPiece(this.gamePiece)
 
         let dynamicJoint = this.getJointForItemPiece(itemPiece);
@@ -76,6 +88,7 @@ class CharacterEquipment {
     }
 
     detatchEquipItem = function(itemPiece) {
+        this.applyItemStatusModifiers(itemPiece, -1);
         itemPiece.setEquippedToPiece(null)
         let dynamicJoint = this.getJointForItemPiece(itemPiece);
         let itemSlot = this.getSlotForItemPiece(itemPiece);
