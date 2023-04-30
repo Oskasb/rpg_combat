@@ -190,11 +190,11 @@ class GamePiece {
     }
 
     applyEquipmentStatusModifier = function(key, value) {
-        this.pieceState.equipmentModifiers[key] += value;
+        this.pieceState.applyEquipmentModifier(key, value);
     }
 
     applyAbilityStatusModifier = function(key, value) {
-        this.pieceState.abilityModifiers[key] += value;
+        this.pieceState.applyAbilityModifier(key, value);
     }
 
     setEquipSlotId(slot) {

@@ -30,6 +30,18 @@ class PieceInfoGui {
                 conf_label: 'widget_piece_info_elem_value'
             },
             {
+                status:'dmg',
+                label: 'damage',
+                conf_status:'widget_piece_info_elem_key',
+                conf_label: 'widget_piece_info_elem_value'
+            },
+            {
+                status:'FAST',
+                label: 'Atks',
+                conf_status:'widget_piece_info_elem_key',
+                conf_label: 'widget_piece_info_elem_value'
+            },
+            {
                 status:'lifetime',
                 label: 'Age',
                 conf_status:'widget_piece_info_elem_key',

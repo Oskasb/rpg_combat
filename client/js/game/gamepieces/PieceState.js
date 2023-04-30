@@ -113,6 +113,20 @@ class PieceState {
 
     }
 
+    applyEquipmentModifier(key, value) {
+        if (typeof(this.equipmentModifiers[key]) === 'undefined') {
+            this.equipmentModifiers[key] = 0;
+        }
+        this.equipmentModifiers[key] += value;
+    }
+
+    applyAbilityModifier(key, value) {
+        if (typeof(this.abilityModifiers[key]) === 'undefined') {
+            this.abilityModifiers[key] = 0;
+        }
+        this.abilityModifiers[key] += value;
+    }
+
     initPieceState() {
         let gamePiece = this.gamePiece;
 
