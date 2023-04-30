@@ -39,8 +39,8 @@ class PieceState {
             levels:[0, 35, 100, 250, 400, 600, 900, 1200, 1600, 2500, 3200,
                 4500, 5350, 6100, 7250, 8400, 9600, 10900, 11200, 13600, 22500, 33200],
             NONE:0,
-            FAST:3,
-            dmg:0,
+            FAST:0,
+            dmg:1,
             lifetime:0,
             level:0,
             xp:0,
@@ -161,7 +161,9 @@ class PieceState {
         console.log("Process Level Up", fromLevel, targetLevel, this.status.levelTables);
 
         let levelTables = gamePiece.getStatusByKey('levelTables');
+
         for (let key in levelTables) {
+            targetLevel = MATH.clamp(targetLevel,0,  levelTables[key].length)
             this.levelModifiers[key] = 0;
             let amount = 0
             for (let i = 0; i < targetLevel; i++) {

@@ -17,6 +17,18 @@ class GuiProgressBar {
         this.digits = options.digits || 2;
         this.time = 0;
 
+        let getValue = function(trackValues, key, defaultValue) {
+            let value;
+            if (typeof(key) === 'undefined') {
+                value = defaultValue;
+            } else if (typeof(trackValues.getBy) === 'function') {
+                value = trackValues.getBy(key)
+            } else {
+                value = trackValues[key]
+            }
+            return value || defaultValue;
+        }
+
         if (this.options['track_config']) {
 
             let catKey = options['track_config']['category'];
@@ -26,8 +38,13 @@ class GuiProgressBar {
 
             let sampler = this.options['track_config']['sampler']
 
+
             this.callbacks['updateProgress'] = function(event) {
-                    this.setProgress(trackValues[sampler['min_key']] || 0, trackValues[sampler['max_key']] || 1, trackValues[sampler['value_key']])
+                    this.setProgress(
+                        getValue(trackValues, sampler['min_key'], 0),
+                        getValue(trackValues, sampler['max_key'], 1),
+                        getValue(trackValues, sampler['value_key'], 0.5)
+                    )
             }.bind(this);
 
             GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress)

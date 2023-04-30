@@ -85,7 +85,7 @@
         "id":"COMBAT_TUTOR",
         "data":{
           "status": {
-            "name": "Charles",
+            "name": "Ingvar",
             "faction": "NEUTRAL",
             "level_table": "level_table_human_boss",
             "level": 6,
@@ -134,7 +134,7 @@
         "id":"BANDIT_HAT_LEATHER",
         "data":{
           "status": {
-            "name": "Bandit",
+            "name": "Bandit Leather Hat",
             "faction": "EVIL",
             "level_table": "level_table_human_default",
             "aggro_range": 5,
@@ -159,7 +159,7 @@
         "id":"BANDIT_HAT_RED",
         "data":{
           "status": {
-            "name": "Bandit",
+            "name": "Bandit Redhat",
             "faction": "EVIL",
             "level_table": "level_table_human_default",
             "aggro_range": 5,
@@ -266,7 +266,7 @@
         "id":"BANDIT_CHAMPION",
         "data":{
           "status": {
-            "name": "Bandit Leader",
+            "name": "Bandit Champion",
             "faction": "EVIL",
             "level_table": "level_table_human_boss",
             "level": 8,
@@ -294,7 +294,7 @@
         "id":"BANDIT_BOSS",
         "data":{
           "status": {
-            "name": "Bandit Leader",
+            "name": "Bandit Boss",
             "faction": "EVIL",
             "level_table": "level_table_human_boss",
             "level": 9,
@@ -322,13 +322,13 @@
         "id":"BARB_TRAINER",
         "data":{
           "status": {
-            "name": "Grong",
+            "name": "Joe",
             "faction": "GOOD",
             "level_table": "level_table_human_default",
             "level": 9,
             "height": 2.3,
             "size": 1.3,
-            "maxHP": 16,
+            "maxHP": 56,
             "hp": 16,
             "dmg": 1,
             "FAST": 1,

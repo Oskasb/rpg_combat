@@ -404,7 +404,12 @@ class PlayerMain {
 
 
     cheatPimpMainChar(event) {
-        let char = GameAPI.getActivePlayerCharacter()
+        console.log("Cheat pimp")
+
+        let char = GameAPI.getActivePlayerCharacter();
+        let gamePiece = GameAPI.getMainCharPiece();
+        let level = gamePiece.getStatusByKey('level');
+        gamePiece.applyPieceLevel(level+1);
         let equip = function(piece) {
             char.getEquipment().characterEquipItem(piece);
         };
@@ -420,11 +425,7 @@ class PlayerMain {
             return;
         }
 
-        console.log("Cheat pimp")
 
-        let gamePiece = GameAPI.getMainCharPiece()
-        let level = gamePiece.getStatusByKey('level');
-        gamePiece.applyPieceLevel(level+1);
 
     }
 
