@@ -70,6 +70,12 @@ class GuiTextElement {
     };
 
 
+    setTextColor = function(rgba, lutColor) {
+        for (let i = 0; i < this.guiStrings.length; i++) {
+            this.guiStrings[i].setStringColorRGBA(rgba, lutColor)
+        }
+    }
+
     setTextLayout = function(textLayout) {
         this.textLayout = textLayout;
     };

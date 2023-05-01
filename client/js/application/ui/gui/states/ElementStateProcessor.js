@@ -11,16 +11,11 @@ class ElementStateProcessor {
     applyStateToTextElement = function(element, elementState) {
         let feedbackId = element.getFeedbackConfigId();
         let state_feedback =  GuiAPI.getGuiSettingConfig('FEEDBACK', 'TEXT', feedbackId);
-
         if (state_feedback) {
-
             let stateKey = ENUMS.getKey('ElementState', elementState);
-
             if (state_feedback[stateKey]) {
-
                 let color = state_feedback[stateKey]['color_rgba'];
                 if (color) {
-
                     for (let  i = 0; i < element.guiStrings.length; i++) {
                         element.guiStrings[i].setStringColorRGBA(color, state_feedback[stateKey]['lut_color']);
                     }

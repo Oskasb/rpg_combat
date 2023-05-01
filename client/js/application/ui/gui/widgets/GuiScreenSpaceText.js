@@ -72,11 +72,11 @@ class GuiScreenSpaceText {
         this.size= new THREE.Vector3()
     };
 
-    initScreenSpaceText = function(onReady, messageType, duration) {
+    initScreenSpaceText = function(onReady, conf, duration) {
         this.time = 0;
         this.callbacks.setDuration(duration || 1);
 
-        let conf = {
+        conf = conf || {
             "sprite_font": "sprite_font_debug",
             "feedback": "feedback_text_blue",
             "textLayout": {"x": 0.5, "y": 0.5, "fontsize": 8}
@@ -85,6 +85,7 @@ class GuiScreenSpaceText {
         let textCB = function (txtElem) {
             txtElem.setFeedbackConfigId(conf.feedback);
             txtElem.setTextLayout(conf.textLayout)
+        //    txtElem.updateWidgetStateFeedback()
             this.callbacks.setTextElement(txtElem);
             onReady(this)
         }.bind(this);
