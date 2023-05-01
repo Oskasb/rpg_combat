@@ -15,13 +15,15 @@ class PieceText {
 
         let onReady = function(ssTxt) {
 
-            ThreeAPI.tempVec3.copy(this.gamePiece.getAboveHead(0.08));
+            ThreeAPI.tempVec3.copy(this.gamePiece.getAboveHead(0.25));
             ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, tempVec1)
+            GuiAPI.applyAspectToScreenPosition(tempVec1, tempVec1);
             //    let anchor = this.callbacks.getAnchor();
             //    anchor.guiWidget.setPosition(ThreeAPI.tempVec3b)
 
             //     tempVec1.set(-0.5, -0.5, 0);
-            tempVec2.set(1.0, 1.0, 0);
+            tempVec2.set(1.0, 0.5, 0);
+            tempVec2.add(tempVec1)
 
             ssTxt.setTextDimensions(tempVec1, tempVec2);
             ssTxt.activateScreenSpaceText();

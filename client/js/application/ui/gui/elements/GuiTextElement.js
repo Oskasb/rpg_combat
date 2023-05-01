@@ -9,7 +9,7 @@ class GuiTextElement {
         this.minXY = new THREE.Vector3();
         this.maxXY = new THREE.Vector3();
 
-        this.textLayout = {"x": 0.5, "y": 0.5, "fontsize": 15};
+        this.textLayout = {"x": 0.5, "y": 0.5, "fontsize": 12};
         this.maxRows = 1;
 
         this.guiStringPool = guiStringPool;

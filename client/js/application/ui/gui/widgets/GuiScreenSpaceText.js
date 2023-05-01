@@ -9,8 +9,8 @@ class GuiScreenSpaceText {
         }
 
         this.surface = {
-            minXY:{x:-0.25, y:-0.5, z:0},
-            maxXY:{x: 0.25, y:0.5, z:0}
+            minXY:new THREE.Vector3(-0.25,-0.5,0),
+            maxXY:new THREE.Vector3(0.25, 0.5, 0)
         };
 
         let stringReady = function() {
@@ -24,10 +24,13 @@ class GuiScreenSpaceText {
 
         let updateProgress = function(tpf, time) {
             this.time += tpf;
+            ThreeAPI.tempVec3.copy(this.size);
+            //    ThreeAPI.tempVec3.multiplyScalar(0.5);
+            this.surface.maxXY.addVectors(this.pos, this.size);
 
-            textElement.minXY.copy(this.pos);
-            textElement.maxXY.addVectors(this.pos, this.size);
-
+            ThreeAPI.tempVec3.subVectors(this.pos, ThreeAPI.tempVec3);
+            this.surface.minXY.copy(ThreeAPI.tempVec3);
+            textElement.updateTextMinMaxPositions(this.surface);
             if (duration < this.time) {
                 removeText();
             }
@@ -70,11 +73,13 @@ class GuiScreenSpaceText {
 
         let conf = {
             "sprite_font": "sprite_font_debug",
-            "feedback": "feedback_text_blue"
+            "feedback": "feedback_text_blue",
+            "textLayout": {"x": 0.5, "y": 0.5, "fontsize": 8}
         };
 
         let textCB = function (txtElem) {
             txtElem.setFeedbackConfigId(conf.feedback);
+            txtElem.setTextLayout(conf.textLayout)
             this.callbacks.setTextElement(txtElem);
             onReady(this)
         }.bind(this);
