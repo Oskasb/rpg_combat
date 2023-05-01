@@ -17,7 +17,7 @@ class PieceText {
 
         let getDamageTextPosition = function(progress) {
             let pos = getTextOrigin();
-            pos.y += progress*0.1;
+            pos.y += MATH.curveQuad(progress) *0.1;
             return pos;
         }
 
@@ -31,7 +31,7 @@ class PieceText {
             feedback: "feedback_text_red",
             rgba:  {r:1, g:-0.1, b:-0.3, a:1},
             lutColor:ENUMS.ColorCurve.warmFire,
-            textLayout: {"x": 0.5, "y": 0.5, "fontsize": 7}
+            textLayout: {"x": 0.5, "y": 0.5, "fontsize": 9}
         };
 
         this.messageMap = {};
@@ -64,7 +64,7 @@ class PieceText {
             txtElem.surface.maxXY.addVectors(txtPosVec3, tempVec2);
             txtElem.surface.minXY.subVectors(txtPosVec3, tempVec2);
             txtElem.callbacks.getTextElement().updateTextMinMaxPositions(txtElem.surface);
-            rgba.a = 1-textProgress;
+            rgba.a = 1 - MATH.curveSigmoid(textProgress);
             txtElem.callbacks.getTextElement().setTextColor(rgba, ENUMS.ColorCurve.red_3);
         };
 

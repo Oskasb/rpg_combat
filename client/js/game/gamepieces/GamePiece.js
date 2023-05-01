@@ -43,7 +43,7 @@ class GamePiece {
         let tickGamePiece = function(tpf, gameTime) {
         //    this.notifyDamageTaken(5);
             if (Math.random() < 0.9) {
-                this.printPieceText(Math.floor(Math.random()*100), null, 0.5);
+        //        this.printPieceText(Math.floor(Math.random()*100), null, 0.5);
             }
 
             if (this.isDead) {
@@ -320,7 +320,7 @@ class GamePiece {
         let newHP = MATH.clamp(hp - Math.floor(amount), 0, hp);
         this.setStatusValue('hp', newHP);
         let harm = hp-newHP;
-        this.printPieceText(harm, 'damage_taken', 1);
+        this.printPieceText(harm, ENUMS.Message.DAMAGE_NORMAL_TAKEN, 1);
         if (harm !== 0) {
             PieceEffects.damageEffect(this, harm, attacker)
             if (newHP === 0) {
