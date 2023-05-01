@@ -243,8 +243,7 @@ class PieceInfoGui {
     }
 
     updatePieceInfo() {
-        ThreeAPI.tempVec3.copy(this.gamePiece.getPos());
-        ThreeAPI.tempVec3.y += this.gamePiece.getStatusByKey('height') + 0.08;
+        ThreeAPI.tempVec3.copy(this.gamePiece.getAboveHead(0.08));
         ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, ThreeAPI.tempVec3b)
         let anchor = this.callbacks.getAnchor();
         anchor.guiWidget.setPosition(ThreeAPI.tempVec3b)

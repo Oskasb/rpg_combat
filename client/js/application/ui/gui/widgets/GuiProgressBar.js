@@ -43,7 +43,7 @@ class GuiProgressBar {
                     this.setProgress(
                         getValue(trackValues, sampler['min_key'], 0),
                         getValue(trackValues, sampler['max_key'], 1),
-                        getValue(trackValues, sampler['value_key'], 0.5)
+                        getValue(trackValues, sampler['value_key'], 0)
                     )
             }.bind(this);
 

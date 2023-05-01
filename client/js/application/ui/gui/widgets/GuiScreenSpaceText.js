@@ -1,91 +1,107 @@
 
 class GuiScreenSpaceText {
     constructor(options) {
+        let textElement;
+        let duration;
+        this.options = {};
+        for (let key in options) {
+            this.options[key] = options[key];
+        }
 
-            this.options = {};
-            for (var key in options) {
-                this.options[key] = options[key];
+        this.surface = {
+            minXY:{x:-0.25, y:-0.5, z:0},
+            maxXY:{x: 0.25, y:0.5, z:0}
+        };
+
+        let stringReady = function() {
+            textElement.updateTextMinMaxPositions(this.surface);
+        }.bind(this);
+
+        let removeText =function() {
+            this.deactivateScreenSpaceText();
+            textElement.recoverTextElement();
+        }.bind(this)
+
+        let updateProgress = function(tpf, time) {
+            this.time += tpf;
+
+            textElement.minXY.copy(this.pos);
+            textElement.maxXY.addVectors(this.pos, this.size);
+
+            if (duration < this.time) {
+                removeText();
             }
 
-            this.surface = {
-                minXY:{x:-0.25, y:-0.5, z:0},
-                maxXY:{x: 0.25, y:0.5, z:0}
-            };
+        }.bind(this);
 
-            var stringReady = function(tpf, time) {
-                this.text.updateTextMinMaxPositions(this.surface);
-            }.bind(this);
+        let setTextElement = function(elem) {
+            textElement = elem;
+        }
 
-            var updateProgress = function(tpf, time) {
-                this.time += tpf;
+        let getTextElement = function() {
+            return textElement;
+        }
 
-                this.text.minXY.copy(this.pos);
-                this.text.maxXY.addVectors(this.pos, this.size);
+        let setDuration = function(seconds) {
+            duration = seconds;
+        }
 
-                var string = '';
-                var maxSize = this.text.getMaxCharCount();
+        let getDuration = function() {
+            return duration;
+        }
 
-                for (var i = 0; i < maxSize; i++) {
-                    string += Math.floor(Math.random()*10);
-                }
-
-                this.updateTextContent(string);
-            }.bind(this);
-
-            this.callbacks = {
-                updateProgress:updateProgress,
-                stringReady:stringReady
-            };
-
-            this.pos = new THREE.Vector3();
-            this.size= new THREE.Vector3()
-
+        this.callbacks = {
+            updateProgress:updateProgress,
+            removeText:removeText,
+            stringReady:stringReady,
+            setDuration:setDuration,
+            getDuration:getDuration,
+            setTextElement:setTextElement,
+            getTextElement:getTextElement
         };
 
+        this.pos = new THREE.Vector3();
+        this.size= new THREE.Vector3()
+    };
 
-        initScreenSpaceText = function(onReady) {
+    initScreenSpaceText = function(onReady, messageType, duration) {
+        this.time = 0;
+        this.callbacks.setDuration(duration || 1);
 
-
-            var conf = {
-                "sprite_font": "sprite_font_debug",
-                "feedback": "feedback_text_blue"
-            };
-
-            var textCB = function (txtElem) {
-                txtElem.setFeedbackConfigId(conf.feedback);
-                this.text = txtElem;
-                onReady(this)
-            }.bind(this);
-
-            GuiAPI.getTextSystem().buildTextElement(textCB, conf.sprite_font);
-
+        let conf = {
+            "sprite_font": "sprite_font_debug",
+            "feedback": "feedback_text_blue"
         };
 
-        setTextDimensions = function(pos, size) {
-            this.pos.copy(pos);
-            this.size.copy(size);
-            this.text.updateTextMinMaxPositions(this.surface);
-        };
+        let textCB = function (txtElem) {
+            txtElem.setFeedbackConfigId(conf.feedback);
+            this.callbacks.setTextElement(txtElem);
+            onReady(this)
+        }.bind(this);
+
+        GuiAPI.getTextSystem().buildTextElement(textCB, conf.sprite_font);
+
+    };
+
+    setTextDimensions = function(pos, size) {
+        this.pos.copy(pos);
+        this.size.copy(size);
+        this.callbacks.getTextElement().updateTextMinMaxPositions(this.surface);
+    };
+
+    updateTextContent = function(string) {
+        this.callbacks.getTextElement().drawTextString(GuiAPI.getTextSysKey(), string, this.callbacks.stringReady)
+    };
+
+    activateScreenSpaceText = function() {
+        GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress);
+    };
+
+    deactivateScreenSpaceText = function() {
+        GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);
+    };
 
 
-        updateTextContent = function(text) {
-            this.text.drawTextString(GuiAPI.getTextSysKey(), text, this.callbacks.stringReady)
-        };
+}
 
-        activateScreenSpaceText = function() {
-            this.time = 0;
-            GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress);
-        };
-
-        deactivateScreenSpaceText = function() {
-            GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);
-        };
-
-        removeGuiWidget = function() {
-            this.deactivateScreenSpaceText();
-            this.text.recoverTextElement();
-        };
-
-    }
-
-    export { GuiScreenSpaceText }
+export { GuiScreenSpaceText }

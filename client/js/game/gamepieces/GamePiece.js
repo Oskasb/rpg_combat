@@ -9,6 +9,7 @@ import { MovementPath } from "../piece_functions/MovementPath.js";
 import { PieceState } from "./PieceState.js";
 import { PieceAbilitySystem } from "./PieceAbilitySystem.js";
 import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
+import { PieceText } from "../../application/ui/gui/game/PieceText.js";
 import { CompanionSystem } from "../companion/CompanionSystem.js";
 import * as PieceEffects from "./feedback/PieceEffects.js";
 import * as CombatEffects from "../combat/feedback/CombatEffects.js";
@@ -30,7 +31,7 @@ class GamePiece {
 
         this.combatSystem = new CombatSystem(this);
         this.threatDetector = new ThreatDetector(this);
-
+        this.pieceText = new PieceText(this);
         this.pieceAnimator = new PieceAnimator();
         this.pieceAttacher = new PieceAttacher();
         this.modelInstance = null;
@@ -110,6 +111,12 @@ class GamePiece {
         this.getCenterMass = function() {
             tempVec3.copy(this.getPos());
             tempVec3.y += this.getStatusByKey('height') * 0.7;
+            return tempVec3;
+        }.bind(this)
+
+        this.getAboveHead = function(above) {
+            tempVec3.copy(this.getPos());
+            tempVec3.y += this.getStatusByKey('height') + above;
             return tempVec3;
         }.bind(this)
 
@@ -303,6 +310,9 @@ class GamePiece {
         MATH.quickSplice(this.activeActions, action);
     };
 
+    printPieceText(string, messageType, duration) {
+        this.pieceText.pieceTextPrint(string, messageType, duration);
+    }
 
     applyDamage(amount, attacker) {
         let hp = this.getStatusByKey('hp');
@@ -310,6 +320,7 @@ class GamePiece {
         let newHP = MATH.clamp(hp - Math.floor(amount), 0, hp);
         this.setStatusValue('hp', newHP);
         let harm = hp-newHP;
+        this.printPieceText(harm, 'damage_taken', 1);
         if (harm !== 0) {
             PieceEffects.damageEffect(this, harm, attacker)
             if (newHP === 0) {

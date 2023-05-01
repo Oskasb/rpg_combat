@@ -4,7 +4,7 @@ import {GuiSimpleButton} from "./widgets/GuiSimpleButton.js";
 import {GuiExpandingContainer} from "./widgets/GuiExpandingContainer.js";
 import {GuiThumbstick} from "./widgets/GuiThumbstick.js";
 import {GuiTextBox} from "./widgets/GuiTextBox.js";
-import {GuiScreenSpaceText} from "./widgets/GuiScreenSpaceText.js";
+import {GuiMatrixText} from "./widgets/GuiMatrixText.js";
 import {GuiProgressBar} from "./widgets/GuiProgressBar.js";
 
 class UiTestSetup {
@@ -359,7 +359,7 @@ class UiTestSetup {
                     ssTxt.updateTextContent('screenspace text....')
                 }.bind(this);
 
-                this.matrixText = new GuiScreenSpaceText();
+                this.matrixText = new GuiMatrixText();
 
                 this.matrixText.initScreenSpaceText(onReady);
 
