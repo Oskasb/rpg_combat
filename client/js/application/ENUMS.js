@@ -6,19 +6,13 @@ if(typeof(ENUMS) === "undefined"){
 
 
     ENUMS.Message = {
-        REGISTER_BUFFER:        0,
-        NOTIFY_FRAME:           1,
-        REGISTER_PORT:          2,
-        FIRE_EVENT:             3,
-        INIT_RENDERER:          4,
-        RENDERER_READY:         5,
-        REQUEST_ASSET:          6,
-        REGISTER_ASSET:         7,
-        REGISTER_INSTANCING_BUFFERS:    8,
-        RELAY_CONFIG_DATA:      9,
-        TERRAIN_BUFFERS:        10,
-        WORLD_READY:            11,
-        GENERATE_FRAME:         12
+        SAY:                        0,
+        YELL:                       1,
+        WHISPER:                    2,
+        DAMAGE_NORMAL_TAKEN:        3,
+        DAMAGE_NORMAL_DONE:         4,
+        DAMAGE_CRITICAL_TAKEN:      5,
+        DAMAGE_CRITICAL_DONE:       6
     };
 
     ENUMS.Event = {

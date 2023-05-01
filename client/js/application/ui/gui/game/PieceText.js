@@ -15,9 +15,26 @@ class PieceText {
             return txtOrigin;
         }
 
-        this.call = {
-            getTextOrigin:getTextOrigin
+        let getDamageTextPosition = function(progress) {
+            let pos = getTextOrigin();
+            pos.y += progress*0.1;
+            return pos;
         }
+
+        this.call = {
+            getTextOrigin:getTextOrigin,
+            getDamageTextPosition:getDamageTextPosition
+        }
+
+        this.messageMap = {};
+
+        this.messageMap[ENUMS.Message.SAY]                      = this.call.getTextOrigin;
+        this.messageMap[ENUMS.Message.YELL]                     = this.call.getTextOrigin;
+        this.messageMap[ENUMS.Message.WHISPER]                  = this.call.getTextOrigin;
+        this.messageMap[ENUMS.Message.DAMAGE_NORMAL_TAKEN]      = this.call.getDamageTextPosition;
+        this.messageMap[ENUMS.Message.DAMAGE_NORMAL_DONE]       = this.call.getDamageTextPosition;
+        this.messageMap[ENUMS.Message.DAMAGE_CRITICAL_TAKEN]    = this.call.getDamageTextPosition;
+        this.messageMap[ENUMS.Message.DAMAGE_CRITICAL_DONE]     = this.call.getDamageTextPosition;
 
         this.pieceTexts = [];
 
@@ -25,11 +42,12 @@ class PieceText {
 
     pieceTextPrint(string, messageType, duration) {
 
-        let gamePiece = this.gamePiece;
-        let call = this.call;
+        messageType = messageType || ENUMS.Message.DAMAGE_NORMAL_TAKEN;
 
-        let positionText = function(txtElem) {
-            let txtPosVec3 = call.getTextOrigin()
+        let call = this.call;
+        let messageMap = this.messageMap;
+        let positionText = function(txtElem, textProgress) {
+            let txtPosVec3 = messageMap[messageType](textProgress)
             tempVec2.set(1.0, 0.5, 0);
             tempVec2.add(txtPosVec3)
             txtElem.surface.maxXY.addVectors(txtPosVec3, tempVec2);

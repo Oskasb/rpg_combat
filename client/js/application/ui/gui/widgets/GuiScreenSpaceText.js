@@ -4,6 +4,7 @@ class GuiScreenSpaceText {
         let textElement;
         let duration;
         let positionFunction;
+        let textProgress;
 
         this.options = {};
         for (let key in options) {
@@ -26,7 +27,8 @@ class GuiScreenSpaceText {
 
         let updateProgress = function(tpf, time) {
             this.time += tpf;
-            positionFunction(this);
+            textProgress = MATH.calcFraction(0, duration, this.time);
+            positionFunction(this, textProgress);
 
             if (duration < this.time) {
                 removeText();
