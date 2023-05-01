@@ -12,7 +12,8 @@ if(typeof(ENUMS) === "undefined"){
         DAMAGE_NORMAL_TAKEN:        3,
         DAMAGE_NORMAL_DONE:         4,
         DAMAGE_CRITICAL_TAKEN:      5,
-        DAMAGE_CRITICAL_DONE:       6
+        DAMAGE_CRITICAL_DONE:       6,
+        HEALING_GAINED:             7
     };
 
     ENUMS.Event = {

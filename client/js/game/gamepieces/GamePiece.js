@@ -353,6 +353,7 @@ class GamePiece {
         let heal = newHP-hp;
         if (heal !== 0) {
             PieceEffects.healEffect(this, heal, healer)
+            this.printPieceText(heal, ENUMS.Message.HEALING_GAINED, 2.5);
         }
     }
 
