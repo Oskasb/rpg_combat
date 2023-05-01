@@ -68,9 +68,14 @@ class GuiScreenSpaceText {
             getTextElement:getTextElement
         };
 
+        this.tPosOffset = new THREE.Vector3();
         this.pos = new THREE.Vector3();
         this.size= new THREE.Vector3()
     };
+
+    setTransitionTargetPositionOffset(vec3) {
+        this.tPosOffset.copy(vec3);
+    }
 
     initScreenSpaceText = function(onReady, conf, duration) {
         this.time = 0;

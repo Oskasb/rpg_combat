@@ -18,9 +18,11 @@ import { Vector3 } from "../../../libs/three/math/Vector3.js";
 import { Object3D } from "../../../libs/three/core/Object3D.js";
 let tempVec3 = new Vector3();
 let tempObj3d = new Object3D()
-
+let pieceIndex = 0;
 class GamePiece {
     constructor(config, callback) {
+        pieceIndex++
+        this.pieceIndex = pieceIndex;
         this.config = config;
         this.companions = [];
         this.character = null;
@@ -42,7 +44,7 @@ class GamePiece {
 
         let tickGamePiece = function(tpf, gameTime) {
         //    this.notifyDamageTaken(5);
-            if (Math.random() < 0.9) {
+            if (Math.random() < 0.94) {
         //        this.printPieceText(Math.floor(Math.random()*100), null, 0.5);
             }
 
