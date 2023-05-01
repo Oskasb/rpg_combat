@@ -3,6 +3,8 @@ class GuiScreenSpaceText {
     constructor(options) {
         let textElement;
         let duration;
+        let positionFunction;
+
         this.options = {};
         for (let key in options) {
             this.options[key] = options[key];
@@ -24,13 +26,8 @@ class GuiScreenSpaceText {
 
         let updateProgress = function(tpf, time) {
             this.time += tpf;
-            ThreeAPI.tempVec3.copy(this.size);
-            //    ThreeAPI.tempVec3.multiplyScalar(0.5);
-            this.surface.maxXY.addVectors(this.pos, this.size);
+            positionFunction(this);
 
-            ThreeAPI.tempVec3.subVectors(this.pos, ThreeAPI.tempVec3);
-            this.surface.minXY.copy(ThreeAPI.tempVec3);
-            textElement.updateTextMinMaxPositions(this.surface);
             if (duration < this.time) {
                 removeText();
             }
@@ -53,7 +50,13 @@ class GuiScreenSpaceText {
             return duration;
         }
 
+        let setPositionFunction = function(posFunc) {
+            positionFunction = posFunc;
+        }
+
+
         this.callbacks = {
+            setPositionFunction:setPositionFunction,
             updateProgress:updateProgress,
             removeText:removeText,
             stringReady:stringReady,

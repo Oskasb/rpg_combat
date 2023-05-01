@@ -6,6 +6,18 @@ class PieceText {
     constructor(gamePiece) {
         this.gamePiece = gamePiece;
 
+        let txtOrigin = new Vector3();
+
+        let getTextOrigin = function() {
+            ThreeAPI.tempVec3.copy(gamePiece.getAboveHead(0.25));
+            ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, txtOrigin)
+            GuiAPI.applyAspectToScreenPosition(txtOrigin, txtOrigin);
+            return txtOrigin;
+        }
+
+        this.call = {
+            getTextOrigin:getTextOrigin
+        }
 
         this.pieceTexts = [];
 
@@ -13,19 +25,21 @@ class PieceText {
 
     pieceTextPrint(string, messageType, duration) {
 
-        let onReady = function(ssTxt) {
+        let gamePiece = this.gamePiece;
+        let call = this.call;
 
-            ThreeAPI.tempVec3.copy(this.gamePiece.getAboveHead(0.25));
-            ThreeAPI.toScreenPosition(ThreeAPI.tempVec3, tempVec1)
-            GuiAPI.applyAspectToScreenPosition(tempVec1, tempVec1);
-            //    let anchor = this.callbacks.getAnchor();
-            //    anchor.guiWidget.setPosition(ThreeAPI.tempVec3b)
-
-            //     tempVec1.set(-0.5, -0.5, 0);
+        let positionText = function(txtElem) {
+            let txtPosVec3 = call.getTextOrigin()
             tempVec2.set(1.0, 0.5, 0);
-            tempVec2.add(tempVec1)
+            tempVec2.add(txtPosVec3)
+            txtElem.surface.maxXY.addVectors(txtPosVec3, tempVec2);
+            txtElem.surface.minXY.subVectors(txtPosVec3, tempVec2);
+            txtElem.callbacks.getTextElement().updateTextMinMaxPositions(txtElem.surface);
+        };
 
-            ssTxt.setTextDimensions(tempVec1, tempVec2);
+        let onReady = function(ssTxt) {
+            positionText(ssTxt);
+            ssTxt.callbacks.setPositionFunction(positionText);
             ssTxt.activateScreenSpaceText();
             ssTxt.updateTextContent(string)
         }.bind(this);
