@@ -11,17 +11,51 @@
         {"id": "skinned_barb_greaves",  "config":{"model": "file_barb_item_greaves", "material": "material_standard",  "settings": "model_settings_default"}},
 
 
+        {"id": "asset_belt_green", "config": { "model": "file_belt_bronze",  "material":        "mat_instancing_green",  "settings": "model_settings_items" }},
+        {"id": "asset_beltplate_green",   "config": { "model": "file_beltplate",    "material": "mat_instancing_green",  "settings": "model_settings_items" }},
+        {"id": "asset_helmetviking_green","config": { "model": "file_helmetviking", "material": "mat_instancing_green",  "settings": "model_settings_items" }},
+        {"id": "asset_helmet_green", "config": { "model": "file_helmet_bronze", "material":     "mat_instancing_green",  "settings": "model_settings_items"  }},
+        {"id": "asset_bracer_green", "config": { "model": "file_bracer_bronze", "material":     "mat_instancing_green",  "settings": "model_settings_items"  }},
+
+        {"id": "asset_green_legs",          "config":{"model": "file_bronze_legs",  "material": "material_green",          "settings": "model_settings_default"}},
+        {"id": "asset_green_bp",            "config":{"model": "file_bronze_bp",    "material": "material_green",          "settings": "model_settings_default"}},
+
+        {"id": "asset_scale_green_boots",   "config":{"model": "file_scale_boots",  "material": "material_green",          "settings": "model_settings_default"}},
+        {"id": "asset_scale_green_gloves",  "config":{"model": "file_scale_gloves", "material": "material_green",          "settings": "model_settings_default"}},
+        {"id": "asset_chain_shirt_green",  "config":{"model": "file_chain_shirt",  "material": "material_green",           "settings": "model_settings_default"}},
+        {"id": "asset_chain_legs_green",   "config":{"model": "file_chain_legs",   "material": "material_green",           "settings": "model_settings_default"}},
+        {"id": "asset_scale_green_legs",    "config":{"model": "file_scale_legs",   "material": "material_purple",          "settings": "model_settings_default"}},
+        {"id": "asset_scale_shirt_green",  "config":{"model": "file_scale_shirt",  "material": "material_purple",           "settings": "model_settings_default"}},
+
         {"id": "asset_chain_shirt",  "config":{"model": "file_chain_shirt",  "material": "material_standard",           "settings": "model_settings_default"}},
         {"id": "asset_chain_legs",   "config":{"model": "file_chain_legs",   "material": "material_standard",           "settings": "model_settings_default"}},
         {"id": "asset_scale_shirt",  "config":{"model": "file_scale_shirt",  "material": "material_standard",           "settings": "model_settings_default"}},
-
+        {"id": "asset_scale_legs",   "config":{"model": "file_scale_legs",   "material": "material_standard",          "settings": "model_settings_default"}},
 
         {"id": "asset_bronze_legs",  "config":{"model": "file_bronze_legs",  "material": "material_standard",          "settings": "model_settings_default"}},
         {"id": "asset_bronze_bp",    "config":{"model": "file_bronze_bp",    "material": "material_standard",          "settings": "model_settings_default"}},
-
-        {"id": "asset_scale_legs",   "config":{"model": "file_scale_legs",   "material": "material_standard",          "settings": "model_settings_default"}},
         {"id": "asset_scale_boots",  "config":{"model": "file_scale_boots",  "material": "material_standard",          "settings": "model_settings_default"}},
         {"id": "asset_scale_gloves", "config":{"model": "file_scale_gloves", "material": "material_standard",          "settings": "model_settings_default"}},
+
+
+        {"id": "asset_red_legs",          "config":{"model": "file_bronze_legs",  "material": "material_red",          "settings": "model_settings_default"}},
+        {"id": "asset_red_bp",            "config":{"model": "file_bronze_bp",    "material": "material_red",          "settings": "model_settings_default"}},
+
+        {"id": "asset_scale_red_boots",   "config":{"model": "file_scale_boots",  "material": "material_red",          "settings": "model_settings_default"}},
+        {"id": "asset_scale_red_gloves",  "config":{"model": "file_scale_gloves", "material": "material_red",          "settings": "model_settings_default"}},
+        {"id": "asset_chain_shirt_red",  "config":{"model": "file_chain_shirt",  "material": "material_red",           "settings": "model_settings_default"}},
+        {"id": "asset_chain_legs_red",   "config":{"model": "file_chain_legs",   "material": "material_red",           "settings": "model_settings_default"}},
+        {"id": "asset_scale_red_legs",    "config":{"model": "file_scale_legs",   "material": "material_green",          "settings": "model_settings_default"}},
+        {"id": "asset_scale_shirt_red",  "config":{"model": "file_scale_shirt",  "material": "material_green",           "settings": "model_settings_default"}},
+
+        {"id": "asset_purple_legs",          "config":{"model": "file_bronze_legs",  "material": "material_purple",          "settings": "model_settings_default"}},
+        {"id": "asset_purple_bp",            "config":{"model": "file_bronze_bp",    "material": "material_purple",          "settings": "model_settings_default"}},
+        {"id": "asset_scale_purple_boots",   "config":{"model": "file_scale_boots",  "material": "material_purple",          "settings": "model_settings_default"}},
+        {"id": "asset_scale_purple_gloves",  "config":{"model": "file_scale_gloves", "material": "material_purple",          "settings": "model_settings_default"}},
+        {"id": "asset_chain_shirt_purple",  "config":{"model": "file_chain_shirt",  "material": "material_purple",           "settings": "model_settings_default"}},
+        {"id": "asset_chain_legs_purple",   "config":{"model": "file_chain_legs",   "material": "material_purple",           "settings": "model_settings_default"}},
+        {"id": "asset_scale_purple_shirt",  "config":{"model": "file_scale_shirt",  "material": "material_red",           "settings": "model_settings_default"}},
+        {"id": "asset_scale_purple_legs",    "config":{"model": "file_scale_legs",   "material": "material_red",          "settings": "model_settings_default"}},
 
         {"id": "asset_box",         "config": { "model": "file_box",         "material": "material_instancing_tileset",      "settings": "model_settings_tileset"  }},
 
@@ -42,9 +76,25 @@
 
         {"id": "asset_beltplate",   "config": { "model": "file_beltplate",    "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
         {"id": "asset_helmetviking","config": { "model": "file_helmetviking", "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
-
         {"id": "asset_helmet_bronze", "config": { "model": "file_helmet_bronze", "material": "mat_instancing_standard",  "settings": "model_settings_items"  }},
         {"id": "asset_bracer_bronze", "config": { "model": "file_bracer_bronze", "material": "mat_instancing_standard",  "settings": "model_settings_items"  }},
+
+
+
+        {"id": "asset_belt_red", "config": { "model": "file_belt_bronze",  "material":        "mat_instancing_red",  "settings": "model_settings_items" }},
+        {"id": "asset_beltplate_red",   "config": { "model": "file_beltplate",    "material": "mat_instancing_red",  "settings": "model_settings_items" }},
+        {"id": "asset_helmetviking_red","config": { "model": "file_helmetviking", "material": "mat_instancing_red",  "settings": "model_settings_items" }},
+        {"id": "asset_helmet_red", "config": { "model": "file_helmet_bronze", "material":     "mat_instancing_red",  "settings": "model_settings_items"  }},
+        {"id": "asset_bracer_red", "config": { "model": "file_bracer_bronze", "material":     "mat_instancing_red",  "settings": "model_settings_items"  }},
+
+
+        {"id": "asset_belt_purple", "config": { "model": "file_belt_bronze",  "material":        "mat_instancing_purple",  "settings": "model_settings_items" }},
+        {"id": "asset_beltplate_purple",   "config": { "model": "file_beltplate",    "material": "mat_instancing_purple",  "settings": "model_settings_items" }},
+        {"id": "asset_helmetviking_purple","config": { "model": "file_helmetviking", "material": "mat_instancing_purple",  "settings": "model_settings_items" }},
+        {"id": "asset_helmet_purple", "config": { "model": "file_helmet_bronze", "material":     "mat_instancing_purple",  "settings": "model_settings_items"  }},
+        {"id": "asset_bracer_purple", "config": { "model": "file_bracer_bronze", "material":     "mat_instancing_purple",  "settings": "model_settings_items"  }},
+
+
         {"id": "asset_hat_cloth_white", "config": { "model": "file_hat_cloth_white", "material": "mat_instancing_standard",  "settings": "model_settings_items"  }},
         {"id": "asset_hat_cloth_yellow", "config": { "model": "file_hat_cloth_yellow", "material": "mat_instancing_standard",  "settings": "model_settings_items"  }},
 
@@ -60,12 +110,13 @@
         {"id": "asset_mansion_main", "config": { "model": "file_mansion_main",  "material": "mat_instancing_basic",     "settings": "model_settings_items" }},
         {"id": "asset_house_t",      "config": { "model": "file_house_t",       "material": "mat_instancing_basic",     "settings": "model_settings_items" }},
 
-        {"id": "asset_ninjablade",  "config": { "model": "file_ninjablade",   "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
-        {"id": "asset_slicer_axe_2h",  "config": { "model": "file_slicer_axe_2h",   "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
 
-        {"id": "asset_sword_fancy",  "config": { "model": "file_sword_fancy",   "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
+        {"id": "asset_katana_green", "config": { "model": "file_ninjablade",        "material": "mat_instancing_green",  "settings": "model_settings_items" }},
+        {"id": "asset_ninjablade",  "config": { "model": "file_ninjablade",         "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
+        {"id": "asset_slicer_axe_2h",  "config": { "model": "file_slicer_axe_2h",   "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
+        {"id": "asset_sword_fancy",  "config": { "model": "file_sword_fancy",       "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
         {"id": "asset_emerald_blade",  "config": { "model": "file_emerald_blade",   "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
-        {"id": "asset_hatchet_nice",  "config": { "model": "file_hatchet_nice",   "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
+        {"id": "asset_hatchet_nice",  "config": { "model": "file_hatchet_nice",     "material": "mat_instancing_standard",  "settings": "model_settings_items" }},
 
         {"id": "asset_tree_1",      "config": { "model": "file_tree_1" ,      "material": "mat_instancing_basic",     "settings": "model_settings_instancing"     }},
         {"id": "asset_tree_2",      "config": { "model": "file_tree_2" ,      "material": "mat_instancing_basic",     "settings": "model_settings_instancing"     }},

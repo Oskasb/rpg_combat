@@ -16,20 +16,89 @@
           }
         },
         {
-          "id":"mat_instancing_lambert",
-          "config":{
-            "settings": "mat_settings_lambert_instancing",
-            "textures":[
-              {"key":"map"           , "id":"atlas_2k_diff"       }
-            ]
-          }
-        },
-        {
           "id":"mat_instancing_standard",
           "config":{
             "settings": "mat_settings_standard_instancing",
             "textures":[
               {"key":"map"           , "id":"atlas_2k_diff"       } ,
+              {"key":"envMap"        , "id":"ref_sphere"          } ,
+              {"key":"metalnessMap"  , "id":"atlas_2k_metalness"  } ,
+              {"key":"roughnessMap"  , "id":"atlas_2k_roughness"  } ,
+              {"key":"normalMap"     , "id":"atlas_2k_norm"       }
+            ]
+          }
+        },
+        {
+          "id":"material_green",
+          "config":{
+            "settings": "mat_settings_standard_opaque",
+            "textures":[
+              {"key":"map"           , "id":"atlas_2k_green"   } ,
+              {"key":"envMap"        , "id":"ref_sphere"      } ,
+              {"key":"metalnessMap"  , "id":"atlas_2k_metalness"   } ,
+              {"key":"roughnessMap"  , "id":"atlas_2k_roughness"   } ,
+              {"key":"normalMap"     , "id":"atlas_2k_norm"   }
+            ]
+          }
+        },
+        {
+          "id":"mat_instancing_green",
+          "config":{
+            "settings": "mat_settings_standard_instancing",
+            "textures":[
+              {"key":"map"           , "id":"atlas_2k_green"       } ,
+              {"key":"envMap"        , "id":"ref_sphere"          } ,
+              {"key":"metalnessMap"  , "id":"atlas_2k_metalness"  } ,
+              {"key":"roughnessMap"  , "id":"atlas_2k_roughness"  } ,
+              {"key":"normalMap"     , "id":"atlas_2k_norm"       }
+            ]
+          }
+        },
+        {
+          "id":"material_red",
+          "config":{
+            "settings": "mat_settings_standard_opaque",
+            "textures":[
+              {"key":"map"           , "id":"atlas_2k_red"   } ,
+              {"key":"envMap"        , "id":"ref_sphere"      } ,
+              {"key":"metalnessMap"  , "id":"atlas_2k_metalness"   } ,
+              {"key":"roughnessMap"  , "id":"atlas_2k_roughness"   } ,
+              {"key":"normalMap"     , "id":"atlas_2k_norm"   }
+            ]
+          }
+        },
+        {
+          "id":"mat_instancing_red",
+          "config":{
+            "settings": "mat_settings_standard_instancing",
+            "textures":[
+              {"key":"map"           , "id":"atlas_2k_red"       } ,
+              {"key":"envMap"        , "id":"ref_sphere"          } ,
+              {"key":"metalnessMap"  , "id":"atlas_2k_metalness"  } ,
+              {"key":"roughnessMap"  , "id":"atlas_2k_roughness"  } ,
+              {"key":"normalMap"     , "id":"atlas_2k_norm"       }
+            ]
+          }
+        },
+        {
+          "id":"material_purple",
+          "config":{
+            "settings": "mat_settings_standard_opaque",
+            "textures":[
+              {"key":"map"           , "id":"atlas_2k_purple"       } ,
+              {"key":"envMap"        , "id":"ref_sphere"            } ,
+              {"key":"metalnessMap"  , "id":"atlas_2k_metalness"   } ,
+              {"key":"roughnessMap"  , "id":"atlas_2k_roughness"   } ,
+              {"key":"normalMap"     , "id":"atlas_2k_norm"   }
+            ]
+          }
+        },
+        {
+          "id":"mat_instancing_purple",
+          "config":{
+            "settings": "mat_settings_standard_instancing",
+            "textures":[
+              {"key":"map"           , "id":"atlas_2k_purple"     } ,
               {"key":"envMap"        , "id":"ref_sphere"          } ,
               {"key":"metalnessMap"  , "id":"atlas_2k_metalness"  } ,
               {"key":"roughnessMap"  , "id":"atlas_2k_roughness"  } ,

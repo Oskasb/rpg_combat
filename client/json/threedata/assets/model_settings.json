@@ -68,6 +68,20 @@
             }
           }
         },
+        {"id": "model_settings_items_green" ,
+          "config": {
+            "instancing": {
+              "instances": 20,
+              "attributes": ["offset", "vertexColor", "scale3d", "orientation"],
+              "cameraspace": false
+            },
+            "transform": {
+              "pos":   [0, 0, 0],
+              "rot":   [0, 0, 0],
+              "scale": [1, 1, 1]
+            }
+          }
+        },
         {"id": "model_settings_items" ,
           "config": {
             "instancing": {

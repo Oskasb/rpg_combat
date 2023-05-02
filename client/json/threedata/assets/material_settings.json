@@ -48,7 +48,7 @@
               "settings": {
                 "roughness":1,
                 "metalness":1.0,
-                "envMapIntensity":1.2,
+                "envMapIntensity":1.8,
                 "aoMapIntensity":1.1
               }
             }

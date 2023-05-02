@@ -59,14 +59,32 @@
                   }
                 },
                 {
+                  "widget_id":"button_go_bandits",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_red",
+                  "options":{
+                    "text":"BANDITS",
+                    "container_id":"page_home_center",
+                    "offset_x":-0.13,
+                    "offset_y": 0.16,
+                    "dispatch":{
+                      "event":"REQUEST_SCENARIO",
+                      "value":{
+                        "id":"home_scenario",
+                        "dynamic":"encounter_field_bandits_dynamic"
+                      }
+                    }
+                  }
+                },
+                {
                   "widget_id":"button_go_cave",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_red",
                   "options":{
                     "text":"CELLAR",
                     "container_id":"page_home_center",
-                    "offset_x":-0.09,
-                    "offset_y":-0.33,
+                    "offset_x": 0.13,
+                    "offset_y": 0.16,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -81,43 +99,26 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"FIELD",
+                    "text":"FRIENDS",
                     "container_id":"page_home_center",
                     "offset_x":-0.115,
-                    "offset_y":-0.29,
+                    "offset_y":-0.30,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"encounter_field_home_dynamic"
+                        "dynamic":"encounter_friends_home_dynamic"
                       }
                     }
                   }
                 },
-                {
-                  "widget_id":"button_go_bandits",
-                  "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"button_big_blue",
-                  "options":{
-                    "text":"BANDITS",
-                    "container_id":"page_home_center",
-                    "offset_x":-0.115,
-                    "offset_y":-0.25,
-                    "dispatch":{
-                      "event":"REQUEST_SCENARIO",
-                      "value":{
-                        "id":"home_scenario",
-                        "dynamic":"encounter_field_bandits_dynamic"
-                      }
-                    }
-                  }
-                },
+
                 {
                   "widget_id":"button_go_train",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"TRAIN",
+                    "text":"ALLIES",
                     "container_id":"page_home_center",
                     "offset_x":0.115,
                     "offset_y":-0.30,
@@ -125,7 +126,7 @@
                       "event":"REQUEST_SCENARIO",
                       "value":{
                         "id":"home_scenario",
-                        "dynamic":"hero_practice_dynamic"
+                        "dynamic":"hero_allies_dynamic"
                       }
                     }
                   }

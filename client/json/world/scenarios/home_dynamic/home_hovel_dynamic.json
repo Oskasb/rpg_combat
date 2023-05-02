@@ -36,18 +36,7 @@
                 "rot": [0, 0.19, 0],
                 "pos": [-2.4, 0, -1.1]
               },
-              "characters": [
-                {
-                  "character":"HOME_DUDE",
-                  "pos": [-2.8, 0, 0.1],
-                  "rot": [0, -1.111, 0]
-                },
-                {
-                  "character":"COMPANION_ONE",
-                  "pos": [0.4, 0, 0.2],
-                  "rot": [0, 0.611, 0]
-                }
-              ]
+              "characters": []
             }
           }
         ]

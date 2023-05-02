@@ -5,7 +5,7 @@
         "id":"PLAYER_MAIN",
         "data":{
           "status": {
-            "name": "Gideon",
+            "name": "Boi",
             "faction": "GOOD",
             "level": 1,
             "level_table": "level_table_human_default",
@@ -25,7 +25,7 @@
           },
           "abilities": {
             "fire_ball": {
-              "level": 2
+              "level": 7
             },
             "magic_missiles":{
               "level": 6
@@ -34,12 +34,12 @@
               "level": 4
             },
             "heal_minor":{
-              "level": 3
+              "level": 7
             }
           },
 
           "actor":"ACTOR_FIGHTER",
-          "equipment":["NINJASWORD", "HAT_CLOTH_BLUE", "BELT_BRONZE", "LEGS_BRONZE"],
+          "equipment":["NINJASWORD", "HELMET_BRONZE", "BELT_BRONZE", "LEGS_BRONZE"],
           "inventory": [
 
           ]
@@ -49,15 +49,87 @@
         "id":"COMPANION_ONE",
         "data":{
           "status": {
-            "name": "Bucket",
+            "name": "Victor",
             "faction": "GOOD",
             "level_table": "level_table_human_default",
-            "level": 3,
+            "level": 6,
             "companion": 1,
             "following": null,
             "aggro_range": 39,
-            "height": 1.75,
-            "size": 0.94,
+            "height": 1.85,
+            "size": 1.0,
+            "hp": 20,
+            "maxHP": 20,
+            "dmg": 1,
+            "FAST": 1,
+            "xp_value": 20,
+            "ability_slots": 2
+          },
+          "abilities": {
+            "magic_missiles": {
+              "level": 5
+            },
+            "heal_minor":{
+              "level": 8
+            }
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["AXE_SLICER", "HELMET_VIKING_GREEN", "BELT_PLATE_GREEN", "SHIRT_CHAIN", "LEGS_CHAIN","BOOTS_SCALE_GREEN", "GLOVES_SCALE_GREEN", "BREASTPLATE_GREEN"],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
+        "id":"COMPANION_TWO",
+        "data":{
+          "status": {
+            "name": "Hugo",
+            "faction": "GOOD",
+            "level_table": "level_table_human_default",
+            "level": 6,
+            "companion": 1,
+            "following": null,
+            "aggro_range": 39,
+            "height": 1.85,
+            "size": 1.0,
+            "hp": 10,
+            "maxHP": 10,
+            "dmg": 1,
+            "FAST": 1,
+            "xp_value": 20,
+            "ability_slots": 2
+          },
+          "abilities": {
+            "freeze_minor":{
+              "level": 8
+            },
+            "heal_minor":{
+              "level": 4
+            }
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["EMERALD_BLADE", "HELMET_VIKING_RED", "BELT_PLATE_RED", "SHIRT_CHAIN", "LEGS_CHAIN", "BOOTS_SCALE_RED", "GLOVES_SCALE_RED", "BREASTPLATE_RED"],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
+        "id":"COMPANION_THREE",
+        "data":{
+          "status": {
+            "name": "Pontus",
+            "faction": "GOOD",
+            "level_table": "level_table_human_default",
+            "level": 9,
+            "companion": 1,
+            "following": null,
+            "aggro_range": 39,
+            "height": 1.85,
+            "size": 1.0,
             "hp": 10,
             "maxHP": 10,
             "dmg": 1,
@@ -67,15 +139,15 @@
           },
           "abilities": {
             "fire_ball": {
-              "level": 5
+              "level": 9
             },
             "heal_minor":{
-              "level": 1
+              "level": 3
             }
           },
 
           "actor":"ACTOR_FIGHTER",
-          "equipment":["SWORD_FANCY", "HAT_CLOTH_YELLOW", "BELT_BRONZE", "LEGS_CHAIN", "BREASTPLATE_BRONZE"],
+          "equipment":["SWORD_FANCY", "HELMET_VIKING_PURPLE", "BELT_PLATE_PURPLE", "SHIRT_CHAIN", "LEGS_CHAIN", "BOOTS_SCALE_PURPLE", "GLOVES_SCALE_PURPLE", "BREASTPLATE_PURPLE"],
           "inventory": [
 
           ]

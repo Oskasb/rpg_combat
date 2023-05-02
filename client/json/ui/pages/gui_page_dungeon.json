@@ -42,7 +42,7 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"RETREAT",
+                    "text":"HOME",
                     "container_id":"page_dungeon_top_center",
                     "offset_x": -0.13,
                     "offset_y": -0.07,
