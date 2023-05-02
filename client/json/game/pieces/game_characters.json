@@ -153,30 +153,7 @@
           ]
         }
       },
-      {
-        "id":"COMBAT_TUTOR",
-        "data":{
-          "status": {
-            "name": "Ingvar",
-            "faction": "NEUTRAL",
-            "level_table": "level_table_human_boss",
-            "level": 6,
-            "height": 1.85,
-            "size": 1,
-            "hp": 12,
-            "maxHP": 12,
-            "dmg": 1,
-            "FAST": 1,
-            "xp_value": 25
-          },
 
-          "actor":"ACTOR_FIGHTER",
-          "equipment":["SWORD_FANCY", "GLOVES_SCALE", "BELT_PLATE", "BOOTS_SCALE", "LEGS_CHAIN", "SHIRT_CHAIN"],
-          "inventory": [
-
-          ]
-        }
-      },
       {
         "id":"BANDIT_BASIC",
         "data":{
@@ -341,7 +318,7 @@
             "name": "Bandit Champion",
             "faction": "EVIL",
             "level_table": "level_table_human_boss",
-            "level": 8,
+            "level": 13,
             "aggro_range": 4,
             "height": 1.98,
             "size": 1.22,
@@ -369,7 +346,7 @@
             "name": "Bandit Boss",
             "faction": "EVIL",
             "level_table": "level_table_human_boss",
-            "level": 9,
+            "level": 18,
             "aggro_range": 3,
             "height": 2.18,
             "size": 1.42,
@@ -382,9 +359,33 @@
 
           "actor":"ACTOR_FIGHTER",
           "equipment":[
-            "EMERALD_BLADE", "HAT_POINTY_WHITE" ,"BELT_PLATE", "BOOTS_SCALE",
-            "LEGS_SCALE", "SHIRT_CHAIN", "GLOVES_SCALE", "SHIRT_SCALE"
+            "EMERALD_BLADE", "HAT_POINTY_WHITE" ,"BELT_PLATE_PURPLE", "BOOTS_SCALE_PURPLE",
+            "LEGS_SCALE_PURPLE", "SHIRT_CHAIN_PURPLE", "GLOVES_SCALE_PURPLE", "SHIRT_SCALE_PURPLE"
           ],
+          "inventory": [
+
+          ]
+        }
+      },
+      {
+        "id":"COMBAT_TUTOR",
+        "data":{
+          "status": {
+            "name": "Ingvar",
+            "faction": "NEUTRAL",
+            "level_table": "level_table_human_boss",
+            "level": 6,
+            "height": 1.85,
+            "size": 1,
+            "hp": 12,
+            "maxHP": 12,
+            "dmg": 1,
+            "FAST": 1,
+            "xp_value": 25
+          },
+
+          "actor":"ACTOR_FIGHTER",
+          "equipment":["SWORD_FANCY", "GLOVES_SCALE", "BELT_PLATE_RED", "BOOTS_SCALE", "LEGS_SCALE_RED", "SHIRT_SCALE_RED"],
           "inventory": [
 
           ]

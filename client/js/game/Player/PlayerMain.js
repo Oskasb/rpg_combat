@@ -4,9 +4,9 @@ import { Vector3 } from "../../../libs/three/math/Vector3.js";
 let tempVec3 = new Vector3()
 
 let cheatInventory = [
-    "HELMET_VIKING_PURPLE", "BELT_PLATE_PURPLE",
-    "SHIRT_CHAIN_PURPLE", "SHIRT_SCALE_PURPLE", "LEGS_SCALE_PURPLE",
-    "BOOTS_SCALE_PURPLE", "GLOVES_SCALE_PURPLE","EMERALD_BLADE"
+    "HELMET_VIKING_RED", "BELT_PLATE_RED",
+    "SHIRT_CHAIN", "SHIRT_SCALE_RED", "LEGS_SCALE_RED",
+    "BOOTS_SCALE", "GLOVES_SCALE", "SWORD_FANCY"
 ]
 
 class PlayerMain {

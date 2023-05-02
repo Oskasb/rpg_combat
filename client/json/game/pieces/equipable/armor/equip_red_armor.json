@@ -113,7 +113,7 @@
       {
         "id":"SHIRT_SCALE_RED",
         "data":{
-          "model_asset":"asset_scale_red_shirt",
+          "model_asset":"asset_scale_shirt_red",
           "slot": "SLOT_CHEST",
           "status": {
             "name": "Jade Scale Plates",
