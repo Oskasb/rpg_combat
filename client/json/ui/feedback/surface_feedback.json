@@ -243,6 +243,39 @@
               }
             },
             {
+              "id":"feedback_icon_button",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.1, "g": 0.4, "b": 0.65, "a": 1.0},
+                  "sprite": "icon_button"
+                },
+                "HOVER": {
+                  "color_rgba": {"r": 0.2, "g": 0.5, "b": 0.75, "a": 1.0},
+                  "sprite": "icon_button"
+                },
+                "PRESS": {
+                  "color_rgba": {"r": 0.2, "g": 0.5, "b": 0.75, "a": 1.0},
+                  "sprite": "icon_button_pressed"
+                },
+                "ACTIVE": {
+                  "color_rgba": {"r": 0.21, "g": 0.71, "b": 0.91, "a": 1.0},
+                  "sprite": "icon_button"
+                },
+                "ACTIVE_HOVER": {
+                  "color_rgba": {"r": 0.41, "g": 0.81, "b": 0.97, "a": 1.0},
+                  "sprite": "icon_button"
+                },
+                "ACTIVE_PRESS": {
+                  "color_rgba": {"r": 0.41, "g": 0.81, "b": 0.97, "a": 1.0},
+                  "sprite": "icon_button_pressed"
+                },
+                "DISABLED": {
+                  "color_rgba": {"r": 0.3, "g": 0.3, "b": 0.3, "a": 1.0},
+                  "sprite": "icon_button"
+                }
+              }
+            },
+            {
               "id":"feedback_button_action",
               "config": {
                 "NONE": {

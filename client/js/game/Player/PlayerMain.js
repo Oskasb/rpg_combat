@@ -1,6 +1,8 @@
 import { PlayerStash } from "./PlayerStash.js";
+import { PartyLeaderSystem } from "../../application/ui/gui/systems/PartyLeaderSystem.js";
 import { TargetIndicator } from "../../application/ui/gui/game/TargetIndicator.js";
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
+
 let tempVec3 = new Vector3()
 
 let cheatInventory = [
@@ -17,6 +19,7 @@ class PlayerMain {
         this.playerCharacter = null;
         this.selectionIndicator = new TargetIndicator();
         this.targetIndicator = new TargetIndicator();
+        this.partyLeaderSystem = new PartyLeaderSystem();
 
         let takeStashItem = function (event) {
             let item = this.playerStash.takePieceFromStash(event.item);
@@ -215,15 +218,21 @@ class PlayerMain {
 
         character.gamePiece.setStatusValue('isCharacter', 1);
         if (this.mainCharPage) {
+            this.partyLeaderSystem.clearPartyLeaderSystem()
             GuiAPI.closePage(this.mainCharPage);
+        } else {
+            GameAPI.registerGameUpdateCallback(this.partyLeaderSystem.updatePartyLeaderSystem);
         }
+
+        this.partyLeaderSystem.setPartyLeaderPiece(character.gamePiece)
+
         let openMainCharPage = function() {
             this.mainCharPage = GuiAPI.activatePage("page_player_main");
         }.bind(this);
 
         setTimeout(function() {
             openMainCharPage();
-        }, 2000)
+        }, 1000)
 
 
         this.playerCharacter = character;

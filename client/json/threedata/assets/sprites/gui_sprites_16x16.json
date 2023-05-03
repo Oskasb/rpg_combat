@@ -113,11 +113,19 @@
             "tiles":[[13, 3]]
           },
           {
+            "id":"icon_button",
+            "tiles":[[12, 4]]
+          },
+          {
+            "id":"icon_button_pressed",
+            "tiles":[[13, 4]]
+          },
+          {
             "id":"horizontal",
             "tiles":[[0, 2]]
           },
           {
-            "id":"vertical",
+            "id":"heal_icon",
             "tiles":[[0, 3]]
           },
           {
@@ -147,6 +155,10 @@
             "tiles":[[0, 5]]
           },
           {
+            "id":"fire_ball",
+            "tiles":[[1, 3]]
+          },
+          {
             "id":"warning",
             "tiles":[[1, 4]]
           },
@@ -155,12 +167,20 @@
             "tiles":[[1, 5]]
           },
           {
+            "id":"magic_missile",
+            "tiles":[[2, 3]]
+          },
+          {
             "id":"crosshair",
             "tiles":[[2, 4]]
           },
           {
             "id":"fire",
             "tiles":[[2, 5]]
+          },
+          {
+            "id":"frostball",
+            "tiles":[[3, 3]]
           },
           {
             "id":"sleep",
@@ -277,6 +297,38 @@
           {
             "id":"atk_off",
             "tiles":[[2, 6]]
+          },
+          {
+            "id":"face_1",
+            "tiles":[[0, 10]]
+          },
+          {
+            "id":"face_2",
+            "tiles":[[0, 11]]
+          },
+          {
+            "id":"face_3",
+            "tiles":[[1, 10]]
+          },
+          {
+            "id":"face_4",
+            "tiles":[[1, 11]]
+          },
+          {
+            "id":"face_5",
+            "tiles":[[2, 10]]
+          },
+          {
+            "id":"face_6",
+            "tiles":[[2, 11]]
+          },
+          {
+            "id":"face_7",
+            "tiles":[[3, 10]]
+          },
+          {
+            "id":"face_8",
+            "tiles":[[3, 11]]
           }
         ]
       }

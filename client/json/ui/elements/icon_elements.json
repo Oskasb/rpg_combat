@@ -17,6 +17,15 @@
               }
             },
             {
+              "id":"button_icon_config",
+              "config": {
+                "innersize": { "x":0.85,  "y":0.85, "z": 0},
+                "offset":    { "x":0.5,  "y":0.5, "z": 0},
+                "atlas_key": "GUI_16x16",
+                "stretch": false
+              }
+            },
+            {
               "id":"attack_point_icon",
               "config": {
                 "innersize": { "x":1.0,  "y":1.0, "z": 0},
@@ -61,6 +70,16 @@
                 "atlas_key": "GUI_16x16",
                 "stretch": true,
                 "progress": {"axis": "left", "alts": ["up", "down", "left", "right"]}
+              }
+            },
+            {
+              "id":"progress_vertical_hp_bar",
+              "config": {
+                "innersize": { "x":0.96, "y":1.0, "z": 0},
+                "offset":    { "x":0.5, "y":0.13, "z": 0},
+                "atlas_key": "GUI_16x16",
+                "stretch": true,
+                "progress": {"axis": "up", "alts": ["up", "down", "left", "right"]}
               }
             },
             {

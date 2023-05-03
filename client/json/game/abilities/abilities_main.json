@@ -8,7 +8,7 @@
             "data_key": "ability_config",
             "config": {
               "name": "Fire Ball",
-              "icon_key": "fire",
+              "icon_key": "fire_ball",
               "target": "tile",
               "precast_effect": "combat_effect_hands_fire",
               "missile_effect": "combat_effect_fire_missile",
@@ -36,7 +36,7 @@
             "data_key": "ability_config",
             "config": {
               "name": "Minor Heal",
-              "icon_key": "droplet",
+              "icon_key": "heal_icon",
               "target": "friendly",
               "precast_effect": "combat_effect_hands_heal_power",
               "missile_effect": "combat_effect_heal_missile",
@@ -57,7 +57,7 @@
             "data_key": "ability_config",
             "config": {
               "name": "Minor Freeze",
-              "icon_key": "sleep",
+              "icon_key": "frostball",
               "target": "hostile",
               "precast_effect": "combat_effect_hands_frost",
               "missile_effect": "combat_effect_frost_missile",
@@ -82,7 +82,7 @@
             "data_key": "ability_config",
             "config": {
               "name": "Magic Missiles",
-              "icon_key": "energy",
+              "icon_key": "magic_missile",
               "target": "hostile",
               "precast_effect": "combat_effect_hands_magic_power",
               "missile_effect": "combat_effect_magic_missile",

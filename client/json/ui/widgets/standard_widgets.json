@@ -31,6 +31,18 @@
               }
             },
             {
+              "id":"progress_indicator_portrait_hp",
+              "layout":"layout_portrait_hp_container",
+              "icon": {
+                "icon_config": "progress_vertical_hp_bar",
+                "feedback": "feedback_icon_portrait_hp_progress"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_portrait_hp_container",
+                "feedback": "nineslice_surface_anchor"
+              }
+            },
+            {
               "id":"progress_indicator_turn_progress",
               "layout":"layout_turn_progress_container",
               "icon": {
@@ -144,6 +156,54 @@
               "surface": {
                 "nineslice": "nineslice_surface_action_button",
                 "feedback": "feedback_button_action"
+              }
+            },
+            {
+              "id":"widget_icon_button",
+              "layout":"layout_icon_button",
+              "text": {
+                "sprite_font": "sprite_font_button_big",
+                "feedback": "feedback_text_action_button"
+              },
+              "icon": {
+                "icon_config": "button_icon_config",
+                "feedback": "feedback_button_icon"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_action_button",
+                "feedback": "feedback_icon_button"
+              }
+            },
+            {
+              "id":"widget_main_portrait_button",
+              "layout":"layout_main_portrait_button",
+              "text": {
+                "sprite_font": "sprite_font_button_big",
+                "feedback": "feedback_text_action_button"
+              },
+              "icon": {
+                "icon_config": "button_icon_config",
+                "feedback": "feedback_button_icon"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_action_button",
+                "feedback": "feedback_icon_button"
+              }
+            },
+            {
+              "id":"widget_companion_portrait_button",
+              "layout":"layout_companion_portrait_button",
+              "text": {
+                "sprite_font": "sprite_font_button_big",
+                "feedback": "feedback_text_action_button"
+              },
+              "icon": {
+                "icon_config": "button_icon_config",
+                "feedback": "feedback_button_icon"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_action_button",
+                "feedback": "feedback_icon_button"
               }
             },
             {

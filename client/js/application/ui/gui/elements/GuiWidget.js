@@ -205,6 +205,7 @@ class GuiWidget {
                 this.offsetPosition.y = options.offset_y;
             }
 
+
             if (options.text) {
                 this.printWidgetText(options.text);
             }
@@ -221,10 +222,15 @@ class GuiWidget {
                 options.container.addChildWidgetToContainer(this);
             }
 
+            if (options.set_parent !== null) {
+                console.log("Set Parent")
+                options.set_parent.addChild(this);
+            }
+
+
             this.applyWidgetPosition();
 
         };
-
 
 
         setLayoutConfigId = function(layoutConfigId) {
@@ -234,7 +240,6 @@ class GuiWidget {
         getLayoutConfigId = function() {
             return this.layoutConfigId;
         };
-
 
 
         initWidgetSurface = function(surfaceConf, surfaceReady) {
@@ -259,7 +264,6 @@ class GuiWidget {
             GuiAPI.getTextSystem().buildTextElement(textCB, txtConf.sprite_font);
 
         };
-
 
 
         initWidgetIcon = function(iconConf, cb) {
@@ -329,7 +333,6 @@ class GuiWidget {
             //    ElementStateProcessor.applyStateToTextElement(this.text, state);
             this.updateTextPositions();
             this.updateSurfacePositions();
-
             this.updateWidgetStateFeedback();
         };
 

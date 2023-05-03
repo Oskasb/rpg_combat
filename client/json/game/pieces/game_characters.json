@@ -7,6 +7,7 @@
           "status": {
             "name": "Boi",
             "faction": "GOOD",
+            "icon_key": "face_4",
             "level": 1,
             "level_table": "level_table_human_default",
             "companion": 1,
@@ -51,6 +52,7 @@
           "status": {
             "name": "Victor",
             "faction": "GOOD",
+            "icon_key": "face_2",
             "level_table": "level_table_human_default",
             "level": 6,
             "companion": 1,
@@ -87,6 +89,7 @@
           "status": {
             "name": "Hugo",
             "faction": "GOOD",
+            "icon_key": "face_3",
             "level_table": "level_table_human_default",
             "level": 6,
             "companion": 1,
@@ -123,6 +126,7 @@
           "status": {
             "name": "Pontus",
             "faction": "GOOD",
+            "icon_key": "face_1",
             "level_table": "level_table_human_default",
             "level": 9,
             "companion": 1,
@@ -160,6 +164,7 @@
           "status": {
             "name": "Bandit",
             "faction": "EVIL",
+            "icon_key": "face_3",
             "level_table": "level_table_human_default",
             "aggro_range": 5,
             "height": 1.65,
@@ -185,6 +190,7 @@
           "status": {
             "name": "Bandit Leather Hat",
             "faction": "EVIL",
+            "icon_key": "face_3",
             "level_table": "level_table_human_default",
             "aggro_range": 5,
             "height": 1.65,
@@ -210,6 +216,7 @@
           "status": {
             "name": "Bandit Redhat",
             "faction": "EVIL",
+            "icon_key": "face_3",
             "level_table": "level_table_human_default",
             "aggro_range": 5,
             "height": 1.62,
@@ -235,6 +242,7 @@
           "status": {
             "name": "Bandit Tough",
             "faction": "EVIL",
+            "icon_key": "face_3",
             "level_table": "level_table_human_default",
             "level": 4,
             "aggro_range": 6,
@@ -262,6 +270,7 @@
           "status": {
             "name": "Bandit Guard",
             "faction": "EVIL",
+            "icon_key": "face_3",
             "level_table": "level_table_human_default",
             "level": 3,
             "aggro_range": 6,
@@ -289,6 +298,7 @@
           "status": {
             "name": "Bandit Leader",
             "faction": "EVIL",
+            "icon_key": "face_3",
             "level_table": "level_table_human_default",
             "level": 7,
             "aggro_range": 7,
@@ -317,6 +327,7 @@
           "status": {
             "name": "Bandit Champion",
             "faction": "EVIL",
+            "icon_key": "face_3",
             "level_table": "level_table_human_boss",
             "level": 13,
             "aggro_range": 4,
@@ -345,6 +356,7 @@
           "status": {
             "name": "Bandit Boss",
             "faction": "EVIL",
+            "icon_key": "face_3",
             "level_table": "level_table_human_boss",
             "level": 18,
             "aggro_range": 3,
@@ -373,6 +385,7 @@
           "status": {
             "name": "Ingvar",
             "faction": "NEUTRAL",
+            "icon_key": "face_5",
             "level_table": "level_table_human_boss",
             "level": 6,
             "height": 1.85,
@@ -397,6 +410,7 @@
           "status": {
             "name": "Joe",
             "faction": "GOOD",
+            "icon_key": "face_6",
             "level_table": "level_table_human_default",
             "level": 9,
             "height": 2.3,
@@ -417,6 +431,7 @@
           "status": {
             "name": "Eddie",
             "faction": "GOOD",
+            "icon_key": "face_7",
             "level_table": "level_table_human_default",
             "level": 12,
             "height": 1.88,

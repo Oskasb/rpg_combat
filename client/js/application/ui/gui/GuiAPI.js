@@ -150,6 +150,7 @@ class GuiAPI {
         opts.offset_y       = options.offset_y || null;
         opts.anchor         = options.anchor || false;
         opts.container      = options.container || false;
+        opts.set_parent     = options.set_parent || null;
 
         return opts
     };

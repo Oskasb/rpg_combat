@@ -154,6 +154,7 @@
             "id":"fire",
             "tiles":[[2, 5]]
           },
+
           {
             "id":"sleep",
             "tiles":[[3, 4]]
@@ -184,15 +185,15 @@
             "id":"indicate_pitch_upper",
             "tiles":[[1, 2]]
           },
-
-          {
-            "id":"plate",
-            "tiles":[[3, 2]]
-          },
           {
             "id":"progress_vertical",
             "tiles":[[2, 2]]
           },
+          {
+            "id":"plate",
+            "tiles":[[3, 2]]
+          },
+
           {
             "id":"progress_horizontal",
             "tiles":[[1, 2]]

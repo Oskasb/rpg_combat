@@ -38,6 +38,10 @@ class ElementStateProcessor {
                 if (color) {
                     element.setGuiIconColorRGBA(color);
                 }
+                let lutColor = state_feedback[stateKey]['lut_color'];
+                if (lutColor) {
+                    element.setGuiIconLutColor(lutColor)
+                }
             }
         }
     };

@@ -15,7 +15,6 @@
       "/world/spawn/spawn_patterns.json"                     ,
       "/world/grid/adventure_grids.json"                     ,
       "/world/scenarios/home_scenario_static.json"
-
     ],
     "NOT_POLL_INDEX":[
       "/threedata/shaders/three_shader_programs.json"        ,

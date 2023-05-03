@@ -85,6 +85,32 @@
               }
             },
             {
+              "id":"feedback_icon_portrait_hp_progress",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 0.01, "g": 0.65, "b":  0.01, "a": 0.4}
+                },
+                "HOVER": {
+                  "color_rgba": {"r": 0.05, "g": 0.74, "b": 0.85, "a": 0.6}
+                },
+                "PRESS": {
+                  "color_rgba": {"r": 0.99, "g": 0.80, "b": 0.55, "a": 0.6}
+                },
+                "ACTIVE": {
+                  "color_rgba": {"r": 0.01, "g": 0.6,  "b": 0.9, "a": 1.0}
+                },
+                "ACTIVE_HOVER": {
+                  "color_rgba": {"r": 0.99, "g": 0.95, "b": 0.81, "a": 0.6}
+                },
+                "ACTIVE_PRESS": {
+                  "color_rgba": {"r": 0.05, "g": 0.74, "b": 0.99, "a": 0.6}
+                },
+                "DISABLED": {
+                  "color_rgba": {"r": 0.45, "g": 0.25, "b": 0.25, "a": 0.6}
+                }
+              }
+            },
+            {
               "id":"feedback_icon_xp_bar_progress",
               "config": {
                 "NONE": {
@@ -160,6 +186,33 @@
                 "DISABLED": {
                   "color_rgba": {"r": 0.45, "g": 0.25, "b": 0.25, "a": 0.6}
                 }
+              }
+            },
+            {
+              "id":"feedback_button_icon",
+              "config": {
+                "NONE": {
+                  "color_rgba": {"r": 1.29, "g": 0.5, "b": 0.01, "a": 0.6}
+                },
+                "HOVER": {
+                  "color_rgba": {"r": 0.96, "g": 0.87, "b": 0.86, "a": 0.95}
+                },
+                "PRESS": {
+                  "color_rgba": {"r": 0.99, "g": 0.89, "b": 0.69, "a": 0.99}
+                },
+                "ACTIVE": {
+                  "color_rgba": {"r": 0.99, "g": 0.91, "b": 0.79, "a": 0.99}
+                },
+                "ACTIVE_HOVER": {
+                  "color_rgba": {"r": 0.99, "g": 0.99, "b": 0.89, "a": 0.99}
+                },
+                "ACTIVE_PRESS": {
+                  "color_rgba": {"r": 0.99, "g": 0.99, "b": 0.99, "a": 0.99}
+                },
+                "DISABLED": {
+                  "color_rgba": {"r": 0.5, "g": 0.5, "b": 0.5, "a": 1.0}
+                }
+
               }
             },
             {
