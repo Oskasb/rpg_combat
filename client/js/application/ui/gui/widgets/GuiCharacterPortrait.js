@@ -42,7 +42,6 @@ class GuiCharacterPortrait {
             evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
         }.bind(this);
 
-    //    let addContainerElement = function(configId) {
             let contopts = GuiAPI.buildWidgetOptions(
                 {
                     widgetClass:'GuiExpandingContainer',
@@ -54,9 +53,6 @@ class GuiCharacterPortrait {
             );
 
             evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, contopts)
-     //   }
-
-    //    addContainerElement( 'widget_hidden_container', anchorReady)
 
     }
 
@@ -67,9 +63,14 @@ class GuiCharacterPortrait {
     updateCharacterPortrait(tpf, gameTime) {
         if (this.portraitStatusGui) {
             this.portraitStatusGui.updateCharacterStatElement();
+            if (this.gamePiece.isDead) {
+                let iconKey = 'dead'
+                this.button.guiWidget.setWidgetIconKey(iconKey)
+            } else {
+                let iconKey = this.gamePiece.getStatusByKey('icon_key')
+                this.button.guiWidget.setWidgetIconKey(iconKey)
+            }
         }
-     //   let isActive = this.guiWidget.testElementIsActive();
-    //    this.guiWidget.updateWidgetStateFeedback();
     }
 
 }
