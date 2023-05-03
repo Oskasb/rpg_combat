@@ -3,15 +3,9 @@
     "UI": {
       "PAGES":[
         {
-          "id": "page_scene_hero",
+          "id": "page_leader_peace",
           "data": [
             {
-              "camera": {
-
-                "mode": "portrait_main_char",
-                "offset_pos": [0, 1.7, -4],
-                "offset_lookAt": [-0.0, 1.3, -0.0]
-              },
               "containers":[
                 {
                   "widget_id":"page_hero_center",
@@ -38,7 +32,6 @@
                     }
                   }
                 },
-
                 {
                   "widget_id":"text_box_home",
                   "widget_class":"GuiExpandingContainer",
@@ -58,31 +51,50 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"BACK",
+                    "text":"INSPECT",
                     "container_id":"page_hero_center",
                     "offset_x":-0.15,
-                    "offset_y":-0.04,
+                    "offset_y":-0.18,
                     "dispatch":{
-                      "event":"SWITCH_BACK_GUI_PAGE",
+                      "event":"SWITCH_GUI_PAGE",
                       "value":{
-                        "from_id": "page_scene_hero"
+                        "page": "page_scene_hero"
                       }
                     }
                   }
                 },
                 {
-                  "widget_id":"button_exit_hero_page",
+                  "widget_id":"button_hero_equip",
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"PIMP",
+                    "text":"EQUIP",
                     "container_id":"page_hero_center",
-                    "offset_x": 0.05,
-                    "offset_y":-0.08,
+                    "offset_x":-0.15,
+                    "offset_y":-0.14,
                     "dispatch":{
-                      "event":"CHEAT_APPLY_PIMP",
+                      "event":"EQUIP_ITEM",
                       "value":{
-                        "status": "xp"
+                        "item":"random",
+                        "time":1
+                      }
+                    }
+                  }
+                },
+                {
+                  "widget_id":"button_hero_rest",
+                  "widget_class":"GuiExpandingContainer",
+                  "widget_config_id":"button_big_blue",
+                  "options":{
+                    "text":"UNEQUIP",
+                    "container_id":"page_hero_center",
+                    "offset_x":-0.15,
+                    "offset_y":-0.10,
+                    "dispatch":{
+                      "event":"UNEQUIP_ITEM",
+                      "value":{
+                        "item":"random",
+                        "time":1
                       }
                     }
                   }

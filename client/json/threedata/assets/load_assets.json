@@ -14,7 +14,9 @@
     "POLL_INDEX":[
       "/world/spawn/spawn_patterns.json"                     ,
       "/world/grid/adventure_grids.json"                     ,
-      "/world/scenarios/home_scenario_static.json"
+      "/world/scenarios/home_scenario_static.json"            ,
+      "/ui/pages/characters/gui_page_companion_peace.json"    ,
+      "/ui/pages/characters/gui_page_leader_peace.json"
     ],
     "NOT_POLL_INDEX":[
       "/threedata/shaders/three_shader_programs.json"        ,

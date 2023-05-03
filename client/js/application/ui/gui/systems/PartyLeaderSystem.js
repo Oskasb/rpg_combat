@@ -11,6 +11,8 @@ let activatedCompanion = null;
 let letCompanionLayout = 'widget_companion_portrait_button';
 let mainCharPortraitLayout = 'widget_main_portrait_button';
 
+let partyLeaderPage = null;
+
 let clearCompanionPortraits = function() {
     while (companionPortraits.length) {
         companionPortraits.pop().guiWidget.recoverGuiWidget()
@@ -24,14 +26,33 @@ let notifyButtonStatechange = function() {
     }
 }
 
+let companionPage = null;
+
+let activateCompanionPeacePage = function() {
+    if (partyLeaderActive) {
+        partyLeaderPage = GuiAPI.activatePage('page_leader_peace')
+    } else {
+        if (partyLeaderPage) {
+            GuiAPI.guiPageSystem.closeGuiPage(partyLeaderPage);
+            partyLeaderPage = null;
+        }
+    }
+}
+
+
 let addCompanionPortrait = function(companion, index) {
 
     let activateCompanion = function(companion) {
 
         if (activatedCompanion === companion) {
             activatedCompanion = null;
+            if (companionPage) {
+                GuiAPI.guiPageSystem.closeGuiPage(companionPage)
+                companionPage = null;
+            }
         } else {
             activatedCompanion = companion;
+            companionPage = GuiAPI.activatePage('page_companion_peace')
         //    activeCompanionIndex = index
         }
         notifyButtonStatechange()
@@ -75,10 +96,26 @@ let processCompanions = function(tpf, gameTime) {
 class PartyLeaderSystem {
     constructor() {
 
+        let switchCallback = function() {
+
+        }
+    //    if (longPress === 1) {
+        //    if (!gamePiece.getTarget()) {
+
         let pressPartyLeader = function(partyLeader) {
             notifyButtonStatechange();
             partyLeaderActive = !partyLeaderActive;
-            console.log("pressPartyLeader", partyLeader)
+
+            if (partyLeaderActive) {
+                partyLeaderPage = GuiAPI.activatePage('page_leader_peace')
+            } else {
+                if (partyLeaderPage) {
+                    GuiAPI.guiPageSystem.closeGuiPage(partyLeaderPage);
+                    partyLeaderPage = null;
+                }
+            }
+
+        //    console.log("pressPartyLeader", partyLeader)
         }
 
         let partyLeaderTestActive = function(partyLeader) {

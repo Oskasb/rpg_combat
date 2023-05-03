@@ -38,6 +38,8 @@
       "/ui/gui_systems.json"                                 ,
 
       "/ui/pages/characters/gui_page_player_main.json"       ,
+      "/ui/pages/characters/gui_page_companion_peace.json"   ,
+      "/ui/pages/characters/gui_page_leader_peace.json"       ,
 
       "/ui/pages/debug/gui_page_debug_view.json"             ,
       "/ui/pages/debug/gui_page_debug_view_buffers.json"     ,

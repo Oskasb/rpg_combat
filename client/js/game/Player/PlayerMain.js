@@ -171,6 +171,21 @@ class PlayerMain {
         }.bind(this);
 
 
+        let switchCallback = function() {
+
+        }
+
+        let switchGuiPage = function(event) {
+            let currentPage = GameAPI.getActiveDynamicScenario().page;
+            if (currentPage.isActive === false) {
+                return;
+            }
+
+            GuiAPI.guiPageSystem.switchFromCurrentActiveToPage(currentPage, event.page, switchCallback);
+        }
+
+
+
         let callbacks = {
             applyCameraModifiers:applyCameraModifiers,
             handleEquip : equipItem,
@@ -186,7 +201,8 @@ class PlayerMain {
             openTarget:openTarget,
             selectTarget:selectTarget,
             returnHome:returnHome,
-            applyCheatPimp:applyCheatPimp
+            applyCheatPimp:applyCheatPimp,
+            switchGuiPage:switchGuiPage
         }
 
         this.callbacks = callbacks;
@@ -205,6 +221,7 @@ class PlayerMain {
         evt.on(ENUMS.Event.MAIN_CHAR_ENGAGE_TARGET, callbacks.registerTargetEngaged);
         evt.on(ENUMS.Event.MAIN_CHAR_RETURN_HOME, callbacks.returnHome);
         evt.on(ENUMS.Event.CHEAT_APPLY_PIMP, callbacks.applyCheatPimp);
+        evt.on(ENUMS.Event.SWITCH_GUI_PAGE, callbacks.switchGuiPage);
     }
 
 

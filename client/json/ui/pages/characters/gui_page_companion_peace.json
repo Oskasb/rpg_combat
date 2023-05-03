@@ -3,15 +3,9 @@
     "UI": {
       "PAGES":[
         {
-          "id": "page_scene_hero",
+          "id": "page_companion_peace",
           "data": [
             {
-              "camera": {
-
-                "mode": "portrait_main_char",
-                "offset_pos": [0, 1.7, -4],
-                "offset_lookAt": [-0.0, 1.3, -0.0]
-              },
               "containers":[
                 {
                   "widget_id":"page_hero_center",
@@ -58,27 +52,10 @@
                   "widget_class":"GuiExpandingContainer",
                   "widget_config_id":"button_big_blue",
                   "options":{
-                    "text":"BACK",
+                    "text":"LEAD",
                     "container_id":"page_hero_center",
-                    "offset_x":-0.15,
-                    "offset_y":-0.04,
-                    "dispatch":{
-                      "event":"SWITCH_BACK_GUI_PAGE",
-                      "value":{
-                        "from_id": "page_scene_hero"
-                      }
-                    }
-                  }
-                },
-                {
-                  "widget_id":"button_exit_hero_page",
-                  "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"button_big_blue",
-                  "options":{
-                    "text":"PIMP",
-                    "container_id":"page_hero_center",
-                    "offset_x": 0.05,
-                    "offset_y":-0.08,
+                    "offset_x": 0.15,
+                    "offset_y":-0.21,
                     "dispatch":{
                       "event":"CHEAT_APPLY_PIMP",
                       "value":{
