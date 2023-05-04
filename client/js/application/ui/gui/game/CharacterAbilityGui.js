@@ -50,57 +50,43 @@ class CharacterAbilityGui {
 
         let onContainerReady = function(element) {
             let barContainer = element;
-            let addButtonElement = function(configId, container, onReady) {
+
+
+            let addButtonElement = function(configId, container, slot, onReady) {
+
+                let ability = slot.pieceAbility;
+                let config = ability.config;
+
                 let opts = GuiAPI.buildWidgetOptions(
                     {
                         widgetClass:'GuiActionButton',
                         widgetCallback:onReady,
+                        onActivate:ability.call.activatePieceAbility,
+                        testActive:ability.call.isActivated,
                         container:container,
-                        configId:configId
+                        configId:configId,
+                        icon:config['icon_key']
                     }
                 );
                 evt.dispatch(ENUMS.Event.BUILD_GUI_ELEMENT, opts)
             }
 
-            let onButtonReady = function(element) {
+            let onButtonReady = function(button) {
             //    element.guiWidget.applyWidgetPosition()
                 barContainer.guiWidget.applyWidgetPosition();
-                console.log("Action Button; ", element)
+                console.log("Action Button; ", button)
 
-                let slot = slottedAbilities[abilityButtons.length]
-
-                if (slot) {
-                    let ability = slot.pieceAbility;
-                    let config = ability.config;
-                    element.guiWidget.setWidgetIconKey(config['icon_key']);
-                    element.setActivateCallback(ability.call.activatePieceAbility)
-                    let interactiveElem = element.getInteractiveElement();
-
-                    let onActivate = function(input) {
-                   //     console.log("Activate", input)
-                    //    _this.deactivateCharacterAbilityGui();
-                        ability.call.activatePieceAbility();
-                    }
-
-                    let onHover = function(input) {
-                    //    console.log("hovering", input)
-                        interactiveElem.setInteractiveState(ENUMS.ElementState.PRESS);
-                        interactiveElem.applyPressState();
-                        interactiveElem.addOnActivateCallback(onActivate);
-
-                    }
-                    interactiveElem.addOnHoverCallback(onHover);
-
-                }
-
-                abilityButtons.push(element);
+                abilityButtons.push(button);
 
             }
 
         //    element.guiWidget.applyWidgetPosition()
             containers.push(element);
             for (let i = 0; i < maxSlots; i++) {
-                addButtonElement('widget_action_button', element, onButtonReady)
+                let slot = slottedAbilities[i]
+                if (slot) {
+                    addButtonElement('widget_action_button', element, slot, onButtonReady)
+                }
             }
         }
 

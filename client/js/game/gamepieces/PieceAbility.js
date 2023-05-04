@@ -26,7 +26,15 @@ class PieceAbility {
         let updateActivatedAbility = function() {
             this.updateActivatedAbility()
         }.bind(this)
+
+        let isActivated = function() {
+            if (this.getAbilityTarget()) {
+                return true;
+            }
+        }.bind(this);
+
         this.call = {
+            isActivated:isActivated,
             activatePieceAbility:activateAbility,
             updateReleasedAbility:updateReleasedAbility,
             updateActivatedAbility:updateActivatedAbility

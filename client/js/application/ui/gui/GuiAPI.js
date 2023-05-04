@@ -151,6 +151,7 @@ class GuiAPI {
         opts.anchor         = options.anchor || false;
         opts.container      = options.container || false;
         opts.set_parent     = options.set_parent || null;
+        opts.icon           = options.icon || null
 
         return opts
     };
