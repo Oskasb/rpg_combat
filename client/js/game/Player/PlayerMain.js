@@ -143,37 +143,9 @@ class PlayerMain {
             this.cheatPimpMainChar(event)
         }.bind(this)
 
-        let applyCameraModifiers = function() {
-
-            let gamePiece = this.playerCharacter.gamePiece;
-            let companions = gamePiece.companions;
-            for (let i = 0; i < companions.length; i++) {
-                let companion = companions[i]
-                if (!companion.isDead) {
-                    tempVec3.copy(companion.getPos());
-                    tempVec3.sub(gamePiece.getPos());
-                    tempVec3.multiplyScalar(0.3);
-                    GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
-                    GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
-                }
-            }
-
-            let target = gamePiece.getTarget();
-            if (target) {
-                tempVec3.copy(target.getPos());
-                tempVec3.sub(gamePiece.getPos());
-                tempVec3.multiplyScalar(0.35);
-                GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
-                tempVec3.multiplyScalar(-0.8);
-                GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
-            }
-
-        }.bind(this);
-
-
         let switchCallback = function() {
-
-        }
+            this.partyLeaderSystem.deactivateSelections();
+        }.bind(this);
 
         let switchGuiPage = function(event) {
             let currentPage = GameAPI.getActiveDynamicScenario().page;
@@ -187,7 +159,6 @@ class PlayerMain {
 
 
         let callbacks = {
-            applyCameraModifiers:applyCameraModifiers,
             handleEquip : equipItem,
             handleUnequip : unequipItem,
             handleDropItem : function (event) {        },
@@ -228,10 +199,10 @@ class PlayerMain {
     setPlayerCharacter(character, oldMain) {
         if (oldMain) {
             GameAPI.unregisterGameUpdateCallback(oldMain.getOnUpdateCallback())
-            GameAPI.unregisterGameUpdateCallback(this.callbacks.applyCameraModifiers)
+        //    GameAPI.unregisterGameUpdateCallback(this.callbacks.applyCameraModifiers)
         }
         GameAPI.registerGameUpdateCallback(character.gamePiece.getOnUpdateCallback())
-        GameAPI.registerGameUpdateCallback(this.callbacks.applyCameraModifiers)
+      //  GameAPI.registerGameUpdateCallback(this.callbacks.applyCameraModifiers)
 
         character.gamePiece.setStatusValue('isCharacter', 1);
         if (this.mainCharPage) {

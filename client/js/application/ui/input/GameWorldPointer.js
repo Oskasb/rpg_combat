@@ -50,6 +50,8 @@ class GameWorldPointer {
 
     }
 
+
+
     indicateSelection = function(bool, pointer, selection) {
         if (bool) {
 

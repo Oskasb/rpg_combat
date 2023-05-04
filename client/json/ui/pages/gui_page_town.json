@@ -48,8 +48,8 @@
                   "options":{
                     "text":"LEAVE",
                     "container_id":"page_home_center",
-                    "offset_x":-0.08,
-                    "offset_y":-0.24,
+                    "offset_x":-0.12,
+                    "offset_y":-0.02,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -73,42 +73,6 @@
                       "value":{
                         "id":"cave_scenario",
                         "dynamic":"encounter_cave_basic_dynamic"
-                      }
-                    }
-                  }
-                },
-                {
-                  "widget_id":"button_go_merchant",
-                  "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"button_big_blue",
-                  "options":{
-                    "text":"TRADER",
-                    "container_id":"page_home_center",
-                    "offset_x":0.11,
-                    "offset_y":0.06,
-                    "dispatch":{
-                      "event":"REQUEST_SCENARIO",
-                      "value":{
-                        "id":"home_scenario",
-                        "dynamic":"town_merchant_dynamic"
-                      }
-                    }
-                  }
-                },
-                {
-                  "widget_id":"button_go_inn",
-                  "widget_class":"GuiExpandingContainer",
-                  "widget_config_id":"button_big_blue",
-                  "options":{
-                    "text":"INN",
-                    "container_id":"page_home_center",
-                    "offset_x": 0.13,
-                    "offset_y": -0.12,
-                    "dispatch":{
-                      "event":"REQUEST_SCENARIO",
-                      "value":{
-                        "id":"home_scenario",
-                        "dynamic":"town_inn_dynamic"
                       }
                     }
                   }

@@ -43,6 +43,18 @@
               }
             },
             {
+              "id":"progress_indicator_portrait_swing",
+              "layout":"layout_portrait_hp_container",
+              "icon": {
+                "icon_config": "progress_vertical_hp_bar",
+                "feedback": "feedback_icon_portrait_swing_progress"
+              },
+              "surface": {
+                "nineslice": "nineslice_surface_portrait_hp_container",
+                "feedback": "nineslice_surface_anchor"
+              }
+            },
+            {
               "id":"progress_indicator_turn_progress",
               "layout":"layout_turn_progress_container",
               "icon": {

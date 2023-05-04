@@ -102,7 +102,7 @@
                     "text":"FRIENDS",
                     "container_id":"page_home_center",
                     "offset_x":-0.135,
-                    "offset_y":-0.16,
+                    "offset_y":-0.03,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{
@@ -121,7 +121,7 @@
                     "text":"ALLIES",
                     "container_id":"page_home_center",
                     "offset_x":0.135,
-                    "offset_y":-0.16,
+                    "offset_y":-0.03,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{

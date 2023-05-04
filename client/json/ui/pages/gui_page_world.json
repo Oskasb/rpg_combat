@@ -84,8 +84,8 @@
                   "options":{
                     "text":"TOWN",
                     "container_id":"page_home_center",
-                    "offset_x":0.09,
-                    "offset_y":-0.28,
+                    "offset_x":0.11,
+                    "offset_y":-0.17,
                     "dispatch":{
                       "event":"REQUEST_SCENARIO",
                       "value":{

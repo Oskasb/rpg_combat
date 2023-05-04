@@ -15,7 +15,7 @@
               "camera": {
                 "mode": "follow_cam_main_char",
                 "offset_pos": [0, 10, -7],
-                "offset_lookAt": [0, 1, 1]
+                "offset_lookAt": [0, 0, 0]
               },
               "gui_page":"page_scene_dungeon",
               "victory_page": "page_scenario_victory",

@@ -85,7 +85,7 @@ class PortraitStatusGui {
         }.bind(this)
 
         this.addProgressElement( 'progress_indicator_portrait_hp',  onHpReady)
-        this.addProgressElement( 'progress_indicator_portrait_hp',  onSwingReady)
+        this.addProgressElement( 'progress_indicator_portrait_swing',  onSwingReady)
         this.addPointContainer('widget_attack_point_container',  onAttacksContainerReady )
         this.addPointContainer('widget_attack_point_container',  onAPContainerReady )
     }

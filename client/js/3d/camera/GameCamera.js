@@ -2,7 +2,7 @@ class GameCamera {
     constructor() {
         let tpf;
         let fraction = 1;
-        let tempVec = new THREE.Vector3();
+        let tempVec3 = new THREE.Vector3();
         let cameraPos = new THREE.Vector3();
         let cameraLookAt = new THREE.Vector3();
         let targetLookAt = new THREE.Vector3();
@@ -24,14 +24,47 @@ class GameCamera {
             positionModifier.add(vec3);
         }
 
+        let applyCameraModifiers = function() {
+
+            let gamePiece = GameAPI.getMainCharPiece();
+            if (!gamePiece) return;
+        //    let companions = gamePiece.companions;
+       //     for (let i = 0; i < companions.length; i++) {
+                let companion = GameAPI.getSelectedCompanion();
+                if (companion) {
+                    tempVec3.copy(companion.getPos());
+                    tempVec3.sub(gamePiece.getCenterMass());
+                    tempVec3.multiplyScalar(0.5);
+                    GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
+                    GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
+                }
+        //   }
+
+            let target = gamePiece.getTarget();
+            if (target) {
+                tempVec3.copy(target.getPos());
+                tempVec3.sub(gamePiece.getPos());
+                tempVec3.multiplyScalar(0.25);
+                GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
+                tempVec3.multiplyScalar(-0.8);
+                GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
+            }
+
+        }.bind(this);
+
         let applyFrameToCameraMotion = function() {
             if (fraction > 1) return;
+
+            if (GameAPI.getPlayerMain().playerCharacter) {
+                    applyCameraModifiers();
+            }
+
             fraction = MATH.calcFraction(transitionStartTime, transitionEndTime, currentTime);
             let factor = 1;
             let posFactor = 1;
             if (fraction < 0.95) {
                 factor =  MATH.curveSigmoid(fraction*0.95);
-                posFactor = MATH.curveSigmoid(fraction*0.5);
+                posFactor = MATH.curveSigmoid(fraction*0.75);
             } else {
                 fraction = 1;
                 factor = 1;
@@ -77,6 +110,7 @@ class GameCamera {
 
 
         let applyFrame = function(frame) {
+
                 currentTime = frame.elapsedTime;
                 tpf = frame.tpf;
                 applyFrameToCameraMotion()
@@ -148,7 +182,7 @@ class GameCamera {
         camParams.offsetLookAt[0] = camConf.offsetLookAt[0];
         camParams.offsetLookAt[1] = camConf.offsetLookAt[1];
         camParams.offsetLookAt[2] = camConf.offsetLookAt[2];
-        camParams.time = 0.1;
+        camParams.time = 0.07;
         if (camConf['mode'] === "portrait_main_char") {
         //    console.log("Make cam go to char here for nice")
         }

@@ -12,7 +12,6 @@ import { PieceInfoGui } from "../../application/ui/gui/game/PieceInfoGui.js";
 import { PieceText } from "../../application/ui/gui/game/PieceText.js";
 import { CompanionSystem } from "../companion/CompanionSystem.js";
 import * as PieceEffects from "./feedback/PieceEffects.js";
-import * as CombatEffects from "../combat/feedback/CombatEffects.js";
 
 import { Vector3 } from "../../../libs/three/math/Vector3.js";
 import { Object3D } from "../../../libs/three/core/Object3D.js";

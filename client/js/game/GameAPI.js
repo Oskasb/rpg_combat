@@ -126,6 +126,10 @@ class GameAPI {
 
     }
 
+    getSelectedCompanion() {
+        return this.gameMain.playerMain.partyLeaderSystem.getSelectedCompanion();
+    }
+
     deactivateWorldSpacePointer(pointer) {
         this.gameWorldPointer.worldPointerDeactivate(pointer);
     }
