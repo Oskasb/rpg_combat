@@ -156,7 +156,21 @@ class PlayerMain {
             GuiAPI.guiPageSystem.switchFromCurrentActiveToPage(currentPage, event.page, switchCallback);
         }
 
-
+        let setCompanionAsLeader = function(event) {
+            let playerPiece = GameAPI.getMainCharPiece();
+            let gamePiece = GameAPI.getSelectedCompanion();
+            if (!gamePiece) {
+                console.log("No companion selected, something broken...")
+                return;
+            }
+            gamePiece.setStatusValue('following', null)
+            gamePiece.addCompanion(playerPiece);
+            MATH.quickSplice(playerPiece.companions, gamePiece);
+            while (playerPiece.companions.length) {
+                gamePiece.addCompanion(playerPiece.companions.pop())
+            }
+            this.setPlayerCharacter(gamePiece.character, playerPiece)
+        }.bind(this);
 
         let callbacks = {
             handleEquip : equipItem,
@@ -173,7 +187,8 @@ class PlayerMain {
             selectTarget:selectTarget,
             returnHome:returnHome,
             applyCheatPimp:applyCheatPimp,
-            switchGuiPage:switchGuiPage
+            switchGuiPage:switchGuiPage,
+            setCompanionAsLeader:setCompanionAsLeader
         }
 
         this.callbacks = callbacks;
@@ -193,6 +208,9 @@ class PlayerMain {
         evt.on(ENUMS.Event.MAIN_CHAR_RETURN_HOME, callbacks.returnHome);
         evt.on(ENUMS.Event.CHEAT_APPLY_PIMP, callbacks.applyCheatPimp);
         evt.on(ENUMS.Event.SWITCH_GUI_PAGE, callbacks.switchGuiPage);
+        evt.on(ENUMS.Event.SET_COMPANION_AS_LEADER, callbacks.setCompanionAsLeader);
+
+
     }
 
 
@@ -284,7 +302,7 @@ class PlayerMain {
 
         if ((gamePiece === playerPiece) || (gamePiece.getStatusByKey('following') === playerPiece)) {
             console.log("Open friendly", gamePiece);
-            gamePiece.getCharacter().activateCharAbilityGui();
+        //    gamePiece.getCharacter().activateCharAbilityGui();
         }
 
     }
@@ -329,6 +347,7 @@ class PlayerMain {
         if (gamePiece.getStatusByKey('following') === playerPiece) {
             if (longPress === 1) {
                 console.log("select follower, switch control here..")
+                return;
                 gamePiece.setStatusValue('following', null)
                 gamePiece.addCompanion(playerPiece);
                 MATH.quickSplice(playerPiece.companions, gamePiece);

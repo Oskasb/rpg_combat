@@ -108,6 +108,7 @@ class CharacterAbilityGui {
         let maxSlots = this.gamePiece.getStatusByKey('ability_slots_max');
         this.addButtonContainer(maxSlots)
         GameAPI.registerGameUpdateCallback(this.callbacks.updateCharAbilityGui)
+        return this;
     }
 
     deactivateCharacterAbilityGui() {

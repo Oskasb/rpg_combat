@@ -14,6 +14,11 @@ let letCompanionLayout = 'widget_companion_portrait_button';
 let mainCharPortraitLayout = 'widget_main_portrait_button';
 
 let partyLeaderPage = null;
+let indicatedSelections = [];
+
+let companionPage = null;
+let leaderActionBar = null;
+let companionActionBar = null;
 
 let clearCompanionPortraits = function() {
     while (companionPortraits.length) {
@@ -28,13 +33,43 @@ let notifyButtonStatechange = function() {
     }
 }
 
-let companionPage = null;
 
 let activateCompanionPeacePage = function() {
-    companionPage = GuiAPI.activatePage('page_companion_peace')
+
+    if (activatedCompanion.getTarget()) {
+        companionActionBar = characterPortraitSystem.createCompanionActionBar(activatedCompanion)
+    } else {
+        companionPage = GuiAPI.activatePage('page_companion_peace')
+    }
+
+
 }
 
-let indicatedSelections = [];
+
+
+let operatePartyLeaderSelection = function() {
+    let leaderPiece = GameAPI.getMainCharPiece();
+    if (partyLeaderActive) {
+
+        indicateSelection(true, leaderPiece)
+        if (leaderPiece.getTarget()) {
+            leaderActionBar = characterPortraitSystem.createLeaderActionBar(leaderPiece);
+        } else {
+            partyLeaderPage = GuiAPI.activatePage('page_leader_peace')
+        }
+
+    } else {
+        if (partyLeaderPage) {
+            GuiAPI.guiPageSystem.closeGuiPage(partyLeaderPage);
+            partyLeaderPage = null;
+        }
+        if (leaderActionBar) {
+            leaderActionBar.deactivateCharacterAbilityGui();
+            leaderActionBar = null;
+        }
+        indicateSelection(false, leaderPiece)
+    }
+}
 
 let indicateSelection = function(bool, selection) {
     let indicator = indicatedSelections[selection.pieceIndex];
@@ -60,13 +95,17 @@ let addCompanionPortrait = function(companion, index) {
             companionPage = null;
         }
 
+        if (companionActionBar) {
+            companionActionBar.deactivateCharacterAbilityGui()
+        }
+
         if (activatedCompanion === companion) {
             activatedCompanion = null;
             indicateSelection(false, companion)
         } else {
             activatedCompanion = companion;
             indicateSelection(true, companion)
-            setTimeout(activateCompanionPeacePage, 100);
+            setTimeout(activateCompanionPeacePage, 50);
         }
         notifyButtonStatechange()
         console.log("activate companion", companion)
@@ -109,30 +148,11 @@ let processCompanions = function(tpf, gameTime) {
 class PartyLeaderSystem {
     constructor() {
 
-        let switchCallback = function() {
-
-        }
-    //    if (longPress === 1) {
-        //    if (!gamePiece.getTarget()) {
-
-        let pressPartyLeader = function(partyLeader) {
+        let pressPartyLeader = function() {
             notifyButtonStatechange();
             partyLeaderActive = !partyLeaderActive;
-
-            if (partyLeaderActive) {
-                indicateSelection(true, GameAPI.getMainCharPiece())
-                partyLeaderPage = GuiAPI.activatePage('page_leader_peace')
-            } else {
-                if (partyLeaderPage) {
-                    indicateSelection(false, GameAPI.getMainCharPiece())
-                    GuiAPI.guiPageSystem.closeGuiPage(partyLeaderPage);
-                    partyLeaderPage = null;
-                }
-            }
-
-        //    console.log("pressPartyLeader", partyLeader)
+            operatePartyLeaderSelection()
         }
-
         let partyLeaderTestActive = function(partyLeader) {
             return partyLeaderActive
         }

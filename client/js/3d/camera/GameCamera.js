@@ -44,9 +44,9 @@ class GameCamera {
             if (target) {
                 tempVec3.copy(target.getPos());
                 tempVec3.sub(gamePiece.getPos());
-                tempVec3.multiplyScalar(0.25);
+                tempVec3.multiplyScalar(0.15);
                 GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
-                tempVec3.multiplyScalar(-0.8);
+                tempVec3.multiplyScalar(-0.3);
                 GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
             }
 

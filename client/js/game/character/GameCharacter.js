@@ -72,7 +72,7 @@ class GameCharacter {
     }
 
     activateCharAbilityGui() {
-        this.characterAbilityGui.activateCharacterAbilityGui()
+        return this.characterAbilityGui.activateCharacterAbilityGui()
     }
 
     deactivateCharAbilityGui() {
