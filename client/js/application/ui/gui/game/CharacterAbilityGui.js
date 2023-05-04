@@ -12,6 +12,7 @@ class CharacterAbilityGui {
 
         this.tempVec3 = new THREE.Vector3();
         this.tempVec3b = new THREE.Vector3();
+        this.screenPos = new THREE.Vector3();
         this.buttonContainers = [];
         this.abilityButtons = [];
         let updateCharAbilityGui = function() {
@@ -34,6 +35,7 @@ class CharacterAbilityGui {
             {
                 widgetClass:'GuiExpandingContainer',
                 widgetCallback:onReady,
+                anchor:'bottom_center',
                 configId:configId
             }
         );
@@ -47,7 +49,7 @@ class CharacterAbilityGui {
         let _this = this;
 
         let onContainerReady = function(element) {
-
+            let barContainer = element;
             let addButtonElement = function(configId, container, onReady) {
                 let opts = GuiAPI.buildWidgetOptions(
                     {
@@ -62,6 +64,7 @@ class CharacterAbilityGui {
 
             let onButtonReady = function(element) {
             //    element.guiWidget.applyWidgetPosition()
+                barContainer.guiWidget.applyWidgetPosition();
                 console.log("Action Button; ", element)
 
                 let slot = slottedAbilities[abilityButtons.length]
@@ -75,7 +78,7 @@ class CharacterAbilityGui {
 
                     let onActivate = function(input) {
                    //     console.log("Activate", input)
-                        _this.deactivateCharacterAbilityGui();
+                    //    _this.deactivateCharacterAbilityGui();
                         ability.call.activatePieceAbility();
                     }
 
@@ -101,10 +104,12 @@ class CharacterAbilityGui {
             }
         }
 
-        this.addAbilityContainer('widget_action_button_container', onContainerReady)
+        this.addAbilityContainer(this.containerConfigId, onContainerReady)
     }
 
-    activateCharacterAbilityGui() {
+    activateCharacterAbilityGui(containerId,x, y) {
+        this.containerConfigId = containerId;
+        this.screenPos.set(x, y, 0);
         let maxSlots = this.gamePiece.getStatusByKey('ability_slots_max');
         this.addButtonContainer(maxSlots)
         GameAPI.registerGameUpdateCallback(this.callbacks.updateCharAbilityGui)
@@ -152,20 +157,20 @@ class CharacterAbilityGui {
         }
     }
 
-    setContainerPosition(pieceScreenPos, container, containerIndex, buttonCount) {
-        container.guiWidget.setPosition(pieceScreenPos)
+    setContainerPosition(screenPos, container, containerIndex, buttonCount) {
+        container.guiWidget.setPosition(screenPos)
     }
 
     updateCharacterAbilityElements() {
-        this.spatial.getSpatialPosition(this.tempVec3);
-        this.tempVec3.y +=  this.gamePiece.getStatusByKey('height');
-        ThreeAPI.toScreenPosition(this.tempVec3, this.tempVec3b)
+    //    this.spatial.getSpatialPosition(this.tempVec3);
+    //    this.tempVec3.y +=  this.gamePiece.getStatusByKey('height');
+    //    GuiAPI.applyAspectToScreenPosition(this.screenPos, this.tempVec3b)
 
         this.updateAbilityElements(this.gamePiece.getStatusByKey('ability_slots'))
 
-        for (let i = 0; i < this.buttonContainers.length; i++) {
-            this.setContainerPosition(this.tempVec3b, this.buttonContainers[i], i, this.buttonContainers.length)
-        }
+    //    for (let i = 0; i < this.buttonContainers.length; i++) {
+    //        this.setContainerPosition(this.tempVec3b, this.buttonContainers[i], i, this.buttonContainers.length)
+    //    }
 
 
     }

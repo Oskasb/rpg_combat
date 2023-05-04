@@ -71,8 +71,8 @@ class GameCharacter {
         return this.gamePiece;
     }
 
-    activateCharAbilityGui() {
-        return this.characterAbilityGui.activateCharacterAbilityGui()
+    activateCharAbilityGui(containerId, x, y) {
+        return this.characterAbilityGui.activateCharacterAbilityGui(containerId, x, y)
     }
 
     deactivateCharAbilityGui() {

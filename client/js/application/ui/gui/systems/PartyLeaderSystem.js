@@ -37,7 +37,7 @@ let notifyButtonStatechange = function() {
 let activateCompanionPeacePage = function() {
 
     if (activatedCompanion.getTarget()) {
-        companionActionBar = characterPortraitSystem.createCompanionActionBar(activatedCompanion)
+        companionActionBar = characterPortraitSystem.createCompanionActionBar(activatedCompanion, 'widget_companion_action_button_container', 0, 0)
     } else {
         companionPage = GuiAPI.activatePage('page_companion_peace')
     }
@@ -53,7 +53,7 @@ let operatePartyLeaderSelection = function() {
 
         indicateSelection(true, leaderPiece)
         if (leaderPiece.getTarget()) {
-            leaderActionBar = characterPortraitSystem.createLeaderActionBar(leaderPiece);
+            leaderActionBar = characterPortraitSystem.createLeaderActionBar(leaderPiece, 'widget_action_button_container', 0, 0);
         } else {
             partyLeaderPage = GuiAPI.activatePage('page_leader_peace')
         }
@@ -123,7 +123,7 @@ let addCompanionPortrait = function(companion, index) {
         companionPortraits.push(portrait)
     }
 
-    characterPortraitSystem.createPortrait(companion, letCompanionLayout, activateCompanion, testActive, 0.14 -index*0.09, -0.305, onReady)
+    characterPortraitSystem.createPortrait(companion, letCompanionLayout, activateCompanion, testActive, 0.14 -index*0.09, -0.31, onReady)
 
 
 }

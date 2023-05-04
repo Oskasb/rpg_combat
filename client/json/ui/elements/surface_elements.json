@@ -24,6 +24,17 @@
                 "image": {
                   "layer": "UI_ELEMENTS_BACK",
                   "atlas_key": "GUI_16x16",
+                  "border_thickness": {"x": 0.25, "y": 0.25}
+                }
+              }
+            },
+            {
+              "id":"nineslice_surface_portrait_button",
+              "config": {
+                "padding": { "x":0.0, "y":0.0},
+                "image": {
+                  "layer": "UI_ELEMENTS_BACK",
+                  "atlas_key": "GUI_16x16",
                   "border_thickness": {"x": 0.5, "y": 0.5}
                 }
               }

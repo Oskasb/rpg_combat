@@ -1,5 +1,4 @@
 import { GuiCharacterPortrait } from "../widgets/GuiCharacterPortrait.js";
-import {CharacterAbilityGui} from "../game/CharacterAbilityGui.js";
 
 class CharacterPortraitSystem {
     constructor() {
@@ -9,12 +8,12 @@ class CharacterPortraitSystem {
        return new GuiCharacterPortrait(gamePiece, layoutConfId, onActivate, testActive, x, y, onReady)
     }
 
-    createLeaderActionBar(gamePiece) {
-        return gamePiece.getCharacter().activateCharAbilityGui();
+    createLeaderActionBar(gamePiece, containerId, x, y) {
+        return gamePiece.getCharacter().activateCharAbilityGui(containerId, x, y)
     }
 
-    createCompanionActionBar(gamePiece) {
-        return gamePiece.getCharacter().activateCharAbilityGui();
+    createCompanionActionBar(gamePiece, containerId, x, y) {
+        return gamePiece.getCharacter().activateCharAbilityGui(containerId, x, y);
     }
 
 }
