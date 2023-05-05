@@ -6,6 +6,7 @@ class PieceAbilitySystem {
         this.gamePiece = gamePiece;
         this.abilitySlots = [];
         this.pieceAbilities = {};
+        this.activeCast = null;
     }
 
     initAbilitySlots(count) {
@@ -21,6 +22,23 @@ class PieceAbilitySystem {
             this.abilitySlots[slotIndex].setAbility(this.getAbility(abilityId));
         }
     }
+
+    setActiveCastingAbility(ability) {
+        if (this.activeCast !== null) {
+            console.log("Trying to cast while casting...")
+            return;
+        }
+        this.activeCast = ability;
+    }
+
+    completeActiveCastingAbility(ability) {
+        if (this.activeCast !== ability) {
+            console.log("Something fishy with the ability state")
+        }
+        ability.applyCastProgressCompleted()
+        this.activeCast = null;
+    }
+
 
     getSlottedAbilities() {
         return this.abilitySlots;

@@ -1,14 +1,6 @@
 
 class CharacterAbilityGui {
     constructor() {
-        this.colorMap = {
-            on:{"r": 0.11, "g": 0.75, "b": 0.75, "a": 0.99},
-            active:{"r": 0.99, "g": 0.93, "b": 0.39, "a": 0.99},
-            off:{"r": 0.35, "g": 0.35, "b": 0.85, "a": 0.99},
-            available:{"r": 0.01, "g": 0.79, "b": 0.01, "a": 0.99},
-            activated:{"r": 0.99, "g": 0.73, "b": -0.4, "a": 0.99},
-            unavailable:{"r": 0.7, "g": -0.1, "b": -0.15, "a": 0.39}
-        }
 
         this.tempVec3 = new THREE.Vector3();
         this.tempVec3b = new THREE.Vector3();
@@ -129,7 +121,7 @@ class CharacterAbilityGui {
                 let ability = slot.pieceAbility;
                 actionButton.updateActionButton(ability, GuiAPI.getUiSystemTime())
             } else {
-                bufferElem.setColorRGBA(this.colorMap['unavailable']);
+            //    bufferElem.setColorRGBA(this.colorMap['unavailable']);
             }
         }
     }

@@ -1,3 +1,4 @@
+import { AbilityState } from "./AbilityState.js";
 import * as CombatEffects from "./../combat/feedback/CombatEffects.js";
 import { Vector3 } from "./../../../libs/three/math/Vector3.js";
 import { Object3D } from "./../../../libs/three/core/Object3D.js";
@@ -7,10 +8,12 @@ let tempObj3D = new Object3D();
 
 class PieceAbility {
     constructor(gamePiece, abilityId, config) {
-        this.warmup = 0;
+        this.config = config;
+        this.abilityState = new AbilityState(gamePiece, this);
+        let call = this.abilityState.call;
         this.gamePiece = gamePiece;
         this.abilityId = abilityId;
-        this.config = config;
+
         this.abilityStatus = {};
 
         this.status = {};
@@ -18,8 +21,6 @@ class PieceAbility {
         this.sendTime = 0;
         this.arriveTime = 0;
         this.target = null;
-
-
 
         let activateAbility = function() {
             this.activatePieceAbility()
@@ -31,29 +32,14 @@ class PieceAbility {
             this.updateActivatedAbility()
         }.bind(this)
 
-        let isActivated = function() {
-            if (this.getAbilityTarget()) {
-                return true;
-            }
-        }.bind(this);
-
-        let getProgressStatus = function() {
-            return MATH.clamp(Math.sin(GuiAPI.getUiSystemTime()*3), 0, 1)
-        }.bind(this);
-
-        let getCooldownStatus = function() {
-            return MATH.clamp(Math.cos(GuiAPI.getUiSystemTime()*3), 0, 1)
-        }.bind(this);
-
-        let getIsAvailable = function() {
-            return MATH.clamp(Math.cos(GuiAPI.getUiSystemTime()*6.2), 0, 1)
-        }.bind(this);
-
         this.call = {
-            getProgressStatus:getProgressStatus,
-            getCooldownStatus:getCooldownStatus,
-            getIsAvailable:getIsAvailable,
-            isActivated:isActivated,
+            getProgressStatus:call.getProgressStatus,
+            getCooldownStatus:call.getCooldownStatus,
+            getIsAvailable:call.getIsAvailable,
+            getAutoCast:call.getAutoCast,
+            isActivated:call.isActivated,
+            setTarget:call.setAbilityTarget,
+            getTarget:call.getAbilityTarget,
             activatePieceAbility:activateAbility,
             updateReleasedAbility:updateReleasedAbility,
             updateActivatedAbility:updateActivatedAbility
@@ -67,20 +53,46 @@ class PieceAbility {
         }
     }
 
-    setAbilityTarget(target) {
-        this.target=target;
-    }
-    getAbilityTarget() {
-        return this.target;
+    processTargetSelection() {
+
+        if (this.config.target === 'friendly') {
+            let friends = this.gamePiece.threatDetector.getFriendliesInRangeOf(this.gamePiece, this.config.range)
+            if (this.config.heal) {
+                let friendlyTarget = this.selectMostHurtFriend(friends)
+                this.call.setTarget(friendlyTarget)
+            } else {
+                console.log("No targeting function for ability: ", this);
+            //    GameAPI.unregisterGameUpdateCallback(this.call.updateActivatedAbility)
+                this.call.setTarget(null)
+                return;
+            }
+
+        } else if (this.gamePiece.getTarget()) {
+            this.call.setTarget(this.gamePiece.getTarget())
+        } else {
+            this.call.setTarget(null)
+        }
+        return this.call.getTarget();
     }
 
     activatePieceAbility() {
         console.log("Call Activate Ability", this);
-        GameAPI.registerGameUpdateCallback(this.call.updateActivatedAbility)
-        this.gamePiece.setStatusValue('activeAbility', this)
 
-        this.warmup = GameAPI.getGameTime();
+        let target = this.processTargetSelection();
+        if (target === null) {
+            console.log("No target, exit")
+        //    return;
+        }
 
+        if (this.call.getIsAvailable()) {
+            GameAPI.registerGameUpdateCallback(this.call.updateActivatedAbility)
+            this.gamePiece.setStatusValue('activeAbility', this)
+            this.abilityState.abilityStateActivated();
+            this.warmup = GameAPI.getGameTime();
+        } else {
+            this.abilityState.call.setAutocast(!this.abilityState.call.getAutoCast());
+            console.log("Ability not available")
+        }
     }
 
     selectMostHurtFriend(friends) {
@@ -101,28 +113,18 @@ class PieceAbility {
         return friend;
     }
 
+    applyCastProgressCompleted() {
+        this.sendAbilityToTarget()
+    }
+
     updateActivatedAbility() {
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_R', tempObj3D)
         CombatEffects.effectCalls()[this.config['precast_effect']](this.gamePiece, tempObj3D)
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_L', tempObj3D)
         CombatEffects.effectCalls()[this.config['precast_effect']](this.gamePiece, tempObj3D)
 
-        if (this.config.target === 'friendly' && GameAPI.getGameTime() - this.warmup > 0.5) {
-            let friends = this.gamePiece.threatDetector.getFriendliesInRangeOf(this.gamePiece, this.config.range)
-            if (this.config.heal) {
-                let friendlyTarget = this.selectMostHurtFriend(friends)
-                this.setAbilityTarget(friendlyTarget)
-                this.sendAbilityToTarget()
-            } else {
-                console.log("No targeting function for ability: ", this);
-                GameAPI.unregisterGameUpdateCallback(this.call.updateActivatedAbility)
-                return;
-            }
 
-        } else if (this.gamePiece.getTarget() && GameAPI.getGameTime() - this.warmup > 0.5) {
-            this.setAbilityTarget(this.gamePiece.getTarget())
-            this.sendAbilityToTarget()
-        }
+
 
     }
 
@@ -143,7 +145,11 @@ class PieceAbility {
     }
 
     activateAbilityMissile(index) {
-        let target = this.getAbilityTarget();
+        let target = this.call.getTarget();
+        if (!target) {
+            console.log("Target lost, assuming dead") 
+            return;
+        }
         let onArriveCb = function(fx) {
             fx.endEffectOfClass()
             this.applyAbilityToTarget()
@@ -221,7 +227,7 @@ class PieceAbility {
     }
 
     applyAbilityToTarget() {
-        let target = this.getAbilityTarget();
+        let target = this.call.getTarget();
         CombatEffects.effectCalls()[this.config['on_hit_effect']](target)
         this.gamePiece.setStatusValue('activeAbility', null)
         //if (this.config['damage']) {

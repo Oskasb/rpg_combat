@@ -3,6 +3,7 @@ import { Action } from "../../../../game/piece_functions/Action.js";
 
 let colorMap = {
     flash:{"r": 0.99, "g": 0.99, "b": 0.99, "a": 0.99},
+    manual:{"r": 0.09, "g": 0.49, "b": 0.59, "a": 0.99},
     on:{"r": 0.11, "g": 0.75, "b": 0.75, "a": 0.99},
     active:{"r": 0.21, "g": 0.53, "b": 0.99, "a": 0.99},
     off:{"r": 0.99, "g": -0.55, "b": -0.55, "a": 0.99},
@@ -189,14 +190,19 @@ class GuiActionButton {
         this.setFrameColor(rgba)
     }
 
-    updateFrameColor(ability, uiSysTime) {
-        this.flashFrame(uiSysTime);
+    updateAutoCastFeedback(ability, uiSysTime) {
+        let autocastOn = ability.call.getAutoCast();
+        if (autocastOn === true) {
+            this.flashFrame(uiSysTime);
+        } else {
+            this.setFrameColor(this.colorMap['manual'])
+        }
     }
 
     updateActionStatus(ability, uiSysTime) {
+        this.updateAutoCastFeedback(ability, uiSysTime)
         this.updateAbilityAvailability(ability)
         this.updateAbilityProgress(ability)
-        this.updateFrameColor(ability, uiSysTime);
     }
 
     updateActionButton = function(ability, uiSysTime) {
