@@ -23,7 +23,7 @@
                     "text":"THE WOODLANDS",
                     "anchor":"bottom_center",
                     "offset_x": 0.0,
-                    "offset_y": 0.04
+                    "offset_y": 0.025
                   }
                 },
 
@@ -34,7 +34,7 @@
                   "options":{
                     "anchor":"bottom_center",
                     "offset_x":0.0,
-                    "offset_y":0.01,
+                    "offset_y":0.005,
                     "text":"A world of adventures."
                   }
 

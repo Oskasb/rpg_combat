@@ -28,7 +28,7 @@
                   "options":{
                     "anchor":"bottom_center",
                     "offset_x": 0.0,
-                    "offset_y":0.04,
+                    "offset_y":0.025,
                     "text_dynamic": {
                       "track_config": {
                         "category": "CHARACTERS",
@@ -46,7 +46,7 @@
                   "options":{
                     "anchor":"bottom_center",
                     "offset_x":0.0,
-                    "offset_y":0.01,
+                    "offset_y":0.005,
                     "text":"Ready to go right now"
                   }
 

@@ -123,7 +123,7 @@ let addCompanionPortrait = function(companion, index) {
         companionPortraits.push(portrait)
     }
 
-    characterPortraitSystem.createPortrait(companion, letCompanionLayout, activateCompanion, testActive, 0.14 -index*0.09, -0.31, onReady)
+    characterPortraitSystem.createPortrait(companion, letCompanionLayout, activateCompanion, testActive, 0.14 -index*0.09, -0.34, onReady)
 
 
 }
@@ -171,7 +171,7 @@ class PartyLeaderSystem {
             console.log("portrait", button);
         }
 
-        characterPortraitSystem.createPortrait(gamePiece, mainCharPortraitLayout, callbacks.pressPartyLeader, callbacks.partyLeaderTestActive, -0.14, -0.29, onReady)
+        characterPortraitSystem.createPortrait(gamePiece, mainCharPortraitLayout, callbacks.pressPartyLeader, callbacks.partyLeaderTestActive, -0.14, -0.32, onReady)
 
     }
 

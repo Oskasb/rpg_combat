@@ -227,6 +227,10 @@ class GuiSurface {
         };
 
 
+        setSurfaceColor = function(rgba) {
+            this.bufferElement.setColorRGBA(rgba);
+        }
+
         setElementPosition = function(vec3) {
             this.bufferElement.setPositionVec3(vec3);
         };

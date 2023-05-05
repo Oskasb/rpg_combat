@@ -1,8 +1,24 @@
 import { GuiWidget} from "../elements/GuiWidget.js";
 import { Action } from "../../../../game/piece_functions/Action.js";
 
+let colorMap = {
+    flash:{"r": 0.99, "g": 0.99, "b": 0.99, "a": 0.99},
+    on:{"r": 0.11, "g": 0.75, "b": 0.75, "a": 0.99},
+    active:{"r": 0.99, "g": 0.93, "b": 0.39, "a": 0.99},
+    off:{"r": 0.35, "g": 0.35, "b": 0.85, "a": 0.99},
+    available:{"r": 0.01, "g": 0.79, "b": 0.01, "a": 0.99},
+    activated:{"r": 0.99, "g": 0.73, "b": -0.4, "a": 0.99},
+    unavailable:{"r": 0.7, "g": -0.1, "b": -0.15, "a": 0.39}
+}
+
 class GuiActionButton {
     constructor(options) {
+
+        this.colorMap = {}
+
+        for (let key in colorMap) {
+            this.colorMap[key] = colorMap[key];
+        }
 
         this.progWidgetId = 'widget_action_button_progress';
         this.progressIcon = 'progress_vertical';
@@ -36,6 +52,10 @@ class GuiActionButton {
             this.updateCurrentProgress(progress);
         }.bind(this);
 
+        let updateActionStatus = function(action, uiSysTime) {
+            this.updateActionStatus(action, uiSysTime);
+        }.bind(this);
+
         let actionButtonTriggerUiUpdate = function() {
             this.actionButtonTriggerUiUpdate();
         }.bind(this);
@@ -60,6 +80,7 @@ class GuiActionButton {
             testActive:testActive,
             activateActionButton:activateActionButton,
             updateProgress:updateProgress,
+            updateActionStatus:updateActionStatus,
             actionButtonTriggerUiUpdate:actionButtonTriggerUiUpdate,
             updateSufficientActionPoints:updateSufficientActionPoints,
             attachActionToButton:attachActionToButton,
@@ -101,10 +122,12 @@ class GuiActionButton {
 
         this.guiWidget = new GuiWidget(widgetConfig);
 
+        for (let key in colorMap) {
+            this.colorMap[key] = colorMap[key];
+        }
+
         let progressReady = function(widget) {
-
             this.guiWidget.addChild(widget);
-
         }.bind(this);
 
         let buttonReady = function(widget) {
@@ -137,16 +160,16 @@ class GuiActionButton {
 
 
     attachActionToButton = function(action) {
-
+/*
         this.setAction(action);
         this.guiWidget.printWidgetText(action.getActionName());
         this.guiWidget.setWidgetIconKey(action.getActionIcon());
         this.guiWidget.addOnActiaveCallback(this.callbacks.activateAction);
-
+*/
     };
 
     bindActionSlotCallbacks = function(actionSlot) {
-
+/*
         actionSlot.addActionPointUpdateCallback(this.callbacks.updateSufficientActionPoints);
         actionSlot.addSetSlotActionCallback(this.callbacks.attachActionToButton);
         actionSlot.addActionSlotRemovedCallback(this.callbacks.removeGuiWidget);
@@ -156,86 +179,67 @@ class GuiActionButton {
             actionSlot.notifySetSlotAction(actionSlot.getSlotCurrentAction())
         }
         this.actionSlot = actionSlot;
+
+ */
     };
 
     updateCurrentProgress = function(progress) {
-
-    //    if (!action.getActionText()) {
-    //        console.log("TextMissing", action)
-    //    } else {
-    //        this.guiWidget.setFirstSTringText(action.getActionText());
-    //    }
-
         this.progressWidget.indicateProgress(0, 1, progress, 1);
-
-    //    this.guiWidget.setWidgetInteractiveState(this.stateFeedbackMap[action.getActionState()]);
-    //    this.progressWidget.setWidgetInteractiveState(this.stateFeedbackMap[action.getActionState()]);
-/*
-        if (!action.getActionIsActive()) {
-            this.progressWidget.setFirstSTringText(null);
-            this.guiWidget.enableWidgetInteraction();
-            GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);
-        }
-*/
     };
 
     actionButtonInitiateAction = function() {
-
         this.getAction().requestActivation();
         this.actionButtonTriggerUiUpdate();
-
     };
 
     actionButtonTriggerUiUpdate = function() {
-
-        GuiAPI.addGuiUpdateCallback(this.callbacks.updateProgress);
         this.guiWidget.disableWidgetInteraction();
-
-    };
-
-
-    actionButtonActivated = function(inputIndex, widget) {
-
-        if (this.getAction().testAvailable()) {
-            this.actionButtonInitiateAction()
-        }
-
     };
 
     setTestActiveCallback = function(cb) {
         this.guiWidget.addTestActiveCallback(cb);
     };
 
-    updateSufficientActionPoints = function(action, count) {
-        this.guiWidget.setWidgetInteractiveState(this.stateFeedbackMap[action.getActionState()]);
-
-        if (action.getActionState() === ENUMS.ActionState.UNAVAILABLE) {
-            this.guiWidget.setFirstSTringText(count +'/'+action.getActionPointCost());
-        } else {
-            if (action.getActionState() === ENUMS.ActionState.AVAILABLE) {
-                this.updateCurrentProgress(action);
-            }
-        }
-
-    };
-
     removeGuiWidget = function() {
         this.guiWidget.recoverGuiWidget();
         this.progressWidget.recoverGuiWidget();
-        GuiAPI.removeGuiUpdateCallback(this.callbacks.updateProgress);
-
-        if (this.actionSlot) {
-            this.actionSlot.removeActionPointUpdateCallback(this.callbacks.updateSufficientActionPoints);
-            this.actionSlot.removeSetSlotActionCallback(this.callbacks.attachActionToButton);
-            this.actionSlot.removeActionSlotRemovedCallback(this.callbacks.removeGuiWidget);
-            this.actionSlot.removeActionTriggeredCallback(this.callbacks.actionButtonTriggerUiUpdate);
-        }
-
     };
 
     getDummyAction = function() {
         return new Action();
     };
+
+    getProgressSurface = function() {
+        return this.progressWidget.guiSurface;
+    }
+
+    setFrameColor(rgba) {
+        let frameSurface = this.getProgressSurface();
+        frameSurface.setSurfaceColor(rgba)
+    }
+
+    flashFrame(uiSysTime) {
+        let rgba = this.colorMap['flash']
+        let brightness = 0.25 + Math.cos(uiSysTime*10)*0.25;
+        rgba.r = Math.abs(Math.sin(uiSysTime*8))*0.49 +brightness;
+        rgba.g = Math.abs(Math.cos(uiSysTime*8))*0.49 +brightness;
+        rgba.b = 0.5 + brightness;
+        this.setFrameColor(rgba)
+    }
+
+    updateFrameColor(action, uiSysTime) {
+        this.flashFrame(uiSysTime);
+
+    }
+
+    updateActionStatus(action, uiSysTime) {
+        this.callbacks.updateProgress(Math.abs(Math.sin(uiSysTime*3)))
+        this.updateFrameColor(action, uiSysTime);
+    }
+
+    updateActionButton = function(action, uiSysTime) {
+        this.callbacks.updateActionStatus(action, uiSysTime);
+    }
 
 }
 

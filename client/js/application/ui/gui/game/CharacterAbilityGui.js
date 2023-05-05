@@ -119,14 +119,15 @@ class CharacterAbilityGui {
 
     //    console.log(slottedAbilities)
         for (let i = 0; i < this.abilityButtons.length; i++) {
-            let element = this.abilityButtons[i].guiWidget;
+            let actionButton = this.abilityButtons[i];
+
+            let element = actionButton.guiWidget;
             let bufferElem = element.icon.bufferElement;
             let slot = slottedAbilities[i]
 
             if (slot) {
                 let ability = slot.pieceAbility;
-
-                let actionButton = this.abilityButtons[i];
+                actionButton.updateActionButton(ability, GuiAPI.getUiSystemTime())
                 let config = ability.config;
 
             //    element.setWidgetIconKey(config['icon_key']);
@@ -139,12 +140,7 @@ class CharacterAbilityGui {
             } else {
                 bufferElem.setColorRGBA(this.colorMap['unavailable']);
             }
-
         }
-    }
-
-    setContainerPosition(screenPos, container, containerIndex, buttonCount) {
-        container.guiWidget.setPosition(screenPos)
     }
 
     updateCharacterAbilityElements() {

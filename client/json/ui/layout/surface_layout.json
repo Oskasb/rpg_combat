@@ -29,7 +29,7 @@
                 "text":   {"x":0.5, "y": 0.15, "fontsize": 8},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
-                "size":   {"x":0.06, "y":0.06,"z":  0.0}
+                "size":   {"x":0.048, "y":0.048,"z":  0.0}
               }
             },
             {
@@ -47,7 +47,7 @@
                 "text":   {"x":0.17, "y": 1.21, "fontsize": 8},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
-                "size":   {"x":0.105, "y":0.105,"z":  0.0}
+                "size":   {"x":0.09, "y":0.09,"z":  0.0}
               }
             },
             {
@@ -56,16 +56,16 @@
                 "text":   {"x":0.17, "y": 1.21, "fontsize": 7},
                 "anchor": {"x":0.5, "y":0.5, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
-                "size":   {"x":0.085, "y":0.085,"z":  0.0}
+                "size":   {"x":0.075, "y":0.075,"z":  0.0}
               }
             },
             {
               "id":"layout_progress_action_button",
               "config": {
-                "text":   {"x":0.5, "y":0.55, "fontsize": 14},
+                "text":   {"x":0.73, "y":0.2, "fontsize": 6},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"center":true},
-                "size":   {"x":0.060, "y":0.060,"z":  0.0}
+                "size":   {"x":0.050, "y":0.050,"z":  0.0}
               }
             },
             {
@@ -172,7 +172,7 @@
             {
               "id":"layout_progress_button_fat",
               "config": {
-                "text":   {"x":0.5, "y":0.15, "fontsize": 4},
+                "text":   {"x":0.5, "y":0.07, "fontsize": 4},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
                 "size":   {"x":0.08, "y":0.05,"z":  0.0}
@@ -181,10 +181,10 @@
             {
               "id":"layout_page_header_text_box",
               "config": {
-                "text":   {"x":0.5, "y":0.0, "fontsize": 15},
+                "text":   {"x":0.5, "y":0.5, "fontsize": 12},
                 "anchor": {"x":0.0, "y":0.0, "z":  0.0},
                 "offset": {"x":0.0, "y":0.0, "z":  0.0},
-                "size":   {"x":0.3, "y":0.04, "z":  0.0}
+                "size":   {"x":0.3, "y":0.025, "z":  0.0}
               }
             },
             {
@@ -308,8 +308,8 @@
               "config": {
                 "text":   {"x":1.0, "y":0.0, "fontsize": 8},
                 "anchor": {"x": 0.0, "y": 0, "z": 0.0},
-                "offset": {"x":  -8.4, "y":8.3,"z":  0.0},
-                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 4, "pad": 0.002, "gridx": 1, "gridy":1}
+                "offset": {"x":  -8.3, "y":6.2,"z":  0.0},
+                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 4, "pad": 0.005, "gridx": 1, "gridy":1}
               }
             },
             {
@@ -317,8 +317,8 @@
               "config": {
                 "text":   {"x":1.0, "y":0.0, "fontsize": 8},
                 "anchor": {"x":0.0, "y":0.0, "z": 0.0},
-                "offset": {"x":8.4, "y":7,"z":  0.0},
-                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 2, "pad": 0.002, "gridx": -1, "gridy":1}
+                "offset": {"x":8.4, "y":5.5,"z":  0.0},
+                "size":   {"x":"auto", "y":"auto", "z":  0.0, "cols": 2, "pad": 0.005, "gridx": -1, "gridy":1}
               }
             },
             {

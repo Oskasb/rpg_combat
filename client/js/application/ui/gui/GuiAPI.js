@@ -5,6 +5,7 @@ import { GuiDebug } from "./systems/GuiDebug.js";
 import { GuiPageSystem } from "./systems/GuiPageSystem.js";
 import { DebugView } from "../../debug/DebugView.js";
 
+let guiTime = 0;
 class GuiAPI {
     constructor() {
         let inMenueFlag = false;
@@ -307,9 +308,13 @@ class GuiAPI {
         return this.txtSysKey;
     };
 
-
+    getUiSystemTime = function() {
+        return guiTime;
+    }
 
     updateGui = function(tpf, time) {
+
+        guiTime = time;
 
         for (let i = 0; i < this.worldSpacePointers.length; i++) {
             GameAPI.handleWorldSpacePointerUpdate(this.worldSpacePointers[i])

@@ -30,7 +30,7 @@
                   "options":{
                     "anchor":"bottom_center",
                     "offset_x":0.0,
-                    "offset_y":0.01,
+                    "offset_y":0.005,
                     "text":"",
                     "on_event": {"event_id": "SCENARIO_TEXT", "call": "printWidgetText"}
                   }
