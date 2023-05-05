@@ -14,8 +14,10 @@ class AbilityState {
         this.apCost = pieceAbility.config['ap_cost'] || 2;
         this.castProgress = 0;
         this.cooldownProgress = 0;
+        this.actionPointProgress = 0;
         this.isAvailable = false;
         this.isAutoCasting = false;
+        this.isInRange = false;
 
 
         let isActivated = function() {
@@ -30,9 +32,18 @@ class AbilityState {
             return this.cooldownProgress
         }.bind(this);
 
+        let getActionPointStatus = function() {
+            return this.actionPointProgress;
+        }.bind(this)
+
         let getIsAvailable = function() {
             return this.isAvailable;
         }.bind(this);
+
+        let setIsAvailable = function(bool) {
+            this.isAvailable  = bool;
+        }.bind(this);
+
 
         let getAutoCast = function() {
             return this.isAutoCasting;
@@ -54,6 +65,22 @@ class AbilityState {
             return this.abilityTarget;
         }.bind(this);
 
+        let setIsInRange = function(bool) {
+            this.isInRange = bool;
+        }.bind(this);
+
+        let getInRange = function() {
+            return this.isInRange;
+        }.bind(this);
+
+        let setSufficientActionPoints = function(bool) {
+            this.sufficientAP = bool;
+        }.bind(this);
+
+        let getSufficientActionPoints = function() {
+            return this.sufficientAP;
+        }.bind(this);
+
         this.call = {
             tick:tickAbilityState,
             setAbilityTarget:setAbilityTarget,
@@ -61,7 +88,13 @@ class AbilityState {
             setAutocast:setAutocast,
             getProgressStatus:getProgressStatus,
             getCooldownStatus:getCooldownStatus,
+            getActionPointStatus:getActionPointStatus,
+            setSufficientActionPoints:setSufficientActionPoints,
+            getSufficientActionPoints:getSufficientActionPoints,
+            setIsAvailable:setIsAvailable,
             getIsAvailable:getIsAvailable,
+            setIsInRange:setIsInRange,
+            getInRange:getInRange,
             getAutoCast:getAutoCast,
             isActivated:isActivated,
         }
@@ -86,6 +119,7 @@ class AbilityState {
     }
 
     updateAbilityStateProgress() {
+        this.call.setIsAvailable(false);
         let progress = 0;
         let turnTime = GameAPI.getTurnStatus().turnTime;
         if (this.castCompleted === false) {
@@ -96,11 +130,13 @@ class AbilityState {
                 this.abilityStateCastCompleted()
             }
             this.cooldownProgress = 0;
+            this.actionPointProgress = 0;
         } else {
             progress = MATH.calcFraction(this.castCompletedTime, this.castCompletedTime+this.cooldownTime*turnTime, GameAPI.getGameTime())
             this.castProgress = 0;
             if(progress < 1) {
                 this.cooldownProgress = 1- progress;
+                this.actionPointProgress = 0;
             } else {
                 this.abilityCooldownCompleted()
             }
@@ -109,17 +145,16 @@ class AbilityState {
 
     updateAbilityAvailability() {
         let activeCast = this.gamePiece.pieceAbilitySystem.activeCast;
-        if (activeCast !== null) {
-            this.isAvailable = false;
-        } else {
+        this.isAvailable = false;
+        if (activeCast === null) {
 
-                if (this.isActive) {
-                    this.isAvailable = false;
-                } else {
-                    if (this.call.getAbilityTarget()) {
+            if (this.isActive) {
+
+            } else {
+                if (this.call.getAbilityTarget()) {
+                    if (this.call.getInRange()) {
                         this.isAvailable = true;
-                    } else {
-                        this.isAvailable = false;
+                    }
                 }
             }
         }
@@ -132,17 +167,17 @@ class AbilityState {
             this.pieceAbility.processTargetSelection();
             this.castProgress = 0;
             this.cooldownProgress = 0;
+            this.actionPointProgress = 1 - this.pieceAbility.processActionPointStatus();
+            this.updateAbilityAvailability();
 
+            if (this.isAvailable && this.call.getAutoCast()) {
+                console.log("Autocast trigger")
+                this.pieceAbility.activatePieceAbility(true)
+            }
         }
-        this.updateAbilityAvailability();
 
-        if (this.isAvailable && this.call.getAutoCast()) {
-            console.log("Autocast trigger")
-            this.pieceAbility.activatePieceAbility()
-        }
 
     }
-
 }
 
 export { AbilityState }

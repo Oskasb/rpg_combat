@@ -23,7 +23,7 @@ class PieceAbility {
         this.target = null;
 
         let activateAbility = function() {
-            this.activatePieceAbility()
+            this.requestActivatePieceAbility()
         }.bind(this)
         let updateReleasedAbility = function() {
             this.updateReleasedAbility()
@@ -35,11 +35,17 @@ class PieceAbility {
         this.call = {
             getProgressStatus:call.getProgressStatus,
             getCooldownStatus:call.getCooldownStatus,
+            getActionPointStatus:call.getActionPointStatus,
+            setIsAvailable:call.setIsAvailable,
             getIsAvailable:call.getIsAvailable,
             getAutoCast:call.getAutoCast,
             isActivated:call.isActivated,
             setTarget:call.setAbilityTarget,
             getTarget:call.getAbilityTarget,
+            setIsInRange:call.setIsInRange,
+            getInRange:call.getInRange,
+            setSufficientActionPoints:call.setSufficientActionPoints,
+            getSufficientActionPoints:call.getSufficientActionPoints,
             activatePieceAbility:activateAbility,
             updateReleasedAbility:updateReleasedAbility,
             updateActivatedAbility:updateActivatedAbility
@@ -53,7 +59,25 @@ class PieceAbility {
         }
     }
 
+    processActionPointStatus() {
+        let currentAP = this.gamePiece.getStatusByKey('actPts')
+        if (currentAP < this.config['ap_cost']) {
+            this.call.setSufficientActionPoints(false)
+            return MATH.calcFraction(0, this.config['ap_cost'], currentAP)
+        } else {
+            this.call.setSufficientActionPoints(true)
+            return 1
+        }
+    }
+
     processTargetSelection() {
+
+        this.processActionPointStatus()
+        let sufficientAP = this.call.getSufficientActionPoints();
+        if (!sufficientAP) {
+            this.call.setTarget(null)
+            return null;
+        }
 
         if (this.config.target === 'friendly') {
             let friends = this.gamePiece.threatDetector.getFriendliesInRangeOf(this.gamePiece, this.config.range)
@@ -72,25 +96,44 @@ class PieceAbility {
         } else {
             this.call.setTarget(null)
         }
-        return this.call.getTarget();
+
+        let target = this.call.getTarget();
+        if (target) {
+            let targetDistance = MATH.distanceBetween(target.getPos(), this.gamePiece.getPos())
+
+            if (targetDistance < this.config['range']) {
+                this.call.setIsInRange(true);
+            } else {
+                this.call.setIsInRange(false);
+            }
+        }
+
+        return target;
     }
 
     activatePieceAbility() {
-        console.log("Call Activate Ability", this);
+
+        this.gamePiece.setStatusValue('activeAPs', this.config['ap_cost'])
+
+        GameAPI.registerGameUpdateCallback(this.call.updateActivatedAbility)
+        this.gamePiece.setStatusValue('activeAbility', this)
+        this.abilityState.abilityStateActivated();
+    }
+
+    requestActivatePieceAbility(isAutoCast) {
+        console.log("Call Request Activate Ability", this);
 
         let target = this.processTargetSelection();
-        if (target === null) {
-            console.log("No target, exit")
-        //    return;
+        if (target === null || target.isDead) {
+            this.call.setIsAvailable(false);
         }
 
-        if (this.call.getIsAvailable()) {
-            GameAPI.registerGameUpdateCallback(this.call.updateActivatedAbility)
-            this.gamePiece.setStatusValue('activeAbility', this)
-            this.abilityState.abilityStateActivated();
-            this.warmup = GameAPI.getGameTime();
+        if (this.call.getIsAvailable() && this.call.getInRange()) {
+            this.activatePieceAbility();
         } else {
-            this.abilityState.call.setAutocast(!this.abilityState.call.getAutoCast());
+            if (!isAutoCast) {
+                this.abilityState.call.setAutocast(!this.abilityState.call.getAutoCast());
+            }
             console.log("Ability not available")
         }
     }
@@ -114,6 +157,11 @@ class PieceAbility {
     }
 
     applyCastProgressCompleted() {
+        this.gamePiece.setStatusValue('activeAPs', 0);
+        let currentAP = this.gamePiece.getStatusByKey('actPts')
+        currentAP -= this.config['ap_cost'];
+        this.gamePiece.setStatusValue('actPts', currentAP)
+
         this.sendAbilityToTarget()
     }
 
@@ -122,10 +170,6 @@ class PieceAbility {
         CombatEffects.effectCalls()[this.config['precast_effect']](this.gamePiece, tempObj3D)
         this.gamePiece.getModel().getJointKeyWorldTransform('HAND_L', tempObj3D)
         CombatEffects.effectCalls()[this.config['precast_effect']](this.gamePiece, tempObj3D)
-
-
-
-
     }
 
     updateReleasedAbility() {
@@ -147,7 +191,7 @@ class PieceAbility {
     activateAbilityMissile(index) {
         let target = this.call.getTarget();
         if (!target) {
-            console.log("Target lost, assuming dead") 
+            console.log("Target lost, assuming dead")
             return;
         }
         let onArriveCb = function(fx) {
@@ -228,6 +272,11 @@ class PieceAbility {
 
     applyAbilityToTarget() {
         let target = this.call.getTarget();
+        if (!target) {
+            console.log("No target, assume dead")
+            return
+        }
+
         CombatEffects.effectCalls()[this.config['on_hit_effect']](target)
         this.gamePiece.setStatusValue('activeAbility', null)
         //if (this.config['damage']) {

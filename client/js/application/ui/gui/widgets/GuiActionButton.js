@@ -1,15 +1,15 @@
 import { GuiWidget} from "../elements/GuiWidget.js";
-import { Action } from "../../../../game/piece_functions/Action.js";
 
 let colorMap = {
     flash:{"r": 0.99, "g": 0.99, "b": 0.99, "a": 0.99},
     manual:{"r": 0.09, "g": 0.49, "b": 0.59, "a": 0.99},
     on:{"r": 0.11, "g": 0.75, "b": 0.75, "a": 0.99},
-    active:{"r": 0.21, "g": 0.53, "b": 0.99, "a": 0.99},
-    off:{"r": 0.99, "g": -0.55, "b": -0.55, "a": 0.99},
-    available:{"r": 0.41, "g": 0.79, "b": 0.11, "a": 0.99},
-    activated:{"r": 0.59, "g": 0.99, "b": 0.39, "a": 0.99},
-    unavailable:{"r": 0.3, "g": 0.3, "b": 0.5,  "a": 0.99}
+    active:{"r": 0.41, "g": 0.33, "b": 0.22, "a": 0.99},
+    off:{"r": 0.69, "g":  0.25, "b": 0.25, "a": 0.99},
+    ap_missing:{"r": 0.39, "g": -0.95, "b": 0.95, "a": 0.99},
+    available:{"r": 0.41, "g": 0.69, "b": 0.11, "a": 0.99},
+    activated:{"r": 0.59, "g": 0.49, "b": 0.05, "a": 0.99},
+    unavailable:{"r": 0.3, "g": 0.5, "b": 0.3,  "a": 0.99}
 }
 
 class GuiActionButton {
@@ -75,7 +75,6 @@ class GuiActionButton {
         this.progressWidget = new GuiWidget(this.progWidgetId);
         this.progressWidget.initGuiWidget(null, progressReady);
         this.progressWidget.setWidgetIconKey(this.progressIcon);
-    //    this.setTestActiveCallback(this.callbacks.testActive);
 
         widget.attachToAnchor('bottom_right');
 
@@ -115,13 +114,18 @@ class GuiActionButton {
         let progress = 0;
         let progressStatus = ability.call.getProgressStatus();
         let cooldownStatus = ability.call.getCooldownStatus();
+        let apProgress = ability.call.getActionPointStatus();
+
 
         if (progressStatus !== 0) {
             progress = progressStatus;
-            this.setProgressBarColor(this.colorMap['active'])
+            this.setProgressBarColor(this.colorMap['on'])
         } else if (cooldownStatus !== 0) {
             progress = cooldownStatus;
             this.setProgressBarColor(this.colorMap['off'])
+        } else if (apProgress !== 0) {
+            this.setProgressBarColor(this.colorMap['ap_missing'])
+            progress = apProgress;
         }
 
         this.progressWidget.indicateProgress(0, 1, progress, 1);
@@ -131,14 +135,23 @@ class GuiActionButton {
     //    console.log("Update avail")
         let isAvailable = ability.call.getIsAvailable();
 
-        if (isAvailable > 0.5) {
+        if (isAvailable) {
             this.getInteractiveElement().setInteractiveState(this.stateFeedbackMap[ENUMS.ActionState.AVAILABLE])
-            //    this.enableButtonInteraction();
-           this.setActionIconColor(this.colorMap['available'])
+            this.setActionIconColor(this.colorMap['available'])
         } else {
-            this.getInteractiveElement().setInteractiveState(this.stateFeedbackMap[ENUMS.ActionState.UNAVAILABLE])
-            //    this.disableButtonInteraction();
-            this.setActionIconColor(this.colorMap['unavailable'])
+            if (ability.call.getProgressStatus()) {
+                this.getInteractiveElement().setInteractiveState(this.stateFeedbackMap[ENUMS.ActionState.ACTIVATING])
+                this.setActionIconColor(this.colorMap['activated'])
+            } else if (ability.call.getCooldownStatus()) {
+                this.getInteractiveElement().setInteractiveState(this.stateFeedbackMap[ENUMS.ActionState.ACTIVE])
+                this.setActionIconColor(this.colorMap['active'])
+            } else if (ability.call.getInRange()) {
+                this.getInteractiveElement().setInteractiveState(this.stateFeedbackMap[ENUMS.ActionState.UNAVAILABLE])
+                this.setActionIconColor(this.colorMap['unavailable'])
+            } else {
+                this.getInteractiveElement().setInteractiveState(this.stateFeedbackMap[ENUMS.ActionState.UNAVAILABLE])
+                this.setActionIconColor(this.colorMap['off'])
+            }
         }
 
     }
@@ -159,10 +172,6 @@ class GuiActionButton {
     removeGuiWidget = function() {
         this.guiWidget.recoverGuiWidget();
         this.progressWidget.recoverGuiWidget();
-    };
-
-    getDummyAction = function() {
-        return new Action();
     };
 
     getProgressSurface = function() {

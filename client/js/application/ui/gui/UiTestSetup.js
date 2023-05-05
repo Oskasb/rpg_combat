@@ -423,15 +423,6 @@ class UiTestSetup {
 
 
 
-
-        //    console.log("Add Action Button", inputIndex);
-
-            var attachAction = function(ab) {
-
-            //    console.log("Attach Action Button action...", ab);
-                ab.attachActionToButton(ab.getDummyAction());
-            };
-
             var sticks = [
                 new THREE.Vector3(-0.40, 0.08, 0),
                 new THREE.Vector3(-0.39, 0.19, 0),

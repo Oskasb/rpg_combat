@@ -90,14 +90,10 @@ class PieceStateProcessor {
     updateTurnActionPoints(status) {
 
         if (status.getBy('actPts') === status.getBy('maxAPs')) {
-            status.actPts = 0;
+        //    status.actPts = 0; // notify autocast that AP is about to expire unused?
         } else {
             status.actPts = MATH.clamp(status.getBy('actPts')+1, 0, status.getBy('maxAPs'));
         }
-
-        status.activeAPs = Math.floor(Math.random()*Math.random()*status.getBy('actPts'));
-
-
 
     }
 

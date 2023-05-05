@@ -229,10 +229,6 @@
             {
               "id":"widget_action_button_progress",
               "layout":"layout_progress_action_button",
-              "text": {
-                "sprite_font": "sprite_font_button_big",
-                "feedback": "feedback_text_action_button"
-              },
               "icon": {
                 "icon_config": "progress_vertical_actionbutton",
                 "feedback": "feedback_icon_action_progress"

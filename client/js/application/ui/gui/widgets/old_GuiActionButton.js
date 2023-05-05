@@ -217,10 +217,6 @@ class GuiActionButton {
 
     };
 
-    getDummyAction = function() {
-        return new Action();
-    };
-
 }
 
 export { GuiActionButton }
