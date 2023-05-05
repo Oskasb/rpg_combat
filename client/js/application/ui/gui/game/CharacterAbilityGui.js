@@ -128,15 +128,6 @@ class CharacterAbilityGui {
             if (slot) {
                 let ability = slot.pieceAbility;
                 actionButton.updateActionButton(ability, GuiAPI.getUiSystemTime())
-                let config = ability.config;
-
-            //    element.setWidgetIconKey(config['icon_key']);
-                if (i < availableSlots) {
-                    bufferElem.setColorRGBA(this.colorMap['available']);
-                //    actionButton.callbacks.updateProgress(Math.random())
-                } else {
-                    bufferElem.setColorRGBA(this.colorMap['unavailable']);
-                }
             } else {
                 bufferElem.setColorRGBA(this.colorMap['unavailable']);
             }

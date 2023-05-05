@@ -13,9 +13,13 @@ class PieceAbility {
         this.config = config;
         this.abilityStatus = {};
 
+        this.status = {};
+
         this.sendTime = 0;
         this.arriveTime = 0;
         this.target = null;
+
+
 
         let activateAbility = function() {
             this.activatePieceAbility()
@@ -33,7 +37,22 @@ class PieceAbility {
             }
         }.bind(this);
 
+        let getProgressStatus = function() {
+            return MATH.clamp(Math.sin(GuiAPI.getUiSystemTime()*3), 0, 1)
+        }.bind(this);
+
+        let getCooldownStatus = function() {
+            return MATH.clamp(Math.cos(GuiAPI.getUiSystemTime()*3), 0, 1)
+        }.bind(this);
+
+        let getIsAvailable = function() {
+            return MATH.clamp(Math.cos(GuiAPI.getUiSystemTime()*6.2), 0, 1)
+        }.bind(this);
+
         this.call = {
+            getProgressStatus:getProgressStatus,
+            getCooldownStatus:getCooldownStatus,
+            getIsAvailable:getIsAvailable,
             isActivated:isActivated,
             activatePieceAbility:activateAbility,
             updateReleasedAbility:updateReleasedAbility,
