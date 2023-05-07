@@ -321,7 +321,7 @@ class GuiAPI {
         };
 
         this.guiDebug.updateDebugElements();
-        this.instantiator.updateInstantiatorBuffers(time);
+        this.instantiator.updateInstantiatorBuffers();
 
         MATH.callAll(this.guiUpdateCallbacks, tpf, time);
 

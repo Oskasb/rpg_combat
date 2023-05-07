@@ -155,11 +155,9 @@ class InstanceBuffer {
         this.geometry.dispose();
     };
 
-    updateBufferStates = function(systemTime) {
+    updateBufferStates = function() {
 
         let drawRange =0;
-
-        this.setSystemTime(systemTime);
 
         for (let key in this.buffers) {
             let buffer = this.buffers[key];
@@ -177,12 +175,6 @@ class InstanceBuffer {
         }
 
         return drawRange;
-    };
-
-    setSystemTime = function(systemTime) {
-        let buffer = this.buffers['offset'];
-        buffer[buffer.length - 2] = systemTime;
-
     };
 
     removeFromScene = function() {

@@ -18,7 +18,7 @@ class ElementListeners {
 
         let updateLongPressProgress = function() {
             if (Math.abs(progInputState.dragDistance[0]) + Math.abs(progInputState.dragDistance[1]) < 50) {
-                let lpProg = MATH.calcFraction(0, progInputState.longPressTime, ThreeAPI.getSystemTime() - progInputState.pressStartTime)
+                let lpProg = MATH.calcFraction(0, progInputState.longPressTime, GuiAPI.getUiSystemTime() - progInputState.pressStartTime)
                 progInputState.longPressProgress = MATH.clamp(lpProg, 0, 1)
             //    console.log(progInputState.longPressProgress)
             } else {
@@ -182,7 +182,7 @@ class ElementListeners {
                     inputState.dragDistance[1] = 0;
 */
                 inputState.longPressProgress = 0;
-                inputState.pressStartTime = ThreeAPI.getSystemTime()-0.0001;
+                inputState.pressStartTime = GuiAPI.getUiSystemTime()-0.0001;
                 GuiAPI.addGuiUpdateCallback(this.call.updateLongPressProgress)
             } else if (inputState.longPressProgress === 0) {
             //    console.log("Why release here?")

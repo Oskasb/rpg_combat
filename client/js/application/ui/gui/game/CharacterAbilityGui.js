@@ -119,7 +119,7 @@ class CharacterAbilityGui {
 
             if (slot) {
                 let ability = slot.pieceAbility;
-                actionButton.updateActionButton(ability, GuiAPI.getUiSystemTime())
+                actionButton.updateActionButton(ability)
             } else {
             //    bufferElem.setColorRGBA(this.colorMap['unavailable']);
             }

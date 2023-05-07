@@ -70,7 +70,7 @@ class ParticleEffect {
         }.bind(this)
 
         let getParticleProgress = function(bufferElement) {
-            return bufferElement.getLifecycleProgress(GameAPI.getGameTime());
+            return bufferElement.getLifecycleProgress();
         }
 
         this.callbacks = {

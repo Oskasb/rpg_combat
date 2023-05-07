@@ -33,8 +33,8 @@ class ThreeSetup {
     callPrerender = function(frame) {
         //    requestAnimationFrame( ThreeSetup.callPrerender );
 
-        let time = frame.elapsedTime;
-        this.tpf = frame.tpf;
+        let time = frame.gameTime;
+        this.tpf = time - this.lastTime;
 
         //    if (tpf < 0.03) return;
 
@@ -44,7 +44,7 @@ class ThreeSetup {
 
         this.lastTime = time;
 
-        this.avgTfp = this.tpf*0.3 + this.avgTfp*0.7;
+        this.avgTfp = this.tpf // *0.3 + this.avgTfp*0.7;
 
         for (let i = 0; i < this.prerenderCallbacks.length; i++) {
             this.prerenderCallbacks[i](this.avgTfp);

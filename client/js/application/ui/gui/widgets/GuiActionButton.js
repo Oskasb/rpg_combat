@@ -45,8 +45,8 @@ class GuiActionButton {
             this.updateCurrentProgress(progress);
         }.bind(this);
 
-        let updateActionStatus = function(action, uiSysTime) {
-            this.updateActionStatus(action, uiSysTime);
+        let updateActionStatus = function(action) {
+            this.updateActionStatus(action);
         }.bind(this);
 
         let removeGuiWidget = function() {
@@ -199,23 +199,23 @@ class GuiActionButton {
         this.setFrameColor(rgba)
     }
 
-    updateAutoCastFeedback(ability, uiSysTime) {
+    updateAutoCastFeedback(ability) {
         let autocastOn = ability.call.getAutoCast();
         if (autocastOn === true) {
-            this.flashFrame(uiSysTime);
+            this.flashFrame(GuiAPI.getUiSystemTime());
         } else {
             this.setFrameColor(this.colorMap['manual'])
         }
     }
 
-    updateActionStatus(ability, uiSysTime) {
-        this.updateAutoCastFeedback(ability, uiSysTime)
+    updateActionStatus(ability) {
+        this.updateAutoCastFeedback(ability)
         this.updateAbilityAvailability(ability)
         this.updateAbilityProgress(ability)
     }
 
-    updateActionButton = function(ability, uiSysTime) {
-        this.callbacks.updateActionStatus(ability, uiSysTime);
+    updateActionButton = function(ability) {
+        this.callbacks.updateActionStatus(ability);
     }
 
 }

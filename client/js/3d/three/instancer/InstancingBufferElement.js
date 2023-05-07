@@ -152,11 +152,14 @@ class InstancingBufferElement {
         this.guiBuffers.setElementReleased(this);
     };
 
-    getLifecycleProgress(systemTime) {
-        return MATH.calcFraction(this.lifecycle.x ,this.lifecycle.z + this.lifecycle.w, systemTime);
+    getLifecycleProgress() {
+        let elementTime = this.guiBuffers.getSystemTime()
+        return MATH.calcFraction(this.lifecycle.x ,this.lifecycle.z + this.lifecycle.w, elementTime);
     }
-    testLifetimeIsOver = function(systemTime) {
-        if ((this.lifecycle.z + this.lifecycle.w) < systemTime) {
+
+    testLifetimeIsOver = function() {
+        let elementTime = this.guiBuffers.getSystemTime()
+        if ((this.lifecycle.z + this.lifecycle.w) < elementTime) {
         //    console.log("Lifetime over: ", this.lifecycle.z , this.lifecycle.w, this);
             return true;
         }
