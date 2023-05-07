@@ -33,7 +33,7 @@ class ThreeSetup {
     callPrerender = function(frame) {
         //    requestAnimationFrame( ThreeSetup.callPrerender );
 
-        let time = frame.gameTime;
+        let time = frame.systemTime;
         this.tpf = time - this.lastTime;
 
         //    if (tpf < 0.03) return;

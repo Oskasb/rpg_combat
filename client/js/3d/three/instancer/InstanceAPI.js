@@ -12,7 +12,6 @@ class InstanceAPI {
         this.instances = {};
         this.materials = [];
         this.uiSystems = {};
-        this.systemTime = 0;
         this.attributes = {
             "startTime"      : { "dimensions":1, "dynamic":true },
             "duration"       : { "dimensions":1, "dynamic":false},
@@ -155,17 +154,16 @@ class InstanceAPI {
 
     }
 
-    updateInstances = function(tpf, systemTime) {
+    updateInstances = function() {
 
         let iCount = 0;
         let updateUiSystemBuffers = function(instanceBuffers) {
-            let count = instanceBuffers.updateBufferStates( systemTime)
+            let count = instanceBuffers.updateBufferStates()
         //    console.log(count);
             instanceBuffers.setInstancedCount(count);
             iCount+=count;
         };
 
-        this.systemTime = systemTime;
 
         let sysKeys = 0;
         let sysBuffs = 0;
@@ -196,7 +194,7 @@ class InstanceAPI {
                 mats++
                 if (mat.uniforms) {
                     if (mat.uniforms.systemTime) {
-                        mat.uniforms.systemTime.value = this.systemTime;
+                        mat.uniforms.systemTime.value = client.getFrame().systemTime;
                     } else {
                         console.log("no uniform yet...")
                     }

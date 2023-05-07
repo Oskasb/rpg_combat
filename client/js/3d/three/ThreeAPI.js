@@ -477,12 +477,7 @@ class ThreeAPI {
     };
 
 
-    getSystemTime() {
-        return this.systemTime;
-    }
-
     requestFrameRender = function(frame) {
-        this.systemTime = frame.elapsedTime;
         this.threeSetup.callPrerender(frame);
     };
 

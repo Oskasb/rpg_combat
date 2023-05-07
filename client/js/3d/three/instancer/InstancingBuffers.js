@@ -109,14 +109,8 @@ class InstancingBuffers {
         };
 
 
-    setSystemTime = function(systemTime) {
-        let buffer = this.buffers['offset'];
-        buffer[buffer.length - 2] = systemTime;
-    };
-
         getSystemTime = function() {
-            let buffer = this.buffers['offset'];
-            return buffer[buffer.length - 2];
+            client.getFrame().systemTime;
         };
 
         setUpdated = function(buffer) {
@@ -129,7 +123,7 @@ class InstancingBuffers {
             while (releasedIndices.length) {
                 let elemIndex = releasedIndices.pop();
                 let element = this.activeElements[elemIndex];
-                if (element.testLifetimeIsOver(this.getSystemTime())) {
+                if (element.testLifetimeIsOver()) {
                     this.activeCount--;
                     this.setIndexBookState(elemIndex, ENUMS.IndexState.INDEX_AVAILABLE);
                 } else {
@@ -164,9 +158,8 @@ class InstancingBuffers {
 
 
 
-        updateGuiBuffer = function(systemTime) {
+        updateGuiBuffer = function() {
 
-            this.setSystemTime(systemTime);
             let releasedIndices = this.getBookState(ENUMS.IndexState.INDEX_RELEASING);
 
             this.relCount+=releasedIndices.length;
@@ -181,7 +174,7 @@ class InstancingBuffers {
         };
 
         setElementReleased = function(guiElement) {
-            guiElement.endLifecycleNow(this.getSystemTime());
+            guiElement.endLifecycleNow();
             this.setIndexBookState(guiElement.index, ENUMS.IndexState.INDEX_RELEASING);
         };
 

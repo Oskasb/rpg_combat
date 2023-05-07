@@ -60,7 +60,7 @@ class GameAPI {
             return 0
         }
         let time = this.gameMain.gameTime;
-        if (typeof (time) === 'undefined') {
+        if (typeof (time) !== 'number') {
             console.log("Time is bad, investigate")
         }
         return time;

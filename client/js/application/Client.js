@@ -7,7 +7,12 @@ import * as THREE from '../../libs/three/Three.js';
 import { ThreeController } from '../3d/ThreeController.js';
 import { DynamicMain } from '../3d/DynamicMain.js';
 
-
+let frame = {
+    tpf:0.01,
+    gameTime:0.01,
+    systemTime:0.01,
+    elapsedTime:0.01
+};
 class Client {
 
     constructor( devMode, env ) {
@@ -54,6 +59,9 @@ class Client {
         this.setup.initGlobalAPIs();
     };
 
+    getFrame() {
+        return frame;
+    }
     createScene() {
 
 
@@ -74,10 +82,7 @@ class Client {
 
         const clock = new THREE.Clock(true);
 
-        let frame = {
-            tpf:clock.getDelta(),
-            elapsedTime:clock.elapsedTime
-        };
+
 
         function triggerFrame() {
             frame.tpf = clock.getDelta();
@@ -86,19 +91,25 @@ class Client {
                 return;
             }
             frame.elapsedTime = clock.elapsedTime;
+
+
             ThreeAPI.updateCamera();
             GuiAPI.updateGui(frame.tpf, frame.elapsedTime);
             ThreeAPI.requestFrameRender(frame)
             requestAnimationFrame( triggerFrame );
 
             client.evt.dispatch(ENUMS.Event.FRAME_READY, frame);
+
+            frame.gameTime = GameAPI.getGameTime();
+            frame.systemTime += frame.tpf;
+
             ThreeAPI.applyDynamicGlobalUniforms();
 
             ThreeAPI.updateAnimationMixers(frame.tpf);
-            ThreeAPI.updateSceneMatrixWorld(frame.tpf);
-            client.dynamicMain.tickDynamicMain(frame.tpf, frame.elapsedTime);
+            ThreeAPI.updateSceneMatrixWorld();
+            client.dynamicMain.tickDynamicMain();
             //     renderer.render(scene, camera)
-            EffectAPI.updateEffectAPI(frame.elapsedTime);
+            EffectAPI.updateEffectAPI();
 
             window.PipelineAPI.tickPipelineAPI(frame.tpf)
 
