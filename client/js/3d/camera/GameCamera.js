@@ -25,7 +25,7 @@ class GameCamera {
         }
 
         let applyCameraModifiers = function() {
-return;
+
             let gamePiece = GameAPI.getMainCharPiece();
             if (!gamePiece) return;
         //    let companions = gamePiece.companions;
@@ -63,8 +63,8 @@ return;
             let factor = 1;
             let posFactor = 1;
             if (fraction < 0.95) {
-                factor =  MATH.curveSigmoid(fraction*0.95);
-                posFactor = MATH.curveSigmoid(fraction*0.75);
+                factor =  MATH.curveSigmoid(fraction*0.85);
+                posFactor = MATH.curveSigmoid(fraction*0.95);
             } else {
                 fraction = 1;
                 factor = 1;
@@ -182,7 +182,7 @@ return;
         camParams.offsetLookAt[0] = camConf.offsetLookAt[0];
         camParams.offsetLookAt[1] = camConf.offsetLookAt[1];
         camParams.offsetLookAt[2] = camConf.offsetLookAt[2];
-        camParams.time = 0.07;
+        camParams.time = 0.08;
         if (camConf['mode'] === "portrait_main_char") {
         //    console.log("Make cam go to char here for nice")
         }

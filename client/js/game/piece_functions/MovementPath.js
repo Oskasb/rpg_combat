@@ -288,7 +288,7 @@ class MovementPath {
         }
 
         this.tempVec.sub(this.gamePiece.getPos());
-        this.tempVec.multiplyScalar(0.5);
+        this.tempVec.multiplyScalar(0.35);
         GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
         let distanceLookat = MATH.distanceBetween(ThreeAPI.getCamera().position, posVec)
         let distancePlayer = MATH.distanceBetween(ThreeAPI.getCamera().position, this.gamePiece.getPos())
@@ -359,7 +359,7 @@ class MovementPath {
     //    return;
         this.tempVec.copy(posVec);
         this.tempVec.sub(this.gamePiece.getPos())
-        this.tempVec.multiplyScalar(0.95);
+        this.tempVec.multiplyScalar(0.25);
         GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
         this.tempVec.multiplyScalar(0.55);
         GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
