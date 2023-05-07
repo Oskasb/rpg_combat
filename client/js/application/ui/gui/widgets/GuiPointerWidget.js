@@ -138,7 +138,8 @@ class GuiPointerWidget {
     showPointerWidgetReleased() {
 
         for (let i = 0; i < this.surfaceElements.length; i++) {
-            this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.0, 999999, 0.2, true)
+            this.surfaceElements[i].endLifecycleNow()
+        //    this.callbacks.applyLifecycle(this.surfaceElements[i], 0, 0.0, 999999, 0.2, true)
         //    this.callbacks.applySpriteToNineslice(this.surfaceElements[i], 7, 0, 0.03+i*0.01, 0.03+i*0.01)
         }
     }
