@@ -33,7 +33,7 @@ class TargetIndicator {
     addPointerPieceCameraModifiers(posVec) {
         tempVec3.copy(posVec);
         tempVec3.sub(GameAPI.getMainCharPiece().getPos())
-        tempVec3.multiplyScalar(0.35);
+        tempVec3.multiplyScalar(0.15);
         GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
         tempVec3.multiplyScalar(0.55);
         GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);

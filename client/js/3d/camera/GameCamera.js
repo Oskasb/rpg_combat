@@ -25,7 +25,7 @@ class GameCamera {
         }
 
         let applyCameraModifiers = function() {
-
+return;
             let gamePiece = GameAPI.getMainCharPiece();
             if (!gamePiece) return;
         //    let companions = gamePiece.companions;
@@ -34,9 +34,9 @@ class GameCamera {
                 if (companion) {
                     tempVec3.copy(companion.getPos());
                     tempVec3.sub(gamePiece.getCenterMass());
-                    tempVec3.multiplyScalar(0.5);
+                    tempVec3.multiplyScalar(0.15);
                     GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
-                    GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
+                //    GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);
                 }
         //   }
 
@@ -44,7 +44,7 @@ class GameCamera {
             if (target) {
                 tempVec3.copy(target.getPos());
                 tempVec3.sub(gamePiece.getPos());
-                tempVec3.multiplyScalar(0.15);
+                tempVec3.multiplyScalar(0.12);
                 GameAPI.getGameCamera().addLookAtModifierVec3(tempVec3);
                 tempVec3.multiplyScalar(-0.3);
                 GameAPI.getGameCamera().addPositionModifierVec3(tempVec3);

@@ -355,9 +355,11 @@ class MovementPath {
 
 
     addPathPieceCameraModifiers(posVec) {
+        this.applyPathPointCameraModifiers(posVec)
+    //    return;
         this.tempVec.copy(posVec);
         this.tempVec.sub(this.gamePiece.getPos())
-        this.tempVec.multiplyScalar(0.65);
+        this.tempVec.multiplyScalar(0.95);
         GameAPI.getGameCamera().addLookAtModifierVec3(this.tempVec);
         this.tempVec.multiplyScalar(0.55);
         GameAPI.getGameCamera().addPositionModifierVec3(this.tempVec);
@@ -368,7 +370,7 @@ class MovementPath {
         this.determinePathToTargetPiece(targetPiece)
 
         if (this.gamePiece === GameAPI.getMainCharPiece()) {
-            this.addPathPieceCameraModifiers(targetPiece.getPos())
+            this.addPathPieceCameraModifiers(targetPiece.getAboveHead(1))
         }
     }
 

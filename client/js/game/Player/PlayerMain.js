@@ -217,10 +217,8 @@ class PlayerMain {
     setPlayerCharacter(character, oldMain) {
         if (oldMain) {
             GameAPI.unregisterGameUpdateCallback(oldMain.getOnUpdateCallback())
-        //    GameAPI.unregisterGameUpdateCallback(this.callbacks.applyCameraModifiers)
         }
         GameAPI.registerGameUpdateCallback(character.gamePiece.getOnUpdateCallback())
-      //  GameAPI.registerGameUpdateCallback(this.callbacks.applyCameraModifiers)
 
         character.gamePiece.setStatusValue('isCharacter', 1);
         if (this.mainCharPage) {
