@@ -59,7 +59,7 @@ class GameAPI {
         if (!this.gameMain) {
             return 0
         }
-        let time = this.gameMain.gameTime;
+        let time = client.getFrame().systemTime;
         if (typeof (time) !== 'number') {
             console.log("Time is bad, investigate")
         }

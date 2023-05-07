@@ -52,7 +52,7 @@ function endOnLanded(fx) {
 }
 
 function setupLifecycle(efct, fxDuration, onPaceFactor, decayFactor) {
-    let start = GameAPI.getGameTime();
+    let start = client.getFrame().systemTime;
     let atk = onPaceFactor*fxDuration;
     let decay = decayFactor*fxDuration;
     let end = start+fxDuration;

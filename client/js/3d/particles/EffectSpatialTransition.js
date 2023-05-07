@@ -69,13 +69,13 @@ class EffectSpatialTransition {
     }
 
     initEffectTransition(opts) {
-        let now = GameAPI.getGameTime();
+        let now = client.getFrame().systemTime;;
         this.startTime = now;
         this.applyTransitionOptions(opts);
     }
 
     interpolatePosition() {
-        let now = GameAPI.getGameTime();
+        let now = client.getFrame().systemTime;;
         if (this.targetTime > now) {
             let fraction = MATH.calcFraction(this.startTime, this.targetTime, now);
             if (fraction > 1) fraction = 1;

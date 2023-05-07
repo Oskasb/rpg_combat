@@ -109,18 +109,18 @@ class InstancingBufferElement {
     };
 
     applyDuration = function(duration) {
-        this.endTime = duration + this.guiBuffers.getSystemTime();
+        this.endTime = duration + client.getFrame().systemTime;
    //     console.log("End time: ", this.endTime);
     };
 
     startLifecycleNow = function() {
-        this.lifecycle.x = this.guiBuffers.getSystemTime();
+        this.lifecycle.x = client.getFrame().systemTime;
         this.lifecycle.z = this.endTime;
         this.applyLifecycle();
     };
 
     endLifecycleNow = function() {
-        this.lifecycle.z = this.guiBuffers.getSystemTime();
+        this.lifecycle.z = client.getFrame().systemTime;
         this.lifecycle.w = 0;
         this.guiBuffers.setAttribXYZ('offset', this.index, 0, 0, 10)
         this.applyLifecycle();
@@ -132,7 +132,7 @@ class InstancingBufferElement {
         this.setQuat(this.quat);
         this.setColorRGBA(this.rgba);
         this.setSprite(this.sprite);
-        this.lifecycle.x = this.guiBuffers.getSystemTime();
+        this.lifecycle.x = client.getFrame().systemTime;;
         this.applyLifecycle();
         this.applyDataTexture();
     };
@@ -153,12 +153,12 @@ class InstancingBufferElement {
     };
 
     getLifecycleProgress() {
-        let elementTime = this.guiBuffers.getSystemTime()
+        let elementTime = client.getFrame().systemTime;
         return MATH.calcFraction(this.lifecycle.x ,this.lifecycle.z + this.lifecycle.w, elementTime);
     }
 
     testLifetimeIsOver = function() {
-        let elementTime = this.guiBuffers.getSystemTime()
+        let elementTime = client.getFrame().systemTime;
         if ((this.lifecycle.z + this.lifecycle.w) < elementTime) {
         //    console.log("Lifetime over: ", this.lifecycle.z , this.lifecycle.w, this);
             return true;

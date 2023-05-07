@@ -86,10 +86,7 @@ class Client {
 
         function triggerFrame() {
             frame.tpf = clock.getDelta();
-            if (typeof (frame.tpf) !== 'number') {
-                console.log("Clock gives bad tpf...")
-                return;
-            }
+
             frame.elapsedTime = clock.elapsedTime;
 
 

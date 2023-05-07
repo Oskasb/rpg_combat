@@ -108,15 +108,9 @@ class InstancingBuffers {
             this.setUpdated(buffer);
         };
 
-
-        getSystemTime = function() {
-            client.getFrame().systemTime;
-        };
-
         setUpdated = function(buffer) {
             buffer[buffer.length-1] = 1
         };
-
 
         updateReleaseIndices = function(releasedIndices) {
 
