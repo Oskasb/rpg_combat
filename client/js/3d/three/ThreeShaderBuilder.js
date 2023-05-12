@@ -19,20 +19,20 @@ class ThreeShaderBuilder {
 
         let testShader = function( src, type ) {
 
-            var types = {
+            let types = {
                 fragment:gl.FRAGMENT_SHADER,
                 vertex:gl.VERTEX_SHADER
             };
 
-            var shader = gl.createShader( types[type]);
-            var line, lineNum, lineError, index = 0, indexEnd;
+            let shader = gl.createShader( types[type]);
+            let line, lineNum, lineError, index = 0, indexEnd;
 
             gl.shaderSource( shader, [src] );
             gl.compileShader( shader );
 
 
             if ( !gl.getShaderParameter( shader, gl.COMPILE_STATUS ) ) {
-                var error = gl.getShaderInfoLog( shader );
+                let error = gl.getShaderInfoLog( shader );
 
                 console.error( [shader],error );
 
@@ -59,8 +59,8 @@ class ThreeShaderBuilder {
         }
 
         let buildStringChunks = function(src, data) {
-            var chunks = {}
-            for (var key in data) {
+            let chunks = {}
+            for (let key in data) {
                 chunks[key] = data[key].join( "\n" );
                 PipelineAPI.setCategoryKeyValue(src, key, chunks[key]+"\n");
             }
@@ -69,8 +69,8 @@ class ThreeShaderBuilder {
         };
 
             let mapThreeShaderChunks = function() {
-            var chunks = {}
-            for (var key in THREE.ShaderChunk) {
+                let chunks = {}
+            for (let key in THREE.ShaderChunk) {
                 chunks[key] = THREE.ShaderChunk[key];
                 PipelineAPI.setCategoryKeyValue("THREE_CHUNKS", key, "\n" + chunks[key] + "\n");
             }
@@ -78,8 +78,8 @@ class ThreeShaderBuilder {
         };
 
             let combineProgramFromSources = function(sources) {
-            var programString = '';
-            for (var i = 0; i < sources.length; i++) {
+                let programString = '';
+            for (let i = 0; i < sources.length; i++) {
                 programString += PipelineAPI.readCachedConfigKey(sources[i].source, sources[i].chunk) + "\n";
             }
             return programString;
@@ -87,12 +87,12 @@ class ThreeShaderBuilder {
 
             let buildShaderPrograms = function(src, data) {
 
-            var program = {};
-            var cached = PipelineAPI.readCachedConfigKey("SHADERS", src);
+                let program = {};
+                let cached = PipelineAPI.readCachedConfigKey("SHADERS", src);
 
-            var diff = 2;
+                let diff = 2;
 
-            for (var key in data) {
+            for (let key in data) {
                 program[key] = combineProgramFromSources(data[key]);
 
                 if (!diff) {
@@ -126,14 +126,14 @@ class ThreeShaderBuilder {
         };
 
             let buildShadersFromIndex = function() {
-            for (var key in shaderDataIndex) {
+            for (let key in shaderDataIndex) {
                 buildShaderPrograms(key, shaderDataIndex[key]);
             }
         };
 
             let registerShaderProgram = function(src, data) {
             shaderDataIndex[src] = {};
-            for (var key in data) {
+            for (let key in data) {
                 shaderDataIndex[src][key] = data[key];
             }
             //    console.log("SHADER DATA INDEX:", shaderDataIndex);
@@ -148,19 +148,19 @@ class ThreeShaderBuilder {
         };
 
             let loadChunkIndex = function(src, data) {
-            for (var i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
                 new PipelineObject("SHADER_CHUNKS",   data[i], buildStringChunks)
             }
         };
 
             let loadProgramIndex = function(src, data) {
-            for (var i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
                 new PipelineObject("SHADER_PROGRAMS",   data[i], buildStringChunks)
             }
         };
 
             let loadShaderIndex = function(src, data) {
-            for (var i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
                 new PipelineObject("SHADERS_THREE",   data[i], registerShaderProgram)
             }
         };
@@ -187,7 +187,6 @@ class ThreeShaderBuilder {
 				#endif
 				#include <common>
 				#include <uv_pars_vertex>
-				#include <uv2_pars_vertex>
 				#include <envmap_pars_vertex>
 				#include <bsdfs>
 				#include <lights_pars_begin>
@@ -200,7 +199,6 @@ class ThreeShaderBuilder {
 				#include <clipping_planes_pars_vertex>
 				void main() {
 					#include <uv_vertex>
-					#include <uv2_vertex>
 					#include <color_vertex>
 					// vertex colors instanced
 					#ifdef INSTANCED
@@ -265,7 +263,6 @@ class ThreeShaderBuilder {
                     
                     #include <common>
                     #include <uv_pars_vertex>
-                    #include <uv2_pars_vertex>
                     #include <displacementmap_pars_vertex>
                     #include <color_pars_vertex>
                     #include <fog_pars_vertex>
@@ -277,7 +274,6 @@ class ThreeShaderBuilder {
                     
                     void main() {
                     	#include <uv_vertex>
-                    	#include <uv2_vertex>
                     	#include <color_vertex>
                     	#include <beginnormal_vertex>
                     	

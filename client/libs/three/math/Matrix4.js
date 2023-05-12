@@ -711,10 +711,6 @@ class Matrix4 {
 
 		const te = this.elements;
 
-		if (isNaN(te[0])) {
-			console.log("Something breaks in decompose...")
-		}
-
 		let sx = _v1.set( te[ 0 ], te[ 1 ], te[ 2 ] ).length();
 		const sy = _v1.set( te[ 4 ], te[ 5 ], te[ 6 ] ).length();
 		const sz = _v1.set( te[ 8 ], te[ 9 ], te[ 10 ] ).length();
@@ -726,10 +722,6 @@ class Matrix4 {
 		position.x = te[ 12 ];
 		position.y = te[ 13 ];
 		position.z = te[ 14 ];
-
-		if (isNaN(position.x)) {
-			console.log("Something breaks in decompose...")
-		}
 
 		// scale the rotation part
 		_m1.copy( this );
